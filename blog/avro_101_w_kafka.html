@@ -257,7 +257,7 @@
 								<li>It is very fast.</li>
 								<li>It has great bindings for a wide variety of programming languages so you can generate Java objects that make working with event data easier, but it does not require code generation so tools can be written generically for any data stream.</li>
 								<li>It has a rich, extensible schema language defined in pure JSON</li>
-								<li>It has the best notion of compatibility for evolving your data over time.</li>
+								<li>It has the best notion of compatibility for evolving your data over time. (note: Avro schemas can be evolved when they abide by a set of compatibility rules)</li>
 
 							</ol>
 
@@ -340,6 +340,8 @@
 
 						<h3>General Notes on Generic Avro Records vs Specific Avro Records</h3>
 						<p>
+							The Avro SpecificRecord API does require us to know in advance of compile time what all of our schema fields will be, unlike the Avro GenericRecord API. If we need more flexibility at runtime, then we likely should consider the GenericRecord API instead.
+
 							The high-level comparison between the two Avro API paths:
 							<ul>
 								<li>generic record api is adaptable due to flexibility at runtime</li>
@@ -362,7 +364,6 @@
 
 						</p>
 						<p>
-							The Avro SpecificRecord API does require us to know in advance of compile time what all of our schema fields will be, unlike the Avro GenericRecord API. If we need more flexibility at runtime, then we likely should consider the GenericRecord API instead.
 
 
 						

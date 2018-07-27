@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Notes on Using Apache Avro with Apache Kafka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Notes on Using Apache Avro with Apache Kafka</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: July 16th, 2018</p>
+						
+						<p>
+							<i>In this blog article we give a list of tips and tricks on the basics of using Apache Avro with Apache Kafka. Topics Include:</i>
+							
+							<ul>
+								<li>What is Apache Avro?</li>
+								<li>How does Avro work within Kafka?</li>
+								<li>Best practices for Avro usage with Kafka Producers, Consumers, and Streaming API</li>
+								
+
+							</ul>
+
+						</p>
+
+						<!--
+
+							Editing notes:
+								- this is fundamentally a streaming API article, start w that focus
+
+
+					-->
+					
+
+					</div>
+				</div>
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>What is Avro and Why Do I Care?</h2>
+						<p>The description from the <a href="http://avro.apache.org/">Apache Avro website</a> describes Avro as a data serialization system providing rich data structures in a compact binary data format (and more). The data in Avro is described in a language-independent schema (which are usually JSON format) and binary files are generally how the files are serialized. Many times the schema is embedded in the data files themselves. The <a href="http://shop.oreilly.com/product/0636920044123.do">Apache Kafka book</a> goes on to state:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Apache Avro, which is a serialization framework originally developed for Hadoop. Avro provides a compact serialization format; schemas that are separate from the message payloads and that do not require code to be generated when they change; and strong data typing and schema evolution, with both backward and forward compatibility."</i></p>
+						  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
+						</blockquote>
+
+						</p>
+
+						<p>
+						We can see an example of an avro schem below:
+
+							<script src="http://gist-it.appspot.com/https://github.com/confluentinc/kafka-streams-examples/blob/4.1.1-post/src/main/resources/avro/io/confluent/examples/streams/pageview.avsc"></script>
+
+						</p>
+
+						<p>
+							We can see from the Avro example above that there are four fields (outside of the fields themselves in the "fields" entry):
+
+							<ol>
+								<li>type - Identifies the JSON field type. For Avro schemas, this must always be 'record' when it is specified at the schema's top level</li>
+								<li>namespace - effectively a URI that uniquely identifies this schema for your organization</li>
+								<li>name - combines with namespace (making it fully-qualified) to uniquely identify in the global pool of Avro schemas</li>
+								<li>fields - actual schema definition, defines what fields are in the value payload of the message and their corresponding data types</li>
+
+							</ol>
+
+
+
+						Note that schema field names must begin with [A-Za-z_], and subsequently contain only [A-Za-z0-9_].							
+
+						</p>
+
+						<p>
+						The home <a href="http://avro.apache.org/docs/current/gettingstartedjava.html">website</a> for Avro offers:
+						<ul>
+							<li>maven dependency information for including Avro in projects</li>
+							<li>the Avro Maven plugin for performing code generation</li>
+							<li>examples of schemas</li>
+							<li>instructions on how to perform manual code generation for Avro</li>
+						</ul>
+
+						While all of these tools are interesting in the abstract, what we really want to focus on in this article in how we apply Avro in the context of <a href="http://docs.confluent.io/current/streams/">Apache Kafka streaming applicaitons</a>.
+
+
+
+						</p>
+<!--
+						<p>
+							where the `WikiFeed`
+ 						* class is auto-generated from its Avro schema by the maven avro plugin
+
+ 						As well as the Avro Maven plugin (for performing code generation):
+
+							<script src="http://gist-it.appspot.com/https://github.com/JohnReedLOL/kafka-streams/blob/master/pom.xml?slice=256:275"></script>							
+
+
+
+
+						</p>
+-->
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Using Apache Avro with Apache Kafka</h2>
+						<p>The <a href="http://shop.oreilly.com/product/0636920044123.do">Apache Kafka book</a> sets forth serialization as a key part of building a robust data platform as described in the excerpt below:
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A consistent data format is important in Kafka, as it allows writing and reading messages to be decoupled. When these tasks are tightly coupled, applications that subscribe to messages must be updated to handle the new data format, in parallel with the old format. Only then can the applications that publish the messages be updated to utilize the new format. By using well-defined schemas and storing them in a common repository, the messages in Kafka can be understood without coordination."</i></p>
+						  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
+						</blockquote>
+
+
+							While protobuff and raw JSON are considered popular for Kafka in some <a href="http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">circles<sup>1</sup></a>, many large enterprises prefer Avro as the serialization framework of choice to use with Apache Kafka as <a href="https://www.confluent.io/blog/avro-kafka-data/">outlined in Jay Kreps blog article</a>. Jay makes the argument for Avro on Confluent's platform (their distro of Apache Kafka) based on the following reasons:
+
+							<ul>
+								<li>It has a direct mapping to and from JSON</li>
+								<li>It has a very compact format. The bulk of JSON, repeating every field name with every single record, is what makes JSON inefficient for high-volume usage.</li>
+								<li>It is very fast.</li>
+								<li>It has great bindings for a wide variety of programming languages so you can generate Java objects that make working with event data easier, but it does not require code generation so tools can be written generically for any data stream.</li>
+								<li>It has a rich, extensible schema language defined in pure JSON</li>
+								<li>It has the best notion of compatibility for evolving your data over time. (note: Avro schemas can be evolved when they abide by a set of compatibility rules)</li>
+
+							</ul>
+
+							Schemas drive collaboration, <A href="https://www.confluent.io/blog/stream-data-platform-2/">consistency</a>, robustness, and clarity in how to interoperate on a system. Avro gives us these properties and thus is more than suitable for the Apache Kafka platform.
+
+						</p>
+
+
+						<p>
+
+							So now that we've made the argument for using Avro for serialization on Kafka, we need to dig into "how" part of doing this. Avro has many subtlies to it, and saying "just use avro" can prove daunting to new Kafka users. This article is meant to provide some notes on basic usage of Avro across producers, consumers, and streaming applications on Kafka.
+
+							The key aspects of Avro usage in Kafka we'll focus on for this article are:
+							<ul>
+								<li>leveraging the <a href="https://docs.confluent.io/current/schema-registry/docs/index.html">Confluent Schema Registry</a> for schema management</li>
+								<li>practical differences in using <a href="https://github.com/apache/avro/blob/master/lang/java/avro/src/main/java/org/apache/avro/generic/GenericRecord.java">Generic Avro Records</a> vs <a href="https://github.com/apache/avro/blob/master/lang/java/avro/src/main/java/org/apache/avro/specific/SpecificRecord.java">Specific Avro Records</a></li>
+								<li>notes on how to setup producers, consumers, and streaming applications with Avro { Generic, Specific } objects</li>
+								
+
+							</ul>
+
+							Let's start off with taking a quick look at the role of the Schema Registry in building streaming platforms for enterprises.
+
+
+						
+							
+						</p>
+
+
+						<h3>Leveraging the Confluent Schema Registry</h3>
+						<p>
+							I felt a bit of deja vu when reading Gwen Shapira's <a href="https://www.confluent.io/blog/schema-registry-kafka-stream-processing-yes-virginia-you-really-need-one/">story about building ETL pipelines for Data Warehouse Offloading</a> while working on Hadoop projects (<i>side note: we both worked in the field division at Cloudera previously</i>). Schema-on-read (or really "whatever schema was embedded in the MapReduce code...") was the theme of the times (around 2010), and the world needed flexibility to handle the masses of heterogenous types of data being offloaded into Hadoop. However, over time the world found that schema-on-read had some <A href="https://www.confluent.io/blog/how-i-learned-to-stop-worrying-and-love-the-schema-part-1/">drawbacks</a> and began to think about bringing order to the wild west of data pipelines. Enter the concept of the Schema Registry and <a href="https://www.oreilly.com/ideas/the-problem-of-managing-schemas">schema management</a>.
+
+						</p>
+						<p>
+							The nice aspects of the schema registry is that it watches messages passing through for new schemas and archives each new schema. Specifically the class <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">KafkaAvroSerializer</a> does this, as explained in the <a href="https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html">Confluent documentation</a>:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"When sending a message to a topic t, the Avro schema for the key and the value will be automatically registered in the Schema Registry under the subject t-key and t-value, respectively, if the compatibility test passes."</i></p>
+						  <p><a href="https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html">Serializer and Formatter</a></p>
+						</blockquote>
+
+							
+
+
+							The schema is sent to the schema registry for retrieval later by other processes needing to decode the payload of a message using the same schema. The schema registry acts as a centralized authority on schema management for the Kafka platforn. 
+
+						</p>
+						<p>
+							We need the <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">serializer</a> used to produce messages to the Kafka cluster to match the <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroDeserializer.java">deserializer</a> that will be used when consuming messages (otherwise bad things happen and <a href="https://github.com/confluentinc/schema-registry/blob/master/core/src/main/java/io/confluent/kafka/schemaregistry/storage/exceptions/SerializationException.java">exceptions</a> are thrown).
+
+							The behind-the-scenes details of storing the schema in the registry and pulling it up when required is performed by the serializers and deserializers in Kafka (which is pretty handy). Having to manually keep track of these when dealing with lots of concurrent streams on a well-worked Kafka cluster quickly becomes a challenge. Being able to leverage Avro in conjunction with the Confluent Schema Registry solves a lot of issues easily that most enterprises don't take a lot of time to think about (side note: data platforms in the enterprise commonly overlook many of the small issues like these which can end up taking most of the engineering time, ironically enough). 
+
+						</p>
+						<p>
+							So we've established a solid argument for not only using Avro on Kafka but also basing our schema management on the Confluent Schema Registry. Now let's take a look at design patterns for Avro schema design and then ways to encode messages with Avro for Kafka: Generic Records and Specific Records.
+
+						</p>
+
+
+						<h3>Tips for Avro Schema Design in Kafka</h3>
+						<p>
+							We'll briefly highlight a few notes from this <a href="https://www.confluent.io/blog/avro-kafka-data/">article</a> about best practices for Avro schema design relative to usage in Kafka:
+
+							<ul>
+								<li>Use enumerated values whenever possible</li>
+								<li>Require documentation for all fields</li>
+								<li>Avoid non-trivial union types and recursive types</li>
+								<li>Enforce reasonable schema and field naming conventions</li>
+
+							</ul>
+
+							Beyond defining the schema, we also need to consider which part of the Avro API we want to use.
+
+
+
+						</p>
+
+
+						<h3>General Notes on Generic Avro Records vs Specific Avro Records</h3>
+						<p>
+							The Avro SpecificRecord API does require us to know in advance of compile time what all of our schema fields will be, unlike the Avro GenericRecord API. If we need more flexibility at runtime, then we likely should consider the GenericRecord API instead.
+
+							The high-level comparison between the two Avro API paths:
+							<ul>
+								<li>generic record api is adaptable due to flexibility at runtime</li>
+								<li>specific record api has type safety and ease-of-use provided by specific format</li>
+								<li>both styles are orthogonal to schema evolution (e.g., "it doesnt affect schema evolution")</li>
+								<li>both styles are orthogonal to storage space as the binary encoding is exactly the same</li>
+								<li>if we don't have a good idea of how set the schema will be, we might want to start out with the generic record API</li>
+
+							</ul>
+
+						</p>
+						<p>
+						<h4>Avro SpecificRecords</h4>
+
+						<a href="https://github.com/apache/avro/blob/master/lang/java/avro/src/main/java/org/apache/avro/specific/SpecificRecord.java">SpecificRecord</a> Avro bindings make use of classes that are generated from your schema specifications with the Maven Avro Plugin.
+
+						These generated classes allow us to manage the fields in our Avro schema using getter and setter methods in the code in our Kafka application, making programming feel a bit more familiar.
+
+						The <a href="https://avro.apache.org/docs/1.8.2/api/java/org/apache/avro/specific/package-summary.html">SpecificRecord API</a> offers static compile time type safety checks and provides integrity for using correct field names and datatypes. We see the SpecificRecord API used for most RPC uses and for data applications that always use the same datatypes (e.g., "schemas are known at compile time").
+
+						</p>
+						<p>
+
+
+						
+
+						<!--
+
+						Further, when using Avro-specific classes, the client application does not need to be aware of the Avro schema at runtime. The generated class has an internal reference to its associated schema, and this schema is used by the binding, so the application does not need to explicitly supply a schema. Schemas are supplied at build time, when the source code for the specific class is generated.
+					-->
+
+						</p>
+						<p>
+						<h4>Avro GenericRecords</h4>
+
+						The <a href="https://github.com/apache/avro/blob/master/lang/java/avro/src/main/java/org/apache/avro/generic/GenericRecord.java">Avro GenericRecord</a> binding is a general-purpose binding which indentifies fields to be read and written by supplying a simple string that names the field, as can see in the example schema code section shown below.
+
+						<script src="http://gist-it.appspot.com/https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/producer/src/main/java/io/confluent/examples/producer/ProducerExample.java?slice=45:52"></script>
+
+
+						Generic record bindings provide the widest support for the Avro data types, which is helpful if your store has a constantly expanding set of schema.
+
+						For data applications that accept dynamic datatypes where the schema is not known until runtime the <a href="https://avro.apache.org/docs/1.8.2/api/java/org/apache/avro/generic/package-summary.html">Avro GenericRecord API</a> is recommended. The advantage with this approach is it allows us to use the binding in a generic manner but also suffers from a lack of type safety at application compile time.
+
+						If we are early on in the message design process and we don't have a good idea of how set the schema will be, we might want to start out with the generic record API. 
+
+						</p>
+<!--
+						<p>
+"Note: The generic Avro binding is used for serialization/deserialization.  This means the
+ appropriate Avro schema files must be provided for each of the "intermediate" Avro classes, i.e.
+ whenever new types of Avro objects (in the form of GenericRecord) are being passed between
+ processing steps.""
+						</p>
+-->
+
+						<h3>Best Practices with the Avro Records API for Producers, Consumers, and the Streaming API</h3>
+						<p>
+							A quick guide with examples of each API for the 3 types of Kafka processing nodes commonly seen used with Avro. We're listing this out explicitly here because its not always clear which API to use and where you will need the .avsc file (or not).
+
+							<h4>Leveraging the SpecificRecord API with Kafka and the Schema Registry</h4>
+
+							Overview: with the SpecificRecord API you'll always provide the .avsc file at <b>compile time</b> to generate the Avro specific message code to be compiled into the Kafka application.
+							
+							<ul>
+								<li><b>producers</b>: for the SpecficRecord API we need the specific .avsc file for the schema so that the Maven Avro Plugin can auto-generate the code to represent the class, which is then compiled in as part of the application. The class is referenced in the import list of the Kafka code and is used like a normal java class. [ <a href="https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/specific-avro-producer/src/main/resources/avro/LogLine.avsc">example .avsc</a>, <a href="https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/specific-avro-producer/src/main/java/io/confluent/examples/producer/AvroClicksProducer.java#L3">example producer</a> ]</li>
+
+								<li><b>consumers</b>: for SpecificRecord API usage and consumers we need a .avsc file for the Maven Avro Plugin to generate the Avro message generated code. [ <a href="https://github.com/confluentinc/examples/blob/master/kafka-clients/specific-avro-consumer/src/main/resources/avro/LogLine.avsc">example avsc</a>, <a href="https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/specific-avro-consumer/src/main/java/io/confluent/examples/consumer/AvroClicksSessionizer.java">example consumer</a> ]</li>
+
+								<li><b>streaming API</b>: for Specific Record API usage and the streaming API we again need a .avsc file for the Maven Avro Plugin to generate the message class code [ <a href="https://github.com/confluentinc/kafka-streams-examples/blob/4.1.1-post/src/main/resources/avro/io/confluent/examples/streams/wikifeed.avsc">example avsc</a>, <a href="https://github.com/confluentinc/kafka-streams-examples/blob/4.1.1-post/src/main/java/io/confluent/examples/streams/WikipediaFeedAvroExample.java#L18">example streaming code</a> ]</li>
+
+							</ul>
+
+						</p>
+						<p>
+							<h4>Leveraging the GenericRecord API with Kafka and the Schema Registry</h4>
+
+							Overview: with the GenericRecord API it is a mixture of usage patterns with respect to how the schema is provided, as detailed befow.
+							
+							<ul>
+								<li><b>producers</b>: need to have the schema typically embedded as a string in the code to inform the Generic Record object. The schema registry may or may not already have a copy of the schema, but for a new application it likely will not so we'll need to provide the schema the first time. [ <a href="https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/producer/src/main/java/io/confluent/examples/producer/ProducerExample.java#L46">example producer</a> ]</li>
+
+								<li><b>consumers</b>:  if they are only consuming messages formatted with the Avro Generic object schema, then it will take the schema ID from the message it gets, query the schema registry, pull the schema, and update the generic avro object instance locally to parse the message bytes</li>
+
+								<li><b>streaming API</b>: for anything it reads via avro, it can look up the message in the schema registry,  ------- but for any intermediate or outbound messages, it needs to have an Avro schema copy (embedded in code, or locally somehow) of the schema to dynamically generate the messages [ <a href="https://github.com/confluentinc/kafka-streams-examples/blob/4.1.1-post/src/main/java/io/confluent/examples/streams/PageViewRegionExample.java#L148">example streaming code</a> ]</li>
+
+							</ul>
+						</p>
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Illustrated Example: Kafka Producer Example Using SpecificRecord API</h2>
+						<p>
+							In this example we see a basic producer that is using the SpecificRecord API to and the Maven Avro plugin to generate the Avro message class at compile time with the included .avsc file shown below:
+						
+
+						<script src="http://gist-it.appspot.com/https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/specific-avro-producer/src/main/resources/avro/LogLine.avsc"></script>
+
+						</p>
+
+						<p>
+						In the code below we see the producer code reading log lines from a file on disk and producing Kafka messages to a Kafka cluster using the class (JavaSessionize.avro.LogLine) generated at compile from the .avsc file shown above.
+
+							<script src="http://gist-it.appspot.com/https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/specific-avro-producer/src/main/java/io/confluent/examples/producer/AvroClicksProducer.java#L3"></script>
+
+							A few lines of note in the example code above:
+							<ul>
+								<li>key and value serializers are both set to <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">io.confluent.kafka.serializers.KafkaAvroSerializer</a>, which knows how to interop with the Confluent Schema Registry</li>
+								<li>schema.registry.url - gives the address of where the Confluent Schema Registry is running</li>
+								<li>Producer<String, LogLine> producer = new KafkaProducer<String, LogLine>(props) --- shows the LogLine class in action at compile time</li>
+								
+
+
+							</ul>
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->		
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Illustrated Example: Kafka Producer Example Using GenericRecord API</h2>
+						<p>
+					Now let's take a look at using generic Avro objects rather than generated Avro objects in the context of a Kafka producer example. 
+					<ol>
+						<li>we still use <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">KafkaAvroSerializer</a></li>
+						<li>we also still provide the uri of schema registry</li>
+						<li>we now need to provide the avro schema at runtime, since it is not provided by the avro-generated object. In the example below we see the schema text in the code itself.</li>
+						<li>The Avro message object type is nowGenericRecord and we have to manually initialize it with our text schema we include in the code</li>
+						<li>ProducerRecord will use a GenericRecord that contains the combination of our custom schema and data values for the fields</li>
+					</ol>
+
+					We can see this in action in the <A href="https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/producer/src/main/java/io/confluent/examples/producer/ProducerExample.java">example</a> below where we see a Kafka Producer setting up to use the GenericRecord API:
+
+							<script src="http://gist-it.appspot.com/https://github.com/confluentinc/examples/blob/4.0.x/kafka-clients/producer/src/main/java/io/confluent/examples/producer/ProducerExample.java#L46"></script>
+
+						</p>
+
+					</div>
+				</div>
+				<!-- end of section -->				
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Summary</h2>
+						<p>
+							In this article we started out introducing the basic concept of Avro, made the case for the use of Avro with the Confluent Schema Registry as a best practice for Kafka, and then provided some best practices for Specific vs Generic Avro Record API usage. We hope this information helps as an introduction to the concepts for any new Kafka practitioners out there.
+
+						</p>
+						
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Slider -->
+		<!--
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+	-->
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>
+

@@ -272,9 +272,30 @@
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/AirQualityProcessor/SensorStreamProcessor.java?slice=63:71"></script>
 
-						<p>If you would like to view your stream, you can use the code below to print off each message in your aggregated stream:</p>
+						<p>If you would like to view the new stream, you can use the code below to print off each message in your aggregated stream:</p>
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/AirQualityProcessor/SensorStreamProcessor.java?slice=71:78"></script>
+
+					<h2>Running The Example</h2>
+					<p>To run this example, ZooKeeper needs to be up and running. Run: </p>
+					<p>
+					<code>./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties</code>
+				</p>
+					<p>Next, start the Kafka Broker: </p>
+					<p>
+						<code> ./bin/kafka-server-start ./etc/kafka/server.properties</code>
+					</p>
+
+					<p>Once these are up and running, you will need to create your topic. Run the command below to create the topic for a single sensor. While our producer does create a stream for each sensor, the stream processor application requires only one sensor. We will use the "PT08S1" sensor. Run: </p>
+					<p><code> ./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 \
+ --partitions 1 --topic PT08S1</code></p>
+
+ 					<p>Now run our stream processor:</p>
+					<p><code>mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.AirQualityProcessor.SensorStreamProcessor"</code></p>
+					<p>Lastly, start our stream producer:</p>
+					<p><code>mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.PollutionDataTracker.PollutionSensorProducer"</code></p>
+
+
 
 						<!-- <p>
 							We need the <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">serializer</a> used to produce messages to the Kafka cluster to match the <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroDeserializer.java">deserializer</a> that will be used when consuming messages (otherwise bad things happen and <a href="https://github.com/confluentinc/schema-registry/blob/master/core/src/main/java/io/confluent/kafka/schemaregistry/storage/exceptions/SerializationException.java">exceptions</a> are thrown).

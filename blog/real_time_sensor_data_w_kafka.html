@@ -226,7 +226,8 @@ But the processing has to be continuous and ongoing."</i></p>
 						<h3>Stream Producer</h3>
 
 						<p>Since we do not have access to sensors, we will simulate our own. We will use a subset of data from UCI’s “Gas sensors for home activity monitoring”. You can download the dataset <a href="http://archive.ics.uci.edu/ml/datasets/gas+sensors+for+home+activity+monitoring">here</a>.</p>
-						<p>Data from each sensor will be published via the producer to the sensors topic. The topic is determined by the sensors type. Each sensor will have its own topic. The date, time, sensor type and reading make up a single messages. Avro is used for serialization and deserialization in this example, if you are new to Avro I would suggest checking out this <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">article</a>. The schema is shown below: </p>
+
+						<p>Data from each sensor will be published via the producer to the sensors topic. The topic is determined by the sensors type. Each sensor will publish its own topic, because order is required. The date, time, sensor type and reading make up a single messages. Avro is used for serialization and deserialization in this example, if you are new to Avro I would suggest checking out this <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">article</a>. The schema is shown below: </p>
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/PollutionDataTracker/PollutionSensorProducer.java?slice=70:79"></script>
 

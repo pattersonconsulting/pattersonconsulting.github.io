@@ -111,18 +111,6 @@
 		</header>
 		<!-- Header -->
 
-<!--
-		<div class="fh5co-slider" >
-			<div class="container" >
-
-				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
-						<h1>Rail, Aquariums, and Data</h1>
-				</div>
-			</div>
-		</div>
--->
-
-
 		<div id="fh5co-intro" class="fh5co-section">
 			<div class="container">
 
@@ -130,20 +118,14 @@
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Real-Time Sensor Data Processing with the Kafka Streaming API</h1>
-						<p>Author: <a href="http://www.twitter.com/jpatanooga">Austin Harris</a></p>
+						<p>Author: <a href="https://twitter.com/Austin_P_Harris">Austin Harris</a></p>
 						<p>Date: July 26th, 2018</p>
 
 						<p>
-							<i>In this blog article we give a list of tips and tricks on the basics of using Apache Avro with Apache Kafka. Topics Include:</i>
-
-							<ul>
-								<li>What is Apache Avro?</li>
-								<li>How does Avro work within Kafka?</li>
-								<li>Best practices for Avro usage with Kafka Producers, Consumers, and Streaming API</li>
-
-
-							</ul>
-
+							<i>In this blog article we aim to introduce you to the Kafka Streams API by creating our own stream processing application.</i>
+						</p>
+							<p>With today's rapid adoption of sensors and IOT devices the demand for real-time processing applications has exploded. Large deployments of connected devices require specialized infrastructure in order to ingest large volumes of high frequency data. </p> <p> In this article, we will use Kafka to set up a data pipeline in order to ingest streaming data from multiple simulated sensors, and create an application using the Kafka Streams API to process the data in real-time. This articles primary objective is to introduce Kafka Streams API. Therefore, we assume you have a Kafka broker up and running. If you are new to Kafka, I reccommend starting <a href="https://docs.confluent.io/current/platform.html">here</a>.
+							</p>
 						</p>
 					</div>
 				</div>
@@ -158,10 +140,6 @@
 
 							<!-- <script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script> -->
 
-
-						<p>With today's rapid adoption of sensors and IOT devices the demand for real-time processing applications has exploded. Large deployments of connected devices require specialized infrastructure in order to ingest large volumes of high frequency data. In this article, we will use Kafka to set up a data pipeline in order to ingest streaming data from multiple simulated sensors, and create a Kafka Streams application to process the data in real-time. This articles primary objective is to introduce Kafka Streams API. Therefore, we assume you have a Kafka broker up and running. If you are new to Kafka, I reccommend starting <a href="https://docs.confluent.io/current/platform.html">here</a>.
-						</p>
-
 						<h2>What is Stream Processing?</h2>
 
 						<p>Before we can define stream processing, we need to make sure we know what a stream is. While many explanations exist, we will be using the one commonly agreed upon:
@@ -175,6 +153,7 @@
 							  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
 							</blockquote>
 
+						<p>Stream processing is the processing of data continuously, a single record at a time. Understanding events in real-time can greatly benefit business decision making skills.<p>
 
 						<p>
 							A few examples of streams would include:
@@ -187,7 +166,6 @@
 
 
 
-						<p>This list is almost infinite itself. Stream processing is the processing of data continuously, a single record at a time. Each record <p>
 
 
 
@@ -226,14 +204,14 @@
 					<div class="col-md-12" id="fh5co-content">
 						<h2>Kafka Streams</h2>
 						<p> Kafka Streams is a client library for stream processing applications that makes writing scalable, fault-tolerant streaming applications easy. It requires no other dependencies other than kafka itself. A streams application can be package, and deployed like any other Java application. A kafka streams application processes data in the cluster as the input topic and then outputs its results back into the cluster as a new topic.</P>
-						<p>For now, we will use the high-level Streams DSL (Domain Specific Language) to create our application. However, Kafka does provide a Low-Level Processor API (Link) if you need a bit more control. We will use windowed aggregation in order to show how easy it is to compute a moving average in the example below.</p>
+						<p>For now, we will use the high-level Streams DSL (Domain Specific Language) to create our application. However, Kafka does provide a Low-Level Processor API if you need a bit more control. If you would like to learn more about the APIs themselves <a href="https://www.confluent.io">Confluent</a> provides some great <a href="https://docs.confluent.io/3.0.0/streams/developer-guide.html">examples</a>. We will use windowed aggregation in order to show how easy it is to compute a moving average in the example below.</p>
 
 						<h3>Example</h3>
 
 						<p> All code in this article can be found at: </p>
 						<p>In order to introduce the Kafka Streams API, we will implememnt an example Kafka streams application that will calculate the moving average of a given topic. Each topic will consist of a single stream of data from a sensor. This example is broken down into three main components:
 							<ul>
-								<li>Sensor Stream Producers</li>
+								<li>Sensor Stream Producer</li>
 								<li>Sensor Stream Processor</li>
 								<li>Sensor Stream Aggregator</li>
 							</ul>
@@ -244,7 +222,7 @@
 						<h3>Stream Producer</h3>
 
 						<p>Since we do not have access to sensors, we will simulate our own. We will use a subset of data from UCI’s “Gas sensors for home activity monitoring”. You can download the dataset here. </p>
-						<p>Data from each sensor will be published via the producer to the sensors topic. The topic is determined by the sensors type. Each sensor will have its own topic. The date, time, sensor type and reading make up a single messages. The schema is shown below: </p>
+						<p>Data from each sensor will be published via the producer to the sensors topic. The topic is determined by the sensors type. Each sensor will have its own topic. The date, time, sensor type and reading make up a single messages. Avro is used for serialization and deserialization in this example, if you are new to Avro I would suggest checking out this <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">article</a>. The schema is shown below: </p>
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/PollutionDataTracker/PollutionSensorProducer.java?slice=70:79"></script>
 
@@ -258,13 +236,13 @@
 
 						<h3>Sensor Aggregator</h3>
 
-						<p> The sensor aggregator is responsible for defining how the data should be aggregated. The aggregator consists of two methods: add() and calculateAverage(). The average is calculated for the duration of pre-defined windows of time. For a given time window, an aggregator is initialized and the readings that are recieved are passed via the add() method. The calculateAverage() method is called when the time window has completed. </p>
+						<p> The sensor aggregator is responsible for defining how the data should be aggregated. The aggregator consists of two methods: <code>add()</code> and <code>calculateAverage()</code>. The average is calculated for the duration of pre-defined windows of time. For a given time window, an aggregator is initialized and the readings that are recieved are passed via the <code>add()</code> method. The <code>calculateAverage()</code> method is called when the time window has completed. </p>
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/AirQualityProcessor/SensorAggregator.java?slice=5:32"></script>
 
 						<h3>Sensor Processor</h3>
 
-						<p>The SensorStreamProcessor uses the Kafka Streams API windowed aggregation to aggregate sensor data into a new stream. First, a StreamBuilder is initialized and a KStream is created using builder.stream(“topicName”). The “topicName” can be any of the sensor types at the top of the CSV file. Here we build a stream from the "PT08S1" sensor:</p>
+						<p>The SensorStreamProcessor uses the Kafka Streams API windowed aggregation to aggregate sensor data into a new stream. First, a StreamBuilder is initialized and a KStream is created using <code>builder.stream(“topicName”)</code>. The “topicName” can be any of the sensor types at the top of the CSV file. Here we build a stream from the "PT08S1" sensor:</p>
 
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis/tree/master/src/main/java/com/pattersonconsultingtn/kafka/examples/AirQualityProcessor/SensorStreamProcessor.java?slice=56:59"></script>
 
@@ -306,8 +284,6 @@
 
 			</div>
 		</div>
-
-
 
 
 

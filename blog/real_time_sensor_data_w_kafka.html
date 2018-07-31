@@ -130,9 +130,6 @@
 					</div>
 				</div>
 
-
-
-
 				<!-- start of section -->
 
 				<div class="row row-bottom-padded-sm">
@@ -153,8 +150,15 @@
 							  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
 							</blockquote>
 
-						<p>Stream processing is the processing of data continuously, a single record at a time. Understanding events in real-time can greatly benefit business decision making skills.<p>
+						<p>Stream processing is the processing of data continuously, a single record at a time. The <i>Kafka: The Definitive Guide</i> gives a great explanation of stream processing as well: <p>
 
+							<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+							  <p style="font-size: 14px;">
+							  <i>"As long as you are continuously reading data from an unbounded
+dataset, doing something to it, and emitting output, you are doing stream processing.
+But the processing has to be continuous and ongoing."</i></p>
+							  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
+							</blockquote>
 						<p>
 							A few examples of streams would include:
 							<ol>
@@ -208,7 +212,7 @@
 
 						<h3>Example</h3>
 
-						<p> All code in this article can be found at: </p>
+						<p> All code in this article can be found <a href="https://github.com/pattersonconsulting/kafka_streaming_sensor_analysis">here</a>. </p>
 						<p>In order to introduce the Kafka Streams API, we will implememnt an example Kafka streams application that will calculate the moving average of a given topic. Each topic will consist of a single stream of data from a sensor. This example is broken down into three main components:
 							<ul>
 								<li>Sensor Stream Producer</li>
@@ -272,6 +276,16 @@
 					<p><code>mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.AirQualityProcessor.SensorStreamProcessor"</code></p>
 					<p>Lastly, start our stream producer:</p>
 					<p><code>mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.PollutionDataTracker.PollutionSensorProducer"</code></p>
+					<p>Your output should look like this:</p>
+					<p><code>
+						key=PT08S1, Average=158.33 </br>
+						key=PT08S1, Average=139.66 </br>
+						key=PT08S1, Average=-200.00 </br>
+						key=PT08S1, Average=186.66 </br>
+						key=PT08S1, Average=116.66 </br>
+						key=PT08S1, Average=137.00 </br>
+						key=PT08S1, Average=148.66 </br>
+					</code></p>
 
 
 

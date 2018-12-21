@@ -239,16 +239,16 @@ Each test for an individual batch size was done three times then averaged. The a
 
 Here’s what each of those arguments mean:
 <br>
---topic testTopic		The topic the perf test will write to<br>
---num-records 1000000	The total number of records to send for the test<br>
---throughput -1		The maximum throughput for the test<br>
---producer-props		The producer properties<br>
-	bootstrap.servers	The location of one of the Kafka brokers<br>
-	batch.size		The batch size in bytes<br>
-	linger.ms		The amount of time the producer will wait if a batch does not fill<br>
-	buffer.memory		The amount of RAM allocated for the producer to store batches<br>
-	request.timeout.ms	The amount of time before a timeout from a request occurs<br>
---record-size			The size of each record in bytes
+--topic testTopic &emspc &emspc The topic the perf test will write to<br>
+--num-records 1000000 &emspc &emspc The total number of records to send for the test<br>
+--throughput -1 &emspc &emspc The maximum throughput for the test<br>
+--producer-props & emspc &emspc The producer properties<br>
+	bootstrap.servers &emspc &emspc The location of one of the Kafka brokers<br>
+	batch.size &emspc &emspc The batch size in bytes<br>
+	linger.ms &emspc &emspc The amount of time the producer will wait if a batch does not fill<br>
+	buffer.memory &emspc &emspc The amount of RAM allocated for the producer to store batches<br>
+	request.timeout.ms &emspc &emspc The amount of time before a timeout from a request occurs<br>
+--record-size &emspc &emspc The size of each record in bytes
 
 						</p>
 
@@ -319,7 +319,7 @@ As might already be obvious, requiring more acknowledgments means the producer h
 
 
 
-Compressing messages in Kafka works on entire batches. According to Kafka’s documentation on <a href="https://kafka.apache.org/documentation/#producerconfigs">producer configurations</a>: <br> <p><i>“Compression is of full batches of data, so the efficacy of batching will also impact the compression ratio (more batching means better compression).”</i></p> In order to show the differences in throughput of the different compression methods, I have chosen a single batch size of 10,000 bytes. 
+Compressing messages in Kafka works on entire batches. According to Kafka’s documentation on <a href="https://kafka.apache.org/documentation/#producerconfigs">producer configurations</a>: <br><br> <p><i>“Compression is of full batches of data, so the efficacy of batching will also impact the compression ratio (more batching means better compression).”</i></p> In order to show the differences in throughput of the different compression methods, I have chosen a single batch size of 10,000 bytes. 
 </p>
 <p>
 Kafka supports three types of compression: 

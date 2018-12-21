@@ -238,16 +238,16 @@ Each test for an individual batch size was done three times then averaged. The a
 						<p>
 
 Here’s what each of those arguments mean:
-
---topic testTopic		The topic the perf test will write to
---num-records 1000000	The total number of records to send for the test
---throughput -1		The maximum throughput for the test
---producer-props		The producer properties
-	bootstrap.servers	The location of one of the Kafka brokers
-	batch.size		The batch size in bytes
-	linger.ms		The amount of time the producer will wait if a batch does not fill
-	buffer.memory		The amount of RAM allocated for the producer to store batches
-	request.timeout.ms	The amount of time before a timeout from a request occurs
+<br>
+--topic testTopic		The topic the perf test will write to<br>
+--num-records 1000000	The total number of records to send for the test<br>
+--throughput -1		The maximum throughput for the test<br>
+--producer-props		The producer properties<br>
+	bootstrap.servers	The location of one of the Kafka brokers<br>
+	batch.size		The batch size in bytes<br>
+	linger.ms		The amount of time the producer will wait if a batch does not fill<br>
+	buffer.memory		The amount of RAM allocated for the producer to store batches<br>
+	request.timeout.ms	The amount of time before a timeout from a request occurs<br>
 --record-size			The size of each record in bytes
 
 						</p>
@@ -319,7 +319,7 @@ As might already be obvious, requiring more acknowledgments means the producer h
 
 
 
-Compressing messages in Kafka works on entire batches. According to Kafka’s documentation on <a href="https://kafka.apache.org/documentation/#producerconfigs">producer configurations</a>, <p><i>“Compression is of full batches of data, so the efficacy of batching will also impact the compression ratio (more batching means better compression).”</i></p> In order to show the differences in throughput of the different compression methods, I have chosen a single batch size of 10,000 bytes. 
+Compressing messages in Kafka works on entire batches. According to Kafka’s documentation on <a href="https://kafka.apache.org/documentation/#producerconfigs">producer configurations</a>: <br> <p><i>“Compression is of full batches of data, so the efficacy of batching will also impact the compression ratio (more batching means better compression).”</i></p> In order to show the differences in throughput of the different compression methods, I have chosen a single batch size of 10,000 bytes. 
 </p>
 <p>
 Kafka supports three types of compression: 
@@ -342,7 +342,7 @@ In order to change these, simply use the <code>--producer-props</code> argument 
 
 						<p>
 
-Note that compression does introduce CPU overhead. As stated in the <a href="http://kafka.apache.org/documentation.html#design_compression">documentation on compression</a>, <p><i>“Kafka supports this with an efficient batching format. A batch of messages can be clumped together compressed and sent to the server in this form. This batch of messages will be written in compressed form and will remain compressed in the log and will only be decompressed by the consumer.”</i></p> This means that the producer and consumer (though not the broker!) have to compress/decompress messages in addition to any work involved in simply producing/consuming them. However, in your specific scenario, CPU may not be the bottleneck. If that is the case, compressing messages can greatly increase throughput. Similar to “acks” above, the only change in the terminal command is to add <code>compression.type=gzip</code> (or any of the other types) to the <code>--producer-props</code> argument.
+Note that compression does introduce CPU overhead. As stated in the <a href="http://kafka.apache.org/documentation.html#design_compression">documentation on compression</a>: <p><i>“Kafka supports this with an efficient batching format. A batch of messages can be clumped together compressed and sent to the server in this form. This batch of messages will be written in compressed form and will remain compressed in the log and will only be decompressed by the consumer.”</i></p> This means that the producer and consumer (though not the broker!) have to compress/decompress messages in addition to any work involved in simply producing/consuming them. However, in your specific scenario, CPU may not be the bottleneck. If that is the case, compressing messages can greatly increase throughput. Similar to “acks” above, the only change in the terminal command is to add <code>compression.type=gzip</code> (or any of the other types) to the <code>--producer-props</code> argument.
 
 
 
@@ -356,7 +356,7 @@ The results show that any compression increases throughput. For this particular 
 						<p>
 							<h3>Conclusion</h3>
 
-In this post, we looked at three different factors that can be altered to increase throughput: batch size, buffer size, and compression. While every setup and scenario is different, these settings can be changed to find the (hopefully) achieve the best throughput for your use case.
+In this post, we looked at three different factors that can be altered to increase throughput: batch size, acknowledgements, and compression. While every setup and scenario is different, these settings can be changed to (hopefully) achieve the best throughput for your use case.
 
 
 

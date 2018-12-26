@@ -1,0 +1,2428 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: July 16th, 2018</p>
+						
+						<p>
+							<i>In this blog article we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
+
+						</p>
+
+
+						<img src="./images/big_cloud_dealz_logo2.png" style="width: 300px; height: 315px; float: left; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+
+
+							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience, especially with Amazon's acquisition of Whole Foods and their original concept AmazonGo. On the online front we see shoppers expecting recommendations during their shopping experience along with a customized shopping experience based on their past viewing habits. With the physical storefront experience we see Amazon innovating with an storefront that mimics the online experience with a dizzing array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This blog post gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms-race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
+
+						</p>
+
+						<p>
+
+							The venerable brick and mortar retailer "Big Cloud Dealz" badly wants to compete with the evolving landscape and has made the concerted effort to integrate emerging technologies into their customer experience. Founding CEO, "Big Cloud Ron" (<A HREF="https://twitter.com/BigCloudRon1">@BigCloudRon</a>), loves technology but has been burned in the past by fancy tech ideas. Big Cloud Ron has mandated that IT approach this project in a way that is iterative and adaptable as they figure out "what works" and "what does not".
+						</p>
+						<p>
+
+							So, with the stage being set, we take a look at the notes from the first meeting where the enterprise team kicks off their project:
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/3UjhFM7OejM" style=" margin: 6px;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						<p style="margin-left: 12px;">A Commerical for the K-Mart Blue Light Special</p>
+						</div>
+<!--
+
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/3UjhFM7OejM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+-->
+							<ul>
+								
+								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell; he wants to combine real people with technology --- something online retail cannot do.</li>
+
+								<li>He wants customers to interact with a salesperson "at the right time in the right context". (Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart "Blue Light Special"</a><sup>1</sup>)</li>
+
+								<li>He wants the team to create the following effect in store with technology: create a dynamic in-store special that will prompt a sales associate to move to a specific isle to upsell a specific product based on some business logic, but be based on what people are shopping for "at that momment".</li>
+								<li>He wants to offer a dynamic special that will have the chance to create the most extra margin possible, so we need to know the summary of what items are in everyone's basket combined before they hit the register.</li>
+								<li>Based on this real-time shopping basket summary, the sales manager will have the option to choose one of the top 5 items from the most shopped items (and its associated upsell item) and prompt a sales associate to run to that isle with a portable microphone to announce the "Avacado-Toast Special"<sup>2</sup> for item X</li>
+							</ul>
+
+
+
+						</p>
+						<p>
+
+							So now that we know what management wants, we'll digest this into a general architecture and then break it further down into specific code (that can be run as a local demo). We've organized the remainder of this article into 3 major sections below:
+
+							<ol>
+								<li>Application Architectural Overview</li>
+								<li>Integrating Computer Vision Object Detection into Shopping Cart 2.0</li>
+								<li>Deeper Dive into Building Real-Time Applications with the Kafka Streaming API</li>
+							</ol>
+
+							Let's now continue the story of breaking down the requirements into a system architecture.
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Application Architectural Overview</h2>
+						<p>
+
+							Ok, so IT knows the business goal, now its time to start breaking this down into technical sub-problems they can implement.
+
+							<ul>
+								
+								
+								<li>Latency is a big deal for this application because if we dont have the aggregate contents of all the shopping baskets, we can't make a business decision on which items to offer the upsell on in real-time</li>
+								<li>This makes our biggest focus to be the streaming aspect of this application. The team has been reading a lot about how much success other companies have had with Apache Kafka, so they want to give that a shot.</li>
+								<li>Kafka will handle the data ingest and aggregation part, but now we still need a way to inventory the contents of all shoppers' shopping baskets while they shop. The team knows that object detection has gotten a lot better recently, so they want to leverage that to index the basket contents. They'll also need some sort of device attached to the shopping cart that can run this detection algorithm and send the output to the Kafka system.</li>
+								
+								<li>We don't really want to process this data in batch because latency is a killer for this situation, and the longer we wait, the more likely the shopper is either in line for checkout or out of the store</li>
+								<li>We're going to leverage Confluent's packaging of Apache Kafka as our streaming data collection and processing system.</li>
+								
+							</ul>
+
+							
+							The team realizes they need to measure activity in the retail store in the same way we track shoppers in a web-based store. Ultimately what is happening here is that they will instrument and analyze the physical world much in the same way we treat a webserver and how we analyze web logs to see not only what happened, but predict what we might should do next.
+							
+						</p>
+
+						<p>
+							<h3>Digging into the Apache Kafka Platform</h3>
+
+							<img src="./images/kafka_logo.png" style="width: 250px; height: 85px; float: right; margin: 12px; border: 0px solid #999999;" />
+
+
+							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept as Kafka has a lot of examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's interest:
+
+							<ul>
+								<li>The type of application they were looking for wasn't as good of a fit for the batch world due to the latency requirements</li>
+								<li>Streaming apps tended to differ from MapReduce (or Spark, batch, etc) applications as they tended to implement core function of the business as opposed to computing analytics<sup>olap</sup> </li>
+								
+
+
+						<li>real time apps <a href="https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/">work better as event-driven</a>, where database-based applications are fundamentally table driven<sup>apps</sup></li>
+
+						
+								
+								<li>Having stream processing mechanics built into your ingest platform is handy and <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">more efficient than trying to cobble this together from multiple systems</a></li>
+								<li>Given that the team had to build an embedded application for Shopping Cart 2.0, being able to build everything else on a single platform was a positive</li>
+
+							</ul>
+
+							The application development team checked out Confluent's blog for more ideas, and saw where machine learning had been <a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/">applied in general for machine learning</a> along with for <a href="https://www.confluent.io/blog/predicting-flight-arrivals-with-the-apache-kafka-streams-api/">predicting flight arrivals</a>.
+
+
+						
+
+						
+
+
+
+
+						</p>
+
+						<p>
+
+
+
+							A quote from Confluent's site goes on to state:
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Consider a simple model of a retail store. The core streams in retail are sales of products, orders placed for new products, and shipments of products that arrive. The “inventory on hand” is a table computed off the sale and shipment streams which add and subtract from our stock of products on hand. Two key stream processing operations for a retail outlet are re-ordering products when the stock starts to run low, and adjusting prices as supply and demand change."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>		
+
+						The team also likes the idea of Kafka (as opposed to trying to wire-together something themselves) because they don't have to maintain another custom internally built system. Why? When building complex systems there are only so many parts you want to "own", as many things become a rabbit hole that distract from your end goal and most folks don't have time to miss their project dates.		
+
+						<h3>The General Application Architecture</h3>			
+
+						Based on several whiteboarding sessions, the team comes up with a general design for what they want to do with "Green-Light Special" application. In the diagram below we see the architectural overview for this streaming Kafka-based application.
+						</p>
+						<p>
+							<img src="./images/cloud_dealz_arch_design_start.png" style="width: 938px; height: 296px;" />
+						</p>
+
+
+
+
+
+
+
+
+						From the whiteboarding session the team has broken up the applicaiton into 3 major components in the architectural diagram above:
+
+							<ol>
+								<li>A shopping cart (2.0) with an attached camera and wifi unit (likely an ARM-based embedded system) with an object detection model loaded to <a href="http://www.iraj.in/journal/journal_file/journal_pdf/12-201-144871022643-46.pdf">detect specific objects</a> from the camera</li>
+								<li>Kafka Cluster back in the data center to collect all of the incoming data from the shopping carts, organizing it into logical topics ("groups") for processing</li>
+								<li>A group of streaming applications leveraging Kafka's Streaming API to give our retail store's team a real-time look at what is happening across our store from the perspective of what is in the customer carts</li>
+								
+
+							</ol>
+
+							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable, and in the case of trying to analyze shopper's baskets in real time it doesn't make a lot of sense to push this data to HDFS first. In this case they find it far more favorable for latency purposes to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, let's take a look at the 3 specific application parts the needs to develop.
+
+						</p>
+
+						<p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I DONT NEED COMPUTER VISION BECAUSE I CAN SEE THE FUTURE. AND IN THE FUTURE I BRING THE BLUE LIGHT SPECIAL BACK TO RETAIL. AND IT WILL BRING THE WOOOOO BACK TO RETAIL.</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1027260844269346817?ref_src=twsrc%5Etfw">August 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>							
+
+						</p>						
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<div style="border-top: 1px #999999 solid;"> </div>			
+				<br/>
+				<br/>
+				<br/>
+
+				[ start 2nd blog post ]
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Prototyping Shopping Cart 2.0 with Computer Vision</h2>
+
+
+
+						<p>
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/Xkwl0k_p3FI" style=" margin: 6px;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						<p style="margin-left: 12px; width: 560px;">Demonstration of <a href="../../vision_apps.html"><i>object detection</i></a>. Object detection<sup>objdet</sup> in computer vision is defined as finding objects in images with “0 to multiple objects per image”. Each object prediction is accompanied by a bounding box and a class probability distribution.</p>
+						</div>		
+
+
+
+
+
+
+
+						</p>
+						<p>					
+
+							The team has stated they need to do some <a href="https://www.oreilly.com/ideas/solving-real-world-business-problems-with-computer-vision">computer vision</a> on the contents of the cart, but they don't have the resources to get too exotic. The development team has read a lot about <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">object detection</a> lately in the domain of <a href="https://ai.googleblog.com/2018/07/accelerated-training-and-inference-with.html">computer vision</a> and they know there are a lot of pre-trained models available for TensorFlow. After watching several demos and videos of applied object detection models, they decide on leveraging one of the models provided in the TensorFlow object deteciton project.
+
+						</p>
+						<p>
+
+
+						We need to know what's happening real-time in those shopping carts, but can't spend a ton of time developing the cart sensor because management wants to see a working prototype "soon". The data science team ran some tests on available pre-trained models and observed that our shopping cart bottoms have an odd pattern that tends to disrupt certain item's classifications with the model.
+
+					</p>
+
+					<p>
+
+
+
+						The SVP of Application Development doesnt want to spend on a custom model (yet). They arent sure of the value of collecting a lot of custom shopping cart image data, and they want to see what <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">stock models</a> can do first. If we can get a basic model working to show "something", we likely will get the green light to iterative improve Shopping Cart 2.0 with more custom models based on our earlier models.
+
+
+
+					</p>
+
+						
+		
+
+					
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Selecting an Initial Object Detection Model</h2>
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/bcd_shopping_cart_frisbees.jpg" style="width: 430px; height: 461px; float: right; margin: 12px; border: 1px solid #999999;" />
+						<p style="margin-left: 12px; width: 430px;">R-CNN pre-trained model output rendered on input image of a ball and two frisbees with bounding boxes and classifications.</p>
+						</div>		
+
+					<p> Given that we need an android device on the cart itself to collect images of the basket items, it makes sense that we <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_on_mobile_tensorflowlite.md">run the model "at the edge"</a><sup>model-edge</sup> on the cart android device, and only send the model predictions. Model predictions are produced through a process known as "inference" where we take input data and let it do a forward pass through the network. The output layer gives us the prediction, and that's the output we'll send on to the rest of the application. Another advantage of doing inference on the Android devices is that it allows us to leverage all of the CPUs in our fleet of Shopping Cart 2.0's as opposed to having a bank of GPUs back in the data warehouse. 
+
+
+
+					</p>
+					<p>To summarize the process:
+
+						<ol>
+							<li>Periodically take a picture of the contents of the basket</li>
+							<li>Use the picture as input to the local model and get the output of the inference as the object detections</li>
+							<li>Pass each detected object (name of items, bounding box coordinates) to the Kafka system via the <a href="https://docs.confluent.io/current/clients/producer.html">Producer API</a> for aggregation in real-time</li>
+
+						</ol>
+
+
+					</p>
+
+				<div style="float: left; margin: 12px; border: 0px solid #999999;">
+					<iframe src="http://www.oreilly.com/authors/widgets/782.html" height="380px" width="200px" scrolling="no" frameborder="0"></iframe>							
+				</div>	
+
+					
+					<p>
+						Given that our mandate is to use off-the-shelf components as much as possible to rapidly prototype, we're going to work with a pre-trained model from the <a href="https://www.tensorflow.org/">TensorFlow</a> <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">model zoo</a>. TensorFlow has a lot of community traction and support so the team wants to try and leverage one of object detection models offered from their website. The team has found some ARM9 boards (that will run <a href="https://www.tensorflow.org/mobile/android_build">TensorFlow on Android</a> with WIFI connectivity) with cameras for under $150, so creating 100 Shopping cart 2.0 prototypes loaded up with an object deteciton model should cost around $15k for hardware. Another advantage is that TensorFlow has JVM bindings that run on Android as well, which can be integrated with the JVM code from Kafka.
+
+					</p>
+
+
+
+
+					<p>
+						The team scans the TensorFlow model zoo and <a href="https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/">reads up on mAP scores</a> as an overall indication of model quality (Resources on <a href="https://medium.com/@timothycarlen/understanding-the-map-evaluation-metric-for-object-detection-a07fe6962cf3">Understanding object detection and mAP scores</a>, and <a href="https://arxiv.org/abs/1611.10012">understanding speed/accuracy trade-offs in object detection</a>). Inference speed is general a concern, but given that this was a prototype and the team was more interested in a better mAP value, it was less of a concern here. The application did not need to produce a lot of inferences, so a few seconds of latency between taking the picture and sending object detections back to the Kafka cluster was not a big deal.
+
+
+					</p>
+
+					<p>
+
+						The team chooses the <a href="http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz">COCO-pretrained Faster R-CNN with Resnet-101 model</a> because of its general mAP accuracy and decent file size. The team gave a lot of consideration to the YOLOv2 model variant, but ended up going for another model that was slower but gave a better mAP score for the application (which makes a lot of difference when we're using a stock model for prototyping). The data scientist is relieved to know that there are resources for easily <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md">training a future custom model</a> on specific basket images (Example: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_pets.md">Training a pet detector based on Faster R-CNN Resnet 101</a>) once they get the prototype system running for management.
+
+					</p>
+					<p>
+						With the base system design in place, the team could then move on to getting JVM code working that would take a custom image as input and produce a raw inference output that could be passed to the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a>, as we see being done in the next section.
+
+					</p>
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Object Detection Model Inference at the Edge with TensorFlow</h2>
+
+						<p>
+							In this section we'll focus on getting TF setup with java code, the model loaded, and inferences produced from the model to send to the kafka cluster.
+
+
+							The core java classes for this object detection system running on each cart are listed below:
+							<ul>
+								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a>: code to run the model inference with TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a>: support utilities for TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject.java</a>: class to represent detected objects from model inference output</li>
+								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a>: code tying the TensorFlow code into the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka producer API</a>, more on that a bit later</li>
+
+							</ul>
+							To get this project going we'll use Apache Maven so we'll need a pom.xml to bring in the needed dependencies. Below we see a portion of the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml">pom.xml</a> file with the dependencies of note:
+						</p>
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml?slice=59:102"></script>
+
+							<p>
+
+							We can see the confluent dependencies that will support the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a> operations along with the TensorFlow dependencies needed to load a pre-trained model (component versions are in the variables section of the pom.xml file; specifically we're using TensorFlow 1.8 in this example). 
+
+						</p>
+						<p>
+							Let's take a closer look at how we'll load the TensorFlow model and make inferences in java with the TensorFlow R-CNN object detection model. In the code section below, we can see the <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method highlighted which performs the bulk of the work in the class.
+
+
+						</p>
+
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script>
+
+						
+
+						<p>
+							The <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method takes 3 parameters:
+
+							<ol>
+								<li><b>modelFile</b>: the TensorFlow object detection model to load for inference</li>
+								<li><b>labelMapFile</b>: list of labels the associated <b>modelFile</b> can output (e.g., "the vocabulary of labels the saved model understands")</li>
+								<li><b>inputImageFile</b>: the image file path that we want to use as input to the <b>modelFile</b> to get object detections as output from</li>
+
+							</ol>
+
+							This class is a convinient wrapper around the base TensorFlow classes needed to load a <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code> and produce inference output on an arbitrary TensorFlow model.							
+							We'll point out a few key areas in the TensorFlow code above:<br/><br/>
+
+							<ul>
+								
+								
+								<li>Working with <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code>, frozen graphs, and .pb files</li>
+								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a></li>
+
+								
+								<li>Converting TensorFlow output into <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject</a> class instances</li>
+
+							</ul>
+
+							The <code>SavedModelBundle</code> is handy because it all of the needed files to run a TensorFlow object detection model.
+
+							The <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a> class is of note because it wraps functionality for doing things like <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L69">loading label files</a> and <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L95">converting the image file input</a> into the proper vectorized <Code>Tensor&lt;UInt8&gt;</code> format. 
+
+							After we get the output of the scores, classes, and bounding boxes from the TensorFlow inference output, the code <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L160">converts these into a our VisualObject</a> class wrappers to make them more easy to with.
+							Now that we've located the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObjects</a> in our basket and given them classifications, let's move on to how we'll send the classified objects to the Kafka cluster for processing.
+
+						</p>
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Integrating Shopping Cart 2.0 Detected Objects into an Apache Kafka Producer</h2>
+						<p>
+							To write data to a Kafka topic we need to use the Kafka Producer API. Apache Kafka is a JVM-based system so that makes it a relatively simple process to tie the object detection code into the code using the Producer API. In this example, we can see this happening in the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class.
+
+							We can see the code for this class highlighted below.
+
+							
+
+						</p>
+						
+							
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=112:172"></script>							
+
+						
+						<p>
+							We'll highlight a few key areas of the code:
+
+							<ol>
+								<li>Specifying a <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L167">Kafka topic</a> to send messages to</li>
+								<li>Configuring the producer to <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L124">use the Avro GenericRecord API</a></li>
+								<li>Laying out an <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L81">Avro schema</a> for the GenericRecord API to use</li>
+								<li>Configuring the producer <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L116">properties</a></li>
+								<li>Scanning all <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L173">image files in a directory</a></li>
+								<li>Watching a <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L224">directory for incoming files</a></li>
+								<li>Main <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L113">run loop</a> of the producer</li>
+								
+							</ol>
+
+							The producer class can either scan a pre-existing directory and index all of the objects in the images of the directory or watch a directory for images as they arrive. The producer class uses the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a> we outlined in the previous section to analyze the images in the directory. The TFVision_ObjectDetection.java class's <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96"><code>scanImageForObjects(...)</code></a> method produces object detections which are then sent to the configured Kafka topic <code>shopping_cart_objects</code>. If we update our general architecture diagram from above it now looks like:
+
+
+						</p>
+
+						<div style="float: left; margin: 12px; border: 0px solid #999999;">
+
+							<img src="./images/bcd_arch_part_2.png" style="width: 587px; height: 418px;" />
+
+						</div>
+
+						<p>
+							We've configured this example to use the GenericRecord Avro API and the code contains an embedded Avro schema so that we can leverage the GenericRecord API as we're prototyping this application at this stage (for more details on how to use the Generic and SpecificRecord Avro API, check out our <A href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">blog post on Using Apache Avro with Apache Kafka</a>). We also include the address of the <a href="https://www.confluent.io/blog/schema-registry-kafka-stream-processing-yes-virginia-you-really-need-one/">Confluent Schema Registry</a> so the schema can be archived in its central Avro schema repository. 
+
+						</p>
+
+
+
+						<p>
+							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L201">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo.
+
+					</div>
+					<div class="col-md-12" id="fh5co-content">
+						At this point the BCD has some working object detection code for cart 2.0 that will send detected objects to <Code>shopping_cart_objects</code> topic in a Kafka cluster. However, we don't have our Kafka system setup nor configured, so we're going to wait until part 3 of this series to run this code (because we have no where to send the detections right now).
+					</div>
+
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Summary</h2>
+
+						<p>
+							In part 2 of this series on re-inventing the shopping cart we walked the reader through:
+
+							<ol>
+								<li>Selecting an object detection model</li>
+								<li>Integrating the model to serve predictions</li>
+								<li>Wiring the predictings into Kafka with the Producer API</li>
+
+
+							</ol>
+
+							In part of our 3-part series, we'll show how we take the real-time incoming shopping cart data and aggregate it to drive a new level of shopping experience in the store.
+
+
+						</p>
+						
+						
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+						<h3>More Notes on Model Integration and Model Lifecycle Management</h3>
+						  <p>
+						  <i>
+						  	Obviously for this example we're hard-wiring a model into the Shopping Cart 2.0 project in a way that's great for proof of concepts yet doesnt address many of the production lifesycle issues that arise.
+						  	Some of these considerations include:
+
+							<ul>
+								
+								<li>Why not send images to Kafka or the Data Lake?</li>
+								<li>How often do we retrain this model?</li>								
+								<li>How would we swap out or roll-back the model in production?</li>
+								
+							</ul>
+							One great reason to not send images back to the data lake is that we might capture someone's kids' images which could cause legal issues in certain scenarios. Another reason for not capture the images is from a pure resource standpoint as it would require more store and processing resources to be used to move the images around.
+
+
+							</i></p>
+							<p><i>
+								The R-CNN model the team uses in this example is good to prove to management that this concept "works", yet has a limited initial vocabulary of objects it can recognize. A real production version of this model would need to fine-tune against the full inventory of the retail chain and would require retraining everytime the store carried a new item. A re-train event would need to be done in a batch setting back on the Data Lake probably leveraging GPUs.
+
+							</i></p>
+
+							<p><i>
+								Once we have a new re-trained model, we'll need to be able to deploy the model to system. We have two options: we either deploy it each night after the store closes, or we do it while people are shopping and using the system. We feel the best approach in terms of model management long-term is to leverage a <A href="https://www.oreilly.com/ideas/integrating-convolutional-neural-networks-into-enterprise-applications">model server system</a> so the support / Ops team can treat each model as it would a RDBMS table. There are several variants of model servers today, a few notable ones:
+
+								<ul>
+									<li>Official <a href="https://github.com/tensorflow/serving">TensorFlow Serving Project</a> and then Google's cloud model hosting offerings</li>
+									<li>Hosting <a href="https://docs.microsoft.com/en-us/visualstudio/ai/tensorflow-vm">TensorFlow models on an Azure VM</a>, Deploying <a href="https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/model-management-service-deploy">model as web service</a> on Azure</li>
+									<li>Cloudera's <a href="https://www.cloudera.com/documentation/data-science-workbench/latest/topics/cdsw_overview.html">Data Science Workbench</a></li>
+
+									<li>Amazon <A href="https://aws.amazon.com/blogs/machine-learning/introducing-model-server-for-apache-mxnet/">MXNet Model Server</a></li>
+									
+
+									<li>Skymind's <a href="https://docs.skymind.ai/docs">SKIL Model Server</a> for TensorFlow model hosting</li>
+									<li>The <A href="https://mlflow.org/">MLFlow</a> open source project</li>
+
+								</ul>
+
+								For the purposes of brevity and practicality in this example, we will not integrate a model server and will leave that as an exercise for the reader to explore later.
+
+							</i></p>
+
+
+							</div>	
+
+
+				<div style="border-top: 1px #999999 solid;"> </div>				
+				<br/>
+				<br/>
+				<br/>
+
+				[ start 3rd blog post ]
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Distributed Real-Time Aggregations for the Green Light Special with Kafka Streams</h1>
+
+
+						<p>
+
+							
+<!--
+						<div style="float: right; margin: 12px; border: 0px solid #999999;">
+-->
+							
+<!--
+						</div>
+-->
+
+							Now that we have a general plan on how to generate the shopping cart data, we need to look at the specifics of how to ingest and aggregate the detected cart objects across all baskets in the store in real-time.
+
+							The Big Cloud Dealz team knows they have to ingest all of these predictions with Kafka from the shopping cart embedded android devices, and that they need to write some <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer code</a> on the Android device to send data to Kafka. Beyond that, they know they need:<br/><br/>
+
+						<div style="float: right; margin: 12px; border: 0px solid #999999;">
+
+							<img src="./images/bcd_arch_part3.png" style="width: 591px; height: 373px;" />
+
+						</div>
+
+
+							<ul>
+								<li>Need a topic to track all incoming detections from the shopping cart devices (topic: <code>shopping_cart_objects</code>)</li>
+								<li>Need a topic that gives an aggregate count of the incoming shopping cart items (topic: <code>aggregate_cart_objects</code>)</li>
+								<li>Need some <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">stream processing code</a> to convert the incoming detections data into the aggregated counts</li>
+								<!--
+								<li>Need a way to pull in the inventory table and associated upsell items (topic: <code>inventory_and_upsell</code>)</li>
+								<li>Need a way to take the incoming streaming aggregates and join that data with the inventory table to get the upsell item (upsell items were hand-picked by business analysts via business rules) (topic: <code>top_basket_upsells</code>)</li>
+							-->
+
+
+
+							</ul>
+
+
+								From an operational standpont, a <a href="https://www.confluent.io/blog/stream-data-platform-1/">single platform</a> that combines data ingestion and an streaming API would be a lot simpler for IT to support the project, and Kafka checks those boxes as well. The BCD team was able to leverage a lot of <a href="https://www.confluent.io/blog/stream-data-platform-2/">best practices</a> in terms of cluster architecture design as well.
+
+
+						</p>
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+							<h3>System Architectural Considerations</h3>
+
+							<ul>
+								<li>Back of the envelope calculations for <A href="https://docs.confluent.io/current/streams/sizing.html">throughput of system</a></li>
+								<li>local storage needs per broker</li>
+								<li>Edge nodes <a href="https://docs.confluent.io/current/kafka/deployment.html">layout</a></li>
+								<li>Network connectivity</li>
+								<li><a href="https://docs.confluent.io/current/installation/system-requirements.html">Machine profiles</a> for each type of node in the cluster</li>
+								<li>Long-term data storage with Hadoop</li>
+
+
+							</ul>
+
+						</div>
+
+				
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Collecting and Aggregating Detected Cart 2.0 Objects in a Kafka Topic</h2>
+
+						<p>
+
+							As we can see in the kafka cluster topic diagram above, the incoming object detections (e.g., "names of objects in cart") are stored in the <code>shopping_cart_objects</code> topic. We want to get an aggregate view across all of the cart objects so we know what is the hot seller at that moment.
+
+							The BCD application team put together a Kafka streaming API application that takes these raw object counts and continuously aggregates them into the <code>aggregate_cart_objects</code> topic, using this <a href="https://github.com/confluentinc/kafka-streams-examples/blob/4.1.1-post/src/main/java/io/confluent/examples/streams/PageViewRegionExample.java">example</a> as a guide on how to build streaming aggregates with the Kafka streaming API. We see the pattern of reading from and writing to topics used throughout the gamut of kafka application design as noted in the quote from the Kafka book below:
+
+						</p>
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"The Kafka Streams application always reads data from Kafka topics and writes its output to Kafka topics."</i></p>
+						  <p><a href="http://shop.oreilly.com/product/0636920044123.do">Narkhede, Shapira, and Palino, "Kafka: The Definitive Guide"</a></p>
+						</blockquote>								
+
+						
+						<p>
+							The streaming API gives a solid mix of power and complexity to get the job done for real-time data processing and allows us to quickly create business applications to react to events as they arrive. Processing sequences of events generated by an entity occur under many titles including:
+
+							<ul>
+								<li>Time-series applications</li>
+								<li><a href="https://www.confluent.io/blog/event-sourcing-using-apache-kafka/">Event sourcing</a> application</li>
+								<li>Webserver Log data applications</li>
+								<li>Financial transactions</li>
+								<li>Powergrid data</li>
+								<li>Smart City data</li>
+							</ul>
+
+							All of these applications follow a similar pattern of one or more entities generating events either ad-hoc ("as they happen") or in some temporal pattern. The Kafka Platform and Streaming API is a great place to build applications that leverage and act on this data as it occurs and is ingested into the system.
+
+
+						</p>
+
+
+						<p>
+							For this streaming application to build the real-time aggregates of the objects in the shopping carts we'll need to consider a few things:
+							<ul>
+								<li>Building the aggregates with the Kafka streaming API (using <Code>KTable</code>s and <code>KStream</code>s)</li>
+								<li>Using Avro for the Kafka messages</li>
+								<li>Use of schema registry</li>
+								<li>Writing the aggregate back to the new topic <code>aggregate_cart_objects</code></li>
+
+							</ul>
+							[ fix segue ]
+						</p>
+
+						<p>
+							The nice aspects of the <A href="https://www.confluent.io/blog/schema-registry-kafka-stream-processing-yes-virginia-you-really-need-one/">schema registry</a> is that it watches messages passing through for new schemas and archives each new schema. Specifically the class <a href="https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java">KafkaAvroSerializer</a> does this, as explained in the <a href="https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html">Confluent documentation</a>.
+
+							For more details on the interplay between Avro, Kafka message passing, and the schema registry check out our <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">blog post on Kafka and Avro</a>. 
+
+						</p>
+
+
+						<p>
+
+							<h3>Concepts of Building an Aggregate</h3>
+
+							Many times (with traditional application design patterns) we'd build aggregates in a relational database with SQL, and in this case our query might look something like:<br/><br/>
+
+							<pre><span style="font-weight: 400; font-size: 12px;">select count(*), name from inventory group by name;</span></pre>
+
+							<br/>
+
+							The GROUP BY clause is a SQL command that is used to group records that have the same (specific column) values, optionally used in conjunction with aggregate functions to produce summary statistics.
+
+						<p style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+							We'll also note that the Kafka ecosystem includes a SQL-abstraction on top of its streaming API called <a href="https://www.confluent.io/blog/ksql-open-source-streaming-sql-for-apache-kafka/">KSQL</a> (similar to the role of Apache Hive for Hadoop). The purpose of this example is to show off the streaming API, so we'll save the KSQL version of this example for a later blog post.
+						</p>
+						
+
+						</p>
+						<p>
+
+
+							To build our aggregates in the streaming API the concepts are generally the same, its just a matter of the specific API calls. We want to take the data from the incoming topic and reference that as a <code>KStream</code> object. From there we can <code>.map()</code> the streaming (object detection) data by the detected object string <code>class_name</code> (because it was previously partitioned with the cameraID as the key from the producer) to setup our <code>groupByKey()</code> operation. Once we have all of the detected objects grouped by <code>class_name</code> we can then count the records per group with the <code>.count()</code> method and then write this result to a new topic in the form of <code>&lt;String, Long&gt;</code> pairs. We see this design pattern in the code snippet below:
+
+						
+<pre><span style="font-weight: 400; font-size: 12px;">final KStream<String, GenericRecord> detectedObjectsKStream = builder.stream("shopping_cart_objects");
+
+final KStream<String, GenericRecord> detectedObjectsKeyedByClassname = detectedObjectsKStream.map(new KeyValueMapper<String, GenericRecord, KeyValue<String, GenericRecord>>() {
+  @Override
+  public KeyValue<String, GenericRecord> apply(final String cameraID, final GenericRecord record) {            
+    return new KeyValue<>(record.get("class_name").toString(), record);
+  }
+});
+
+KGroupedStream<String, GenericRecord> groupedDetectedObjectStream = detectedObjectsKeyedByClassname.groupByKey();
+
+KTable<String, Long> detectedObjectCounts = groupedDetectedObjectStream.count(); 
+
+KStream<String, Long> detectedObjectCountsStream = detectedObjectCounts.toStream();
+</span></pre>
+<br/>
+Two of the core classes used consistently in the design of streaming applications are the <code>KTable</code> and the <code>KStream</code> class. Below we describe their function and how they fit in with the rest of the streaming pipeline.
+
+						</p>
+						<p>
+						<h3>KTable</h3>
+
+
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KTable is an abstraction of a changelog stream, where each data record represents an update. More precisely, the value in a data record is interpreted as an “UPDATE” of the last value for the same record key, if any (if a corresponding key doesn’t exist yet, the update will be considered an INSERT). Using the table analogy, a data record in a changelog stream is interpreted as an UPSERT aka INSERT/UPDATE because any existing row with the same key is overwritten."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-ktable">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+
+
+
+
+
+					The KTable is a collection of keyed facts that are continuously updated, but also behind the scenes there is a changelog stream that tracks of the updates backing the KTable. This abstraction allows you to perform joins and aggregations on the streaming data.
+
+					<h3>KStreams</h3>
+
+
+
+
+
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KStream is an abstraction of a record stream, where each data record represents a self-contained datum in the unbounded data set. Using the table analogy, data records in a record stream are always interpreted as an “INSERT” – think: adding more entries to an append-only ledger – because no record replaces an existing row with the same key. Examples are a credit card transaction, a page view event, or a server log entry."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-kstream">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+
+						So effectively the <code>KTable</code> gives us the latest view of a stream of events by key, and the <code>KStream</code> view gives us the full set of information, not just the latest version. Tables and streams can be converted back and forth between one another in the streaming API as well. We'll also note the use of the <a href="https://kafka.apache.org/10/javadoc/org/apache/kafka/streams/kstream/KGroupedStream.html"><code>KGroupedStream</code></a> class that is produced after a grouping (<code>.groupByKey()</code>) of a <code>KStream</code>. We typically will see this class produced as an intermediate result before an aggregation is applied (<Code>.count()</code>) resulting in a <code>KTable</code>. Many times we'll only use it in a chain of methods, but in this code listing we wanted to break out each operation separately to walk through the distinct stages.
+
+
+						</p>
+
+
+						<p>
+
+							Let's put the aggregate code to work in a real-world streaming API example with the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingDetectedObjectCounts.java">StreamingDetectedObjectCounts.java</a> code listing below:
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingDetectedObjectCounts.java?slice=106:302"></script>
+
+							As we can see in the full code above the streaming API code occurs in after the Kafka configuration setup area where we configure things such as the bootstrap server's address and zookeeper's address. A few areas we'll note that are different than the producer code API from part 2's example:
+
+
+
+							<ol>
+								<li>We're reading from the same topic that we wrote the detected objects to at the start of our streaming code</li>
+								<li>Again we're <A href="https://www.confluent.io/blog/decoupling-systems-with-apache-kafka-schema-registry-and-avro/">leveraging Avro (with the Schema Registry)</a> for the message format and <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">using the GenericRecord API</a></li>
+								<li>Configuring the stream application with the <code>StreamsBuilder</code></li>
+								<li>We are splitting off a side stream that writes Avro messages to console so the user can see what is coming through as it is processed</li>
+								<li>Writing back the aggregated results to a new topic <code>aggregate_cart_objects</code></li>
+								<li>Building the streaming applicaiton topology with the <code>KafkaStreams</code> builder</li>
+								<li>Finally running the streaming application with the with the <code>KafkaStreams.start()</code> method</li>
+								
+							</ol>
+
+
+						</p>
+
+						<p>
+							<h3>Building the Application</h3>
+
+							Running this project locally will require both git and Apache Maven to be installed. Using the <kbd>git</kbd> command locally on your computer, download the project and compile with the comands:
+						</p>
+
+<pre><code>git pull git@github.com:pattersonconsulting/kafka_tf_object_detection.git
+cd kafka_tf_object_detection
+mvn package
+</code></pre>
+
+						<p>
+
+							These commands will build an uber jar in the <code>./target</code> subdirectory. (The reader may note that we're using the same <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml">pom.xml</a> file for this project as we did in the last project as all parts of the application are running from the same uber jar for demo simplicity.)
+
+
+
+						</p>
+						<p>
+							<h3>Running the Application</h3>
+
+							Running the application is dependent on <a href="https://www.confluent.io/download/">downloading the Confluent open source platform</a> from their website. We want to start each of the commands below in its own terminal window for simplicity.
+
+
+
+						</p>
+
+<pre><code># (1) Start Zookeeper. Since this is a long-running service, you should run it in its own terminal.
+$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+
+# (2) Start Kafka, also in its own terminal.
+$ ./bin/kafka-server-start ./etc/kafka/server.properties
+
+# (3) Start the Schema Registry, also in its own terminal.
+./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+
+# (4) create topic for incoming objects
+
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic shopping_cart_objects
+
+# create topic for aggregate counts
+
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic aggregate_cart_objects
+
+# (5) Start the Streaming App
+mvn exec:java -Dexec.mainClass=com.pattersonconsultingtn.kafka.examples.tf_object_detection.StreamingDetectedObjectCounts
+
+# (6) Run the producer from maven
+
+mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" \
+  -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"
+
+# (7) kafka consumer setup from console
+
+bin/kafka-console-consumer --topic aggregate_cart_objects --from-beginning \
+--new-consumer --bootstrap-server localhost:9092 \
+--property print.key=true \
+--property print.value=true \
+--formatter kafka.tools.DefaultMessageFormatter \
+--property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
+--property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
+</code></pre>
+
+						<p>
+
+						If we look at the console output from the command:
+</p>
+<pre><code>mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" \
+  -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"</code></pre>
+<p>
+  We'll see something like:						
+</p>
+
+<consoleoutput>
+* /Users/josh/Documents/workspace/PattersonConsulting/confluent/kafka_tf_object_detection/./src/main/resources/cart_images/basket_test_22.jpg
+	Found sports ball          (score: 0.9834)
+Box: 0.0042404234, 0.42308074, 0.3421962, 0.72577053
+	Found sports ball          (score: 0.9471)
+Box: 0.02893363, 0.6947326, 0.37699723, 0.99258703
+Sending avro object detection data for: basket_test_22.jpg
+Sending avro object detection data for: basket_test_22.jpg							
+</consoleoutput>
+
+						<p>
+							Here we see the TensorFlow code finding objects in the images in the local directory included in the project <code>resources/</code> subdirectory. It will take these objects and individually send them to the Kafka cluster as messages to the <code>shopping_cart_objects</code> topic.
+						</p>
+
+
+						<p>
+							If we switch over to the console where we have teh streaming application running with the command
+							</p>
+
+
+<pre><code>mvn exec:java -Dexec.mainClass=com.pattersonconsultingtn.kafka.examples.tf_object_detection.StreamingDetectedObjectCounts</code></pre>
+
+						<p>
+							We will see console output similar to below:
+						</p>
+
+<consoleoutput>
+debug: frisbee
+debug: frisbee
+debug: sports ball
+debug: frisbee
+debug: frisbee
+debug: clock
+debug: frisbee
+debug: frisbee
+debug: sports ball
+key=clock, value=1
+key=frisbee, value=7
+key=sports ball, value=5
+</consoleoutput>
+						<p>
+							We're seeing the processing code detecting new objects as they come in, and then updating the keys in the topic <code>aggregate_cart_objects</code>.
+
+						</p>
+						<p>
+							Finally, if we check out the contents of the <code>aggregate_cart_objects</code> topic from the command line, we'll see it being update with the command:
+
+						</p>
+
+<pre><code>bin/kafka-console-consumer --topic aggregate_cart_objects --from-beginning \
+--new-consumer --bootstrap-server localhost:9092 \
+--property print.key=true \
+--property print.value=true \
+--formatter kafka.tools.DefaultMessageFormatter \
+--property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
+--property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer</code></pre>						
+
+						<p>
+
+							Showing output similar to below:
+
+						</p>
+<consoleoutput>
+cup	1
+dining table	1
+fork	2
+sports ball	1
+sports ball	3
+tennis racket	2
+frisbee	1
+clock	1
+frisbee	7
+sports ball	5
+sports ball	11
+frisbee	8						
+</consoleoutput>
+						<p>
+							In the next section we'll take a closer look at how the two topics, <Code>shopping_cart_objects</code> and <Code>aggregate_cart_objects</code>, differ in message schemas.
+
+
+
+						</p>
+
+						<p>
+							<h3>A Note on Topic Design vs Avro Schemas</h3>
+
+							Topic design (with respect to key design and partitions) is orthogonal to designing an Avro schema for the message body. Both the key and the message body for a kafka message can be defined with Avro, as explained in the confluent docs:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"When sending a message to a topic t, the Avro schema for the key and the value will be automatically registered in the Schema Registry under the subject t-key and t-value, respectively, if the compatibility test passes."</i></p>
+						  <p><a href="https://docs.confluent.io/current/schema-registry/docs/serializer-formatter.html">Serializer and Formatter</a></p>
+						</blockquote>
+
+							With <a href="https://www.confluent.io/blog/put-several-event-types-kafka-topic/">topic design</a> we're concerned with what types of messages will go in our topic, and then how they will be partitioned inside the topic (affecting other downstream processing, potentially). Topic design ultimately directly affects what subset of messages a consumer can consume. <A href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/">Latency and memory overhead</a> can also fluctuate based on how we design our keys and partitions in topics. Key design for topics affects how a message flows through the cluster.
+
+						</p>
+						<p>
+
+							With schema design we are not concerned with how the message moves through the cluster, yet we are now concerned with what information is in the payload of the Kafka message. As described above, both the key and the message can be defined with Avro. For more notes on using Avro in Kafka applications, check out our <a href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">blog post</a> on the topic.
+
+
+						</p>
+						<p>
+							Earlier in this article we mentioned that the schema registry tracks all schemas as they are used to write to topics. Let's check out what schemas were registered in the registry.
+
+
+							 We can use the <a href="https://docs.confluent.io/current/schema-registry/docs/using.html">schema registry web API</a> with the <kbd>curl</kbd> command to get a listing of all of the schemas in the registry:
+
+						</p>
+
+						<p>
+
+							<pre><span style="font-weight: 400; font-size: 12px;">$ curl -X GET http://localhost:8081/subjects</span></pre>
+
+						</p>
+						<p>
+
+<consoleoutput>
+["shopping_cart_objects-key","shopping_cart_objects-value","KafkaStreamingCartObjectAggregatorApp-KSTREAM-AGGREGATE-STATE-STORE-0000000002-repartition-value"]
+</consoleoutput>
+						</p>
+						<p>
+							We notice that our aggregate topic <code>aggregate_cart_objects</code> does not show up in the Schema Registry list whereas the <code>shopping_cart_objects</code> topic does show up for both key (<code>shopping_cart_objects-key</code>) and value (<code>shopping_cart_objects-value</code>) Avro schemas. This is because when we first wrote to the topic in the streaming application <code>StreamingDetectedObjectCounts</code> we manually specified the Serdes for both the key (<code>Serdes.String()</code>) and the value (<code>Serdes.Long()</code>) of the topic with the code:
+						</p>
+
+<pre><code>detectedObjectCountsStream.to( aggregateDestTopicName, Produced.with(Serdes.String(), Serdes.Long()));
+</code></pre>
+						<p>
+
+							Had we not specified these settings, the defaults set in the application configuration would have specified Avro as the Serde.
+
+						</p>
+<!--
+						<p>
+
+<consoleoutput>
+./bin/kafka-topics --list --zookeeper localhost:2181
+KafkaStreamingCartObjectAggregatorApp-KSTREAM-AGGREGATE-STATE-STORE-0000000002-changelog
+KafkaStreamingCartObjectAggregatorApp-KSTREAM-AGGREGATE-STATE-STORE-0000000002-repartition
+__confluent.support.metrics
+__consumer_offsets
+_schemas
+aggregate_cart_objects
+shopping_cart_objects
+</consoleoutput>
+
+						</p>	
+						-->					
+						<p>
+							<h3>Summary</h3>
+
+							At this point we have detected objects streaming from our shopping cart into <code>shopping_cart_objects</code> and then a real-time streaming application is building an aggregate of that information in the <code>aggregate_cart_objects</code> topic. However, we're still not ready to launch this application to power the BCD team's "Green Light Special" retail system. Now we need to join this aggregated information in real-time with the current inventory of items from BCD's inventory counts in their MySQL database. We'll do just that in part 4 of this series, stay tuned.
+
+						</p>
+
+
+						
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+				<div style="border-top: 1px #999999 solid;"> </div>				
+				<br/>
+				<br/>
+				<br/>
+
+				[ start 4th blog post ]				
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Ingesting the Inventory MySQL Table with Kafka Connect</h2>
+
+						<p>
+							<i>This is part 4 in a 5-part blog series on building the "Green Light Special" system for fictional retailer, Big Cloud Dealz.</i>
+
+						</p>
+
+						<p>
+
+							In part 3 of our series, we had just aggregated all of the incoming object detections into a new topic <code>aggregate_cart_objects</code>.
+
+							We need to join this aggregated information with the current inventory to know which items are paired to upsell by the business analysis group (e.g., "business rules"). The inventory information needs to be joined with the new object detections as they come into the Kafka cluster, so latency is important as well.
+
+						</p>
+
+						<div style="float: right; margin: 12px; border: 0px solid #999999;">
+
+							<img src="./images/bcd_arch_part_4.png" style="width: 665px; height: 396px;" />
+
+						</div>
+
+						<p>
+							Big Cloud Dealz's inventory table is located in a relational database which is a typical home for this type of inforamtion in most Fortune 500 companies. They are using specifically the MySQL database to house their inventory information. Given that we don't want to constantly perform RDBM queries to rebuild the joined data as new information comes in (this would create <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">excessive table lookups, causing scalability issues</a>), we need to periodically cache the latest inventory table in Kafka as a topic. We'll do this with the <a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect/">kafka Connect tool</a> which is included in Confluent's Kafka platform. We'll also again leverage the schema registry to standardize our data with the <A href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">Avro</a> message format, as this proves advantageous for managing schemas over time:
+
+
+							
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Although the Schema Registry is not a required service for Kafka Connect, it enables you to easily use Avro as the common data format for all connectors. This keeps the need to write custom code at a minimum and standardizes your data in a flexible format. Additionally, you get the benefits of enforced compatibility rules for schema evolution."</i></p>
+						  <p><a href="https://docs.confluent.io/current/connect/userguide.html">Kafka Connect User Guide</a> from Confluent Documentation</p>
+						</blockquote>
+
+						With context now set, let's dig into how we will use Kafka Connect to cache the MySQL table in Kafka as a topic.
+
+
+
+
+						</p>
+
+
+						<p>
+							<h3>Preparing the MySQL Inventory Table</h3>
+
+							For the purposes of this example we'll assume you either have MySQL working locally or can <a href="https://www.mysql.com/">install it</a> on your own.
+
+							Once you've logged into MySQL, use the following script to build the inventory table and populate it with inventory data that we'll use later on in this blog series.
+						</p>
+						<p>
+
+
+			<pre><span style="font-weight: 400; font-size: 12px;">mysql> CREATE DATABASE big_cloud_dealz;
+mysql> USE big_cloud_dealz;
+
+mysql> CREATE TABLE inventory (
+ id serial NOT NULL PRIMARY KEY,
+ name varchar(100),
+ upsell_item varchar(200),
+ count INT,
+ modified timestamp default CURRENT_TIMESTAMP NOT NULL,
+ INDEX `modified_index` (`modified`)
+ );
+
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('cup', 'plate', 100);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('bowl', 'cup', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('fork', 'spoon', 200);
+
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('spoon', 'fork', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('sportsball', 'soccer goal', 2);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('tennis racket', 'tennis ball', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('frisbees', 'frisbee goal', 100);
+
+</span></pre>							
+
+						</p>
+						<p>
+
+							The above commands will do 4 things:
+							<ol>
+								<li>Creates a database in MySQL called <code>big_cloud_dealz</code></li>
+								<li>Switches the current database to <code>big_cloud_dealz</code> in the MySQL command line tool.</li>
+								<li>Creates a table called <code>inventory</code> in the <code>big_cloud_dealz</code> database.</li>
+								<li>Inserts 7 records in the <code>inventory</code> table that we'll use in this example.</li>
+
+							</ol>
+
+							Now let's move on to configuring Kafka Connect so we can ingest the <code>inventory</code> table into a topic in the Kafka cluster.
+
+						</p>
+						<p>
+							<h3>Configuring Kafka Connect</h3>
+
+							Integrating data systems is an age old problem in enterprise architecture. Writing custom code to connect a new system to Kafka begins to create a high development and maintenance cost for teams, so we want standardized ways to integrate systems. <a href="https://docs.confluent.io/current/connect/index.html">Kafka Connect</a> let's us standardize how we move data into and out of Kafka and should be our first choice when connecting to a new system. 
+
+						</p>
+						<p>
+							Kafka Connect helps create reliable, high-performance ETL pipelines and we'll focus on ingesting the <code>inventory</code> table using it.
+							In this situation we need to ingest our <code>inventory</code> table into a topic in the Kafka cluster. The Kafka Connect system will use a pre-defined connector to communicate with MySQL and ingest an Avro message for every record in the table.
+
+						</p>
+						<p>
+
+
+							Given that our system is based on the Confluent platform for Kafka, we already have Kafka Connect setup. Before we startup Kafka Connect we need to configure it to know where our database is located, what information to ingest, and how to connect to it. We can see the conf file for the Kafka Connect system below.
+						</p>
+						<p>
+
+
+			<pre><span style="font-weight: 400; font-size: 12px;"># Bootstrap Kafka servers. If multiple servers are specified, they should be comma-separated.
+bootstrap.servers=localhost:9092
+
+# The converters specify the format of data in Kafka and how to translate it into Connect data.
+# Every Connect user will need to configure these based on the format they want their data in
+# when loaded from or stored into Kafka
+key.converter=io.confluent.connect.avro.AvroConverter
+key.converter.schema.registry.url=http://localhost:8081
+value.converter=io.confluent.connect.avro.AvroConverter
+value.converter.schema.registry.url=http://localhost:8081
+
+# The internal converter used for offsets and config data is configurable and must be specified,
+# but most users will always want to use the built-in default. Offset and config data is never
+# visible outside of Connect in this format.
+internal.key.converter=org.apache.kafka.connect.json.JsonConverter
+internal.value.converter=org.apache.kafka.connect.json.JsonConverter
+internal.key.converter.schemas.enable=false
+internal.value.converter.schemas.enable=false
+
+# Local storage file for offset data
+offset.storage.file.filename=/tmp/connect.offsets
+
+plugin.path=share/java,/Users/josh/Documents/workspace/PattersonConsulting/confluent/mysql-connector-java-8.0.12</span></pre>
+						</p>
+						<p>
+
+							This configuration file tells Connect where the boostrap server for the Kafka cluster lives, to use Avro for the messages, and where our connector plugin jars live. Let's now move on and take a look at how we configure the MySQL connector as a message source.
+
+
+
+						</p>
+						<p>
+							<h3>Configuring the MySQL Source Connector</h3>
+
+							We'll use the stock JDBC connector that ships with the Confluent platform. The stock JDBC connector allows us to connect to any relational database that supports JDBC as described below:
+							
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"The JDBC connector allows you to import data from any relational database with a JDBC driver (such as MySQL, Oracle, or SQL Server) into Kafka. By using JDBC, this connector can support a wide variety of databases without requiring custom code for each one."</i></p>
+						  <p>Confluent Blog Post: <a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect/">How to Build a Scalable ETL Pipeline with Kafka Connect</a></p>
+						</blockquote>
+
+						The most complicated parst of configuring the connector to talk to MySQL is getting the connection string right. We have a few snafus getting it correctly connected (looking at you, <code>useJDBCCompliantTimezoneShift=true</code>). We share our Kafka Connect MySQL connector conf file below:
+						</p>
+						<p>
+
+			<pre><span style="font-weight: 400; font-size: 12px;">name=test-mysql-jdbc
+connector.class=io.confluent.connect.jdbc.JdbcSourceConnector
+tasks.max=1
+connection.url=jdbc:mysql://localhost:3306/big_cloud_dealz?user=root&password=1234&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+mode=timestamp+incrementing
+incrementing.column.name=id
+timestamp.column.name=modified
+topic.prefix=mysql_tables_jdbc_
+table.whitelist=inventory</span></pre>
+							
+						</p>
+						<p>
+							This connector is setup for standalone (non-distributed) mode, and you'll likely spend the most time making sure your <Code>connection.url</code> jdbc connection string is correct. Once we have this conf file ready, we can move on to using the 2 configuration files to crank up Kafka Connect and get the <code>inventory</code> table loaded as a topic.
+
+
+
+						</p>
+						<p>
+							<h3>Running Kafka Connect to Export the Inventory Table From MySQL</h3>
+
+
+							To run Kafka Connect, we need the following components running:
+
+							<ol>
+								<li>Zookeeper</li>
+								<li>Kafka Broker</li>
+								<li>Schema Registry</li>
+								<li>MySQL Server</li>
+
+							</ol>
+
+							With these daemons running, we can then start Kafka Connect to extract the <code>inventory</code> table from the MySQL database into the Kafka topic <Code>mysql_tables_jdbc_inventory</code> with the command:
+
+						</p>
+						<p>
+
+			<pre><span style="font-weight: 400; font-size: 12px;">$ bin/connect-standalone worker.properties connector1.properties [connector2.properties connector3.properties ...]</span></pre>	
+						</p>					
+						<p>
+
+
+			<pre><span style="font-weight: 400; font-size: 12px;">$ connect-standalone /mnt/etc/connect-avro-standalone.properties \
+    /mnt/etc/mysql.properties /mnt/etc/hdfs.properties &amp;</span></pre>	
+
+						</p>
+
+						<p>
+							This command will output logs to the terminal similar to what we see below:
+
+						</p>
+						<p>
+
+<consoleoutput>[2018-08-03 10:25:52,822] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Finished commitOffsets successfully in 10 ms (org.apache.kafka.connect.runtime.WorkerSourceTask:427)
+[2018-08-03 10:26:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
+[2018-08-03 10:26:52,827] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
+[2018-08-03 10:27:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
+[2018-08-03 10:27:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
+[2018-08-03 10:28:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
+[2018-08-03 10:28:52,827] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
+</consoleoutput>
+						</p>
+
+						<p>
+
+							If we launch another terminal window we can query our inventory data in the <code>mysql_tables_jdbc_inventory</code> topic with the following command:
+
+
+						</p>
+						<p>
+			<pre><span style="font-weight: 400; font-size: 12px;">$ ./bin/kafka-avro-console-consumer --zookeeper localhost:2181 --topic mysql_tables_jdbc_inventory --from-beginning</span></pre>
+						</p>
+						<p>
+							The output should look like we see in below:
+
+
+						</p>
+
+						<p>
+
+							
+<!--
+<pre><span style="font-weight: 400; font-size: 12px;">
+-->
+<consoleoutput>
+Using the ConsoleConsumer with old consumer is deprecated and will be removed in a future major release. Consider using the new consumer by passing [bootstrap-server] instead of [zookeeper].
+{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1533291848000}
+{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1533291848000}
+{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1533291848000}
+{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1533291848000}
+{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1533291848000}
+{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1533291848000}
+{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1533291848000}
+</consoleoutput>
+<!--
+</span></pre>							
+-->
+						</p>
+
+						<p>
+							<h3>Summary</h3>
+							At this point we have our system detecting objects, sending them to a Kafka topic, and then aggregating them into a topic. We also have our inventory table from MySQL being ingested into its own Kafka topic. In our final post in this series, the Big Cloud Dealz team will join the aggregated cart items with the inventory table in real-time to create the "Green Light Special" application. Hopefully, Big Cloud Ron will approve.
+
+
+
+						</p>
+						
+						
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+				<div style="border-top: 1px #999999 solid;"> </div>				
+				<br/>
+				<br/>
+				<br/>
+
+				[ start 5th blog post ]		
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Joining the Aggregated Objects with the Inventory Table with the Streaming API</h2>
+
+						<p>
+							In the last article we setup Kafka Connect to import the <code>inventory</code> table from a MySQL database and store it as a topic in the Kafka cluster.
+
+							In this article we'll put the final peice in place and the Big Cloud Dealz team will join the aggregated cart items with the inventory table in real-time to create the "Green Light Special" application.
+						</p>
+						<p>
+													
+							<img src="./images/bcd_arch_part_5.png" style="width: 918px; height: 400px;" />
+						</p>
+						<p>
+							In the diagram above we can see:
+
+							<ol>
+								<li>The shopping cart sending detected objects as message via the producer API to the Kafka cluster topic <code>shopping_cart_objects</code></li>
+								<li>A new aggregate real-time view of the detected objects across all carts being generated with the streaming API and written to the topic <code>aggregate_cart_obects</code></li>
+								<li>Kafka Connect separate from the Kafka cluster of brokers connecting to the MySQL database via a JDBC connector and ingesting the <code>inventory</code> table into the <code>inventory</code> topic in the Kafka cluster.</li>
+
+							</ol>
+
+							We can also see the join we're going to build between the <code>aggregate_cart_objects</code> topic and the <code>inventory</code> topic in the diagram above to produce the <code>top_cart_upsells</code> topic. This join is the focus of part 5 of this blog series, and also a narrative seen commonly in the land of real-time applications as expressed in the excerpt below:
+
+
+						</p>
+
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"I’ll argue that the fundamental problem of an asynchronous application is combining tables that represent the current state of the world with streams of events about what is happening right now."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>
+
+						<p>
+							With that, let's dig into building this streaming DSL join by reviewing the schemas for the topics that we want to join.
+
+						</p>
+
+						<p>
+							<h3>Topic Schemas to Join</h3>
+
+							As outlined in the diagram above, we want to join the <code>aggregate_cart_objects</code> topic and the <code>inventory</code> topic to produce the final <code>top_cart_upsells</code> topic.
+
+							To do this let's review each topic schema in preparation of writing the join code. Let's take a look at the Avro schema generated by Kafka Connect that we setup previously in the last blog post. To do that we'll use the <a href="https://docs.confluent.io/current/schema-registry/docs/using.html">schema registry web API</a> with the command line <kbd>curl</kbd> command to get a listing of all of the schemas in the registry:
+
+						</p>
+
+						<p>
+
+							<pre><span style="font-weight: 400; font-size: 12px;">$ curl -X GET http://localhost:8081/subjects</span></pre>
+
+						</p>
+						<p>
+							This command will give us console output similar to what we see below:
+
+						</p>
+
+
+						<p>
+
+<consoleoutput>["mysql_tables_jdbc_inventory-value"]</consoleoutput>
+
+						</p>
+
+						<p>
+							As we can see the topic name includes the <code>-value</code> suffix on the end of the topic prefix <Code>topic.prefix=mysql_tables_jdbc_</code> specified in the configuration file. We do not see an entry for the topic key in the schema registry because table data exported from a database with the JDBC connector and Kafka Connect <a href="https://www.confluent.io/blog/simplest-useful-kafka-connect-data-pipeline-world-thereabouts-part-3/">will have a null key by default</a>.
+						</p>
+						<p>
+							<h4>Topic mysql_tables_jdbc_inventory Message Schema</h4>
+
+							To view the <code>mysql_tables_jdbc_inventory-value</code> schema stored by Kafka Connect in the schema registry we'll use the web API again and the <kbd>curl</kbd> command to call the schema registry REST API:
+
+						</p>
+
+						
+
+						<p>
+
+							<pre><span style="font-weight: 400; font-size: 12px;">$ curl -X GET http://localhost:8081/subjects/mysql_tables_jdbc_inventory-value/versions/1</span></pre>
+
+						</p>
+
+						<p>
+
+							The console output will look a bit jumbled together, so let's take a look at the schema JSON text pretty formatted:
+
+						</p>
+						<p>
+
+<pre><code>{
+  "schema": 
+  "{
+	  \"type\":\"record\",
+	  \"name\":\"inventory\",
+	  \"fields\":
+	  [
+	    {\"name\":\"id\",\"type\":\"long\"},
+	    {\"name\":\"name\",\"type\":[\"null\",\"string\"],\"default\":null},
+	    {\"name\":\"upsell_item\",\"type\":[\"null\",\"string\"],\"default\":null},
+	    {\"name\":\"count\",\"type\":[\"null\",\"int\"],\"default\":null},
+	    {\"name\":\"modified\",\"type\":
+	    	{
+	    		\"type\":\"long\",
+	    		\"connect.version\":1,
+	    		\"connect.name\":\"org.apache.kafka.connect.data.Timestamp\",
+	    		\"logicalType\":\"timestamp-millis\"
+	    	}
+	    }
+	  ],
+	  \"connect.name\":\"inventory\"
+	}"
+}
+</code></pre>
+
+
+						</p>		
+						<p>
+							
+							The Kafka Connect extracted mysql <code>inventory</code> table column names from the schema above are shown below for clarity:
+
+							<table class="table" style="border: 2px solid #999999;">
+								<tr>
+									<th>Column Name</th>
+									<th>Type</th>
+									<th>Description</th>
+
+								</tr>
+
+								<tr>
+									<td>id</td>
+									<td><code>Long</code></td>
+									<td><i>Record ID</i></td>
+								</tr>
+
+								<tr>
+									<td>name</td>
+									<td><code>String</code></td>
+									<td><i>Name of the item in inventory</i></td>
+								</tr>
+
+								<tr>
+									<td>upsell_item</td>
+									<td><code>String</code></td>
+									<td><i>Name of the item that we want to upsell paired with this item</i></td>
+								</tr>
+
+								<tr>
+									<td>count</td>
+									<td><code>Int</code></td>
+									<td><i>Current count of this item in inventory</i></td>
+								</tr>
+
+								<tr>
+									<td>modified</td>
+									<td><code>Long</code></td>
+									<td><i>Last modified timestamp</i></td>
+								</tr>
+
+
+							</table>
+						</p>
+						<p>
+							While the table above describes the message schema of the topic, we'll point out that our default key for the topic is <code>null</code> as we previously mentioned. This will come into play in a moment as we design our streaming join.
+
+						</p>
+						<p>
+
+							<h4>Topic aggregate_cart_objects Message Schema</h4>
+
+							Let's now remember the <code>aggregate_cart_objects</code> topic we created previously in this blog series. It has a single field in the <b>message schema</b> as shown in the table below:
+						</p>
+						<p>
+
+							<table class="table" style="border: 2px solid #999999;">
+								<tr>
+									<th>Column Name</th>
+									<th>Type</th>
+									<th>Description</th>
+
+								</tr>
+								<!--
+								<tr>
+									<td>class_name</td>
+									<td><code>String</code></td>
+									<td><i>Name of the detected object, will match up to a name in the inventory</i></td>
+								</tr>
+							-->
+
+								<tr>
+									<td>count</td>
+									<td><code>Long</code></td>
+									<td><i>Number of times this item was detected across all baskets</i></td>
+								</tr>
+
+
+							</table>							
+
+<!--
+							This avro schema was generated automatically when we created the <code>aggregate_cart_objects</code> topic and then wrote to it from our streaming code in part 3 of this blog series. 
+
+							In the code snippet below we can see how in the Kafka configuration portion of the application code we set <Code>DEFAULT_KEY_SERDE_CLASS_CONFIG</code> to <code>String</code> and <code>DEFAULT_VALUE_SERDE_CLASS_CONFIG</code> to <code>GenericAvroSerde</code>. 
+-->
+							</p>
+							<p>
+
+							</p>
+							The topic is keyed on the <code>String</code> name of the object class and the topic does not show up in the schema registry. How did this play out differently?
+
+							<p>
+			
+
+If we check the schema registry, we do not see an entry for this topic. This is because when we first wrote to the topic in the streaming application <code>StreamingDetectedObjectCounts</code> we manually specified the Serdes for both the key (<code>Serdes.String()</code>) and the value (<code>Serdes.Long()</code>) of the topic with the code:
+						</p>
+
+<pre><code>detectedObjectCountsStream.to( aggregateDestTopicName, Produced.with(Serdes.String(), Serdes.Long()));
+</code></pre>
+<!--
+<pre><code>props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, GenericAvroSerde.class);
+</code></pre>
+-->
+
+						<p>
+							This means we keyed the topic on the class name of the object, and the message schema is simply the <code>Long</code> count of the objects from the aggregate streaming code.
+
+						</p>			
+
+						<p>
+							<h3>Output Topic Schema</h3>
+
+
+						
+
+							Logically we want to join on <code>mysql_tables_jdbc_inventory.name</code> and <code>aggregate_cart_objects.class_name</code> in our code to produce the <code>top_cart_upsells</code> topic. The information we want to send to our sales associates on the Big Cloud Dealz floor with the <code>top_cart_upsells</code> topic logically looks like:
+						</p>
+
+							<table class="table" style="border: 2px solid #999999;">
+								<tr>
+									<th>Column Name</th>
+									<th>Type</th>
+									<th>Description</th>
+
+								</tr>
+								<tr>
+									<td>item_name</td>
+									<td><code>String</code></td>
+									<td><i>the name of the item in the shopper's cart</i></td>
+								</tr>
+
+								<tr>
+									<td>upsell_item_name</td>
+									<td><code>String</code></td>
+									<td><i>the name of the item that the business analysts paired with this item for upsell</i></td>
+								</tr>
+
+								<tr>
+									<td>item_cart_count</td>
+									<td><code>Long</code></td>
+									<td><i>the count of this item across all carts on the floor</i></td>
+								</tr>
+
+
+							</table>
+
+						<p>
+
+							Now that we have an output schema in mind, let's design a join with the Kafka Streaming DSL to produce these messages with this schema and write them back to the <code>top_cart_upsells</code> topic.
+
+
+						</p>							
+
+
+					</div>
+				</div>
+				<!-- end of section -->				
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Designing a Streaming Join with the Kafka Streaming API</h2>
+
+						<p>
+
+							Our streaming application to finish the "Green Light Special" application will involve a real-time streaming join between the following topics:
+
+							<ol>
+								<li>The aggregated detected objects from the cart in the topic <code>aggregate_cart_objects</code>.</li>
+								<li>The inventory we want to join against is represented (from the previous post) in the <code>mysql_tables_jdbc_inventory</code> topic.</li>
+
+							</ol>
+
+
+
+							
+
+							The stream of aggregated cart item updates (<code>aggregate_cart_objects</code>) are interpreted as a <b>changelog</b> stream, where each new detected object message represents an update (i.e. any previous data records having the same record key will be replaced by the latest update in the aggregate topic; <a href="https://www.confluent.io/blog/building-real-time-streaming-etl-pipeline-20-minutes/">Confluent blog article</a> for more context). So we'll represent the <code>aggregate_cart_objects</code> topic as a <code>KTable</code> in the Kafka Streams DSL.
+
+
+						</p>
+
+						<p>
+							If we we're doing the join with the raw incoming object detections as opposed to the aggregated results, we'd use a <code>KStream</code> as each record would represent a self-contained datum (e.g., similar to a "click stream from a website"). We can summarize this delineation as described in the quote from the Confluent blog below:
+
+						</p>
+
+						<p>
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"In Kafka Streams, a record stream is represented via the so-called <code>KStream</code> interface and a changelog stream via the <code>KTable</code> interface."</i></p>
+						  <p>Confluent Blog Article: <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">"Distributed, Real-time Joins and Aggregations on User Activity Events using Kafka Streams"</a></p>
+						</blockquote>
+
+
+
+
+						</p>
+						<p>
+							The <code>mysql_tables_jdbc_inventory</code> topic is a stream of updates from MySQL so we'll represent it as a <code>KStream</code>.
+
+						</p>
+
+						<p>
+
+							Now that we've decided how we'll represent the inputs to our streaming join, we need to decide on:
+
+							<ol>
+								<li>The type of join we want to use</li>
+								<li>The transforms to the input topics we need to use as inputs to the join</li>
+							</ol>
+
+							Let's now dig into the specifics of how we design this join with the Kafka Streaming API DSL.
+
+						</p>
+						<p>
+							<h3>Thinking Through the Streaming API DSL</h3>
+
+							We've decided on a base representation for both topics, but there is a catch.
+
+							Joins (on most any system) require key (both key type and value) to match up records and the two input topics are not both keyed on the object class name (<i>remember: topic key design is orthogonal to message schema design</i>).
+
+							To build the join between the <Code>mysql_tables_jdbc_inventory</code> topic and the <code>aggregate_cart_objects</code>  topic we need an intermediate representation of the <Code>mysql_tables_jdbc_inventory</code> topic keyed on the class name of the inventory item. As we established above, fortunately <code>aggregate_cart_objects</code> was built with the class name of the item as they <code>String</code> key, as seen in the diagram below.
+
+						</p>
+
+						<p>
+													
+							<img src="./images/pre_join_topics.png" style="width: 729px; height: 360px;" />
+						</p>
+
+
+						<p>
+							
+
+							However, our <Code>mysql_tables_jdbc_inventory</code> topic has a null key (as explained previously in this article and also seen visually in the diagram above), so we have to re-key the topic with an intermediate representation that has a <code>String</code> key representing the item class name as well.
+						</p>
+
+<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+							For more information on the basics of how to build joins check out <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">"Distributed, Real-time Joins and Aggregations on User Activity Events using Kafka Streams"</a> (this article also has some great information on why the design of the Kafka Streaming Platform is so efficient) and the associated <a href="https://github.com/confluentinc/kafka-streams-examples/blob/5.0.0-post/src/main/java/io/confluent/examples/streams/PageViewRegionExample.java">example code</a>.
+</div>						
+						<p>
+							
+							
+
+							We need to change the key of each record in the <Code>mysql_tables_jdbc_inventory</code> topic and store the results in a intermediate <code>KStream</code> representation before we can do the join. 
+
+<!--
+							The catch is that <code>KTable</code>s each have a distinct key, so we cannot change the key in place. However, a <Code>KStream</code> can do this (as they do not have the unique key constraint) so our general strategy becomes:
+-->
+
+							<ol>
+								
+								<li>Use the <Code>.map()</code> on the <Code>mysql_tables_jdbc_inventory</code> <code>KStream</code> representation to map the K/V pairs into a new key-space based on the name of the cart object</li>
+								<li>Perform the join between the <code>KStream</code> and the <code>KTable</code> to produce a new <code>KStream</code></li>
+								<li>Re-group the KStream joined data in the result with the same key with the <Code>.groupByKey()</code> method</li>
+								<li>Use a reduce function to re-create a newly keyed table from the grouped stream</li>
+								<li>Send this result <Code>KTable</code> to the <code>top_cart_upsells</code> topic</li>
+
+							</ol>
+
+							We can see the join schema from above updated in the diagram below showing how we've re-keyed the inventory <Code>KTable</code> to be keyed on the object name but now represented as a <code>KStream</code>.
+
+
+
+						</p>
+
+						<p>
+													
+							<img src="./images/bcd_joined_schemas_final.png" style="width: 590px; height: 455px;" />
+						</p>
+						<p>
+							We now have a general DSL flow for what we want to do to create our output topic. Let's now take a more detailed look at the nuances of joining the two topics together once our <Code>mysql_tables_jdbc_inventory</code> topic is re-keyed on the object name.
+
+
+						</p>
+
+
+						<p>
+							<h3>KStream-KTable Join</h3>
+
+							A few notes on the KStream-KTable join:
+
+							<ul>
+
+								<li>they are non-windowed joins always</li>
+								<li>allow the user to perform lookups against a table (Changelog stream)</li>
+								<li>triggered on the event of recieving a new record from the KStream</li>
+
+
+							</ul>
+
+							They are typically used when we want to enrich a data stream with events from a lookup table.
+							
+
+<!--
+							Given that we want to do a <a href="https://docs.confluent.io/current/streams/javadocs/org/apache/kafka/streams/kstream/KTable.html#join-org.apache.kafka.streams.kstream.KTable-org.apache.kafka.streams.kstream.ValueJoiner-">KTable to KTable join</a>, we'll use a basic <a href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#ktable-ktable-join">inner join of one <code>KTable</code> with another <code>KTable</code></a>. The result will be another ever-updating <code>KTable</code> that represents the "current" resutls of the join. 
+						-->
+
+							The general pattern is shown in the Java 7 code example below:
+						</p>
+
+<pre><code>KStream<String, Long> left = ...;
+KTable<String, Double> right = ...;
+
+...
+
+// Java 7 example
+KStream<String, String> joined = left.join(right,
+    new ValueJoiner<Long, Double, String>() {
+      @Override
+      public String apply(Long leftValue, Double rightValue) {
+        return "left=" + leftValue + ", right=" + rightValue;
+      }
+    },
+    Joined.keySerde(Serdes.String()) /* key */
+      .withValueSerde(Serdes.Long()) /* left value */
+  );
+
+</code></pre>							
+
+						<!--
+						<p>
+							So in the code example above, we see a left and right record value coming in to be combined into a single value as the output of the <code>ValueJoiner.apply(...)</code> method. So how does it know which records to submit to this function to join together? It matches keys for the records together as the join is key-based, i.e. with the join predicate <code>leftRecord.key == rightRecord.key</code>. Our immediate worry is that we did not send our data to the topic with the correct key to be joined with, but we quickly realize that we can do intermediate transformations to materialize the proper view of the data for the join with the Kafka Streams DSL.
+
+						</p>-->
+						<p>
+							An interesting aspect to note is that this KStream-KTable join is similar to performing a table lookup in a streaming context. We often see this pattern occur in applications where the lookup table is updated continuously and concurrently while data we are joining against streams into our system.
+
+						</p>
+						<p>
+							Another condition for the execution of this join is that the left and right input data much be <A href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-joins-co-partitioning">co-partitioned</a> as described in the documentation. This means that both topics that are providing source data for this join are partitioned and keyed in such a way that records with the same key are delivered to the same stream task during processing.
+
+							This effectively comes down to responsible topic design, which includes considering the read patterns when we're designing a topic (or any storage pattern, for that matter).
+
+						</p>
+
+						
+						<p>
+							
+
+							Below we see the code for the streaming join implemented in Java 7:
+						</p>
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/gwenshap/kafka-streams-wordcount/blob/master/src/main/java/com/shapira/examples/streams/wordcount/WordCountExample.java?slice=10:20"></script>
+
+						<p>
+
+							<h3>Explaining the Streaming Join DSL Code</h3>
+
+							In the code above we see ...
+
+							<ul>
+
+								<li>read topics</li>
+								<li>re-key topics as needed to match up for join</li>
+								<li>relate back to join conditions</li>				
+								<li>explain join specifics</li>
+								<li>explain writing join to new topic, new schema</li>
+
+							</ul>
+
+							Default Serde for JOINS
+							https://docs.confluent.io/current/streams/developer-guide/config-streams.html#default-key-serde
+
+							https://stackoverflow.com/questions/47712933/kstream-error-reading-and-writing-avro-records
+
+							resetting the join streaming app
+
+						</p>
+						<p>
+							Reduce Operation
+
+Rolling aggregation. Combines the values of (non-windowed) records by the grouped key. The current record value is combined with the last reduced value, and a new reduced value is returned. 							
+
+						</p>
+						<p>
+							explain preparation via DSL of the aggregate_counts topic data
+
+						</p>
+						<p>
+							explain prep via DSL of the inventory topic data
+
+						</p>
+
+
+						<p>
+							[ When does the join update? ]
+							
+
+						</p>
+
+						
+
+						<p>hashing, caching, and batching</p>
+						<p>games of materialized views</p>
+
+
+						<p>
+
+							https://hbr.org/2016/02/todays-automation-anxiety-was-alive-and-well-in-1960
+
+						</p>
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Running the Full Demo</h2>
+						<p>
+							Parts of this demo have been done in the previous 4 blog posts:
+							<ol>
+								<li>Part 1</li>
+								<li>Part 2</li>
+								<li>Part 3</li>
+								<li>Part 4</li>
+
+							</ol>
+
+							In this final demo we'll take all the demo parts from previous articles and put them together as a full end-to-end demo that builds the "green light special" system for the Big Cloud Dealz team. The reader will have seen these instructions in the previous blog articles, so in this final demo we'll focus on the specific steps and have removed the extra explanation.
+						</p>
+						<p>
+
+
+
+							This demo has a number of parts to stand-up, so we explain the run instructions in 3 sections below:
+						
+							<ul>
+								<li>Setup Kafka Infrastructure</li>
+								<li>Setup MySQL and Kafka Connect</li>
+								<li>Run Cart Client and Streaming Applications</li>
+
+							</ul>
+
+							Let's start out by getting the Kafka daemons running locally on our machine.
+
+
+						</p>
+
+						<h3>Setup Kafka Locally</h3>
+
+						<p>
+							To get Kafka platform running in a state to support the rest of the example, we need to perform the following steps:
+
+
+							<ol>
+								<li>Run Zookeeper</li>
+								<li>Run a single Kafka broker</li>
+								<li>Run the Confluent schema registry</li>
+								<li>Create topic: "shopping_cart_objects"</li>
+								<li>Create topic: "aggregate_cart_objects"</li>
+								<li>Create topic: "top_cart_upsells"</li>
+							</ol>
+
+							The script to do these steps is as follows:
+						</p>
+
+<pre><span style="font-weight: 400; font-size: 12px;"># (1) Start Zookeeper. Since this is a long-running service, you should run it in its own terminal.
+./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+
+# (2) Start Kafka, also in its own terminal.
+./bin/kafka-server-start ./etc/kafka/server.properties
+
+# (3) Start the Schema Registry, also in its own terminal.
+./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+
+# (4) Create topic: shopping_cart_objects
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic shopping_cart_objects
+
+# (5) create topic: aggregate_cart_objects
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic aggregate_cart_objects
+
+# (6) create topic: top_cart_upsells
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic top_cart_upsells
+</span></pre>
+
+						<p>
+							Let's now move on and setup MySQL, the inventory table, and Kafka Connect to move the table into a topic in Kafka.
+
+
+						</p>
+
+						<h3>Setup MySQL and Kafka Connect</h3>
+
+						<p>
+
+							Now that we have Kafka up and running with our base set of topics, we need to pull in the <Code>inventory</code> table from MySQL as a topic in our Kafka cluster. We need to do 3 things to accomplish this:
+
+							<ol>
+
+
+								<li>Setup MySQL table with the provided SQL script</li>
+								<li>Run kafka-connect to extract the table from MySQL and create the topic in Kafka</li>
+								<li>Run the CLI avro-consumer to confirm data</li>
+
+							</ol>
+
+
+
+							For the purposes of this demo we're going to assume the reader can find and install MySQL on their own, and we won't re-print those instructions here.
+
+
+
+							For the purposes of this example we'll assume you either have MySQL working locally or can <a href="https://www.mysql.com/">install it</a> on your own.
+
+							Once you've logged into MySQL, use the following script to build the inventory table and populate it with inventory data that we'll use later on in this blog series.
+						</p>
+						<p>
+
+
+			<pre><span style="font-weight: 400; font-size: 12px;">mysql> CREATE DATABASE big_cloud_dealz;
+mysql> USE big_cloud_dealz;
+
+mysql> CREATE TABLE inventory (
+ id serial NOT NULL PRIMARY KEY,
+ name varchar(100),
+ upsell_item varchar(200),
+ count INT,
+ modified timestamp default CURRENT_TIMESTAMP NOT NULL,
+ INDEX `modified_index` (`modified`)
+ );
+
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('cup', 'plate', 100);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('bowl', 'cup', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('fork', 'spoon', 200);
+
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('spoon', 'fork', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('sportsball', 'soccer goal', 2);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('tennis racket', 'tennis ball', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('frisbees', 'frisbee goal', 100);
+
+</span></pre>							
+
+						</p>
+						<p>
+
+							The above commands will do 4 things:
+							<ol>
+								<li>Creates a database in MySQL called <code>big_cloud_dealz</code></li>
+								<li>Switches the current database to <code>big_cloud_dealz</code> in the MySQL command line tool.</li>
+								<li>Creates a table called <code>inventory</code> in the <code>big_cloud_dealz</code> database.</li>
+								<li>Inserts 7 records in the <code>inventory</code> table that we'll use in this example.</li>
+
+							</ol>
+
+							Now let's move on to configuring Kafka Connect so we can ingest the <code>inventory</code> table into a topic in the Kafka cluster.
+
+						</p>						
+
+
+						<p>
+
+
+							Given that our system is based on the Confluent platform for Kafka, we already have Kafka Connect setup. Before we startup Kafka Connect we need to configure it to know where our database is located, what information to ingest, and how to connect to it.
+						</p>
+						<p>
+							
+
+							When we run Kafka-connect, it will automatically create the topic in the Kafka cluster for us.
+
+							The basic pattern for <A href="https://docs.confluent.io/current/connect/userguide.html#running-workers">running Kafka Connect in standalone mode</a> is:
+
+<pre><span style="font-weight: 400; font-size: 12px;">bin/connect-standalone worker.properties connector1.properties [connector2.properties connector3.properties ...]</span></pre>
+						</p>
+						<p>
+
+							The first parameter in the <Code>connect-standalone</code> command is always a <a href="https://docs.confluent.io/current/connect/userguide.html#connect-configuring-workers">configuration file</a> for the worker. Each additional configuration file are the configration files for connectors. We need 2 basic configuration files for this example:
+
+							<ol>
+								<li>The work properties file: connect-avro-standalone.properties</li>
+								<li>The JDBC database conncetor: mysql_ingest.properties</li>
+
+							</ol>
+
+							Below we show the contents of each of these files, and we start with the connect-avro-standalone.properties file.
+
+						</p>
+
+						<p>
+
+
+			<pre><span style="font-weight: 400; font-size: 12px;"># Bootstrap Kafka servers. If multiple servers are specified, they should be comma-separated.
+bootstrap.servers=localhost:9092
+
+# The converters specify the format of data in Kafka and how to translate it into Connect data.
+# Every Connect user will need to configure these based on the format they want their data in
+# when loaded from or stored into Kafka
+key.converter=io.confluent.connect.avro.AvroConverter
+key.converter.schema.registry.url=http://localhost:8081
+value.converter=io.confluent.connect.avro.AvroConverter
+value.converter.schema.registry.url=http://localhost:8081
+
+# The internal converter used for offsets and config data is configurable and must be specified,
+# but most users will always want to use the built-in default. Offset and config data is never
+# visible outside of Connect in this format.
+internal.key.converter=org.apache.kafka.connect.json.JsonConverter
+internal.value.converter=org.apache.kafka.connect.json.JsonConverter
+internal.key.converter.schemas.enable=false
+internal.value.converter.schemas.enable=false
+
+# Local storage file for offset data
+offset.storage.file.filename=/tmp/connect.offsets
+
+plugin.path=share/java,/Users/josh/Documents/workspace/PattersonConsulting/confluent/mysql-connector-java-8.0.12</span></pre>
+						</p>
+						<p>
+							
+
+							We'll use the stock JDBC connector that ships with the Confluent platform. The stock JDBC connector allows us to connect to any relational database that supports JDBC.
+							We share our Kafka Connect MySQL connector conf file (mysql_ingest.properties) below:
+						</p>
+						<p>
+
+			<pre><span style="font-weight: 400; font-size: 12px;">name=test-mysql-jdbc
+connector.class=io.confluent.connect.jdbc.JdbcSourceConnector
+tasks.max=1
+connection.url=jdbc:mysql://localhost:3306/big_cloud_dealz?user=root&password=1234&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+mode=timestamp+incrementing
+incrementing.column.name=id
+timestamp.column.name=modified
+topic.prefix=mysql_tables_jdbc_
+table.whitelist=inventory</span></pre>
+							
+						</p>
+						<p>
+
+
+							Using the connect-standalone command from above and the two configuration files, we can now start the ingest process. We start Kafka Connect to extract the <code>inventory</code> table from the MySQL database into the Kafka topic <Code>mysql_tables_jdbc_inventory</code> with the command:
+
+						</p>
+						<p>
+
+<!--
+			<pre><span style="font-weight: 400; font-size: 12px;">$ connect-standalone /mnt/etc/connect-avro-standalone.properties \
+    /mnt/etc/mysql.properties /mnt/etc/hdfs.properties &amp;</span></pre>	
+-->
+<!--
+/Users/josh/Documents/workspace/PattersonConsulting/confluent/kafka_tf_object_detection/src/main/resources/kafka/connect/connect-avro-standalone.properties
+
+/Users/josh/Documents/workspace/PattersonConsulting/confluent/kafka_tf_object_detection/src/main/resources/kafka/connect/mysql_ingest.properties
+
+-->
+<!--
+bin/connect-standalone worker.properties connector1.properties [connector2.properties connector3.properties ...]
+	-->
+
+			<pre><span style="font-weight: 400; font-size: 12px;">$ connect-standalone [path_to_confs]/connect-avro-standalone.properties \
+    [path_to_confs]/mysql_ingest.properties</span></pre>	
+
+
+						</p>
+						<p>
+
+							Now that we have the Kafka infrastructure running, topics created, and the inventory table ingested as a topic, we're ready to run our streaming applications.
+
+						</p>
+
+
+
+
+
+						<h3>Run Cart Application and Streaming Applications</h3>
+
+						<p>
+							Now we want to run the application code to detect the cart objects, aggregate them accross all carts, and then join them together with the inventory data to give real-time upsell information to the Big Cloud Dealz floor staff. The specific steps we need to do are:
+
+
+
+							<ol>
+								
+								<li>Run Kafka aggregator streaming DSL application</li>
+								<li>Run Kafka streaming-join application</li>
+								<li>Run Cart 2.0 object detection client application</li>
+								<li>Run CLI clients to confirm topics are being populated</li>
+								
+								
+
+							</ol>
+
+							We break down those specific instructions below.
+
+						</p>
+						<p>
+
+<pre><span style="font-weight: 400; font-size: 12px;"># (1) Start the Streaming Aggregation App
+mvn exec:java -Dexec.mainClass=com.pattersonconsultingtn.kafka.examples.tf_object_detection.StreamingDetectedObjectCounts
+
+# (2) Start the Streaming Join App
+mvn exec:java -Dexec.mainClass=com.pattersonconsultingtn.kafka.examples.tf_object_detection.StreamingJoin_CartCountsAndInventoryTopics
+
+# (3) Run the producer from maven
+mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" \
+  -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"
+
+# (4) Check topics
+bin/kafka-console-consumer --topic aggregate_cart_objects --from-beginning \
+--new-consumer --bootstrap-server localhost:9092 \
+--property print.key=true \
+--property print.value=true \
+--formatter kafka.tools.DefaultMessageFormatter \
+--property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
+--property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer</span></pre>
+							
+						</p>
+
+<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+	<h3>Resetting Streaming Applications</h3>
+
+	If you run the above stream applications and then try to re-run them later, they will not automatically re-process the data. To reset the application state do the following command:
+
+	<code>./bin/kafka-streams-application-reset --application-id pct-cv-streaming-join-counts-inventory-app-3 --input-topics mysql_tables_jdbc_inventory,aggregate_cart_objects</code>
+
+
+	For more information on resetting streaming applications, check out these resources:
+
+	<ul>
+		<li>https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/</li>
+		<li>https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html</li>
+	</ul>
+
+</div>
+
+					<p>
+						Checking the top cart upsell topic:
+
+<consoleoutput>
+./bin/kafka-avro-console-consumer --zookeeper localhost:2181 --topic top_cart_upsells --from-beginning
+Using the ConsoleConsumer with old consumer is deprecated and will be removed in a future major release. Consider using the new consumer by passing [bootstrap-server] instead of [zookeeper].
+{"item_name":"cup","upsell_item_name":"plate","item_cart_count":1}
+{"item_name":"fork","upsell_item_name":"spoon","item_cart_count":2}
+{"item_name":"sports ball","upsell_item_name":"soccer goal","item_cart_count":11}
+{"item_name":"tennis racket","upsell_item_name":"tennis ball","item_cart_count":2}
+{"item_name":"frisbee","upsell_item_name":"frisbee goal","item_cart_count":8}						
+</consoleoutput>
+
+					</p>
+
+					<p>
+						Explanation of how the information would be used -- sales manager watches a custom dashboard that updates with store data, sends out sales associate with a bullhorn to the speciifc area of the store for the upsell.
+
+					</p>
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Summary</h2>
+						<p>
+						[ todo ]
+						</p>
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Footnotes</h2>
+						<p>
+							<OL>
+								<LI>In popular culture, <a href="https://en.wikipedia.org/wiki/Kmart">Kmart became known for its "Blue Light Specials."</a> These occurred at surprise moments when a store worker would light up a mobile police light and offer a discount in a specific department of the store, while announcing the discounted special over the store's public address system. (I'm really dating myself with this reference.)</LI>
+								<li>Streaming apps tended to focus on doing something with business logic (transactional) vs building off-line batch model training (batch / OLAP) jobs</li>
+								<li>OLAP / MapReduce / Spark scan of all input to cache the output / predictions in a new table ("games of materialized views"). Streaming applications allow applied ML applications to potentially work more efficiently (trading disk space for ad-hoc computing power) if they are deployed as event-driven applications</li>
+								<li>
+Three key papers for recent state-of-the-art object detection are:
+<ul>
+	<li><a href="https://arxiv.org/abs/1506.01497">Faster R-CNN</a></li>
+	<li><a href="https://arxiv.org/abs/1512.02325">SSD: Single Shot MultiBox Detector</a></li>
+	<li><A href="https://arxiv.org/abs/1612.08242">YOLO v2</a></li>
+</ul>
+
+
+								</li>
+								<li>a frozen graph proto with weights baked into the graph as constants (frozen_inference_graph.pb) to be used for out of the box inference</li>
+
+
+
+
+							</OL>
+
+						</p>
+						
+					</div>
+				</div>
+				<!-- end of section -->				
+
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Slider -->
+		<!--
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+	-->
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

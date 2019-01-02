@@ -162,7 +162,7 @@ The goal here is not to say “this is the only right way to configure your Kafk
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h3>Setting Up the Throughput Experiments</h3>
+						<h3>Setting Things Up</h3>
 						<p>
 For this post, I have set up Kafka using a Confluent distribution. For instructions on how to get started with Confluent’s distribution of Kafka, I recommend starting with this <a href="https://docs.confluent.io/current/quickstart/cos-quickstart.html#cos-quickstart">Confluent quick start article</a>. In order to test producer throughput, we will be using the <kbd>kafka-producer-perf-test</kbd> found in <code>[confluent directory]/bin/kafka-producer-perf-test</code>. For help with the usage of the test, run: <kbd>./kafka-producer-perf-test -h</kbd>.
 </p>
@@ -175,7 +175,7 @@ To see the full specs, take a look at the <a href="https://aws.amazon.com/ec2/in
 						</p>
 
 						<p>
-							<h3>Working with the Batch Size Parameter</h3>
+							<h3>Batch Size</h3>
 
 When a producer wants to send a message to a partition on a broker, that message can be sent immediately or can be batched and sent together with other messages. Because of the network and CPU overhead involved with sending messages between producers and brokers, throughput can be increased by sending messages together. As is probably obvious, this batching of messages to increase throughput is done at the expense of latency. If a message is produced at the beginning of a batch, it has to wait to be sent until the batch fills up (or a specified amount of time has passed), meaning it arrives at the broker later than it could have if sent immediately.
 						</p>
@@ -224,7 +224,7 @@ Now, enough about setup. Let’s take a look at some results!
 						</p>
 
 						<p>
-							<h3>Results for Batch Size Experiments</h3>
+							<h3>Results for Batch Size Tests</h3>
 
 Each test for an individual batch size was done three times then averaged. The actual command given was as follows (using 1,000 batch size as an example):
 
@@ -282,7 +282,7 @@ As can be seen above, the larger the batch size, the higher the throughput. It s
 
 					</p>
 					<p>
-						<h3>Kafka Performance and Acknowledgments Settings</h3>
+						<h3>Results for Acknowledgments Tests</h3>
 
 When a producer sends a request to the brokers, an acknowledgment is sent back to the producer to confirm receipt of the request. Kafka producers have three settings for acknowledgments:
 						</p>
@@ -313,7 +313,7 @@ As might already be obvious, requiring more acknowledgments means the producer h
 					</p>
 
 					<p>
-							<h3>Results for Compression Experiments</h3>
+							<h3>Results for Compression Tests</h3>
 
 
 

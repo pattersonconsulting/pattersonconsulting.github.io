@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Effects of Batch Size, Acknowledgments, and Compression on Kafka Throughput</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Setting up Kafka on Amazon Web Services (AWS)</h1>
+						<p>Author: Stuart Eudaly</p>
+						<p>Date: January 2nd, 2019</p>
+						
+						<p>
+							<i>Setting up Kafka on remote hardware can be difficult. Especially if you’re not very familiar with the cloud service’s options for configurations. This blog post aims to give the reader an introduction to setting up Kafka on AWS and some of the intricacies involved in that process.</i>
+
+						</p>
+
+
+						<p>
+
+							<img src="./images/kafka_logo.png" style="width: 250px; height: 85px; float: right; margin: 12px; border: 0px solid #999999;" />
+
+
+When writing this article, I made the assumption that the reader has little to no experience using AWS or setting up Kafka. Based on that assumption, I will be starting from the very beginning with the creation of an AWS account. From there, we will configure instances and related settings, launch and connect to the instances, then install and configure Kafka on each instance. The entire process is not overly difficult, but can be a little confusing if you have no experience. Let’s get to it!
+</p>
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h3>Setting Up an AWS Account</h3>
+						<p>
+In order to do anything with AWS, they require the user to set up an AWS account and provide a credit card for billing purposes. I followed the steps in AWS’s own documentation, but will go over the basics below. I highly recommend following <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html">this guide</a>.
+</p>
+
+<p>
+<ol>
+<li>Create an AWS account <a href="https://aws.amazon.com/">here</a>.</li>
+<li>Create an IAM user (a user with administrative privileges in this case) <a href="https://console.aws.amazon.com/iam/">here</a>.</li>
+<li>Create and download a key pair so that you can SSH to your instance.</li>
+<li>Create a Virtual Private Cloud (VPC), if you’d prefer not to use the default (I used the default VPC).</li>
+<li>Create a Security Group to manage incoming connections to your instance (SSH from your current IP).</li>
+</ol>
+</p>
+
+<p>
+If you’ve followed AWS’s documentation, those five steps are fairly straightforward. The only additional work needed is to configure your security group to allow TCP connections between instances. For this post, I set up Kafka and Zookeeper on the same instances. This means that each instance needs to be able to communicate on the following ports:
+</p>
+
+<p>
+<ul>
+<li>2181 - Zookeeper client connections</li>
+<li>2888 - Zookeeper follower connections</li>
+<li>3888 - Zookeeper inter-node connections</li>
+<li>9092 - Kafka connections</li>
+</ul>
+</p>
+
+<p>
+To open these ports, start by opening the EC2 console <a href="https://console.aws.amazon.com/ec2/">here</a>. In the left-hand pane, choose “Security Groups” under “Network & Security.” Here, you’ll find the security group you made earlier to SSH to your instances. Select that security group, click the Actions button, then choose “Edit inbound rules.”
+</p>
+
+<p>
+AWS’s internal networking (at least for the instances and region I was using) uses <code>172.31.X.X</code> for IP addresses. To allow each instance to connect to the others, set up four rules for inbound connections using TCP as the protocol and <code>172.31.0.0./16</code> as the source (or a different source if your instances have different internal IP addresses). Each rule should have one of the four ports mentioned above. When finished, your security group should look something like this:
+</p>
+
+<p>
+<img src="./images/AWS_1.png" style="width: 900px; height: 437px; margin: 12px; border: 0px solid #999999;" />
+</p>
+
+<p>
+Now that we have all of our account settings configured, let’s set up some instances.
+</p>
+
+
+						<p>
+							<h3>Setting Up Instances</h3>
+
+AWS provides many cloud-based services. We’re interested in AWS’s scalable cloud computing service called “Elastic Cloud Compute” or EC2. For more information, check out these links:
+						</p>
+						
+<p>
+<ul>
+<li><a href="https://aws.amazon.com/ec2/">Amazon EC2</a></li>
+<li><a href="https://www.confluent.io/resources/apache-kafka-confluent-enterprise-reference-architecture/">Confluent’s hardware recommendations</a></li>
+<li><a href="https://aws.amazon.com/ec2/instance-types/">EC2 instance types</a></li>
+<li><a href="https://aws.amazon.com/ec2/pricing/on-demand/">EC2 instance prices</a></li>
+</ul>
+</p>
+
+<p>
+Based on Confluent’s recommendations for AWS, I chose to set up three r5.xlarge instances for Kafka and Zookeeper. These instances each feature 4 vCPUs, 32GiB of RAM, and 10Gbps networking. To configure and launch these instances, <a href="https://console.aws.amazon.com/ec2/">start on the EC2 dashboard</a>. In the left-hand pane, choose “Instances” under the “Instances” heading. Click the Launch Instance button and follow the steps. There are seven steps total:
+</p>
+
+<p>
+<ol>
+<li>Choose an Amazon Machine Image (AMI) - I choose the standard Amazon Linux AMI.</li>
+<li>Choose an Instance Type - As stated earlier, I went with r5.xlarge.</li>
+<li>Configure Instance Details - I didn’t change anything here except the number of instances.</li>
+<li>Add Storage - Because I was setting these instances up for training purposes, I decided on 200GiB each. I used the General Purpose SSD option. Storage for EC2 is done through Elastic Block Storage (EBS) and costs per GB-month. <a href="https://aws.amazon.com/ebs/pricing/">For more information look here</a>.</li>
+<li>Add Tags - This step is optional, but allows you to “tag” your instances for better management.</li>
+<li>Configure Security Group - Make sure to choose “Select an existing security group” and pick the security group created earlier.</li>
+<li>Review - Review all the details of your instances before launching them. If everything looks good, click the Launch button!</li>
+</ol>
+</p>
+
+<p>
+<img src="./images/AWS_2.png" style="width: 900px; height: 437px; margin: 12px; border: 0px solid #999999;" />
+</p>
+
+<p>
+Now that you’ve launched your instances, head back to the “Instances” section of EC2 (if it didn’t redirect you automatically) and take a look at the instances you have running. They can take a minute or two to launch, but once they’re up and running, you can look at the details of each instance. There are two important pieces of information you should take note of:
+</p>
+
+<p>
+<ol>
+<li>Public DNS - This should look something like <code>ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com</code>.</li>
+<li>Private IP - As stated earlier, this looks like <code>172.31.X.X</code> (at least for the region and instances I used).</li>
+</ol>
+</p>
+
+<p>
+<img src="./images/AWS_3.png" style="width: 900px; height: 437px; margin: 12px; border: 0px solid #999999;" />
+</p>
+
+<p>
+The Public DNS will be used to SSH to your instances. Be aware: the public DNS changes every time you launch an instance! The private IP won’t be used for any connections we’ll be doing, but you need to ensure that the private IPs for your instances correspond to the security group rules for port connections discussed earlier. If the IPs don’t match your security group rules, your instances will not be able to connect to each other. The good news is that you can change a running instance’s security group if anything was not set up properly. For more info, <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SG_Changing_Group_Membership">check out this link</a>.
+</p>
+
+<p>
+Now that we have running instances, we’ll use SSH to connect to them. I strongly suggest using <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">this guide</a> if you are unfamiliar with this process. After following those steps, you should connect to your instance from a terminal with the SSH command that will look something like this:
+</p>
+
+<p>
+<consoleoutput>
+ssh -i /path/to/keypair.pem ec2-user@ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com
+</consoleoutput>
+</p>
+
+<p>
+I used three terminal windows for my three running instances. Each instance has its own public DNS (obviously) and the public DNS changes each time you launch that instance, as stated earlier. If you have any issues SSHing to your instances, <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html#TroubleshootingInstancesConnectingMindTerm">check out this page</a>. At this point, you should have at least one (three in my case) terminal window open and connected to your instance(s). Now it’s time to install Kafka!
+</p>
+
+
+
+						<p>
+							<h3>Installing Kafka</h3>
+
+For this blog post, I used Confluent’s distribution of Kafka. We’re going to be doing the whole process from the command line, but <a href="https://www.confluent.io/download/">here is the download page if you’re interested</a>. We’re going to do some terminal commands and modify some configuration files in order to get everything installed and set up. Note: if you have multiple instances to set up, these commands will need to be run on each instance!
+						</p>
+						
+<p>
+Start by installing Java 1.8. Amazon AMIs (at least the one I used) come with Java 1.7 and Confluent’s distribution of Kafka requires 1.8. In the instance’s terminal window, run:
+</p>
+
+<p>
+<consoleoutput>
+sudo yum install java-1.8.0
+</consoleoutput>
+</p>
+
+<p>
+then
+</p>
+
+<p>
+<consoleoutput>
+sudo yum remove java-1.7.0-openjdk
+</consoleoutput>
+</p>
+
+<p>
+It’s necessary to install 1.8 THEN remove 1.7 as the aws-apitools will be removed if removing 1.7 first. Next, run:
+</p>
+
+<p>
+<consoleoutput>
+curl -O http://packages.confluent.io/archive/5.0/confluent-oss-5.0.1-2.11.zip
+</consoleoutput>
+</p>
+
+<p>
+Feel free to install an updated version if there is one available. 5.0.1-2.11 is the version I used for this tutorial. Once the file is downloaded, unzip it:
+</p>
+
+<p>
+<consoleoutput>
+unzip confluent-oss-5.0.1-2.11.zip
+</consoleoutput>
+</p>
+
+<p>
+You should now have a confluent directory with all the needed files stored within. From here on out, I’ll refer to this as <code>[confluent directory]</code>. At this point, Kafka should be runnable, but we haven’t configured anything yet. Start by setting the Java heap size. By default, the heap size is set to 1GB. In my testing, I tried to set the buffer size (used for storing messages before sending) to 4GB, but the buffer size could not exceed the heap size. In order to make the buffer size bigger, the heap size needed to be set first. I chose to set the heap to 8GB, as all the machines I was working with had well over 8GB of memory and I didn’t plan to set the buffer size any larger than 8GB. For more information, <a href="https://stackoverflow.com/questions/27681511/how-do-i-set-the-java-options-for-kafka">check out this Stack Overflow question</a>.
+</p>
+
+<p>
+To set the Java heap size, type this command in terminal:
+</p>
+
+<p>
+<consoleoutput>
+export KAFKA_HEAP_OPTS="-Xmx8G -Xms8G"
+</consoleoutput>
+</p>
+
+<p>
+Now, we need to set some server properties for each broker. The file can be found in <code>[confluent directory]/etc/kafka/server.properties</code>. Open this file with your favorite text editor. I used nano:
+</p>
+
+<p>
+<consoleoutput>
+nano confluent-5.0.1/etc/kafka/server.properties
+</consoleoutput>
+</p>
+
+<p>
+Make sure each broker has a unique broker.id. Because I used three instances, I numbered them 0, 1, 2. Once that’s done, head down to the line that says:
+</p>
+
+<p>
+<pre>
+<code>
+#listeners=PLAINTEXT://:9092
+</code>
+</pre>
+</p>
+
+<p>
+Here, we need to set each instance to have its own value as well. Start by uncommenting the line (delete the # symbol) then insert the public DNS for each instance into its own server.properties file. In other words, each instance should have one line for “listeners” and that line should have the public DNS of itself. It should look like something like this:
+</p>
+
+<p>
+<pre>
+<code>
+listeners=PLAINTEXT://ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:9092
+</code>
+</pre>
+</p>
+
+<p>
+The “listeners” need to be set to the external IP (or in this case, public DNS) of each instance so that clients can connect. For a more in-depth explanation, <a href="https://rmoff.net/2018/08/02/kafka-listeners-explained/">look here</a>. Note: as stated earlier, the public DNS changes for these instances each time you shut them down and relaunch them. If you plan on shutting down and relaunching, EVERY place you entered a public DNS needs to be changed!
+</p>
+
+<p>
+It should be noted here that we are NOT going to change the value for zookeeper.connect, as we’re running the broker and Zookeeper on the same instance. If you have a separate instance running Zookeeper, that value needs to be changed.
+</p>
+
+<p>
+Next, let’s set the Zookeeper properties. This file is found in the same directory as <code>server.properties</code> that we just worked on <code>[confluent directory]/etc/kafka/zookeeper.properties</code>. Here, we need to specify each of the instances (in my case, three instances) where Zookeeper is running. At the bottom of the file, add a line for each instance you have running. Each line should have a separate address that corresponds to the number of instances you are running. It should look something like this:
+</p>
+
+<p>
+<pre>
+<code>
+server.1=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
+server.2=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
+server.3=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
+...
+</code>
+</pre>
+</p>
+
+<p>
+Take note of what server.number you assign to each instance. This will be important here in just a second. The public DNS should correspond to each instance you are running and 2888 and 3888 are the ports Zookeeper uses to communicate. Note: as stated several times now, the public DNS of each instance changes when shut down and relaunched. Change the values here if you shut down and relaunch your instances!
+</p>
+
+<p>
+While zookeeper.properties is still open, add values for <code>tickTime</code>, <code>initLimit</code>, and <code>syncLimit</code>. These settings have to do with heartbeats and timeouts. For more information <a href="http://zookeeper.apache.org/doc/r3.2.2/zookeeperAdmin.html#sc_configuration">look here</a>. Apache’s documentations suggests starting with these values:
+</p>
+
+<p>
+<pre>
+<code>
+tickTime=2000
+initLimit=5
+syncLimit=2
+</code>
+</pre>
+</p>
+
+<p>
+The last configuration to set up before running Kafka is the <code>myid</code> file. Before closing out of <code>zookeeper.properties</code> (or reopen it if you’ve already closed it), take a look at the location of <code>dataDir</code>. By default, this is set to <code>/tmp/zookeeper</code>. We need to head to this directory and create a myid file that corresponds to the server.number we created earlier. To start, head to <code>/tmp</code> and create a “zookeeper” directory (if it’s not already there):
+</p>
+
+<p>
+<consoleoutput>
+cd /tmp
+mkdir zookeeper
+cd /zookeeper
+</consoleoutput>
+</p>
+
+<p>
+Once that’s done, create a <code>myid</code> file:
+</p>
+
+<p>
+<consoleoutput>
+touch myid
+</consoleoutput>
+</p>
+
+<p>
+Then, open <code>myid</code> on each instance, and type a single number corresponding to the server.number earlier. For example, on the instance designated <code>server.1</code>, open myid and type the number “1” then close the file. On <code>server.2</code>, open myid and type “2” and so on.
+</p>
+
+<p>
+Once all of these configurations have been set, we should now be ready to start up Kafka!
+</p>
+
+					<p>
+						<h3>Running Kafka</h3>
+
+To get Kafka up and running, you must first start Zookeeper on each instance. Navigate to <code>[confluent directory]/bin</code> then look for the executable <code>zookeeper-server-start</code>. This executable takes one argument, which is the location of the <code>zookeeper.properties</code> file. To start Zookeeper, your terminal command should look like this:
+						</p>
+
+<p>
+<consoleoutput>
+./zookeeper-server-start ~/[confluent directory]/etc/kafka/zookeeper.properties
+</consoleoutput>
+</p>
+
+<p>
+When running this command, I would suggest moving the process to the background so you don’t have to open separate terminal windows to run Zookeeper and the Kafka broker. There are two easy ways to send a process to the background so you can continue using your terminal:
+</p>
+
+<p>
+<ol>
+<li>Add “ &” (including the space) to the end of the command.</li>
+<li>If you didn’t add an ampersand, press CTRL-Z once the process is running, then type “bg” and hit enter to send the process to the background.</li>
+</ol>
+</p>
+
+<p>
+Now that Zookeeper is running on each instance, it’s time to start the Kafka broker on each instance. The <code>kafka-server-start</code> command will look very similar to the above Zookeeper command, only this time we provide <code>server.properties</code> instead:
+</p>
+
+<p>
+<consoleoutput>
+./kafka-server-start ~/[confluent directory]/etc/kafka/server.properties
+</consoleoutput>
+</p>
+
+<p>
+Again, add the ampersand to the end of the command, or send it to the background after it starts running. Now that all instances have Zookeeper and the Kafka broker running, let’s verify that everything checks out. One way to do this is to query Zookeeper as to which brokers are currently connected. Because Zookeeper is running on each instance and they all stay up-to-date, you should be able to run the command below on any instance and see the same result. The executable is in the bin directory where you should still be after starting.
+</p>
+
+<p>
+<consoleoutput>
+./zookeeper-shell localhost:2181 <<< "ls /brokers/ids"
+</consoleoutput>
+</p>
+
+<p>
+The “localhost:2181” is the location of Zookeeper. Obviously, if you set up Zookeeper in a separate location, you’ll need to provide that location to the command. The command should spit back all of the currently connected broker IDs from Zookeeper. Mine looked like this:
+</p>
+
+<p>
+<img src="./images/AWS_4.png" style="width: 900px; height: 154px; margin: 12px; border: 0px solid #999999;" />
+</p>
+
+<p>
+As long as the results match what you’re expecting, Kafka is up and running! At this point, you can do whatever you’d like with it, but you might want to start by creating a topic. Here’s an example:
+</p>
+
+<p>
+<consoleoutput>
+./kafka-topics --zookeeper localhost:2181 --create --topic testTopic --replication-factor 3 --partitions 1
+</consoleoutput>
+</p>
+
+<p>
+Then you can list your topics to make sure it was created. This can be done on any of the Kafka brokers, even one you didn’t create the topic on. Here’s what that looks like:
+</p>
+
+<p>
+<consoleoutput>
+./kafka-topics --zookeeper localhost:2181 --list
+</consoleoutput>
+</p>
+
+<p>
+<a href="http://www.pattersonconsultingtn.com/blog/throughput_testing_kafka.html">You might even want to run some perf testing with your setup</a>.
+</p>
+
+<p>
+If you’d like to stop Zookeeper and the Kafka brokers, first run <code>kafka-server-stop</code> on all instances, then run <code>zookeeper-server-stop</code> on all instances. Just remember, if you shut down and relaunch your instances, you’ll need to change all of those public DNS entries!
+</p>
+
+
+						<p>
+							<h3>Conclusion</h3>
+
+In this post, we looked at setting up an AWS account, configuring, launching, and connecting to AWS instances, and installing, configuring, and starting Kafka. Hopefully, this post helped the reader through this process. Obviously, the setup I used was for training purposes, but the steps and concepts in this guide should apply to larger-scale implementations.
+
+
+
+					</p>
+
+<!--
+							A quote from Confluent's site goes on to state:
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Consider a simple model of a retail store. The core streams in retail are sales of products, orders placed for new products, and shipments of products that arrive. The “inventory on hand” is a table computed off the sale and shipment streams which add and subtract from our stock of products on hand. Two key stream processing operations for a retail outlet are re-ordering products when the stock starts to run low, and adjusting prices as supply and demand change."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>		
+-->
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

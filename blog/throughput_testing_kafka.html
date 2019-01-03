@@ -208,8 +208,8 @@ The batch size should be set in the <code>producer.properties</code> file once a
 						<p>
 
 I also discovered that increasing the buffer size DOES NOT increase the Java heap size for Kafka. In order to do this, you can set the environment variable in a terminal before starting Kafka with:
-<pre><code>export KAFKA_HEAP_OPTS="-Xmx8G -Xms8G”
-</code></pre>
+<consoleoutput>export KAFKA_HEAP_OPTS="-Xmx8G -Xms8G”
+</consoleoutput>
 The “8G” portion of that command is what sets the heap size. I settled on 8GB as all the machines I was dealing with had at least 8GB, and the buffer memory was set at 4GB. For more information, check out this <a href="https://stackoverflow.com/questions/27681511/how-do-i-set-the-java-options-for-kafka">Stack Overflow question on the topic</a>.
 						</p>
 

@@ -133,13 +133,16 @@
 					<div class="col-md-12" id="fh5co-content">
 						<h1>2019 Trends: Kubernetes and Container Orchestration</h1>
 
+
 						<p>
 This report is part of an ongoing series Patterson Consulting offers on our public blog as part of looking at current technology trends in the market. This post looks at some of the market trends we've seen in 2018 for <a href="https://kubernetes.io/">Kubernetes</a>. 
 </p>
+<img src="./images/kubernetes-logo.jpg" style="float: right; width: 319px; height: 179px;" >
+
 <p>
 <b>Some overall 2018 infrastructure trends we note as of interest as we go into 2019:</b>
 <ul>
-<li>Mixtures of on-premise, cloud, and hybrid deployments are becoming more popular with enterprises. </li>
+<li>Mixtures of on-premise, cloud, and <a href="https://cloud.google.com/solutions/heterogeneous-deployment-patterns-with-kubernetes">hybrid deployments</a> are becoming more popular with enterprises. </li>
 <li>The 3 major "big cloud" vendors continue to capture a number of workloads that move to the cloud. some of these workloads oscillate between cloud and on-premise.</li>
 <li><a href="https://www.docker.com/">Docker</a> is synonymous with the term "container"</li>
 <li>Our customers are either using Kubernetes or strongly considering it as their <A href="https://www.infoworld.com/article/3268073/kubernetes/what-is-kubernetes-container-orchestration-explained.html">container orchestration</a> platform</li>
@@ -147,6 +150,8 @@ This report is part of an ongoing series Patterson Consulting offers on our publ
 
 
 						</p>
+
+
 						<p>
 <b>Some highlights of this report include:</b>
 
@@ -449,20 +454,57 @@ These conference growth numbers also correlate with the adoption trends we're se
 
 In 2018 we saw customers interested in the following themes:
 <ul>
-<li>Moving ETL and data science workloads to the cloud</li>
-<li>Moving ETL and data science workloads back on-premise</li>
+<li>Moving ETL and data science workloads to the cloud (and then back, in many cases)</li>
 <li>Managing and scheduling machine learning workloads across multiple teams in a multi-tenant scenario</li>
+<li>Managing infrastructure (compute, storage) resources across teams</li>
 <li>Understanding and planning for hybrid cloud scenarios</li>
 <li>Understanding how to use Kubernetes to provide container orchestration on-premise and in the cloud</li>
+<li>Managing multiple systems such as Kafka, Hadoop, and machine learning infrastructure systems yet allowing them to interop</li>
 </ul>
 
-In 2018 we saw data scientists continue to experiment with multiple machine learning tools (sci-kit learn, tensor flow, pytorch, dl4j, etc) and have not converged on a singular stack yet. These data scientists want to be able to experiment locally in a container + notebook before later moving this containerized job to more powerful hardware either in the on-premise data center or on a major cloud vendor infrastructure. Nvidia GPUs and the DGX were a key for data scientists to be able to run complex machine learning jobs requiring lots of compute power. 
+In this section we take a look at some of these themes across 3 majors areas that we work with customers:
+
+<ol>
+	<li>Kafka</li>
+	<li>Hadoop / Data Lake</li>
+	<li>Machine Learning Infrastructure</li>
+</ol>
+
+
 </p>
+
+<h3>Kafka and Kubernetes</h3>
 <p>
+	In our customer accounts in 2018 we did not see many folks running Kafka on Kubernetes, but we did see these systems running together in the same shop and the discussion came up with customers. We generally give our parter's advice for best practices on specific technology.
+
+	Confluent's Gwen Shapira <a href="https://www.confluent.io/blog/apache-kafka-kubernetes-could-you-should-you">gives two reasons</a> that she sees to run Kafka on Kubernetes:
+	<ol>
+		<li>If you are running most of your other applications and microservices on Kubernetes, it becomes the organizational path of least resistance</li>
+		<li>most orgs underestimate how many Kafka clusters they will end up deploying. As the number of use cases grow, you end up with multiple production clusters (so Kafka management here makes sense)</li>
+
+	</ol>
+
+	For now we are suggesting to customers to hold off on deploying Kafka on Kubernetes.
+
+
+</p>
+
+<h3>Hadoop and Kubernetes</h3>
+<p>
+	Kubernetes is entering the conversation for not only Kafka discussions with our customers, but also how it impacts the holistic data lake strategy as some workloads shift to the cloud. Given that much of the Fortune 500 runs some form of Hadoop today for their ETL and analytics, Hadoop and Kubernetes conversations are colliding more often these days. Overall we're recommending to our customers to hold off on any Hadoop and Kubernetes integrations right now. Cloudera Manager does a great job for on-premise and in the cloud deployments. For transient clusters, systems like Amazon EMR make a lot of sense.
+
+</p>
+
+<h3>Machine Learning Infrastructure and Kubernetes</h3>
+<p>
+	We will note, however, that interop between Hadoop workloads and specialized Kubernetes-based machine learning workloads are on the horizon (as we see <A href="https://www.zdnet.com/article/cloudera-machine-learning-release-takes-cloud-native-path/">Cloudera using Kubernetes for their new data science tools</a> as opposed to YARN). 
 In earlier years Spark had been a key technology for running machine learning jobs, but in more recent years we see enterprises shifting towards GPU-based training in containers that may not live on a Hadoop cluster.
 The DevOps, IT, and Platform teams working with these data scientists wanted to make sure they were setting the teams up for success while also having a manageable infrastructure strategy. The folks in charge of these platforms were concerned with using the cloud in a way that did not cost too much but took advantage of the transient nature of cloud-based workloads.
-Hadoop and Spark were still key tools for data storage and processing, but increasingly Kubernetes has <a href="https://venturebeat.com/2018/09/10/cisco-unveils-ucs-c480-ml-m5-a-powerful-server-for-ai/">come into the picture</a> to manage the on-premise, cloud, and hybrid workloads. We saw a need to make these worlds work together on data lakes whether they were on-premise or in the cloud, or somewhere in-between
-.
+Hadoop and Spark are still key tools for data storage and processing, but increasingly Kubernetes has <a href="https://venturebeat.com/2018/09/10/cisco-unveils-ucs-c480-ml-m5-a-powerful-server-for-ai/">come into the picture</a> to manage the on-premise, cloud, and hybrid workloads. We see a growing need to make these worlds work together on data lakes whether they were on-premise or in the cloud, or somewhere in-between
+. 
+</p>
+<p>
+In our next 2019-trends post, we'll take a look at Kubeflow, an emerging Kubernetes-based system for managing machine learning infrastructure.
 </p>
 
 

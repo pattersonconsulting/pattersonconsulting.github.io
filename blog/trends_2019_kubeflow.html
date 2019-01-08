@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: 2019 Trends - Kubeflow and Machine Learning Infrastructure</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, kubeflow, kubernetes" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>2019 Trends: Kubeflow and Machine Learning Infrastructure</h1>
+
+						<p>
+This report is part of an ongoing series Patterson Consulting offers on our public blog as part of looking at current technology trends in the market. This post looks at some of the market trends we've seen in 2018 for <a href="https://kubeflow.org/">Kubeflow</a>. 
+</p>
+<p>
+<b>Some overall 2018 infrastructure trends we note as of interest as we go into 2019:</b>
+
+<img src="./images/kubeflow_logo.png" style="float: right; width: 200px; height: 200px; margin: 12px; margin-left: 20px;" >
+
+<ul>
+<li>Mixtures of on-premise, cloud, and <a href="https://cloud.google.com/solutions/heterogeneous-deployment-patterns-with-kubernetes">hybrid deployments</a> are becoming more popular with enterprises. </li>
+<li>Our customers are either using Kubernetes or strongly considering it as their container orchestration platform (<a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubernetes.html">Patterson Consulting 2019 Trends report on Kubernetes</a>)</li>
+
+<li>The 3 major cloud vendors ("big cloud") all are offering managed kubernetes and marketing Kubeflow as an option for running machine learning workflows</li>
+
+<li>Some of our customers are already adopting Kubeflow to manage on-premise infrastructure resources and multi-tenancy</li>
+
+</ul>
+
+		Another industry trend worth mentioning is how <a href="https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2018/">Kubecon</a> (conference dedicated to Kubernetes) attendance has <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubernetes.html">doubled year over year for the past 3 years</a>, both in the US and for the EU version of the conference.
+		
+
+
+
+						</p>
+						<p>
+<b>Some highlights of this report include:</b>
+
+
+<ol>
+
+<li>Understanding trends in data science practice</li>
+<li>An overview of the Kubeflow project</li>
+<li>Understanding how Kubeflow is used and who uses it</li>
+<li>Selected media from large vendors investing in Kubeflow</li>
+<li>Kubeflow support from the major cloud vendors</li>
+
+</ol>
+
+
+
+						</p>
+
+						<h2>Why is Kubeflow Compelling?</h2>
+						<p>
+
+
+
+Planning and deploying machine learning infrastructure on-premise, in the cloud, and in hybrid situations is a key topic in the emerging machine learning landscape. Building machine learning models is only 20% of the overall process to deploying machine learning applications, as we can see below in the diagram from the paper <a href="http://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems.pdf">"Hidden Technical Debt in Machine Learning Systems"</a>.
+</p>
+<img src="./images/ml_infra_boxes.png" style="width: 816px; height: 295px; margin: 12px; border: 0px solid #999999;" /><br/>
+
+<h4>Customer Observations from Patterson Consulting Field Team</h4>
+<p>
+	
+	A few of the major challenges we see in the enterprise machine learning practitioner space are:
+
+	<ul>
+		<li>data scientists tend to prefer their own unique cluster of libraries and tools</li>
+		<li>these tools are generally heterogeneous both inside teams and across organizations</li>
+		<li>data scientists needs to interoperate with the rest of the enterprise for resources, data, and model deployment</li>
+		<li>many of their tools are python-based, where python scripts prove difficult to manage across a large organization</li>
+		<li>many times data scientists want to build containers and then just "move them around" to take advantage of more powerful resources beyond their laptop, either in the on-premise data center or in the cloud</li>
+
+
+	</ul>
+
+	We progressively live in an age where developers and data scientists feel empowered to spin up their own infrastructure in the cloud, so it has become antithetical for many organizations to enforce strict infrastructure rules for machine learning practitioners. We've seen this in the space where customers end up with 3-4 different machine learning pipeline systems because groups cannot agree (and simply run off to AWS or GCP to get what they want when they get told "no"). The lessons we draw from 2018 around how organizations want to work are:
+
+	<ul>
+		<li>containers are key part of how data scientists want to operate</li>
+		<li>managing containers from local exectution, to on-premise infrastructure, to running on the cloud (easily and cleanly) is important</li>
+		<li>teams need to balance multi-tenancy with access to storage and compute options (NAS, HDFS, Flashblade) and high-end GPUs (Nvidia DGX-1, etc)</li>
+		<li>teams need a flexible way to customize their applied machine learning full applications, from ETL to modeling to model deployment, yet in a manner that stays within the above tenants</li>
+
+
+	</ul>
+
+We see that cloud vendors have an increasing influence on how enterprises build their infrastructure where managed services they tend to advocate for are likely to get accelerated adoption. All three major cloud vendors are pushing both Kubernetes and these tailwinds should accelerate interest in Kubernetes and Kubeflow in 2019.	
+</p>
+
+<h4>Integration with Other Data Infrastructure</h4>
+
+<p>
+In earlier years Spark has been a key technology for running machine learning jobs, but in more recent years we see enterprises shifting additionally towards GPU-based training in containers that may not live on a Hadoop cluster.
+
+
+Hadoop and Spark are still key tools for data storage and processing, but increasingly Kubernetes has <a href="https://venturebeat.com/2018/09/10/cisco-unveils-ucs-c480-ml-m5-a-powerful-server-for-ai/">come into the picture</a> to manage the on-premise, cloud, and hybrid workloads. There is progressively a need to make these worlds work together on data lakes whether they were on-premise or in the cloud, or somewhere in-between. The Hadoop distributions are investing into integrating Kubernetes support, but its still a ways off. We see Kubeflow as having a role in bridging these worlds.
+</p>
+
+</p>
+<p>
+Kubeflow makes deploying these full applications easier. Kubeflow is an open source Kubernetes-native platform for developing, orchestrating, deploying, and running scalable and portable machine learning workloads based on Google’s internal machine learning pipelines. 
+</p>
+
+						<h2>What is Kubeflow?</h2>
+						<p>
+Kubeflow is an open source Kubernetes-native platform for developing, orchestrating, deploying, and running scalable and portable machine learning workloads. It is a cloud native platform based on Google’s internal machine learning pipelines. The project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable.
+</p>
+<p>
+Operating Kubeflow in an increasingly multi-cloud and hybrid cloud world will be a key topic as the market grows and <A href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubernetes.html">as Kubernetes adoption grows</a>. A single workflow may have a lifecycle that starts on-premise but quickly requires resources only available in the cloud. How Kubeflow meets the organizational needs for machine learning infrastructure as described above is described in the quote from the Kubeflow blog below:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“The leading research and development organizations are quickly migrating to open source machine learning frameworks, especially those that take advantage of the operational and infrastructure efficiencies provided by containers, micro-services and Kubernetes. This trend is demonstrated in a recent 451 Research survey which found that over 70% of enterprise organizations surveyed are using Kubernetes. GitHub has over 95M projects, and Kubernetes and Tensorflow are frequently in the top 10 projects, in terms of contributors, discussions, forks, and reviews. With an ever-increasing availability of data and compute power, machine learning is turning out to be a powerful tool to solve various problems and helping achieve state of the art results. In such interesting times, Kubeflow has grown very quickly to be one of the most promising ML toolkits in the cloud native open source world.”
+						  </i></p>
+						  <p>Kubeflow Blog: <a href="https://medium.com/kubeflow/why-kubeflow-in-your-infrastructure-56b8fabf1f3e">"Why Kubeflow in Your Infrastructure"</a></p>
+						</blockquote>		
+
+
+					</p>
+						<p>
+
+Another compelling factor for Kubeflow that makes it distinctive as an open source project is the google backing of the project. TensorFlow is an example of how open source projects offered by Google tend to enjoy disproportionate brand awareness as compared to other similar open source projects. We’re also seeing this effect with the Kubernetes project in container orchestration.
+
+						</p>
+
+						</p>
+						<h3>How is Kubeflow Used?</h3>
+						<p>
+Kubeflow is used typically for the following reasons:
+<ul>
+<li>You want to train/serve machine learning models in different environments (e.g. local, on-premise, and cloud)</li>
+<li>You want to use <a href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">Jupyter notebooks</a> to manage machine learning training jobs</li>
+<li>You want to launch training jobs that use resources (such as additional CPUs or GPUs – that aren’t available on your personal computer)</li>
+<li>You want to combine machine learning code (e.g., <a href="https://www.tensorflow.org/">TensorFlow</a> code with other processes (For example, you may want to use TensorFlow/agents to run simulations to generate data for training reinforcement learning models.)</li>
+</ul>
+Kubeflow is a great option for Fortune 500 infrastructure because it allows a notebook-based modeling system to easily integrated with the data lake ETL operations on local data lake or in the cloud in similar fashion. It also supports multi-tenancy across different hardware by managing the container orchestration aspect of the infrastructure.
+
+
+
+
+						</p>
+
+						<h3>Who is Most Interested in Kubeflow?</h3>
+						<p>
+
+Some of the key enterprise personnel that have the most interest in Kubernetes include:
+
+<ul>
+<li>DevOps Engineer</li>
+<li>Platform Architect</li>
+
+<li>Data scientists</li>
+<li>Data Engineer</li>
+</ul>
+
+DevOps and Platform Architects needs to support everyone with the right infrastructure in the right places, cloud or on-premise, supporting the ingest, ETL, data warehouse, and modeling efforts of other teams. Data engineers use this infrastructure to setup data scientists with the best denormalized datasets for vectorization and machine learning modeling. All of these teams need to work together to operate in the modern data warehouse and Kubernetes gives them a lot of flexibility in how that happens.
+
+						</p>
+
+
+
+						<h2>Selected Media on Kubeflow in 2018</h2>
+
+							<p>
+
+								We are beginning to see press on Kubeflow in the second half of 2018 going into 2019. We highlight some key articles in the section below.
+
+
+
+
+								<h4>Cisco Makes a Big Bet on Kubeflow</h4>
+							<p>
+
+								<a href="http://www.cisco.com">Cisco</a> is making Kubeflow directly a key management part of their <a href="https://newsroom.cisco.com/press-release-content?type=webcontent&articleId=1943022">new UCS C480 ML Offering</a>:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“More C480/Cisco AI ecosystem work involves Cisco contributing code to the Google Kubeflow open-source project, which integrates TensorFlow with Kubernetes, announcing its DevNet AI Developer Center for developers, operators, and data scientists, a DevNet Ecosystem Exchange, and working with Anaconda so data scientists and developers can collaborate on machine learning using languages such as Python.“
+						  </i></p>
+						  <p>TheRegister.co.uk: <a href="https://www.theregister.co.uk/2018/09/10/cisco_ai_server_nvlinked_tesla_gpu/">Cisco C480ML Announcement Coverage</a></p>
+						</blockquote>
+
+						Cisco leverages Kubernetes to manage the compute and storage resources inside the latest C480 ML Offering, going as far as to become a contributor to the Kubeflow project to help make it ready for their hardware. They are targetting the hybrid cloud experience for the new UCS offering, <a href="https://www.sdxcentral.com/articles/news/ciscos-new-ucs-server-supports-ml-tools-from-google-anaconda-cloudera/2018/09/">stating</a> <i>"Companies running Kubeflow on the new UCS server will be able to use the same machine learning tools on-premises and on Google Cloud"</i>. 
+
+					</p>
+					<p>
+						Google chimes in on the project from their own blog:
+
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“Cisco and Google Cloud have been working on an open hybrid cloud architecture to help customers maximize their investments across cloud and on-premises environments. Continuing this commitment, Cisco announced that the Unified Computing System (UCS) and HyperFlex platforms will leverage Kubeflow to provide production-grade on-premise infrastructure to run AI/ML jobs.“
+						  </i></p>
+						  <p>Google Blog: <a href="https://cloud.google.com/blog/products/gcp/simplifying-machine-learning-on-open-hybrid-clouds-with-kubeflow">"Simplifying Machine Learning on Open Hybrid Clouds with Kubeflow"</a></p>
+						</blockquote>
+
+
+						Beyond just Kubeflow, Cisco has made efforts to integrate the new UCS offering with other data infrastructure. A separate <a href="https://www.sdxcentral.com/articles/news/ciscos-new-ucs-server-supports-ml-tools-from-google-anaconda-cloudera/2018/09/">article also states</a> that Cisco is making further efforts to integrate big data tool offerings from MapR, Cloudera, and Horton such that the <i>"UCS server is part of the big data cluster"</i> and that <i>“It’s able to support much more variety of software, and the particular software stack can oftentimes be curate by the data scientist themselves for particular needs”</i>.
+
+
+
+						</p>
+						<p>
+							We also see the Hadoop vendors paying close attention to <a href="https://mapr.com/blog/containers-kubernetes-and-mapr-the-time-is-now/">not only Kubernetes</a> but also Kubeflow:
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“What KubeFlow does is make all of this functionality a bit more user-friendly by providing some of the commonly used machine learning projects as pre-built templatized offerings (ksonnets) that are pretested to integrate together in one Kubernetes namespace ...“
+						  </i></p>
+						  <p>MapR.com: <a href="https://mapr.com/blog/kubernetized-machine-learning-and-ai-using-kubeflow/">"Kubernetized Machine Learning and AI Using KubeFlow"</a></p>
+						</blockquote>
+
+
+
+
+
+
+
+
+
+
+							</p>
+
+							<h4>Nvidia Invests in Kubeflow for Managing GPUs</h4>
+							<p>
+								Nvidia's GPUs are managed with Kubeflow and Kubernetes for both the Cisco C480ML mentioned above. Nvidia themselves have made some investments in the Kubeflow pipeline space as described in the quote below.
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“To help accelerate end-to-end data science training, NVIDIA developed  RAPIDS, an open-source data analytics and machine learning acceleration platform designed exclusively for GPUs. As a step towards wider integration, the Kubeflow team announced the availability of the NVIDIA RAPIDS GPU-accelerated libraries as an image on the Kubeflow Pipelines.“
+						  </i></p>
+						  <p>nvidia.com: <a href="https://news.developer.nvidia.com/nvidia-rapids-accelerates-kubeflow-pipeline-with-gpus-on-kubernetes/">"NVIDIA RAPIDS Accelerates Kubeflow Pipeline with GPUs on Kubernetes"</a></p>
+						</blockquote>
+
+						<p>
+
+Nvidia drives the GPU space, which drives the applied machine learning space. They hold a lot of sway with the high end GPU crowd and have made some in-roads into the enterprise space with the DGX appliance. 
+Nvidia has been recently <a href="https://news.developer.nvidia.com/nvidia-tensorrt-inference-server-and-kubeflow-make-deploying-data-center-inference-simple/">evangelizing Kubeflow</a> to manage resources in multi-tenant situations.
+
+						</p>
+								
+								
+
+
+							
+
+							<h4>Redhat Invests in the Kubeflow Project</h4>
+							<p>
+								Redhat also directly mentions their investment in Kubeflow:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+“Today we are taking another step forward and working with the community on the Kubeflow project. Our intent is to make Kubeflow a vendor-neutral, open community with the mission to make machine learning on Kubernetes easier, portable and more scalable.
+
+“We’re ecstatic that Red Hat has joined the Kubeflow community and is bringing their knowledge of large-scale deployments to the project,” said David Aronchick, Product Manager on Kubeflow. “With OpenShift’s native Kubernetes implementation and success in major companies around the world, Kubeflow gives you the opportunity bring ML and OpenShift together on a single platform.”“
+						  </i></p>
+						  <p>openshift.com: <a href="https://blog.openshift.com/machine-learning-openshift-kubernetes/">"Machine Learning on OpenShift and Kubernetes"</a></p>
+						</blockquote>
+
+								
+
+
+							</p>
+
+							<h4>Traditional Large Technology Companies See Value in Kubeflow</h4>
+
+						<p>
+							Intel's AI blog provides a tutorial on using Kubeflow:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>
+"Kubernetes* is a cloud platform and a container orchestration tool which is changing the industry standard on how to deploy and manage applications at scale. Another project—Kubeflow—has recently emerged to utilize what Kubernetes offers, and makes it easy to deploy distributed machine learning workloads with just a few commands."
+						  </i></p>
+						  <p>Intel Blog Tutorial: <a href="https://ai.intel.com/lets-flow-within-kubeflow/">"Let’s Flow within Kubeflow"</a></p>
+						</blockquote>
+
+
+
+
+
+
+
+						</p>
+
+							<p>
+
+								Oracle has also published tutorials on how to use Kubeflow with their container service:
+
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"With OCI Container Engine for Kubernetes and Kubeflow, you can easily setup a flexible and scalable machine learning and AI platform for your projects.  You can focus more on building and training your models rather than on managing the underlying infrastructure. "
+ 
+						  </i></p>
+						  <p>Oracle's Blog: <a href="https://blogs.oracle.com/cloud-infrastructure/deploy-kubeflow-with-oracle-cloud-infrastructure-container-engine-for-kubernetes">"Deploy Kubeflow with Oracle Cloud Infrastructure Container Engine for Kubernetes"</a></p>
+						</blockquote>		
+
+						</p>						
+
+
+
+						<h2>Big Cloud Supporting Kubeflow</h2>
+
+<p>
+	All three major cloud vendors have promoted running Kubeflow on their managed kubernetes platforms. Given that:
+<ul>
+<li>cloud dominates today’s infrastructure discussion</li>
+<li>all three major cloud vendors are pushing kubernetes as the way to do cloud / hybrid workloads with container orchestration, and offering managed kubernetes options
+<ul>
+<li><a href="https://cloud.google.com/kubernetes-engine/">Google GKE</a></li>
+<li><a href="https://aws.amazon.com/eks/">Amazon EKS</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/kubernetes-service/">Azure AKS</a></li>
+</ul>
+
+</li>
+<li>all three are pushing kubeflow on kubernetes as a key way to run machine learning workflows and inference serving
+	<ul>
+	<li><a href="https://cloud.google.com/blog/products/gcp/simplifying-machine-learning-on-open-hybrid-clouds-with-kubeflow">Google Support for Kubeflow – March 2018</a></li>
+	<li><a href="https://aws.amazon.com/blogs/opensource/kubeflow-amazon-eks/">AWS Support for Kubeflow – Nov 2018</a></li>
+	<li><a href="https://github.com/Azure/kubeflow-labs">Azure Support for Kubeflow – Sept 2018</a></li>
+	</ul>
+
+</li>
+</ul>
+
+
+							In the age of cloud infrastructure, what "big cloud" (AWS, Azure, GCP) does tends to significantly impact how enterprises build their own infrastructure today. We make the assertion that these factors will drive significant growth in the kubeflow market. 
+
+
+						</p>
+
+
+						<h2>Summary</h2>
+
+						<p>
+
+In 2018 we saw data scientists continue to experiment with multiple machine learning tools (sci-kit learn, tensor flow, pytorch, dl4j, etc), yet have not converged on a singular stack yet. In this article we presented market trends (customer interactions, vendor investments, and conference trends) that indicate that Kubeflow has a growing role in the machine learning infrastructure market going into 2019.
+	</p>
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

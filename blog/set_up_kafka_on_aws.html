@@ -248,7 +248,7 @@ Now that you’ve launched your instances, head back to the “Instances” sect
 </p>
 
 <p>
-The Public DNS will be used to SSH to your instances. Be aware: the public DNS changes every time you launch an instance! The private IP won’t be used for any connections we’ll be doing, but you need to ensure that the private IPs for your instances correspond to the security group rules for port connections discussed earlier. If the IPs don’t match your security group rules, your instances will not be able to connect to each other. The good news is that you can change a running instance’s security group if anything was not set up properly. For more info, <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SG_Changing_Group_Membership">check out this link</a>.
+The public DNS will be used to SSH to your instances. Be aware: the public DNS changes every time you launch an instance! The private IP will be used for Zookeeper. Also, you need to ensure that the private IPs for your instances correspond to the security group rules for port connections discussed earlier. If the IPs don’t match your security group rules, your instances will not be able to connect to each other. The good news is that you can change a running instance’s security group if anything was not set up properly. For more info, <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SG_Changing_Group_Membership">check out this link</a>.
 </p>
 
 <p>
@@ -376,16 +376,16 @@ Next, let’s set the Zookeeper properties found here: <code>[confluent director
 <p>
 <pre>
 <code>
-server.1=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
-server.2=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
-server.3=ec2-XX-XX-XX-XX.us-east-2.compute.amazonaws.com:2888:3888
+server.1=172.31.X.X:2888:3888
+server.2=172.31.X.X:2888:3888
+server.3=172.31.X.X:2888:3888
 ...
 </code>
 </pre>
 </p>
 
 <p>
-Take note of what server.number you assign to each instance. This will be important here in just a second. The public DNS should correspond to each instance you are running and 2888 and 3888 are the ports Zookeeper uses to communicate. Note: as stated several times now, the public DNS of each instance changes when shut down and relaunched. Change the values here if you shut down and relaunch your instances!
+Take note of what server.number you assign to each instance. This will be important here in just a second. The private IP should correspond to each instance you are running and 2888 and 3888 are the ports Zookeeper uses to communicate.
 </p>
 
 <p>

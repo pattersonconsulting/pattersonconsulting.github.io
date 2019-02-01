@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Setting Up Kubeflow 3.5 on Google Kubernetes Engine</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, kubernetes, kubeflow, gke" />
+	<meta name="author" content="Patterson Consulting" />
+
+	<meta property="og:title" content="Setting Up Kubeflow 3.5 on Google Kubernetes Engine"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This tutorial is on how to get Kubeflow 3.5 installed and working on GKE in under 30 minutes."/>
+	
+
+	<meta name="twitter:title" content="Setting Up Kubeflow 3.5 on Google Kubernetes Engine" />
+	<meta data-rh="true" property="twitter:description" content="This tutorial is on how to get Kubeflow 3.5 installed and working on GKE in under 30 minutes."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Setting Up Kubeflow 3.5 on Google Kubernetes Engine</h1>
+
+						<p>
+This tutorial is on how to get Kubeflow 3.5 installed and working on GKE in under 30 minutes. For a review on why Kubeflow is compelling in the current machine leanring infrastructure landscape, <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubeflow.html">check out our report</a>.
+
+
+						</p>
+
+
+
+						<h2>Tasks in this tutorial:</h2>
+						<p>
+							<ul>
+								<li>Get the latest python</li>
+								<li>Setup GCloud Acccount</li>
+								<li>Setup GCloud SDK</li>
+								<li>Install kubernetes cluster running on GKE</li>
+								<li>Install Kubectl locally</li>
+								<li>Install Ksonnet locally</li>
+								<li>Setup github token setup</li>
+								<li>Use Ksonnet to deploy Kubeflow to our cluster on GCP</li>
+
+							</ul>
+
+							
+
+						</p>
+						<h2>Sign up for Google Cloud Platform</h2>
+							<p>
+								If you dont already have an account on <a href="https://cloud.google.com/">Google Cloud Platform</a> (GCloud), you can <a href="https://cloud.google.com/free/">sign up for a free trial</a>.
+							</p>
+
+						<h2>Installing Google Cloud SDK</h2>
+						<p>
+							Before you install Google Cloud's SDK, make sure and upgrade python to the latest version to avoid issues (e.g., SSL issues).
+							After you have python updated, take a look at the <a href="https://cloud.google.com/sdk/install">instructions for getting the GCloud SDK</a> working.
+
+						</p>
+						<p>
+							For Mac OSX users, a simple way to do this is to <a href="https://cloud.google.com/sdk/docs/downloads-interactive">use the interactive installer</a>.
+
+						</p>
+						<p>
+							Once you have the GCloud SDK working, log into your GCloud account from the command line with the <a href="https://cloud.google.com/sdk/gcloud/reference/auth/">gcloud auth tool</a>:
+
+							
+
+
+
+						</p>
+<pre><code>gcloud auth login</code></pre>
+						<p>	
+						This will pop up some screens in your web browser asking for permission via OAuth for GCloud tools to access the Google Cloud Platform.
+						</p>
+
+
+						<h2>Standing Up a Kubernetes Cluster with GKE</h2>
+
+						<p>
+							make sure we have enabled the Google Kubernetes API: https://console.cloud.google.com/apis/library/container.googleapis.com
+						</p>
+						<p>
+							We need a project on Google Cloud Platform to organize our project resources inside. To create a project on GCloud, follow the instructions in the video embedded below:
+						</p>
+
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/7n9DkOzjwlA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							
+							<p>
+We also will need to <a href="https://console.cloud.google.com/apis/library/container.googleapis.com?q=kubernetes%20engine&_ga=2.174132130.-1623410605.1541018561">enable the Kubernetes Engine API</a> on GCP.
+
+							</p>
+
+
+
+						<p>
+
+							Once you have the project created, check to make sure it shows up from the command line with the command:
+
+						</p>
+<pre><code>gcloud projects list</code></pre>
+						<p>This command lists all of the projects we have in our account on the google cloud platform.
+						The output should be similar to below:
+
+						</p>
+
+<consoleoutput>PROJECT_ID               NAME                  PROJECT_NUMBER
+kubeflow-3-5-project     kubeflow-3-5-project  781217520374
+kubeflow-codelab-229018  kubeflow-codelab      919126119217</consoleoutput>
+
+
+
+						<p>
+							Now we need to create a Kubernetes cluster for our project on Google Cloud Platform. First, we need to set our current working project from the command line so we'll use the command as shown below:
+
+							
+						</p>
+
+<pre><code>PROJECT_ID=kubeflow-3-5-project
+gcloud config set project $PROJECT_ID
+
+gcloud container clusters create [your-cluster-name-here] \
+      --zone us-central1-a --machine-type n1-standard-2
+</code></pre>
+
+						<p>
+							Note that the name of the project and the project ID may not be exactly the same, so be careful. Most of the time we want to use the Project_ID of our project when working from the command line. It may take 3-5 minutes for the system to complete the kubernetes cluster setup on GCP.
+
+
+						</p>
+
+
+
+
+
+
+						<h2>Installing Kubectl</h2>
+						<p>
+							<kbd>kubectl</kbd> controls the Kubernetes cluster manager and is a command line interface for running commands against Kubernetes clusters.
+
+
+
+							We use kubectl to deploy and manage applications on Kubernetes. Using kubectl, we can 
+
+							<ul>
+								<li>inspect cluster resources</li>
+								<li>create components</li>
+								<li>delete components</li>
+								<li>update components</li>
+
+
+							</ul>
+
+							For a more complete list of functions in kubectl, check out <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources">this cheatsheet</a>.
+
+
+
+						</p>
+						<p>
+							An easy way to install kubectl on OSX is to use the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-with-homebrew-on-macos">brew command</a>:
+
+						</p>
+<pre><code>brew install kubernetes-cli</code></pre>						
+
+						<p>
+							Once we have kubectl, we <A href="https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl">need permission</a> for it to talk to our remote managed kubernetes cluster on GCP.
+							We get the credentials for our new kubernetes cluster with the command:
+
+
+						</p>
+
+<pre><code>gcloud container clusters get-credentials kubeflow-codelab --zone us-central1-a</code></pre>
+
+						<p>
+							This command writes a context into our local <code>~/.kube/context</code> file so <kbd>kubectl</kbd> knows where to look for the current cluster we're working with. In some cases, you will be working with multiple clusters, and their context information will also be stored in this file.
+
+						</p>
+							
+						<p>
+							Once we can connect to our kubernetes cluster with kubectl, we can check out the status of the running cluster with the command:
+
+						</p>
+
+<pre><code>kubectl cluster-info</code></pre>						
+
+						<p>We should see output similar to below:</p>
+
+
+<consoleoutput>
+Kubernetes master is running at https://31.239.115.73
+GLBCDefaultBackend is running at https://31.239.115.73/api/v1/namespaces/kube-system/services/default-http-backend:http/proxy
+Heapster is running at https://31.239.115.73/api/v1/namespaces/kube-system/services/heapster/proxy
+KubeDNS is running at https://31.239.115.73/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Metrics-server is running at https://31.239.115.73/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+</consoleoutput>
+<p>	</p>
+
+
+
+						<h2>Installing Ksonnet</h2>
+						<p>
+							<a href="https://ksonnet.io/">Ksonnet</a> is a CLI-supported framework for extensible Kubernetes configurations. Ksonnet provides an organizational structure and specialized features for managing configurations across different clusters and environments. For this demo we'll use Ksonnet (the <kbd>ks</kbd> command) to install a specific version of Kubeflow (v3.5) and deploy it to our new managed GKE cluster.
+
+						</p>
+						<p>
+							To install Ksonnet on OSX easily just use brew with the command:
+
+						</p>
+<pre><code>brew install ks</code></pre>	
+<p>
+This will get ksonnet install locally, which will pull code from github and use kubectl to deploy the application code (Kubeflow) to our GKE cluster.
+</p>					
+
+
+						<h2>Setting Up a Github Auth Token</h2>
+						<p>
+							We need to use a GitHub personal access token with ksonnet otherwise we quickly run into GitHub API limits.
+
+							We need to <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">create a personal access token</a> and use it in place of a password when ksonnet is performing operations over HTTPS with Git on the command line against github's API. Once you have logged in and created the token, we set it as an env variable with the command:
+
+
+
+						</p>
+
+<pre><code>export GITHUB_TOKEN=ece2d65f0070abf00283f000460fc10952a87a2</code></pre>
+
+<p>
+Now we are ready to use Ksonnet and deploy Kubeflow to our cluster.
+	</p>
+
+						<h1>CLI Install Steps for Kubeflow v3.5</h1>
+						<p>
+							Use Ksonnet's <kbd>ks</kbd> command to initalize your new kubernetes application.
+
+						</p>
+<pre><code>ks init [app-name]
+cd [app-name]
+</code></pre>
+<p>
+The output on the screen should look similar to what you see below.
+	</p>
+<consoleoutput>INFO Using context "gke_kubeflow-3-5-project_us-central1-a_kf-3-5-k8s" from kubeconfig file "/Users/josh/.kube/config" 
+INFO Creating environment "default" with namespace "default", pointing to "version:v1.10.11" cluster at address "https://35.239.115.73" 
+INFO Generating ksonnet-lib data at path '/Users/josh/Documents/workspace/PattersonConsulting/kubeflow_gke_test/jp-gke-kf-3-5/lib/ksonnet-lib/v1.10.11' 
+</consoleoutput>
+
+
+						<p>
+							As we can see above, ksonnet found our GKE cluster context in our kubeconfig file and was able to configure our new ksonnet application to use it. Ksonnet also initialized our application directory with some template code. Now we need to customize this application code with the Kubeflow codebase from github.
+
+						</p>
+
+
+
+						<p>
+							We need to add kubeflow 3.5 to the ksonnet registry so it knows here to look to download the code. We do this with the following comand:
+
+						</p>
+<pre><code>ks registry add kubeflow github.com/kubeflow/kubeflow/tree/v0.3.5/kubeflow</code></pre>
+
+
+
+						<p>
+							Next we want to install packages from this github repository in our local ksonnet application. We want to work with a specific version of Kubeflow for this tutorial, so we'll specify the <code>v0.3.5</code> version of Kubeflow with the command below.
+
+						</p>
+<pre><code>ks pkg install kubeflow/core@v0.3.5</code></pre>
+						<p>
+							The console won't report much, but you should see the following output:
+
+						</p>
+<consoleoutput>INFO Retrieved 38 files</consoleoutput>
+
+
+
+
+						<p>
+							Now we need to generate the components for the application from the package we installed from the v0.3.5 Kubeflow codebase on github. We generate components with the following commands:
+
+						</p>
+<pre><code>ks generate ambassador ambassador
+ks generate jupyterhub jupyterhub
+ks generate centraldashboard centraldashboard
+ks generate tf-job-operator tf-job-operator</code></pre>
+						<p>
+							This components will give us a minimal install of Kubeflow. The console output for of the commands above will look similar to what we see below.
+
+						</p>
+<consoleoutput>INFO Writing component at '/Users/josh/Documents/workspace/PattersonConsulting/kubeflow_gke_test/jp-gke-kf-3-5/components/ambassador.jsonnet' </consoleoutput>						
+						<p>
+							Each of these components was installed in our custom Ksonnet application in our local directory.
+
+						</p>
+
+
+
+						<p>
+							Finally, we want to send these components to our kubernetes cluster. We apply local Kubernetes manifests (components) to remote clusters with the following commands:
+
+						</p>
+<pre><code># Create all the core components
+ks apply default -c ambassador
+ks apply default -c jupyterhub
+ks apply default -c centraldashboard
+ks apply default -c tf-job-operator
+</code></pre>
+						<p>
+							For each of these commands, we will send output on the console similar to what we show below:
+
+						</p>
+<consoleoutput>INFO Applying services default.ambassador         
+INFO Creating non-existent services default.ambassador 
+INFO Applying services default.statsd-sink        
+INFO Creating non-existent services default.statsd-sink 
+INFO Applying services default.ambassador-admin   
+INFO Creating non-existent services default.ambassador-admin 
+INFO Applying roles default.ambassador            
+INFO Creating non-existent roles default.ambassador 
+INFO Applying serviceaccounts default.ambassador  
+INFO Creating non-existent serviceaccounts default.ambassador 
+INFO Applying rolebindings default.ambassador     
+INFO Creating non-existent rolebindings default.ambassador 
+INFO Applying services default.k8s-dashboard      
+INFO Creating non-existent services default.k8s-dashboard 
+INFO Applying deployments default.ambassador      
+INFO Creating non-existent deployments default.ambassador</consoleoutput>					
+						<p>
+							At this point, we have installed the basic version of Kubeflow 0.3.5 on our remote GKE kubernetes cluster.
+
+						</p>
+
+						<h2>Confirming Kubeflow is Operational</h2>
+						<p>
+							To confirm our cluster is operational and the components are running, try the following command:
+
+
+							
+
+						</p>
+
+<pre><code>kubectl get services</code></pre>
+<p>We should see a list of components running that match the components we just installed on our cluster.
+	</p>
+
+<consoleoutput>NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+ambassador         ClusterIP   10.31.244.0     &lt;none&gt;        80/TCP     6m
+ambassador-admin   ClusterIP   10.31.245.255   &lt;none&gt;        8877/TCP   6m
+centraldashboard   ClusterIP   10.31.251.36    &lt;none&gt;        80/TCP     4m
+k8s-dashboard      ClusterIP   10.31.252.214   &lt;none&gt;        443/TCP    6m
+kubernetes         ClusterIP   10.31.240.1     &lt;none&gt;        443/TCP    6d
+statsd-sink        ClusterIP   10.31.242.245   &lt;none&gt;        9102/TCP   6m
+tf-hub-0           ClusterIP   None            &lt;none&gt;        8000/TCP   5m
+tf-hub-lb          ClusterIP   10.31.243.236   &lt;none&gt;        80/TCP     5m
+tf-job-dashboard   ClusterIP   10.31.249.94    &lt;none&gt;        80/TCP     4m</consoleoutput>
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

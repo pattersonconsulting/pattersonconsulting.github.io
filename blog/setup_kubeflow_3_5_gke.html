@@ -316,9 +316,32 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 						<h2>Installing Ksonnet</h2>
 						<p>
-							<a href="https://ksonnet.io/">Ksonnet</a> is a CLI-supported framework for extensible Kubernetes configurations. Ksonnet provides an organizational structure and specialized features for managing configurations across different clusters and environments. For this demo we'll use Ksonnet (the <kbd>ks</kbd> command) to install a specific version of Kubeflow (v3.5) and deploy it to our new managed GKE cluster.
+							<a href="https://ksonnet.io/">Ksonnet</a> is a CLI-supported framework for extensible Kubernetes configurations. Ksonnet provides an organizational structure and specialized features for managing configurations across different clusters and environments. For this demo we'll use Ksonnet (the <kbd>ks</kbd> command) to install a specific version of Kubeflow (v3.5) and deploy it to our new managed GKE cluster. Let's take a quick look at some key terminology used with ksonnet applications.
 
 						</p>
+						<p>
+							A Ksonnet <b>environment</b> is a unique location to deploy our application to. It consists of:
+							<ol>
+								<li>a unique name</li>
+								<li>the kubernetes cluster address</li>
+								<li>the cluster's namespace</li>
+								<li>the kubernetes API version</li>
+
+							</ol>
+
+							You can customize different cluster deployments with environments.
+
+						</p>
+						<p>
+							A Ksonnet <b>prototype</b> is an object that describes a set of kubernetes resources in an abstract way. This object also includes associated parameters for these resources. An example of this is how Kubeflow has a prototype for <code>tf-job-operator</code> as we'll see later in this article.
+
+						</p>
+						<p>A Ksonnet <b>component</b> is a specific implementation of a <b>prototype</b>. We create a component by "filling in" the parameters for the prototype. A prototype can be deployed to a kubernetes cluster and can also directly generate standard Kubernetes YAML files. Each environment may be customized with different parameters for a prototype.
+
+						</p>
+
+
+
 						<p>
 							To install Ksonnet on OSX easily just use brew with the command:
 
@@ -370,7 +393,11 @@ INFO Generating ksonnet-lib data at path '/Users/josh/Documents/workspace/Patter
 
 
 						<p>
-							We need to add kubeflow 3.5 to the ksonnet registry so it knows here to look to download the code. We do this with the following comand:
+
+							At this point we need to add Kubeflow to our custom ksonnet project. To do this we nee add the Kubeflow repository to our project and then we pull the individual kubeflow packages into our local project.
+
+
+							Specifically here we need to add kubeflow 3.5 to the ksonnet registry so it knows here to look to download the code. We do this with the following comand:
 
 						</p>
 <pre><code>ks registry add kubeflow github.com/kubeflow/kubeflow/tree/v0.3.5/kubeflow</code></pre>
@@ -383,10 +410,17 @@ INFO Generating ksonnet-lib data at path '/Users/josh/Documents/workspace/Patter
 						</p>
 <pre><code>ks pkg install kubeflow/core@v0.3.5</code></pre>
 						<p>
+
 							The console won't report much, but you should see the following output:
 
 						</p>
 <consoleoutput>INFO Retrieved 38 files</consoleoutput>
+						<p>
+
+							We should now be able to see the installed package in our <Code>./app.yaml</code> file and also in our <code>./vendor</code> directory.
+
+						</p>
+
 
 
 
@@ -440,7 +474,35 @@ INFO Creating non-existent rolebindings default.ambassador
 INFO Applying services default.k8s-dashboard      
 INFO Creating non-existent services default.k8s-dashboard 
 INFO Applying deployments default.ambassador      
-INFO Creating non-existent deployments default.ambassador</consoleoutput>					
+INFO Creating non-existent deployments default.ambassador</consoleoutput>
+
+						<p>
+							As we can see above, the Kubeflow components were installed on GKE remotely. We'll confirm those components are on the kubernetes cluster in a moment, but first we want to take a quick look at what was deployed.
+
+						</p>
+
+						<h2>Kubeflow 3.5 Component Details</h2>
+						<p>
+							Quick notes on each component are listed below.
+
+							<ul>
+								<li><b>ambassador</b>: The Kubeflow project uses <a href="https://www.getambassador.io/">Ambassador</a> as a central point of authentication and routing for their services</li>
+								<li><b>jupyterhub</b>: a <a href="https://github.com/jupyterhub/jupyterhub">multi-user Hub</a>, spawns, manages, and proxies multiple instances of the single-user Jupyter notebook server</li>
+								<li><b>centraldashboard</b>: To make it easy to navigate the components in Kubeflow a <A href="https://v0-3.kubeflow.org/docs/guides/accessing-uis/">central navigation UI</a> is provided</li>
+								<li><b>tf-job-operator</b>: Kubernetes <a href="https://github.com/kubeflow/tf-operator">custom resource and operator</a> For TensorFlow jobs</li>
+ 
+
+
+							</ul>
+
+							Effectively these components work together to provide a scalable and secure system for running machine learning jobs (notebook-based jobs and also jobs outside of notebooks). Given the rise of Kubernetes as an enterprise platform management system, it makes a lot of sense to have a way to manage our machine learning workloads in a similar manner.
+
+						</p>
+						<p>
+							The system also provides compelling flexibility in how data scientists can use the library (language independent as well) of their choice in a notebook or outside of a notebook on Kubeflow. It becomes a compelling offering quickly as now a data scientist can quickly move a workload built in the language of their choice from their laptop to an on-premise enterprise cloud or to a public cloud and leverage more hardware. This fits in with the pattern where machine learning jobs typically are prototyped on a user laptop and then once validated are moved to a more powerful system for training and then model deployment.
+
+						</p>
+
 						<p>
 							At this point, we have installed the basic version of Kubeflow 0.3.5 on our remote GKE kubernetes cluster.
 

@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Running TensorFlow Jobs on Kubeflow 3.5</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, kubernetes, kubeflow, google cloud, tensorflow" />
+	<meta name="author" content="Patterson Consulting" />
+
+	<meta property="og:title" content="2019 Trends: Interview on the Machine Learning and Artificial Intelligence Market"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="Unedited interview answers to an upcoming Mike Barlow report on Oreilly's web site."/>
+	
+
+	<meta name="twitter:title" content="2019 Trends: Interview on the Machine Learning and Artificial Intelligence Market" />
+	<meta data-rh="true" property="twitter:description" content="Unedited interview answers to an upcoming Mike Barlow report on Oreilly's web site"/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>2019 Trends: Interview on the Machine Learning and Artificial Intelligence Market</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: February 27th, 2019</p>
+
+
+						<p>
+<i>This article is from an interview I recently gave to <a href="https://twitter.com/mike7pilot">Mike Barlow</a> for an Oreilly report to be released on their website (One of Mike's previous <a href="https://learning.oreilly.com/library/view/practical-artificial-intelligence/9781492049814/">similar reports here</a>). Usually these answers are broken up into quotes in the course of the overall article Mike will produce, but we thought it fit well on our blog as a series of comments on current market trends as well. Re-posted with Mike's permission.</i>
+
+
+						</p>
+
+
+
+						<h2>Question: "What’s the best way of explaining what AI is and what AI isn’t?"</h2>
+
+<br/>
+
+<h3>What AI is not</h3>
+						<p>
+
+
+
+AI is not alive, self-aware, nor near any level of “general artificial intelligence” that keeps getting marketed today.
+
+We’ve <a href="https://en.wikipedia.org/wiki/AI_winter">seen these cycles before</a> (2 times, previously), where AI gets over-marketed and then crashes through results, while impressive and drive new industry sectors, always fall short of “magical”.
+</p><p>
+Why do we keep doing this to ourselves?
+</p><p>
+AI has long held a place in society’s collective imagination because it poses an <A href="https://en.wikipedia.org/wiki/Luddite">existential threat</a> to our fundamental role in society. People relate to their place in the society by the role they take on in the working world, whether that is clergy, engineer, or philosopher. If we are all automated into irrelevance, then those roles and relations disappear and this becomes an existential issues for most people. Fundamentally, we keep running through this hype cycle due to fear of this scenario.
+</p>
+
+<h3>What is AI?</h3>
+
+<p>
+Artificial Intelligence today in real terms is “applied machine learning”. This definition can be expanded further, from the automation viewpoint, to “artificial intelligence is a term for algorithms that increase user productivity”. We can make this designation because some techniques, such as game-state search, are not qualified as machine learning yet fall under the historical banner of AI.
+</p><p>
+Folks who over-market machine learning to be “general artificial intelligence” do the entire computer science industry a disservice. Machine learning is (<i>largely, in practice</i>) classification and regression and in no way matches up to ephemeral aspirations of an all-knowing, self-aware system that can help the reader with their marketing problem.
+</p><p>
+
+<i>For an extended take on this topic, check out “Appendix A: What is Artificial Intelligence?” in our book from Oreilly <a href="http://shop.oreilly.com/product/0636920035343.do">“Deep Learning: A Practitioner’s Approach”</a></i>
+
+
+						</p>
+
+
+
+						<h2>Question: "What’s the relationship between data science and AI?"</h2>
+						<br/>
+<p>						
+Data science involves the practice of <i>applied machine learning</i>.
+</p>
+<p>
+The term “Artificial intelligence” is how we poorly market <i>“data science practicing applied machine learning”</i>.
+</p>
+
+						<h2>Question: "Will AI eliminate all jobs or just some of them? Which ones will it eliminate?"</h2>
+						<br/>
+<p>						
+This is a poor narrative that has been propagated too many times.
+</p><p>
+If we agree that AI is not going to be “general artificial intelligence” any time soon, and that we’re really talking about “applied machine learning” in most cases, then the engineer in us thinks its simply an issue of how well we can build and apply models to real world problems.
+</p><p>
+The problem is, the world is not that simple.
+</p><p>
+Engineers do well when code does not have to enter the real world, because when its “just a webserver”, they can always just “reset the server” when things go bad. There are no regulations or oversight or major laws to consider in this case.
+</p><p>
+But in the case of everyone’s favorite automation topic, self-driving cars, we begin to hit a litany of real-world issues that engineers don’t hit in pure-software land. If our models are even slightly imperfect, “1% Edge cases” become “we only hit 3 mailboxes out of 300 this morning on the way to the office”. Other issues include <a href="http://www.ncsl.org/research/transportation/autonomous-vehicles-self-driving-vehicles-enacted-legislation.aspx">regulatory</a>, <a href="https://www.theatlantic.com/technology/archive/2018/03/can-you-sue-a-robocar/556007/">legal</a>, and then just how fast society will accept the risks posed by a <a href="https://www.nbcnews.com/mach/science/6-surprising-ways-driverless-cars-will-change-our-world-ncna867061">major automation change</a>.
+</p><p>
+So change becomes slower, and productivity enhancers like “lane assist” slowly become integrated as “automation”. And new features take a lot longer to “get right” and get integrated in a way that federal law will bless.
+</p><p>
+Most automation will occur slowly over the coming decades and society will adapt with it, just like it has since the time of the automated loom. In many cases, given that the <a href="https://en.wikipedia.org/wiki/Red_Queen%27s_race">red queen demands</a> we all “run as fast as we can to stay in the same place”, we will continue to work in many of the same jobs as they evolve, yet will welcome ways to be more efficient and continue to compete in our respective markets. Jobs will continue to be created and some jobs will become extinct, as is the natural cycle over time.
+
+</p>
+
+
+
+
+
+
+
+						<h2>Question: "How does a software developer become an AI developer?"</h2>
+						<br/>
+<p>						
+Through the natural evolution of adding job skills. The computer science industry looks favorably on those candidates who continue to add new techniques to their toolbelt. Engineers do not have to get a phd in math or machine learning (a common fallacy) to do quality data science work. They just need to find good fundamentals in the areas of:
+<ul>
+<li>Data collection</li>
+<li>Data cleaning and extract, transform, and load (ETL) methods</li>
+<li>Applying modeling patterns from similar problems to new problems</li>
+<li>Model deployment and integration</li>
+<li>Model monitoring and evaluation</li>
+</ul>
+
+</p>
+
+
+
+						<h2>Question: "Please name five skills you need to become a data scientist"</h2>
+						<br/>
+<p>	
+
+The python ecosystem has signficant gravity these days, so I'd suggest:	
+
+<ul>				
+<li>Python, Pandas, Numpy, and Jupyter Notebooks</li>
+<li>Spark and Extract, Transform, Load (ETL) skills</li>
+<li>Learning basic data vectorization and feature engineering</li>
+<li>Model deployment, integration, and management</li>
+<li>Understanding how to triage use cases</li>
+</ul>
+
+I'd also add that data scientists need to focus on getting a result for their line of business, and less on their favorite langauge or toolkit.
+
+</p>
+
+
+						<h2>Question: "What do you personally find most frustrating about AI?"</h2>
+						<br/>
+<p>						
+The propensity of technology companies to take any new technology, such as “AI”, and make marketing statements that would make <a href="https://en.wikipedia.org/wiki/Theranos">Theranos</a> executives blush.
+
+</p>
+<!--
+						<h2>Question: ""</h2>
+						<br/>
+<p>						
+
+
+</p>
+-->
+<br/>
+<br/>
+<br/>
+<br/>
+<p>To continue this discussion, <A href="https://twitter.com/jpatanooga">reach out on twitter</a> or <a href="/contact.html">contact us.</p>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

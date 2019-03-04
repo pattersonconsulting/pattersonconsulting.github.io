@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Running TensorFlow Jobs on Kubeflow 3.5</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, kubernetes, kubeflow, google cloud, tensorflow" />
+	<meta name="author" content="Patterson Consulting" />
+
+	<meta property="og:title" content="Running TensorFlow Jobs on Kubeflow 3.5"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5."/>
+	
+
+	<meta name="twitter:title" content="Running TensorFlow Jobs on Kubeflow 3.5" />
+	<meta data-rh="true" property="twitter:description" content="This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Running TensorFlow Jobs on Kubeflow 3.5</h1>
+
+						<p>
+This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5. In a previous tutorial, we <a href="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html">showed how to setup Kubeflow 3.5</a> on Google Cloud. For a review on why Kubeflow is compelling in the current machine learning infrastructure landscape, <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubeflow.html">check out our report</a>.
+
+
+						</p>
+
+
+
+						<h2>Concepts in this tutorial:</h2>
+						<p>
+							<ul>
+								<li>Building the Docker container for the job</li>
+								<li>Managing containers and container registries</li>
+								<li>Working with .yaml files for Kubernetes CRDs</li>
+								<li>Working with <kbd>kubectl</kbd> to operate the remote Kubernetes cluster</li>
+
+							</ul>
+
+							In this tutorial we'll work through new and old concepts to build a working knowledge on how to run a TensorFlow job on Kubeflow 3.5. We'll start out with a high-level review of what we're going to do and then dig into the sub-topics involved in running the job.
+
+
+
+							
+
+						</p>
+
+
+
+						<h2>High-Level Workflow for Running a TensorFlow Job on Kubeflow</h2>
+
+						<p>
+							The high-level set of tasks needed to run a TensorFlow job on Kubeflow are listed below.
+
+							<ol>
+								<li>Build the docker container image containing our code and dependencies</li>
+								<li>Register contain with container registry (e.g., "docker hub", "artifactory", etc)</li>
+								<li>Build a .yaml file based on the CRD "TFJob" describing our job (container image, program or script for training, execution parameters, etc)</li>
+								<li>Configure storage and copy data into cluster</li>
+								<li>Send the job yaml file to the cluster for execution with <kbd>kubectl</kbd></li>
+
+							</ol>
+
+						</p>
+
+
+
+						<h2>Overview of TensorFlow on Kubeflow</h2>
+						<p>
+							Out of the box, Kubernetes does not understand how distributed TensorFlow works. 
+							It needs help understanding where the daemons are running and how they talk with one another. We can see the general flow of how the different parts of Kubeflow work together to get TensorFlow containers working on Kubernetes and coordinating between worker containers.
+
+							
+
+
+						</p>
+
+						<img src="./images/tf_on_kf_3_5.png" style="width: 991px; height: 441px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							In the sections below we'll explain the individual parts from the diagram above, focusing on <A href="https://github.com/kubeflow/tf-operator/tree/v0.3-branch/examples/crd">TFJob</a>.
+						</p>
+
+						<h3>What is TFJob?</h3>
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px; width: 50%; float: right;">
+
+						<h3>Sidebar: Kubernetes and Custom Resources</h3>
+						  <p>						
+
+								A kubernetes resource is an endpoint in the Kubernetes API that stores a group of API Objects of a certain kind.
+
+								A <A href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resource</a> is a Kubernetes API extension that is specific to a cluster once installed, customizing said cluster.
+
+								Custom resources can be created, updated, and deleted on a running cluster through dynamic registration.
+
+								Once we have installed a custom resource, we can control it with the <kbd>kubectl</kbd> tool just like we would built-in resources (e.g., "pods", etc).
+
+						</p>
+						
+						<p>
+
+							By themselves custom resources allow us to store and retrieve structured data. 
+							When we combine a custom resource with a <b>controller</b> then they become a true declarative API.
+
+							The controller interprets the structured data as a record of the user’s desired state.
+
+							The controller continually takes action to get to this state.
+
+							<b>Custom controllers</b> are especially effective when combined with custom resources (but they can work with any kind of resource).
+
+
+							One example of this combintion (custom controller and custom resource) is the "<b>operator pattern</b>".
+
+							The operator pattern allows us to encode domain knowledge for specific applications into an extension of the Kubernetes API, bringing us to how
+
+
+						</p>						
+
+						</div>
+
+
+
+
+						<p>
+
+							  <A href="https://github.com/kubeflow/tf-operator">TFJob</a> is a custom component for Kubeflow which <A href="https://github.com/kubeflow/tf-operator/blob/master/tf_job_design_doc.md">contains</a> a <b>Kubernetes custom resource descriptor</b> (CRD) and an <b>associated controller</b> ( <A href="https://github.com/kubeflow/tf-operator">tf-operator</a>, which we'll discuss further below).
+
+							The <a href="https://github.com/kubeflow/tf-operator/tree/v0.3-branch/examples/crd">TFJob CRD</a> (a resource with a simple YAML representation) makes it easy to run <a href="https://www.tensorflow.org/deploy/distributed">distributed</a> or non-distributed <a href="https://www.tensorflow.org/">TensorFlow</a> jobs on Kubernetes.
+
+							
+
+						</p>
+
+
+						<p>
+
+							The TFJob CRD informs the cluster how to manage kubernetes resource during job training.
+
+							When we write a new TensorFlow training job for Kubeflow we write a custom .yaml file that references the <a href="https://github.com/kubeflow/tf-operator/tree/v0.3-branch/examples/crd">TFJob CRD</a>, which is a resource with a simple YAML representation.
+
+
+
+						</p>
+
+
+						<p>
+						TensorFlow <a href="https://www.tensorflow.org/deploy/distributed">supports distributed training</a> and can contain 0 or more of the following process types:
+						<ul>
+							<li><b>Chief</b>: <i>responsible for orchestrating training along with other tasks such as checkingpointing the model</i></li>
+							<li><b>Ps</b>: <i>Parameter server, provides a distributed data store for the global model parameter vector</i></li>
+							<li><b>Worker</b>: <i>Works update a local copy of the model parameter vector by training on the input dataset. Sometimes worker 0 may also serve as the Chief</i></li>
+							<li><b>Evaluator</b>: <i>tracks model statistics during training</i></li>
+							
+
+						</ul>						
+						</p>
+
+						<p>
+							With our custom job YAML file we'll setup how these processes execute for our specific job.
+							Let's now take a look at a how to setup a TensorFlow job YAML file.
+
+						</p>
+
+
+
+
+						<h3>An Example Custom TensorFlow Job Configuration in YAML</h3>
+						<p>
+							In this case we'll take a look at how to get the canonical MNIST job running as a <a href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml">Kubeflow job</a>.
+
+							In the short example below we can see how the kind field is referenced as "<code>TFJob</code>" and the job roles are configured in the <code>replicaSpecs</code> section:
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml"></script>
+
+						</p>
+
+
+						<h3>Understanding the Configuration Options</h3>
+
+						<p>
+
+There are two versions of the TFJob API: 
+<ol>
+<li><a href="https://github.com/kubeflow/tf-operator/blob/v0.3-branch/examples/crd/crd-v1alpha2.yaml">v1alpha2</a></li>
+<li><a href="https://github.com/kubeflow/tf-operator/blob/v0.4-branch/examples/crd/crd-v1beta1.yaml">v1beta1</a></li>
+</ol>
+For the purposes of this example we'll forcus on <Code>v1alpha2</code> because we're running on a <a href="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html">deployed Kubeflow 3.5 cluster</a> in this article.
+
+						</p>
+
+						<p>
+							Key entries in the top of the yaml file (and their role) to note:
+
+<pre><code>apiVersion: "kubeflow.org/v1alpha2"
+<b>kind: "TFJob"</b>
+metadata:
+  name: "dist-mnist-pct"</code></pre>
+
+The <code>apiVersion</code> field references the version of our API (v1alpha2).
+
+The <code>kind</code> field references the CRD we want to use, "TFJob".
+
+  The <code>metadata</code> field allows us to set labels and give the job a specific name, along with assigning it to a namespace. The metadata subfields helps uniquely identify the object, including a name string, UID, and optional namespace.
+
+In this example we <code>name</code> our job "dist-mnist-pct".
+
+						</p>
+
+						<h4>Defining Processes with tfReplicaSpecs</h4>
+
+						<p>
+							Next we have the <code>tfReplicaSpecs</code> section, as seen below:
+
+<pre><code>spec:
+  tfReplicaSpecs:
+    PS:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: emsixteeen/tf-dist-mnist-test:1.0</code></pre>
+
+
+							The <code>tfReplicaSpec</code> section defines the processes (distributed) TensorFlow uses: 
+
+							<ul>
+								<li>Master</li>
+								<li>Workers</li>
+								<li>Ps</li>
+
+							</ul>
+							In the code snippet above, we see specifically the definition for the <Code>PS</code> (parameter server).
+
+							A TFJob resource is a collection of TfReplicas.
+							Each TfReplica matches up to a set of TensorFlow processes executing a role in the TensorFlow training job (example: a TensorFlow worker process, or a TensorFlow parameter server process).
+							
+
+						</p>
+
+						<p>
+
+The <a href="https://github.com/kubeflow/tf-operator/blob/v0.3-branch/examples/crd/crd-v1alpha2.yaml">TFJob (v1alpha2)</a> spec has a map that matches the type of replica (the list of processes above) with the <b>TFReplicaSpec</b> for that replica. Each TFReplicaSpec entry has the following 3 sub-fields:
+<ol>
+	<li><b>replicas</b>: <i>replica count of this process type to create for the TFJob instance</i></li>
+	<li><b>template</b>: <i><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#podtemplatespec-v1-core">PodTemplateSpec</a> describing the pod we want to create for each replica (the pod must have a container named 'tensorflow')</i></li>
+	<li><b>restartPolicy</b>: <i>the policy for if/how the pod will be restarted when they exit</i></li>
+
+</ol>
+
+Each TfReplica contains a standard Kubernetes PodTemplate to specify the processes (including TensorFlow) to run in each replica, allowing us to leverage Kubernetes features, which we'll see in the next section when we highlight the <code>Worker</code> definition.
+</p>
+						<h4>Defining TensorFlow Worker Processes for Kubeflow</h4>
+						<p>
+We can see the worker processes defined in the YAML configuration snippet below:
+<pre><code>    Worker:
+      replicas: 2
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: emsixteeen/tf-dist-mnist-test:1.0</code></pre>
+
+              We can see that we're requesting to run 2 worker processes with the <code>replicas: 2</code> configuration line, as we wrote about above in the previous section. We also set the <code>restartPolicy</code> here to "Never".
+
+              We can see in the <code>template</code> section, we are defining a <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#podtemplatespec-v1-core">PodTemplateSpec</a> for the <A href="">pod</a> we want to create for the worker replicas. 
+
+
+              Inside the template, we define a <code>spec</code> (<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#podspec-v1-core">PodSpec</a>) field, which describes the specification of the desired behavior of the pod.
+
+						
+              			</p>
+              			<p>
+              				Inside the <code>spec</code> field, we further define a <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#container-v1-core"><code>containers</code></a> field.
+              				<!-- 
+List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.
+              			-->
+              			This field defines a list of containers we want to assign to the pod. There must be at least 1 container assigned to the pod, and we cannot update this field later. In the configuration example above, we can see the following container fields defined:
+
+              			<ul>
+              				<li><b>name</b>: <i>[ <b style="color: red;">where does this come from?</b> ]</i></li>
+              				<li><b>image</b>: <i>docker image name (for expanding information on docker images, <A href="https://kubernetes.io/docs/concepts/containers/images">check out this resource</a>)</i></li>
+
+              			</ul>
+
+
+              			Some of the other parameters we can set for the <code>containers</code> field are:
+
+							<ul>
+								<li>args</li>
+								<li>command</li>
+								<li>env</li>
+								
+								
+								<li>ports</li>
+								<li>volumeMounts</li>
+								<li>workingDir</li>
+
+							</ul>
+
+
+              			</p>
+<!--
+						<p>
+
+						Understanding TFJob YAML Files
+						<ul>
+							<li>The TFJob CRD defines <b>Kubernetes custom resource descriptor</b> (CRD) and an <b>associated controller</b>, tf-operator</li>
+							<li>The TFJob resource is a collection of TfReplicas</li>
+							<li>Each TfReplica matches up to a set of TensorFlow processes executing a role in the TensorFlow training job (example: a TensorFlow worker process, or a TensorFlow parameter server process)</li>
+
+
+						</ul>
+
+						</p>
+					-->
+
+
+						<p>
+							We now have a good idea of what our custom TensorFlow job needs to look like and we're ready to run our job. First we need to make sure we have a Kubeflow 3.5 cluster ready and installed with the right TFJob CRD to support out job.
+
+
+						</p>			
+						<p> 
+
+							To deploy the TFJob custom resource to our kubernetes cluster we need to <a href="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html">deploy kubeflow to our cluster</a>. This way, when we send our custom TensorFlow job to the cluster, the custom operator <a href="https://github.com/kubeflow/tf-operator">tf-operator</a> is already installed there. Something to note as well is that each TensorFlow job running on Kubeflow is treated as a component in our Kubeflow application.
+
+						</p>
+
+
+
+						<h2>Running the TensorFlow Job on Kubeflow with Kubectl</h2>
+						<p>
+							A Tensorflow job on Kubeflow is made up of:
+							<ol>
+								<li>Custom job <A href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml">.yaml file</a></li>
+								<li>Docker container to execute the code on inside the cluster (<a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/Dockerfile">example</a>)</li>
+								<li>TensorFlow <a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/dist_mnist.py">python code</a> to execute for model training</li>
+
+							</ol>
+
+						</p>
+
+						<p>
+							Now that we have our job ready to go, let's run it from the command line. First we'll get a copy of the <a href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5">job yaml file</a> from github:
+
+						</p>
+
+
+							<pre><code>git clone https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5.git</code></pre>
+
+							<p>
+								Change into the project subdirectory (<kbd>cd</kbd> command) and then run the following <kbd>kubectl</kbd> command:
+
+						</p>
+
+<pre><code>Kubectl apply -f <A href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml">tf_mnist_job.yaml</a></code></pre>
+
+<p>We should now have the job running on the Kubeflow cluster. We won't see the job running and writing to our console screen because it is running on a remote cluster. We can check the job status with the command:</p>
+
+<pre><code>kubectl get pod</code></pre>
+
+<p>Our console output should look something like:</p>
+
+
+<consoleoutput>NAME                                       READY   STATUS    RESTARTS   AGE
+ambassador-f4898cd57-ctsx7                 3/3     Running   0          28d
+ambassador-f4898cd57-ln8p7                 3/3     Running   0          28d
+ambassador-f4898cd57-lxbjg                 3/3     Running   0          28d
+centraldashboard-79645788-2bkht            1/1     Running   0          28d
+dist-mnist-pct-ps-0                        1/1     Running   0          1m
+dist-mnist-pct-worker-0                    1/1     Running   0          1m
+dist-mnist-pct-worker-1                    1/1     Running   0          1m
+tf-hub-0                                   1/1     Running   0          28d
+tf-job-dashboard-7cddcdf9c4-lpktq          1/1     Running   0          28d
+tf-job-operator-v1alpha2-6566f45db-nxkxr   1/1     Running   0          28d</consoleoutput>
+
+<p><br/></p>
+
+
+
+<h3>Successful Job Completion</h3>
+<p>
+To check the progress of our job, we want to check the logs of the local TensorFlow process on the cluster. We do that with the following command:
+</p>
+
+<pre><code>kubectl logs dist-mnist-pct-worker-0</code></pre>
+
+<p>
+The logs will look something like the output sample below:
+</p>
+
+
+<consoleoutput>1551717385.842652: Worker 0: training step 10020 done (global step: 19974)
+1551717385.855453: Worker 0: training step 10021 done (global step: 19976)
+1551717385.863761: Worker 0: training step 10022 done (global step: 19978)
+1551717385.874690: Worker 0: training step 10023 done (global step: 19979)
+1551717385.886346: Worker 0: training step 10024 done (global step: 19981)
+1551717385.896427: Worker 0: training step 10025 done (global step: 19983)
+1551717385.910320: Worker 0: training step 10026 done (global step: 19984)
+1551717385.922846: Worker 0: training step 10027 done (global step: 19986)
+1551717385.934626: Worker 0: training step 10028 done (global step: 19988)
+1551717385.945602: Worker 0: training step 10029 done (global step: 19990)
+1551717385.959762: Worker 0: training step 10030 done (global step: 19992)
+1551717385.973269: Worker 0: training step 10031 done (global step: 19994)
+1551717385.984852: Worker 0: training step 10032 done (global step: 19995)
+1551717385.995786: Worker 0: training step 10033 done (global step: 19997)
+1551717386.009679: Worker 0: training step 10034 done (global step: 19999)
+1551717386.025252: Worker 0: training step 10035 done (global step: 20001)
+Training ends @ 1551717386.025338
+Training elapsed time: 148.364505 s
+After 20000 training step(s), validation cross entropy = 1998.18</consoleoutput>
+
+<p><br/></p>
+
+
+<h3>Checking a Process Logs on Failure</h3>
+
+<p>
+Sometimes we'll notice a job that seems hung or gives an error message in Kubernetes. We can check the logs to see what is going on inside the container with the same command:
+</p>
+
+<pre><code>kubectl logs dist-mnist-pct-worker-0</code></pre>
+<p>
+The logs will look something like the output sample below:
+</p>
+
+<consoleoutput>INFO|2019-03-04T16:26:47|/opt/launcher.py|48| Launcher started.
+INFO|2019-03-04T16:26:47|/opt/launcher.py|73| Command to run: --job_name=worker --ps_hosts=dist-mnist-pct-ps-0:2222 --worker_hosts=dist-mnist-pct-worker-0:2222,dist-mnist-pct-worker-1:2222 --task_index=0
+INFO|2019-03-04T16:26:47|/opt/launcher.py|15| Running --job_name=worker --ps_hosts=dist-mnist-pct-ps-0:2222 --worker_hosts=dist-mnist-pct-worker-0:2222,dist-mnist-pct-worker-1:2222 --task_index=0
+Traceback (most recent call last):
+  File "/opt/launcher.py", line 79, in <module>
+    run_and_stream(command)
+  File "/opt/launcher.py", line 17, in run_and_stream
+    stderr=subprocess.STDOUT)
+  File "/usr/lib/python2.7/subprocess.py", line 711, in __init__
+    errread, errwrite)
+  File "/usr/lib/python2.7/subprocess.py", line 1343, in _execute_child
+    raise child_exception
+OSError: [Errno 2] No such file or directory</consoleoutput>
+
+<p><br/></p>
+
+<h3>Delete a Job</h3>
+
+<p>
+Periodically we will mis-configure a job or have a missing container in a repo. The job will fail and we need to clear it out of kubeflow. To do this we need to delete the job which we can do with the following command:
+</p>
+
+
+<pre><code>kubectl delete -f [file.yaml]</code></pre>
+
+<p>The result of this command will look similar to the console output below:</p>
+
+<consoleoutput>tfjob.kubeflow.org "dist-mnist-pct" deleted</consoleoutput>
+
+<p><br/></p>
+
+
+
+						<h2>Accessing the TJob User Interface</h2>
+						<p>
+							To get to the TensorFlow dashboard included with Kubeflow 3.5 we need to setup ports correctly with the command:
+
+							<code>kubectl port-forward svc/ambassador 8080:80</code>
+
+							
+
+						</p>
+						<p>
+							Now we go to our web browser and load the url: <a href="http://localhost:8080/">http://localhost:8080/</a> and we should see something like the image below:
+
+						</p>
+
+						<img src="./images/kubeflow_ui_localhost.png" style="width: 916px; height: 302px; margin: 12px; border: 0px solid #999999;" />
+
+
+
+
+						<h2>Optional: Building Custom TensorFlow Docker Containers</h2>
+
+						<p>
+							This tutorial has dealt with running a pre-made TensorFlow job running in pre-built containers. Eventually the reader will want to customize their own job and that will likely involve updating the container image so in this section we give the reader some basics on how to do that. 
+
+						</p>
+						<p>
+							To launch a container we run an image. An image includes everything needed to run an application (code, runtime, libraries, etc) as an executable image. In our TensorFlow job's cases, it includes things like the TensorFlow library dependencies and our python training code to run on each container.
+
+						</p>
+						<p>
+							<A href="https://hub.docker.com/">Docker hub</a> provides a repository for container images to be stored, searched, and retrieved. Other repositories include <a href="https://cloud.google.com/container-registry/">Google's Container Registry</a> and on-premise <a href="https://jfrog.com/artifactory/">Artifactory</a> installs.
+						</p>
+
+						<p>
+
+							In the code snippet below we can see the <a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/Dockerfile">docker file</a> used to build this tutorial's example container image.
+
+							
+							
+						</p>
+
+
+
+
+							<script src="http://gist-it.appspot.com/https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/Dockerfile"></script>
+
+
+
+
+
+
+						<p>(Assuming the reader has a docker hub account), we can build the docker file and tag it into our docker hub repository with the command:</p>
+
+<pre><code>docker build -f Dockerfile -t [namespace/tag:version] ./
+</code></pre>
+
+						<h2>Summary</h2>
+						<p>
+							In this article we walked the reader through an explanation of how TensorFlow jobs work on Kubeflow. We also showed the reader how to run their own custom TensorFlow jobs on Kubeflow and looked at the various ways to customize a job. In future articles we'll look at how to leverage different data storage / loading patterns and how to launch jobs from JupyterHub notebooks on Kubeflow.
+
+						</p>
+
+						<p>
+							If working with machine learning workflows on Kubeflow is interesting to your organization, reach and and <a href="../contact.html">continue the conversation</a> with us.
+
+
+						</p>
+
+
+<!--
+
+
+						<p>
+							What does <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"><kbd>kubectl create</kbd></a> do?
+
+						</p>
+
+						<p>
+							Create a resource from a file or from stdin.
+
+							JSON and YAML formats are accepted.
+
+						</p>
+						<p>
+							creates a resource on the kubernetes cluster refernece in the current context for <kbd>kubectl</kbd>
+
+						</p>
+						<p>
+
+							What is a Kubernetes Deployment?
+-->
+
+							<!--
+Once you have a running Kubernetes cluster, you can deploy your containerized applications on top of it. To do so, you create a Kubernetes Deployment configuration. The Deployment instructs Kubernetes how to create and update instances of your application.
+						-->
+
+<!--
+						</p>
+
+						<p>
+
+							What does <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"><kbd>kubectl apply</kbd></a> do?
+
+						</p>
+-->
+
+
+
+
+
+
+<p><br/></p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

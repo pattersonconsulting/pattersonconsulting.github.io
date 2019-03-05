@@ -17,21 +17,21 @@
 		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Patterson Consulting: Running TensorFlow Jobs on Kubeflow 3.5</title>
+	<title>Patterson Consulting: Running Distributed TensorFlow Jobs on Kubeflow 3.5</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="blog page for Patterson Consulting" />
 	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, kubernetes, kubeflow, google cloud, tensorflow" />
 	<meta name="author" content="Patterson Consulting" />
 
-	<meta property="og:title" content="Running TensorFlow Jobs on Kubeflow 3.5"/>
+	<meta property="og:title" content="Running Distributed TensorFlow Jobs on Kubeflow 3.5"/>
 	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png"/>
 	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html"/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content="This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5."/>
+	<meta property="og:site_name" content="Patterson Consulting Blog"/>
+	<meta property="og:description" content="This tutorial is on how to run a distributed TensorFlow job on Kubeflow 3.5."/>
 	
 
-	<meta name="twitter:title" content="Running TensorFlow Jobs on Kubeflow 3.5" />
-	<meta data-rh="true" property="twitter:description" content="This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5."/>
+	<meta name="twitter:title" content="Running Distributed TensorFlow Jobs on Kubeflow 3.5" />
+	<meta data-rh="true" property="twitter:description" content="This tutorial is on how to run a distributed TensorFlow job on Kubeflow 3.5."/>
 
 	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/vision_apps_bg.png" />
 	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/running_tensorflow_on_kubeflow_3_5.html" />
@@ -116,16 +116,6 @@
 		</header>
 		<!-- Header -->
 
-<!--
-		<div class="fh5co-slider" >
-			<div class="container" >
-				
-				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
-						<h1>Rail, Aquariums, and Data</h1>
-				</div>		
-			</div>
-		</div>
--->
 
 		
 		<div id="fh5co-intro" class="fh5co-section">
@@ -134,11 +124,15 @@
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h1>Running TensorFlow Jobs on Kubeflow 3.5</h1>
+						<h1>Running Distributed TensorFlow Jobs on Kubeflow 3.5</h1>
 
 						<p>
-This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5. In a previous tutorial, we <a href="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html">showed how to setup Kubeflow 3.5</a> on Google Cloud. For a review on why Kubeflow is compelling in the current machine learning infrastructure landscape, <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubeflow.html">check out our report</a>.
+This tutorial is on how to run a distributed TensorFlow job on Kubeflow 3.5. In a previous tutorial, we <a href="http://www.pattersonconsultingtn.com/blog/setup_kubeflow_3_5_gke.html">showed how to setup Kubeflow 3.5</a> on Google Cloud. For a review on why Kubeflow is compelling in the current machine learning infrastructure landscape, <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubeflow.html">check out our report</a> and our <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_ai_interview.html">2019 Trends interview notes on artificial intelligence and machine learning</a>.
 
+
+						</p>
+						<p>
+							A trend we see with our customers is where they want to manage workloads that can easily move between an on-premise infrastructure and a similar cloud managed infrastructure. Kubernetes is <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubernetes.html">quickly becoming</a> the platform for doing just this. While TensorFlow already has a distributed execution mode available, some teams want to manage their systems with kubernetes for the aforementioned reasons. From that perspective we saw it relevant to put together this tutorial.
 
 						</p>
 
@@ -146,46 +140,41 @@ This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5. In a prev
 
 						<h2>Concepts in this tutorial:</h2>
 						<p>
+							In this article we'll get a better understanding of:
 							<ul>
-								<li>Building the Docker container for the job</li>
+								<li>Overall architecture of distributed TensorFlow job execution on Kubeflow 3.5</li>
+								<li>Working with .yaml files for Kubernetes custom resource definitions</li>
+								<li>How to setup a custom TensorFlow job on Kubeflow</li>
 								<li>Managing containers and container registries</li>
-								<li>Working with .yaml files for Kubernetes CRDs</li>
 								<li>Working with <kbd>kubectl</kbd> to operate the remote Kubernetes cluster</li>
 
 							</ul>
 
-							In this tutorial we'll work through new and old concepts to build a working knowledge on how to run a TensorFlow job on Kubeflow 3.5. We'll start out with a high-level review of what we're going to do and then dig into the sub-topics involved in running the job.
-
-
-
-							
+							In this tutorial we'll work through new and old concepts to build a working knowledge on how to run a <a href="https://github.com/tensorflow/examples/blob/master/community/en/docs/deploy/distributed.md">distributed TensorFlow</a> job on <A href="https://github.com/kubeflow">Kubeflow 3.5</a>. We'll start out with a high-level review of what we're going to do and then dig into the sub-topics involved in running the job.
 
 						</p>
 
 
 
-						<h2>High-Level Workflow for Running a TensorFlow Job on Kubeflow</h2>
 
+
+						<h2>Overview of TensorFlow on Kubeflow</h2>
 						<p>
 							The high-level set of tasks needed to run a TensorFlow job on Kubeflow are listed below.
 
 							<ol>
-								<li>Build the docker container image containing our code and dependencies</li>
-								<li>Register contain with container registry (e.g., "docker hub", "artifactory", etc)</li>
-								<li>Build a .yaml file based on the CRD "TFJob" describing our job (container image, program or script for training, execution parameters, etc)</li>
-								<li>Configure storage and copy data into cluster</li>
+								<LI>Write/configure (or re-use) python TensorFlow training code</li>
+								<li>Build a .yaml file based on the custom resource definition "TFJob" describing our job (container image, program or script for training, execution parameters, etc)</li>
+								<li>Find an existing container or build a docker container image containing our code and dependencies</li>
 								<li>Send the job yaml file to the cluster for execution with <kbd>kubectl</kbd></li>
 
 							</ol>
 
 						</p>
 
-
-
-						<h2>Overview of TensorFlow on Kubeflow</h2>
 						<p>
-							Out of the box, Kubernetes does not understand how distributed TensorFlow works. 
-							It needs help understanding where the daemons are running and how they talk with one another. We can see the general flow of how the different parts of Kubeflow work together to get TensorFlow containers working on Kubernetes and coordinating between worker containers.
+							Out of the box, Kubernetes does not understand <a href="https://github.com/tensorflow/examples/blob/master/community/en/docs/deploy/distributed.md">how distributed TensorFlow works</a>. 
+							Kubernetes needs help understanding where the daemons are running and how they talk with one another. We can see the general flow of how the different parts of Kubeflow work together to get TensorFlow containers working on Kubernetes and coordinating between worker containers.
 
 							
 
@@ -195,7 +184,7 @@ This tutorial is on how to run a basic TensorFlow job on Kubeflow 3.5. In a prev
 						<img src="./images/tf_on_kf_3_5.png" style="width: 991px; height: 441px; margin: 12px; border: 0px solid #999999;" />
 
 						<p>
-							In the sections below we'll explain the individual parts from the diagram above, focusing on <A href="https://github.com/kubeflow/tf-operator/tree/v0.3-branch/examples/crd">TFJob</a>.
+							In the sections below we'll explain the individual parts from the diagram above, focusing on <A href="https://github.com/kubeflow/tf-operator/tree/v0.3-branch/examples/crd">TFJob</a>, the custom component that manages distributed TensorFlow excecution on Kubeflow.
 						</p>
 
 						<h3>What is TFJob?</h3>
@@ -455,16 +444,27 @@ List of containers belonging to the pod. Containers cannot currently be added or
 						<p>
 							A Tensorflow job on Kubeflow is made up of:
 							<ol>
-								<li>Custom job <A href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml">.yaml file</a></li>
-								<li>Docker container to execute the code on inside the cluster (<a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/Dockerfile">example</a>)</li>
 								<li>TensorFlow <a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/dist_mnist.py">python code</a> to execute for model training</li>
 
+								<li>Custom job <A href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml">.yaml file</a></li>
+								<li>Docker container to execute the code on inside the cluster (<a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/Dockerfile">example</a>)</li>
+
+
 							</ol>
+							For the purposes of this article we're going to re-use some <a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/dist_mnist.py">existing training code</a> for distributed training on the canonical <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>. We've already setup a pre-built container image on docker hub (<a href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5/blob/master/tf_mnist_job.yaml#L14">referenced in the job yaml file</a>) for the reader to use containing the distributed training python code. All we have remaining to setup this job is to:
+
+							<ol>
+								<li>Git clone a repository containing the job yaml file already setup for the reader</li>
+								<li>Run the job on the cluster with <kbd>kubectl</kbd></li>
+
+
+							</ol>
+							So let's get to it.
 
 						</p>
 
 						<p>
-							Now that we have our job ready to go, let's run it from the command line. First we'll get a copy of the <a href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5">job yaml file</a> from github:
+							First we'll get a copy of the <a href="https://github.com/pattersonconsulting/tf_mnist_kubeflow_3_5">job yaml file</a> from github:
 
 						</p>
 
@@ -584,11 +584,13 @@ Periodically we will mis-configure a job or have a missing container in a repo. 
 						<p>
 							To get to the TensorFlow dashboard included with Kubeflow 3.5 we need to setup ports correctly with the command:
 
-							<code>kubectl port-forward svc/ambassador 8080:80</code>
+						</p>
+
+<pre><code>kubectl port-forward svc/ambassador 8080:80</code></pre>
 
 							
 
-						</p>
+						
 						<p>
 							Now we go to our web browser and load the url: <a href="http://localhost:8080/">http://localhost:8080/</a> and we should see something like the image below:
 
@@ -636,13 +638,20 @@ Periodically we will mis-configure a job or have a missing container in a repo. 
 <pre><code>docker build -f Dockerfile -t [namespace/tag:version] ./
 </code></pre>
 
+<br/><br/>
+
 						<h2>Summary</h2>
+				<div style="float: right; margin: 12px; border: 0px solid #999999;">
+					<iframe src="http://www.oreilly.com/authors/widgets/782.html" height="380px" width="200px" scrolling="no" frameborder="0"></iframe>							
+				</div>	
+
 						<p>
 							In this article we walked the reader through an explanation of how TensorFlow jobs work on Kubeflow. We also showed the reader how to run their own custom TensorFlow jobs on Kubeflow and looked at the various ways to customize a job. In future articles we'll look at how to leverage different data storage / loading patterns and how to launch jobs from JupyterHub notebooks on Kubeflow.
 
 						</p>
 
 						<p>
+							For more perspective on the space, <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_kubeflow.html">check out our report</a> and our <a href="http://www.pattersonconsultingtn.com/blog/trends_2019_ai_interview.html">2019 Trends interview notes on artificial intelligence and machine learning</a>.
 							If working with machine learning workflows on Kubeflow is interesting to your organization, reach and and <a href="../contact.html">continue the conversation</a> with us.
 
 

@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Tutorial - Using The TensorFlow Estimator Design Pattern</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Using The TensorFlow Estimator Design Pattern</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: April 19th, 2019</p>
+
+						<p>
+This tutorial covers the basics of how to use <a href="https://www.tensorflow.org/">TensorFlow's</a> <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator">Estimator API</a> to write modeling code that will run in a consistent fashion in multiple execution modes. In a previous article we looked at how to run a pre-built <a href="./running_tensorflow_on_kubeflow_3_5.html">TensorFlow program in distributed mode on Kubeflow</a>. However, the <a href="https://github.com/kubeflow/tf-operator/blob/v0.3.0/examples/v1alpha2/dist-mnist/dist_mnist.py">TensorFlow code itself was rather complex</a> as it had the user dealing with all sorts of things beyond focusing on the model training itself. In this tutorial the reader will learn:
+<ul>
+<li>What is the Estimator API?</li>
+<li>Why is it relevant?</li>
+<li>Sample code to model with Iris dataset locally with an Estimator</li>
+</ul>
+
+Lets jump right into "What is the Estimator API?"
+
+						</p>
+
+						<h2>Introduction to TensorFlow's Estimator API</h2>
+						<p>
+							For newer readers who aren't familiar with the landscape of machine learning tooling, we'll start off by defining TensorFlow:
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications."</i></p>
+						  <p><a href="https://www.tensorflow.org/">https://www.tensorflow.org/</a></p>
+						</blockquote>
+							
+
+Building on that definition, the TensorFlow <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator">Estimator API</a> is a high-level TensorFlow API that makes machine learning programming easier when dealing with different execution modes (e.g., "local", "distributed"). Historically TensorFlow coding has involved a lot of low-level details such as placing specific operations on specific GPUs. <a href="https://www.tensorflow.org/guide/estimators">Estimators make sharing implementations of models easier</a> to share between data scientists. Another aspect of Estimators is that they build the TensorFlow graph for you and there is no explicit Session. Many data scientists do not want to have to deal with these type details, so Estimators make things considerably simpler. Ultimately it allows the user to get consistent results regardless if they are executing locally or in the cloud in distributed mode.
+</p>
+<p>
+Estimators provide a standard way to deal with the following actions:
+
+<ul>
+<li>training</li>
+<li>evaluation</li>
+<li>prediction</li>
+<li>export for serving</li>
+</ul>
+
+</p>
+<p>
+There are many pre-built Estimators already in the TensorFlow library, but you may write your own custom <code>Estimator</code> as well. Any <code>Estimator</code>, built-in or a custom one we create, will be based on the <Code>tf.estimator.Estimator</code> class.
+						</p>
+
+						<h2>Keras Support with Estimators</h2>	
+
+						<p>
+							TensorFlow now supports converting any Keras model into an <code>Estimator</code>, speeding up your model development.
+
+							This is done by defining a model with <code>tf.keras.Model</code> and then converting the model to an <code>tf.estimator.Estimator</code> object with the <Code>tf.keras.estimator.model_to_estimator()</code> method. Once we've got an <code>Estimator</code> representation of the Keras model, we can train the model in the same way we'd train any <Code>Estimator</code> model.
+
+
+						</p>
+
+						<h2>Deprecation of the Experiment Class</h2>
+
+
+						<p>
+
+							Previously we might have used the <a href="https://www.tensorflow.org/api_docs/python/tf/contrib/learn/Experiment">Experiment</a> class for building TensorFlow training code, but at this point the Experiment class has been marked deprecated. The Estimator class should now be directly used in place of where we'd have used the Experiment class, and it appears to be a better design pattern as well.
+
+						</p>
+
+
+
+						<h2>Writing TensorFlow Code with Estimators</h2>
+						<p>
+
+
+						The primary steps necessary to write TensorFlow training code with Estimators are:
+						<ol>
+						<li>Build your Estimator model or use a pre-built one already in the TensorFlow library</li>
+						<li>Define how data is fed into the model for both training and test datasets (often these functions are setup the same)</li>
+						<li>Define training and evaluation specifications (<code>TrainSpec</code> and <code>EvalSpec</code>, respectively) to be passed to <code><A href="https://www.tensorflow.org/api_docs/python/tf/estimator/train_and_evaluate">tf.estimator.train_and_evaluate</a></code></li>
+						</ol>
+						The <code>EvalSpec</code> can also include information on how to export your trained model for prediction (serving).
+						</p>
+						<p>
+						The <code>.train_and_evaluate(...)</code> method provides a consistent interaface for training locally or in the cloud, non-distributed or in a distributed-fashion. Check out the TensorFlow documentation for more details. In the next section we show an example of the Estimator API in practice.
+						</p>
+
+
+						<h2>Example TensorFlow Code for Modeling the Iris Dataset</h2>
+						<p>
+						We include below a basic <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/tf_estimator_iris/tf_estimator_iris_single.py">TensorFlow Estimator API example</a> code listing. This Estimator API example models the canoncical <a href="http://archive.ics.uci.edu/ml/datasets/iris">Iris dataset</a>. While this example is not a complex deep learning model, the Iris dataset is simple and well-understood. The example below allows us to see the Estimator API in action without dealing with the distractions of a more complex model.
+
+	<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/tf_estimator_iris/tf_estimator_iris_single.py"></script>
+
+						</p>
+						<p>
+
+							In the sections below, we provide commentary on the following areas of the code from above:
+
+							<ul>
+								<li>Loading the initial dataset, creating feature columns</li>
+								<li>Configuring our TensorFlow job with the <code>RunConfig</code> class</li>
+								<li>Setting up an <Code>Estimator</code> with the <code>DNNClassifier</code> class</li>
+								<li>Setting up the <code>TrainSpec</code> class</li>
+								<li>Setting up the <code>EvalSpec</code> class</li>
+								<li>Training the model</li>
+
+							</ul>
+
+						</p>
+						<h2>Loading the Iris Dataset</h2>
+						<p>
+							We use the include iris_data.py util functions to download and load the Iris dataset for us locally, as seen in the code snippet below (from the program listing above):
+
+						</p>
+
+<pre><code>    # Fetch the data
+    (train_x, train_y), (test_x, test_y) = iris_data.load_data()
+
+    # Feature columns describe how to use the input.
+    my_feature_columns = []
+    for key in train_x.keys():
+        my_feature_columns.append(tf.feature_column.numeric_column(key=key))
+</code></pre>
+						<p>
+							The <A href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/tf_estimator_iris/iris_data.py">iris_data.py</a> utilities do a few things under the hood:
+
+							<ol>
+								<li>download the dataset</li>
+								<li>read the CSV datasets with <A href="https://pandas.pydata.org/">Pandas</a> into dataframes</li>
+								<li>creates dataset features and labels</li>
+								<li>creates separate train and test datasets</li>
+							</ol>
+
+							Once we have our data, we can move on and configure our modeling job with the <Code>RunConfig</code> class.
+
+
+						</p>						
+
+						<h2>Configuration with RunConfig</h2>
+						<p>
+							The <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/RunConfig">RunConfig</a> class is part of the Estimator API in TensorFlow and it specifies the configurations for an <code>Estimator</code> run. 
+						</p>
+						<p>
+							We can see the <code>RunConfig</code> class in action in our code in the snippet below:
+
+<pre><code>    config = tf.estimator.RunConfig(
+                model_dir="/tmp/tf_estimator_iris_model",
+                save_summary_steps=1,
+                save_checkpoints_steps=100,
+                keep_checkpoint_max=3,
+                log_step_count_steps=10)
+</code></pre>							
+
+						<p>
+							This configuration does a few things for us, but primarily sets things like the directory where we'll save our <a href="https://www.tensorflow.org/guide/checkpoints">model checkpoints</a> (e.g., <code>model_dir="/tmp/tf_estimator_iris_model"</code>) and then how often to checkpoint our model (e.g., <code>save_checkpoints_steps=100</code>). All of the properties for the RunConfig class are listed in the documentation, which we show the init function here for:
+						</p>
+
+<pre><code>__init__(
+    model_dir=None,
+    tf_random_seed=None,
+    save_summary_steps=100,
+    save_checkpoints_steps=_USE_DEFAULT,
+    save_checkpoints_secs=_USE_DEFAULT,
+    session_config=None,
+    keep_checkpoint_max=5,
+    keep_checkpoint_every_n_hours=10000,
+    log_step_count_steps=100,
+    train_distribute=None,
+    device_fn=None,
+    protocol=None,
+    eval_distribute=None,
+    experimental_distribute=None
+)</code></pre>
+
+						<p>
+							There are other properties that can be set for <code>RunConfig</code>, but we'll save those for a future article. Now that we've looked at how to configure our job, let's now move on to how to create the <code>Estimator</code> itself.
+
+
+						</p>
+
+						<h2>Setting up an Estimator with the DNNClassifier</h2>
+
+				<div style="float: right; margin: 12px; border: 0px solid #999999;">
+					<iframe src="http://www.oreilly.com/authors/widgets/782.html" height="380px" width="200px" scrolling="no" frameborder="0"></iframe>							
+				</div>	
+
+
+						<p>
+							For this example we're going to build a small multi-layer perceptron neural network to model our Iris dataset.
+
+						</p>
+
+<pre><code>    # Build 2 hidden layer DNN with 10, 10 units respectively.
+    estimator = tf.estimator.DNNClassifier(
+        feature_columns=my_feature_columns,
+        model_dir="/tmp/tf_estimator_iris_model",
+        # Two hidden layers of 10 nodes each.
+        hidden_units=[10, 10],
+        # The model must choose between 3 classes.
+        n_classes=3)
+</code></pre>
+						<p>
+							In the code section above, we can see the <code>DNNClassifier</code> class being instantiated defining our feature columns, where we'll train the model, and then the size of the hidden layers (10 nodes per layer). Finally we tell TensorFlow that we want the model to give us an output based on 3 classes. Let's now move on to setting up the <code>TrainSpec</code> for the Estimator.
+
+
+
+						</p>						
+
+
+						<h2>TrainSpec and Data Input</h2>
+<pre><code>    train_input_fn = lambda:iris_data.train_input_fn(train_x, train_y,
+                                                 opts.batch_size)
+
+
+    train_spec = tf.estimator.TrainSpec(input_fn=train_input_fn,
+                                        max_steps=1000)    
+</code></pre>
+
+						<p>
+							In the code section above we can see two lines. The first line builds a <Code>train_input_fn</code> with the <code>lambda</code> keyword in python based on the <code>train_input_fn(...)</code> method in our iris_utils.py utilities.
+
+
+						</p>
+						<p>
+							The second line takes the <Code>train_input_fn</code> we created and passes it to the <code>TrainSpec</code> class in the Estimator API. This class instance will be used by the Estimator when we train the model in a moment.
+
+
+						</p>
+
+						<p>Oftentimes we will not have a pre-made input function for our Estimator.
+						To write a custom input function for TrainSpec in Estimators, check out the TensorFlow documentation on <a href="https://www.tensorflow.org/guide/datasets_for_estimators">datasets for Estimators</a>. Now we'll move on to evaluation with Estimators.
+
+						
+						</p>
+
+
+						<h2>EvalSpec and Model Evaluation</h2>
+
+<pre><code>    # Evaluate the model.
+    eval_input_fn = lambda:iris_data.eval_input_fn(test_x, test_y,
+                                                opts.batch_size)
+
+    eval_spec = tf.estimator.EvalSpec(input_fn=eval_input_fn,
+                                      steps=None,
+                                      start_delay_secs=0,
+                                      throttle_secs=60)
+</code></pre>
+
+						<p>
+							Similar to <code>TrainSpec</code>, <code>EvalSpec</code> uses the lambda keyword in Python to create an input function that is then used directly as a parameter in the <code>EvalSpec</code> class.
+
+
+						</p>
+
+						<h2>Training Method for Estimators</h2>
+
+<pre><code>    tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)
+</code></pre>
+
+						<p>Lastly, we'll highlight how it all comes together for training an <code>Estimator</code>. We use the <code>Estimator</code>, <code>TrainSpec</code>, and <code>EvalSpec</code> as parameters to the <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/train_and_evaluate">tf.estimator.train_and_evaluate( ... )</a> method. Veterans of TensorFlow programming instantly recognize that this function encapsulates a number of things for training runs and is far easier to use consistently for data scientists. Another interesting aspect of this method is how it can train models in a <a href="https://github.com/tensorflow/examples/blob/master/community/en/docs/deploy/distributed.md">distributed fashion for TensorFlow</a> without changing the training code.
+
+						</p>
+
+						<h2>Running Our Estimator TensorFlow Program</h2>
+
+						<p>
+							To run this example application, first we need to pull the code down from github:
+						</p>
+<pre><code>git clone https://github.com/pattersonconsulting/tensorflow_estimator_examples.git
+</code></pre>
+<p>
+Next, change into the new project directory that was just created:
+</p>
+<pre><code>cd tensorflow_estimator_examples
+</code></pre>
+<p>
+	The user needs to account for dependency management in running any Python program. The two common options are:
+	<ul>
+		<li><A href="https://www.anaconda.com/">Anaconda</a></li>
+		<li><a href="www.docker.com">Docker</a> containers</li>
+
+	</ul>
+
+	Once you have at least TensorFlow 1.12.0 installed locally, you should be able to run the example with the command:
+
+</p>
+<pre><code>python tf_estimator_iris_single.py
+</code></pre>
+
+						<p>
+							The console output should look similar to the output shown below:
+						</p>
+
+<consoleoutput>INFO:tensorflow:global_step/sec: 116.118
+INFO:tensorflow:loss = 10.430826, step = 401 (0.862 sec)
+INFO:tensorflow:global_step/sec: 147.967
+INFO:tensorflow:loss = 6.974675, step = 501 (0.675 sec)
+INFO:tensorflow:global_step/sec: 161.068
+INFO:tensorflow:loss = 5.9006176, step = 601 (0.621 sec)
+INFO:tensorflow:global_step/sec: 152.809
+INFO:tensorflow:loss = 3.3194108, step = 701 (0.654 sec)
+INFO:tensorflow:global_step/sec: 167.913
+INFO:tensorflow:loss = 7.634383, step = 801 (0.596 sec)
+INFO:tensorflow:global_step/sec: 175.906
+INFO:tensorflow:loss = 5.5086565, step = 901 (0.568 sec)
+INFO:tensorflow:Saving checkpoints for 1000 into /tmp/tf_estimator_iris_model/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2019-04-18-19:00:17
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from /tmp/tf_estimator_iris_model/model.ckpt-1000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Finished evaluation at 2019-04-18-19:00:18
+INFO:tensorflow:Saving dict for global step 1000: accuracy = 0.93333334, average_loss = 0.06142591, global_step = 1000, loss = 1.8427773
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 1000: /tmp/tf_estimator_iris_model/model.ckpt-1000
+INFO:tensorflow:Loss for final step: 2.909092.</consoleoutput>
+
+
+						<h2>Summary</h2>
+						<p>
+							In this example we walked through the new Estimator API for TensorFlow and highlighted some of its core concepts. We hope the reader enjoyed the walkthrough. In future articles we'll take a look at how this example can be extended to distributed TensorFlow and then further executed on systems such as Kubeflow for on-premise/cloud/hybrid operations.
+
+						</p>
+						<p>
+							If you'd like further help in topics such as:
+
+							<ul>
+								
+								<li>General machine learning education</li>
+								<li>Advanced deep learning modeling</li>
+								<li>Enterprise machine learning infrastructure</li>
+
+							</ul>
+
+							please <a href="/contact.html">reach out to us and say hello</a>.
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

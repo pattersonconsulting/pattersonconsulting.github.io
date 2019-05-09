@@ -1,0 +1,1240 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: A Practical Guide for Data Scientists Using GPUs with TensorFlow</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="A Practical Guide for Data Scientists Using GPUs with TensorFlow"/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="A Practical Guide for Data Scientists Using GPUs with TensorFlow" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		th, td {
+		  padding: 15px;
+		  text-align: left;
+		  border-bottom: 1px solid #ddd;
+		  border-right: 1px solid #ddd;
+
+		}
+		tr:hover {background-color: #f5f5f5;}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>A Practical Guide for Data Scientists Using GPUs with TensorFlow</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: May 9th, 2019</p>
+
+
+						<p>
+							In a <a href="tensorflow_estimator_design_pattern.html">previous post</a> we showed how to use the basic TensorFlow Estimator API in a simple example. 
+
+							In this tutorial we'll take the code from the previous example and run it as a multi-GPU TensorFlow training program to show how the Estimator API makes this easy. Specifically we'll look at how to run a tensorflow job on GCP using a gpu on a pre-built VM.
+						</p>
+						<p>
+
+							Readers of this tutorial will learn about:
+
+							<ul>
+							<li>Setting up a GCP instance with GPUs</li>
+							<li>Enabling quotas for GPUs on GCP</li>
+							<li>Setting up an instance image for deep learning workflows</li>
+							<li>Gaining a practical understanding of executing code on GPUs</li>
+
+							</ul>
+
+							It is common to see articles on the internet extolling the benefits of using GPUs with machine learning and deep learning.
+							However, many practioners find it is not easy to just "turn on GPUs". 
+
+
+						</p>
+						<p>
+							This article is broken into three phases:
+							<ol>
+								<li>Getting an execution environment running for GPUs</li>
+								<li>Setting up our modeling workflow for GPUs</li>
+								<li>Running our workflow and understanding performance mechanics</li>
+							</ol>
+
+							Along the way we'll call out some of the challenges in the space arena of machine learning workflow deployment across different environments.
+
+
+						</p>
+
+						<h2>Getting an Execution Environment Running for GPUs</h2>
+
+						
+
+<!--
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/generic_program_stack.png" style="width: 205px; height: 368px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 215px;">A generic program stack</p>
+						</div>
+-->
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/local_cpu_stack.png" style="width: 411px; height: 366px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 410px;">Our application as a local stack</p>
+						</div>						
+
+
+
+						<p>
+							Changing our code to run on GPUs isn't as simple as moving from and AMD CPU to an Intel CPU, as we're dealing with a different type of processor which is attached via a PCI-bus (typically) and needs its own drivers for the operating system. We tend not to think about all of these details until we try and move our modeling code from our local environment to some other system.
+						</p>
+						<p>
+
+							
+							Building machine workflows involve a lot of effort, and we end up chaining multiple tools together to build our models. However, we tend to take it for granted how wired into the execution environment our workflow have become.
+
+						</p>
+
+						<p>
+							As soon as we start thinking about moving our machine learning workflow, we're confronted by multiple challenges which include:
+							
+
+
+							<ul>
+								<li>Getting access to different types of hardware (GPU, TPU, etc)</li>
+								
+								<li>Coding differences for executing on CPU vs GPU</li>
+								<li>Different drivers required for GPU, TPU, etc</li>
+								<li>Optimizing <A href="https://www.tensorflow.org/guide/performance/overview">TensorFlow performance</a> in different execution modes</li>
+								
+
+							</ul>
+
+							To the right we show a generic program stack of the parts of a program we might be running on our laptop. Most of the time we don't think of our programs in this way because a lot of the layers already exist on our local environment, and we're focused on the problem more in terms of "what dependencies am I missing to get this going?". 
+						</p>
+						<p>
+
+							When we are talking about using GPUs, we're talking about changes to our execution platform which might include:
+
+							
+							<ul>
+								
+								<li>New drivers: Nvidia gpu</li>
+								<li>A different OS: Ubuntu</li>
+								<li>Different hardwre: GPUs</li>
+
+
+							</ul>
+							Now that we've framed what needs to happen, let's look at one way to solve for porting our code to a new execution platform on the cloud.
+						</p>
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+						<h3>A Note on GPUs, Training Speed, and Predictive Accuracy</h3>
+
+						  <p>
+						  	We want to make a clear distinction around what we gain from GPUs as many times this seems to be conflated in machine learning marketing.
+
+						  </p>
+						  <p>
+							We define "<b>predictive accuracy of model</b>" as how accuate the model's prediction are with respect to the task at hand (and there are multiple ways to rate models).
+						</p>
+						<p>
+
+							Another facet of model training is "<b>training speed</b>" which is how long it takes us to train for a number of epochs (passes over an entire input training dataset) or to a specific accuracy/metric.
+						</p>
+						<p>
+							We call out these two specific definitions because we want to make sure the reader understands:
+						</p>
+						<p>
+
+							<b>GPUs will not make your model more accurate</b>
+
+						</p>
+						<p>
+
+							However, GPUs will allow us to train a model faster and find better models (which may be more accurate) faster. So GPUs can indirectly help model accuracy, but we still want to set expectations here.
+
+
+
+						  </p>
+
+						</div>
+
+
+						
+
+						<h3>Getting GPUs in the Cloud</h3>
+
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_dl_vm.png" style="width: 459px; height: 339px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 510px;">Screenshot of the GCP <a href="https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning">Deep Learning VM</a></p>
+						</div>
+						<p>
+							So let's suppose we don't have GPUs on our local laptop, and we need to look for another option that gives us flexibility in how we can leverage GPUs. Obviously these days folks are inclined to go the cloud for ad-hoc usage of hardware they may not have local access to, and here that's a great option. For the purposes of this article we'll use Google Cloud as they have instances with GPUs (and lots of options) we can use along with VM images pre-built for deep learning.
+
+							<ol>
+								<li>Need a GCP instance with GPUs attached</li>
+								<li>Need a <a href="https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning">VM image with the correct drivers</a> installed for GPUs (example shown to the right)</li>
+
+
+							</ol>
+
+
+						Obviously you'll need a GCP account to do this, and they have a 1-year trial available. Once you are signed up, there are two major routes to accomplish getting a VM setup on GCP with GPUs and drivers:
+
+						<ol>
+							<li>Setup a GCP instance with a GPU, and then <a href="https://www.tensorflow.org/install/gpu">install the drivers manually</a>(<a href="https://medium.com/searce/installing-tensorflow-gpu-with-nvidia-cuda-on-a-google-cloud-platform-vm-instance-b059ea47e55c">Alternate tutorial</a>)</li>
+							<li>Use the pre-built deep learning VM with TensorFlow and the Nvidia drivers already installed</li>
+
+						</ol>
+
+						For those that want to go the manual route, <a href="https://medium.com/searce/installing-tensorflow-gpu-with-nvidia-cuda-on-a-google-cloud-platform-vm-instance-b059ea47e55c">follow this link</a>. For this article, we're going to go the simpler route of just using their supplied VM as this is a lot quicker	
+
+							
+
+						</p>
+						<p>
+							We'll also note that you'll likely need to <a href="https://cloud.google.com/compute/quotas#requesting_additional_quota">increase your quotas for gpus</a> in a region. Given the cloud is a self-serve situation, this step seemed odd overall but its just something that has to happen. It should take anywhere from half a day to 2 days to get a response on your request.
+
+						</p>
+
+						<div style=" margin: 12px; border: 1px solid #999999; width: 525px; float: left;">
+						<img src="./images/gcp_setup_screen.png" style="width: 505px; height: 743px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Screenshot of the GCP Instance setup page</p>
+						</div>
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px; float: right; width: 410px;">
+
+						<h3>Options for Nvidia GPUs on Clouds</h3>
+
+
+
+						  <p>
+
+						  	
+						  	
+						  	On GCP today we can use the <a href="https://cloud.google.com/gpu/">following GPUs</a> from Nvidia:
+
+						  	<ul>
+						  		<li>Tesla K80</li>
+						  		<li>P100</li>
+						  		<li>P4</li>
+						  		<li>T4</li>
+						  		<li>V100</li>
+
+						  	</ul>
+
+						  	They should give bare metal performance and are directly attached to the virtual machine for the best performance.
+
+						  	We can attach up to 8 GPUs to a single GCP instance (however, this will require further execution details that we'll cover in a future article).
+
+
+						  </p>
+
+						</div>
+
+
+
+					</div>
+					
+					<div class="col-md-12" id="fh5co-content">
+						<h3>Starting our Instance</h3>
+						<p>
+
+							So we can start and stop instances from the "compute" screen in the GCP console. This is relevant as GCP instances are not free and instances with GPUs attached are more expensive (read: don't leave these running). To start (or stop) our GCP instance click
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/starting_gpu_gcp_instance.png" style="width: 655px; height: 217px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Logging into the GCP web ssh terminal</a></p>
+						</div>
+
+						<p>
+							It will take a minute or two for the instance to spin up, but once the console reports the instance is running we can log into the instance.
+
+
+						</p>
+
+
+					</div>
+
+					<div class="col-md-12" id="fh5co-content">
+
+						<h3>Accessing the Image, Dependencies, and Tools</h3>
+						<p>
+
+							There are multiple options to log into the GCP instance we've created, but the easiest is to just use the web ssh terminal as shown in the image below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_web_ssh_terminal.png" style="width: 648px; height: 181px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Logging into the GCP web ssh terminal</a></p>
+						</div>
+
+						<p>
+
+							Once we click on "Open in browser window", we should see a terminal window in a browser pop-up window as shown below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_web_ssh_terminal_open.png" style="width: 901px; height: 681px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">GCP web ssh terminal</a></p>
+						</div>
+
+
+						<p>
+
+							Once we're logged into our shell, let's quickly confirm that tensorflow is installed with the command:
+
+<code><pre>python3 -c 'import tensorflow as tf; print(tf.__version__)'</pre></code>
+
+The output should look similar to:
+						</p>
+
+<consoleoutput>1.13.1</consoleoutput><br/>
+
+						
+						<p>
+							Let's also check out the <kbd>nvidia-smi</kbd> tool by confirming our GPUs are attached and working by typing:
+
+<code><pre>nvidia-smi</pre></code>
+
+							we should see output similar to:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999; width: 720px;">
+						<img src="./images/nvidia_smi_shot.png" style="width: 701px; height: 352px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Checking GPUs with the Nvidia-SMI Tool</a></p>
+						</div>
+
+
+						<p>
+							At this point we technically have a running VM with a GPU attached and Tensorflow (gpu-capable) installed. We can run a basic TensorFlow application from the web shell with the command:
+
+
+
+
+						</p>
+						<p>
+							In the case we want to use docker containers on GPUs in our application development process, we need to <a href="https://www.tensorflow.org/install/docker">install nvidia-docker</a>. Fortunately the Google deep learning VM we're using already ahs nvidia-docker installed, so we can use it as needed on our instance.
+
+
+
+						</p>
+
+
+
+
+
+<!-- start section 2 -->
+
+
+
+						<h2>Setting up our TensorFlow Modeling Workflow for GPUs</h2>
+						<p>
+
+							There are 3 major ways we can write tensorflow code:
+							<ol>
+								<li>low-level TensorFlow API</li>
+								<li><A href="https://keras.io/">Keras</a></li>
+								<li>Estimator API</li>
+
+							</ol>
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="https://www.tensorflow.org/images/tensorflow_programming_environment.png" style="width: 366px; height: 160px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 300px;"><i>Estimators and The TensorFlow Programming Environment / Source: <a href="https://www.tensorflow.org/guide/premade_estimators">TensorFlow Premade Estimators</a></i></p>
+						</div>											
+
+							Earlier on when TensorFlow first came out, most people wrote to the lower-level API. While this allowed fine-grain control over certain aspects of execution, it tended to get in the way of data scientists focusing on developing the model itself. Keras soon provided a layer over TensorFlow to allow for higher-level operations with TensorFlow. In a similar fashion, the Estimator API (previous article: <a href="tensorflow_estimator_design_pattern.html">Using the Estimator API pattern</a>) for Tensorflow allows us to deal with a higher-level API and it abstracts away a lot of the runtime execution details for things like:
+
+							<ul>
+								<li>using a single GPU</li>
+								<li>using multiple GPUs on a single host</li>
+								<li>executing <a href="https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/distribute/README.md">distributed training</a> on multiple hosts (CPU)</li>
+								<li>executing distributed training on multiple hosts each with a GPU</li>
+								<li>executing distributed training on multiple hosts each with multiple GPUs</li>
+
+
+							</ul>
+
+							Historically each of those execution modes for TensorFlow required custom program beyond just the model training logic (e.g., <a href="https://www.tensorflow.org/guide/using_gpu">placing a specific operation on a specific gpu</a>) and moving the model training code to another execution mode (e.g., single host training to distributed training on multiple hosts) was troublesome.
+
+							Each of those execution modes creates progressively more execution overhead for the developer and using the lower-level TensorFlow APIs quickly becomes burdensome for the data scientist.
+
+
+							
+
+						</p>
+
+
+
+
+						<!-- side bar -->
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px; ">
+						<h3>A Word on Machine Learning Workflow Portability and Scalability</h3>
+
+
+						  <p>
+
+							Data scientists want to use the right hardware for the task at hand in the name of workflow <b>scalability</b>, in that they either want to scale with the input data size or they want to train faster. In the pursuit of scale and speed, every variation of hardware is an opportunity for stress, overhead, pain. There's a world of emerging execution hardware such as:
+
+							<ul>
+							<li>GPUs</li>
+							<li>FPGAs</li>
+							<li>ASICs/TPUs</li>
+							<li>NICs / Infiniband</li>
+							<li>kernel drivers, libraries</li>
+							</ul>
+
+							Trying to write machine learning workflows specific to any of the above tends to create chaos in real world deployments. What we'd ideally like are workflows that have a certain degree of <b>portability</b>.
+						  	
+
+						  </p>
+						  <p>
+						  	Abstraction and higher-level APIs are the only way we survive these issues in a world that expects execution across on-premise, cloud, and potentially hybrid situations. Workflows that are portable are more valuable to the organization.
+
+						  </p>
+
+						</div>
+						<!-- side bar -->
+
+
+
+
+
+
+						<h3>Organizing Our Code for GPU Execution</h3>
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/stack_on_gcp_w_k80.png" style="width: 579px; height: 488px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 410px;">Our application as a cloud+gpu stack</p>
+						</div>						
+
+						<p>
+							We've established the options for running TensorFlow code previously in this article, and now we'll take a look at putting this into action for our own TensorFlow example. We know we want to focus on a higher-level API for portability and scalability so we have two options here for TensorFlow:
+
+							<ul>
+								<li>Estimator API</li>
+								<li><a href="https://keras.io/">Keras</a></li>
+
+							</ul>
+
+							In <a href="tensorflow_estimator_design_pattern.html">our last article</a>, we explained how we can use the same execution mechanics with Keras as with Estimators if we use the <code>tf.keras.estimator.model_to_estimator()</code> method, so we know we will have scalability options no matter which way we go. Both Keras and Estimators will automatically use a GPU if it is detected on the local host.
+
+						</p>
+						<p>
+							For this article we'll build a basic <a href="https://en.wikipedia.org/wiki/Recurrent_neural_network">recurrent neural network</a> (LSTM) with the Keras API to run on our GCP GPU instance. We also show our updated stack from earlier in the article but now based on GPUs running on cloud hardware, as shown to the diagram to the right. We call this out to show how much of our stack has changed as it is easy to just install dependencies and drivers and forget about it. As we wrote above, we tend to forget how many things we change to get a workflow working on another platform, which can limit our workflow portability.
+
+
+
+						</p>
+						<p>
+							As we get ready to execute our code on GPUs, we'll note a few things that have changed for the target environment:
+
+							<ul>
+								<li>TensorFlow is changed to the <a href="https://www.tensorflow.org/install/gpu">version that supports GPUs</a></li>
+								<li>CUDA Drivers are now on the host machine</li>
+								<li>Operating system is different, now Ubuntu</li>
+								<li>Although we're still using CPU for part of the code, the training linear algebra now runs on a GPU</li>
+
+							</ul>
+
+							We note these as they all create portability friction that we may not have even realized. With those details notes, let's continue building our gpu TensorFlow LSTM job.
+
+						</p>
+
+
+
+<!--						
+						<p>
+
+
+							Advantages of estimators
+
+							https://www.tensorflow.org/programmers_guide/estimators#advantages_of_estimators
+
+							Run on CPU, GPU or TPU without reordering your model
+Safely distributed training loop to build a graph, initialize variables, start queues, create checkpoints, save summaries to TensorBoard
+Export for serving
+
+						</p>
+					-->
+
+						<h3>Building a LSTM Example with Keras</h3>
+
+						<p>
+							We'll use a modified version of <a href="https://github.com/keras-team/keras/blob/master/examples/imdb_lstm.py">imdb_lstm.py</a> example from the canonical Keras <a href="https://github.com/keras-team/keras/tree/master/examples">examples repository</a>. We chose this example because its well-known and shows a practical but concise use of a Keras LSTM network running on TensorFlow. We can see the code listing below:
+
+							<!--
+
+							Aurelien Geron's (wonderful) book "<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291">Hands-On Machine Learning with Scikit-Learn and TensorFlow</a>". This python RNN example will generate some synthetic sequence data for our modeling program and then fit the dataset with a basic RNN.
+
+						-->
+
+
+						</p>
+
+<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/keras/basic_rnn/keras_imdb_lstm.py"></script>
+<!--
+						<p>
+							A few notes on the RNN code example listing above:
+
+							<ul>
+								<li>We <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/keras/basic_rnn/keras_rnn_synthetic.py#L50">generate synthetic timeseries</a> in batches to train on</li>
+								<li>We define a <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/keras/basic_rnn/keras_rnn_synthetic.py#L106">basic RNN</a></li>
+								<li>We call the <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/blob/master/keras/basic_rnn/keras_rnn_synthetic.py#L144">fit(...) method on the model</a> to perform training</li>
+								
+
+
+
+							</ul>
+-->
+						<p>
+							To get a sense for how this application runs on a normal laptop, let's run the application locally first. 
+
+							So for this test I just used my MacBook Pro (from 2012 no less) that has a 2.5 GHz Intel Core i5. So we're not using the latest and greatest of hardware for the local run, but just a "run of the mill" laptop.
+
+							In the case of local execution we would deal with adding dependencies to our environment in 1 of 2 ways:
+
+							<ol>
+								<li><A href="https://www.anaconda.com/">Anaconda</a> environments</li>
+								<li><a href="http://www.docker.com/">Docker</a> containers</li>
+
+							</ol>
+
+
+
+							For this example we'll assume the reader already knows how to get TensorFlow installed in their environment through one of the two above methods. For my local execution I used an Anaconda environment as that's quick and easy on my laptop.
+
+
+						</p>
+						<p>
+							
+							If we clone this repository on github with the command:
+
+						</p>
+<code><pre>git clone https://github.com/pattersonconsulting/tensorflow_estimator_examples.git</pre></code>
+
+						<p>
+
+							We can change into the local directory and run this python TensorFlow application locally with the command:
+
+
+						</p>
+
+<code><pre>python3 keras_imdb_lstm.py</pre></code>
+
+
+						<p>
+
+
+
+							We'd see output similar to what we see below:
+
+						</p>
+
+<consoleoutput>python3 keras_imdb_lstm.py 
+Loading data...
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/imdb.npz
+17465344/17464789 [==============================] - 3s 0us/step
+25000 train sequences
+25000 test sequences
+Pad sequences (samples x time)
+x_train shape: (25000, 80)
+x_test shape: (25000, 80)
+Build model...
+Train...
+/Users/josh/anaconda2/envs/env_2019/lib/python3.6/site-packages/tensorflow/python/ops/gradients_impl.py:112: UserWarning: Converting sparse IndexedSlices to a dense Tensor of unknown shape. This may consume a large amount of memory.
+  "Converting sparse IndexedSlices to a dense Tensor of unknown shape. "
+Train on 25000 samples, validate on 25000 samples
+Epoch 1/15
+2019-05-09 10:31:16.765640: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+2019-05-09 10:31:16.767314: I tensorflow/core/common_runtime/process_util.cc:69] Creating new thread pool with default inter op setting: 4. Tune using inter_op_parallelism_threads for best performance.
+25000/25000 [==============================] - 699s 28ms/step - loss: 0.4567 - acc: 0.7843 - val_loss: 0.4028 - val_acc: 0.8216
+Epoch 2/15
+25000/25000 [==============================] - 743s 30ms/step - loss: 0.2977 - acc: 0.8788 - val_loss: 0.3942 - val_acc: 0.8294
+Epoch 3/15
+25000/25000 [==============================] - 707s 28ms/step - loss: 0.2127 - acc: 0.9186 - val_loss: 0.4426 - val_acc: 0.8319
+Epoch 4/15
+25000/25000 [==============================] - 708s 28ms/step - loss: 0.1530 - acc: 0.9439 - val_loss: 0.5832 - val_acc: 0.8152
+Epoch 5/15
+25000/25000 [==============================] - 709s 28ms/step - loss: 0.1061 - acc: 0.9606 - val_loss: 0.5597 - val_acc: 0.8248
+...
+</consoleoutput><br/>
+
+						<p>
+							So this LSTM training script runs for a while and takes around 700 seconds per epoch (e.g., "passes over the entire dataset"). Let's dig into what just happened. Notice the line of console output highlighted below:
+
+
+						</p>
+
+<consoleoutput>Epoch 3/15
+25000/25000 [==============================] - 707s 28ms/step - loss: 0.2127 - acc: 0.9186 - val_loss: 0.4426 - val_acc: 0.8319
+</consoleoutput><br/>
+						<p>
+							This line let's us know that all 25000 training samples were trained against, and that it took 707 seconds. Right after the <code>707s</code> time, we see another metric <code>28ms/step</code>. This is an important metric to watch in mini-batch training, where we define mini-batch as:
+
+
+
+							
+
+						</p>
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Mini-batch size is the number of records (or vectors) we pass into our learning algorithm at the same time. This contrasts with where we’d pass in a single input record on which to train."</i></p>
+						  <p style="font-size: 14px;"><i>
+
+						  "It’s been shown that dividing the training input dataset into mini-batches allows us to more efficiently train the network. A mini-batch tends to be anywhere from 10 input vectors up to the full input dataset.
+This method also allows us to compute certain linear algebra operations (specifically matrix–matrix multiplications) in a vectorized fashion. In this scenario, we also have the option of sending the vectorized computations to GPUs if they are present."</i></p>
+
+						  <p>Oreilly's <a href="http://www.oreilly.com/authors/widgets/782.html">"Deep Learning: A Practitioner's Approach"</a>, Patterson / Gibson 2018</p>
+						</blockquote>	
+
+				<div style="float: right; margin: 12px; border: 0px solid #999999;">
+					<iframe src="http://www.oreilly.com/authors/widgets/782.html" height="380px" width="200px" scrolling="no" frameborder="0"></iframe>							
+				</div>	
+
+
+
+						<p>
+
+							In the results from Keras, a "step" is one mini-batch of sequence records. So in the case of <code>ms/step</code> we're seeing how efficient the model training code is at learning from a single mini-batch of input records. The <code>ms/step</code> a good metric of training speed/efficiency when comparing two learning algorithms that may have different parameters such as number of epochs or total records. 
+
+						</p>
+
+
+						<p>
+							So let's do some quick math to make sure all of this pans out:
+							<ul>
+								<li>Total records: 25,000</li>
+								<li>Total time for epoch: 707 seconds</li>
+								<li>Total time for epoch in ms: 707,000 </li>
+								<li>ms per step: 28</li>
+								<li>(Total time for epoch in ms) / (ms per step) == ~25,000</li>
+
+							</ul>
+
+							So we get the correct number of input records based on the quick back of the envelope math, which is good and shows us how this plays out. (Another metric sometimes used is how we define "steps per epoch", which is defined as (Total records / mini-batch-size)).
+
+
+
+						</p>
+
+						<p>
+							In keras we control the mini_batch size with the parameter <Code>batch_size</code> in the <code>.fit(...)</code> method on the model.
+
+							An interesting experiment for the reader is to observe how mini-batch size can affect training speed and loss over time. Larger mini-batch size make an epoch take less training time, but we don't always see the loss values drop as quick. However, a smaller batch size will take longer per epoch but we'll likely see the loss drop more quickly per epoch. This is of course problem depenedent as well, and there is no perfect answer out of the gate. Keras defaults to a mini-batch size of 32 when None is specified.
+						</p>
+						<p>
+							Knowing that this was an older laptop, I wanted to make sure we created a good baseline so I ran the same python code on a GCP image with no GPUs attached and the same CPU (n1-highmem-2 (2 vCPUs, 13 GB memory), Intel Haswell). We see the results below:
+
+						</p>
+
+
+
+<consoleoutput>2019-05-09 18:31:59.201709: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-05-09 18:31:59.207159: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2300000000 Hz
+2019-05-09 18:31:59.207563: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x11af0d10 executing computations on platform Host. Devices:
+2019-05-09 18:31:59.207706: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+Epoch 1/3
+25000/25000 [==============================] - 341s 14ms/sample - loss: 0.4605 - acc: 0.7846 - val_loss: 0.4229 - val_acc: 0.8059
+Epoch 2/3
+25000/25000 [==============================] - 338s 14ms/sample - loss: 0.2942 - acc: 0.8789 - val_loss: 0.3831 - val_acc: 0.8284
+Epoch 3/3
+25000/25000 [==============================] - 336s 13ms/sample - loss: 0.2122 - acc: 0.9182 - val_loss: 0.5259 - v
+...
+</consoleoutput><br/>
+
+						<p>This ended up being about 2x as fast as my laptop and gave us a better baseline against which to measure GPUs.</p>
+						
+
+
+
+						<h3>Running the Keras LSTM Network on Cloud GPUs</h3>
+
+						<p>
+							Earlier in this article we had the reader ssh into our running GCP instance via the web ssh console. Log into the GCP instance web ssh terminal and clone the <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples">github repository</a> again (but this time on the GCP instance so we have our <A href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/tree/master/keras/basic_rnn">python code</a> out there).
+
+
+						</p>
+<code><pre>git clone https://github.com/pattersonconsulting/tensorflow_estimator_examples.git</pre></code>
+
+						<p>
+							The instance we provisioned on GCP has a machine type of "n1-highmem-2 (2 vCPUs, 13 GB memory) / Intel Haswell" with a GPU attached, for reference. It's also running CUDA 10.
+
+							Change into the <code>keras/basic_rnn/</code> subdirectory so we can access the different versions of the Keras RNN code we put together. Let's run the same script again with the command:
+
+
+						</p>
+
+<code><pre>python3 keras_imdb_lstm.py</pre></code>
+
+						<p>
+							We should see output in the web ssh terminal screen similar to below:
+						</p>						
+
+
+
+
+<consoleoutput>2019-05-09 15:48:11.015462: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0, 1
+2019-05-09 15:48:11.642909: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-09 15:48:11.642965: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 1 
+2019-05-09 15:48:11.642982: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N Y 
+2019-05-09 15:48:11.642990: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 1:   Y N 
+2019-05-09 15:48:11.643603: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10753 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0, compute capability: 3.7)
+2019-05-09 15:48:11.644097: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10753 MB memory) -> physical GPU (device: 1, name: Tesla K80, pci bus id: 0000:00:05.0, compute capability: 3.7)
+Epoch 1/3
+2019-05-09 15:48:13.033002: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+25000/25000 [==============================] - 166s 7ms/sample - loss: 0.4602 - acc: 0.7819 - val_loss: 0.3898 - val_acc: 0.8278
+Epoch 2/3
+25000/25000 [==============================] - 164s 7ms/sample - loss: 0.2919 - acc: 0.8804 - val_loss: 0.3848 - val_acc: 0.8287
+Epoch 3/3
+25000/25000 [==============================] - 165s 7ms/sample - loss: 0.2078 - acc: 0.9198 - val_loss: 0.4565 - val_acc: 0.8266
+...
+</consoleoutput><br/>
+
+
+
+						<p>
+							(<i>note: If you get an error around 'Object arrays cannot be loaded when allow_pickle=False', check out a fix <a href="https://stackoverflow.com/questions/55890813/how-to-fix-object-arrays-cannot-be-loaded-when-allow-pickle-false-for-imdb-loa">here</a>)</i>
+						</p>
+						<p>
+							Now that we know a bit about how epochs, mini-batches, and steps work, we're in a better position to understand what happened. Once again looking at the 2nd epoch we see:
+						</p>
+
+<consoleoutput>Epoch 2/3
+25000/25000 [==============================] - 164s 7ms/sample - loss: 0.2919 - acc: 0.8804 - val_loss: 0.3848 - val_acc: 0.8287
+</consoleoutput><br/>
+
+						<p>
+							We see that an epoch now only takes 164 seconds (with the same mini-batch size) on a GPU. Out of the box this is a TODO improvement over the old training time...
+
+						</p>
+						<p>
+							If we want to watch how it affects the GPU(s) on the system, open a separate ssh window and use the command:
+						</p>
+<code><pre>watch -n0.5 nvidia-smi</pre></code>
+
+						<p>
+							We'll see something like in the image below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/watching_lstm_w_nvidia_smi.png" style="width: 909px; height: 343px; margin: 12px; border: 0px solid #999999; " />
+						<p style="margin-left: 12px; width: 900px;">Watching GPUs during training wtih the nvidia-smi tool</p>
+						</div>						
+
+
+						<p>
+
+						Let's go another step and change the code slightly to use CUDA specific layers for LSTMs that are optimized for Nvidia GPUS by using the <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/CuDNNLSTM">CuDNNLSTM layer</a> for Keras. We've already set this up for you, so just run from the same directory:
+
+						</p>
+
+<code><pre>python3 keras_imdb_CuDNNLSTM.py</pre></code>
+
+						<p>
+							We should see output in the web ssh terminal screen similar to below:
+						</p>						
+
+
+<consoleoutput>2019-05-09 16:01:33.140676: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0, 1
+2019-05-09 16:01:33.782127: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-09 16:01:33.782186: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 1 
+2019-05-09 16:01:33.782201: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N Y 
+2019-05-09 16:01:33.782210: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 1:   Y N 
+2019-05-09 16:01:33.782729: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10753 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0, compute capability: 3.7)
+2019-05-09 16:01:33.783108: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10753 MB memory) -> physical GPU (device: 1, name: Tesla K80, pci bus id: 0000:00:05.0, compute capability: 3.7)
+Epoch 1/3
+2019-05-09 16:01:34.638634: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+25000/25000 [==============================] - 19s 760us/sample - loss: 0.4284 - acc: 0.7980 - val_loss: 0.4350 - val_acc: 0.7964
+Epoch 2/3
+25000/25000 [==============================] - 18s 709us/sample - loss: 0.2509 - acc: 0.9003 - val_loss: 0.3788 - val_acc: 0.8375
+Epoch 3/3
+25000/25000 [==============================] - 18s 712us/sample - loss: 0.1537 - acc: 0.9436 - val_loss: 0.4464 - val_acc: 0.8288
+</consoleoutput><br/>
+
+						<p>
+							So we see a further speedup by moving to Keras layers that are optimized for CUDA. If we look at the entire speedup picture, we see:
+
+							<table style="border: 1px solid; padding: 6px; margin: 6px;">
+								<tr>
+									<th>Execution mode</th>
+									<th>Epoch training time</th>
+									<th>Step/ms</th>
+									<th>Speedup factor over CPU</th>
+
+								</tr>
+								<tr>
+									<td>Laptop CPU</td>
+									<td>699 seconds</td>
+									<td>28ms/step</td>
+									<td>n/a - only here for comparison</td>
+
+								</tr>
+
+								<tr>
+									<td>GCP Instance (baseline, no GPU)</td>
+									<td>338 seconds</td>
+									<td>14ms/step</td>
+									<td>baseline</td>
+
+								</tr>
+
+								<tr>
+									<td>GCP Instance w GPU</td>
+									<td>164 seconds</td>
+									<td>7ms/step</td>
+									<td><b>2.1x over GCP-CPU-Instance</b></td>
+
+								</tr>
+								<tr>
+									<td>GCP Instance w GPU/CuDNNLSTM</td>
+									<td>18 seconds</td>
+									<td>0.8ms/step</td>
+									<td><b style="color: red;">18.8x over GCP-CPU-Instance</b></td>
+
+								</tr>
+
+
+							</table>
+
+							And to further compare things, we can see that changing over to the <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/CuDNNLSTM">CUDA-specific layer</a> for the LSTM gave us a ~9x speedup over the basic LSTM layer with a GPU.
+
+
+						</p>
+						<h3>GPU Speedup Performance Factors</h3>
+						<p>
+							Beyond just changing the layer types, performance mechanics with deep learning and GPUs can be tricky and problem dependent (read: not every model will get a 18x speedup). One factor can be hte computational backend you use, but if you use numpy, you are probably using one of the BLAS libraries as computational backend already. For Nvidia GPUs, the only widely used backend is <a href="https://developer.nvidia.com/cublas">CUDA's cuBLAS</a> so in the examples we've shown on GPUs this was not a limiting factor.
+						</p>
+						<p>
+
+							Another consideration is how data transfer between host RAM and GPU device memory is a key factor that generally affects the overall performance as transfering data between normal RAM and graphics RAM takes time. Beyond that, we should consider:
+
+							<ul>
+								<li>GPU memory size</li>
+								<li>GPU memory bandwidth</li>
+
+							</ul>
+
+							Advanced hardware such as the DGX-1/2 from Nvidia have technology such as NVLink (2) to help mitigate bandwidth issues, but that is not available on every cloud platform.
+
+
+
+						</p>
+
+						<!--
+
+						<p>
+							Considerations
+							- GPU memory Size
+							- GPU memory bandwidth
+
+							- nvlink / 2
+
+
+							TF and NCCL
+
+							https://github.com/tensorflow/tensorflow/issues/22692
+
+							known benchmarks
+
+							https://github.com/tfboyd/benchmarks/tree/master/scripts/tf_cnn_benchmarks
+
+							https://www.tensorflow.org/guide/performance/benchmarks
+
+							https://www.tensorflow.org/guide/performance/overview
+
+
+						</p>
+					-->
+
+
+<!--
+# interesting notes on how cloud gpus perform worse than desktop gpus
+https://medium.com/initialized-capital/benchmarking-tensorflow-performance-and-cost-across-different-gpu-options-69bd85fe5d58
+
+
+# speedup of CNNs tends to be pretty good
+https://www.microway.com/hpc-tech-tips/deep-learning-benchmarks-nvidia-tesla-p100-16gb-pcie-tesla-k80-tesla-m40-gpus/
+-->
+
+						<h3>A Note on Dependency Management and Docker for GPUs</h3>
+
+						<div style="margin: 12px; border: 1px solid #999999; float: right; width: 410px;">
+						<img src="./images/containerized_keras.png" style="width: 391px; height: 262px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 900px;">Containerizing Our Keras Code</p>
+						</div>						
+
+
+						<p>
+							In terms of dependency management we noted above for a local laptop we'd use either Anaconda or Docker. In the situation in this article where we execute the code on the VM image with GPUs on GCP, our VM already had the dependencies we needed so we did not need to use Docker to run a container.
+						</p>
+						<p>
+							In the event that we had a lot of other dependencies for our application we'd have built a docker image with the remaining dependencies for our TensorFlow application. The major dependency to run TensorFlow-gpu-based docker containers on GPU VMs with Docker is the <a href="https://github.com/NVIDIA/nvidia-docker">nvidia-docker</a> tool (we say this because Keras is contained now in the recent versions of TensorFlow).
+
+
+						</p>
+						<p>
+							The image to the right shows how our container might contain application-level code and dependencies (and maybe some stored files), and then the host images would have things like the GPU drivers, etc.
+
+						</p>
+
+
+					</div>
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+<!--
+						<h3>Data Input Pipeline Performance</h3>
+						<p>
+
+							https://www.tensorflow.org/guide/performance/datasets
+
+						## Inside the TensorFlow Input Pipeline
+
+						https://www.youtube.com/watch?v=kVEOCfBy9uY
+
+						</p>
+-->
+<!--
+
+						<p>
+
+							Key tensorflow tuning knobs for gpus
+
+						</p>
+
+
+
+
+						</p>
+-->
+							
+
+
+<!--
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/estimator_api_advantages.png" style="width: 502px; height: 307px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 510px;">Estimator API as a common high-level API across multiple execution modes</p>
+						</div>						
+
+-->
+						
+<!--
+						
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="https://www.tensorflow.org/images/layers.png" style="width: 300px; height: 267px; float: right; padding: 12px; margin: 12px; border: 1px solid #999999;" />
+						<p style="margin-left: 12px; width: 270px;">Image from the <a href="https://www.tensorflow.org/guide/extend/architecture">TensorFlow Architecture</a> page.</p>
+						</div>						
+-->
+
+
+<!--
+							<img src="./images/kubeflow_portability_issues.png" style="width: 510px; height: 343px; margin: 12px; border: 0px solid #999999;" />
+
+-->
+
+
+
+
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+						<h3>Why Don't We Just Plug All the Needed Drivers into Our TensorFlow Container?</h3>
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="https://i.stack.imgur.com/mzwAJ.png" style="width: 522px; height: 369px; float: right; padding: 12px; margin: 12px; border: 1px solid #999999;" />
+						<p style="margin-left: 12px; width: 430px;">Image from the <a href="https://www.nvidia.com/object/docker-container.html">Nvidia docker documentation</a> page.</p>
+						</div>
+
+						  <p>
+
+						  	Given that containers are the solution du jour of today's technology cycle, this is likely a question a data scientist might ask (while a DevOps engineer might just scoff).
+
+						  </p>
+						  <p>
+						  	Containers are runnning on the operating system as an application in their own namespace
+
+						  </p>
+
+						  <p>
+						  	GPUs need drivers like GPU drivers to talk to the host kernel via the PCI bus, and these drivers need to run in their own priveleged namepsace. The nvidia drivers are there so the kernel can talk to the gpu hardware.
+
+						  </p>
+
+							
+
+
+						  <p>
+						  	While it  is technically possible to install the drivers in the container, its a best practice to install them at the host level.
+
+						  </p>
+
+						</div>
+
+
+
+<!--
+						<h2>Running our workflow and understanding performance mechanics</h2>
+
+
+
+
+
+						</p>
+-->
+
+<!--
+						<h3>Dependency Management for GPUs and TF</h3>
+
+						<p>
+
+							options for running on GCP
+
+							(1) use a docker image w tf installed + a VM with nvidia drivers installed
+
+							https://www.tensorflow.org/install/docker
+
+							https://github.com/NVIDIA/nvidia-docker
+
+							(2) use a VM with all of the drivers + dependencies installed together
+
+							---- Q: what is the difference between container deps vs vm deps/drivers here?
+
+							---- Q: why not just have the nvidia drivers in my container?
+
+
+
+							list of dependencies
+
+							- supported OS
+
+							- tf-gpu: https://www.tensorflow.org/install#nvidia_requirements_to_run_tensorflow_with_gpu_support
+
+							- nvidia GPU drivers
+							- CUDA Toolkit
+							- CUPTI
+							- cuDNN SDK
+
+
+							we can put different versions of the cuda toolkit in different containers as long as we have the cuda driver installed in the OS
+
+							https://www.nvidia.com/object/docker-container.html
+
+
+
+							nvidia-docker
+
+
+							GCP image
+
+							https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning
+
+
+							alternative
+
+							https://medium.com/searce/installing-tensorflow-gpu-with-nvidia-cuda-on-a-google-cloud-platform-vm-instance-b059ea47e55c
+
+
+						</p>
+
+-->
+						
+
+
+						<h2>Summary and Looking Ahead</h2>
+
+						<p>
+							In this article we took a look at how to run a Keras LSTM on a machines with CPU and then cloud instances with GPUs. We also did some analysis on how the performance changed as enabled GPUs and then upgraded the layers for CUDA-specific optimizations.
+
+
+						</p>
+						<p>
+							Some of the broader/tangential topics we touched on in this article included how we wanted the reader to think about the portability and scalability of their design decisions as they moved their code to a GPU. We highlight these concepts as code portability has a larger role to play in this domain going forward.
+
+						</p>
+						<p>
+							We've just scratched the surface of this topic, as some of the other branch topics the reader should consider include:
+							<ul>
+								<li>Leveraging multiple-GPUs on a single host</li>
+								<li>Optimizing how data is transfered from RAM to the GPU</li>
+								<li>Organizational security policies and how that impacts job execution</li>
+								<li>Dependency management in a multi-tenant environment/cluster</li>
+								
+
+							</ul>
+							
+							In future articles we'll touch on some of this topics and build on the concepts from this article.
+
+
+						</p>
+						<p>
+							If your organization is interested in continuing a discussion around any of the topics in this article (deep learning, GPUs, etc) please <A href="../contact.html">reach out and say hello</a>.
+
+
+						</p>
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

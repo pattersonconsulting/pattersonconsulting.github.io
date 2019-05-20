@@ -142,7 +142,7 @@
 					<div class="col-md-12" id="fh5co-content">
 						<h1>A Practical Guide for Data Scientists Using GPUs with TensorFlow</h1>
 						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
-						<p>Date: May 9th, 2019</p>
+						<p>Date: May 20th, 2019</p>
 
 
 						<p>
@@ -1089,19 +1089,21 @@ https://www.microway.com/hpc-tech-tips/deep-learning-benchmarks-nvidia-tesla-p10
 
 						  </p>
 						  <p>
-						  	Containers are runnning on the operating system as an application in their own namespace
-
+						  	
+Hardware drivers are designed for controlling the underlying hardware they are intended to support. In the same way a specialized Ethernet driver, or a specialized disk driver control a network card or a disk respectively, the GPU drivers control and (drive) the GPUs in a machine. Drivers typically operate at or near the Kernel level.
 						  </p>
-
 						  <p>
-						  	GPUs need drivers like GPU drivers to talk to the host kernel via the PCI bus, and these drivers need to run in their own priveleged namepsace. The nvidia drivers are there so the kernel can talk to the gpu hardware.
 
+Considering that containers are a namespaced processed (that is, a process that has been isolated from many or all other processes in a system), installing the driver in the container would require that process be allowed to inject and remove elements from the running Kernel, in effect providing exclusive control of the hardware to that container. The container would need to run with elevated privileges, removing a chunk of security semantics containers provide.
 						  </p>
-
-							
-
-
 						  <p>
+
+In other words, giving a container exclusive control of underlying hardware sort of defeats the notion of the "containerized process"; it binds it to a highly specific hardware set - thus making it less portable (consider what happens if the container attempts to load the driver, but the hardware is different on another machine the container runs on); and it requires the container have elevated system privileges.
+						  </p>
+						  <p>
+
+In a containerized environment, the underlying host is typically best suited to control its own hardware, and to expose the availability of that hardware to containers.
+
 						  	While it  is technically possible to install the drivers in the container, its a best practice to install them at the host level.
 
 						  </p>

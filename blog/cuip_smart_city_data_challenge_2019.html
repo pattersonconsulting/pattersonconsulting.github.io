@@ -267,10 +267,19 @@
 
 
 						</p>
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o0WM0T4oaAg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+						<p style="margin-left: 12px;"><i>Chattanooga was one of the nation's dirtiest at one point</i></p>
+						</div>
+
 						<p>
 							Just like with understanding how cars move through an intersection can make traffic operations more efficient, we can better design and operate cities when we <a href="https://www.ncbi.nlm.nih.gov/pubmed/26773394">understand how pollution affects sections of our city</a>. As car usage has increased in over-subscribed urban areas, we see their emissions significantly rise in relative contribution to city pollution. As cities become more complex with the rise of global population it is critical to measure and understand all aspects of how we operate cities.
 
 						</p>
+
+
 						<!--
 						<p>
 							"Due to the large
@@ -301,8 +310,19 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 						</p>
 
 						<p>
-							Releasing the dataset involved a few challenges, namely the limitation that CUIP was not allowed to release image data from any of the cameras on the smart corridor. With that restriction in mind, the CUIP program used open source computer vision models to produce object detections on the data and then save only the detected objects in their data lake internally.
+							Finally, we'll note how the city has come full circle from being named infamously by Walter Cronkite as "America's Dirtiest City" on the evening news. To be fair, he wasn't wrong as the lead paragraph from the March 4, 1969 Chattanooga Times read:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Chattanooga's particulate air pollution is ranked the worst in the nation for the period of 1961-65 in an 1,800-page publication on Air Quality Criteria for Particulate Matter just released by the Department of Health, Education and Welfare."</i></p>
+						  <p><a href="https://www.timesfreepress.com/news/local/story/2019/mar/03/moments-memory-how-chattanoogcleaned-its-act/489833/">The Times Free Press: "How Chattanooga cleaned up its act after being named the dirtiest city in America", March 4, 1969</a></p>
+						</blockquote>
+
+
+							 
+
 						</p>
+
 
 
 						<h3>Dataset Structure</h3>
@@ -318,13 +338,18 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 							The air quality data is collected from the Purple Air Sensor located at each intersection along the smart corridor. Each reading includes columns such as humidity and temperature. It also has the PM2.5 level for the same point in time along with other particulate types. Take a look at the dataset website to see all of the columns.
 
 						</p>
+
+						<p>
+							Releasing the dataset involved a few challenges, namely the limitation that CUIP was not allowed to release image data from any of the cameras on the smart corridor. With that restriction in mind, the CUIP program used open source computer vision models to produce object detections on the data and then save only the detected objects in their data lake internally.
+						</p>
+
 						<p>
 							The object detection data is in the other main directory in the dataset and contains daily object detections as they occured per intersection.
 
 
 							The object detection data was more complex to release due to limitations around what information could be released.
 
-							The CUIP program could not release the video data itself, so instead they decided to release the detected objects from the video frames. These object detections were produced with the YOLOv2 Convolutional Neural Network computer vision model along with some custom scene object tracking code developed by the CUIP program.
+							The CUIP program could not release the video data itself, so instead they decided to release the detected objects from the video frames. These object detections were produced with the <A href="https://pjreddie.com/darknet/yolo/">YOLOv2 Convolutional Neural Network computer vision model</a> along with some custom scene object tracking code developed by the CUIP program.
 
 
 						</p>
@@ -408,20 +433,30 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 
 							</ul>
 
-							With a deployment of sensors at the edge, an enterprise-class data collection/ingestion system (Apache Kafka), and modern data analysis tools, the CUIP team has been able to drive new use cases of smart city data.
+							With a deployment of sensors at the edge, an enterprise-class data collection/ingestion system (Apache Kafka), and modern data analysis tools, the CUIP team has been able to drive new use cases of smart city data. For more details on the hardware installed on the CUIP smart city platform, check out their <a href="https://www.utccuip.com/features">features page</a>.
 
 
 						</p>
 
 
-						<h2>Basic Python Code to Get You Started</h2>
+						<h2>Basic Python Notebook to Get You Started</h2>
 
 						<p>
 
-							[ TODO: Example Python code to load data ]
+							Some of the seasoned data scientists out there may jump right in and start downloading data to analyze with their favorite tools and methods. However, for our newer data scientist friends, we wanted to provide some sample data and an example notebook on how to work with the data in python with pandas. We hope this allows people who just want to learn more about the CUIP dataset challenge an easier way to work with the data in a friendly Jupyter notebook environment. In the image below we can see some operations being performed on the sample object detection data from the dataset.
 
 
 						</p>
+
+
+						<img src="./images/cuip_data_sample_notebook.png" style="width: 1139px; height: 422px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							Even if you don't participate in the competition, it might be fun to play around with the data and see what you can learn about how traffic moves through MLK street in Chattanooge. We'd love to hear your stories at the competition at the coffee or poster sessions.
+
+						</p>
+
+
 
 						<h2>See You at the 2019 CUIP Smart City Conference</h2>
 
@@ -436,7 +471,19 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 
 						<p>
 
-							Good luck to all participants in the <A href="https://www.utccuip.com/smart-city-data-challenge-dataset">2019 CUIP Smart City Data Challenge</a>. Come check out the winning team's methods at the <a href="https://www.utccuip.com/2019-dl-conference">2019 CUIP Deep Learning Conference</a> in Chattanooga, TN at the Edney Center on September 13th, 2019. Looking forward to seeing everyone there.
+							Good luck to all participants in the <A href="https://www.utccuip.com/smart-city-data-challenge-dataset">2019 CUIP Smart City Data Challenge</a>. Come check out the winning team's methods at the <a href="https://www.utccuip.com/2019-dl-conference">2019 CUIP Deep Learning Conference</a> in Chattanooga, TN at the Edney Center on September 13th, 2019. Be sure to catch talks at the conference by companies such as:
+
+							<ul>
+								<li>The Google Cloud Team</li>
+								<li>Nvidia</li>
+								<li>Ford</li>
+
+							</ul>
+
+							and more.
+
+
+							Looking forward to seeing everyone there.
 
 						
 
@@ -444,11 +491,15 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 						</p>
 
 
+				<div style="float: left; margin: 12px; border: 0px solid #999999;">
+					<iframe src="http://www.oreilly.com/authors/widgets/782.html" height="380px" width="200px" scrolling="no" frameborder="0"></iframe>							
+				</div>	
 
 
 					</div>
 				</div>
 				<!-- end of section -->
+
 
 
 

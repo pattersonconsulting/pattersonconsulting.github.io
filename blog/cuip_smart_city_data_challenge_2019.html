@@ -403,7 +403,7 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 							We consider having to deal with complex data to be part of the competition and we look forward to hearing the methods used by the top 3 teams during the conference on the winners panel.
 
 						</p>
-
+<!--
 						<h3>Dataset Schema: Key Variables</h3>
 						
 						<p>
@@ -426,21 +426,94 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 
 						</p>
 
-					
+					-->
 
 						<h3>Competition Rules</h3>
 
 						<p>
-							The rules of the competition are as follows:
+							This contest is based around “Predicting Urban Pollution Levels From Street Video Events and Weather”.
 
-							<ul>
-								<li>Teams will use <a href="https://www.utccuip.com/smart-city-data-challenge-dataset">3 weeks of CUIP smart city data</a> as input to their models</li>
-								<li>The goal of the competition is: "predict daily PM2.5 levels from object detection data"</li>
-								<li>Deadline for model submission: [ TODO ]</li>
-								<li>Models will be evaluated on a held out seperate week of object detection data as input</li>
-								<li>There are two goals for the modeling contest: (1) predict the average pm2.5 level for each day of a given week (2) predict the peak pm2.5 level for each day of the week</li>
-								<li>Each team can submit one entry and models will be evaluated by a separate 1 week dataset from the same platform</li>
-							</ul>
+						</p>
+						<p>
+							The specific goal of the contest is to use <a href="https://www.utccuip.com/smart-city-data-challenge-dataset">3 weeks of CUIP basic weather information and object detections</a> to build a model to predict the pm2.5 level for each hour (top of hour) in a day (7am-7pm, top of the hour) for every intersection across 5 days.
+
+						</p>
+						<h4>Training Data</h4>
+						<p>
+							The training data will consist of 3 weeks of CUIP collected data containing: 
+							<ol>
+								<li>weather</li>
+								<li>pm2.5</li>
+								<li>vehicle object detections</li>
+							</ol>
+
+							All data is in the CSV text file format.
+
+						</p>
+						<h4>Held Out Prediction Data</h4>
+						<p>
+							The held out data for the prediction task will contain:
+							<ol>
+								<li>weather</li>
+								<li>vehicle object detections</li>
+							</ol>
+
+							All data is in the CSV text file format.
+
+
+						</p>
+						<p>
+							The prediction output will be for all 7 intersections 
+							from 7am-7pm (12 hours) on the top of hte hour for 5 days. This will be a prediction submission file containing 336 predictions.
+						</p>
+						<h4>Submitting an Entry</h4>
+						<p>
+							
+							Teams can submit multiple times to the competition. Each submission will consist of a CSV file in the format:
+<code><pre>date,time_hour,intersection_index,pm2_5_value
+2019-06-01,7:00,1,100.0
+2019-06-01,8:00,1,100.0
+2019-06-01,9:00,1,100.0
+2019-06-01,10:00,1,100.0
+2019-06-01,11:00,1,100.0
+...
+</pre></code>
+
+							An example submission template can be seen here.
+
+							</p>
+						<p>
+
+
+							
+							Each team will save their entry in the above CSV file format and email it to [austin?@utc.org]
+
+
+						</p>
+						<h4>Evaluation Method</h4>
+
+						<p>
+							The evaluation metric will be <A href="https://towardsdatascience.com/how-to-select-the-right-evaluation-metric-for-machine-learning-models-part-1-regrression-metrics-3606e25beae0">Mean Square Error (MSE)</a> across all predictions.
+
+						</p>
+						<p>
+							A leaderboard will list the top 5 entries / teams and will be updated twice a week (Tuesdays and Fridays) leading up to the conference.
+
+						</p>
+						<p>
+							Top 5 teams will have to send in model for confirmation once the competitions has ended.
+
+						</p>
+
+						<h4>Contest Deadlines</h4>
+
+						<p>
+							The deadline for model submission: Sept 6th, 2019.
+
+						</p>
+						<h4>Contest Winners and Competitors at the 2019 CUIP Conference</h4>
+
+						<p>
 
 							<b>All teams who participate are invited to present a poster for their methods at the 2019 CUIP conference in Chattanooga, TN during the poster session of the conference.</b> 
 

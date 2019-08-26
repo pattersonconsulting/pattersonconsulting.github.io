@@ -138,7 +138,7 @@
 						<p>
 
 
-							This year the <A href="https://www.utccuip.com/">Center for Urban Informatics and Prgoress (CUIP)</a> program is putting on its second annual data science conference (link to 2018 conference). 
+							This year the <A href="https://www.utccuip.com/">Center for Urban Informatics and Progress (CUIP)</a> program is putting on its second annual data science conference (link to 2018 conference). 
 
 							This year the 2019 CUIP conference is focused on analysis of smart city data and is also putting on a data modeling competition that ties into the conference focus with the theme: 
 						</p>
@@ -442,12 +442,58 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 						<p>
 							The training data will consist of 3 weeks of CUIP collected data containing: 
 							<ol>
-								<li>weather</li>
-								<li>pm2.5</li>
+								<li>air quality (weather + pm2.5)</li>
 								<li>vehicle object detections</li>
 							</ol>
 
 							All data is in the CSV text file format.
+
+						</p>
+						<p>
+							We show the air quality csv data header below:
+
+						</p>
+
+<code><pre>,current_dewpoint_f,current_humidity,current_temp_f,lat,lon,p_0_3_um,p_0_3_um_b,p_0_5_um,p_0_5_um_b,p_10_0_um,p_10_0_um_b,p_1_0_um,p_1_0_um_b,p_2_5_um,p_2_5_um_b,p_5_0_um,p_5_0_um_b,pm10_0_atm,pm10_0_atm_b,pm10_0_cf_1,pm10_0_cf_1_b,pm1_0_atm,pm1_0_atm_b,pm1_0_cf_1,pm1_0_cf_1_b,pm2_5_atm,pm2_5_atm_b,pm2_5_cf_1,pm2_5_cf_1_b,timestamp,nicename,SensorId,Adc,response_date,key2_response_b,wlstate,pm2.5_aqi,ts_s_latency_b,DateTime,httpsuccess,key2_count_b,key2_response_date_b,period,hardwareversion,httpsends,memcs,pressure,key2_response,version,Geo,status_6,status_5,status_8,key1_response,status_7,Mem,pm2.5_aqi_color,status_9,key1_count,ts_latency_b,key1_response_date,status_0,Id,status_2,status_1,status_4,status_3,pm2.5_aqi_b,loggingrate,latency,key1_count_b,memfrag,key1_response_b,key2_count,hardwarediscovered,place,rssi,key2_response_date,pm2.5_aqi_color_b,pa_latency,key1_response_date_b,uptime,ts_latency,ts_s_latency,response,location,memfb,timestamp-iso,status_10,response_b,response_date_b,latency_b
+</pre></code>
+
+						<p>
+							And then a sample air quality csv record:
+
+						</p>
+
+<code><pre>0,54,26,95,35.039406,-85.291992,2386.27,2242.46,730.58,711.25,0.33,0.0,144.39,133.76,9.8,3.36,2.23,0.67,23.61,19.76,23.61,19.76,13.08,13.56,13.08,13.56,22.21,19.4,22.21,19.4,1559406002000.0,mlk-central,84:f3:eb:44:d8:24,0.04,1559405882.0,200.0,Connected,72.0,731.0,2019/06/01T16:20:02z,4470.0,119148.0,1559406002.0,120.0,2.0,4470.0,1024.0,988.47,200.0,4.02,PurpleAir-d824,1.0,2.0,2.0,200.0,0.0,19128.0,"rgb(255,244,0)",2.0,108612.0,739.0,1559405999.0,2.0,1482.0,2.0,2.0,2.0,2.0,66.0,15.0,52.0,119212.0,22.0,200.0,117694.0,2.0+OPENLOG+15931 MB+DS3231+BME280+PMSX003-B+PMSX003-A,outside,-65.0,1559406000.0,"rgb(255,251,0)",560.0,1559406001.0,88926.0,845.0,728.0,200.0,"35.039406, -85.291992",14840.0,2019-06-01 16:20:02,,,,
+</pre></code>						
+						<p>
+							Note that there are multiple columns that represent pollution measurements from the Purple Air sensor. 
+</p>
+<code><pre>p_0_3_um,
+p_0_3_um_b,
+p_0_5_um,
+p_0_5_um_b,
+p_10_0_um,
+p_10_0_um_b,
+p_1_0_um,
+p_1_0_um_b,
+<span style="color: red;">p_2_5_um</span>,
+p_2_5_um_b,
+p_5_0_um,
+p_5_0_um_b,
+pm10_0_atm,
+pm10_0_atm_b,
+pm10_0_cf_1,
+pm10_0_cf_1_b,
+pm1_0_atm,
+pm1_0_atm_b,
+pm1_0_cf_1,
+pm1_0_cf_1_b,
+pm2_5_atm,
+pm2_5_atm_b,
+pm2_5_cf_1,
+pm2_5_cf_1_b
+</pre></code>
+<p>
+							Specifically for this competition we're going to use the column "<span style="color: red;">p_2_5_um</span>" in the air quality data as the dependent variable for the model. In your regression model you should be using the value of this column as your output/label. To better understand the meanings of the columns in the air quality data, check out this <a href="https://docs.google.com/document/d/15ijz94dXJ-YAZLi9iZ_RaBwrZ4KtYeCy08goGBwnbCU/edit">gdoc from Purple Air</a> with schema information.
 
 						</p>
 						<h4>Held Out Prediction Data</h4>

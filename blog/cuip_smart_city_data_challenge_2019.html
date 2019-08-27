@@ -132,6 +132,8 @@
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Announcing The CUIP 2019 Smart City Data Challenge</h1>
+						<p>Authors: <A href="https://www.utc.edu/faculty/mina-sartipi/index.php">Dr. Mina Sartipi</a>, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, <a href="https://twitter.com/CMastication">James Long</a>, Austin Harris, Jose Stovall</p>
+						<p>Date: August 27th, 2019</p>
 						
 
 
@@ -442,7 +444,7 @@ studies”, Environ. Int., 88 (2016), pp. 235-
 						<p>
 							The training data will consist of 3 weeks of CUIP collected data containing: 
 							<ol>
-								<li>air quality (weather + pm2.5)</li>
+								<li>air quality (weather + purple air particulate matter readings)</li>
 								<li>vehicle object detections</li>
 							</ol>
 
@@ -493,7 +495,7 @@ pm2_5_atm_b,
 pm2_5_cf_1_b
 </pre></code>
 <p>
-							Specifically for this competition we're going to use the column "<span style="color: red;">pm2_5_cf_1</span>" in the air quality data as the dependent variable for the model (in the purple air instructions they indicate this by saying "PM2.5 (CF=1) ug/m3 This is the field to use for PM2.5"). In your regression model you should be using the value of this column as your output/label. To better understand the meanings of the columns in the air quality data, check out this <a href="https://docs.google.com/document/d/15ijz94dXJ-YAZLi9iZ_RaBwrZ4KtYeCy08goGBwnbCU/edit">gdoc from Purple Air</a> with schema information.
+							Specifically for this competition we're going to use the column "<span style="color: red;">pm2_5_cf_1</span>" in the air quality data as the dependent variable for the model (<i>in the purple air instructions they indicate this by saying "PM2.5 (CF=1) ug/m3 This is the field to use for PM2.5"</i>). In your regression model you should be using the value of this column as your output/label. To better understand the meanings of the columns in the air quality data, check out this <a href="https://docs.google.com/document/d/15ijz94dXJ-YAZLi9iZ_RaBwrZ4KtYeCy08goGBwnbCU/edit">gdoc from Purple Air</a> with schema information.
 
 						</p>
 						<p>
@@ -514,9 +516,9 @@ If both laser counters (channels) are in agreement, the data can be seen as exce
 
 						<h4>Held Out Prediction Data</h4>
 						<p>
-							The held out data for the prediction task will contain:
+							The held out data for the prediction task will contain data for the dates June 25th - 29th:
 							<ol>
-								<li>weather</li>
+								<li>weather (no particulate matter information)</li>
 								<li>vehicle object detections</li>
 							</ol>
 
@@ -524,20 +526,40 @@ If both laser counters (channels) are in agreement, the data can be seen as exce
 
 
 						</p>
+						<h4>Prediction Goal</h4>
 						<p>
-							The prediction output will be for all 7 intersections 
-							from 7am-7pm (12 hours) on the top of hte hour for 5 days. This will be a prediction submission file containing 336 predictions.
+							 The goal is to predict the missing <span style="color: red;">pm2_5_cf_1</span> column for the days of June 25, 26, 27, 28, and 29. This means the contestant will need to make predictions for <span style="color: red;">pm2_5_cf_1</span> across 5 days during 12 hours each day (top of the hour) for 7 different interestions
+
+						</p>
+						<p>
+							The prediction output CSV file will contain a line for all combinations of 7 intersections 
+							from 7am-7pm (12 hours) on the top of the hour for 5 days. This will give us a CSV submission file of (7 x 12 x 5 ==) 420 different lines of pm2_5_cf_1 predictions.
+						</p>
+						<p>
+							The intersection IDs to predict are:
+						</p>
+
+<code><pre>mlk-central
+mlk-douglas
+mlk-georgia
+mlk-houston
+mlk-lindsay
+mlk-magnolia
+mlk-peeples
+</pre></code>
+						<p>
+							Contestants should list out the full string intersection ID in their submission CSV file.
 						</p>
 						<h4>Submitting an Entry</h4>
 						<p>
 							
 							Teams can submit multiple times to the competition. Each submission will consist of a CSV file in the format:
 <code><pre>date,time_hour,intersection_index,pm2_5_value
-2019-06-01,7:00,1,100.0
-2019-06-01,8:00,1,100.0
-2019-06-01,9:00,1,100.0
-2019-06-01,10:00,1,100.0
-2019-06-01,11:00,1,100.0
+2019-06-25,7:00,mlk-douglas,100.0
+2019-06-25,8:00,mlk-douglas,100.0
+2019-06-25,9:00,mlk-douglas,100.0
+2019-06-25,10:00,mlk-douglas,100.0
+2019-06-25,11:00,mlk-douglas,100.0
 ...
 </pre></code>
 

@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Real-Time Analysis of Retail Shopping Baskets with Computer Vision / TensorFlow and Apache Kafka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision (Part 1)</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a> and Stuart Eudaly</p>
+						<p>Date: Sept 16th, 2019</p>
+						
+						<p>
+							<i>In this blog article we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
+
+						</p>
+
+
+						<img src="./images/big_cloud_dealz_logo2.png" style="width: 300px; height: 315px; float: left; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+
+
+							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience, especially with Amazon's acquisition of Whole Foods and their original concept AmazonGo. On the online front we see shoppers expecting recommendations during their shopping experience along with a customized shopping experience based on their past viewing habits. With the physical storefront experience we see Amazon innovating with an storefront that mimics the online experience with a dizzing array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This blog post gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms-race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
+
+						</p>
+
+						<p>
+
+							The venerable brick and mortar retailer "Big Cloud Dealz" badly wants to compete with the evolving landscape and has made the concerted effort to integrate emerging technologies into their customer experience. Founding CEO, "Big Cloud Ron" (<A HREF="https://twitter.com/BigCloudRon1">@BigCloudRon</a>), loves technology but has been burned in the past by fancy tech ideas. Big Cloud Ron has mandated that IT approach this project in a way that is iterative and adaptable as they figure out "what works" and "what does not".
+						</p>
+						<p>
+
+							So, with the stage being set, we take a look at the notes from the first meeting where the enterprise team kicks off their project:
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/3UjhFM7OejM" style=" margin: 6px;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						<p style="margin-left: 12px;">A Commerical for the K-Mart Blue Light Special</p>
+						</div>
+<!--
+
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/3UjhFM7OejM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+-->
+							<ul>
+								
+								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell; he wants to combine real people with technology --- something online retail cannot do.</li>
+
+								<li>He wants customers to interact with a salesperson "at the right time in the right context". (Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart "Blue Light Special"</a><sup>1</sup>)</li>
+
+								<li>He wants the team to create the following effect in store with technology: create a dynamic in-store special that will prompt a sales associate to move to a specific isle to upsell a specific product based on some business logic, but be based on what people are shopping for "at that momment".</li>
+								<li>He wants to offer a dynamic special that will have the chance to create the most extra margin possible, so we need to know the summary of what items are in everyone's basket combined before they hit the register.</li>
+								<li>Based on this real-time shopping basket summary, the sales manager will have the option to choose one of the top 5 items from the most shopped items (and its associated upsell item) and prompt a sales associate to run to that isle with a portable microphone to announce the "Avacado-Toast Special"<sup>2</sup> for item X</li>
+							</ul>
+
+
+
+						</p>
+						<p>
+
+							So now that we know what management wants, we'll digest this into a general architecture and then break it further down into specific code (that can be run as a local demo). We've organized the remainder of this article into 3 major sections below:
+
+							<ol>
+								<li>Application Architectural Overview</li>
+								<li>Integrating Computer Vision Object Detection into Shopping Cart 2.0</li>
+								<li>Deeper Dive into Building Real-Time Applications with the Kafka Streaming API</li>
+							</ol>
+
+							Let's now continue the story of breaking down the requirements into a system architecture.
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h2>Application Architectural Overview</h2>
+						<p>
+
+							Ok, so IT knows the business goal, now its time to start breaking this down into technical sub-problems they can implement.
+
+							<ul>
+								
+								
+								<li>Latency is a big deal for this application because if we dont have the aggregate contents of all the shopping baskets, we can't make a business decision on which items to offer the upsell on in real-time</li>
+								<li>This makes our biggest focus to be the streaming aspect of this application. The team has been reading a lot about how much success other companies have had with Apache Kafka, so they want to give that a shot.</li>
+								<li>Kafka will handle the data ingest and aggregation part, but now we still need a way to inventory the contents of all shoppers' shopping baskets while they shop. The team knows that object detection has gotten a lot better recently, so they want to leverage that to index the basket contents. They'll also need some sort of device attached to the shopping cart that can run this detection algorithm and send the output to the Kafka system.</li>
+								
+								<li>We don't really want to process this data in batch because latency is a killer for this situation, and the longer we wait, the more likely the shopper is either in line for checkout or out of the store</li>
+								<li>We're going to leverage Confluent's packaging of Apache Kafka as our streaming data collection and processing system.</li>
+								
+							</ul>
+
+							
+							The team realizes they need to measure activity in the retail store in the same way we track shoppers in a web-based store. Ultimately what is happening here is that they will instrument and analyze the physical world much in the same way we treat a webserver and how we analyze web logs to see not only what happened, but predict what we might should do next.
+							
+						</p>
+
+						<p>
+							<h3>Digging into the Apache Kafka Platform</h3>
+
+							<img src="./images/kafka_logo.png" style="width: 250px; height: 85px; float: right; margin: 12px; border: 0px solid #999999;" />
+
+
+							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept as Kafka has a lot of examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's interest:
+
+							<ul>
+								<li>The type of application they were looking for wasn't as good of a fit for the batch world due to the latency requirements</li>
+								<li>Streaming apps tended to differ from MapReduce (or Spark, batch, etc) applications as they tended to implement core function of the business as opposed to computing analytics<sup>olap</sup> </li>
+								
+
+
+						<li>real time apps <a href="https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/">work better as event-driven</a>, where database-based applications are fundamentally table driven<sup>apps</sup></li>
+
+						
+								
+								<li>Having stream processing mechanics built into your ingest platform is handy and <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">more efficient than trying to cobble this together from multiple systems</a></li>
+								<li>Given that the team had to build an embedded application for Shopping Cart 2.0, being able to build everything else on a single platform was a positive</li>
+
+							</ul>
+
+							The application development team checked out Confluent's blog for more ideas, and saw where machine learning had been <a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/">applied in general for machine learning</a> along with for <a href="https://www.confluent.io/blog/predicting-flight-arrivals-with-the-apache-kafka-streams-api/">predicting flight arrivals</a>.
+
+
+						
+
+						
+
+
+
+
+						</p>
+
+						<p>
+
+
+
+							A quote from Confluent's site goes on to state:
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Consider a simple model of a retail store. The core streams in retail are sales of products, orders placed for new products, and shipments of products that arrive. The “inventory on hand” is a table computed off the sale and shipment streams which add and subtract from our stock of products on hand. Two key stream processing operations for a retail outlet are re-ordering products when the stock starts to run low, and adjusting prices as supply and demand change."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>		
+
+						The team also likes the idea of Kafka (as opposed to trying to wire-together something themselves) because they don't have to maintain another custom internally built system. Why? When building complex systems there are only so many parts you want to "own", as many things become a rabbit hole that distract from your end goal and most folks don't have time to miss their project dates.		
+
+						<h3>The General Application Architecture</h3>			
+
+						Based on several whiteboarding sessions, the team comes up with a general design for what they want to do with "Green-Light Special" application. In the diagram below we see the architectural overview for this streaming Kafka-based application.
+						</p>
+						<p>
+							<img src="./images/cloud_dealz_arch_design_start.png" style="width: 938px; height: 296px;" />
+						</p>
+
+
+
+
+
+
+
+
+						From the whiteboarding session the team has broken up the applicaiton into 3 major components in the architectural diagram above:
+
+							<ol>
+								<li>A shopping cart (2.0) with an attached camera and wifi unit (likely an ARM-based embedded system) with an object detection model loaded to <a href="http://www.iraj.in/journal/journal_file/journal_pdf/12-201-144871022643-46.pdf">detect specific objects</a> from the camera</li>
+								<li>Kafka Cluster back in the data center to collect all of the incoming data from the shopping carts, organizing it into logical topics ("groups") for processing</li>
+								<li>A group of streaming applications leveraging Kafka's Streaming API to give our retail store's team a real-time look at what is happening across our store from the perspective of what is in the customer carts</li>
+								
+
+							</ol>
+
+							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable, and in the case of trying to analyze shopper's baskets in real time it doesn't make a lot of sense to push this data to HDFS first. In this case they find it far more favorable for latency purposes to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, let's take a look at the 3 specific application parts the needs to develop.
+
+						</p>
+
+						<p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I DONT NEED COMPUTER VISION BECAUSE I CAN SEE THE FUTURE. AND IN THE FUTURE I BRING THE BLUE LIGHT SPECIAL BACK TO RETAIL. AND IT WILL BRING THE WOOOOO BACK TO RETAIL.</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1027260844269346817?ref_src=twsrc%5Etfw">August 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>							
+
+						</p>						
+
+
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Slider -->
+		<!--
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+	-->
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

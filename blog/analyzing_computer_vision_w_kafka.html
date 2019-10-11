@@ -459,19 +459,17 @@
 
 							The core java classes for this object detection system running on each cart are listed below:
 							<ul>
-								<li><b>**FIX LINKS TO CODE**</b></li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a>: code to run the model inference with TensorFlow</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a>: support utilities for TensorFlow</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject.java</a>: class to represent detected objects from model inference output</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a>: code tying the TensorFlow code into the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka producer API</a></li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a>: code to run the model inference with TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a>: support utilities for TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject.java</a>: class to represent detected objects from model inference output</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a>: code tying the TensorFlow code into the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka producer API</a></li>
 
 							</ul>
-						<b>**FIX POM.XML LINK**</b> To get this project going we'll use Apache Maven so we'll need a pom.xml to bring in the needed dependencies. Here, we see the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml">pom.xml</a>:
+						To get this project going we'll use Apache Maven so we'll need a pom.xml to bring in the needed dependencies. Here, we see the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/pom.xml">pom.xml</a>:
 						</p>
 
 
-					<b>**FIX POM.XML SCRIPT FROM GITHUB**</b>
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml?slice=59:102"></script>
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/pom.xml?slice=76:111"></script>
 
 							<p>
 
@@ -479,19 +477,19 @@
 
 						</p>
 						<p>
-							Let's take a closer look at how we'll load the TensorFlow model and make inferences in Java with the TensorFlow R-CNN object detection model. In the code section below, we can see the <b>**FIX CODE LINK**</b> <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method highlighted which performs the bulk of the work in the class.
+							Let's take a closer look at how we'll load the TensorFlow model and make inferences in Java with the TensorFlow R-CNN object detection model. In the code section below, we can see the <code><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanAllFilesInDirectory(...)</a></code> method highlighted which performs the bulk of the work in the class.
 
 
 						</p>
 
 
-					<b>**FIX CODE SCRIPT FROM GITHUB**</b>
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script>
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script>
 
 						
 
 						<p>
-							The <b>**FIX CODE LINK**</b> <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method takes 3 parameters:
+							The <code><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method takes 3 parameters:
 
 							<ol>
 								<li><b>modelFile</b>: the TensorFlow object detection model to load for inference</li>
@@ -507,19 +505,19 @@
 								
 								
 								<li>Working with <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code>, frozen graphs, and .pb files</li>
-								<li><b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a></li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a></li>
 
 								
-								<li>Converting TensorFlow output into <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject</a> class instances</li>
+								<li>Converting TensorFlow output into <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject</a> class instances</li>
 
 							</ul>
 
 							The <code>SavedModelBundle</code> is handy because it contains all of the needed files to run a TensorFlow object detection model.
 
-							The <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a> class is of note because it wraps functionality for doing things like <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L69">loading label files</a> and <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L95">converting the image file input</a> into the proper vectorized <Code>Tensor&lt;UInt8&gt;</code> format. 
+							The <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a> class is of note because it wraps functionality for doing things like <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L69">loading label files</a> and <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L95">converting the image file input</a> into the proper vectorized <Code>Tensor&lt;UInt8&gt;</code> format. 
 
-							After we get the output of the scores, classes, and bounding boxes from the TensorFlow inference output, the code <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L160">converts these into a VisualObject</a> class wrapper to make them easier to work with.
-							Now that we've located the <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObjects</a> in our basket and given them classifications, let's move on to how we'll send the classified objects to the Kafka cluster for processing.
+							After we get the output of the scores, classes, and bounding boxes from the TensorFlow inference output, the code <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L160">converts these into a VisualObject</a> class wrapper to make them easier to work with.
+							Now that we've located the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObjects</a> in our basket and given them classifications, let's move on to how we'll send the classified objects to the Kafka cluster for processing.
 
 						</p>
 
@@ -535,7 +533,7 @@
 					<div class="col-md-12" id="fh5co-content">
 						<h2>Integrating Shopping Cart 2.0 Detected Objects into an Apache Kafka Producer</h2>
 						<p>
-							To write data to a Kafka topic we need to use the Kafka Producer API. Apache Kafka is a JVM-based system so that makes it a relatively simple process to tie the object detection code into the code using the Producer API. In this example, we can see this happening in the <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class.
+							To write data to a Kafka topic we need to use the Kafka Producer API. Apache Kafka is a JVM-based system so that makes it a relatively simple process to tie the object detection code into the code using the Producer API. In this example, we can see this happening in the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class.
 
 							We can see the code for this class highlighted below.
 
@@ -543,26 +541,25 @@
 
 						</p>
 						
-							<b>**FIX CODE SCRIPT FROM GITHUB**</b>
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=112:172"></script>							
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=164:304"></script>							
 
 						
 						<p>
 							We'll highlight a few key areas of the code:
 
 							<ol>
-								<li><b>**FIX ALL CODE LINKS**</b></li>
-								<li>Specifying a <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L167">Kafka topic</a> to send messages to</li>
-								<li>Configuring the producer to <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L124">use the Avro GenericRecord API</a></li>
-								<li>Laying out an <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L81">Avro schema</a> for the GenericRecord API to use</li>
-								<li>Configuring the producer <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L116">properties</a></li>
-								<li>Scanning all <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L173">image files in a directory</a></li>
-								<li>Watching a <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L224">directory for incoming files</a></li>
-								<li>Main <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L113">run loop</a> of the producer</li>
+								<li>Specifying a <A href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L239">Kafka topic</a> to send messages to</li>
+								<li>Configuring the producer to <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L184">use the Avro GenericRecord API</a></li>
+								<li>Laying out an <A href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L104">Avro schema</a> for the GenericRecord API to use</li>
+								<li>Configuring the producer <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L176">properties</a></li>
+								<li>Scanning all <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L245">image files in a directory</a></li>
+								<li>Watching a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L307">directory for incoming files</a></li>
+								<li>Main <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L164">run loop</a> of the producer</li>
 								
 							</ol>
 
-							The producer class can either scan a pre-existing directory and index all of the objects in the images of the directory or watch a directory for images as they arrive. The producer class uses the <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a> we outlined in the previous section to analyze the images in the directory. The TFVision_ObjectDetection.java class's <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96"><code>scanImageForObjects(...)</code></a> method produces object detections which are then sent to the configured Kafka topic <code>shopping_cart_objects</code>. If we update our general architecture diagram from above it now looks like:
+							The producer class can either scan a pre-existing directory and index all of the objects in the images of the directory or watch a directory for images as they arrive. The producer class uses the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a> we outlined in the previous section to analyze the images in the directory. The TFVision_ObjectDetection.java class's <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96"><code>scanImageForObjects(...)</code></a> method produces object detections which are then sent to the configured Kafka topic <code>shopping_cart_objects</code>. If we update our general architecture diagram from above it now looks like:
 
 
 						</p>
@@ -581,7 +578,7 @@
 
 
 						<p>
-							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <b>**FIX CODE LINK**</b> <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L201">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo. <b>**ADD INFORMATION ABOUT AUTOMATIC PRODUCER THAT WAS ADDED</b>
+							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo. Additionally, we have provided a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> class that randomly generates items every 15 seconds. This allows testing where items are continuously produced, rather than needing to have a photo for each item.
 
 					</div>
 					<div class="col-md-12" id="fh5co-content">

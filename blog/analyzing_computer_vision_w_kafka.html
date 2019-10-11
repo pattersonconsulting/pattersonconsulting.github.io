@@ -129,12 +129,13 @@
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision (Part 1 of 4)</h1>
-						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Stuart Eudaly, Austin Harris</p>
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 1 of 4</h3>
+						<p>Authors: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Stuart Eudaly, Austin Harris</p>
 						<p>Date: INSERT DATE, 2019</p>
 						
 						<p>
-							<i>In this series of blog articles we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
+							<i>In this series of blog articles, we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
 
 						</p>
 
@@ -144,7 +145,7 @@
 						<p>
 
 
-							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience for customers. This is especially true with Amazon's acquisition of Whole Foods and their original concept "AmazonGo." On the online front, we see shoppers expecting a customized shopping experience with recommendations based on their past viewing habits. We also see Amazon innovating with a storefront that mimics the online experience with a dizzing array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This series of blog posts gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
+							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience for customers. This is especially true with Amazon's acquisition of Whole Foods and their original concept "AmazonGo." On the online front, we see shoppers expecting a customized shopping experience with recommendations based on their past viewing habits. We also see Amazon innovating with a storefront that mimics the online experience with a dizzying array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This series of blog posts gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
 
 						</p>
 
@@ -166,9 +167,9 @@
 -->
 							<ul>
 								
-								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell. He wants to combine real people with technolog -- something online retail cannot do.</li>
+								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell. He wants to combine real people with technology -- something online retail cannot do.</li>
 
-								<li>He wants customers to interact with a salesperson "at the right time in the right context." Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart "Blue Light Special."</a><sup>1</sup></li>
+								<li>He wants customers to interact with a salesperson "at the right time in the right context." Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart Blue Light Special.</a><sup>1</sup></li>
 
 								<li>He wants the team to create the following effect in store with technology: create a dynamic in-store special that will prompt a sales associate to move to a specific aisle to upsell a specific product based on some business logic based on what people are shopping for "at that moment."</li>
 								<li>He wants to offer a dynamic special that will have the chance to create the most extra margin possible. So, it will be necessary to know the summary of what items are in everyone's basket combined before they hit the registers.</li>
@@ -196,7 +197,7 @@
 						<h2>Application Architectural Overview</h2>
 						<p>
 
-							Now that IT knows the business goal, let's break this down into technical sub-problems they can implement:
+							Now that IT knows the business goal, here are a few key points they need to focus on to implement this system:
 
 							<ul>
 								
@@ -220,7 +221,7 @@
 							<img src="./images/kafka_logo.png" style="width: 250px; height: 85px; float: right; margin: 12px; border: 0px solid #999999;" />
 
 
-							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept, as Kafka has many examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's interest:
+							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept, as Kafka has many examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's attention:
 
 							<ul>
 								<li>The type of application they were looking for wasn't as good of a fit for the batch world due to the latency requirements.</li>
@@ -289,7 +290,7 @@
 
 							</ol>
 
-							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable. In the case of trying to analyze shoppers' baskets in real time, it doesn't make a lot of sense to push this data to HDFS first. They find it far more favorable (for latency purposes) to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, we'll take a look in the upcoming blog posts at specific application parts the team needs to develop.
+							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable. In the case of trying to analyze shoppers' baskets in real time, it doesn't make a lot of sense to push this data to HDFS first. They find it far more favorable (for latency purposes) to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, we'll take a look in the upcoming blog posts at specific parts of the application the team needs to develop.
 
 						</p>
 
@@ -298,7 +299,7 @@
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I DONT NEED COMPUTER VISION BECAUSE I CAN SEE THE FUTURE. AND IN THE FUTURE I BRING THE BLUE LIGHT SPECIAL BACK TO RETAIL. AND IT WILL BRING THE WOOOOO BACK TO RETAIL.</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1027260844269346817?ref_src=twsrc%5Etfw">August 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>							
 
 						</p>
-						
+		<h3>Footnote</h3>
 						<p>
 							1. In popular culture, <a href="https://en.wikipedia.org/wiki/Kmart">Kmart became known for its "Blue Light Specials."</a> These occurred at surprise moments when a store worker would light up a mobile police light and offer a discount in a specific department of the store while announcing the discounted special over the store's public address system. (I'm really dating myself with this reference.)
 						</p>

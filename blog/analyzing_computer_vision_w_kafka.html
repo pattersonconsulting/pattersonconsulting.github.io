@@ -666,7 +666,7 @@
 
 							</div>	
 
-
+<!--
 				<div style="border-top: 1px #999999 solid;"> </div>				
 				<br/>
 				<br/>
@@ -675,9 +675,10 @@
 				[ start 3rd blog post ]
 
 				<!-- start of section -->
-
+<!--
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
+-->
 						
 <!-- 3RD POST COMMENTED OUT-->
 <!--						
@@ -1180,7 +1181,7 @@ shopping_cart_objects
 						<h2>Installing and Configuring Kafka</h2>
 
 						<p>
-							Now that we have a plan for how to generate the shopping cart data to be sent to Kafka, **INSERT LINK** we need to install and configure Kafka using Confluent’s platform so that the data has somewhere to go. Once the Confluent files are downloaded, run the commands listed below in order to start and configure Kafka for this demo. We suggest executing each command in its own terminal window or tab.
+							Now that we have a plan for how to generate the shopping cart data to be sent to Kafka, we need to install and configure Kafka using <a href="https://www.confluent.io/download/">Confluent’s platform</a> so that the data has somewhere to go. Once the Confluent files are downloaded, run the commands listed below in order to start and configure Kafka for this demo. We suggest executing each command in its own terminal window or tab.
 						</p>
 <!--
 						<div style="float: right; margin: 12px; border: 0px solid #999999;">
@@ -1209,7 +1210,7 @@ $ ./bin/kafka-server-start ./etc/kafka/server.properties
 						</p>
 
 						<p>
-							The previous commands start all the Kafka services we’ll need and create the **INSERT FORMATTING** shopping_cart_objects topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both **INSERT LINK** git and **INSERT LINK** Apache Maven installed. Download and prepare the code using the following commands:
+							The previous commands start all the Kafka services we’ll need and create the <code>shopping_cart_objects</code> topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both <a href="https://git-scm.com/downloads">git</a> and <a href="https://maven.apache.org/download.cgi">Apache Maven</a> installed. Download and prepare the code using the following commands:
 						</p>
 						<p>
 							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
@@ -1219,7 +1220,7 @@ mvn package</span></pre>
 						</p>
 						
 						<p>
-							These commands pull in the files from the repository then build an uber jar in the **INSERT FORMATTING** ./target subdirectory. To then run the producer from Maven, use the following:
+							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. To then run the producer from Maven, use the following:
 						</p>
 						
 						<p>
@@ -1232,15 +1233,15 @@ mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_obje
 						</p>
 					
 					<p>
-						<pre><span style="font-weight: 400; font-size: 12px;">	Found sports ball          (score: 0.9834)
+						<consoleoutput>	Found sports ball          (score: 0.9834)
 Box: 0.0042404234, 0.42308074, 0.3421962, 0.72577053
 	Found sports ball          (score: 0.9471)
 Box: 0.02893363, 0.6947326, 0.37699723, 0.99258703
 Sending avro object detection data for: basket_test_22.jpg
-Sending avro object detection data for: basket_test_22.jpg</span></pre>
+Sending avro object detection data for: basket_test_22.jpg</consoleoutput>
 					</p>
 						<p>
-							Here we see the TensorFlow code finding objects in the images in the local directory included in the project **INSERT FORMATTING** resources/ subdirectory. It will take these objects and individually send them to the Kafka cluster as messages to the **INSERT FORMATTING** shopping_cart_objects topic. You can check that they made it to the topic by executing the command below:
+							Here we see the TensorFlow code finding objects in the images in the local directory included in the project <code>/resources</code> subdirectory. It will take these objects and individually send them to the Kafka cluster as messages to the <code>shopping_cart_objects</code> topic. You can check that they made it to the topic by executing the command below:
 							
 						</p>
 
@@ -1254,9 +1255,9 @@ Sending avro object detection data for: basket_test_22.jpg</span></pre>
 						</p>
 
 						<p>
-							<pre><span style="font-weight: 400; font-size: 12px;">"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+							<consoleoutput>"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
 "spoon"	{"timestamp":1568925134323,"image_name":"spoon","class_id":5,"class_name":"spoon","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
-"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</span></pre>
+"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</consoleoutput>
 						</p>
 						
 

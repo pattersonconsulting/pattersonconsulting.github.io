@@ -328,7 +328,7 @@
 						<p>Authors: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Stuart Eudaly, Austin Harris</p>
 						<p>Date: INSERT DATE, 2019</p>
 						<p>
-							<b>**INSERT LINK TO POST 1**</b> In our last blog post, we saw a new business plan developed by Big Cloud Dealz to update their in-store retail experience. In this post, we'll look at the object detection portion of that plan, along with sending those detected objects to Kafka.
+							<i>**INSERT LINK TO POST 1** In our last blog post, we saw a new business plan developed by Big Cloud Dealz to update their in-store retail experience. In this post, we'll look at the object detection portion of that plan, along with sending those detected objects to Kafka.</i>
 						</p>
 						<h2>Prototyping Shopping Cart 2.0 with Computer Vision</h2>
 
@@ -542,7 +542,7 @@
 						</p>
 						
 
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=164:304"></script>							
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=163:304"></script>							
 
 						
 						<p>
@@ -678,6 +678,9 @@
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
+						
+<!-- 3RD POST COMMENTED OUT-->
+<!--						
 						<h1>Distributed Real-Time Aggregations for the Green Light Special with Kafka Streams</h1>
 
 
@@ -691,7 +694,7 @@
 <!--
 						</div>
 -->
-
+<!--
 							Now that we have a general plan on how to generate the shopping cart data, we need to look at the specifics of how to ingest and aggregate the detected cart objects across all baskets in the store in real-time.
 
 							The Big Cloud Dealz team knows they have to ingest all of these predictions with Kafka from the shopping cart embedded android devices, and that they need to write some <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer code</a> on the Android device to send data to Kafka. Beyond that, they know they need:<br/><br/>
@@ -701,7 +704,6 @@
 							<img src="./images/bcd_arch_part3.png" style="width: 591px; height: 373px;" />
 
 						</div>
-
 
 							<ul>
 								<li>Need a topic to track all incoming detections from the shopping cart devices (topic: <code>shopping_cart_objects</code>)</li>
@@ -713,7 +715,7 @@
 							-->
 
 
-
+<!--
 							</ul>
 
 
@@ -747,7 +749,7 @@
 
 
 				<!-- start of section -->
-
+<!--
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						<h2>Collecting and Aggregating Detected Cart 2.0 Objects in a Kafka Topic</h2>
@@ -1134,7 +1136,8 @@ shopping_cart_objects
 </consoleoutput>
 
 						</p>	
-						-->					
+						-->	
+<!--
 						<p>
 							<h3>Summary</h3>
 
@@ -1150,7 +1153,7 @@ shopping_cart_objects
 				</div>
 				<!-- end of section -->
 
-
+<!-- 3RD POST COMMENTED OUT-->
 
 
 				<div style="border-top: 1px #999999 solid;"> </div>				
@@ -1158,87 +1161,117 @@ shopping_cart_objects
 				<br/>
 				<br/>
 
-				[ start 4th blog post ]				
+				[ start 3rd blog post ]				
 
 
 				<!-- start of section -->
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h2>Ingesting the Inventory MySQL Table with Kafka Connect</h2>
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 3 of 4</h3>
+						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
+						<p>Date: INSERT DATE, 2019</p>
 
 						<p>
-							<i>This is part 4 in a 5-part blog series on building the "Green Light Special" system for fictional retailer, Big Cloud Dealz.</i>
-
+							<i>**INSERT LINK TO POST 2** In part 2 of our series, we looked at how Big Cloud Dealz would detect items in their Shopping Cart 2.0 using TensorFlow. In this post, we’ll look at setting up Confluent’s distribution of Kafka, creating a MySQL database for our in-store items, and pulling in that data to Kafka using Kafka Connect.</i>
 						</p>
+						
+						<h2>Installing and Configuring Kafka</h2>
 
 						<p>
-
-							In part 3 of our series, we had just aggregated all of the incoming object detections into a new topic <code>aggregate_cart_objects</code>.
-
-							We need to join this aggregated information with the current inventory to know which items are paired to upsell by the business analysis group (e.g., "business rules"). The inventory information needs to be joined with the new object detections as they come into the Kafka cluster, so latency is important as well.
-
+							Now that we have a plan for how to generate the shopping cart data to be sent to Kafka, **INSERT LINK** we need to install and configure Kafka using Confluent’s platform so that the data has somewhere to go. Once the Confluent files are downloaded, run the commands listed below in order to start and configure Kafka for this demo. We suggest executing each command in its own terminal window or tab.
 						</p>
-
+<!--
 						<div style="float: right; margin: 12px; border: 0px solid #999999;">
 
 							<img src="./images/bcd_arch_part_4.png" style="width: 665px; height: 396px;" />
 
 						</div>
+-->
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;"># (1) Start Zookeeper
+$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+
+# (2) Start Kafka
+$ ./bin/kafka-server-start ./etc/kafka/server.properties
+
+# (3) Start the Schema Registry
+./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+
+# (4) Create topic for incoming objects
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic shopping_cart_objects
+
+# (5) Create other topics that will be used later
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mysql_tables_jdbc_inventory
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic inventory_rekeyed
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic windowed_items</span></pre>
+						</p>
 
 						<p>
-							Big Cloud Dealz's inventory table is located in a relational database which is a typical home for this type of inforamtion in most Fortune 500 companies. They are using specifically the MySQL database to house their inventory information. Given that we don't want to constantly perform RDBM queries to rebuild the joined data as new information comes in (this would create <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">excessive table lookups, causing scalability issues</a>), we need to periodically cache the latest inventory table in Kafka as a topic. We'll do this with the <a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect/">kafka Connect tool</a> which is included in Confluent's Kafka platform. We'll also again leverage the schema registry to standardize our data with the <A href="http://www.pattersonconsultingtn.com/blog/avro_101_w_kafka.html">Avro</a> message format, as this proves advantageous for managing schemas over time:
-
-
+							The previous commands start all the Kafka services we’ll need and create the **INSERT FORMATTING** shopping_cart_objects topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both **INSERT LINK** git and **INSERT LINK** Apache Maven installed. Download and prepare the code using the following commands:
+						</p>
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
+git pull git@github.com:pattersonconsulting/kafka_tf_object_detection.git
+cd kafka_tf_object_detection
+mvn package</span></pre>
+						</p>
+						
+						<p>
+							These commands pull in the files from the repository then build an uber jar in the **INSERT FORMATTING** ./target subdirectory. To then run the producer from Maven, use the following:
+						</p>
+						
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
+mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"</span></pre>
+						</p>
+						
+						<p>
+							Looking at the output from the above command, you’ll see something like this:
+						</p>
+					
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">	Found sports ball          (score: 0.9834)
+Box: 0.0042404234, 0.42308074, 0.3421962, 0.72577053
+	Found sports ball          (score: 0.9471)
+Box: 0.02893363, 0.6947326, 0.37699723, 0.99258703
+Sending avro object detection data for: basket_test_22.jpg
+Sending avro object detection data for: basket_test_22.jpg</span></pre>
+					</p>
+						<p>
+							Here we see the TensorFlow code finding objects in the images in the local directory included in the project **INSERT FORMATTING** resources/ subdirectory. It will take these objects and individually send them to the Kafka cluster as messages to the **INSERT FORMATTING** shopping_cart_objects topic. You can check that they made it to the topic by executing the command below:
 							
-						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
-						  <p style="font-size: 14px;">
-						  <i>"Although the Schema Registry is not a required service for Kafka Connect, it enables you to easily use Avro as the common data format for all connectors. This keeps the need to write custom code at a minimum and standardizes your data in a flexible format. Additionally, you get the benefits of enforced compatibility rules for schema evolution."</i></p>
-						  <p><a href="https://docs.confluent.io/current/connect/userguide.html">Kafka Connect User Guide</a> from Confluent Documentation</p>
-						</blockquote>
-
-						With context now set, let's dig into how we will use Kafka Connect to cache the MySQL table in Kafka as a topic.
-
-
-
-
 						</p>
-
 
 						<p>
-							<h3>Preparing the MySQL Inventory Table</h3>
+							<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic shopping_cart_objects --from-beginning --property print.key=true --bootstrap-server localhost:9092</span></pre>
 
-							For the purposes of this example we'll assume you either have MySQL working locally or can <a href="https://www.mysql.com/">install it</a> on your own.
-
-							Once you've logged into MySQL, use the following script to build the inventory table and populate it with inventory data that we'll use later on in this blog series.
 						</p>
+
 						<p>
-
-
-			<pre><span style="font-weight: 400; font-size: 12px;">mysql> CREATE DATABASE big_cloud_dealz;
-mysql> USE big_cloud_dealz;
-
-mysql> CREATE TABLE inventory (
- id serial NOT NULL PRIMARY KEY,
- name varchar(100),
- upsell_item varchar(200),
- count INT,
- modified timestamp default CURRENT_TIMESTAMP NOT NULL,
- INDEX `modified_index` (`modified`)
- );
-
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('cup', 'plate', 100);
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('bowl', 'cup', 10);
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('fork', 'spoon', 200);
-
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('spoon', 'fork', 10);
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('sportsball', 'soccer goal', 2);
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('tennis racket', 'tennis ball', 10);
-mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('frisbees', 'frisbee goal', 100);
-
-</span></pre>							
-
+							You should see console output similar to this:
 						</p>
+
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"spoon"	{"timestamp":1568925134323,"image_name":"spoon","class_id":5,"class_name":"spoon","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</span></pre>
+						</p>
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<p>
 
 							The above commands will do 4 things:

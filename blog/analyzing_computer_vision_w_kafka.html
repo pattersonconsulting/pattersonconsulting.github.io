@@ -130,11 +130,12 @@
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
-						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
-						<p>Date: July 16th, 2018</p>
+						<h3>Part 1 of 4</h3>
+						<p>Authors: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Stuart Eudaly, Austin Harris</p>
+						<p>Date: INSERT DATE, 2019</p>
 						
 						<p>
-							<i>In this blog article we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
+							<i>In this series of blog articles, we take on the perspective of the enterprise development team of a fictional Fortune 500 Retailer "Big Cloud Dealz" looking to integrate emerging technology to re-invent the in-store customer experience.</i>
 
 						</p>
 
@@ -144,13 +145,13 @@
 						<p>
 
 
-							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience, especially with Amazon's acquisition of Whole Foods and their original concept AmazonGo. On the online front we see shoppers expecting recommendations during their shopping experience along with a customized shopping experience based on their past viewing habits. With the physical storefront experience we see Amazon innovating with an storefront that mimics the online experience with a dizzing array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This blog post gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms-race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
+							Retail stores are under more pressure than ever to "be like Amazon.com" in terms of tailoring the shopping experience for customers. This is especially true with Amazon's acquisition of Whole Foods and their original concept "AmazonGo." On the online front, we see shoppers expecting a customized shopping experience with recommendations based on their past viewing habits. We also see Amazon innovating with a storefront that mimics the online experience with a dizzying array of <a href="https://www.washingtonpost.com/news/business/wp/2018/01/22/inside-amazon-go-the-camera-filled-convenience-store-that-watches-you-back">sensors and cameras</a>. This series of blog posts gives a real world example in how a non-Amazon retailer could add some of these features to their retail experience by leveraging Apache Kafka (specifically Confluent's enterprise platform) and advanced object detection in computer vision. The <a href="https://www.forbes.com/sites/retailwire/2016/09/21/can-robo-carts-improve-the-walmart-shopping-experience/#3529caed1b22">shopping experience arms race</a> has begun and there is <a href="https://www.cnbc.com/2018/01/17/coming-to-a-grocery-store-near-you-self-driving-carts-smart-shelves.html">no turning back now</a>.
 
 						</p>
 
 						<p>
 
-							The venerable brick and mortar retailer "Big Cloud Dealz" badly wants to compete with the evolving landscape and has made the concerted effort to integrate emerging technologies into their customer experience. Founding CEO, "Big Cloud Ron" (<A HREF="https://twitter.com/BigCloudRon1">@BigCloudRon</a>), loves technology but has been burned in the past by fancy tech ideas. Big Cloud Ron has mandated that IT approach this project in a way that is iterative and adaptable as they figure out "what works" and "what does not".
+							The venerable brick-and-mortar retailer "Big Cloud Dealz" badly wants to compete with the evolving shopping landscape and has made the concerted effort to integrate emerging technologies into their customer experience. Founding CEO, "Big Cloud Ron" (<A HREF="https://twitter.com/BigCloudRon1">@BigCloudRon</a>), loves technology but has been burned in the past by fancy tech ideas. Big Cloud Ron has mandated that IT approach this project in a way that is iterative and adaptable as they figure out "what works" and "what does not."
 						</p>
 						<p>
 
@@ -166,13 +167,13 @@
 -->
 							<ul>
 								
-								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell; he wants to combine real people with technology --- something online retail cannot do.</li>
+								<li>Big Cloud Ron wants to increase engagement with his customers in a unique, personalized, and timely way that drives upsell. He wants to combine real people with technology -- something online retail cannot do.</li>
 
-								<li>He wants customers to interact with a salesperson "at the right time in the right context". (Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart "Blue Light Special"</a><sup>1</sup>)</li>
+								<li>He wants customers to interact with a salesperson "at the right time in the right context." Big Cloud Ron, being a student of retail history, wants a modern version of the classic <A href="https://en.wikipedia.org/wiki/Kmart">K-Mart Blue Light Special.</a><sup>1</sup></li>
 
-								<li>He wants the team to create the following effect in store with technology: create a dynamic in-store special that will prompt a sales associate to move to a specific isle to upsell a specific product based on some business logic, but be based on what people are shopping for "at that momment".</li>
-								<li>He wants to offer a dynamic special that will have the chance to create the most extra margin possible, so we need to know the summary of what items are in everyone's basket combined before they hit the register.</li>
-								<li>Based on this real-time shopping basket summary, the sales manager will have the option to choose one of the top 5 items from the most shopped items (and its associated upsell item) and prompt a sales associate to run to that isle with a portable microphone to announce the "Avacado-Toast Special"<sup>2</sup> for item X</li>
+								<li>He wants the team to create the following effect in store with technology: create a dynamic in-store special that will prompt a sales associate to move to a specific aisle to upsell a specific product based on some business logic based on what people are shopping for "at that moment."</li>
+								<li>He wants to offer a dynamic special that will have the chance to create the most extra margin possible. So, it will be necessary to know the summary of what items are in everyone's basket combined before they hit the registers.</li>
+								
 							</ul>
 
 
@@ -180,15 +181,8 @@
 						</p>
 						<p>
 
-							So now that we know what management wants, we'll digest this into a general architecture and then break it further down into specific code (that can be run as a local demo). We've organized the remainder of this article into 3 major sections below:
+							Since we now know what management wants, let's take a look at the system architecture necessary to accomplish it.
 
-							<ol>
-								<li>Application Architectural Overview</li>
-								<li>Integrating Computer Vision Object Detection into Shopping Cart 2.0</li>
-								<li>Deeper Dive into Building Real-Time Applications with the Kafka Streaming API</li>
-							</ol>
-
-							Let's now continue the story of breaking down the requirements into a system architecture.
 						</p>
 
 
@@ -203,22 +197,21 @@
 						<h2>Application Architectural Overview</h2>
 						<p>
 
-							Ok, so IT knows the business goal, now its time to start breaking this down into technical sub-problems they can implement.
+							Now that IT knows the business goal, here are a few key points they need to focus on to implement this system:
 
 							<ul>
 								
 								
-								<li>Latency is a big deal for this application because if we dont have the aggregate contents of all the shopping baskets, we can't make a business decision on which items to offer the upsell on in real-time</li>
-								<li>This makes our biggest focus to be the streaming aspect of this application. The team has been reading a lot about how much success other companies have had with Apache Kafka, so they want to give that a shot.</li>
-								<li>Kafka will handle the data ingest and aggregation part, but now we still need a way to inventory the contents of all shoppers' shopping baskets while they shop. The team knows that object detection has gotten a lot better recently, so they want to leverage that to index the basket contents. They'll also need some sort of device attached to the shopping cart that can run this detection algorithm and send the output to the Kafka system.</li>
+								<li>Latency is a big deal for this application. If they don't have the aggregate contents of all the shopping baskets in a timely fashion, they can't make a business decision on which items to offer the upsell on in real-time. This makes their biggest focus to be on the streaming aspect of this application. The team has been reading a lot about how much success other companies have had with Apache Kafka, so they want to give that a shot.</li>
+								<li>Kafka will handle the data ingest and aggregation part, but they still need a way to see the contents of all shoppers' shopping baskets while they shop. The team knows that object detection has gotten a lot better recently, so they want to leverage that to index the baskets' contents. They'll also need some sort of device attached to the shopping cart that can run this detection algorithm and send the output to the Kafka system.</li>
 								
-								<li>We don't really want to process this data in batch because latency is a killer for this situation, and the longer we wait, the more likely the shopper is either in line for checkout or out of the store</li>
-								<li>We're going to leverage Confluent's packaging of Apache Kafka as our streaming data collection and processing system.</li>
+								<li>They don't really want to process this data in batch because latency is a killer for this situation. The longer they wait, the more likely the shopper is either in line for checkout or out of the store.</li>
+								<li>They're going to leverage Confluent's packaging of Apache Kafka as their streaming data collection and processing system.</li>
 								
 							</ul>
 
 							
-							The team realizes they need to measure activity in the retail store in the same way we track shoppers in a web-based store. Ultimately what is happening here is that they will instrument and analyze the physical world much in the same way we treat a webserver and how we analyze web logs to see not only what happened, but predict what we might should do next.
+							The team realizes they need to measure activity in the retail store in the same way they track shoppers in a web-based store. Ultimately, what is happening here is that they will instrument and analyze the physical world much in the same way they would treat a webserver or analyze web logs. They want to see not only what happened, but predict what they should do next.
 							
 						</p>
 
@@ -228,24 +221,24 @@
 							<img src="./images/kafka_logo.png" style="width: 250px; height: 85px; float: right; margin: 12px; border: 0px solid #999999;" />
 
 
-							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept as Kafka has a lot of examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's interest:
+							The Big Cloud Dealz application development team has been to a few conferences and is interested in building on a solid real-time platform. They've heard a lot about Apach Kafka so they are going to base their application design on that platform as they are largely focused on collecting large amounts of streaming data and being able to run business rules against aggregates of this data. The <a href="https://docs.confluent.io/current/streams/index.html">Kafka streaming API</a> seems like a great fit to implement this concept, as Kafka has many examples of applications being able to react to data in-flight before it hits the data lake. A few other aspects of Kafka catch the team's attention:
 
 							<ul>
-								<li>The type of application they were looking for wasn't as good of a fit for the batch world due to the latency requirements</li>
-								<li>Streaming apps tended to differ from MapReduce (or Spark, batch, etc) applications as they tended to implement core function of the business as opposed to computing analytics<sup>olap</sup> </li>
+								<li>The type of application they were looking for wasn't as good of a fit for the batch world due to the latency requirements.</li>
+								<li>Streaming apps tended to differ from MapReduce (or Spark, batch, etc.) applications as they tended to implement core function of the business as opposed to computing analytics.</li>
 								
 
 
-						<li>real time apps <a href="https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/">work better as event-driven</a>, where database-based applications are fundamentally table driven<sup>apps</sup></li>
+						<li>Real-time apps <a href="https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/">work better as event-driven</a>, while database-based applications are fundamentally table driven.</li>
 
 						
 								
-								<li>Having stream processing mechanics built into your ingest platform is handy and <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">more efficient than trying to cobble this together from multiple systems</a></li>
-								<li>Given that the team had to build an embedded application for Shopping Cart 2.0, being able to build everything else on a single platform was a positive</li>
+								<li>Having stream processing mechanics built into the ingest platform is handy and <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">more efficient than trying to cobble this together from multiple systems</a>.</li>
+								<li>Given that the team had to build an embedded application for Shopping Cart 2.0, being able to build everything else on a single platform was a benefit.</li>
 
 							</ul>
 
-							The application development team checked out Confluent's blog for more ideas, and saw where machine learning had been <a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/">applied in general for machine learning</a> along with for <a href="https://www.confluent.io/blog/predicting-flight-arrivals-with-the-apache-kafka-streams-api/">predicting flight arrivals</a>.
+							The application development team checked out Confluent's blog for more ideas and saw where machine learning had been <a href="https://www.confluent.io/blog/build-deploy-scalable-machine-learning-production-apache-kafka/">applied in general</a> along with <a href="https://www.confluent.io/blog/predicting-flight-arrivals-with-the-apache-kafka-streams-api/">predicting flight arrivals</a>.
 
 
 						
@@ -270,11 +263,11 @@
 						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
 						</blockquote>		
 
-						The team also likes the idea of Kafka (as opposed to trying to wire-together something themselves) because they don't have to maintain another custom internally built system. Why? When building complex systems there are only so many parts you want to "own", as many things become a rabbit hole that distract from your end goal and most folks don't have time to miss their project dates.		
+						The team also likes the idea of Kafka (as opposed to trying to put something together themselves) because they don't have to maintain another custom, internally-built system. Why? When building complex systems there are only so many parts you want to "own" as many things become a rabbit hole that distract from your end goal and most folks don't have time to miss their project dates.		
 
 						<h3>The General Application Architecture</h3>			
 
-						Based on several whiteboarding sessions, the team comes up with a general design for what they want to do with "Green-Light Special" application. In the diagram below we see the architectural overview for this streaming Kafka-based application.
+						Based on several whiteboarding sessions, the team comes up with a general design for what they want to do with the "Green-Light Special" application. In the diagram below, we see the architectural overview for this streaming Kafka-based application.
 						</p>
 						<p>
 							<img src="./images/cloud_dealz_arch_design_start.png" style="width: 938px; height: 296px;" />
@@ -287,17 +280,17 @@
 
 
 
-						From the whiteboarding session the team has broken up the applicaiton into 3 major components in the architectural diagram above:
+						The team has broken up the applicaiton into 3 major components in the architectural diagram above:
 
 							<ol>
-								<li>A shopping cart (2.0) with an attached camera and wifi unit (likely an ARM-based embedded system) with an object detection model loaded to <a href="http://www.iraj.in/journal/journal_file/journal_pdf/12-201-144871022643-46.pdf">detect specific objects</a> from the camera</li>
-								<li>Kafka Cluster back in the data center to collect all of the incoming data from the shopping carts, organizing it into logical topics ("groups") for processing</li>
-								<li>A group of streaming applications leveraging Kafka's Streaming API to give our retail store's team a real-time look at what is happening across our store from the perspective of what is in the customer carts</li>
+								<li>A shopping cart (2.0) with an attached camera and wifi unit (likely an ARM-based embedded system) with an object detection model loaded to <a href="http://www.iraj.in/journal/journal_file/journal_pdf/12-201-144871022643-46.pdf">detect specific objects</a> from the camera.</li>
+								<li>A Kafka cluster back in the data center to collect all of the incoming data from the shopping carts, organizing it into logical topics for processing.</li>
+								<li>A group of streaming applications leveraging Kafka's Streaming API to give the retail store's team a real-time look at what items are in customers' baskets across the store.</li>
 								
 
 							</ol>
 
-							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable, and in the case of trying to analyze shopper's baskets in real time it doesn't make a lot of sense to push this data to HDFS first. In this case they find it far more favorable for latency purposes to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, let's take a look at the 3 specific application parts the needs to develop.
+							While the Big Cloud Dealz team is a big fan of Apache Hadoop, notice that the architecture above does not include (at this point) any sort of "data lake" to land the data. Some types of data have value that is a direct function of how long it takes to make the data actionable. In the case of trying to analyze shoppers' baskets in real time, it doesn't make a lot of sense to push this data to HDFS first. They find it far more favorable (for latency purposes) to have the data driving business insights as it comes in, which keeps the data's value high. With the basic architecture laid out, we'll take a look in the upcoming blog posts at specific parts of the application the team needs to develop.
 
 						</p>
 
@@ -305,7 +298,12 @@
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I DONT NEED COMPUTER VISION BECAUSE I CAN SEE THE FUTURE. AND IN THE FUTURE I BRING THE BLUE LIGHT SPECIAL BACK TO RETAIL. AND IT WILL BRING THE WOOOOO BACK TO RETAIL.</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1027260844269346817?ref_src=twsrc%5Etfw">August 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>							
 
-						</p>						
+						</p>
+		<h3>Footnote</h3>
+						<p>
+							1. In popular culture, <a href="https://en.wikipedia.org/wiki/Kmart">Kmart became known for its "Blue Light Specials."</a> These occurred at surprise moments when a store worker would light up a mobile police light and offer a discount in a specific department of the store while announcing the discounted special over the store's public address system. (I'm really dating myself with this reference.)
+						</p>
+		
 
 
 
@@ -325,6 +323,13 @@
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 2 of 4</h3>
+						<p>Authors: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Stuart Eudaly, Austin Harris</p>
+						<p>Date: INSERT DATE, 2019</p>
+						<p>
+							<b>**INSERT LINK TO POST 1**</b> In our last blog post, we saw a new business plan developed by Big Cloud Dealz to update their in-store retail experience. In this post, we'll look at the object detection portion of that plan, along with sending those detected objects to Kafka.
+						</p>
 						<h2>Prototyping Shopping Cart 2.0 with Computer Vision</h2>
 
 
@@ -334,7 +339,7 @@
 
 						<div style="float: right; margin: 12px; border: 1px solid #999999;">
 						<iframe width="560" height="315" src="https://www.youtube.com/embed/Xkwl0k_p3FI" style=" margin: 6px;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-						<p style="margin-left: 12px; width: 560px;">Demonstration of <a href="../../vision_apps.html"><i>object detection</i></a>. Object detection<sup>objdet</sup> in computer vision is defined as finding objects in images with “0 to multiple objects per image”. Each object prediction is accompanied by a bounding box and a class probability distribution.</p>
+						<p style="margin-left: 12px; width: 560px;">Demonstration of <a href="../../vision_apps.html"><i>object detection</i></a>. Object detection in computer vision is defined as finding objects in images with “0 to multiple objects per image.” Each object prediction is accompanied by a bounding box and a class probability distribution.</p>
 						</div>		
 
 
@@ -346,13 +351,13 @@
 						</p>
 						<p>					
 
-							The team has stated they need to do some <a href="https://www.oreilly.com/ideas/solving-real-world-business-problems-with-computer-vision">computer vision</a> on the contents of the cart, but they don't have the resources to get too exotic. The development team has read a lot about <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">object detection</a> lately in the domain of <a href="https://ai.googleblog.com/2018/07/accelerated-training-and-inference-with.html">computer vision</a> and they know there are a lot of pre-trained models available for TensorFlow. After watching several demos and videos of applied object detection models, they decide on leveraging one of the models provided in the TensorFlow object deteciton project.
+							The team has stated they need to do some <a href="https://www.oreilly.com/ideas/solving-real-world-business-problems-with-computer-vision">computer vision</a> on the contents of the cart, but they don't have the resources to get too exotic. They've read a lot about <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">object detection</a> lately in the domain of <a href="https://ai.googleblog.com/2018/07/accelerated-training-and-inference-with.html">computer vision</a> and they know there are a lot of pre-trained models available for TensorFlow. After watching several demos and videos of applied object detection models, they decide on leveraging one of the models provided in the TensorFlow object detection project.
 
 						</p>
 						<p>
 
 
-						We need to know what's happening real-time in those shopping carts, but can't spend a ton of time developing the cart sensor because management wants to see a working prototype "soon". The data science team ran some tests on available pre-trained models and observed that our shopping cart bottoms have an odd pattern that tends to disrupt certain item's classifications with the model.
+						They need to know what's happening in real-time in those shopping carts, but can't spend a ton of time developing the cart sensor because management wants to see a working prototype "soon." The data science team ran some tests on available pre-trained models and observed that the shopping cart bottoms have an odd pattern that tends to disrupt certain item's classifications with the model.
 
 					</p>
 
@@ -360,7 +365,7 @@
 
 
 
-						The SVP of Application Development doesnt want to spend on a custom model (yet). They arent sure of the value of collecting a lot of custom shopping cart image data, and they want to see what <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">stock models</a> can do first. If we can get a basic model working to show "something", we likely will get the green light to iterative improve Shopping Cart 2.0 with more custom models based on our earlier models.
+						The SVP of Application Development doesn't want to spend on a custom model (yet). They aren't sure of the value of collecting a lot of custom shopping cart image data, and they want to see what <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">stock models</a> can do first. If they can get a basic model working to show "something," they will likely get the green light to iteratively improve Shopping Cart 2.0 with more custom models based on the earlier models.
 
 
 
@@ -388,7 +393,7 @@
 						<p style="margin-left: 12px; width: 430px;">R-CNN pre-trained model output rendered on input image of a ball and two frisbees with bounding boxes and classifications.</p>
 						</div>		
 
-					<p> Given that we need an android device on the cart itself to collect images of the basket items, it makes sense that we <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_on_mobile_tensorflowlite.md">run the model "at the edge"</a><sup>model-edge</sup> on the cart android device, and only send the model predictions. Model predictions are produced through a process known as "inference" where we take input data and let it do a forward pass through the network. The output layer gives us the prediction, and that's the output we'll send on to the rest of the application. Another advantage of doing inference on the Android devices is that it allows us to leverage all of the CPUs in our fleet of Shopping Cart 2.0's as opposed to having a bank of GPUs back in the data warehouse. 
+					<p> Given that they need an Android device on the cart itself to collect images of the basket items, it makes sense that they <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_on_mobile_tensorflowlite.md">run the model "at the edge"</a> on the cart Android device, and only send the model predictions. Model predictions are produced through a process known as "inference" where input data is taken and does a forward pass through the network. The output layer gives the prediction, and that's the output that will be sent on to the rest of the application. Another advantage of doing inference on the Android devices is that it allows leverage of all of the CPUs in the fleet of Shopping Cart 2.0s, as opposed to having to use a bank of GPUs back in the data warehouse. 
 
 
 
@@ -396,9 +401,9 @@
 					<p>To summarize the process:
 
 						<ol>
-							<li>Periodically take a picture of the contents of the basket</li>
-							<li>Use the picture as input to the local model and get the output of the inference as the object detections</li>
-							<li>Pass each detected object (name of items, bounding box coordinates) to the Kafka system via the <a href="https://docs.confluent.io/current/clients/producer.html">Producer API</a> for aggregation in real-time</li>
+							<li>Periodically take a picture of the contents of the basket.</li>
+							<li>Use the picture as input to the local model and get the output of the inference as the object detections.</li>
+							<li>Pass each detected object (name of items, bounding box coordinates) to the Kafka system via the <a href="https://docs.confluent.io/current/clients/producer.html">Producer API</a> for real-time processing.</li>
 
 						</ol>
 
@@ -411,7 +416,7 @@
 
 					
 					<p>
-						Given that our mandate is to use off-the-shelf components as much as possible to rapidly prototype, we're going to work with a pre-trained model from the <a href="https://www.tensorflow.org/">TensorFlow</a> <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">model zoo</a>. TensorFlow has a lot of community traction and support so the team wants to try and leverage one of object detection models offered from their website. The team has found some ARM9 boards (that will run <a href="https://www.tensorflow.org/mobile/android_build">TensorFlow on Android</a> with WIFI connectivity) with cameras for under $150, so creating 100 Shopping cart 2.0 prototypes loaded up with an object deteciton model should cost around $15k for hardware. Another advantage is that TensorFlow has JVM bindings that run on Android as well, which can be integrated with the JVM code from Kafka.
+						Given that their mandate is to use off-the-shelf components as much as possible to rapidly prototype, they're going to work with a pre-trained model from the <a href="https://www.tensorflow.org/">TensorFlow</a> <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">model zoo</a>. TensorFlow has a lot of community traction and support, so the team wants to try and leverage one of the object detection models offered from their website. The team has found some ARM9 boards (that will run <a href="https://www.tensorflow.org/mobile/android_build">TensorFlow on Android</a> with WIFI connectivity) with cameras for under $150, so creating 100 Shopping Cart 2.0 prototypes loaded up with an object deteciton model should cost around $15k for hardware. Another advantage is that TensorFlow has JVM bindings that run on Android as well, which can be integrated with the JVM code from Kafka.
 
 					</p>
 
@@ -419,18 +424,18 @@
 
 
 					<p>
-						The team scans the TensorFlow model zoo and <a href="https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/">reads up on mAP scores</a> as an overall indication of model quality (Resources on <a href="https://medium.com/@timothycarlen/understanding-the-map-evaluation-metric-for-object-detection-a07fe6962cf3">Understanding object detection and mAP scores</a>, and <a href="https://arxiv.org/abs/1611.10012">understanding speed/accuracy trade-offs in object detection</a>). Inference speed is general a concern, but given that this was a prototype and the team was more interested in a better mAP value, it was less of a concern here. The application did not need to produce a lot of inferences, so a few seconds of latency between taking the picture and sending object detections back to the Kafka cluster was not a big deal.
+						The team scans the TensorFlow model zoo and <a href="https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/">reads up on mAP scores</a> as an overall indication of model quality. (Resources on <a href="https://medium.com/@timothycarlen/understanding-the-map-evaluation-metric-for-object-detection-a07fe6962cf3">Understanding object detection and mAP scores</a>, and <a href="https://arxiv.org/abs/1611.10012">understanding speed/accuracy trade-offs in object detection</a>.) Inference speed is generally a concern, but given that this was a prototype and the team was more interested in better mAP scores, it was less of a concern here. The application did not need to produce a lot of inferences, so a few seconds of latency between taking the picture and sending object detections back to the Kafka cluster was not a big deal.
 
 
 					</p>
 
 					<p>
 
-						The team chooses the <a href="http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz">COCO-pretrained Faster R-CNN with Resnet-101 model</a> because of its general mAP accuracy and decent file size. The team gave a lot of consideration to the YOLOv2 model variant, but ended up going for another model that was slower but gave a better mAP score for the application (which makes a lot of difference when we're using a stock model for prototyping). The data scientist is relieved to know that there are resources for easily <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md">training a future custom model</a> on specific basket images (Example: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_pets.md">Training a pet detector based on Faster R-CNN Resnet 101</a>) once they get the prototype system running for management.
+						The team chooses the <a href="http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz">COCO-pretrained Faster R-CNN with Resnet-101 model</a> because of its general mAP accuracy and decent file size. They gave a lot of consideration to the YOLOv2 model variant, but ended up going for another model that was slower but gave a better mAP score for the application (which makes a lot of difference when we're using a stock model for prototyping). The data scientists are relieved to know that there are resources for easily <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md">training a future custom model</a> on specific basket images (Example: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_pets.md">training a pet detector based on Faster R-CNN Resnet 101</a>) once they get the prototype system running for management.
 
 					</p>
 					<p>
-						With the base system design in place, the team could then move on to getting JVM code working that would take a custom image as input and produce a raw inference output that could be passed to the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a>, as we see being done in the next section.
+						With the base system design in place, the team can move on to getting JVM code working. The code needs to take a custom image as input and produce a raw inference output that can be passed to the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a>, as we see in the next section.
 
 					</p>
 
@@ -449,70 +454,70 @@
 						<h2>Object Detection Model Inference at the Edge with TensorFlow</h2>
 
 						<p>
-							In this section we'll focus on getting TF setup with java code, the model loaded, and inferences produced from the model to send to the kafka cluster.
+							In this section, we'll focus on getting TensorFlow setup with Java code, the model loaded, and inferences produced from the model to send to the Kafka cluster.
 
 
 							The core java classes for this object detection system running on each cart are listed below:
 							<ul>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a>: code to run the model inference with TensorFlow</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a>: support utilities for TensorFlow</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject.java</a>: class to represent detected objects from model inference output</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a>: code tying the TensorFlow code into the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka producer API</a>, more on that a bit later</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a>: code to run the model inference with TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a>: support utilities for TensorFlow</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject.java</a>: class to represent detected objects from model inference output</li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a>: code tying the TensorFlow code into the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka producer API</a></li>
 
 							</ul>
-							To get this project going we'll use Apache Maven so we'll need a pom.xml to bring in the needed dependencies. Below we see a portion of the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml">pom.xml</a> file with the dependencies of note:
+						To get this project going we'll use Apache Maven so we'll need a pom.xml to bring in the needed dependencies. Here, we see the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/pom.xml">pom.xml</a>:
 						</p>
 
 
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/pom.xml?slice=59:102"></script>
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/pom.xml?slice=76:111"></script>
 
 							<p>
 
-							We can see the confluent dependencies that will support the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a> operations along with the TensorFlow dependencies needed to load a pre-trained model (component versions are in the variables section of the pom.xml file; specifically we're using TensorFlow 1.8 in this example). 
+							We can see the Confluent dependencies that will support the <a href="https://docs.confluent.io/current/clients/producer.html">Kafka Producer API</a> operations along with the TensorFlow dependencies needed to load a pre-trained model (component versions are in the variables section of the pom.xml file; specifically we're using TensorFlow 1.8 in this example). 
 
 						</p>
 						<p>
-							Let's take a closer look at how we'll load the TensorFlow model and make inferences in java with the TensorFlow R-CNN object detection model. In the code section below, we can see the <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method highlighted which performs the bulk of the work in the class.
+							Let's take a closer look at how we'll load the TensorFlow model and make inferences in Java with the TensorFlow R-CNN object detection model. In the code section below, we can see the <code><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanAllFilesInDirectory(...)</a></code> method highlighted which performs the bulk of the work in the class.
 
 
 						</p>
 
 
 
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script>
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java?slice=95:140"></script>
 
 						
 
 						<p>
-							The <code><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method takes 3 parameters:
+							The <code><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96">scanImageForObjects(...)</a></code> method takes 3 parameters:
 
 							<ol>
 								<li><b>modelFile</b>: the TensorFlow object detection model to load for inference</li>
-								<li><b>labelMapFile</b>: list of labels the associated <b>modelFile</b> can output (e.g., "the vocabulary of labels the saved model understands")</li>
+								<li><b>labelMapFile</b>: list of labels the associated <b>modelFile</b> can output (i.e. "the vocabulary of labels the saved model understands")</li>
 								<li><b>inputImageFile</b>: the image file path that we want to use as input to the <b>modelFile</b> to get object detections as output from</li>
 
 							</ol>
 
-							This class is a convinient wrapper around the base TensorFlow classes needed to load a <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code> and produce inference output on an arbitrary TensorFlow model.							
+							This class is a convenient wrapper around the base TensorFlow classes needed to load a <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code> and produce inference output on an arbitrary TensorFlow model.							
 							We'll point out a few key areas in the TensorFlow code above:<br/><br/>
 
 							<ul>
 								
 								
 								<li>Working with <code><a href="https://www.tensorflow.org/api_docs/java/reference/org/tensorflow/SavedModelBundle">SavedModelBundle</a></code>, frozen graphs, and .pb files</li>
-								<li><a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a></li>
+								<li><a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a></li>
 
 								
-								<li>Converting TensorFlow output into <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject</a> class instances</li>
+								<li>Converting TensorFlow output into <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObject</a> class instances</li>
 
 							</ul>
 
-							The <code>SavedModelBundle</code> is handy because it all of the needed files to run a TensorFlow object detection model.
+							The <code>SavedModelBundle</code> is handy because it contains all of the needed files to run a TensorFlow object detection model.
 
-							The <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a> class is of note because it wraps functionality for doing things like <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L69">loading label files</a> and <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L95">converting the image file input</a> into the proper vectorized <Code>Tensor&lt;UInt8&gt;</code> format. 
+							The <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java">TFModelUtils.java</a> class is of note because it wraps functionality for doing things like <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L69">loading label files</a> and <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFModelUtils.java#L95">converting the image file input</a> into the proper vectorized <Code>Tensor&lt;UInt8&gt;</code> format. 
 
-							After we get the output of the scores, classes, and bounding boxes from the TensorFlow inference output, the code <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L160">converts these into a our VisualObject</a> class wrappers to make them more easy to with.
-							Now that we've located the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObjects</a> in our basket and given them classifications, let's move on to how we'll send the classified objects to the Kafka cluster for processing.
+							After we get the output of the scores, classes, and bounding boxes from the TensorFlow inference output, the code <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L160">converts these into a VisualObject</a> class wrapper to make them easier to work with.
+							Now that we've located the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/VisualObject.java">VisualObjects</a> in our basket and given them classifications, let's move on to how we'll send the classified objects to the Kafka cluster for processing.
 
 						</p>
 
@@ -528,7 +533,7 @@
 					<div class="col-md-12" id="fh5co-content">
 						<h2>Integrating Shopping Cart 2.0 Detected Objects into an Apache Kafka Producer</h2>
 						<p>
-							To write data to a Kafka topic we need to use the Kafka Producer API. Apache Kafka is a JVM-based system so that makes it a relatively simple process to tie the object detection code into the code using the Producer API. In this example, we can see this happening in the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class.
+							To write data to a Kafka topic we need to use the Kafka Producer API. Apache Kafka is a JVM-based system so that makes it a relatively simple process to tie the object detection code into the code using the Producer API. In this example, we can see this happening in the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class.
 
 							We can see the code for this class highlighted below.
 
@@ -536,25 +541,25 @@
 
 						</p>
 						
-							
-							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=112:172"></script>							
+
+							<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java?slice=164:304"></script>							
 
 						
 						<p>
 							We'll highlight a few key areas of the code:
 
 							<ol>
-								<li>Specifying a <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L167">Kafka topic</a> to send messages to</li>
-								<li>Configuring the producer to <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L124">use the Avro GenericRecord API</a></li>
-								<li>Laying out an <A href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L81">Avro schema</a> for the GenericRecord API to use</li>
-								<li>Configuring the producer <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L116">properties</a></li>
-								<li>Scanning all <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L173">image files in a directory</a></li>
-								<li>Watching a <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L224">directory for incoming files</a></li>
-								<li>Main <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L113">run loop</a> of the producer</li>
+								<li>Specifying a <A href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L239">Kafka topic</a> to send messages to</li>
+								<li>Configuring the producer to <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L184">use the Avro GenericRecord API</a></li>
+								<li>Laying out an <A href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L104">Avro schema</a> for the GenericRecord API to use</li>
+								<li>Configuring the producer <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L176">properties</a></li>
+								<li>Scanning all <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L245">image files in a directory</a></li>
+								<li>Watching a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L307">directory for incoming files</a></li>
+								<li>Main <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L164">run loop</a> of the producer</li>
 								
 							</ol>
 
-							The producer class can either scan a pre-existing directory and index all of the objects in the images of the directory or watch a directory for images as they arrive. The producer class uses the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a> we outlined in the previous section to analyze the images in the directory. The TFVision_ObjectDetection.java class's <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96"><code>scanImageForObjects(...)</code></a> method produces object detections which are then sent to the configured Kafka topic <code>shopping_cart_objects</code>. If we update our general architecture diagram from above it now looks like:
+							The producer class can either scan a pre-existing directory and index all of the objects in the images of the directory or watch a directory for images as they arrive. The producer class uses the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java">TFVision_ObjectDetection.java</a> we outlined in the previous section to analyze the images in the directory. The TFVision_ObjectDetection.java class's <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/vision/TFVision_ObjectDetection.java#L96"><code>scanImageForObjects(...)</code></a> method produces object detections which are then sent to the configured Kafka topic <code>shopping_cart_objects</code>. If we update our general architecture diagram from above it now looks like:
 
 
 						</p>
@@ -573,11 +578,11 @@
 
 
 						<p>
-							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <a href="https://github.com/pattersonconsulting/kafka_tf_object_detection/blob/master/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java#L201">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo.
+							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo. Additionally, we have provided a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> class that randomly generates items every 15 seconds. This allows testing where items are continuously produced, rather than needing to have a photo for each item.
 
 					</div>
 					<div class="col-md-12" id="fh5co-content">
-						At this point the BCD has some working object detection code for cart 2.0 that will send detected objects to <Code>shopping_cart_objects</code> topic in a Kafka cluster. However, we don't have our Kafka system setup nor configured, so we're going to wait until part 3 of this series to run this code (because we have no where to send the detections right now).
+						At this point, BCD has some working object detection code for cart 2.0 that will send detected objects to the <Code>shopping_cart_objects</code> topic in a Kafka cluster. However, we don't have our Kafka system set up nor configured, so we're going to wait until part 3 of this series to run this code (because we have nowhere to send the detections right now).
 					</div>
 
 				</div>
@@ -601,7 +606,7 @@
 
 							</ol>
 
-							In part of our 3-part series, we'll show how we take the real-time incoming shopping cart data and aggregate it to drive a new level of shopping experience in the store.
+							In part 3 of the series, we'll set up Kafka and pull in inventory information from MySQL to enrich the data coming from the shopping carts.
 
 
 						</p>
@@ -619,31 +624,31 @@
 						<h3>More Notes on Model Integration and Model Lifecycle Management</h3>
 						  <p>
 						  <i>
-						  	Obviously for this example we're hard-wiring a model into the Shopping Cart 2.0 project in a way that's great for proof of concepts yet doesnt address many of the production lifesycle issues that arise.
+						  	Obviously for this example we're hard-wiring a model into the Shopping Cart 2.0 project in a way that's great for proof of concepts, yet doesn't address many of the production lifecycle issues that arise.
 						  	Some of these considerations include:
 
 							<ul>
 								
-								<li>Why not send images to Kafka or the Data Lake?</li>
+								<li>Why not send images to Kafka or the data lake?</li>
 								<li>How often do we retrain this model?</li>								
 								<li>How would we swap out or roll-back the model in production?</li>
 								
 							</ul>
-							One great reason to not send images back to the data lake is that we might capture someone's kids' images which could cause legal issues in certain scenarios. Another reason for not capture the images is from a pure resource standpoint as it would require more store and processing resources to be used to move the images around.
+							One great reason to not send images back to the data lake is that we might capture customer-sensitive images which could cause legal issues in certain scenarios. Another reason for not capturing the images is from a pure resource standpoint. It would require more storage and processing resources be used to move the images around.
 
 
 							</i></p>
 							<p><i>
-								The R-CNN model the team uses in this example is good to prove to management that this concept "works", yet has a limited initial vocabulary of objects it can recognize. A real production version of this model would need to fine-tune against the full inventory of the retail chain and would require retraining everytime the store carried a new item. A re-train event would need to be done in a batch setting back on the Data Lake probably leveraging GPUs.
+								The R-CNN model the team uses in this example is good to prove to management that this concept "works," yet has a limited initial vocabulary of objects it can recognize. A real production version of this model would need to fine tune against the full inventory of the retail chain and would require retraining every time the store carried a new item. A re-train event would need to be done in a batch setting back on the data lake (probably leveraging GPUs).
 
 							</i></p>
 
 							<p><i>
-								Once we have a new re-trained model, we'll need to be able to deploy the model to system. We have two options: we either deploy it each night after the store closes, or we do it while people are shopping and using the system. We feel the best approach in terms of model management long-term is to leverage a <A href="https://www.oreilly.com/ideas/integrating-convolutional-neural-networks-into-enterprise-applications">model server system</a> so the support / Ops team can treat each model as it would a RDBMS table. There are several variants of model servers today, a few notable ones:
+								Once we have a new re-trained model, we'll need to be able to deploy the model to system. We have two options: we either deploy it each night after the store closes, or we do it while people are shopping and using the system. We feel the best approach in terms of model management long term, is to leverage a <A href="https://www.oreilly.com/ideas/integrating-convolutional-neural-networks-into-enterprise-applications">model server system</a> so the support / Ops team can treat each model as it would a RDBMS table. There are several variants of model servers today. Here are a few notable ones:
 
 								<ul>
 									<li>Official <a href="https://github.com/tensorflow/serving">TensorFlow Serving Project</a> and then Google's cloud model hosting offerings</li>
-									<li>Hosting <a href="https://docs.microsoft.com/en-us/visualstudio/ai/tensorflow-vm">TensorFlow models on an Azure VM</a>, Deploying <a href="https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/model-management-service-deploy">model as web service</a> on Azure</li>
+									<li>Hosting <a href="https://docs.microsoft.com/en-us/visualstudio/ai/tensorflow-vm">TensorFlow models on an Azure VM</a> and deploying <a href="https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/model-management-service-deploy">model as web service</a> on Azure</li>
 									<li>Cloudera's <a href="https://www.cloudera.com/documentation/data-science-workbench/latest/topics/cdsw_overview.html">Data Science Workbench</a></li>
 
 									<li>Amazon <A href="https://aws.amazon.com/blogs/machine-learning/introducing-model-server-for-apache-mxnet/">MXNet Model Server</a></li>

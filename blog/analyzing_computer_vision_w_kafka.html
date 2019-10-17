@@ -1261,52 +1261,54 @@ Sending avro object detection data for: basket_test_22.jpg</consoleoutput>
 						</p>
 						
 
+					<h2>Setting up MySQL</h2>
 
+					<p>
+						So, we now have Kafka running and our code producing messages to a topic. Each of these messages contains information about an item in a customer’s basket, which is a great start. However, neither the baskets nor Kafka have any notion of what item Big_Cloud_Dealz wants to pair with the items in customers’ baskets. Luckily, <a href="https://docs.confluent.io/current/connect/index.html">Kafka Connect</a> makes it easy to integrate a large number of external systems with Kafka. If we have a Kafka topic that contains inventory information, it will eliminate the need to constantly perform SQL queries every time a new item is detected in a cart. This, in turn will <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">prevent excessive table lookups and scalability issues</a>. To demonstrate all of this, we’ll create a MySQL database, add a table for inventory and populate it, then use Kafka Connect to ingest that data into Kafka. The end goal here is to have all the information we need inside Kafka so that we can do real-time data enrichment using Kafka Streams, but we’ll wait until part 5 to do that. Start by <a href="https://www.mysql.com/downloads/">installing MySQL</a> and logging into it. Once you’re at the <code>mysql></code> prompt, use the following commands to build the inventory table and populated it with data:
+					</p>
 
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">mysql> CREATE DATABASE big_cloud_dealz;
 
+mysql> USE big_cloud_dealz;
 
+mysql> CREATE TABLE inventory (
+ id serial NOT NULL PRIMARY KEY,
+ name varchar(100),
+ upsell_item varchar(200),
+ count INT,
+ modified timestamp default CURRENT_TIMESTAMP NOT NULL,
+ INDEX `modified_index` (`modified`)
+ );
 
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('cup', 'plate', 100);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('bowl', 'cup', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('fork', 'spoon', 200);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('spoon', 'fork', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('sportsball', 'soccer goal', 2);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('tennis racket', 'tennis ball', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('frisbees', 'frisbee goal', 100);</span></pre>
+					</p>
 
+					<p>
+						The above commands do 4 things:
 
+						<li>Create a database in MySQL called <code>big_cloud_dealz</code></li>
+						<li>Switch the current database to <code>big_cloud_dealz</code> in the MySQL command line tool</li>
+						<li>Create a table called <code>inventory</code> in the <code>big_cloud_dealz</code> database</li>
+						<li>Insert 7 records in the <code>inventory</code> table</li>
+						
+						Now let's move on to configuring Kafka Connect so we can ingest the <code>inventory</code> table into a topic in the Kafka cluster.
+					</p>
 
+					<h2>Configuring Kafka Connect</h2>
 
+					<p>
+						Kafka Connect helps create reliable, high-performance ETL pipelines into Kafka. The Kafka Connect system uses a predefined connector to communicate with MySQL and ingest an Avro message for every record in the table. Given that our system is based on the Confluent platform, we already have Kafka Connect installed. Before we start Kafka Connect, we need to configure it to know where our database is located, what information to ingest, and how to connect to it. We can see the configuration file for the Kafka Connect system below.
+					</p>
 
-
-
-						<p>
-
-							The above commands will do 4 things:
-							<ol>
-								<li>Creates a database in MySQL called <code>big_cloud_dealz</code></li>
-								<li>Switches the current database to <code>big_cloud_dealz</code> in the MySQL command line tool.</li>
-								<li>Creates a table called <code>inventory</code> in the <code>big_cloud_dealz</code> database.</li>
-								<li>Inserts 7 records in the <code>inventory</code> table that we'll use in this example.</li>
-
-							</ol>
-
-							Now let's move on to configuring Kafka Connect so we can ingest the <code>inventory</code> table into a topic in the Kafka cluster.
-
-						</p>
-						<p>
-							<h3>Configuring Kafka Connect</h3>
-
-							Integrating data systems is an age old problem in enterprise architecture. Writing custom code to connect a new system to Kafka begins to create a high development and maintenance cost for teams, so we want standardized ways to integrate systems. <a href="https://docs.confluent.io/current/connect/index.html">Kafka Connect</a> let's us standardize how we move data into and out of Kafka and should be our first choice when connecting to a new system. 
-
-						</p>
-						<p>
-							Kafka Connect helps create reliable, high-performance ETL pipelines and we'll focus on ingesting the <code>inventory</code> table using it.
-							In this situation we need to ingest our <code>inventory</code> table into a topic in the Kafka cluster. The Kafka Connect system will use a pre-defined connector to communicate with MySQL and ingest an Avro message for every record in the table.
-
-						</p>
-						<p>
-
-
-							Given that our system is based on the Confluent platform for Kafka, we already have Kafka Connect setup. Before we startup Kafka Connect we need to configure it to know where our database is located, what information to ingest, and how to connect to it. We can see the conf file for the Kafka Connect system below.
-						</p>
-						<p>
-
-
-			<pre><span style="font-weight: 400; font-size: 12px;"># Bootstrap Kafka servers. If multiple servers are specified, they should be comma-separated.
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;"># Bootstrap Kafka servers. If multiple servers are specified, they should be comma-separated.
 bootstrap.servers=localhost:9092
 
 # The converters specify the format of data in Kafka and how to translate it into Connect data.
@@ -1328,31 +1330,25 @@ internal.value.converter.schemas.enable=false
 # Local storage file for offset data
 offset.storage.file.filename=/tmp/connect.offsets
 
-plugin.path=share/java,/Users/josh/Documents/workspace/PattersonConsulting/confluent/mysql-connector-java-8.0.12</span></pre>
-						</p>
-						<p>
+plugin.path=/home/pattersonconsulting/confluent-5.1.2/share/java</span></pre>
+					</p>
 
-							This configuration file tells Connect where the boostrap server for the Kafka cluster lives, to use Avro for the messages, and where our connector plugin jars live. Let's now move on and take a look at how we configure the MySQL connector as a message source.
-
-
-
-						</p>
-						<p>
-							<h3>Configuring the MySQL Source Connector</h3>
-
-							We'll use the stock JDBC connector that ships with the Confluent platform. The stock JDBC connector allows us to connect to any relational database that supports JDBC as described below:
-							
+					<p>
+						This configuration file tells Connect where the bootstrap server for the Kafka cluster is, to use Avro for the messages, and where the connector plugin jars are. Now, let’s take a look at how we configure the MySQL connector. We'll use the stock JDBC connector that ships with the Confluent platform. The stock JDBC connector allows us to connect to any relational database that supports JDBC as described below:
+						
 						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
 						  <p style="font-size: 14px;">
 						  <i>"The JDBC connector allows you to import data from any relational database with a JDBC driver (such as MySQL, Oracle, or SQL Server) into Kafka. By using JDBC, this connector can support a wide variety of databases without requiring custom code for each one."</i></p>
 						  <p>Confluent Blog Post: <a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect/">How to Build a Scalable ETL Pipeline with Kafka Connect</a></p>
 						</blockquote>
+					</p>
 
-						The most complicated parst of configuring the connector to talk to MySQL is getting the connection string right. We have a few snafus getting it correctly connected (looking at you, <code>useJDBCCompliantTimezoneShift=true</code>). We share our Kafka Connect MySQL connector conf file below:
-						</p>
-						<p>
+					<p>
+						Here, you can see the connector configuration file. The most complicated part is making sure the <code>connection.url</code> string is right. Once the file is set up correctly, you’re ready to use Kafka Connect to ingest MySQL data from the <code>inventory</code> table into the Kafka topic <code>mysql_tables_jdbc_inventory</code>.
+					</p>
 
-			<pre><span style="font-weight: 400; font-size: 12px;">name=test-mysql-jdbc
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">name=mysql-jdbc
 connector.class=io.confluent.connect.jdbc.JdbcSourceConnector
 tasks.max=1
 connection.url=jdbc:mysql://localhost:3306/big_cloud_dealz?user=root&password=1234&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -1361,102 +1357,56 @@ incrementing.column.name=id
 timestamp.column.name=modified
 topic.prefix=mysql_tables_jdbc_
 table.whitelist=inventory</span></pre>
-							
-						</p>
-						<p>
-							This connector is setup for standalone (non-distributed) mode, and you'll likely spend the most time making sure your <Code>connection.url</code> jdbc connection string is correct. Once we have this conf file ready, we can move on to using the 2 configuration files to crank up Kafka Connect and get the <code>inventory</code> table loaded as a topic.
+					</p>
 
+					<h2>Running Kafka Connect to Ingest the Inventory Table from MySQL</h2>
 
+					<p>
+						Now that everything is set up, let’s run Kafka Connect up and running. The command below runs Connect in standalone mode and points to the Connect properties and MySQL connector properties files.
+					</p>
 
-						</p>
-						<p>
-							<h3>Running Kafka Connect to Export the Inventory Table From MySQL</h3>
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/connect-standalone /home/pattersonconsulting/BigCloudDealz_GreenLightSpecial/CartCamApp/src/main/resources/kafka/connect/connect-avro-standalone.properties /home/pattersonconsulting/BigCloudDealz_GreenLightSpecial/CartCamApp/src/main/resources/kafka/connect/mysql_ingest.properties</span></pre>
+					</p>
 
+					<p>
+						This command will output logs to the terminal similar to this:
+					</p>
 
-							To run Kafka Connect, we need the following components running:
+					<p>
+						<consoleoutput>[2019-09-19 15:50:26,257] INFO WorkerSourceTask{id=mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:397)
+[2019-09-19 15:50:26,258] INFO WorkerSourceTask{id=mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:414)
+[2019-09-19 15:50:26,271] INFO WorkerSourceTask{id=mysql-jdbc-0} Finished commitOffsets successfully in 13 ms (org.apache.kafka.connect.runtime.WorkerSourceTask:496)</consoleoutput>
+					</p>
 
-							<ol>
-								<li>Zookeeper</li>
-								<li>Kafka Broker</li>
-								<li>Schema Registry</li>
-								<li>MySQL Server</li>
+					<p>
+						If we launch another terminal window we can query our inventory data in the <code>mysql_tables_jdbc_inventory</code> topic with the following command:
+					</p>
 
-							</ol>
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic mysql_tables_jdbc_inventory --property print.key=true --from-beginning --bootstrap-server localhost:9092</span></pre>
+					</p>
 
-							With these daemons running, we can then start Kafka Connect to extract the <code>inventory</code> table from the MySQL database into the Kafka topic <Code>mysql_tables_jdbc_inventory</code> with the command:
+					<p>
+						The output should look like what you see below. Kafka Connect successfully converted each row of the table into an individual message in the <code>mysql_tables_jdbc_inventory</code> topic in Kafka. You’ll notice that the key for each message is null. This is something we’ll need to address in part 5 of our series.
+					</p>
 
-						</p>
-						<p>
+					<p>
+						<consoleoutput>null	{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1554994983000}
+null	{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1554994994000}
+null	{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1554995002000}
+null	{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1554995012000}
+null	{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1554995020000}
+null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1554995038000}
+null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
+					</p>
 
-			<pre><span style="font-weight: 400; font-size: 12px;">$ bin/connect-standalone worker.properties connector1.properties [connector2.properties connector3.properties ...]</span></pre>	
-						</p>					
-						<p>
+					<h2>Summary</h2>
 
+					<p>
+						At this point we have our system detecting objects, sending them to a Kafka topic, and our inventory table from MySQL being ingested into its own Kafka topic. In our final post in this series, the Big Cloud Dealz team will join the cart items with the inventory and perform windowed aggregations in real-time to create the "Green Light Special" application. I think Big Cloud Ron will approve.
+					</p>
 
-			<pre><span style="font-weight: 400; font-size: 12px;">$ connect-standalone /mnt/etc/connect-avro-standalone.properties \
-    /mnt/etc/mysql.properties /mnt/etc/hdfs.properties &amp;</span></pre>	
-
-						</p>
-
-						<p>
-							This command will output logs to the terminal similar to what we see below:
-
-						</p>
-						<p>
-
-<consoleoutput>[2018-08-03 10:25:52,822] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Finished commitOffsets successfully in 10 ms (org.apache.kafka.connect.runtime.WorkerSourceTask:427)
-[2018-08-03 10:26:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
-[2018-08-03 10:26:52,827] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
-[2018-08-03 10:27:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
-[2018-08-03 10:27:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
-[2018-08-03 10:28:52,826] INFO WorkerSourceTask{id=test-mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:328)
-[2018-08-03 10:28:52,827] INFO WorkerSourceTask{id=test-mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:345)
-</consoleoutput>
-						</p>
-
-						<p>
-
-							If we launch another terminal window we can query our inventory data in the <code>mysql_tables_jdbc_inventory</code> topic with the following command:
-
-
-						</p>
-						<p>
-			<pre><span style="font-weight: 400; font-size: 12px;">$ ./bin/kafka-avro-console-consumer --zookeeper localhost:2181 --topic mysql_tables_jdbc_inventory --from-beginning</span></pre>
-						</p>
-						<p>
-							The output should look like we see in below:
-
-
-						</p>
-
-						<p>
-
-							
-<!--
-<pre><span style="font-weight: 400; font-size: 12px;">
--->
-<consoleoutput>
-Using the ConsoleConsumer with old consumer is deprecated and will be removed in a future major release. Consider using the new consumer by passing [bootstrap-server] instead of [zookeeper].
-{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1533291848000}
-{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1533291848000}
-{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1533291848000}
-{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1533291848000}
-{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1533291848000}
-{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1533291848000}
-{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1533291848000}
-</consoleoutput>
-<!--
-</span></pre>							
--->
-						</p>
-
-						<p>
-							<h3>Summary</h3>
-							At this point we have our system detecting objects, sending them to a Kafka topic, and then aggregating them into a topic. We also have our inventory table from MySQL being ingested into its own Kafka topic. In our final post in this series, the Big Cloud Dealz team will join the aggregated cart items with the inventory table in real-time to create the "Green Light Special" application. Hopefully, Big Cloud Ron will approve.
-
-
-
-						</p>
 						
 						
 

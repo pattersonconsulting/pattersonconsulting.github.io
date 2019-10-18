@@ -1363,7 +1363,7 @@ table.whitelist=inventory</span></pre>
 					<h2>Running Kafka Connect to Ingest the Inventory Table from MySQL</h2>
 
 					<p>
-						Now that everything is set up, let’s run Kafka Connect up and running. The command below runs Connect in standalone mode and points to the Connect properties and MySQL connector properties files.
+						Now that everything is set up, let’s get Kafka Connect up and running. The command below runs Connect in standalone mode and points to the Connect properties and MySQL connector properties files.
 					</p>
 
 					<p>
@@ -1400,6 +1400,12 @@ null	{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{
 null	{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1554995020000}
 null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1554995038000}
 null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;"><h4>A note on re-running Kafka Connect</h4>
+						<i>If, for any reason, you find that you need to re-scan the <code>inventory</code> table in MySQL using Kafka Connect, you'll need to delete the <code>connect.offsets</code> file in the <code>/tmp</code> directory. This file keeps track of what Kafka Connect has already sent to Kafka. Deleting it ensures that Kafka Connect will re-scan the entire table. Otherwise, it would only send any new data to Kafka.</i>
+						</span></pre>
 					</p>
 
 					<h2>Summary</h2>

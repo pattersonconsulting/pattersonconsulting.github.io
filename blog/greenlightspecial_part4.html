@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 4 of 4</h3>
+						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
+						<p>Date: October 23, 2019</p>
+
+						<p>
+							<i>**INSERT LINK TO POST 3** In the last article we, set up Confluent’s distribution of Kafka. We also used Kafka Connect to import the inventory table from a MySQL database and store it as a topic in the Kafka cluster. In this article, we'll actually join detected objects with inventory and perform real-time windowed aggregations to create the Green Light Special application.</i>
+						</p>
+						
+						<h2>Introduction to Kafka Streams: KStreams and KTables</h2>
+						
+						<p>
+							In order to do the joins and windowed aggregations needed to get the Green Light Special application up and running, we’re going to utilize Kafka Streams. Essentially, Kafka Streams takes data from a Kafka topic as input, performs some operation on it, then outputs that data to another topic. The Kafka Streams library makes it relatively easy to apply just about any logic to data in Kafka in real time. The join we’re doing between streaming data and an inventory table is commonly seen in real-time applications:
+						</p>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"I’ll argue that the fundamental problem of an asynchronous application is combining tables that represent the current state of the world with streams of events about what is happening right now."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>
+						
+						<p>
+							Two of the core classes used consistently in the design of streaming applications are the <code>KStream</code> and <code>KTable</code> classes. Below we describe their function and how they fit in with the rest of the streaming pipeline.
+						</p>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KStream is an abstraction of a record stream, where each data record represents a self-contained datum in the unbounded data set. Using the table analogy, data records in a record stream are always interpreted as an “INSERT” – think: adding more entries to an append-only ledger – because no record replaces an existing row with the same key. Examples are a credit card transaction, a page view event, or a server log entry."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-kstream">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KTable is an abstraction of a changelog stream, where each data record represents an update. More precisely, the value in a data record is interpreted as an “UPDATE” of the last value for the same record key, if any (if a corresponding key doesn’t exist yet, the update will be considered an INSERT). Using the table analogy, a data record in a changelog stream is interpreted as an UPSERT aka INSERT/UPDATE because any existing row with the same key is overwritten."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-ktable">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+						
+						<p>
+							So, a <code>KTable</code> gives us the latest view of a stream of events by key, while a <code>KStream</code> shows every record as each is considered an independent piece of information. We’ll be using <code>KStreams</code> and <code>KTables</code> (among other things) extensively in our join and windowed aggregation code.
+						</p>
+						
+						<h2>Rekeying the Inventory Topic</h2>
+						
+						<p>
+							Kafka, as well as just about any other system, requires the keys (both the key type and actual value of the key) to match before a join will occur. If we take a look at the schemas for both the <code>shopping_cart_object</code> and <code>mysql_tables_jdbc_inventory</code> topics, we notice that the keys don’t match up. In fact, <code>mysql_tables_jdbc_inventory</code> has <code>null</code> keys! As it turns out, when you ingest data from a table in a database using the JDBC connector, <a href="https://www.confluent.io/blog/simplest-useful-kafka-connect-data-pipeline-world-thereabouts-part-3/">it will have a null key by default</a>. Here’s example output from each topic:
+						</p>
+						
+
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic shopping_cart_objects --from-beginning --property print.key=true --bootstrap-server localhost:9092</span></pre>
+						
+						<consoleoutput>"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"spoon"	{"timestamp":1568925134323,"image_name":"spoon","class_id":5,"class_name":"spoon","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</consoleoutput>
+						
+						<br><pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic mysql_tables_jdbc_inventory --property print.key=true --from-beginning --bootstrap-server localhost:9092</span></pre>
+						
+						<consoleoutput>null	{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1554994983000}
+null	{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1554994994000}
+null	{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1554995002000}
+null	{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1554995012000}
+null	{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1554995020000}
+null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1554995038000}
+null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
+						
+						<p>
+							<br>As you can see, <code>shopping_cart_objects</code> already has the name of the item as the key. However, because <code>mysql_tables_jdbc_inventory</code> has <code>null</code> keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change <code>mysql_tables_jdbc_inventory</code> from <code>null</code> to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - <code>inventory_rekeyed</code>. Below is the chunk of code where we accomplish this:
+						</p>
+						
+						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=177:191"></script>
+						
+						<p>
+							The code above first pulls in the inventory from the <code>mysql_tables_jdbc_inventory</code> topic using a <code>KStream</code>. Then, the <code>.map</code> function is used to assign the new key and the data is sent to the <code>inventory_rekeyed</code> topic. Now, we should be ready to do the join on the two topics and enrich our detected objects in real time!
+						</p>
+						
+						<h2>Joining Detected Objects and Inventory</h2>
+						
+						<p>
+							Now that we have the keys matching between the two topics, it’s time to perform the join. This join will enrich the detected objects with data from inventory. <a href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-joins">There are three basic types of joins available in Kafka Streams</a>:
+						</p>
+						
+						<p>
+							<ul>
+								<li>KStream-KStream join</li>
+								<li>KTable-KTable join</li>
+								<li>KStream-KTable join</li>
+							</ul>
+						</p>
+						
+						<p>
+							Because the objects in carts are independently detected and output to Kafka, a <code>KStream</code> fits best for <code>shopping_cart_objects</code>. On the other hand, inventory from <code>mysql_tables_jdbc_inventory</code> fits best in a <code>KTable</code>, as each record represents a row of the original table from MySQL. That means we’ll be utilizing the KStream-KTable join. Here a few things to note about a KStream-KTable join:
+						</p>
+						
+						<p>
+							<ul>
+								<li>They are non-windowed joins.</li>
+								<li>They allow for table lookups (data enrichment) by the <code>KStream</code> against the <code>KTable</code>.</li>
+								<li>They are triggered when a new record is received from the <code>KStream</code>.</li>
+							</ul>
+						</p>
+						
+						<p>
+							Below is the code where the join occurs:
+						</p>
+						
+						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=192:222"></script>
+						
+						<p>
+							This code creates a <code>KTable</code> from the <code>inventory_rekeyed</code> topic, creates a <code>KStream</code> from the <code>shopping_cart_objects</code> topic, then performs the join. The join returns the name of the item in the cart, the item that should be paired with it (the upsell item), and the number of items. Because each cart item is a separate record in the <code>KStream</code>, the count for each will always be 1. This wouldn’t matter, except that we’ll be using those counts in the windowed aggregations in the next section. Read on!
+						</p>
+						
+						<h2>Windowed Aggregations</h2>
+						
+						<p>
+							At this point, our code has joined the data from <code>shopping_cart_objects</code> and <code>mysql_tables_jdbc_inventory</code> using a <code>KStream</code> and <code>KTable</code>. However, the result of that operation is another <code>KStream</code>. That means that the Big Cloud Dealz team would see a constant stream of individual items detected in carts (and enriched with data from inventory), rather than a sum of all items in all carts in the store. This can be fixed by converting the output <code>KStream</code> to a <code>KTable</code>, which can be used to show an ever-increasing aggregate of the items. That solves half the problem, but doesn’t ever dump items that are no longer in the carts. To accomplish this, we’ll utilize a <code>Windowed KTable</code> so that we only see aggregates for a specified time window. As this is a proof of concept, we’ll assume that an item is only “valid” in a cart for one minute. In other words, we want to see the totals of all items in all carts every 60 seconds. Let’s take a look at how we do it:
+						</p>
+						
+						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=223:275"></script>
+						
+						<p>
+							The code above:
+						</p>
+						
+						<p>
+							<ol>
+								<li>defines the duration of the time window.</li>
+								<li>creates a <code>Windowed KTable</code>.</li>
+								<li>performs a <code>.groupByKey</code> to (you guessed it) group the items by key.</li>
+								<li>windows the <code>KTable</code> by the window length we defined earlier.</li>
+								<li>performs a <code>.reduce</code> that simply sums the aggregate and the newly counted item.</li>
+								<li>suppresses the output using <code>.suppress</code> so that we get one output per time window instead of every time an object is detected. The <code>.suppress</code> operator requires a defined “grace period” on the time window in order know when the window is closed (which is why we added <code>.grace</code> to the time window earlier). For more information on the <code>.suppress</code> operator, <a href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#window-final-results">read this</a>.</li>
+								<li>outputs the final results to <code>System.out</code> using a <code>KStream</code> (and some hacked-together string formatting to make it look nice).</li>
+							</ol>
+						</p>
+						
+						<p>
+							To see this code in action, first run <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java">StreamingJoin_CartCountsAndInventoryTopics.java</a>, then start <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> (or <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a>).
+						</p>
+						
+						<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
+# 1. Start join and aggregate code
+mvn exec …
+
+# 2. Start producer code
+mvn exec …</span></pre>
+						<p>
+							Here is some sample output from our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> that randomly outputs an item every 15 seconds:
+						</p>
+						
+						<consoleoutput>09/20/2019 14:40:34	item: spoon          count: 1	upsell: fork
+09/20/2019 14:40:34	item: tennis racket  count: 1	upsell: tennis ball
+09/20/2019 14:41:35	item: bowl           count: 1	upsell: cup
+09/20/2019 14:41:35	item: spoon          count: 1	upsell: fork
+09/20/2019 14:41:35	item: sportsball     count: 1	upsell: soccer goal
+09/20/2019 14:41:35	item: tennis racket  count: 1	upsell: tennis ball
+09/20/2019 14:42:35	item: bowl           count: 1	upsell: cup
+09/20/2019 14:42:35	item: sportsball     count: 1	upsell: soccer goal
+09/20/2019 14:42:35	item: tennis racket  count: 2	upsell: tennis ball
+09/20/2019 14:43:35	item: cup            count: 2	upsell: plate
+09/20/2019 14:43:35	item: frisbees       count: 1	upsell: frisbee goal
+09/20/2019 14:43:35	item: tennis racket  count: 1	upsell: tennis ball
+09/20/2019 14:44:35	item: spoon          count: 3	upsell: fork
+09/20/2019 14:44:35	item: frisbees       count: 1	upsell: frisbee goal</consoleoutput>
+						
+						<p>
+							<br>As you can see, every minute we get output that includes the items in carts, how many there are across all carts, and the upsell item that should be paired with those items. Because our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> code outputs an item every 15 seconds, we see a total of 4 items every 1-minute time window (with the exception of the first window, where the code was started halfway through the window).
+						</p>
+						
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+							<h4>Resetting Streaming Applications</h4><i>If you run the above stream applications and then try to rerun them later, they will not automatically reprocess the data. To reset the application state, run the following command:</i>
+							<br><br><code>./bin/kafka-streams-application-reset --application-id pct-cv-streaming-join-counts-inventory-app-3 --input-topics mysql_tables_jdbc_inventory,shopping_cart_objects,inventory_rekeyed</code>
+							<br><br><i>For more information on resetting streaming applications, check out these resources:</i>
+							<br><a href="https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/">https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/</a>
+							<br><a href="https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html">https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html</a>
+
+						</div>
+						
+						<h2>Summary</h2>
+						
+						<p>
+							In this post, we utilized Kafka Streams to join data from two Kafka topics and perform windowed aggregations on the results. This has been a fairly involved process to get the Big Cloud Dealz team the desired functionality in their Green Light Special application. While this application involves many pieces working together to function, Kafka and the Kafka Streams library enable the manipulation of real-time streaming data that would be rather difficult otherwise. Hopefully this series of posts has been beneficial to you and shown you just what TensorFlow, Kafka, Kafka Connect, and Kafka Streams are capable of.
+						</p>
+					</div>
+				</div>
+				<!-- end of section -->				
+
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Slider -->
+		<!--
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+	-->
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

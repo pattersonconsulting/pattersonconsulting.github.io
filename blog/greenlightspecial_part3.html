@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 3 of 4</h3>
+						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
+						<p>Date: October 23, 2019</p>
+
+						<p>
+							<i>**INSERT LINK TO POST 2** In part 2 of our series, we looked at how Big Cloud Dealz would detect items in their Shopping Cart 2.0 using TensorFlow. In this post, we’ll look at setting up Confluent’s distribution of Kafka, creating a MySQL database for our in-store items, and pulling in that data to Kafka using Kafka Connect.</i>
+						</p>
+						
+						<h2>Installing and Configuring Kafka</h2>
+
+						<p>
+							Now that we have a plan for how to generate the shopping cart data to be sent to Kafka, we need to install and configure Kafka using <a href="https://www.confluent.io/download/">Confluent’s platform</a> so that the data has somewhere to go. Once the Confluent files are downloaded, run the commands listed below in order to start and configure Kafka for this demo. We suggest executing each command in its own terminal window or tab.
+						</p>
+<!--
+						<div style="float: right; margin: 12px; border: 0px solid #999999;">
+							<img src="./images/bcd_arch_part_4.png" style="width: 665px; height: 396px;" />
+						</div>
+-->
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;"># (1) Start Zookeeper
+$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+
+# (2) Start Kafka
+$ ./bin/kafka-server-start ./etc/kafka/server.properties
+
+# (3) Start the Schema Registry
+./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+
+# (4) Create topic for incoming objects
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic shopping_cart_objects
+
+# (5) Create other topics that will be used later
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mysql_tables_jdbc_inventory
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic inventory_rekeyed
+./bin/kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic windowed_items</span></pre>
+						</p>
+
+						<p>
+							The previous commands start all the Kafka services we’ll need and create the <code>shopping_cart_objects</code> topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both <a href="https://git-scm.com/downloads">Git</a> and <a href="https://maven.apache.org/download.cgi">Apache Maven</a> installed. Download and prepare the code using the following commands:
+						</p>
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
+git pull git@github.com:pattersonconsulting/kafka_tf_object_detection.git
+cd kafka_tf_object_detection
+mvn package</span></pre>
+						</p>
+						
+						<p>
+							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. To then run the producer from Maven, use the following:
+						</p>
+						
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
+mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"</span></pre>
+						</p>
+						
+						<p>
+							Looking at the output from the above command, you’ll see something like this:
+						</p>
+					
+					<p>
+						<consoleoutput>	Found sports ball          (score: 0.9834)
+Box: 0.0042404234, 0.42308074, 0.3421962, 0.72577053
+	Found sports ball          (score: 0.9471)
+Box: 0.02893363, 0.6947326, 0.37699723, 0.99258703
+Sending avro object detection data for: basket_test_22.jpg
+Sending avro object detection data for: basket_test_22.jpg</consoleoutput>
+					</p>
+						<p>
+							Here we see the TensorFlow code finding objects in the images in the local directory included in the project <code>/resources</code> subdirectory. It will take these objects and individually send them to the Kafka cluster as messages to the <code>shopping_cart_objects</code> topic. You can check that they made it to the topic by executing the command below:
+							
+						</p>
+
+						<p>
+							<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic shopping_cart_objects --from-beginning --property print.key=true --bootstrap-server localhost:9092</span></pre>
+
+						</p>
+
+						<p>
+							You should see console output similar to this:
+						</p>
+
+						<p>
+							<consoleoutput>"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"spoon"	{"timestamp":1568925134323,"image_name":"spoon","class_id":5,"class_name":"spoon","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</consoleoutput>
+						</p>
+						
+
+					<h2>Setting up MySQL</h2>
+
+					<p>
+						So, we now have Kafka running and our code producing messages to a topic. Each of these messages contains information about an item in a customer’s basket, which is a great start. However, neither the baskets nor Kafka have any notion of what item Big_Cloud_Dealz wants to pair with the items in customers’ baskets. Luckily, <a href="https://docs.confluent.io/current/connect/index.html">Kafka Connect</a> makes it easy to integrate a large number of external systems with Kafka. If we have a Kafka topic that contains inventory information, it will eliminate the need to constantly perform SQL queries every time a new item is detected in a cart. This, in turn will <a href="https://www.confluent.io/blog/distributed-real-time-joins-and-aggregations-on-user-activity-events-using-kafka-streams/">prevent excessive table lookups and scalability issues</a>. To demonstrate all of this, we’ll create a MySQL database, add a table for inventory and populate it, then use Kafka Connect to ingest that data into Kafka. The end goal here is to have all the information we need inside Kafka so that we can do real-time data enrichment using Kafka Streams, but we’ll wait until part 4 to do that. Start by <a href="https://www.mysql.com/downloads/">installing MySQL</a> and logging into it. Once you’re at the <code>mysql></code> prompt, use the following commands to build the inventory table and populated it with data:
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">mysql> CREATE DATABASE big_cloud_dealz;
+
+mysql> USE big_cloud_dealz;
+
+mysql> CREATE TABLE inventory (
+ id serial NOT NULL PRIMARY KEY,
+ name varchar(100),
+ upsell_item varchar(200),
+ count INT,
+ modified timestamp default CURRENT_TIMESTAMP NOT NULL,
+ INDEX `modified_index` (`modified`)
+ );
+
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('cup', 'plate', 100);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('bowl', 'cup', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('fork', 'spoon', 200);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('spoon', 'fork', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('sportsball', 'soccer goal', 2);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('tennis racket', 'tennis ball', 10);
+mysql> INSERT INTO inventory (name, upsell_item, count) VALUES ('frisbees', 'frisbee goal', 100);</span></pre>
+					</p>
+
+					<p>
+						The above commands do 4 things:
+
+						<li>Create a database in MySQL called <code>big_cloud_dealz</code></li>
+						<li>Switch the current database to <code>big_cloud_dealz</code> in the MySQL command line tool</li>
+						<li>Create a table called <code>inventory</code> in the <code>big_cloud_dealz</code> database</li>
+						<li>Insert 7 records in the <code>inventory</code> table</li>
+					</p>
+					<p>
+						Now let's move on to configuring Kafka Connect so we can ingest the <code>inventory</code> table into a topic in the Kafka cluster.
+					</p>
+
+					<h2>Configuring Kafka Connect</h2>
+
+					<p>
+						Kafka Connect helps create reliable, high-performance ETL pipelines into Kafka. The Kafka Connect system uses a predefined connector to communicate with MySQL and ingest an Avro message for every record in the table. Given that our system is based on the Confluent platform, we already have Kafka Connect installed. Before we start Kafka Connect, we need to configure it to know where our database is located, what information to ingest, and how to connect to it. We can see the configuration file for the Kafka Connect system below.
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;"># Bootstrap Kafka servers. If multiple servers are specified, they should be comma-separated.
+bootstrap.servers=localhost:9092
+
+# The converters specify the format of data in Kafka and how to translate it into Connect data.
+# Every Connect user will need to configure these based on the format they want their data in
+# when loaded from or stored into Kafka
+key.converter=io.confluent.connect.avro.AvroConverter
+key.converter.schema.registry.url=http://localhost:8081
+value.converter=io.confluent.connect.avro.AvroConverter
+value.converter.schema.registry.url=http://localhost:8081
+
+# The internal converter used for offsets and config data is configurable and must be specified,
+# but most users will always want to use the built-in default. Offset and config data is never
+# visible outside of Connect in this format.
+internal.key.converter=org.apache.kafka.connect.json.JsonConverter
+internal.value.converter=org.apache.kafka.connect.json.JsonConverter
+internal.key.converter.schemas.enable=false
+internal.value.converter.schemas.enable=false
+
+# Local storage file for offset data
+offset.storage.file.filename=/tmp/connect.offsets
+
+plugin.path=/home/pattersonconsulting/confluent-5.1.2/share/java</span></pre>
+					</p>
+
+					<p>
+						This configuration file tells Connect where the bootstrap server for the Kafka cluster is, to use Avro for the messages, and where the connector plugin jars are. Now, let’s take a look at how we configure the MySQL connector. We'll use the stock JDBC connector that ships with the Confluent platform. The stock JDBC connector allows us to connect to any relational database that supports JDBC as described below:
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"The JDBC connector allows you to import data from any relational database with a JDBC driver (such as MySQL, Oracle, or SQL Server) into Kafka. By using JDBC, this connector can support a wide variety of databases without requiring custom code for each one."</i></p>
+						  <p>Confluent Blog Post: <a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect/">How to Build a Scalable ETL Pipeline with Kafka Connect</a></p>
+						</blockquote>
+					</p>
+
+					<p>
+						Here, you can see the connector configuration file. The most complicated part is making sure the <code>connection.url</code> string is right. Once the file is set up correctly, you’re ready to use Kafka Connect to ingest MySQL data from the <code>inventory</code> table into the Kafka topic <code>mysql_tables_jdbc_inventory</code>.
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">name=mysql-jdbc
+connector.class=io.confluent.connect.jdbc.JdbcSourceConnector
+tasks.max=1
+connection.url=jdbc:mysql://localhost:3306/big_cloud_dealz?user=root&password=1234&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+mode=timestamp+incrementing
+incrementing.column.name=id
+timestamp.column.name=modified
+topic.prefix=mysql_tables_jdbc_
+table.whitelist=inventory</span></pre>
+					</p>
+
+					<h2>Running Kafka Connect to Ingest the Inventory Table from MySQL</h2>
+
+					<p>
+						Now that everything is set up, let’s get Kafka Connect up and running. The command below runs Connect in standalone mode and points to the Connect properties and MySQL connector properties files.
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/connect-standalone /home/pattersonconsulting/BigCloudDealz_GreenLightSpecial/CartCamApp/src/main/resources/kafka/connect/connect-avro-standalone.properties /home/pattersonconsulting/BigCloudDealz_GreenLightSpecial/CartCamApp/src/main/resources/kafka/connect/mysql_ingest.properties</span></pre>
+					</p>
+
+					<p>
+						This command will output logs to the terminal similar to this:
+					</p>
+
+					<p>
+						<consoleoutput>[2019-09-19 15:50:26,257] INFO WorkerSourceTask{id=mysql-jdbc-0} Committing offsets (org.apache.kafka.connect.runtime.WorkerSourceTask:397)
+[2019-09-19 15:50:26,258] INFO WorkerSourceTask{id=mysql-jdbc-0} flushing 0 outstanding messages for offset commit (org.apache.kafka.connect.runtime.WorkerSourceTask:414)
+[2019-09-19 15:50:26,271] INFO WorkerSourceTask{id=mysql-jdbc-0} Finished commitOffsets successfully in 13 ms (org.apache.kafka.connect.runtime.WorkerSourceTask:496)</consoleoutput>
+					</p>
+
+					<p>
+						If we launch another terminal window we can query our inventory data in the <code>mysql_tables_jdbc_inventory</code> topic with the following command:
+					</p>
+
+					<p>
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic mysql_tables_jdbc_inventory --property print.key=true --from-beginning --bootstrap-server localhost:9092</span></pre>
+					</p>
+
+					<p>
+						The output should look like what you see below. Kafka Connect successfully converted each row of the table into an individual message in the <code>mysql_tables_jdbc_inventory</code> topic in Kafka. You’ll notice that the key for each message is null. This is something we’ll need to address in part 4 of our series.
+					</p>
+
+					<p>
+						<consoleoutput>null	{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1554994983000}
+null	{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1554994994000}
+null	{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1554995002000}
+null	{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1554995012000}
+null	{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1554995020000}
+null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1554995038000}
+null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
+					</p>
+
+					<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+						<h4>A note on rerunning Kafka Connect</h4><i>If, for any reason, you find that you need to re-scan the <code>inventory</code> table in MySQL using Kafka Connect, you'll need to delete the <code>connect.offsets</code> file in the <code>/tmp</code> directory. This file keeps track of what Kafka Connect has already sent to Kafka. Deleting it ensures that Kafka Connect will re-scan the entire table. Otherwise, it would only send any new data to Kafka.</i>
+					</div>
+
+					<h2>Summary</h2>
+
+					<p>
+						At this point, we have our system detecting objects, sending them to a Kafka topic, and our inventory table from MySQL being ingested into its own Kafka topic. In our final post in this series, the Big Cloud Dealz team will join the cart items with the inventory and perform windowed aggregations in real-time to create the "Green Light Special" application.
+					</p>
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Slider -->
+		<!--
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+	-->
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

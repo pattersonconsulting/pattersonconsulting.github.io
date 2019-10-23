@@ -1210,7 +1210,7 @@ $ ./bin/kafka-server-start ./etc/kafka/server.properties
 						</p>
 
 						<p>
-							The previous commands start all the Kafka services we’ll need and create the <code>shopping_cart_objects</code> topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both <a href="https://git-scm.com/downloads">git</a> and <a href="https://maven.apache.org/download.cgi">Apache Maven</a> installed. Download and prepare the code using the following commands:
+							The previous commands start all the Kafka services we’ll need and create the <code>shopping_cart_objects</code> topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both <a href="https://git-scm.com/downloads">Git</a> and <a href="https://maven.apache.org/download.cgi">Apache Maven</a> installed. Download and prepare the code using the following commands:
 						</p>
 						<p>
 							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
@@ -1429,24 +1429,104 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 				<br/>
 				<br/>
 
-				[ start 5th blog post ]		
+				[ start 4th blog post ]		
 
 
 				<!-- start of section -->
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h2>Joining the Aggregated Objects with the Inventory Table with the Streaming API</h2>
+						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
+						<h3>Part 4 of 4</h3>
+						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
+						<p>Date: INSERT DATE, 2019</p>
 
 						<p>
-							In the last article we setup Kafka Connect to import the <code>inventory</code> table from a MySQL database and store it as a topic in the Kafka cluster.
-
-							In this article we'll put the final peice in place and the Big Cloud Dealz team will join the aggregated cart items with the inventory table in real-time to create the "Green Light Special" application.
+							**INSERT LINK TO POST 3** In the last article we, set up Confluent’s distribution of Kafka. We also used Kafka Connect to import the inventory table from a MySQL database and store it as a topic in the Kafka cluster. In this article, we'll actually join detected objects with inventory and perform real-time windowed aggregations to create the Green Light Special application.
 						</p>
+						
+						<h2>Introduction to Kafka Streams: KStreams and KTables</h2>
+						
 						<p>
-													
-							<img src="./images/bcd_arch_part_5.png" style="width: 918px; height: 400px;" />
+							In order to do the joins and windowed aggregations needed to get the Green Light Special application up and running, we’re going to utilize Kafka Streams. Essentially, Kafka Streams takes data from a Kafka topic as input, performs some operation on it, then outputs that data to another topic. The Kafka Streams library makes it relatively easy to apply just about any logic to data in Kafka in real time. The join we’re doing between streaming data and an inventory table is commonly seen in real-time applications:
 						</p>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"I’ll argue that the fundamental problem of an asynchronous application is combining tables that represent the current state of the world with streams of events about what is happening right now."</i></p>
+						  <p>Jay Kreps' Blog Article: <a href="https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/">"Introducing Kafka Streams: Stream Processing Made Simple"</a></p>
+						</blockquote>
+						
+						<p>
+							Two of the core classes used consistently in the design of streaming applications are the **INSERT CODE** KStream and **INSERT CODE** KTable classes. Below we describe their function and how they fit in with the rest of the streaming pipeline.
+						</p>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KStream is an abstraction of a record stream, where each data record represents a self-contained datum in the unbounded data set. Using the table analogy, data records in a record stream are always interpreted as an “INSERT” – think: adding more entries to an append-only ledger – because no record replaces an existing row with the same key. Examples are a credit card transaction, a page view event, or a server log entry."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-kstream">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+						
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"A KTable is an abstraction of a changelog stream, where each data record represents an update. More precisely, the value in a data record is interpreted as an “UPDATE” of the last value for the same record key, if any (if a corresponding key doesn’t exist yet, the update will be considered an INSERT). Using the table analogy, a data record in a changelog stream is interpreted as an UPSERT aka INSERT/UPDATE because any existing row with the same key is overwritten."</i></p>
+						  <p><a href="https://docs.confluent.io/current/streams/concepts.html#streams-concepts-ktable">Streams Concepts from Confluent Documentation</a></p>
+						</blockquote>
+						
+						<p>
+							So, a **INSERT CODE** KTable gives us the latest view of a stream of events by key, while a **INSERT CODE** KStream shows every record as each is considered an independent piece of information. We’ll be using **INSERT CODE** KStreams and **INSERT CODE** KTables (among other things) extensively in our join and windowed aggregation code.
+						</p>
+						
+						<h2>Rekeying the Inventory topic</h2>
+						
+						<p>
+							Kafka, as well as just about any other system, requires the keys (both the key type and actual value of the key) to match before a join will occur. If we take a look at the schemas for both the **INSERT CODE** shopping_cart_object and **INSERT CODE** mysql_tables_jdbc_inventory topics, we notice that the keys don’t match up. In fact, **INSERT CODE** mysql_tables_jdbc_inventory has **INSERT CODE** null keys! As it turns out, when you ingest data from a table in a database using the JDBC connector, **INSERT LINK** it will have a null key by default. Here’s example output from each topic:
+						</p>
+						
+
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic shopping_cart_objects --from-beginning --property print.key=true --bootstrap-server localhost:9092</span></pre>
+						
+						<consoleoutput>"sportsball"	{"timestamp":1568925073631,"image_name":"sportsball","class_id":1,"class_name":"sportsball","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"spoon"	{"timestamp":1568925134323,"image_name":"spoon","class_id":5,"class_name":"spoon","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}
+"cup"	{"timestamp":1568925194456,"image_name":"cup","class_id":9,"class_name":"cup","score":99.0,"box_x":1,"box_y":2,"box_w":3,"box_h":4}</consoleoutput>
+						
+						<pre><span style="font-weight: 400; font-size: 12px;">./bin/kafka-avro-console-consumer --topic mysql_tables_jdbc_inventory --property print.key=true --from-beginning --bootstrap-server localhost:9092</span></pre>
+						
+						<consoleoutput>null	{"id":1,"name":{"string":"cup"},"upsell_item":{"string":"plate"},"count":{"int":100},"modified":1554994983000}
+null	{"id":2,"name":{"string":"bowl"},"upsell_item":{"string":"cup"},"count":{"int":10},"modified":1554994994000}
+null	{"id":3,"name":{"string":"fork"},"upsell_item":{"string":"spoon"},"count":{"int":200},"modified":1554995002000}
+null	{"id":4,"name":{"string":"spoon"},"upsell_item":{"string":"fork"},"count":{"int":10},"modified":1554995012000}
+null	{"id":5,"name":{"string":"sportsball"},"upsell_item":{"string":"soccer goal"},"count":{"int":2},"modified":1554995020000}
+null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis ball"},"count":{"int":10},"modified":1554995038000}
+null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
+						
+						<p>
+							As you can see, **INSERT CODE** shopping_cart_objects already has the name of the item as the key. However, because **INSERT CODE** mysql_tables_jdbc_inventory has null keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change **INSERT CODE** mysql_tables_jdbc_inventory from **INSERT CODE** null to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - **INSERT CODE** inventory_rekeyed. Below is the chunk of code where we accomplish this:
+						</p>
+						
+						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=177:192"></script>
+						
+						<p>
+							The code above first pulls in the inventory from the **INSERT CODE** mysql_tables_jdbc_inventory topic using a **INSERT CODE** KStream. Then, the **INSERT CODE** .map function is used to assign the new key and the data is sent to the **INSERT CODE** inventory_rekeyed topic. Now, we should be ready to do the join on the two topics and enrich our detected objects in real time!
+						</p>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						<p>
 							In the diagram above we can see:
 

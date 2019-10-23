@@ -1442,7 +1442,7 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						<p>Date: INSERT DATE, 2019</p>
 
 						<p>
-							**INSERT LINK TO POST 3** In the last article we, set up Confluent’s distribution of Kafka. We also used Kafka Connect to import the inventory table from a MySQL database and store it as a topic in the Kafka cluster. In this article, we'll actually join detected objects with inventory and perform real-time windowed aggregations to create the Green Light Special application.
+							<i>**INSERT LINK TO POST 3** In the last article we, set up Confluent’s distribution of Kafka. We also used Kafka Connect to import the inventory table from a MySQL database and store it as a topic in the Kafka cluster. In this article, we'll actually join detected objects with inventory and perform real-time windowed aggregations to create the Green Light Special application.</i>
 						</p>
 						
 						<h2>Introduction to Kafka Streams: KStreams and KTables</h2>
@@ -1458,7 +1458,7 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						</blockquote>
 						
 						<p>
-							Two of the core classes used consistently in the design of streaming applications are the **INSERT CODE** KStream and **INSERT CODE** KTable classes. Below we describe their function and how they fit in with the rest of the streaming pipeline.
+							Two of the core classes used consistently in the design of streaming applications are the <code>KStream</code> and <code>KTable</code> classes. Below we describe their function and how they fit in with the rest of the streaming pipeline.
 						</p>
 						
 						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
@@ -1474,13 +1474,13 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						</blockquote>
 						
 						<p>
-							So, a **INSERT CODE** KTable gives us the latest view of a stream of events by key, while a **INSERT CODE** KStream shows every record as each is considered an independent piece of information. We’ll be using **INSERT CODE** KStreams and **INSERT CODE** KTables (among other things) extensively in our join and windowed aggregation code.
+							So, a <code>KTable</code> gives us the latest view of a stream of events by key, while a <code>KStream</code> shows every record as each is considered an independent piece of information. We’ll be using <code>KStreams</code> and <code>KTables</code> (among other things) extensively in our join and windowed aggregation code.
 						</p>
 						
 						<h2>Rekeying the Inventory Topic</h2>
 						
 						<p>
-							Kafka, as well as just about any other system, requires the keys (both the key type and actual value of the key) to match before a join will occur. If we take a look at the schemas for both the **INSERT CODE** shopping_cart_object and **INSERT CODE** mysql_tables_jdbc_inventory topics, we notice that the keys don’t match up. In fact, **INSERT CODE** mysql_tables_jdbc_inventory has **INSERT CODE** null keys! As it turns out, when you ingest data from a table in a database using the JDBC connector, **INSERT LINK** it will have a null key by default. Here’s example output from each topic:
+							Kafka, as well as just about any other system, requires the keys (both the key type and actual value of the key) to match before a join will occur. If we take a look at the schemas for both the <code>shopping_cart_object</code> and <code>mysql_tables_jdbc_inventory</code> topics, we notice that the keys don’t match up. In fact, <code>mysql_tables_jdbc_inventory</code> has <code>null</code> keys! As it turns out, when you ingest data from a table in a database using the JDBC connector, <a href="https://www.confluent.io/blog/simplest-useful-kafka-connect-data-pipeline-world-thereabouts-part-3/">it will have a null key by default</a>. Here’s example output from each topic:
 						</p>
 						
 
@@ -1501,37 +1501,39 @@ null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis b
 null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
 						
 						<p>
-							<br>As you can see, **INSERT CODE** shopping_cart_objects already has the name of the item as the key. However, because **INSERT CODE** mysql_tables_jdbc_inventory has null keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change **INSERT CODE** mysql_tables_jdbc_inventory from **INSERT CODE** null to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - **INSERT CODE** inventory_rekeyed. Below is the chunk of code where we accomplish this:
+							<br>As you can see, <code>shopping_cart_objects</code> already has the name of the item as the key. However, because <code>mysql_tables_jdbc_inventory</code> has null keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change <code>mysql_tables_jdbc_inventory</code> from <code>null</code> to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - <code>inventory_rekeyed</code>. Below is the chunk of code where we accomplish this:
 						</p>
 						
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=177:191"></script>
 						
 						<p>
-							The code above first pulls in the inventory from the **INSERT CODE** mysql_tables_jdbc_inventory topic using a **INSERT CODE** KStream. Then, the **INSERT CODE** .map function is used to assign the new key and the data is sent to the **INSERT CODE** inventory_rekeyed topic. Now, we should be ready to do the join on the two topics and enrich our detected objects in real time!
+							The code above first pulls in the inventory from the <code>mysql_tables_jdbc_inventory</code> topic using a <code>KStream</code>. Then, the <code>.map</code> function is used to assign the new key and the data is sent to the <code>inventory_rekeyed</code> topic. Now, we should be ready to do the join on the two topics and enrich our detected objects in real time!
 						</p>
 						
 						<h2>Joining Detected Objects and Inventory</h2>
 						
 						<p>
-							Now that we have the keys matching between the two topics, it’s time to perform the join. This join will enrich the detected objects with data from inventory. **INSERT LINK** https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-joins There are three basic types of joins available in Kafka Streams:
+							Now that we have the keys matching between the two topics, it’s time to perform the join. This join will enrich the detected objects with data from inventory. <a href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#streams-developer-guide-dsl-joins">There are three basic types of joins available in Kafka Streams</a>:
 						</p>
 						
 						<p>
-							**INSERT LIST**
-1. KStream-KStream join
-2. KTable-KTable join
-3. KStream-KTable join
+							<ul>
+								<li>KStream-KStream join</li>
+								<li>KTable-KTable join</li>
+								<li>KStream-KTable join</li>
+							</ul>
 						</p>
 						
 						<p>
-							Because the objects in carts are independently detected and output to Kafka, a **INSERT CODE** KStream fits best for **INSERT CODE** shopping_cart_objects. On the other hand, inventory from **INSERT CODE** mysql_tables_jdbc_inventory fits best in a **INSERT CODE** KTable, as each record represents a row of the original table from MySQL. That means we’ll be utilizing the **INSERT CODE** KStream-KTable join. Here a few things to note about a **INSERT CODE** KStream-KTable join:
+							Because the objects in carts are independently detected and output to Kafka, a <code>KStream</code> fits best for <code>shopping_cart_objects</code>. On the other hand, inventory from <code>mysql_tables_jdbc_inventory</code> fits best in a <code>KTable</code>, as each record represents a row of the original table from MySQL. That means we’ll be utilizing the KStream-KTable join. Here a few things to note about a KStream-KTable join:
 						</p>
 						
 						<p>
-							**INSERT LIST**
-- They are non-windowed joins.
-- They allow for table lookups (data enrichment) by the **INSERT CODE** KStream against the **INSERT CODE** KTable.
-- They are triggered when a new record is received from the **INSERT CODE** KStream.
+							<ul>
+								<li>They are non-windowed joins.</li>
+								<li>They allow for table lookups (data enrichment) by the <code>KStream</code> against the <code>KTable</code>.</li>
+								<li>They are triggered when a new record is received from the <code>KStream</code>.</li>
+							</ul>
 						</p>
 						
 						<p>
@@ -1541,13 +1543,13 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=192:222"></script>
 						
 						<p>
-							This code creates a **INSERT CODE** KTable from the **INSERT CODE** inventory_rekeyed topic, creates a **INSERT CODE** KStream from the **INSERT CODE** shopping_cart_objects topic, then performs the join. The join returns the name of the item in the cart, the item that should be paired with it (the upsell item), and the number of items. Because each cart item is a separate record in the **INSERT CODE** KStream, the count for each will always be 1. This wouldn’t matter, except that we’ll be using those counts in the windowed aggregations in the next section. Read on!
+							This code creates a <code>KTable</code> from the <code>inventory_rekeyed</code> topic, creates a <code>KStream</code> from the <code>shopping_cart_objects</code> topic, then performs the join. The join returns the name of the item in the cart, the item that should be paired with it (the upsell item), and the number of items. Because each cart item is a separate record in the <code>KStream</code>, the count for each will always be 1. This wouldn’t matter, except that we’ll be using those counts in the windowed aggregations in the next section. Read on!
 						</p>
 						
 						<h2>Windowed Aggregations</h2>
 						
 						<p>
-							At this point, our code has joined the data from **INSERT CODE** shopping_cart_objects and **INSERT CODE** mysql_tables_jdbc_inventory using a **INSERT CODE** KStream and **INSERT CODE** KTable. However, the result of that operation was another **INSERT CODE** KStream. That means that the Big Cloud Dealz team would see a constant stream of individual items detected in carts (and enriched with data from inventory), rather than a sum of all items in all carts in the store. This can be fixed by converting the output **INSERT CODE** KStream to a **INSERT CODE** KTable, which can be used to show an ever-increasing aggregate of the items. That solves half the problem, but doesn’t ever dump items that are no longer in the carts. To accomplish this, we’ll utilize a **INSERT CODE** Windowed KTable so that we only see aggregates for a specified time window. As this is a proof of concept, we’ll assume that an item is only “valid” in a cart for one minute. In other words, we want to see the totals of all items in all carts every 60 seconds. Let’s take a look at how we do it:
+							At this point, our code has joined the data from <code>shopping_cart_objects</code> and <code>mysql_tables_jdbc_inventory</code> using a <code>KStream</code> and <code>KTable</code>. However, the result of that operation is another <code>KStream</code>. That means that the Big Cloud Dealz team would see a constant stream of individual items detected in carts (and enriched with data from inventory), rather than a sum of all items in all carts in the store. This can be fixed by converting the output <code>KStream</code> to a <code>KTable</code>, which can be used to show an ever-increasing aggregate of the items. That solves half the problem, but doesn’t ever dump items that are no longer in the carts. To accomplish this, we’ll utilize a <code>Windowed KTable</code> so that we only see aggregates for a specified time window. As this is a proof of concept, we’ll assume that an item is only “valid” in a cart for one minute. In other words, we want to see the totals of all items in all carts every 60 seconds. Let’s take a look at how we do it:
 						</p>
 						
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=223:275"></script>
@@ -1557,21 +1559,22 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						</p>
 						
 						<p>
-							**INSERT LIST**
-1. defines the duration of the time window.
-2. creates a windowed **INSERT CODE** KTable.
-3. performs a **INSERT CODE** .groupByKey to (you guessed it) group the items by key.
-4. windows the **INSERT CODE** KTable by the window length we defined earlier.
-5. performs a **INSERT CODE** .reduce that simply sums the aggregate and the newly counted item.
-6. suppresses the output using **INSERT CODE** .suppress so that we get one output per time window instead of every time an object is detected. The **INSERT CODE** .suppress operator requires a defined “grace period” on the time window in order know when the window is closed (which is why we added **INSERT CODE** .grace to the time window earlier). **INSERT LINK** For more information on the **INSERT CODE** .suppress operator, read this.
-7. outputs the final results to **INSERT CODE** System.out using a **INSERT CODE** KStream (and some hacked-together string formatting to make it look nice).
+							<ol>
+								<li>defines the duration of the time window.</li>
+								<li>creates a <code>Windowed KTable</code>.</li>
+								<li>performs a <code>.groupByKey</code> to (you guessed it) group the items by key.</li>
+								<li>windows the <code>KTable</code> by the window length we defined earlier.</li>
+								<li>performs a <code>.reduce</code> that simply sums the aggregate and the newly counted item.</li>
+								<li>suppresses the output using <code>.suppress</code> so that we get one output per time window instead of every time an object is detected. The <code>.suppress</code> operator requires a defined “grace period” on the time window in order know when the window is closed (which is why we added <code>.grace</code> to the time window earlier). For more information on the <code>.suppress</code> operator, <a href="https://docs.confluent.io/current/streams/developer-guide/dsl-api.html#window-final-results">read this</a>.</li>
+								<li>outputs the final results to <code>System.out</code> using a <code>KStream</code> (and some hacked-together string formatting to make it look nice).</li>
+							</ol>
 						</p>
 						
 						<p>
-							To see this code in action, first run **INSERT LINK** StreamingJoin_CartCountsAndInventoryTopics.java, then start **INSERT LINK** ObjectDetectionProducer.java (or **INSERT LINK** TestDetectionProducer.java).
+							To see this code in action, first run <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java">StreamingJoin_CartCountsAndInventoryTopics.java</a>, then start <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> (or <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a>).
 						</p>
 						
-						<pre><span style="font-weight: 400; font-size: 12px;">**INSERT FORMATTING**
+						<pre><span style="font-weight: 400; font-size: 12px;">
 **REWRITE COMMANDS**
 # 1. Start join and aggregate code
 mvn exec …
@@ -1579,7 +1582,7 @@ mvn exec …
 # 2. Start producer code
 mvn exec …</span></pre>
 						<p>
-							Here is some sample output from our **INSERT LINK** TestDetectionProducer.java that randomly outputs an item every 15 seconds:
+							Here is some sample output from our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> that randomly outputs an item every 15 seconds:
 						</p>
 						
 						<consoleoutput>09/20/2019 14:40:34	item: spoon          count: 1	upsell: fork
@@ -1598,16 +1601,16 @@ mvn exec …</span></pre>
 09/20/2019 14:44:35	item: frisbees       count: 1	upsell: frisbee goal</consoleoutput>
 						
 						<p>
-							<br>As you can see, every minute we get output that includes the items in carts, how many there are across all carts, and the upsell item that should be paired with those items. Because our **INSERT LINK** TestDetectionProducer.java code outputs an item every 15 seconds, we see a total of 4 items every 1-minute time window (with the exception of the first window, where the code was started halfway through the window).
+							<br>As you can see, every minute we get output that includes the items in carts, how many there are across all carts, and the upsell item that should be paired with those items. Because our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> code outputs an item every 15 seconds, we see a total of 4 items every 1-minute time window (with the exception of the first window, where the code was started halfway through the window).
 						</p>
 						
 						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
 							<h4>Resetting Streaming Applications</h4><i>If you run the above stream applications and then try to rerun them later, they will not automatically reprocess the data. To reset the application state, run the following command:</i>
-							<br>**INSERT FORMATTING** ./bin/kafka-streams-application-reset --application-id pct-cv-streaming-join-counts-inventory-app-3 --input-topics mysql_tables_jdbc_inventory,shopping_cart_objects,inventory_rekeyed
+							<br><code>./bin/kafka-streams-application-reset --application-id pct-cv-streaming-join-counts-inventory-app-3 --input-topics mysql_tables_jdbc_inventory,shopping_cart_objects,inventory_rekeyed</code>
 							<i>For more information on resetting streaming applications, check out these resources:</i>
-							<br>**INSERT LINKS**
-https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/
-https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html
+							<br><a href="https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/">https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/</a>
+							<br><a href="https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html">https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html</a>
+
 						</div>
 						
 						<h2>Summary</h2>

@@ -1501,7 +1501,7 @@ null	{"id":6,"name":{"string":"tennis racket"},"upsell_item":{"string":"tennis b
 null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"},"count":{"int":100},"modified":1554995048000}</consoleoutput>
 						
 						<p>
-							<br>As you can see, <code>shopping_cart_objects</code> already has the name of the item as the key. However, because <code>mysql_tables_jdbc_inventory</code> has null keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change <code>mysql_tables_jdbc_inventory</code> from <code>null</code> to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - <code>inventory_rekeyed</code>. Below is the chunk of code where we accomplish this:
+							<br>As you can see, <code>shopping_cart_objects</code> already has the name of the item as the key. However, because <code>mysql_tables_jdbc_inventory</code> has <code>null</code> keys, we’ll need to rekey the data in that topic so that Kafka Streams knows which items to join. For the keys to match up, we’ll change <code>mysql_tables_jdbc_inventory</code> from <code>null</code> to the name of the item. We will also need to send the newly rekeyed data to a new topic in Kafka - <code>inventory_rekeyed</code>. Below is the chunk of code where we accomplish this:
 						</p>
 						
 						<script src="http://gist-it.appspot.com/https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java?slice=177:191"></script>
@@ -1574,8 +1574,7 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 							To see this code in action, first run <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/KafkaProcessingApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/StreamingJoin_CartCountsAndInventoryTopics.java">StreamingJoin_CartCountsAndInventoryTopics.java</a>, then start <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> (or <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a>).
 						</p>
 						
-						<pre><span style="font-weight: 400; font-size: 12px;">
-**REWRITE COMMANDS**
+						<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
 # 1. Start join and aggregate code
 mvn exec …
 
@@ -1607,7 +1606,7 @@ mvn exec …</span></pre>
 						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
 							<h4>Resetting Streaming Applications</h4><i>If you run the above stream applications and then try to rerun them later, they will not automatically reprocess the data. To reset the application state, run the following command:</i>
 							<br><code>./bin/kafka-streams-application-reset --application-id pct-cv-streaming-join-counts-inventory-app-3 --input-topics mysql_tables_jdbc_inventory,shopping_cart_objects,inventory_rekeyed</code>
-							<i>For more information on resetting streaming applications, check out these resources:</i>
+							<br><i>For more information on resetting streaming applications, check out these resources:</i>
 							<br><a href="https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/">https://www.confluent.io/blog/data-reprocessing-with-kafka-streams-resetting-a-streams-application/</a>
 							<br><a href="https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html">https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html</a>
 

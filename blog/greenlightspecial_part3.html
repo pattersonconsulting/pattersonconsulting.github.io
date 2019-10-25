@@ -164,19 +164,17 @@ $ ./bin/kafka-server-start ./etc/kafka/server.properties
 							The previous commands start all the Kafka services we’ll need and create the <code>shopping_cart_objects</code> topic. At this point, our code should be ready to run. To get the code and run it locally, you’ll need both <a href="https://git-scm.com/downloads">Git</a> and <a href="https://maven.apache.org/download.cgi">Apache Maven</a> installed. Download and prepare the code using the following commands:
 						</p>
 						<p>
-							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
-git pull git@github.com:pattersonconsulting/kafka_tf_object_detection.git
-cd kafka_tf_object_detection
+							<pre><span style="font-weight: 400; font-size: 12px;">git clone https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial.git
+cd CartCamApp
 mvn package</span></pre>
 						</p>
 						
 						<p>
-							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. To then run the producer from Maven, use the following:
+							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. You'll actually need to <code>cd</code> into each of the three subdirectories (<code>CartCamApp</code>, <code>TestKafkaProducer</code>, and <code>KafkaProcessingApp</code>) and run <code>mvn package</code> to ensure all three pieces of code we'll use will work. We'll need one additional file to run <code>ObjectDetectionProducer</code> - the pre-trained detection model. The model can be downloaded <a href="http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz">here</a>, or you can browse models and learn more about them <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">here</a>. To run the producer from Maven, use the following command, making sure to include the location of the downloaded model and the address of the Schema Registry as arguments:
 						</p>
 						
 						<p>
-							<pre><span style="font-weight: 400; font-size: 12px;">**REWRITE COMMANDS**
-mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="10 http://localhost:8081 ./src/main/resources/cart_images/"</span></pre>
+							<pre><span style="font-weight: 400; font-size: 12px;">mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="/PATH/TO/MODEL/ssd_inception_v2_coco_2018_01_28/saved_model/ http://localhost:8081"</span></pre>
 						</p>
 						
 						<p>

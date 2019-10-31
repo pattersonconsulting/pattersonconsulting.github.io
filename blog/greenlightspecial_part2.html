@@ -17,22 +17,27 @@
 		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<title>Patterson Consulting: Blog - Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 2 of 4</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="blog page for Patterson Consulting" />
 	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
+	<meta property="og:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 2 of 4"/>
+
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part2.html"/>
 	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<meta property="og:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+	
+
+	<meta name="twitter:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 2 of 4" />
+	<meta data-rh="true" property="twitter:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part2.html" />
+	<meta name="twitter:card" content="summary_large_image" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
@@ -179,6 +184,61 @@
 					</div>
 				</div>
 				<!-- end of section -->
+
+				<!-- Start SIDEBAR on Transfer Learning -->
+				<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">
+
+					<h3>Refining Models for Specific Use Cases with Transfer Learning</h3>
+					<p>
+						<i>
+						  	Stock models can work well out of the gate as we'll see through the progression of this blog article. However, many use cases require a certain level of accuracy on a task to be relevant from a business standpoint (e.g., "we have to be able to detect N% of objects in a shopping basket before the upsell makes us money"). The background of the shopping basket and the specific inventory shapes tend to mess with the object detection system somtimes and would need to be accounted for in the model.
+						  	</i>
+						  </p>
+						  <o>
+						  	<i>
+
+						  	We could raise the accuracy of the stock computer vision model by collecting more images of the specific inventory items sitting inside specific types of shopping carts and then building a set of labels (e.g., "bounding boxes + classifications") for the new specific dataset. We'd then take this new data and the "base" stock model from the TensorFlow model zoo and further train the existing model. This technique in known as "transfer learning" in the field of computer vision and deep learning.
+
+
+						</i>
+
+					</p>
+					<p>
+						<i>
+
+							Transfer learning has a few variants, but the classic case is where we take an existing convolutional neural network from a model repository such as the TensorFlow model zoo and further train it with domain-specific data. More specifically:
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;"><i>
+
+						  "In this variant of transfer learning, we see a CNN model trained on a large data‐ set such as ImageNet, and then we replace the last “classifier layer” with some‐ thing specific to the fine-tuning dataset. Some variants will continue to perform backpropagation on all of the layers, and others will update only the later layers. This is because many of the earlier-layer features are general to all types of vision processing and there is less need to update them. The later layers are focused on combining these lower-level features in task-specific ways and are more relevant to train on the domain-specific dataset."</i></p>
+
+						  <p>Oreilly's <a href="http://www.oreilly.com/authors/widgets/782.html">"Deep Learning: A Practitioner's Approach"</a>, Patterson / Gibson 2017</p>
+						</blockquote>	
+
+					</i>
+
+					</p>
+					<p>
+						<i>
+							Another great reason to use transfer learning is because models quickly "age" as the distribution of the image data shifts. This means, as the inventory in the store (for example) gets updated, the model will be less effective at detecting specific objects in the basket as some inventory items will be knew and then some inventory items will get dropped. We need a way to keep our model "fresh" and will likely have to periodically rebuild the model (or <a href="http://www.pattersonconsultingtn.com/offerings/data_science_offerings.html">have someone do it for us with a managed model service</a>). Managing model versions also becomes an issue as we begin to rotate new versions of models into / out of production. This topic is addressed in the sidebar at the end of this article.
+
+						</i>
+
+					</p>
+
+					<p>
+						<i>
+							For the purposes of building this sample application we aren't going to fine tune the shopping cart computer vision model. In a future article beyond this 4 part series, the Patterson Consulting team will show examples of transfer learning in action for a specific domain. An existing example of transfer learning in action is the <A href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_pets.md">TensorFlow pet detector example</a>.
+
+						</i>
+
+					</p>
+
+
+				</div>
+				<!-- End SIDEBAR on Transfer Learning -->
+
 
 				<!-- start of section -->
 
@@ -380,9 +440,71 @@
 							For demo purposes, this producer will come alive and then scan the image files in the directory we specify on the command line when we run the <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/CartCamApp/src/main/java/com/pattersonconsultingtn/kafka/examples/tf_object_detection/ObjectDetectionProducer.java">ObjectDetectionProducer.java</a> class. We include a set of pictures of items in shopping baskets for this demo, and we'll point the <code>ObjectDetectionProducer</code> class at the directory that contains this photos to run this demo. Additionally, we have provided a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> class that randomly generates items every 15 seconds. This allows testing where items are continuously produced, rather than needing to have a photo for each item.
 
 					</div>
-					<div class="col-md-12" id="fh5co-content">
-						At this point, BCD has some working object detection code for cart 2.0 that will send detected objects to the <Code>shopping_cart_objects</code> topic in a Kafka cluster. However, we don't have our Kafka system set up nor configured, so we're going to wait until part 3 of this series to run this code (because we have nowhere to send the detections right now).
-					</div>
+					<h2>Let's Try Out The Cart Cam Application Locally</h2>
+
+					<div>
+
+						<p>
+						We have a <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial">Big Cloud Dealz github repository</a> setup for trying out the code. The main dependencies you will need to run this code is the project repository from github and the model from the TensorFlow ObjectDetection Model Zoo (download the Faster RCNN ResNet 101 model file locally <A href="http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_2018_01_28.tar.gz">from this link on the TensorFlow github repository</a>).
+
+
+						<p>
+							In the command list below, we can see:
+
+						<ol>
+							<li>We need to change into the CartCamApp subdirectory inside the main repository local directory</li>
+							<li>We need to build the project with <code>mvn package</code></li>
+							<li>We finally need to run the application itself with the <code>mvn exec:java ...</code> command</li>
+						</ol>
+
+						The Faster RCNN ResNet 101 model file should be saved somewhere locally such as <code>/Users/josh/Downloads/</code> and uncompressed, so the <code>saved_model/</code> subdirectory is available for our code to read.
+
+					</p>
+					<p>
+
+						We don't need to worry about getting images to process as those are included in the repository at <code>./src/main/resources/cart_images</code> already as part of the project.
+
+					</p>
+
+
+
+
+					
+<code><pre>git clone https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial.git
+cd BigCloudDealz_GreenLightSpecial
+cd CartCamApp
+
+mvn package
+
+mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" \
+  -Dexec.args="/Users/josh/Downloads/faster_rcnn_resnet101_coco_2018_01_28/saved_model/"					
+</pre></code>
+
+<p>
+	After lots of startup console output from TensorFlow, you'll see the code taking each image and scanning it from objects as shown in the console output below:
+
+</p>
+
+
+<consoleoutput>...
+* /Users/josh/Documents/workspace/PattersonConsulting/BigCloudDealz_GreenLightSpecial/CartCamApp/./src/main/resources/cart_images/basket_test_12.jpg
+	Found cup                  (score: 0.9735)
+Box: 0.030348212, 0.12714608, 0.3921343, 0.56470686
+	Found dining table         (score: 0.9123)
+Box: 0.0, 0.0, 1.0, 1.0
+	Found bowl                 (score: 0.5170)
+Box: 0.37673372, 0.2191577, 0.8414614, 0.7825875
+Debug - Sending: cup
+Debug - Sending: dining table
+Debug - Sending: bowl
+...</consoleoutput>
+
+</div>
+
+<p>
+	Given we're just running the TensorFlow object detection code and we haven't setup Kafka yet, the code won't actually send the detected objects to Kafka. We'll see this part of the code in action in parts 3 and 4 where we turn on Kafka and then have the CartCampApp actually write to a topic via the Kafka producer API.
+
+	</p>
 
 				</div>
 				<!-- end of section -->
@@ -446,27 +568,36 @@
 								Once we have a new re-trained model, we'll need to be able to deploy the model to system. We have two options: we either deploy it each night after the store closes, or we do it while people are shopping and using the system. We feel the best approach in terms of model management long term, is to leverage a <A href="https://www.oreilly.com/ideas/integrating-convolutional-neural-networks-into-enterprise-applications">model server system</a> so the support / Ops team can treat each model as it would a RDBMS table. There are several variants of model servers today. Here are a few notable ones:
 
 								<ul>
+									<li><b>Kubeflow's <A href="https://www.kubeflow.org/docs/components/serving/kfserving/">KFServing</a> for serving models (supports: TensorFlow, Pytorch, XGBoost, ONNX, Scikit-Learn, TensorRT), vectorization transformers, traffic routing, more</b></li>
 									<li>Official <a href="https://github.com/tensorflow/serving">TensorFlow Serving Project</a> and then Google's cloud model hosting offerings</li>
 									<li>Hosting <a href="https://docs.microsoft.com/en-us/visualstudio/ai/tensorflow-vm">TensorFlow models on an Azure VM</a> and deploying <a href="https://docs.microsoft.com/en-us/azure/machine-learning/desktop-workbench/model-management-service-deploy">model as web service</a> on Azure</li>
-									<li>Cloudera's <a href="https://www.cloudera.com/documentation/data-science-workbench/latest/topics/cdsw_overview.html">Data Science Workbench</a></li>
 
 									<li>Amazon <A href="https://aws.amazon.com/blogs/machine-learning/introducing-model-server-for-apache-mxnet/">MXNet Model Server</a></li>
 									
 
 									<li>Skymind's <a href="https://docs.skymind.ai/docs">SKIL Model Server</a> for TensorFlow model hosting</li>
-									<li>The <A href="https://mlflow.org/">MLFlow</a> open source project</li>
 
 								</ul>
 
-								For the purposes of brevity and practicality in this example, we will not integrate a model server and will leave that as an exercise for the reader to explore later.
+								For the purposes of brevity and practicality in this example, we will not integrate a model server and will leave that as an exercise for the reader to explore later. For a further discussion on architecture ideas around machine learning infrastructure, please <a href="http://www.pattersonconsultingtn.com/contact.html">reach out to the Patterson Consulting team</a>. We'd love to talk with your team about topics such as:
+
+
+								<ul>
+									<li>Data Science: <a href="http://www.pattersonconsultingtn.com/offerings/data_science_offerings.html">from overview to implementation</a></li>
+									<li><a href="http://www.pattersonconsultingtn.com/offerings/managed_kubeflow.html">Managed Kubeflow</a> for hosting models (on-premise or in the cloud)</li>
+									<li>Custom model design</li>
+									<li><a href="http://www.pattersonconsultingtn.com/offerings/data_science_offerings.html">Managed models</a> as a service</li>
+									<li>Hardware design for your data center</li>
+
+								</ul>
 
 							</i></p>
 
 
 							</div>	
-
+<!--
 						<h4><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html">Part 3</a></h4>
-
+-->
 					</div>
 				</div>
 				

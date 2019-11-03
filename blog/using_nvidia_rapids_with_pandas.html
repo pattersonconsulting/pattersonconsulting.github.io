@@ -1,0 +1,1280 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Using Nvidia's RAPIDS Containers to Speed Up Pandas with GPUs</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Using Nvidia's RAPIDS Containers to Speed Up Pandas with GPUs"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/sensor_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/datascience_guide_tensorflow_gpus.html"/>
+	<meta property="og:site_name" content="Patterson Consulting"/>
+	<meta property="og:description" content="In this tutorial we'll work through how to move TensorFlow / Keras code over to a GPU in the cloud and get a 18x speedup over non-GPU execution for LSTMs."/>
+	<meta name="twitter:title" content="Using Nvidia's RAPIDS Containers to Speed Up Pandas with GPUs" />
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/sensor_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/datascience_guide_tensorflow_gpus.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		th, td {
+		  padding: 15px;
+		  text-align: left;
+		  border-bottom: 1px solid #ddd;
+		  border-right: 1px solid #ddd;
+
+		}
+		tr:hover {background-color: #f5f5f5;}
+
+	</style>
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>[DRAFT] - Using Nvidia's RAPIDS Containers to Speed Up Weather Data Analysis with GPUs and Dataframes</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a></p>
+						<p>Date: June 13th, 2019</p>
+
+
+						<p>
+							In a <a href="tensorflow_estimator_design_pattern.html">previous post</a> we showed how to move TensorFlow / Keras code over to a GPU in the cloud and get a 18x speedup over non-GPU execution for LSTMs.
+							<b>In this tutorial we'll work through how to use RAPIDS and GPUs to speed up the pandas data transforms that typically preceed the machine learning mdoeling phase.</b>
+						</p>
+						<p>
+							The Patterson Consulting team recently has been working with <a href="https://nursing.umich.edu/faculty-staff/faculty/sue-anne-bell">Dr. Sue Anne Bell's</a> team at the University of Michigan to analyze and model healthcare data in the context of disasters. The data being modeled deals with how hospitals are affected by disasters. For example:
+
+						</p>
+						<p style="padding: 12px; border: solid 1px #cccccc;">
+							<i>During a 24-hour period on April 27, 2011, about 218 tornadoes hit the Southeast and Midwest in the United States, resulting in nearly 317 deaths. In Alabama alone, 46 hospitals reported patients with tornado-related injuries. Hospitals are often ill-prepared for the surge in admissions. Elderly patients are particularly vulnerable as they lose or forget medications in the rush to evacuate.</i>
+
+						</p>
+						<p>
+
+							 We'll use synthetically generated data that is similar to the team's actual research data as we cannot share this data, but we can share the synthetic data.
+
+							
+						</p>
+						<p>
+
+							Readers of this tutorial will learn about:
+
+							<ul>
+							<li>Building a custom container with the RAPIDS platform</li>
+							<li>Working with the RAPIDS version of data frames</li>
+							<li>Setting up an instance image for deep learning workflows</li>
+							<li>Running the GPU-enabled dataframe code on cloud GPUs</li>
+
+							</ul>
+
+							It is common to see articles on the internet extolling the benefits of using GPUs with machine learning and deep learning.
+							However, many practioners find it is not easy to just "turn on GPUs". 
+
+
+						</p>
+						<p>
+							This article is broken into three phases:
+							<ol>
+								<li>Getting an execution environment running for GPUs</li>
+								<li>Running our pandas code on the standard CPUs</li>
+								<li>Running our workflow then on a GPU with RAPIDS and understanding performance mechanics</li>
+							</ol>
+
+							Along the way we'll call out some of the challenges in the space arena of machine learning workflow deployment across different environments.
+
+
+						</p>
+
+
+						<h2>Source Datasets for Project</h2>
+						<p>
+							For this research we are focused on hospitalizations that occur after a disaster, rather than directly attributable injuries and illnesses.  80% of medicare beneficiaries have one or more chronic disease, which are often exacerbated by the experience of a disaster. Loss of power, changes in normal eating habits, lack of transportation to get to health appointments, physician office closures.. Our goal is to help hospitals and health care systems predict a surge in admissions for a longer term period (e.g. up to 30 days) after a disaster.
+						</p>
+						<p>
+							There are 4 major datasets we are using for the research project:
+							<ol>
+								<li>Medicare Provider and Analysis Review</li>
+								<li>Medicare Beneficiary Claims</li>
+								<li><b style="color: red;">NOAA GHCN (Global Historical Climatology Network) Daily Dataset</b></li>
+								<li>NOAA Storm Events Database</li>
+
+							</ol>
+
+						</p>
+						<p>
+							Our general data ETL workflow involves the following:
+
+							<ul>
+								<li>Organizing the patient count per day per hospital across all hospitals in the Medicare datasets</li>
+								<li>Organzing other daily-occuring data such as weather by date and zipcode</li>
+								<li>Collecting all occurrences of disasters by date and zip code</li>
+								<li>Joining hospital data and weather data on date and zip code</li>
+
+
+
+							</ul>
+
+							For the purposes of this demonstration article, we'll focus on the ETL pipeline of the NOAA GHCN Daily Dataset. The information that we wish to extract from this dataset is <b style="color: red;">the max temperature per day for every zip code in north america for the past 10 years</b>. 
+
+						</p>
+						<p>
+							There are multiple ways to get the data from the NOAA website:
+							<ul>
+								<li>Public web interface</li>
+								<li>Programmatically via their REST API</li>
+								<li>Download the raw files and perform your own transformations</li>
+
+							</ul>
+							The public web interface is easiest to use, but we're limited to 1000 records at a time so this becomes a limiting factor when we need years of daily data points across 100k different sensors. The programmatic REST API suffers the same limitation. This brings us to the third option where we download the raw data and perform the ETL ourselves to get the data that we need for our purposes.
+
+						</p>
+
+						<p>
+							The interesting thing about this specific part of the ETL pipeline is that this information is useful in all sorts of other analyses (crop modeling in insurance, pollution data analysis in smart city applications), so the reader is free to take the code and integrate it easily into their own projects.
+
+
+						</p>
+						<p>
+							The dataframe code involved in this article is not that complex, as we'll see in a moment. However, the NOAA Weather Database takes some effort to understand what data is contained in the database and then what we need to build our specific derivative dataset. So let's take a moment and dig into the NOAA GHCN Daily Dataset.
+
+						</p>
+						<h3>Working with the NOAA GHCN Daily Dataset</h3>
+						<p>
+
+							The NOAA GHCN Daily dataset contains records from (today roughly) 113,950 stations in 180 countries and territories. 
+
+							As described by the NOAA website:
+
+						</p>
+						
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"GHCN (Global Historical Climatology Network)-Daily is a database that addresses the critical need for
+historical daily temperature, precipitation, and snow records over global land areas. GHCN-Daily is a
+composite of climate records from numerous sources that were merged and then subjected to a suite of
+quality assurance reviews. The archive includes over 40 meteorological elements (see Table 4 below for
+complete list) including temperature daily maximum/minimum, temperature at observation time,
+precipitation, snowfall, snow depth, evaporation, wind movement, wind maximums, soil temperature,
+cloudiness, and more."</i></p>
+						  <p><a href="https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/GHCND_documentation.pdf">GHCN (Global Historical Climatology Network) – Daily Documentation</a></p>
+						</blockquote>
+
+						<p>
+							To learn more about the Global Historical Climatology Network (GHCN)-Daily dataset, check out the <a href="https://journals.ametsoc.org/doi/full/10.1175/JTECH-D-11-00103.1">published research paper on the dataset</a>.
+						</p>
+						<p>
+							Major datasets in the <a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/">NOAA Database</a>:
+							<ul>
+								<li>ghcnd-inventory.txt</li>
+								<li><a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt">ghcnd-stations.txt</a></li>
+								<li>GHCN Daily Readings (<A href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/">by year</a>)</li>
+
+							</ul>
+
+							The official <A href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt">readme.txt</a> document on the NOAA data FTP site gives details about the content and purpose of each dataset listed above. There are other datasets in the NOAA repository, but for the sake of brevity we're just going to focus on these 3 datasets.
+
+
+
+						</p>
+						<h4>GHCND Stations</h4>
+						<p>
+							The <a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt">ghcnd-stations.txt</a> file (~9.3MB) has metadata (e.g., latitude and longitude coordianates) for all stations.
+
+							<pre>IV. FORMAT OF "ghcnd-stations.txt"
+
+------------------------------
+Variable   Columns   Type
+------------------------------
+ID            1-11   Character
+LATITUDE     13-20   Real
+LONGITUDE    22-30   Real
+ELEVATION    32-37   Real
+STATE        39-40   Character
+NAME         42-71   Character
+GSN FLAG     73-75   Character
+HCN/CRN FLAG 77-79   Character
+WMO ID       81-85   Character
+------------------------------
+							</prE>
+
+							In the console output sample below we can see what the raw data looks like for the fixed width source files.
+						</p>
+
+<consoleoutput>USW00094963  44.8322  -93.4706  276.5 MN MPLS FLYING CLOUD AP                        
+USW00094967  46.9006  -95.0678  437.1 MN PARK RAPIDS MUNI AP                HCN      
+USW00094971  43.4075  -94.7461  401.4 IA ESTHERVILLE MUNI AP                         
+USW00094973  46.0261  -91.4442  367.0 WI HAYWARD MUNI AP                             
+USW00094978  41.7636  -96.1778  313.3 NE TEKAMAH MUNI AP                             
+USW00094982  41.6117  -90.5808  229.8 IA DAVENPORT                                   
+USW00094985  44.6381  -90.1875  382.5 WI MARSHFIELD MUNI AP                          
+USW00094988  42.1128  -92.9175  296.9 IA MARSHALLTOWN MUNI AP                        
+USW00094989  41.9922  -93.6217  283.5 IA AMES MUNI AP                                
+USW00094990  43.3906  -99.8422  619.4 SD WINNER WILEY FLD                            
+USW00094991  40.6331  -93.9019  344.7 IA LAMONI MUNI AP                              
+USW00094992  47.7472  -90.3444  185.9 MN GRAND MARAIS                                
+USW00094993  45.6689  -96.9914  353.9 SD SISSETON MUNI AP                            
+USW00094994  43.1561  -90.6775  204.8 WI BOSCOBEL AP                                 
+USW00094995  40.8483  -96.5650  362.4 NE LINCOLN 8 ENE                      CRN 74442
+</consoleoutput>
+						<p>
+							For context on some of the acronyms:
+							<ul>
+
+								<li>GSN stands for "GCOS Surface Network (GSN)"</li>
+
+								<li>HCN stands for "U.S. Historical Climatology Network station"</li>
+
+								<li>CRN stands for "U.S. Climate Reference Network or U.S. Regional Climate Network Station"</li>
+
+								<li>WMO ID stands for "World Meteorological Organization (WMO) number for the station"</li>
+							</ul>
+
+							We're not as interested in this file as we are the next one ("ghcnd-stations.txt"), but we call it out to explain the difference in the two because they are similar. This file has metadata such as elevation, state, city name, and network affiliation code. The GHCND stations file has more information about what kind of data the sensor collects as all sensors are not uniform in what data they produce.
+
+						</p>
+						<h4>GHCND Inventory</h4>
+
+						<p>
+							The second dataset of interest is the <a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt">ghcnd-inventory.txt</a> dataset (~30MB). This dataset tells us what kind (e.g., "ELEMENT") of data a sensor has collected and the range of time it has collected that type of data.
+						</p>
+
+
+
+<pre>
+VII. FORMAT OF "ghcnd-inventory.txt"
+
+------------------------------
+Variable   Columns   Type
+------------------------------
+ID            1-11   Character
+LATITUDE     13-20   Real
+LONGITUDE    22-30   Real
+ELEMENT      32-35   Character
+FIRSTYEAR    37-40   Integer
+LASTYEAR     42-45   Integer
+------------------------------
+</pre>
+
+<consoleoutput>AFM00040938  34.2100   62.2280 TMIN 1973 2019
+AFM00040938  34.2100   62.2280 PRCP 2014 2019
+AFM00040938  34.2100   62.2280 SNWD 1982 2019
+AFM00040938  34.2100   62.2280 TAVG 1973 2019
+AFM00040948  34.5660   69.2120 TMAX 1966 2018
+AFM00040948  34.5660   69.2120 TMIN 1967 2019
+AFM00040948  34.5660   69.2120 PRCP 1983 2019
+AFM00040948  34.5660   69.2120 SNWD 1974 2018
+AFM00040948  34.5660   69.2120 TAVG 1966 2019
+AFM00040990  31.5000   65.8500 TMAX 1973 2019
+AFM00040990  31.5000   65.8500 TMIN 1973 2019
+</consoleoutput>
+
+						<p>
+
+							Here we have infomation about what kind of data is collected by the station (e.g., "PRCP" for precipitation and "TMAX" for maximum temperature) daily and what are the collection start and end years.
+
+
+						</p>
+						<p>
+
+							We'll use this dataset to filter our sensors down to only the set that:
+
+							<ol>
+								<li>Are based in the United States</li>
+								<li>Collect temperature max data</li>
+								<li>started collecting at or before the start of our desired range</li>
+								<li>have collected data to the end of our desired range</li>
+
+							</ol>
+
+						</p>
+
+						<h4>GHCN Daily</h4>
+
+						<p>
+
+							The daily readings grouped by year are in the <a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/">./by_year/</a> directory with GHCN Daily files parsed into yearly
+                      		subsets with observation times where available.
+
+                      		These are the core sensor readings we are interested in, but they are not in the form we need them for joining with the hospital data. We want to join the temperature data per day to the hospital data of the same date by zip code (e.g., "zipcode" and "date" would be the join keys).
+
+						</p>
+						<p>
+
+							As explained by the <a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/readme.txt">readme.txt</a> file:
+
+
+						</p>
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"GHCN-D is a dataset that contains daily observations over global land areas. 
+							Like its monthly counterpart, GHCN-Daily is a composite of climate records from 
+							numerous sources that were merged together and subjected to a common suite of quality 
+							assurance reviews. The archive includes the following meteorological elements..."</i></p>
+						  <p><a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/readme.txt">https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/readme.txt</a></p>
+						</blockquote>
+
+
+						<p>
+
+							The file goes on to explain how the dataset includes the following datatypes:
+
+							<ul>
+							<li>Daily maximum temperature</li>
+							<li>Daily minimum temperature</li>
+							<li>Temperature at the time of observation</li>
+							<li>Precipitation (i.e., rain, melted snow)</li>
+							<li>Snowfall</li>
+							<li>Snow depth</li>
+							<li>Other elements where available</li>
+							</ul>
+
+							And more. In the sample console output listing below we can see a sample of the daily data.
+							
+						</p>
+
+
+<consoleoutput>USC00419361,20190101,TMAX,156,,,7,0800
+USC00419361,20190101,TMIN,39,,,7,0800
+USC00419361,20190101,TOBS,39,,,7,0800
+USC00419361,20190101,PRCP,0,,,7,0800
+USC00419361,20190101,SNOW,0,,,7,
+USC00419361,20190101,SNWD,0,,,7,
+USC00419361,20190101,SN52,178,,,7,0800
+USC00419361,20190101,SX52,178,,,7,0800
+USC00421168,20190101,TMAX,-28,,,7,0800
+USC00421168,20190101,TMIN,-100,,,7,0800
+USC00421168,20190101,TOBS,-94,,,7,0800
+</consoleoutput>
+
+						<p>
+							<i>"This by_year directory contains an alternate form of the GHCN Daily dataset.  In this
+directory, the period of record station files are parsed into  
+yearly files that contain all available GHCN Daily station data for that year 
+plus a time of observation field (where available--primarily for U.S. Cooperative 
+Observers)."</i>
+</p>
+
+
+						<h2>Transforming the NOAA Data</h2>
+						<p>
+							We want to join the temperature data per day to the hospital data of the same date by zip code (e.g., "zipcode" and "date" would be the join keys).
+
+						</p>
+						<p>
+							 The information that we wish to extract from this dataset is <b style="color: red;">the max temperature per day for every zip code in north america for the past 10 years</b>. The dataset currently contains location information such as latitude, longitude, state, and city name, but no zip code. So we're going to have to do some geo-location work as part of our transform pipeline.
+						</p>
+
+						<p>
+							The main operations we need to do to get our weather data organized correctly are:
+
+							<ul>
+								<li>filter the stations we're interested in down to ones that are US-based</li>
+								<li>and filter the stations down to ones that collect temperature data and in the date range we're interested in</li>
+								<li>geo lookup the zip code for every filtered station based on its latitude and longitude</li>
+								<li>filter down the daily readings to only stations we're interested in (note: should this be done as a join?)</li>
+								<li>group sensor data by sensor ID and order by date</li>
+								<li>join zip code from the inventory data to the sensor data by sensor ID</li>
+
+
+							</ul>
+
+							We are pushing the geo-lookup operation down until after we filter for location and datatype because the zip code search is slightly expensive and there is no point in wasting a lookup on a station we won't use.
+
+
+						</p>
+
+						<h3>Filter the Inventory Data</h3>
+						<p>
+
+						</p>
+
+
+						<h3>Geo-Lookup of Station Zip Codes</h3>
+						<p>
+
+						</p>
+
+
+						<h2>Getting to Know the RAPIDS Software Libraries</h2>
+
+						
+<!--					
+
+
+						<p>
+
+Argument for RAPIDs from Nvidia Website:
+
+[quote]
+Let’s say your pipeline has three steps:
+
+Load data
+Clean up the data and perform feature engineering
+Train a classifier
+First you load the data into host memory. Then perform ETL tasks including data clean-up and feature engineering steps such as filtering, imputation, and generating new features. These steps today are largely done using the CPU. After that you must convert the output of the feature engineering step into the internal memory format of the GPU-accelerated machine learning library and then move the data to GPU memory. Now, you run training. You get a huge speedup on the training step, and you’re happy. Finally, you move the data back to host memory and visualize or prepare for deployment.
+
+At the end you get a modest overall speedup, but the copy and convert operations introduce significant overhead due to serialization and deserialization operations and you end up underutilizing the available GPU processing power.		
+
+RAPIDS addresses this issue by design. It provides a columnar data structure called a GPU DataFrame, which implements the Apache Arrow columnar data format on the GPU. The RAPIDS GPU DataFrame provides a pandas-like API that will be familiar to data scientists, so they can now build GPU-accelerated workflows more easily.					
+							[/quote]
+
+
+
+						</p>
+
+						<h3>RAPIDS Python Packages</h3>
+						<p>
+							<ul>
+								<li>cuDF</li>
+								<li>cuSKL</li>
+								<li>XGBoost</li>
+
+
+							</ul>
+
+							Built on:
+
+							[quote]
+							cuML: a GPU-accelerated library of machine learning algorithms including Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Density-based Spatial Clustering of Applications with Noise (DBSCAN).
+ml-prims: A library of low-level math and computational primitives used by cuML.
+[/quote]
+
+
+						</p>
+
+						<h3>Getting RAPIDS Setup</h3>
+
+						<p>
+							Available as:
+							<ul>
+								<li>Github</li>
+								<li>Nvidia GPU Cloud</li>
+								<li>Docker Hub</li>
+								<li></li>
+
+							</ul>
+
+[quote]
+A complete, ready-to-run docker container image is available on the RAPIDS Docker Hub container registry, making it easy to get started with RAPIDS. Pull the latest RAPIDS container image by running the following command:
+[/quote]
+
+<code><pre>$ docker pull nvcr.io/nvidia/rapidsai/rapidsai:latest</pre></code>
+
+To make sure you have the latest image use the docker images command:
+
+<code><pre>$ docker images | grep rapids</pre></code>
+<consoleoutput>rapids/rapidsai latest  4b30dcd9849c 2 days ago  8.51GB</consoleoutput>
+
+						</p>
+
+						<h3>Running Our Code in the RAPIDS Container</h3>
+
+						<p>
+[quote]
+The container can either automatically launch a jupyter notebook or you can start the container in terminal mode by adding bash at the end of the docker command. 
+[/quote]
+</p>
+
+<code><pre>$ docker run --runtime=nvidia \
+                --rm -it \
+                -p 8888:8888 \
+                -p 8787:8787 \
+                -p 8786:8786 \
+                nvcr.io/nvidia/rapidsai/rapidsai:latest		</pre></code>				
+-->
+<!--
+						<p>
+							As soon as we start thinking about moving our machine learning workflow, we're confronted by multiple challenges which include:
+							
+
+
+							<ul>
+								<li>Getting access to different types of hardware (GPU, TPU, etc)</li>
+								
+								<li>Coding differences for executing on CPU vs GPU</li>
+								<li>Different drivers required for GPU, TPU, etc</li>
+								<li>Optimizing <A href="https://www.tensorflow.org/guide/performance/overview">TensorFlow performance</a> in different execution modes</li>
+								
+
+							</ul>
+
+							To the right we show a generic program stack of the parts of a program we might be running on our laptop. Most of the time we don't think of our programs in this way because a lot of the layers already exist on our local environment, and we're focused on the problem more in terms of "what dependencies am I missing to get this going?". 
+						</p>
+						<p>
+
+							When we are talking about using GPUs, we're talking about changes to our execution platform which might include:
+
+							
+							<ul>
+								
+								<li>New drivers: Nvidia gpu</li>
+								<li>A different OS: Ubuntu</li>
+								<li>Different hardwre: GPUs</li>
+
+
+							</ul>
+							Now that we've framed what needs to happen, let's look at one way to solve for porting our code to a new execution platform on the cloud.
+						</p>
+-->
+
+
+						
+<!--
+						<h3>Getting GPUs in the Cloud</h3>
+
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_dl_vm.png" style="width: 459px; height: 339px; margin: 12px; border: 0px solid #999999; float: right;" />
+						<p style="margin-left: 12px; width: 510px;">Screenshot of the GCP <a href="https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning">Deep Learning VM</a></p>
+						</div>
+						<p>
+							So let's suppose we don't have GPUs on our local laptop, and we need to look for another option that gives us flexibility in how we can leverage GPUs. Obviously these days folks are inclined to go the cloud for ad-hoc usage of hardware they may not have local access to, and here that's a great option. For the purposes of this article we'll use Google Cloud as they have instances with GPUs (and lots of options) we can use along with VM images pre-built for deep learning.
+
+							<ol>
+								<li>Need a GCP instance with GPUs attached</li>
+								<li>Need a <a href="https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning">VM image with the correct drivers</a> installed for GPUs (example shown to the right)</li>
+
+
+							</ol>
+
+
+						Obviously you'll need a GCP account to do this, and they have a 1-year trial available. Once you are signed up, there are two major routes to accomplish getting a VM setup on GCP with GPUs and drivers:
+
+						<ol>
+							<li>Setup a GCP instance with a GPU, and then <a href="https://www.tensorflow.org/install/gpu">install the drivers manually</a>(<a href="https://medium.com/searce/installing-tensorflow-gpu-with-nvidia-cuda-on-a-google-cloud-platform-vm-instance-b059ea47e55c">Alternate tutorial</a>)</li>
+							<li>Use the pre-built deep learning VM with TensorFlow and the Nvidia drivers already installed</li>
+
+						</ol>
+
+						For those that want to go the manual route, <a href="https://medium.com/searce/installing-tensorflow-gpu-with-nvidia-cuda-on-a-google-cloud-platform-vm-instance-b059ea47e55c">follow this link</a>. For this article, we're going to go the simpler route of just using their supplied VM as this is a lot quicker	
+
+							
+
+						</p>
+						<p>
+							We'll also note that you'll likely need to <a href="https://cloud.google.com/compute/quotas#requesting_additional_quota">increase your quotas for gpus</a> in a region. Given the cloud is a self-serve situation, this step seemed odd overall but its just something that has to happen. It should take anywhere from half a day to 2 days to get a response on your request.
+
+						</p>
+
+						<div style=" margin: 12px; border: 1px solid #999999; width: 525px; float: left;">
+						<img src="./images/gcp_setup_screen.png" style="width: 505px; height: 743px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Screenshot of the GCP Instance setup page</p>
+						</div>
+
+
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px; float: right; width: 410px;">
+
+						<h3>Options for Nvidia GPUs on Clouds</h3>
+
+
+
+						  <p>
+
+						  	
+						  	
+						  	On GCP today we can use the <a href="https://cloud.google.com/gpu/">following GPUs</a> from Nvidia:
+
+						  	<ul>
+						  		<li>Tesla K80</li>
+						  		<li>P100</li>
+						  		<li>P4</li>
+						  		<li>T4</li>
+						  		<li>V100</li>
+
+						  	</ul>
+
+						  	They should give bare metal performance and are directly attached to the virtual machine for the best performance.
+
+						  	We can attach up to 8 GPUs to a single GCP instance (however, this will require further execution details that we'll cover in a future article).
+
+
+						  </p>
+
+						</div>
+
+
+
+					</div>
+					
+					<div class="col-md-12" id="fh5co-content">
+						<h3>Starting our Instance</h3>
+						<p>
+
+							So we can start and stop instances from the "compute" screen in the GCP console. This is relevant as GCP instances are not free and instances with GPUs attached are more expensive (read: don't leave these running). To start (or stop) our GCP instance click
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/starting_gpu_gcp_instance.png" style="width: 655px; height: 217px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Logging into the GCP web ssh terminal</a></p>
+						</div>
+
+						<p>
+							It will take a minute or two for the instance to spin up, but once the console reports the instance is running we can log into the instance.
+
+
+						</p>
+
+
+					</div>
+
+					<div class="col-md-12" id="fh5co-content">
+
+						<h3>Accessing the Image, Dependencies, and Tools</h3>
+						<p>
+
+							There are multiple options to log into the GCP instance we've created, but the easiest is to just use the web ssh terminal as shown in the image below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_web_ssh_terminal.png" style="width: 648px; height: 181px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Logging into the GCP web ssh terminal</a></p>
+						</div>
+
+						<p>
+
+							Once we click on "Open in browser window", we should see a terminal window in a browser pop-up window as shown below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/gcp_web_ssh_terminal_open.png" style="width: 901px; height: 681px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">GCP web ssh terminal</a></p>
+						</div>
+
+
+						<p>
+
+							Once we're logged into our shell, let's quickly confirm that tensorflow is installed with the command:
+
+<code><pre>python3 -c 'import tensorflow as tf; print(tf.__version__)'</pre></code>
+
+The output should look similar to:
+						</p>
+
+<consoleoutput>1.13.1</consoleoutput><br/>
+
+						
+						<p>
+							Let's also check out the <kbd>nvidia-smi</kbd> tool by confirming our GPUs are attached and working by typing:
+
+<code><pre>nvidia-smi</pre></code>
+
+							we should see output similar to:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999; width: 720px;">
+						<img src="./images/nvidia_smi_shot.png" style="width: 701px; height: 352px; margin: 12px; border: 0px solid #999999;" />
+						<p style="margin-left: 12px; width: 510px;">Checking GPUs with the Nvidia-SMI Tool</a></p>
+						</div>
+
+
+						<p>
+							At this point we technically have a running VM with a GPU attached and Tensorflow (gpu-capable) installed. We can run a basic TensorFlow application from the web shell with the command:
+
+
+
+
+						</p>
+						<p>
+							In the case we want to use docker containers on GPUs in our application development process, we need to <a href="https://www.tensorflow.org/install/docker">install nvidia-docker</a>. Fortunately the Google deep learning VM we're using already ahs nvidia-docker installed, so we can use it as needed on our instance.
+
+
+
+						</p>
+-->
+
+
+
+
+<!-- start section 2 -->
+
+
+<!--
+						<h2>Running our Pandas Code on CPU</h2>
+						<p>
+
+
+						</p>
+
+
+
+
+						
+						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px; ">
+						<h3>[ Sidebar ]</h3>
+
+
+						  <p>
+
+							Data scientists want ....
+						  </p>
+
+						</div>
+						
+
+
+
+
+
+
+						<h3>Moving Our Pandas Code to the RAPIDS Container for GPU Execution</h3>
+
+						<p>
+							We've established the options for 
+
+						</p>
+
+
+<p>
+
+The RAPIDS container is available publicly in these locations:
+</p>
+<p>
+
+NGC RAPIDS container
+
+https://ngc.nvidia.com/catalog/containers/nvidia:rapidsai:rapidsai
+
+Docker Hub RAPIDS container
+
+https://hub.docker.com/r/rapidsai/rapidsai
+
+</p>
+<p>
+ 
+
+Here are some container demo docs
+
+RAPIDS Container Demo Docs
+
+https://docs.rapids.ai/containers/rapids-demo
+
+</p>
+<p>
+ 
+
+Or even try RAPIDS with Colabratory on demand…
+
+GPU powered RAPIDS notebook with Colabratory for free.
+
+https://rapids.ai/start.html
+
+https://colab.research.google.com/drive/1XTKHiIcvyL5nuldx0HSL_dUa8yopzy_Y#forceEdit=true&offline=true&sandboxMode=true
+
+ 
+</p>
+
+						<h3>Running Our RAPIDS-based Container on GCP</h3>
+
+						<p>
+							TODO
+
+						</p>
+
+						<p>
+							To get a sense for how this application runs on a normal laptop, let's run the application locally first. 
+
+							So for this test I just used my MacBook Pro (from 2012 no less) that has a 2.5 GHz Intel Core i5. So we're not using the latest and greatest of hardware for the local run, but just a "run of the mill" laptop.
+
+							In the case of local execution we would deal with adding dependencies to our environment in 1 of 2 ways:
+
+							<ol>
+								<li><A href="https://www.anaconda.com/">Anaconda</a> environments</li>
+								<li><a href="http://www.docker.com/">Docker</a> containers</li>
+
+							</ol>
+
+
+
+							For this example we'll assume the reader already knows how to get TensorFlow installed in their environment through one of the two above methods. For my local execution I used an Anaconda environment as that's quick and easy on my laptop.
+
+
+						</p>
+						<p>
+							
+							If we clone this repository on github with the command:
+
+						</p>
+<code><pre>git clone https://github.com/pattersonconsulting/tensorflow_estimator_examples.git</pre></code>
+
+						<p>
+
+							We can change into the local directory and run this python TensorFlow application locally with the command:
+
+
+						</p>
+
+<code><pre>python3 keras_imdb_lstm.py</pre></code>
+
+
+						<p>
+
+
+
+							We'd see output similar to what we see below:
+
+						</p>
+
+<consoleoutput>python3 keras_imdb_lstm.py 
+Loading data...
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/imdb.npz
+17465344/17464789 [==============================] - 3s 0us/step
+25000 train sequences
+25000 test sequences
+Pad sequences (samples x time)
+x_train shape: (25000, 80)
+x_test shape: (25000, 80)
+Build model...
+Train...
+/Users/josh/anaconda2/envs/env_2019/lib/python3.6/site-packages/tensorflow/python/ops/gradients_impl.py:112: UserWarning: Converting sparse IndexedSlices to a dense Tensor of unknown shape. This may consume a large amount of memory.
+  "Converting sparse IndexedSlices to a dense Tensor of unknown shape. "
+Train on 25000 samples, validate on 25000 samples
+Epoch 1/15
+2019-05-09 10:31:16.765640: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+2019-05-09 10:31:16.767314: I tensorflow/core/common_runtime/process_util.cc:69] Creating new thread pool with default inter op setting: 4. Tune using inter_op_parallelism_threads for best performance.
+25000/25000 [==============================] - 699s 28ms/step - loss: 0.4567 - acc: 0.7843 - val_loss: 0.4028 - val_acc: 0.8216
+Epoch 2/15
+25000/25000 [==============================] - 743s 30ms/step - loss: 0.2977 - acc: 0.8788 - val_loss: 0.3942 - val_acc: 0.8294
+Epoch 3/15
+25000/25000 [==============================] - 707s 28ms/step - loss: 0.2127 - acc: 0.9186 - val_loss: 0.4426 - val_acc: 0.8319
+Epoch 4/15
+25000/25000 [==============================] - 708s 28ms/step - loss: 0.1530 - acc: 0.9439 - val_loss: 0.5832 - val_acc: 0.8152
+Epoch 5/15
+25000/25000 [==============================] - 709s 28ms/step - loss: 0.1061 - acc: 0.9606 - val_loss: 0.5597 - val_acc: 0.8248
+...
+</consoleoutput><br/>
+
+						<p>
+							So this LSTM training script runs for a while and takes around 700 seconds per epoch (e.g., "passes over the entire dataset"). Let's dig into what just happened. Notice the line of console output highlighted below:
+
+
+						</p>
+
+<consoleoutput>Epoch 3/15
+25000/25000 [==============================] - 707s 28ms/step - loss: 0.2127 - acc: 0.9186 - val_loss: 0.4426 - val_acc: 0.8319
+</consoleoutput><br/>
+						<p>
+							This line let's us know that all 25000 training samples were trained against, and that it took 707 seconds. Right after the <code>707s</code> time, we see another metric <code>28ms/step</code>. This is an important metric to watch in mini-batch training, where we define mini-batch as:
+
+
+
+							
+
+						</p>
+
+
+						<p>
+
+							In the results from Keras, a "step" is one mini-batch of sequence records. So in the case of <code>ms/step</code> we're seeing how efficient the model training code is at learning from a single mini-batch of input records. The <code>ms/step</code> a good metric of training speed/efficiency when comparing two learning algorithms that may have different parameters such as number of epochs or total records. 
+
+						</p>
+
+
+						<p>
+							So let's do some quick math to make sure all of this pans out:
+							<ul>
+								<li>Total records: 25,000</li>
+								<li>Total time for epoch: 707 seconds</li>
+								<li>Total time for epoch in ms: 707,000 </li>
+								<li>ms per step: 28</li>
+								<li>(Total time for epoch in ms) / (ms per step) == ~25,000</li>
+
+							</ul>
+
+							So we get the correct number of input records based on the quick back of the envelope math, which is good and shows us how this plays out. (Another metric sometimes used is how we define "steps per epoch", which is defined as (Total records / mini-batch-size)).
+
+
+
+						</p>
+
+						<p>
+							In keras we control the mini_batch size with the parameter <Code>batch_size</code> in the <code>.fit(...)</code> method on the model.
+
+							An interesting experiment for the reader is to observe how mini-batch size can affect training speed and loss over time. Larger mini-batch size make an epoch take less training time, but we don't always see the loss values drop as quick. However, a smaller batch size will take longer per epoch but we'll likely see the loss drop more quickly per epoch. This is of course problem depenedent as well, and there is no perfect answer out of the gate. Keras defaults to a mini-batch size of 32 when None is specified.
+						</p>
+						<p>
+							Knowing that this was an older laptop, I wanted to make sure we created a good baseline so I ran the same python code on a GCP image with no GPUs attached and the same CPU (n1-highmem-2 (2 vCPUs, 13 GB memory), Intel Haswell). We see the results below:
+
+						</p>
+
+
+
+<consoleoutput>2019-05-09 18:31:59.201709: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-05-09 18:31:59.207159: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2300000000 Hz
+2019-05-09 18:31:59.207563: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x11af0d10 executing computations on platform Host. Devices:
+2019-05-09 18:31:59.207706: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+Epoch 1/3
+25000/25000 [==============================] - 341s 14ms/sample - loss: 0.4605 - acc: 0.7846 - val_loss: 0.4229 - val_acc: 0.8059
+Epoch 2/3
+25000/25000 [==============================] - 338s 14ms/sample - loss: 0.2942 - acc: 0.8789 - val_loss: 0.3831 - val_acc: 0.8284
+Epoch 3/3
+25000/25000 [==============================] - 336s 13ms/sample - loss: 0.2122 - acc: 0.9182 - val_loss: 0.5259 - v
+...
+</consoleoutput><br/>
+
+						<p>This ended up being about 2x as fast as my laptop and gave us a better baseline against which to measure GPUs.</p>
+						
+
+
+
+						<h3>Running the Keras LSTM Network on Cloud GPUs</h3>
+
+						<p>
+							Earlier in this article we had the reader ssh into our running GCP instance via the web ssh console. Log into the GCP instance web ssh terminal and clone the <a href="https://github.com/pattersonconsulting/tensorflow_estimator_examples">github repository</a> again (but this time on the GCP instance so we have our <A href="https://github.com/pattersonconsulting/tensorflow_estimator_examples/tree/master/keras/basic_rnn">python code</a> out there).
+
+
+						</p>
+<code><pre>git clone https://github.com/pattersonconsulting/tensorflow_estimator_examples.git</pre></code>
+
+						<p>
+							The instance we provisioned on GCP has a machine type of "n1-highmem-2 (2 vCPUs, 13 GB memory) / Intel Haswell" with a GPU attached, for reference. It's also running CUDA 10.
+
+							Change into the <code>keras/basic_rnn/</code> subdirectory so we can access the different versions of the Keras RNN code we put together. Let's run the same script again with the command:
+
+
+						</p>
+
+<code><pre>python3 keras_imdb_lstm.py</pre></code>
+
+						<p>
+							We should see output in the web ssh terminal screen similar to below:
+						</p>						
+
+
+
+
+<consoleoutput>2019-05-09 15:48:11.015462: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0, 1
+2019-05-09 15:48:11.642909: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-09 15:48:11.642965: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 1 
+2019-05-09 15:48:11.642982: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N Y 
+2019-05-09 15:48:11.642990: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 1:   Y N 
+2019-05-09 15:48:11.643603: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10753 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0, compute capability: 3.7)
+2019-05-09 15:48:11.644097: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10753 MB memory) -> physical GPU (device: 1, name: Tesla K80, pci bus id: 0000:00:05.0, compute capability: 3.7)
+Epoch 1/3
+2019-05-09 15:48:13.033002: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+25000/25000 [==============================] - 166s 7ms/sample - loss: 0.4602 - acc: 0.7819 - val_loss: 0.3898 - val_acc: 0.8278
+Epoch 2/3
+25000/25000 [==============================] - 164s 7ms/sample - loss: 0.2919 - acc: 0.8804 - val_loss: 0.3848 - val_acc: 0.8287
+Epoch 3/3
+25000/25000 [==============================] - 165s 7ms/sample - loss: 0.2078 - acc: 0.9198 - val_loss: 0.4565 - val_acc: 0.8266
+...
+</consoleoutput><br/>
+
+
+
+						<p>
+							(<i>note: If you get an error around 'Object arrays cannot be loaded when allow_pickle=False', check out a fix <a href="https://stackoverflow.com/questions/55890813/how-to-fix-object-arrays-cannot-be-loaded-when-allow-pickle-false-for-imdb-loa">here</a>)</i>
+						</p>
+						<p>
+							Now that we know a bit about how epochs, mini-batches, and steps work, we're in a better position to understand what happened. Once again looking at the 2nd epoch we see:
+						</p>
+
+<consoleoutput>Epoch 2/3
+25000/25000 [==============================] - 164s 7ms/sample - loss: 0.2919 - acc: 0.8804 - val_loss: 0.3848 - val_acc: 0.8287
+</consoleoutput><br/>
+
+						<p>
+							We see that an epoch now only takes 164 seconds (with the same mini-batch size) on a GPU. Out of the box this is a 2.1x  improvement over the same machine instance (but now using GPUs).
+
+						</p>
+						<p>
+							If we want to watch how it affects the GPU(s) on the system, open a separate ssh window and use the command:
+						</p>
+<code><pre>watch -n0.5 nvidia-smi</pre></code>
+
+						<p>
+							We'll see something like in the image below:
+
+						</p>
+
+						<div style="margin: 12px; border: 1px solid #999999;">
+						<img src="./images/watching_lstm_w_nvidia_smi.png" style="width: 909px; height: 343px; margin: 12px; border: 0px solid #999999; " />
+						<p style="margin-left: 12px; width: 900px;">Watching GPUs during training wtih the nvidia-smi tool</p>
+						</div>						
+
+
+						<p>
+
+						Let's go another step and change the code slightly to use CUDA specific layers for LSTMs that are optimized for Nvidia GPUS by using the <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/CuDNNLSTM">CuDNNLSTM layer</a> for Keras. We've already set this up for you, so just run from the same directory:
+
+						</p>
+
+<code><pre>python3 keras_imdb_CuDNNLSTM.py</pre></code>
+
+						<p>
+							We should see output in the web ssh terminal screen similar to below:
+						</p>						
+
+
+<consoleoutput>2019-05-09 16:01:33.140676: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0, 1
+2019-05-09 16:01:33.782127: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-09 16:01:33.782186: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 1 
+2019-05-09 16:01:33.782201: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N Y 
+2019-05-09 16:01:33.782210: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 1:   Y N 
+2019-05-09 16:01:33.782729: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10753 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0, compute capability: 3.7)
+2019-05-09 16:01:33.783108: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10753 MB memory) -> physical GPU (device: 1, name: Tesla K80, pci bus id: 0000:00:05.0, compute capability: 3.7)
+Epoch 1/3
+2019-05-09 16:01:34.638634: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+25000/25000 [==============================] - 19s 760us/sample - loss: 0.4284 - acc: 0.7980 - val_loss: 0.4350 - val_acc: 0.7964
+Epoch 2/3
+25000/25000 [==============================] - 18s 709us/sample - loss: 0.2509 - acc: 0.9003 - val_loss: 0.3788 - val_acc: 0.8375
+Epoch 3/3
+25000/25000 [==============================] - 18s 712us/sample - loss: 0.1537 - acc: 0.9436 - val_loss: 0.4464 - val_acc: 0.8288
+</consoleoutput><br/>
+
+						<p>
+							So we see a further speedup by moving to Keras layers that are optimized for CUDA. If we look at the entire speedup picture, we see:
+
+							<table style="border: 1px solid; padding: 6px; margin: 6px;">
+								<tr>
+									<th>Execution mode</th>
+									<th>Epoch training time</th>
+									<th>Step/ms</th>
+									<th>Speedup factor over CPU</th>
+
+								</tr>
+								<tr>
+									<td>Laptop CPU</td>
+									<td>699 seconds</td>
+									<td>28ms/step</td>
+									<td>n/a - only here for comparison</td>
+
+								</tr>
+
+								<tr>
+									<td>GCP Instance (baseline, no GPU)</td>
+									<td>338 seconds</td>
+									<td>14ms/step</td>
+									<td>baseline</td>
+
+								</tr>
+
+								<tr>
+									<td>GCP Instance w GPU</td>
+									<td>164 seconds</td>
+									<td>7ms/step</td>
+									<td><b>2.1x over GCP-CPU-Instance</b></td>
+
+								</tr>
+								<tr>
+									<td>GCP Instance w GPU/CuDNNLSTM</td>
+									<td>18 seconds</td>
+									<td>0.8ms/step</td>
+									<td><b style="color: red;">18.8x over GCP-CPU-Instance</b></td>
+
+								</tr>
+
+
+							</table>
+
+							And to further compare things, we can see that changing over to the <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/CuDNNLSTM">CUDA-specific layer</a> for the LSTM gave us a ~9x speedup over the basic LSTM layer with a GPU.
+
+
+						</p>
+						<h3>GPU Speedup Performance Factors</h3>
+						<p>
+							Beyond just changing the layer types, performance mechanics with deep learning and GPUs can be tricky and problem dependent (read: not every model will get a 18x speedup). One factor can be hte computational backend you use, but if you use numpy, you are probably using one of the BLAS libraries as computational backend already. For Nvidia GPUs, the only widely used backend is <a href="https://developer.nvidia.com/cublas">CUDA's cuBLAS</a> so in the examples we've shown on GPUs this was not a limiting factor.
+						</p>
+						<p>
+
+							Another consideration is how data transfer between host RAM and GPU device memory is a key factor that generally affects the overall performance as transfering data between normal RAM and graphics RAM takes time. Beyond that, we should consider:
+
+							<ul>
+								<li>GPU memory size</li>
+								<li>GPU memory bandwidth</li>
+
+							</ul>
+
+							Advanced hardware such as the DGX-1/2 from Nvidia have technology such as NVLink (2) to help mitigate bandwidth issues, but that is not available on every cloud platform.
+
+
+
+						</p>
+
+
+					</div>
+
+
+						
+					<div class="col-md-12" id="fh5co-content">
+
+						<h2>Summary and Looking Ahead</h2>
+
+						<p>
+							In this article we took a look at how to run a Keras LSTM on a machines with CPU and then cloud instances with GPUs. We also did some analysis on how the performance changed as enabled GPUs and then upgraded the layers for CUDA-specific optimizations.
+
+
+						</p>
+						<p>
+							Some of the broader/tangential topics we touched on in this article included how we wanted the reader to think about the portability and scalability of their design decisions as they moved their code to a GPU. We highlight these concepts as code portability has a larger role to play in this domain going forward.
+
+						</p>
+						<p>
+							We've just scratched the surface of this topic, as some of the other branch topics the reader should consider include:
+							<ul>
+								<li>Leveraging multiple-GPUs on a single host</li>
+								<li>Optimizing how data is transfered from RAM to the GPU</li>
+								<li>Organizational security policies and how that impacts job execution</li>
+								<li>Dependency management in a multi-tenant environment/cluster</li>
+								
+
+							</ul>
+							
+							In future articles we'll touch on some of this topics and build on the concepts from this article.
+
+
+						</p>
+						<p>
+							If your organization is interested in continuing a discussion around any of the topics in this article (deep learning, GPUs, etc) please <A href="../contact.html">reach out and say hello</a>.
+
+
+						</p>
+
+
+
+
+					</div>
+				</div>
+
+			-->
+				<!-- end of section -->
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

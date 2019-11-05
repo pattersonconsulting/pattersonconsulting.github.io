@@ -17,22 +17,27 @@
 		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<title>Patterson Consulting: Blog - Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 3 of 4</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="blog page for Patterson Consulting" />
 	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
+	<meta property="og:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 3 of 4"/>
+
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html"/>
 	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<meta property="og:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+	
+
+	<meta name="twitter:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 3 of 4" />
+	<meta data-rh="true" property="twitter:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html" />
+	<meta name="twitter:card" content="summary_large_image" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
@@ -81,6 +86,9 @@
 								<div class="dropdown-menu-wrap">
 									<ul>
 										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+										<li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
 										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
 										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
 										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
@@ -125,7 +133,7 @@
 						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
 						<h3>Part 3 of 4</h3>
 						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
-						<p>Date: October 23, 2019</p>
+						<p>Date: Nov 5th, 2019</p>
 
 						<p>
 							<i><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part2.html">In part 2 of our series</a>, we looked at how Big Cloud Dealz would detect items in their Shopping Cart 2.0 using TensorFlow. In this post, we’ll look at setting up Confluent’s distribution of Kafka, creating a MySQL database for our in-store items, and pulling in that data to Kafka using Kafka Connect.</i>
@@ -170,11 +178,11 @@ mvn package</span></pre>
 						</p>
 						
 						<p>
-							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. You'll actually need to <code>cd</code> into each of the three subdirectories (<code>CartCamApp</code>, <code>TestKafkaProducer</code>, and <code>KafkaProcessingApp</code>) and run <code>mvn package</code> to ensure all three pieces of code we'll use will work. We'll need one additional file to run <code>ObjectDetectionProducer</code> - the pre-trained detection model. The model can be downloaded <a href="http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz">here</a>, or you can browse models and learn more about them <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">here</a>. To run the producer from Maven, use the following command, making sure to include the location of the downloaded model and the address of the Schema Registry as arguments:
+							These commands pull in the files from the repository then build an uber jar in the <code>./target</code> subdirectory. You'll actually need to <code>cd</code> into each of the three subdirectories (<code>CartCamApp</code>, <code>TestKafkaProducer</code>, and <code>KafkaProcessingApp</code>) and run <code>mvn package</code> to ensure all three pieces of code we'll use will work. We'll need one additional file to run <code>ObjectDetectionProducer</code> - the pre-trained detection model. The model can be downloaded <a href="http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz">here</a>, or you can browse models and learn more about them <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">here</a>. To run the producer from Maven, use the following command, making sure to include the location of the downloaded model and the address of the Schema Registry as arguments:
 						</p>
 						
 						<p>
-							<pre><span style="font-weight: 400; font-size: 12px;">mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="/PATH/TO/MODEL/ssd_inception_v2_coco_2018_01_28/saved_model/ http://localhost:8081"</span></pre>
+							<pre><span style="font-weight: 400; font-size: 12px;">mvn exec:java -Dexec.mainClass="com.pattersonconsultingtn.kafka.examples.tf_object_detection.ObjectDetectionProducer" -Dexec.args="/Users/josh/Downloads/faster_rcnn_resnet101_coco_2018_01_28/saved_model/ http://localhost:8081"</span></pre>
 						</p>
 						
 						<p>
@@ -355,13 +363,29 @@ null	{"id":7,"name":{"string":"frisbees"},"upsell_item":{"string":"frisbee goal"
 						<h4>A note on rerunning Kafka Connect</h4><i>If, for any reason, you find that you need to re-scan the <code>inventory</code> table in MySQL using Kafka Connect, you'll need to delete the <code>connect.offsets</code> file in the <code>/tmp</code> directory. This file keeps track of what Kafka Connect has already sent to Kafka. Deleting it ensures that Kafka Connect will re-scan the entire table. Otherwise, it would only send any new data to Kafka.</i>
 					</div>
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I STARTED TO DOUBT MYSELF FOR A MOMENT AT LUNCH WHEN I COULDN&#39;T DECIDE BETWEEN THE BURRITO OR THE TACO. AND THEN I REMEMBERED I PUT THE WOOOOOO BACK IN RETAIL. AND THAT MOMENT PASSED. GREATNESS NEVER IN DOUBT.</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1027259660322201600?ref_src=twsrc%5Etfw">August 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>					
+
 					<h2>Summary</h2>
 
 					<p>
-						At this point, we have our system detecting objects, sending them to a Kafka topic, and our inventory table from MySQL being ingested into its own Kafka topic. In our final post in this series, the Big Cloud Dealz team will join the cart items with the inventory and perform windowed aggregations in real-time to create the "Green Light Special" application.
+						At this point, we have our system detecting objects, sending them to a Kafka topic, and our inventory table from MySQL being ingested into its own Kafka topic. In our <a href="">final post in this series (Part 4, coming soon)</a>, the Big Cloud Dealz team will join the cart items with the inventory and perform windowed aggregations in real-time to create the "Green Light Special" application.
+					</p>
+					<p>
+
 					</p>
 
-					<h4><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part4.html">Part 4</a></h4>
+For a further discussion on architecture ideas around Kafka and Confluent-based infrastructure, please <a href="http://www.pattersonconsultingtn.com/contact.html">reach out to the Patterson Consulting team</a>. We'd love to talk with your team about topics such as:
+
+
+								<ul>
+									<li>DevOps <a href="http://www.pattersonconsultingtn.com/offerings/managed_kafka.html">Managed Kafka Clusters</a></li>
+									<li>Kafka Architectural Consulting</li>
+									<li>Custom Kafka Streaming API Application Design</li>
+									<li>Hardware design for your data center</li>
+
+								</ul>					
+
+					<!-- http://www.pattersonconsultingtn.com/blog/greenlightspecial_part4.html -->
 
 					</div>
 				</div>

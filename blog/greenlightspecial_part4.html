@@ -269,21 +269,25 @@ mvn exec:java -Dexec.mainClass="com.pattersoncoultingtn.kafka.examples.test_prod
 						
 						<consoleoutput>09/20/2019 14:40:34	item: spoon          count: 1	upsell: fork
 09/20/2019 14:40:34	item: tennis racket  count: 1	upsell: tennis ball
+-------------------
 09/20/2019 14:41:35	item: bowl           count: 1	upsell: cup
 09/20/2019 14:41:35	item: spoon          count: 1	upsell: fork
 09/20/2019 14:41:35	item: sportsball     count: 1	upsell: soccer goal
 09/20/2019 14:41:35	item: tennis racket  count: 1	upsell: tennis ball
+-------------------
 09/20/2019 14:42:35	item: bowl           count: 1	upsell: cup
 09/20/2019 14:42:35	item: sportsball     count: 1	upsell: soccer goal
 09/20/2019 14:42:35	item: tennis racket  count: 2	upsell: tennis ball
+-------------------
 09/20/2019 14:43:35	item: cup            count: 2	upsell: plate
 09/20/2019 14:43:35	item: frisbees       count: 1	upsell: frisbee goal
 09/20/2019 14:43:35	item: tennis racket  count: 1	upsell: tennis ball
+-------------------
 09/20/2019 14:44:35	item: spoon          count: 3	upsell: fork
 09/20/2019 14:44:35	item: frisbees       count: 1	upsell: frisbee goal</consoleoutput>
 						
 						<p>
-							<br>As you can see, every minute we get output that includes the items in carts, how many there are across all carts, and the upsell item that should be paired with those items. Because our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> code outputs an item every 15 seconds, we see a total of 4 items every 1-minute time window (with the exception of the first window, where the code was started halfway through the window).
+							<br>As you can see, every minute we get output that includes the items in carts, how many there are across all carts, and the upsell items that should be paired with those items. Because our <a href="https://github.com/pattersonconsulting/BigCloudDealz_GreenLightSpecial/blob/master/TestKafkaProducer/src/main/java/com/pattersonconsultingtn/kafka/examples/test_producer/TestDetectionProducer.java">TestDetectionProducer.java</a> code outputs an item every 15 seconds, we see a total of 4 items every 1-minute time window (with the exception of the first window, where the code was started halfway through the window). Because the windowing operation only includes items seen in that particular 1-minute time window, it also drops items from older time windows (rather than an ever-increasing aggregate). So, the end result is that we only see items from the defined time window each time a window closes. Sweet!
 						</p>
 						
 						<div style="border: 1px solid #999999; background-color: #EEEEEE; padding: 16px; margin: 32px;">

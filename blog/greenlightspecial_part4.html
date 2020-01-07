@@ -17,22 +17,27 @@
 		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Patterson Consulting: Blog - Real-Time Analysis of Computer Vision Objects with TensorFlow and Apache Kafka</title>
+	<title>Patterson Consulting: Blog - Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 4 of 4</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="blog page for Patterson Consulting" />
 	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
+	<meta property="og:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 4 of 4"/>
+
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part4.html"/>
 	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<meta property="og:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+	
+
+	<meta name="twitter:title" content="Building the Next-Generation Retail Experience with Apache Kafka and Computer Vision - Part 4 of 4" />
+	<meta data-rh="true" property="twitter:description" content="Building a real time shopping cart analysis system for real world retailers with computer vision and apache kafka."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/big_cloud_dealz_logo2.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part4.html" />
+	<meta name="twitter:card" content="summary_large_image" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
@@ -123,10 +128,20 @@
 						<h1>Building the Next-Gen Retail Experience with Apache Kafka and Computer Vision</h1>
 						<h3>Part 4 of 4</h3>
 						<p>Authors: Stuart Eudaly, <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>, Austin Harris</p>
-						<p>Date: October 23, 2019</p>
+						<p>Date: January 7th, 2020</p>
 
 						<p>
 							<i><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html">In the last article</a>, we set up Confluent’s distribution of Kafka. We also used Kafka Connect to import the inventory table from a MySQL database and store it as a topic in the Kafka cluster. In this article, we'll actually join detected objects with inventory and perform real-time windowed aggregations to create the Green Light Special application.</i>
+						</p>
+						<p>
+							Other parts of the series:
+							<ul>
+								<li><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part1.html">Part 1</a></li>
+								<li><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part2.html">Part 2</a></li>
+								<li><a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html">Part 3</a></li>
+
+							</ul>
+
 						</p>
 						
 						<h2>Introduction to Kafka Streams: KStreams and KTables</h2>
@@ -298,12 +313,57 @@ mvn exec:java -Dexec.mainClass="com.pattersoncoultingtn.kafka.examples.test_prod
 							<br><a href="https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html">https://kafka.apache.org/20/documentation/streams/developer-guide/app-reset-tool.html</a>
 
 						</div>
-						
-						<h2>Summary</h2>
+
+
+						<h2>Putting it All Together for a New Retail Experience</h2>
+
 						
 						<p>
-							In this post, we utilized Kafka Streams to join data from two Kafka topics and perform windowed aggregations on the results. This has been a fairly involved process to get the Big Cloud Dealz team the desired functionality in their Green Light Special application. While this application involves many pieces working together to function, Kafka and the Kafka Streams library enable the manipulation of real-time streaming data that would be rather difficult otherwise. Hopefully this series of posts has been beneficial to you and shown you just what TensorFlow, Kafka, Kafka Connect, and Kafka Streams are capable of.
+							In this post, we utilized Kafka Streams to join data from two Kafka topics and perform windowed aggregations on the results. This has been a fairly involved process to get the Big Cloud Dealz team the desired functionality in their Green Light Special application. While this application involves many pieces working together to function, Kafka and the Kafka Streams library enable the manipulation of real-time streaming data that would be rather difficult otherwise.
 						</p>
+						<p>
+							<img src="./images/cloud_dealz_arch_design_start.png" style="width: 938px; height: 296px;" />
+						</p>
+						<p>
+
+						At this point we have put together the original concept laid out in the beginning of this series (<a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part1.html">Part 1</a>), as reflected in the diagram above. The core components we built in this series are:
+
+
+							<ol>
+								<li>A shopping cart (2.0) (<a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part2.html">Part 2</a>) with an attached camera and wifi unit (likely an ARM-based embedded system) with an object detection model loaded to <a href="http://www.iraj.in/journal/journal_file/journal_pdf/12-201-144871022643-46.pdf">detect specific objects</a> from the camera.</li>
+								<li>A Kafka cluster (<a href="http://www.pattersonconsultingtn.com/blog/greenlightspecial_part3.html">Part 3</a>) back in the data center to collect all of the incoming data from the shopping carts, organizing it into logical topics for processing.</li>
+								<li>A group of streaming applications leveraging Kafka's Streaming API (as detailed in this post) to give the retail store's team a real-time look at what items are in customers' baskets across the store.</li>
+								
+
+							</ol>
+
+						</p>
+
+						<p>
+							With this prototype running, the Big Cloud Dealz team is able to view their brick and mortar shopping floor much the same way as an online retailer views the aggregate activity of their online users. It sets the store operations team up to dynamically recommend upsell items to shoppers strategically at the right time based on what is happening inside the shopping carts. The Big Cloud Dealz team is able to roll out the proof of concept Green Light Special system to one of their locations to begin live testing. <a href="https://twitter.com/BigCloudRon1">Big Cloud Ron</a> is exceptionally pleased as well:
+
+
+						</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">IF I COULD LOVE THE GREEN LIGHT SPECIAL ANY MORE IT WOULD (LIKELY) NOT BE LEGAL IN CERTAIN STATES</p>&mdash; BigCloudRon (@BigCloudRon1) <a href="https://twitter.com/BigCloudRon1/status/1214606388883836928?ref_src=twsrc%5Etfw">January 7, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						
+						<p>
+
+For a further discussion on architecture ideas around Kafka and Confluent-based infrastructure, please <a href="http://www.pattersonconsultingtn.com/contact.html">reach out to the Patterson Consulting team</a> or check out our <a href="http://www.pattersonconsultingtn.com/offerings/managed_kafka.html">Kafka Offerings page</a>. We'd love to talk with your team about topics such as:
+
+
+								<ul>
+									<li>DevOps <a href="http://www.pattersonconsultingtn.com/offerings/managed_kafka.html">Managed Kafka Clusters</a></li>
+									<li>Kafka Architectural Consulting</li>
+									<li>Custom Kafka Streaming API Application Design</li>
+									<li>Hardware design for your data center</li>
+									<li>computer vision model construction and deployment</li>
+
+								</ul>	
+
+
+								</p>	
+
 					</div>
 				</div>
 				<!-- end of section -->				

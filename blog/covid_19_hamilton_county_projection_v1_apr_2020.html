@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Covid 19 Projection (Apr2020v1) for Hamilton County, TN</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Covid 19 Projection (Apr2020v1) for Hamilton County, TN"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/cuip_smart_city_data_challenge_2019.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="Predicting Urban Air Pollution Levels From Weather Data and Street Video Events"/>
+	
+
+	<meta name="twitter:title" content="Covid 19 Projection (Apr2020v1) for Hamilton County, TN" />
+	<meta data-rh="true" property="twitter:description" content="Predicting Urban Air Pollution Levels From Weather Data and Street Video Events"/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/cuip_smart_city_data_challenge_2019.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Analysis of April 2020 Covid-19 Impact vs Hospital Resources (v1.3) for Hamilton County, TN</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>
+
+							</p>
+						<p>Date: April 6th, 2020</p>
+						
+
+
+						<p>
+							The Covid-19 pandemic has quickly shut down the nation and the world at large. This blog post is designed to extrapolate a U.S. county-level forecast from national and state trends for the month of April. We use state-published data along with trends from other states to build a forecast for Hamilton County, TN for the month of April. Further, we compare the forecasted covid-19 impact for April in Hamilton County with known/published information known about the available hospital and ICU beds at the major hospitals in Hamilton County.
+
+						</p>
+						<p>
+							Part of the motivation for this analysis was getting involved in the makers community for creating Personal Protective Equipment to help meet the need for our county based on the upcoming surge. Quickly makers came online and joined our calls (organized by Andrew Rodgers), and there was an obvious ability to produce goods. A challenge became quickly obvious in that it was not clear "what to make" and "how much", as the challenge was quickly changing as new news came online. Beyond that, it is hard to tell how all of this would hit Hamilton County specifically. This report was partially inspired to help inform how to approach the PPE production challenges at hand.
+
+						</p>
+						<p>
+							<a href="https://docs.google.com/spreadsheets/d/1endAbj3nnnmCIceWaDZcDtmnUqi8jLQ8VkcX5BBZIzE/edit#gid=0">Link to PPE Maker Tracking gdoc Spreadsheet</a>
+
+
+						</p>
+
+						<p>
+							Our effectiveness as local communities is what will eventually <a href="https://labblog.uofmhealth.org/rounds/how-scientists-quantify-intensity-of-an-outbreak-like-covid-19">drive the spread rate down (r0 < 1)</a>. To that end, being based in Hamilton County, we wanted to generate a regional forecast as part of helping to communicate the local challenges ahead in the month of April.
+
+						</p>
+						<p>
+							Given this is something we normally would not blog about, we felt it compelling content as many in the community only see national numbers and its hard to extrapolate those into "how does this affect my local community". Each state, city, and county will see different growth rates and effects from this pandemic, so it makes sense to be able to see the macro-level data tailored to a specific region (e.g., "county"). This report is focused on building some foundational analytics for our region to help better tailor our community's response.
+
+						</p>
+						<p>
+							<b style="color: red;">
+							Our intent for this report is for regional readers to get a better sense in how the Covid-19 trends will affect their region across the next 30 days.</b>
+
+						</p>
+
+
+						<h3>Disclaimers</h3>
+						<p>
+							This report was created by Patterson Consulting as a public service analysis. No hospital in Hamilton County nor the County itself are currently endorsing this report.
+
+						</p>
+						<p>
+							 Patterson Consulting does not employ any specific epidemiologists, but we do analyze data and provide forecasts for Fortune 100 companies<sup>[<a href="#footnoteotherinitiatives">Other Initiatives</a>]</sup>. <b style="color: red;">The model in this report does not make any macro/national trend forecasts; it only uses national forecasts to inform a regional Hamilton County forecast and then compares this vs known/published hospital resources.</b> 
+						</p>
+
+
+						<h2>Report Summary</h2>
+
+						<p>
+
+						Hamilton County has a manageable peak of Covid-19 hospitalizations and ICU admissions through the month of April
+						based on the newer national model from IMHE.
+
+						</p>
+
+
+						<h2>Assumptions, Approach, and Caveats</h2>
+
+						<p>
+
+							To build this model we took the data from the state of Tennessee's COVID-19 website and John Hopkin's data and analyzed:
+
+							<ol>
+								<li>How fast the positive covid-19 tests were growing Nationally and Tennessee</li>
+								<li>How many people were hospitalized in Tennessee from Covid-19</li>
+								<li>How many people were in ICU in Tennessee from Covid-19</li>
+								
+
+							</ol>
+
+							The state website also publishes numbers for every county in the state of Tennessee. We began tracking the Covid-19 positive numbers daily for Hamilton County as published daily at 2pm ET on their website. 
+
+						</p>
+						<p>
+							Armed with this data, we build a spreadsheet for April forecasting "every day of April based on Tennessee's compounded growth rate (8%)":
+
+							<ul>
+								<li>what is the positive Covid-19 count?</li>
+								<li>what is the cumulative hospitalized count based on Tennessee's Covid-19 hospitalization rate? national rate?</li>
+								<li>what is the cumulative patient ICU count?</li>
+
+							</ul>
+
+						</p>
+
+						<p>
+							Current national forecasts indicate Tennessee will hit the peak of the growth rate near the last week (April 15th) of April. However, we'll still be adding new positive cases, so even if we're over-projecting assuming doubling through the end of the month, we likely will not be off by a lot.
+
+
+						</p>
+						<p>
+							Other things we should note about how testing works in the United States: not every county or hospital tests with the same criteria. Some counties do not report hospitalization or ICU numbers either.
+
+						</p>
+						<p>
+							It should also be noted that we are looking at total positives rate across the month of April vs how many beds and ICU beds are available in the Hamilton County hospital system. A future better version of this report for resource utilization would model how patients get better and stop consuming resources at the hospital at the end of a window of time.
+
+						</p>
+
+						<h2>Data Sources</h2>
+						<p>
+
+							
+
+Raw data analyzed is from the daily data being pulled from 
+
+						<UL>
+							<li><a href="https://covidtracking.com/">The Covid Tracking Project</a>, <a href="https://covidtracking.com/data/state/tennessee#historical">TN data archives</a></li>
+							<li>The Tennessee state <a href="https://www.tn.gov/health/cedep/ncov.html">website for Covid-19 reported statistics</a></li>
+							<li>State-level forecasts from <a href="https://covid19.healthdata.org/projections">Healthdata.org</a></li>
+
+
+						</UL>
+
+						
+
+
+
+
+
+
+
+
+							
+
+						</p>
+
+
+						<h2>Current State of Tennessee Impact for Covid-19</h2>
+						<p>
+
+							To set context let's start with the IHME (Org. that is part of the University of Washington) <a href="https://covid19.healthdata.org/projections">model (healthdata.org) for how Covid-19 will impact at the state level for the state of Tennessee</a>.
+						</p>
+						<p>
+
+							If we look at the model on April 2nd, as seen below, we see a large spike of Covid-19 infections forecasted for April 19th.
+
+						</p>
+
+
+						<img src="./images/covid_19_tn_april_healthdataorg_graph.png" style="width: 814px; height: 442px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							On April 5th <a href="http://www.healthdata.org/covid/updates">IMHE rebuilt their model</a> based on new data coming online as U.S.-projections have gotten better, as we can see in the updated image below (April 6th):
+
+						</p>
+
+
+						<img src="./images/covid_19_ihme_apr_6th_model_rebuild_v1_3.png" style="width: 813px; height: 504px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							It appears the curve is starting to flatten for at least the state of Tennessee. Let's now move towards a model specifically for Hamilton County.
+
+						</p>
+
+
+
+
+						<h3>Hamilton County Relative to Other Tennessee Counties</h3>
+
+						<p>
+
+							Based on the rankings of counties in the state of Tennesse, Hamilton County currently (Apr 6th) sits at 8th in terms of most positive Covid-19 cases, as seen in the table below.
+						</p>
+
+
+						<img src="./images/covid_19_tn_gov_counties_ranked_1_3.png" style="width: 398px; height: 217px; margin: 12px; border: 0px solid #999999;" />
+
+
+						<p>
+
+
+							
+
+						</p>
+
+						<h2>Building a Forecast for Covid-19 in Hamilton County for April 2020</h2>
+
+						<!--
+						<p>
+
+							The image below gives us a visualization of how many cases were seeing per-county in the state of Tennessee (<a href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html">via NYT</a>):
+
+						</p>
+
+
+						<img src="./images/covid_19_tn_counties_nyt_visualized_v1_1.png" style="width: 762px; height: 305px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							We can see here they forecast the "doubling rate" (e.g., "how long it takes the count to double, in days") as 5 days for Hamilton County. This means the number of positive Covid-19 infections for the county will double every 5 days, which is critical information for us to understand what will happen by the end of April.
+							
+
+						</p>
+					-->
+						<p>
+							To build out a model for hospitalization and icu admission rates due to Covid-19 growth, we need to forecast out the rest of April (daily). To build this daily forecast we need a growth rate (day over day)
+
+						</p>
+
+						<p>
+							In the chart below we can see the trajectory for Covid-19 growth rates per southeastern US State. This chart was built based on data from <a href="https://github.com/CSSEGISandData/COVID-19">the John Hopkins Whiting School of Engineering</a>.
+
+						</p>
+
+
+						<img src="https://pbs.twimg.com/media/EU9tuVdUcAAKmAA?format=jpg&name=4096x4096" style="width: 1014px; height: 626px; margin: 12px; border: 0px solid #999999;" />
+
+						<p>
+							We can see that the state of Tennesee's current (as of April 6th) Covid-19 growth rate is <b style="color: red;">8% day over day</b> (e.g., "compounded"). If we take this number, we can forecast the remaining days <b style="color: red;">cumulative positive covid-19 counts</b> in April as shown in the embedded spreadsheet below.
+
+						</p>
+
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQyIylb4UrO6TgCR58tlNJUWQbc2pIQixjnYpxTDHskEpmKoZ7b2y-zNp3FvvqwPlrt8OodjyvQPeoh/pubhtml?gid=752514746&amp;single=true&amp;widget=true&amp;headers=false" width="600" height="700"></iframe>
+
+
+						<h3>Developing Rates for Hospitalizations and ICU Admissions</h3>
+
+						<p>
+							To forecast hospitalization counts (cumulative) we can calculate this for the state of Tennessee based on the data published on the state Covid-19 website. On April 2nd this rate was 7.45% and on April 6th the rate was 9.25%; Obviously this number is shifting as new data gets reported for Tennessee, so we'll use both the latest rate for Tennessee and compare that rate to the national rate as calculated below.
+
+						</p>
+
+						<p>
+							34 states are reporting "hospitalized cumululative" numbers as of 4/6/2020 per the data from the site <a href="https://covidtracking.com/data">https://covidtracking.com/data</a>.
+
+
+						</p>
+
+
+						<p>
+							Based on states that report "hospitalizations - cumulative" (34 states, as of 4/6/2020) we see an average hospitalzation rate across the dataset as 16.7%.
+
+						</p>
+						<p>
+							Based on states that report "ICU admissions cumulative" (9 states, as of 4/6/2020) we see an average ICU admission rate across the dataset as 4.95%. Tennessee does not report this statistic, so we'll use the national average to forecast the "ICU Admissions cumulative (covid-19 related)" metric for Hamilton County.
+
+						</p>
+<!--
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS-m6zMzlqztSFzUU3pPgZFq7zvTlpO7lukQ-4LYTztse4hXfcRpsmnknlI7vZt7_ayXnLMOGwD_oU_/pubhtml?gid=741242077&amp;single=true&amp;widget=true&amp;headers=false" width="900" height="340"></iframe>		
+-->
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQyIylb4UrO6TgCR58tlNJUWQbc2pIQixjnYpxTDHskEpmKoZ7b2y-zNp3FvvqwPlrt8OodjyvQPeoh/pubhtml?gid=741242077&amp;single=true&amp;widget=true&amp;headers=false" width="1040" height="340"></iframe>				
+
+						<p>
+
+							The above table makes a few assumptions:
+							<ul>
+								<li>Tennessee's state growth rate stays constant; it likely will not, and will start to decline in the second half of the month per the IHME model.</li>
+								<li>larger scale effects of social distancing don't further lower the numbers</li>
+
+							</ul>
+
+							Hopefully this model currently, as of Apr 6th, represents a worst case scenario. However, although models are now trending towards better numbers, there is no guarantee of that, and the numbers could still get worse.
+
+
+						</p>
+
+<!--
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS-m6zMzlqztSFzUU3pPgZFq7zvTlpO7lukQ-4LYTztse4hXfcRpsmnknlI7vZt7_ayXnLMOGwD_oU_/pubhtml?gid=741242077&amp;single=true&amp;widget=true&amp;headers=true" width="920" height="340"></iframe>
+-->
+						<h2>Analysis of Known Hamilton County Hospital Resources</h2>
+						<p>
+
+							The office of Hamilton County Office of Emergency Management <a href="https://newschannel9.com/news/coronavirus/are-chattanooga-area-hospitals-prepared-for-covid-19">provided the following resource levels to News Channel 9 as reported on their website</a>:
+
+							<ul>
+								<li>Available ventilators: 396</li>
+								<li>Available medical beds: 293</li>
+								<li>ICU Beds: 53</li>
+								<li>Pediatric Beds available: 43</li>
+								<li>Pediatric Critical Care Beds: 11</li>
+
+
+							</ul>
+
+							If we know that cumulatively the currently national average for hospital admission says that that Hamilton County will need 100 beds for Covid-19 patients based on the model above, then if the information reported is correct, the county should have that aspect covered.
+
+						</p>
+						<p>
+							The currently forcasted cumulatively admitted ICU Covid-19 patients for Hamilton County (per the model above) is 30 (rounded up). Hamilton County should also be able to cover that number as well, with spare ventilators as backup.
+
+							
+
+						</p>
+
+
+						<p>
+							For reference in terms of ICU resource usage, based on <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2004500">a study from the New England Journal of Medicine</a>, the median length of ICU stay among survivors was 14 days.
+
+						</p>						
+
+
+
+
+
+						<h2>Footnotes</h2>
+						<p>
+
+							<a id="footnoteotherinitiatives">Footnote: [Other Initiatives]</a><br/>
+						
+
+							 Other tangentially relevant Patterson Consulting initiatives:
+
+							<ol>
+								<li>Analytics work supporting research at the University of Michigan on ICU admissions during disasters</li>
+								<li>Smart city analytics support for the University of Tennessee at Chattanooga's CUIP group (see our <a href="http://www.pattersonconsultingtn.com/blog/cuip_smart_city_data_challenge_2019.html">previous article on analying PM2.5 air quality data</a>)</li>
+							</ol>
+
+							Josh Patterson is also a co-author on a <a href="http://shop.oreilly.com/product/0636920035343.do">book about Deep Learning and neural networks</a>; The book covers many topics related to using neural networks to forecast outcomes (e.g., "regression models") based on different types of data. In this report's model, however, we do not use any neural networks.
+
+						
+
+						</p>
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

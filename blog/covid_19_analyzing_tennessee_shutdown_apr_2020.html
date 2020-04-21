@@ -242,9 +242,9 @@ tr:nth-child(even) {
 
 						<div style="background-color: #EEEEEE; padding: 6px; padding-left: 18px;">
 
-							<h3>Using CAGR as a Growth Measure</h3>
+							<h3>Using CDGR as a Growth Measure</h3>
 							<p>
-								We switched to CAGR in this case as its a simple analytical way to express how a variable is growing over time. It's difficult at this stage to fit a model such a SIR on each county as we don't have a good handle on what the specifics for Covid-19 are, and that makes the SIR curves bounce around a lot. So for now we'll stick with CAGR as it seems to be effective to measure near-term infection growth in observed data. It's worth noting that CAGR does not take into account the longer-term dynamics of an infection curve that you'd normally see in a SIR model. This means that while CAGR is a decent near-term growth modeling tool, there is a point on the horizon at which it does not take into account the SIR models tail-dynamics.
+								We switched to Compounded Daily Growth Rate (CDGR) in this case as its a simple analytical way to express how a variable is growing over time. It's difficult at this stage to fit a model such a SIR on each county as we don't have a good handle on what the specifics for Covid-19 are, and that makes the SIR curves bounce around a lot. So for now we'll stick with CDGR as it seems to be effective to measure near-term infection growth in observed data. It's worth noting that CDGR does not take into account the longer-term dynamics of an infection curve that you'd normally see in a SIR model. This means that while CDGR is a decent near-term growth modeling tool, there is a point on the horizon at which it does not take into account the SIR models tail-dynamics.
 
 							</p>
 
@@ -319,7 +319,7 @@ Raw data analyzed is from the daily data being pulled from
 
 <iframe width="900" height="380" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQjgT1nBdbJx3mZ4VLS858qs9-edGfyOVOAnQ3650GRmtQ74kLZEDMOJjijLR5R_f7hCQY3GVDDlnPW/pubhtml?gid=1740835457&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 						<p>
-							We note we're missing 2 days of data in the above model, so we hand calculated approximations based on the CAGR for that part of the shelter-in-place window.
+							We note we're missing 2 days of data in the above model, so we hand calculated approximations based on the CDGR for that part of the shelter-in-place window.
 
 
 
@@ -344,13 +344,13 @@ Raw data analyzed is from the daily data being pulled from
 
 							</ul>
 
-							We further note that the CAGR dropped by (0.11 - 0.02 ==) 0.09 from the end of the "delayed section" (4/7) and the end of the shelter-in-place window (4/17).
+							We further note that the CDGR dropped by (0.11 - 0.02 ==) 0.09 from the end of the "delayed section" (4/7) and the end of the shelter-in-place window (4/17).
 
 
 						</p>
 						<p>
 
-							(For a replay of the April projection with the observed CAGR of 0.11, check out the
+							(For a replay of the April projection with the observed CDGR of 0.11, check out the
 
 							<a href="#footnoteaprilprojection">footnote section</a>.)
 
@@ -374,7 +374,7 @@ Raw data analyzed is from the daily data being pulled from
 
 							<ul>
 								<li>We're missing more days for Davidson County, because I was not downloading and tracking every county's daily stats before 4/13/2020 (I only had a few spot days).</li>
-								<li>However, we can still compute the same CAGR windows as CAGR only needs the start value, the end value, and the count of time periods (days, here)</li>
+								<li>However, we can still compute the same CDGR windows as CDGR only needs the start value, the end value, and the count of time periods (days, here)</li>
 
 
 
@@ -389,7 +389,7 @@ Raw data analyzed is from the daily data being pulled from
 						<p>
 
 							
-								If we use the same date windows, we see a similar "tale of two windows"; the difference between the two CAGR windows is nearly the same as Hamilton County (0.14 - 0.05 == 0.09), despite starting and ending with higher numbers.
+								If we use the same date windows, we see a similar "tale of two windows"; the difference between the two CDGR windows is nearly the same as Hamilton County (0.14 - 0.05 == 0.09), despite starting and ending with higher numbers.
 						</p>
 
 						<h2>How did the Shelter-in-Place Affect Smith County?</h2>
@@ -408,18 +408,18 @@ Raw data analyzed is from the daily data being pulled from
 							Shelby County only had 3 at the beginning of the month, and then rose to 11 cases by the end of the month. Less populus rural counties have conditions that are less conducive to infection spreading. This is a potential explanation for the observed data.
 						</p>
 						<p>
-							Another observation here is that the CAGR numbers for the early / late windows do not show the CAGR slowdown as we saw in both Hamilton County and Davidson County. This could also expain why Tennessee's CAGR windows were more "muted" as a state as compared to specific areas of higher Covid-19 infection.
+							Another observation here is that the CDGR numbers for the early / late windows do not show the CDGR slowdown as we saw in both Hamilton County and Davidson County. This could also expain why Tennessee's CDGR windows were more "muted" as a state as compared to specific areas of higher Covid-19 infection.
 
 
 							
 
 						</p>
 
-						<h2>Looking at Change in CAGR for all Counties</h2>
+						<h2>Looking at Change in CDGR for all Counties</h2>
 
 						<p>
 
-							In the table below we compute the two CAGR windows for every county in Tennessee.
+							In the table below we compute the two CDGR windows for every county in Tennessee.
 
 						</p>
 
@@ -428,7 +428,7 @@ Raw data analyzed is from the daily data being pulled from
 						<h3>Observations</h3>
 
 						<p>
-							The top 10 most infected counties (as of 4/16, denoted by the red line in the spreadsheet) showed an average CAGR drop between the two windows of 0.074. For the data shown, counties with 30-40 or more at the start of the month represent the group of counties with the largest impact by growth rates of the infection. This group's infected population had gotten to the size where a month of compounding growth tended to make a difference in the count by the 16th [revise].
+							The top 10 most infected counties (as of 4/16, denoted by the red line in the spreadsheet) showed an average CDGR drop between the two windows of 0.074. For the data shown, counties with 30-40 or more at the start of the month represent the group of counties with the largest impact by growth rates of the infection. This group's infected population had gotten to the size where a month of compounding growth tended to make a difference in the count by the 16th [revise].
 
 						</p>
 						<p>
@@ -440,7 +440,7 @@ Raw data analyzed is from the daily data being pulled from
 
 						</p>
 						<p>
-							The CAGR drop would be most relevant for the top 10 counties (in stopping infection growth) and less so for the counties outside the top 10.
+							The CDGR drop would be most relevant for the top 10 counties (in stopping infection growth) and less so for the counties outside the top 10.
 
 						</p>
 
@@ -457,13 +457,13 @@ Raw data analyzed is from the daily data being pulled from
 
 						<br/><br/>
 						<p>
-							In the larger more populated top 10 counties (e.g., Davidson, Shelby), there are higher infection counts. These counties tend to also be more populated as well. These counties tended to react positively to the 15-day shelter-in-place order based on the slowdown (0.074) in their infection rate CAGR. Given the average top-10 county (by infection cumulative) was compounding daily by a factor of 0.12, a drop of 0.074 was non-trivial (62% drop reduction) in slowing down the infection CAGR.
+							In the larger more populated top 10 counties (e.g., Davidson, Shelby), there are higher infection counts. These counties tend to also be more populated as well. These counties tended to react positively to the 15-day shelter-in-place order based on the slowdown (0.074) in their infection rate CDGR. Given the average top-10 county (by infection cumulative) was compounding daily by a factor of 0.12, a drop of 0.074 was non-trivial (62% drop reduction) in slowing down the infection CDGR.
 
 						</p>
 						<p>
 
 
-							However, 69 counties (73% of all counties, largely rural) in the state of Tennessee had 25 infections cumulative or less as of 4/16. With relation to the changes in CAGR, for infection totals under 25 cumulatively in rural regions of the state the change in CAGR did not either to be that large or seem to have much effect.
+							However, 69 counties (73% of all counties, largely rural) in the state of Tennessee had 25 infections cumulative or less as of 4/16. With relation to the changes in CDGR, for infection totals under 25 cumulatively in rural regions of the state the change in CDGR did not either to be that large or seem to have much effect.
 
 
 						</p>
@@ -516,14 +516,14 @@ Raw data analyzed is from the daily data being pulled from
 						<p>
 
 							
-							To build the forecast below, we use the CAGR observed leading up to shutdown period (0.11).
+							To build the forecast below, we use the CDGR observed leading up to shutdown period (0.11).
 
 							We make the assumption that it is safe to assume we'd hit "at least" this number in April as a mild flu season affects 7.4% of the population.
 							The population of Hamilton County for 2020 is 364,286 and based on the 7.4% flu infection total, that would affect 29,957 people in Hamilton County.
 						</p>
 						<p>
 
-							Therefore we feel its reasonable to assume based on observed characteristics of Covid-19 so far that without reduced contact the virus would follow a CAGR of 0.11 and infect around 1000 people in Hamilton County in April.
+							Therefore we feel its reasonable to assume based on observed characteristics of Covid-19 so far that without reduced contact the virus would follow a CDGR of 0.11 and infect around 1000 people in Hamilton County in April.
 							
 
 

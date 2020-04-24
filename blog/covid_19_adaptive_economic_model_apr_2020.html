@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: An Adaptive Economic Model for Pandemics</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="An Adaptive Economic Model for Pandemics"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/covid_19_hamilton_county_projection_v1_apr_2020.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This blog post ..."/>
+	
+
+	<meta name="twitter:title" content="An Adaptive Economic Model for Pandemics" />
+	<meta data-rh="true" property="twitter:description" content="This blog post ..."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/covid_19_hamilton_county_projection_v1_apr_2020.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+										<li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>An Adaptive Economic Model for Pandemics</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>
+
+							</p>
+						<p>Date: April 16th, 2020</p>
+
+
+						<h2>Introduction</h2>
+						<p>
+							In this report we 
+
+						</p>
+
+						<p>
+
+							In our last report we looked at the shutdown effects ...
+							
+						</p>
+						
+
+						<h3>Disclaimers</h3>
+						<p>
+							This report was created by Patterson Consulting as an informational analytical exercise. No healthcare bodies nor goverments are endorsing this report.
+
+						</p>
+
+						<h1>Covid-19 and the Economic Dilemma</h1>
+						<p>
+
+							Currently due to uncertainty and existential fear, consumer confidence has plummeted
+and safe operational workplace protocol is uncertain
+To avoid accelerating economic decline, we need to optimize our regional operations such that we maximize our GDP output 
+while keeping the load on our healthcare systems to a manageable level
+Unfortunately, economic activity is now tied to infection activity; fundamental to our economy
+						</p>
+						<p>
+We will likely be dealing with covid-19 infections that sporadically re-occur for an indefinite period of time
+Given the above factors, we propose an Adaptable Economic Model for Pandemics (AEMP) 
+based on self-healing properties found in published mesh network optimization research<sup>[TinyTermite]</sup>.
+
+
+
+
+						</p>
+
+
+
+						
+
+
+
+						<div style="float: right; margin: 12px; border: 1px solid #999999;">
+						<img src="https://pbs.twimg.com/media/EVqRhUlWAAgCQ_b?format=jpg&name=large" style="width: 753px; height: 453px; margin: 12px; border: 0px solid #999999;" />
+
+						<p style="margin-left: 12px;"><i>Reduction of consumer confidence as shown by OpenTable's data.</i></p>
+						</div>
+
+						<br/>
+
+						<h1>The Next 18 Months will be Uncertain</h1>
+
+						<p>
+
+
+
+						</p>
+
+
+
+						<div style="float:right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/covid_morgan_stanley_timeline.jpeg" style="width: 870px; height: 450px; margin: 12px; border: 0px solid #999999;" />
+
+						<p style="margin-left: 12px;"><i>18 month timeline as compiled by Morgan Stanley (<a href="https://twitter.com/RobinWigg/status/1249303192355168256">source</a>).</i></p>
+						</div>
+
+						<h1>We Need More Data on Covid-19 to Better Know How it Will Spread</h1>
+
+						<p>
+
+							Difficulties with SEIR models
+
+
+						</p>
+
+						<p>
+
+							
+
+							Asymptomatics
+
+							
+
+
+						</p>
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;">
+						  <i>"Nasopharyngeal swabs were obtained from 210 of the 211 women (99.5%) who did not have symptoms of Covid-19; of these women, 29 (13.7%) were positive for SARS-CoV-2. Thus, 29 of the 33 patients who were positive for SARS-CoV-2 at admission (87.9%) had no symptoms of Covid-19 at presentation."
+						  </i></p>
+						  <p>The New England Journal of Medicine: <a href="https://www.nejm.org/doi/full/10.1056/NEJMc2009316?query=featured_home">"Universal Screening for SARS-CoV-2 in Women Admitted for Delivery
+"</a></p>
+						</blockquote>		
+
+
+						<div style="float:right; margin: 12px; border: 1px solid #999999;">
+						<img src="./images/covid_asymptomatic_nejm_graph.png" style="width: 500px; height: 505px; margin: 12px; border: 0px solid #999999;" />
+
+						<p style="margin-left: 12px;"><i>Graph from the NEJM <a href="https://www.nejm.org/doi/full/10.1056/NEJMc2009316?query=featured_home">article</a> "Universal Screening for SARS-CoV-2 in Women Admitted for Delivery".</i></p>
+						</div>
+
+						<p>
+
+							https://qz.com/1840186/what-the-ihme-covid-19-model-can-and-cant-tell-the-us/
+
+
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Analysis of Infection and Mitigation</h1>
+						<p>
+							
+
+						</p>
+
+						
+
+						<h2>Hamilton County Response to Shelter-in-Place Order</h2>
+						<p>
+							
+
+						</p>
+						
+						<h2>Tennessee Infection Growth in the Month of April</h2>
+						<p>
+							
+
+						</p>
+
+						<h2>A Tale of Two Infection Patterns</h2>
+						<p>
+							
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Adaptive Economic Model for Pandemics (AEMP)</h1>
+						<p>
+							
+We don’t know how long the current conditions will last
+Forecasting regional Covid-19 impact has been a moving target
+We will likely get county-level spikes of infections periodically over the next 18 months
+Operate the state of Tennessee on a per-county basis during pandemics
+Only shutdown a county if the county has an infection daily CDGR that will exceed the number of usable Covid-19 beds in the next 14 days
+Counties that continue to have low infection rates will continue to operate
+Counties will have to adapt their workplace operational hygiene practices (masks, washing, etc)
+We choose to optimize for:
+Maximize the GDP output per county that is possible under Pandemic conditions
+Minimize the operational impact to critical healthcare providers
+
+						</p>
+						<p>
+
+							An adaptive hospitalization rate --- as more data comes online
+
+
+						</p>
+						<p>
+
+							what if we never see a mass of infections?
+
+						</p>
+						<p>
+
+							what if we see lots of infections ?
+
+						</p>
+						<p>
+
+							We can't hide, but we can't push forward blindly either
+
+						</p>
+
+
+						<h2>Tennessee GDP vs Population vs Infection Growth</h2>
+						<p>
+
+							
+							<ul>
+								<li>The top 6 counties in Tennessee account for 62.8% of the GDP output</li>
+								<li>Two of the top 6 (Memphis, Nashville) have the most Covid19 population count growth from 4/1 to 4/16</li>
+								<li>Counties such as Hamilton County have stopped their infection rate growth</li>
+								<li>Tennessee (and similar states) should move to a dynamic per-county optimized economic model to better optimize GDP output during a pandemic</li>
+								<li>Goal: We want to maximize our per-county GDP while at the same time keeping our Covid-19 population at a level that can be sustained by our regional healthcare system</li>
+
+							</ul>
+							
+
+						</p>
+
+						<h2>Limiting Rate of the AEMP Model</h2>
+						<p>
+Each county should only operate at an infection CDGR level that will not outstrip its healthcare resources in any given time period
+Ex: A mild flu season infects 7.4% of the population; at a hospitalization rate of 14% (if that holds), this would produce a significant number of hospitalizations across the 5 month season
+Each hospital can only allocate so many beds to COVID-19 patients
+And they typically operate at 50% capacity
+If we allocate the remaining 50% to covid-19 patients, this would be the limiting factor per county (example: Hamilton county has around 400 beds that could be used for covid-19)
+The forecast for each N weeks would compute
+The number of new positive covid-19 patients x (hospitalization rate for covid-19)
+The number of existing covid-19 patients that would be still hospitalized
+If the sum of this number exceeds the covid-19 available bed count, then the county would be “down-shifted” into “cooldown mode” for a period of 14-21 days
+
+
+						</p>
+
+						<h2>Visualizing AEMP Forecast / Threshold</h2>
+						<p>
+
+						</p>
+
+
+
+
+						<h2>All Models are Wrong, Some are Useful</h2>
+						<p>
+
+							<ul>
+								<li>forecasting covid-19 has been a moving target at best so far; many people stuck at home are frustrated to see a projected peak come and go without results matching the forecast. The danger, however, remains real</li>
+								<li>given how little we know about the real infection population and how covid-19 moves, trying to forecast an infection peak for any area (with a model such as SIR) is likely difficult at best</li>
+								<li>making economic operational rules at the state level does not make sense; a level of economic activity that makes sense for one county in a state will not for another as their infection timeline, populations, and growth rates may vary considerably</li>
+								
+								<li>we face a threat that we do not completely understand yet; we need to hope for the best but prepare for the worst. this is a tall order.</li>
+								<li>We need to optimize our economy in ways that make sense; regions w little covid-19 activity should be put back to work generating GDP.</li>
+								<li>regions with flashes of high covid-19 infection rates should be shutdown periodically to let the infection growth rate die down</li>
+
+								<li>Regions of the world are getting infections rates under control only to see them come back</li>
+								<li>we will likely have to deal with the virus until there is either a vaccine or therapeutics have driven the hospitalization load down</li>
+								<li>we will likely be dealing with covid-19 for a long while</li>
+
+
+							</ul>
+
+
+						</p>
+
+
+						<h2>Adaptive Economic Model Considerations</h2>
+						<p>
+							
+							Each county has different factors impacting how effective they are at putting people to work along with how quickly Covid-19 can spread.
+							<ul>
+								<li>Some counties are sparsely populated so they tend not to have a high Covid-19 growth rate naturally --- every county will have different conditions</li>
+								<li>Counties at lower risk should be able to operate at higher levels naturally because they don't drive Covid-19 infection rates as quickly as more urban areas</li>
+								<li>Any county should seek to never operate at such a level that would create more healthcare burden than its regioanl healthcare system can sustain</li>
+								<li>Any county can have sudden unexpected events that would create an emergency situation with Covid-19 growth acceleration; Any economic model should be flexible enough to isolate the county and reduce its growth rate while still seeking to maximize unaffected surrounded counties.</li>
+
+								<li>the IHME model has been (unfairly) criticized for updating forecast; two critical factors were in play: (1) as more data came online they were able to make their model better (2) the entire world changed its behavior based on model forecasts, changing how the infection rate presented, therefore changing the underlying conditions the original model was based on</li>
+
+								<li>[ article: restarts, and then shutdowns -- a difficult cycle ]</li>
+								<li>[ article: a consumer with no confidence ]</li>
+								<li>[ article: shutdown as a function of consumer confidence ]</li>
+
+
+							</ul>
+
+						</p>
+
+						<h2>Summarizing the Challenge</h2>
+						<p>
+							<ul>
+
+								<li>Currently due to uncertaintity and existential fear, consumer confidence has plummeted and safe operational workplace protocol is uncertain</li>
+
+								<li>To avoid accelerating ecenomic decline, we need to optimize our regional operations such that we maximize our GDP output while keeping the load on our healthcare systems to a manageable level</li>
+
+								<li>We will likely be dealing with covid-19 infections that sporadically re-occur for an indefinite length of time</li>
+
+								<li>Given the above factors, in this article we present a Dynamic Adaptible Economic Model (DAEM) based on self-healing properties found in published mesh network optimization reasearch.</li>
+								<li></li>
+							</ul>
+
+
+							
+
+						</p>
+
+
+						<h2>Summary Results</h2>
+
+						<p>
+							In this simulation we show how a dynamic ecenomic model can per-county optimize for both GDP maximization and covid-19 growth rate minimization at the same time.
+						</p>
+						<p>
+
+							For a baseline 2-level system, the per-county adaptive economic model (CAEM) was X% more effective at GDP throughput as compared to a pure shutdown economy.
+
+
+						</p>
+
+						<p>
+
+							For a baseline 2-level system, the adaptive economic model (CAEM) was X% more effective at GDP throughput as compared to a statewide uniform model that was shutdown every N days on average.
+
+
+						</p>
+
+
+						<p>
+							Our effectiveness as local communities is what will eventually <a href="https://labblog.uofmhealth.org/rounds/how-scientists-quantify-intensity-of-an-outbreak-like-covid-19">drive the spread rate down (r0 < 1)</a>. To that end, being based in Hamilton County, we wanted to generate a regional forecast as part of helping to communicate the local challenges ahead in the month of April.
+
+						</p>
+						<p>
+							Given this is something we normally would not blog about, we felt it compelling content as many in the community only see national numbers and its hard to extrapolate those into "how does this affect my local community". Each state, city, and county will see different growth rates and effects from this pandemic, so it makes sense to be able to see the macro-level data tailored to a specific region (e.g., "county"). This report is focused on building some foundational analytics for our region to help better tailor our community's response.
+
+						</p>
+
+
+						<h3>Disclaimers</h3>
+						<p>
+							This report was created by Patterson Consulting as a 
+
+						</p>
+						<p>
+							 Patterson Consulting does not employ any epidemiologists, but we do analyze data and provide forecasts for Fortune 100 companies<sup>[<a href="#footnoteotherinitiatives">Other Initiatives</a>]</sup>. <b style="color: red;">The model in this report does not make any macro/national trend forecasts; it only uses national forecasts to inform a regional Hamilton County forecast and then compares this vs known/published hospital resources.</b> 
+						</p>
+
+
+						<h2>Report Summary</h2>
+
+						<p>
+
+						Hamilton County has a manageable peak of Covid-19 hospitalizations and ICU admissions through the month of April
+						based on the newer national model from IMHE.
+
+						</p>
+
+
+						<h2>Assumptions, Approach, and Caveats</h2>
+						<p>
+
+						</p>
+
+						<h2>Data Sources</h2>
+						<p>
+
+							
+
+Raw data analyzed is from the daily data being pulled from 
+
+						<UL>
+							<li><a href="https://covidtracking.com/">The Covid Tracking Project</a>, <a href="https://covidtracking.com/data/state/tennessee#historical">TN data archives</a></li>
+							<li>The Tennessee state <a href="https://www.tn.gov/health/cedep/ncov.html">website for Covid-19 reported statistics</a></li>
+							<li>State-level forecasts from <a href="https://covid19.healthdata.org/projections">Healthdata.org</a></li>
+
+
+						</UL>
+
+						
+
+
+						<h2>Economy Current State</h2>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Change in people visiting retail and recreation locations:<br><br>Italy: -94%<br>Spain: -94%<br>New Zealand: 91%<br>UK: -85%<br>India: -77%<br>Brazil: -71%<br>Israel: -67%<br>US: -47%<br>Australia: -45%<br>Japan: -26%<br>Sweden: -24%<br>South Korea: -19%<br>Taiwan: -9%<a href="https://t.co/YpAfQ4OlfZ">https://t.co/YpAfQ4OlfZ</a></p>&mdash; Anthony Goldbloom (@antgoldbloom) <a href="https://twitter.com/antgoldbloom/status/1247020102131703814?ref_src=twsrc%5Etfw">April 6, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>						
+
+						<p>
+
+							https://twitter.com/DKThomp/status/1250471852633448448
+
+
+						</p>
+
+
+						
+
+						<p>
+
+							Likely sports will be changed for a long while:
+
+							https://www.espn.com/espn/story/_/id/29038491/dr-anthony-fauci-promotes-single-site-fan-free-return-sports
+
+
+
+
+							
+
+						</p>
+
+						<h2>A Crisis of Consumer Confidence</h2>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Why Doesn’t Flu Tank Economy Like Covid-19?<br><br>3 times the hospital stay length<br>8 times the hospitalization rate<br>32 times the fatality rate..<a href="https://t.co/6RLTozzwzC">https://t.co/6RLTozzwzC</a> <a href="https://t.co/Zyaii6lvAw">pic.twitter.com/Zyaii6lvAw</a></p>&mdash; Bill Gross (@Bill_Gross) <a href="https://twitter.com/Bill_Gross/status/1249125911905161217?ref_src=twsrc%5Etfw">April 12, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						<p>
+
+							https://twitter.com/Bill_Gross/status/1249125911905161217
+
+
+
+
+						</p>
+						<p>
+
+							Rebuilding Consumer Confidence:
+
+							https://www.fast.ai/2020/04/13/masks-summary/
+
+
+						</p>
+						<p>
+							Testing as a key part of consumer confidence:
+
+						</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Our daily update is published. We’ve now tracked ~3.4 million tests, up 158k from yesterday, which is above the April average.<br><br>Note that we can only track tests that a state reports. And not all states report all tests.<br><br>See: <a href="https://t.co/PZrmH4bl5Y">https://t.co/PZrmH4bl5Y</a> <a href="https://t.co/V6PVklP9G5">pic.twitter.com/V6PVklP9G5</a></p>&mdash; The COVID Tracking Project (@COVID19Tracking) <a href="https://twitter.com/COVID19Tracking/status/1250904006727090176?ref_src=twsrc%5Etfw">April 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+						<p>
+
+							We've adapted economic operations before:
+
+							https://www.history.com/news/spanish-flu-pandemic-response-cities
+
+
+						</p>
+						<p>
+
+							Getting a better understanding of how covid-19 spreads is key in rebuilding consumer confidence:
+
+							https://www.cidrap.umn.edu/news-perspective/2020/03/study-covid-19-may-spread-several-different-ways
+
+						</p>
+
+						<h2>An Unclear Timeline</h2>
+
+						<p>
+							<ul>
+								<li>Given the high infection rate, its unclear how long this virus will keep reappearing through 2020 - [singapore article]</li>
+								<li>Given the current numbers, its a good bet that we'll continue to see low steady growth for the next 60 days</li>
+								<li>There is also a chance we could see the infection rates level off. However, we hope for the best and plan for the worst</li>
+								<li>Rt, although declining, is still in flux for every state</li>
+								<li>Chattanooga didnt see a big burst, although the infections still keep slowly appearing</li>
+
+							</ul>
+
+							when the timeline becomes indeterminate, motivation drops to zero
+
+
+
+						</p>
+
+
+						<h2>Hard to Predict Outbreaks</h2>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Smithfield Foods closes its Sioux Falls, South Dakota <br>meat processing plant indefinitely after 238 employees test positive for coronavirus. The plant is responsible for 4 to 5 percent of U.S. pork production. <a href="https://t.co/YKjg1rZZod">https://t.co/YKjg1rZZod</a></p>&mdash; Steve Lookner (@lookner) <a href="https://twitter.com/lookner/status/1249372146352128004?ref_src=twsrc%5Etfw">April 12, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+						<p>
+
+							todo
+						</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">2/2 This reflects the impact of mitigation - a lower peak in terms of daily cases and healthcare resource utilization, but an epidemic that extends longer; in other words, a flattening of the curve, whereby the epidemic at its peak is now less severe in terms of daily new cases. <a href="https://t.co/ynZsa390ti">pic.twitter.com/ynZsa390ti</a></p>&mdash; Scott Gottlieb, MD (@ScottGottliebMD) <a href="https://twitter.com/ScottGottliebMD/status/1247243999066406915?ref_src=twsrc%5Etfw">April 6, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>						
+
+						<h2>A Long Road Ahead</h2>
+
+
+						<img src="https://pbs.twimg.com/media/EVZqoL8WkAI5shn?format=jpg&name=medium" style="width: 753px; height: 391px; margin: 12px; border: 0px solid #999999;" />
+
+
+						<p>
+
+							An Epidemiologist and Public Health Scientist @HarvardChanSPH tweets:
+
+						</p>
+					
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If vaccine truly isn’t arriving for 12 months, we will be in this pandemic mitigation/containment/reopening/resurgence purgatory for a long time. <a href="https://twitter.com/hashtag/COVID19?src=hash&amp;ref_src=twsrc%5Etfw">#COVID19</a> <a href="https://t.co/w6RidxmCsn">https://t.co/w6RidxmCsn</a></p>&mdash; Eric Feigl-Ding (@DrEricDing) <a href="https://twitter.com/DrEricDing/status/1250012997000536065?ref_src=twsrc%5Etfw">April 14, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+						<p>
+
+							Singapore and Hong Kong: 
+
+							https://www.sciencemag.org/news/2020/04/suppress-and-lift-hong-kong-and-singapore-say-they-have-coronavirus-strategy-works#
+
+						</p>
+						<p>
+							"Singapore, too, expects to go back and forth between different levels of restrictions, Lee said during the webinar, which might be the most sustainable strategy in the long run. Minimally intrusive policies, such as encouraging personal hygiene and telecommuting, are relatively easy to keep up, he noted, but it’s harder to limit the size of gatherings, cancel entertainment, and close schools and businesses for very long.
+
+Experts in both cities believe setbacks are inevitable, as Singapore just learned. It reported 287 new cases on Thursday, its highest ever 1-day total. (Friday’s tally was 198; Saturday’s was 191.)"
+
+						</p>
+						<p>
+							https://www.cnn.com/2020/04/18/asia/singapore-coronavirus-response-intl-hnk/index.html
+
+						</p>
+
+						<p>
+
+							"The former FDA commissioner doesn’t think the US is going to return to normal anytime soon."
+
+							https://www.vox.com/2020/4/14/21219021/scott-gottlieb-coronavirus-covid-19-social-distancing-economy-recession
+
+"As long as this pathogen is circulating in the background and we don’t have a vaccine and very effective therapeutics, this is going to alter the way we live and do business. Some of it is going to be subtle. You’ll see businesses advertising deep cleanings. People aren’t going to shake hands as much anymore. Wearing masks in public is going to become more fashionable in Western societies.
+
+Some of it’s going to be more profound. I don’t think the marginal customer for a stadium or a concert or a cruise ship is coming back soon. I think people are going to be more circumspect about travel, particularly international travel. Businesses are going to be more circumspect about bringing together large groups of people. So you’re going to see a change in the way we live, in the way we do business.
+
+The question is: Can we get back to our normal level of economic activity with that kind of profound, pervasive change in the way we operate? It may be hard. That’s why I talk about the “80 percent economy.”							
+
+						</p>
+
+						<p>
+
+							Treatments on the horizon:
+
+							https://www.statnews.com/2020/04/16/early-peek-at-data-on-gilead-coronavirus-drug-suggests-patients-are-responding-to-treatment/
+
+
+
+						</p>
+
+
+						<h2>Footnotes</h2>
+						<p>
+
+							<a id="footnoteotherinitiatives">Footnote: [Other Initiatives]</a><br/>
+						
+
+							 Other tangentially relevant Patterson Consulting initiatives:
+
+							<ol>
+								<li>Analytics work supporting research at the University of Michigan on ICU admissions during disasters</li>
+								<li>Smart city analytics support for the University of Tennessee at Chattanooga's CUIP group (see our <a href="http://www.pattersonconsultingtn.com/blog/cuip_smart_city_data_challenge_2019.html">previous article on analying PM2.5 air quality data</a>)</li>
+							</ol>
+
+							Josh Patterson is also a co-author on a <a href="http://shop.oreilly.com/product/0636920035343.do">book about Deep Learning and neural networks</a>; The book covers many topics related to using neural networks to forecast outcomes (e.g., "regression models") based on different types of data. In this report's model, however, we do not use any neural networks.
+
+						
+
+						</p>
+
+					</div>
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

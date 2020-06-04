@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Deploying a RCNN Object Detection Model with KFServing</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Deploying a RCNN Object Detection Model with KFServing"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/deploying_computer_vision_object_detection_with_kfserving.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this example we demonstrate how to take a computer vision object detection model and run it as a KFServing hosted model."/>
+	
+
+	<meta name="twitter:title" content="Deploying a RCNN Object Detection Model with KFServing" />
+	<meta data-rh="true" property="twitter:description" content="In this example we demonstrate how to take a computer vision object detection model and run it as a KFServing hosted model."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/deploying_computer_vision_object_detection_with_kfserving.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+										<li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Deploying a RCNN Object Detection Model with KFServing</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>
+							<br/>
+							
+
+							</p>
+
+						<p>
+
+							In this example we demonstrate how to take a ...
+
+							and modifying the pre-trained model to run as a <a href="https://github.com/kubeflow/kfserving">KFServing</a> hosted model. 
+							[ more ]
+
+
+						</p>
+						
+
+
+						<h1>What is Object Detection?</h1>
+
+						<p>
+
+
+
+						</p>
+
+
+
+						<h1>What is KFServing?</h1>
+						
+
+						<div style="float: right; margin: 12px; border: 0px solid #999999; ">
+						<img src="./images/kubeflow_logo.png" width="100" style="max-width: 100%; margin: 12px; border: 0px solid #999999;" />
+						</div>	
+						<p>
+
+<a href="https://www.kubeflow.org/docs/components/serving/kfserving/">KFServing</a> (<a href="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html">covered previously in our Applied ML Methods and Tools 2020 report</a>) was designed so that model serving could be operated in a standardized
+way across frameworks right out-of-the-box. There was a need for a model serving
+system, that could easily run on existing Kubernetes and Istio stacks and also provide
+model explainability, inference graph operations, and other model management functions. <a href="https://www.kubeflow.org">Kubeflow</a> needed a way to allow both data scientists and DevOps / MLOps teams to collaborate from model production to modern production model deployment.							
+
+
+						</p>
+
+						<p>
+						 KFServing’s core value can be expressed as:
+						 <ul>
+						 	<li>helps standardizing model serving across orgs w unified data plane and pre-built model servers</li>
+							<li>single way to deploy, monitor inference services / server, and scale inference workload</li>
+							<li>dramatically shortens time for data scientist to deploy model to production</li>
+						</ul>
+						</p>
+
+
+							
+
+							<p>
+								The project description from their open source github repository:
+
+							</p>
+
+
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999;">
+						  <p style="font-size: 14px;">
+						  <i>"KFServing provides a Kubernetes Custom Resource Definition for serving machine learning (ML) models on arbitrary frameworks. It aims to solve production model serving use cases by providing performant, high abstraction interfaces for common ML frameworks like Tensorflow, XGBoost, ScikitLearn, PyTorch, and ONNX.
+"
+						  </i></p>
+						  <p><a href="https://github.com/kubeflow/kfserving">KFServing Github Repository</a></p>
+						</blockquote>							
+							<p>
+								Other core features include:
+
+
+								<ul>
+									<li>Pre/Post Custom Transforms</li>
+									<li>Outlier Detection</li>
+									<li>Canarying</li>
+									<li>Concept Drift Detection</li>
+									<li>Native Kubernetes Framework</li>
+
+
+								</ul>
+
+								KFServing is installed by default by <A href="https://www.kubeflow.org/">Kubeflow 1.0</A> on a Kubernetes cluster.
+
+							</p>
+
+
+
+						<h1>Setting Up KFServing</h1>
+						<p>
+
+							To demo the Hugging Face model on KFServing we'll use the local quick install method on a <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">minikube kubernetes cluster</a>. The standalone “quick install” installs Istio and KNative for us without having to install all of Kubeflow and the extra components that tend to slow down local demo installs.
+</p>
+						<p>
+							To install KFServing follow the instructions in our other article [ Hugging Face link here ]
+
+						</p>
+
+
+
+						<h2>Deploying the Custom HuggingFace Model Server on KFServing</h2>
+						<p>
+
+							There are two main ways to deploy a model as an InferenceService on KFServing:
+						</p>
+						<ol>
+							<li>deploy the saved model with a pre-built model server on a pre-existing image</li>
+							<li>deploy a saved model already wrapped in a pre-existing container as a custom</li>
+						</ol>
+
+
+							
+
+							
+
+						</p>
+						<p>
+
+							Most of the time we want to deploy on a pre-built model server as this will create the
+least amount of work for our engineering team. 
+
+						</p>
+
+						<p>
+
+There are many pre-built model servers included with KFServing out of the box.
+With KFServing our built-in model server options are:
+
+<ol>
+	<li>tensorflow</li>
+	<li>sklearn</li>
+	<li>pytorch</li>
+	<li>onnx</li>
+	<li>tensorrt</li>
+	<li>xgboost</li>
+</ol>
+
+
+Sometimes we’ll have a model that will not wire up correctly with the pre-built
+images. The reasons this could happen include:
+</p>
+
+						<ul>
+							<li>model built with different dependency versions than model server</li>
+							<li>model not saved in file format model server expects</li>
+							<li>model was built with a new/custom framework not yet supported by KFServing</li>
+							<li>model is in container image that has a REST interface that is different than the <a href="https://www.tensorflow.org/tfx/serving/api_rest">Tensorflow V1 HTTP API</a> that KFServing expects</li>
+						</ul>
+
+						<p>
+
+
+						For any of the cases above we have 3 options for deploying our model:
+						<ol>
+
+							<li>wrap our <a href="https://github.com/kubeflow/kfserving/tree/master/docs/samples/custom/hello-world">custom model in our own container</a> where our container runs its own
+							webserver to expose the model endpoint</li>
+							<li>use the KFServing KFServer as the webserver (with its standard Tensorflow V1
+							API) and then <a href="https://github.com/kubeflow/kfserving/tree/master/docs/samples/custom/kfserving-custom-model">overload the load() and predict() methods</a></li>
+							<li>deploy a <a href="https://github.com/kubeflow/kfserving/tree/master/docs/samples/custom/prebuilt-image">pre-built container image with a custom REST API</a>, bypassing <code>InferenceService</code> and sending the HTTP request directly to the predictor</li>
+
+						</ol>
+
+						Of the 3 options, using KFServer as the mode server and just doing custom overloads
+						will likely be the most popular route for folks just wanting to deploy a custom model.
+						</p>
+
+
+						<p>
+
+							Given that Hugging Face has a unique python API and a lot of dependencies, it does not work on KFServing out of the box. 
+
+
+						In this case we need to do 2 key tasks:
+						<ol>
+							<li>create a new python class that inherits from KFModel, with custom methods for
+							<code>load()</code> and <code>predict()</code></li>
+							<li>build a custom container image and then store it in a container repository</li>
+						</ol>
+
+						</p>
+
+						<p>
+							The remainder of this post will be focused on:
+
+							<ol>
+								<li>Building a custom KFModel python <code>kfserving.KFModel</code> with the Hugging Face QA model wired in</li>
+								<li>Building a docker container with the custom python <code>kfserving.KFModel</code></li>
+								<li>Push the docker container to <a href="https://hub.docker.com/">docker hub</a></li>
+								<li>Deploy the custom <code>InferenceService</code> to our minikube kubernetes cluster</li>
+								<li></li>
+
+
+							</ol>
+
+							Now let's get to work building out our custom question answer <code>InferenceService</code> on KFServing.
+
+						</p>
+
+
+						<h3>Building a Custom Python Model Server</h3>
+						<p>
+							In the <a href="https://github.com/jpatanooga/kubeflow_ops_book_dev/tree/master/kfserving/custom_model_servers/extractive_question_answer">code listing</a> below we can see our custom <code>KFModel</code> with the Hugging Face code wired into the <code>load()</code> and <code>predict()</code> methods.
+
+						</p>
+
+<!--
+?slice=177:191
+-->
+						
+						<script src="http://gist-it.appspot.com/https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/kfserving/custom_model_servers/extractive_question_answer/KFServing_BERT_QA_ModelServer.py"></script>
+
+
+
+						<p>
+							There are two things happening in the above code with respect to integrating with the model server:
+
+							<ol>
+								<li>The Hugging Face QA model is loaded in the load(...) method</li>
+								<li>The <code>predict(...)</code> method takes incoming inference input from the REST call and passes them to the Hugging Face <code>TFAutoModelForQuestionAnswering</code> model instance</li>
+
+
+							</ol>
+
+
+						</p>
+						<p>
+							The Hugging Face model we're using here is the "bert-large-uncased-whole-word-masking-finetuned-squad". This model and associated tokenizer are loaded from pre-trained model checkpoints included in the Hugging Face framework.
+
+
+
+						</p>
+						<p>
+							 When the inference input comes in across the network the input is fed to the <code>predict(...)</code> method. There can be <a href="https://raw.githubusercontent.com/jpatanooga/kubeflow_ops_book_dev/master/kfserving/custom_model_servers/extractive_question_answer/qa_bert_input.json">multiple questions in the input json</a> (shown further below).
+
+						</p>
+
+						<p>
+							A stock KFServing model server "speaks" the TF REST API (<a href="https://www.tensorflow.org/tfx/serving/api_rest">reference</a>). In the case that we control the parsing of the input json from the REST call (as we do in the above example), we have the flexibility in what we can send the server from the client side.
+
+							
+In the above example we're sending instance pairs of a text passage and then n number of questions to query the associated text passage for answers.
+
+						</p>
+						<p>
+							For each question we send as part of the json input the code our <code>predict()</code> method builds a sequence from the text and the current question with the correct model-specific separators token type ids and attention masks. Next the code passes this generated sequence to the model for inference. The output of the model inference is a range of scores across the entire sequende tokens (e.g., "questions and text") for both the start and end positions.
+						</p>
+						<p>
+							Then the code computes the softmax of the inference output to get the probabilities over the tokens. Finally our code fetches the tokens from the identified start and stop values and converts those tokens into a string. This string is encoded in the <code>results</code> map with the question as the key in the map. These question answer pairs are returned to the client across the network as the response to complete the inference request.
+
+
+
+
+						</p>
+						<p>
+							Now that we have the code to host our custom model server as an InferenceService on KFServing, let's turn our attention to building this code as a container.
+
+						</p>
+
+						<h3>Building a New Docker Image for the Model Server</h3>
+
+						<p>
+							Once our model serving code above is saved locally, we will build a new docker con‐
+tainer image with the code packaged inside. We can see examples of the container
+build command and the container repository store command (here, docker hub)
+below.
+
+						</p>
+
+
+
+
+						<script src="http://gist-it.appspot.com/https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/kfserving/custom_model_servers/extractive_question_answer/Dockerfile"></script>
+
+						<p>
+
+							Build the new container with our custom code and then send it over to the container repository of your choice:
+
+						</p>						
+
+<pre><code># Build the container on your local machine
+docker build -t {username}/kfserving-custom-model ./model-server
+# Push the container to docker registry
+docker push {username}/kfserving-custom-model</code></pre>
+
+						</p>
+
+						<p>
+							For those that would prefer to use a pre-built version of this container and skip the coding + docker steps, just use our container up on docker hub:
+
+
+<pre><code><a href="https://hub.docker.com/repository/docker/pattersonconsulting/kfserving-huggingface-bert-qa">https://hub.docker.com/repository/docker/pattersonconsulting/kfserving-huggingface-bert-qa</a></code></pre>
+
+
+						</p>
+						<p>
+							Now let's move on to deploying our <a href="https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/kfserving/custom_model_servers/extractive_question_answer/KFServing_BERT_QA_ModelServer.py">model server</a> in our container as an <code>InferenceService</code> on KFServing.
+
+						</p>
+
+						<h3>Deploying Custom Model Server on KFServing with kubectl</h3>
+
+						<p>
+
+Given that KFServing treats models as infrastructure, we deploy a model on KFServing with a yaml file to describe the kubernetes model resource (e.g., InferenceService) as a custom object.
+
+The code listing below shows our yaml file to create our custom InferenceService object on the local kubernetes cluster.			
+
+						</p>
+
+
+
+
+
+						
+						<script src="http://gist-it.appspot.com/https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/kfserving/custom_model_servers/extractive_question_answer/deploy_bert_qa.yaml"></script>
+
+						<p>
+
+
+We need to set four parameters to uniquely identify the model, such as:
+<ul>
+	<li>apiVersion: “serving.kubeflow.org/v1alpha2”</li>
+	<li>kind: “InferenceService”</li>
+	<li>metadata.name: [the model’s unique name inside the namespace]</li>
+	<li>metadata.namespace: [the namespace your model will live in]</li>
+</ul>
+
+							Here we're using the generic <code>kfserving-custom-model</code> as our <code>metadata.name</code> and our model will be created in the default namespace.
+
+
+						</p>
+						<p>
+							Beyond the metadata of our object, the spec of our object has a lot of options, but we'll cover a few specfic ones here. The <code>default</code> field is the part of the InferenceService that specifies which endpoint that will deploy the model (alternatively we could specific <code>canary</code> here). Inside the <code>default</code> spec we define the predictor object and then the required fields to define a custom serving container.
+
+						</p>
+						<p>
+							Towards the end of the spec we ask kubernetes to schedule our container wtih 4GB of ram as Hugging Face tends to take up a lot of space in memory.
+
+						</p>
+
+
+
+
+<p>
+ Once we have our yaml file configured we can create the Kubernetes
+object with Kubectl as shown below.
+</p>
+
+<pre><code>kubectl apply -f custom.yaml</code></pre>
+
+<p>
+	Once we run the above <code>kubectl</code> command, we should have a working InferenceService running on our local kubernetes cluster.
+	We can check the status of our model with the <code>kubectl</code> command:
+
+</p>
+
+<pre><code>kubectl get inferenceservices</code></pre>
+
+<p>
+	This should give us output as shown below.
+
+</p>
+
+<consoleoutput>NAME                     URL                                                                                  READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
+kfserving-custom-model   http://kfserving-custom-model.default.example.com/v1/models/kfserving-custom-model   True    100                                14d</consoleoutput>
+
+<p>
+Deploying a custom model on KFServing is not as easy as using a pre-built model
+server, but its not terrible either as we've seen so far.
+</p>
+
+						<h1>Making an Inference Call with the KFServing-Hosted HuggingFace Model</h1>
+						<p>
+
+							Now let's make an inference call to our locally hosted Hugging Face QA model on KFServing. First we need to do some port forwarding work so our model's port is exposed to our local system with the command:
+						</p>
+
+
+<code><pre>kubectl port-forward --namespace istio-system $(kubectl get pod --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}') 8080:80</pre></code>
+
+<p>
+Then we'll create some text and questions in json format as seen below to send as input.
+</p>
+
+
+						
+						<script src="http://gist-it.appspot.com/https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/kfserving/custom_model_servers/extractive_question_answer/qa_bert_input.json"></script>
+
+
+<p>
+
+	Using the above input, we'll use the <code>curl</code> command to send the json file as input to the predict method on our custom Hugging Face <code>InferenceService</code> on KFServing with the command:
+</p>
+
+<pre><code>curl -v -H "Host: kfserving-custom-model.default.example.com" http://localhost:8080/v1/models/kfserving-custom-model:predict  -d @./qa_bert_input.json</code></pre>			
+ 
+ <p>
+The response will look like:
+</p>
+
+<consoleoutput>*   Trying ::1:8080...
+* Connected to localhost (::1) port 8080 (#0)
+> POST /v1/models/kfserving-custom-model:predict HTTP/1.1
+> Host: kfserving-custom-model.default.example.com
+> User-Agent: curl/7.69.1
+> Accept: */*
+> Content-Length: 669
+> Content-Type: application/x-www-form-urlencoded
+> 
+* upload completely sent off: 669 out of 669 bytes
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< content-length: 261
+< content-type: application/json; charset=UTF-8
+< date: Tue, 02 Jun 2020 14:58:59 GMT
+< server: istio-envoy
+< x-envoy-upstream-service-time: 115984
+< 
+* Connection #0 to host localhost left intact
+{"predictions": {"How many pretrained models are available in Transformers?": "over 32 +", "What does Transformers provide?": "general - purpose architectures", "Transformers provides interoperability between which frameworks?": "tensorflow 2 . 0 and pytorch"}}</consoleoutput>
+
+
+
+
+
+						</p>	
+
+						<p>
+							This example has shown how to take a non-trivial NLP model and host it as a custom InferenceService on KFServing. If you'd like to try this at home, take a look at the example files on our company github repository at:
+
+
+
+
+
+						</p>	
+
+						<code><a href="https://github.com/jpatanooga/kubeflow_ops_book_dev/tree/master/kfserving/custom_model_servers/extractive_question_answer">https://github.com/jpatanooga/kubeflow_ops_book_dev/tree/master/kfserving/custom_model_servers/extractive_question_answer</a></code>	
+
+						<br/><br/>	
+						
+						<p>
+							If you'd like to know more about <a href="https://www.kubeflow.org/">Kubeflow</a> and <a href="https://www.kubeflow.org/docs/components/serving/kfserving/">KFServing</a>, please check out the project homepage, contact us, or check out our <a href="http://shop.oreilly.com/product/0636920260929.do">upcoming book with Oreilly on "Kubeflow Operations"</a>.
+
+						</p>	
+						<br/>	
+
+					</div>
+
+					<div class="col-md-3" id="fh5co-content" style="">
+						<a href="http://shop.oreilly.com/product/0636920260929.do">
+							<img src="../images/kfops_color_cover.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+					</div>
+
+
+				
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

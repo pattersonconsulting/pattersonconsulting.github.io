@@ -625,6 +625,7 @@ tr:nth-child(even) {
 		  </tbody>
 		</table>
 		</div>
+		</pre>
 		
 		<p>We'll need to adjust how our time and date are displayed before splitting the data up, just for simplicity's sake for later usage. Here, we're using a lambda statement to avoid utilizing for loops. For loops are great for assigning variables but they can get slowed down if the dataset becomes too large. While that's not a problem with this smaller dataset, it's good to familarize yourself with time and computation saving code whenever possible.</p>
 
@@ -638,6 +639,8 @@ tr:nth-child(even) {
 		
 		<script charset="UTF-8" src="http://gist-it.appspot.com/github.com/PeteWay/Consulting/blob/master/Citations.py?slice=137:143&footer=minimal"></script>
 
+		<pre>
+		
 		<style scoped>
 			.dataframe tbody tr th:only-of-type {
 				vertical-align: middle;
@@ -790,7 +793,7 @@ tr:nth-child(even) {
 		  </tbody>
 		</table>
 		</div>
-		
+		</pre>
 		<h3>Combining Roadway Data with Citation reports.</h3>
 		
 		<p>The next section combines our roadway information with the citation information to give each entry a set roadway name.</p>
@@ -800,6 +803,7 @@ tr:nth-child(even) {
 		
 		<script charset="UTF-8" src="http://gist-it.appspot.com/github.com/PeteWay/Consulting/blob/master/Citations.py?slice=158:166&footer=minimal"></script>
 
+		<pre>
 		<style scoped>
 			.dataframe tbody tr th:only-of-type {
 				vertical-align: middle;
@@ -958,6 +962,7 @@ tr:nth-child(even) {
 		  </tbody>
 		</table>
 		</div>
+		</pre>
 
 		<p>Now, we'll be importing our roadway data, double-checking the type of our roadways, and limiting the entries to only that type. Note that sometimes datasets will have corrupted or incomplete data. This was the case with this dataset, where one entry of the roadways was incomplete. We can see that in the totals printed before and after the selection line.</p>
 		<p>Next, we join the two datasets together with a geopandas command called sjoin. Sjoin determines spatial matching between datasets of any type (Point, Polygon, Multi-line, etc) and one can select how they would like the new merged set to be set up by selecting 'left', 'right', or 'inner' for the how variable. We are looking to select citations within the roadway data, so we will select 'left', since our citations set is the left variable.</p>
@@ -985,7 +990,6 @@ tr:nth-child(even) {
 		Records after merge 54517
 		Citations before dropping duplicates: 54517
 		Citations after dropping duplicates: 18576
-		</pre>
 		
 		<style scoped>
 			.dataframe tbody tr th:only-of-type {
@@ -1152,18 +1156,14 @@ tr:nth-child(even) {
 		</table>
 		<p>5 rows × 23 columns</p>
 		</div>
-		
+		</pre>
 		
 		<p>Now, let's take the set of roadway strings we just created and convert them into category variables. This takes all the roadways in question and creates a unique numeric tag for each one. This way our roadways can be input into the model, while retaining their unique identities.</p>
 		
 		<script charset="UTF-8" src="http://gist-it.appspot.com/github.com/PeteWay/Consulting/blob/master/Citations.py?slice=202:204&footer=minimal"></script>
 
 
-		<div class="output_wrapper">
-		<div class="output">
-		<div class="output_area">
-			<div class="prompt output_prompt"></div>
-		<div class="output_text output_subarea output_execute_result">
+		
 		<pre>
 		0        397
 		1        455
@@ -1177,10 +1177,7 @@ tr:nth-child(even) {
 		20812    295
 		20813    222
 		Name: Road_Num, Length: 18576, dtype: int16</pre>
-		</div>
-		</div>
-		</div>
-		</div>
+		
 		
 		
 		<h3>Parring Down Variables and Preparing for Negative Sampling</h3>
@@ -1215,19 +1212,11 @@ tr:nth-child(even) {
 
 		<script charset="UTF-8" src="http://gist-it.appspot.com/github.com/PeteWay/Consulting/blob/master/Citations.py?slice=250:255&footer=minimal"></script>
 		
-		<div class="output_wrapper">
-		<div class="output">
-		<div class="output_area">
-			<div class="prompt"></div>
 		
-		<div class="output_subarea output_stream output_stdout output_text">
 		<pre>
 		642279024
 		</pre>
-		</div>
-		</div>
 		
-		</div>
 	
 		<p>Since the creation of negative records is not the focus of this post, we'll just highlight a quick example using a very small slice of our overall dataset. We're slicing a copy of the first ten entries in the citations dataset, and expanding on a Itertools method called product in order to mimic the behavior of an R method called expand. Basically, expand takes a dataset and 'expands' the current entries into every possible combination of said entries. Notice that the unique entries in the created negative set test all match to those found in that sliced piece from citations, but the combinations of those variables created almost a million entries, once the existing citations entries were removed.</p>
 
@@ -1253,7 +1242,6 @@ tr:nth-child(even) {
 		Hour  :  [21. 19. 14. 23. 11. 10. 16.]
 		Segment  :  [ 5.  2. 16. 15.  1. 23.  9.]
 		Road_Num  :  [455. 360. 426. 398. 164. 592. 397. 461. 549.]
-		</pre>
 		
 		
 		<style scoped>
@@ -1330,7 +1318,8 @@ tr:nth-child(even) {
 		  </tbody>
 		</table>
 		</div>
-		
+		</pre>
+
 		<p>Now we can import our actual negative data (created outside of this example, for simplicity's sake).</p>
 		<p>In order to produce a rough ratio for negatives to positives, we'll find how many times the number of citations fits within the negatives, and then take a given iterative of that number. In this case, The length of the negatives is roughly 142 times the length of the citations, so we'll be saving every 142nd entry in the negatives in order to create a roughly 1:1 ratio.</p>
 		<p>The imported negatives have the 'Citation' variable set to zero, since no speeding citation was issued for that temporal/spatial instance. So, we have to add a 'Citation' variable to the actual citation data, and then we are able to merge the sets. All in total, the dataset, once merged, has a length of 37,272 entries with a roughly 1:1 ratio for citations to negatives.</p>

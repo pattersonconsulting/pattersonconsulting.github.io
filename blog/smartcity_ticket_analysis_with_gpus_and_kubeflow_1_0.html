@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Accelerating Smart City Ticket Data Modeling with Kubeflow 1.0 and GPUs</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Accelerating Smart City Ticket Data Modeling with Kubeflow 1.0 and GPUs"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020."/>
+	
+
+	<meta name="twitter:title" content="Accelerating Smart City Ticket Data Modeling with Kubeflow 1.0 and GPUs" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+					<ul>
+						<li><a href="../about.html">About</a></li>
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Services</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../offerings/data_science_offerings.html">Data Science Offerings</a></li>
+										<li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+										<li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+										<li><a href="../big_data_apps.html">Hadoop Applications</a></li>
+										<li><a href="../vision_apps.html">Computer Vision Applications</a></li>
+										<li><a href="../sensor_apps.html">Sensor Applications</a></li>
+										<li><a href="../exec_strategy.html">Executive Strategy</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</li>
+						<!--
+						<li><a href="portfolio.html">Portfolio</a></li>
+-->
+						<li class="has-sub">
+							<div class="drop-down-menu">
+								<a href="#">Technologies</a>
+								<div class="dropdown-menu-wrap">
+									<ul>
+										<li><a href="../deep_learning.html">Deep Learning</a></li>
+										<li><a href="../hadoop.html">Apache Hadoop</a></li>										
+									</ul>
+								</div>
+							</div>
+						</li>
+						
+						<li><a href="../blog/blog_index.html">Blog</a></li>
+					
+						<li class="cta"><a href="../contact.html">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Accelerating Smart City Ticket Data Modeling with Kubeflow 1.0 and GPUs</h1>
+
+
+
+					<div class="col-md-3" id="fh5co-content" style="float: right;">
+						<a href="http://shop.oreilly.com/product/0636920260929.do">
+							<img src="../images/kfops_color_cover.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+					</div>
+
+
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>
+							<br/>
+							
+
+							</p>
+
+						<p>
+
+							In our <a href="">last post we used Keras to build a MLP model to predict which sections of local roadways would be likely to see 
+		speeding citations</a> in 2020 with a variety of metrics.
+
+							
+
+
+
+
+						</p>
+						
+
+						<p>
+							In this post we'll further build on those concepts to run the Jupyter Notebook for modeling from part 1 and run it on Kubeflow to leverage GPUs for faster training. Previously we <a href="http://www.pattersonconsultingtn.com/blog/datascience_guide_tensorflow_gpus.html">covered using GPUs on GCP for just a single VM and NVIDIA GPUs</a>. In this post we'll use GPUs on GCP in a Jupyter Notebook on the Kubeflow 1.0 platform.
+						</p>
+						<p>
+							
+
+							We highlight this usage pattern as many times a data science initiative starts as a local laptop idea on a small amount of data using CPUs. As the data size increases and/or model complexity increases, we quickly look to GPUs as a way to shorten our modeling development iterations. We also highlight the Kubeflow platform beyond just a single instance Jupyter notebook as often a user is at a loss on where to go next with their model beyond just a simple notebook. The Kubeflow platform offers GPU integration, metadata-tracking, identity management, multi-user security, and model deployment management components.
+
+
+						</p>
+						<p>
+							From a logical perspective this article is focused on the data ETL, vectorization, modeling, and evaluation phase of the machine learning workflow, as shown in the figure below.
+
+						</p>
+
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/pct_ml_workflow_data_modeling.png" style=" width: 80%;" />
+						</span>	
+
+						<p>
+							Notebook infrastructure has proven to be a key took for this part of the machine learning workflow. The Kubeflow 1.0 platform provides an integrated experience for the machine learning practitioner to execute Jupyter Notebooks on-premise or in the cloud, on CPU or on GPUs.
+
+						</p>
+
+						<p>
+							In this post (and subsequent related posts) we show this real-world evolution and how a locally developed notebook could be moved to a multi-tenant system (e.g., Kubeflow) while using GPUs.
+
+						</p>
+						
+
+						<h2>Prerequisites</h2>
+
+
+						<p>
+
+							To do this tutorial you'll either need to have a Kubeflow cluster already setup or you'll need to follow the <a href="https://www.kubeflow.org/docs/started/getting-started/">Kubeflow getting started guide</a>.
+
+						</p>
+						<p>
+							There are instructions to quickly getting Kubeflow 1.0 running on most major clouds. For the purposes of this article we'll run Kubeflow on Google Cloud.
+
+						</p>
+
+						<h1>Launch your Notebook Server with GPUs</h1>
+						<p>
+							"You can set up multiple notebook servers per Kubeflow deployment. Each notebook server can include multiple notebooks. Each notebook server belongs to a single namespace, which corresponds to the project group or team for that server."
+"
+
+						</p>
+						<p>
+							Kubeflow has a tab for launching notebook servers as shown in the image below.
+
+						</p>
+
+						
+
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/kf_main_ui_notebooks_tab.png" style=" width: 80%;" />
+						</span>
+
+						<br/><br/><br/>
+
+						<p>
+							We can setup multiple notebook servers per Kubeflow deployment. To launch a notebook server from Kubelow, we use the "New Server" button on the Notebook Servers page in Kubeflow as seen in the figure below.
+
+						</p>					
+
+						
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/kf_launch_notebook_server.png" style=" width: 80%;" />
+						</span>		
+
+						<br/><br/><br/>
+						<p>
+							Each of these new notebook servers we launch belongs to a namespace corresponding to the project group or team for that server. Each notebook server can launch multiple notebooks from the Jupyter notebook UI.
+
+						</p>
+
+
+
+						<p>
+
+							Now that we know a little about how to launch a new notebook server in Kubeflow 1.0, let's launch our notebook and configure it for accelerating our training code with GPUs on GCP.
+
+						</p>
+
+						<h2>Configure Notebook Server</h2>
+
+
+						<p>
+
+							Once you click on the "New Server" button from the Notebooks tab in Kubeflow, you will see a page to configure the new notebook server as shown in the figure below.
+
+						</p>
+
+						
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/gcp_kf_notebook_configure_page.png" style=" width: 80%;" />
+						</span>		
+
+						<br/><br/><br/>
+
+						<p>
+							Most of the configuration options you can accept the defaults for (e.g., Namespace, CPU/RAM, etc). We'll use the transient storage that is local to the docker image VM and won't need to setup persistent storage in this example (although you may for other projects). However, we have some dependencies for our citations notebook that we need to install in our notebook.
+
+						</p>
+
+						<h3>Managing Notebook Container Dependencies</h3>
+
+
+						<p>
+							There are two main methods for managing dependencies for notebooks in Kubeflow:
+
+							<ol>
+								<li>use <code>pip</code> to dynamically install dependencies from inside a notebook cell</li>
+								<li>build a custom notebook docker image with the dependencies already built in</li>
+
+							</ol>
+
+							You'll make your choice of the above options based on the constraints you have for your execution context.
+
+						</p>
+						<p>
+							If you know you'll be using these same set of dependencies over and over, you may want to build your own Docker image for this specific Kubeflow Jupyter notebook. Other reasons to build your own Docker images include:
+
+							<ul>
+								<li>if you don't have permissions in your environment to run <code>pip</code> from the notebook</li>
+								<li>if your Kubeflow cluster does not have internet access</li>
+
+							</ul>
+
+							Many Kubeflow clusters will have internet access, but in some cases with enterprise on-premise clusters you may see a Kubeflow cluster that has no internet connectivity for security considerations.
+
+
+						</p>
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Dependency Best Practices</h4>
+							  <p style="font-size: 14px; ">
+							  <i>In both methods (building a new docker image vs installing inside the notebook), installing dependencies from a requirements.txt file is a best practice.</i></p>
+							  
+							</div>	
+
+						</div>
+
+
+
+					<p>
+						Ideally we'd just pull in our dependencies inside the notebook. However, our code depends on <code>rtree</code> which can be persnickety about installing so we need more control about how it is installed in the local image environment. We're going to have to build a custom docker image based to run our GPU notebook on Kubeflow.
+
+
+					</p>
+
+
+
+
+
+
+					<h3>Build a Custom Notebook Docker Image</h3>
+
+
+					<p>
+						In the code block below you can see the <code>dockerfile</code> code we need to build our new docker image.
+
+					</p>
+
+
+						
+						<script src="http://gist-it.appspot.com/https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/notebooks/citations/Dockerfile"></script>	
+
+					<p>
+
+						In the code listing above we're just using the existing latest TensorFlow 2.1 notebook image that already has support for GPUs. Leveraging this existing image allows us to benefit from all of the work the Kubeflow team already did in their image build process and simply add in the dependencies (here: <code>rtree</code>) that we need.
+
+					</p>
+					<div style="width:900px; margin:0 auto;">
+
+						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+							<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
+
+							<h4><code>rtree</code> is Challenging to Install</h4>
+						  <p style="font-size: 14px; ">
+						  <i><code>rtree</code> will not install via pip and the normal requirements.txt  dependencies. It will conflict with multiple other methods of install (depending on your platform) via a normal <code>pip</code>, so to get it working we need to use <code>apt</code> to install a key dependency (<code>libspatialindex-dev</code>) and build a custom docker image. Otherwise we could use the standard docker image for Kubeflow notebooks and load the dependencies at runtime in the notebook.</i></p>
+
+						</div>
+						  
+						</div>	
+					</div>		
+
+					<p>
+						You can skip the above steps if you want and just use the docker image we have already built:
+
+						
+
+					</p>
+					<p>
+						<code>docker.io/pattersonconsulting/citations-kf-notebook-gpu</code>
+					</p>
+
+					<p>
+						Now that we have an image to run on GCP and Kubeflow for our GPU notebooks, we need to make sure we can actually get machines with GPUs on GCP.
+
+
+					</p>
+
+
+
+
+
+						<h3>Enabling GPUs for You Kubeflow Deployment's Cluster</h3>
+
+						<p>
+							By default Google sets quotas on Google Cloud to 0 for certain types of resources. A great primer on the basics of <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/gpus">GPUs and quotas is on the Google Cloud documentation</a>. GPU instances on the Compute Engine API have a default quota set to 0 for any new project created on Google Cloud, so we need to raise our project's quota for GPUS.
+
+						</p>
+					
+
+						<p>
+
+							To request our quota change, in the GCP web console click on "IAM & Admin"-"Quotas" and filter the list of quotas on "Compute Engine API" and "GPUs (all regions)" as seen in the figure below.
+
+							
+
+
+
+						</p>
+
+
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/gcp_filtered_compute_engine_quotas.png" style=" width: 80%;" />
+						</span>		
+
+						<br/><br/><br/>
+
+						<p>
+
+							Once you click on "Edit Quotas" with the "Compute Engine" row seleted (shown above) for the Limit Name "GPUs (all regions)", you will see the panel shown in the figure below.
+
+
+						</p>
+
+
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/gcp_compute_engine_gpu_limit_raise.png" style=" width: 40%;" />
+						</span>		
+
+						<br/><br/><br/>
+<!--
+<code><pre>gcloud compute accelerator-types list</pre></code>
+
+						<p>				
+
+
+
+						</p>
+
+<consoleoutput>nvidia-tesla-p4        northamerica-northeast1-a  NVIDIA Tesla P4
+nvidia-tesla-p4-vws    northamerica-northeast1-a  NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-p4        northamerica-northeast1-b  NVIDIA Tesla P4
+nvidia-tesla-p4-vws    northamerica-northeast1-b  NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-p4        northamerica-northeast1-c  NVIDIA Tesla P4
+nvidia-tesla-p4-vws    northamerica-northeast1-c  NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-p4        europe-west4-c             NVIDIA Tesla P4
+nvidia-tesla-p4-vws    europe-west4-c             NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-t4        europe-west4-c             NVIDIA Tesla T4
+nvidia-tesla-t4-vws    europe-west4-c             NVIDIA Tesla T4 Virtual Workstation
+nvidia-tesla-v100      europe-west4-c             NVIDIA Tesla V100
+nvidia-tesla-p4        europe-west4-b             NVIDIA Tesla P4
+nvidia-tesla-p4-vws    europe-west4-b             NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-t4        europe-west4-b             NVIDIA Tesla T4
+nvidia-tesla-t4-vws    europe-west4-b             NVIDIA Tesla T4 Virtual Workstation
+nvidia-tesla-v100      europe-west4-b             NVIDIA Tesla V100
+nvidia-tesla-p100      europe-west4-a             NVIDIA Tesla P100
+nvidia-tesla-p100-vws  europe-west4-a             NVIDIA Tesla P100 Virtual Workstation
+nvidia-tesla-v100      europe-west4-a             NVIDIA Tesla V100
+nvidia-tesla-p4        us-west2-c                 NVIDIA Tesla P4
+nvidia-tesla-p4-vws    us-west2-c                 NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-p4        us-west2-b                 NVIDIA Tesla P4
+nvidia-tesla-p4-vws    us-west2-b                 NVIDIA Tesla P4 Virtual Workstation
+nvidia-tesla-t4        asia-northeast3-c          NVIDIA Tesla T4
+nvidia-tesla-t4-vws    asia-northeast3-c          NVIDIA Tesla T4 Virtual Workstation
+nvidia-tesla-t4        asia-northeast3-b          NVIDIA Tesla T4
+nvidia-tesla-t4-vws    asia-northeast3-b          NVIDIA Tesla T4 Virtual Workstation</consoleoutput>
+
+-->
+
+
+					<div style="width:900px; margin:0 auto;">
+
+						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+							<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
+
+							<h4>Changing Quotas Can Take 1-2 Days to Process</h4>
+						  <div style="font-size: 14px; border: 0px solid #990000;  ">
+						  <i>Be aware that when you request a quota change it will not process immediately. In some cases Google Cloud will request a new project wait 1-2 days before processing a GPU quota change.</i></div>
+
+						</div>
+						  
+						</div>	
+					</div>		
+						<p>
+							Once we have confirmed that our GPU quota limit has been raised, we can move on and launch the notebook server with GPUs and our custom docker image.
+
+
+						</p>
+
+						<h2>Launch Notebook Server</h2>
+
+						<p>
+							Once you have input the custom docker image in the notebook server configuration page and confirmed that the GCP GPU quota limit has been raised, you can hit the "launch" button at the bottom and start the notebook server. The screen will now show a list of running notebook servers, and you can see our notebook server in a loading state.
+
+						</p>	
+						<p>
+							Once the notebook server is finished loading, you will be able to hit the "CONNECT" button on the row for your server on the "Notebook Servers" page. This will launch a Jupyter 
+
+						</p>
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/kf_notebook_jupyter_ui.png" style=" width: 90%;" />
+						</span>		
+
+						<br/><br/><br/>
+
+						<p>
+
+							From this page we can upload our notebook and test out the GPUs. Before we load our Citations notebook, let's first run a GPU test notebook to confirm that the notebook can indeed use the GPUs on GCP.
+
+						</p>
+
+
+
+						<h2>Confirm GPUs are Working with Test Notebook</h2>
+
+						<p>
+							To get the GPU with our notebook server a test fire we can load up the <a href="https://github.com/jpatanooga/kubeflow_ops_book_dev/blob/master/notebooks/gpus/kubeflow_gpu_validation_notebook.ipynb">provided notebook on our github repository</a>. Once you download this notebook and then upload it to the notebook server, you will be able to see it as shown in the figure below.
+
+						</p>	
+
+
+						<span style="display: inline-block; text-align: center; ">
+						<img src="./images/kf_jupyter_notebook_loaded.png" style=" width: 90%;" />
+						</span>		
+
+						<br/><br/><br/>
+
+
+
+						<p>
+
+							You likely won't have to spend too much time with this notebook, its just meant as quick sanity check to confirm that we're on the right version of TensorFlow with a docker image that can see the local GPU. At the bottom cell in the notebook, you will also see some basic tensor operations executing and being run on <code>/job:localhost/replica:0/task:0/device:GPU:0</code> indicating that the code is running physically on the local GPU.
+
+						</p>						
+
+						<h2>Load Smart City Notebook</h2>
+
+						<p>
+							At this point we have Kubeflow installed on GCP and we know that our custom docker image works with GPUs on notebooks. We are ready to launch the Citations notebook from the previous post and run it with GPUss.
+
+						</p>	
+						<p>
+							You can clone the repository at:
+
+						</p>
+						<p>
+							<a href="https://github.com/jpatanooga/kubeflow_ops_book_dev/tree/master/notebooks/citations">https://github.com/jpatanooga/kubeflow_ops_book_dev/tree/master/notebooks/citations</a>
+
+						</p>
+						<p>
+							Once you have the citations notebook on your local machine you can upload it to the same notebook server's Jupyter page in a directory named <code>Code</code> on the Jupyter notebook server. You can create directories via the Jupyter notebook main UI. 
+
+						</p>
+
+						<!-- WARNING BLOCK -->
+					<div style="width:900px; margin:0 auto;">
+
+						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+							<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
+
+							<h4>Multiple Notebooks and a Single GPU</h4>
+						  <div style="font-size: 14px; border: 0px solid #990000;  ">
+						  <i>If multiple notebooks try and access a single GPU on a notebook server you will likely see the notebooks lock up or crash. Try and only have a single notebook active at a time while on a single GPU notebook server.</i></div>
+
+						</div>
+						  
+						</div>	
+					</div>	
+					<!-- WARNING BLOCK -->							
+
+
+						<h3>Upload Training Data</h3>
+
+						<p>
+							You will need to also create a <code>Data</code> directory on the Jupyter notebook server and upload the data from:
+
+
+						</p>
+						<p>
+
+							<a href="https://pattersonconsulting.s3.us-east-2.amazonaws.com/kubeflow_ops_book/notebooks/citations/Data.zip">https://pattersonconsulting.s3.us-east-2.amazonaws.com/kubeflow_ops_book/notebooks/citations/Data.zip</a>
+
+						</p>
+						<p>
+							Once you have that file downloaded, uncompress it and upload the contents into your Jupyter notebook server inside the <code>Data</code> directory. We should now be ready to run the notebook on GPUs.
+
+						</p>	
+
+						<h1>Working with the Smart City Notebook</h1>
+
+
+						<p>
+
+							At this point you should be able to work with the notebook normally as you would locally under Anaconda on CPU or on GCP and Kubeflow with CPU. You'll notice in the cell output that some tasks will be put on the CPU and then the tensor operations will be placed on the GPU, as shown in the example console output listing below.
+
+						</p>	
+
+
+
+<consoleoutput>Executing op RangeDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op RepeatDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op MapDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op PrefetchDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op FlatMapDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op TensorDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op RepeatDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op ZipDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op ParallelMapDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Executing op ModelDataset in device /job:localhost/replica:0/task:0/device:CPU:0
+Epoch 1/10
+Executing op VarHandleOp in device /job:localhost/replica:0/task:0/device:GPU:0
+Executing op VarHandleOp in device /job:localhost/replica:0/task:0/device:GPU:0
+Executing op VarHandleOp in device /job:localhost/replica:0/task:0/device:GPU:0
+Executing op VarHandleOp in device /job:localhost/replica:0/task:0/device:GPU:0</consoleoutput>
+
+<br/><br/>
+
+						<h1>Summary</h1>
+
+
+						<p>
+
+							In this article we walked the reader through the specific steps to enable a GPU notebook server to launch under Kubeflow on GCP so we can use a GPU to accelerate our notebook Tensorflow training code.
+
+							
+
+
+						</p>
+
+					<div class="col-md-3" id="fh5co-content" style="">
+						<a href="http://shop.oreilly.com/product/0636920260929.do">
+							<img src="../images/kfops_color_cover.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+					</div>
+											
+						<p>
+							In future articles we're going to take a look at enabling TPUs and then the new NVIDIA DGX-A100 GCP instances for Kubeflow notebooks.
+
+						</p>	
+						
+						<p>
+							If you'd like to know more about <a href="https://www.kubeflow.org/">Kubeflow</a> and <a href="https://www.kubeflow.org/docs/components/serving/kfserving/">KFServing</a>, please check out the project homepage, contact us, or check out our <a href="http://shop.oreilly.com/product/0636920260929.do">upcoming book with Oreilly on "Kubeflow Operations"</a>.
+
+						</p>	
+						
+
+					<p>
+						Patterson Consulting also provides a <a href="/offerings/managed_kubeflow.html">managed service offering for Kubeflow clusters</a> (on-premise and in the cloud).
+
+					</p>
+
+					</div>
+
+
+
+
+					</div>
+
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

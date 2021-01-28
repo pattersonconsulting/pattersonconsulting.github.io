@@ -1,0 +1,1235 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: A Beginner's Guide to Pandas</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="A Beginner's Guide to Pandas"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/deploying_huggingface_with_kfserving.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this example we demonstrate how to take a Hugging Face NLP Question Answer pre-trained model and run it as a KFServing hosted model."/>
+	
+
+	<meta name="twitter:title" content="A Beginner's Guide to Pandas" />
+	<meta data-rh="true" property="twitter:description" content="In this example we demonstrate how to take a Hugging Face NLP Question Answer pre-trained model and run it as a KFServing hosted model."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/deploying_huggingface_with_kfserving.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+          <ul>
+            
+            <li class="has-sub">
+              <div class="drop-down-menu">
+                <a href="#">Services</a>
+                <div class="dropdown-menu-wrap">
+                  <ul>
+                    
+                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+                    
+                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+                    
+                  </ul>
+                </div>
+              </div>
+            </li>
+            
+            <li><a href="../partners.html">Partners</a></li>
+
+            <li><a href="../blog/blog_index.html">Blog</a></li>
+          
+            <li class="cta"><a href="../contact.html">Contact</a></li>
+          </ul>
+        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+						<h1>A Beginner's Guide to Pandas</h1>
+						<p>
+						Author: <a href="">Cayden Brasher</a>
+						<br/>	
+						</p>
+						<p>
+						Date: January 28th, 2021
+						</p>
+
+
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+							<h2 id="toc_1">Introduction</h2><br>
+							<p>
+							Imagine 10 dots in your mind.
+							</p>
+							<p>
+							Imagine 100 dots in your mind.
+							</p>
+							<p>
+							Now imagine 2,500,000,000,000 dots, or bytes for that matter. 
+							This is simply inconceivable for the human mind. 
+							So, what do humans do when they cannot understand something? 
+							They analyze it, and as such, Data Science is born.
+							</p>
+							<p>
+							The field of Data Science is expanding. 
+							90% of the internet was created in the last two years, 
+							and <a href="https://www.forbes.com/sites/bernardmarr/2018/05/21/how-much-data-do-we-create-every-day-the-mind-blowing-stats-everyone-should-read/#745666cf60ba"> 2.5 million terabytes</a> of new data are created daily.
+							
+							Information is evolving into a microcosm in the world economy, with this digital collection of 1’s and 0’s quickly transforming itself into material wealth. 
+							But, like all raw materials, raw data must be mined and processed before gaining any inherent value. 
+							So, in this journal I will be documenting my journey in learning how to process data sets, and why the Pandas software library has been such an impactful aid.
+							</p>
+
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+
+				<div class="row row-bottom-padded-sm" style="border: 0px solid; ">
+						
+
+					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #FF5126; padding: 2px; padding-bottom: 0px; text-align: center; color: #ffffff; margin-bottom: 4px;">
+
+						<p style="margin-bottom: 0px;">
+							Want Help With <span ><b><a href="../offerings/data_engineering.html" style="color:#ffffff;">Data Engineering? Check out our Data Engineering page for a list of services.</a>
+
+						</p>
+
+					</div>	
+
+				</div>
+				<!-- end of row -->
+
+
+
+
+				<!-- ##################### start of row ##################### -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+
+
+						<h2 id="toc_3">Necessary Libraries</h2><br>
+						
+						<h3 id="toc_3.1">Installing Python and Pandas</h3><br>
+						
+						<p>
+						To begin, you will need to have access to Python. 
+						There are multiple IDE’s to choose from before installing Python: Sublime, Atom, PyCharm, etc. 
+						Though in this journal, I will be using <a href="www.eclipse.org">Eclipse</a> + <a href="www.pydev.org">PyDev.</a> Once Python is installed, we will need to install 
+						<a href = "https://pandas.pydata.org">Pandas</a> - which provides us with a Data Frame structure to store, organize, and clean our dataset.
+						</p>
+						<p>
+						The <a href="https://www.anaconda.com/products/individual">"Anaconda"</a> library, which is commonly used in the Data Science community, works as an easy way to install all the tools you will need going forward. But, for the moment, a simple pip-install will suffice. 
+						</p>
+						<p>
+						We'll first check to see if we have pip installed:
+
+<code><pre>pip --version</pre></code>
+						
+						If pip is not already installed then we can try to bootstrap it from the default library.
+<code><pre>python -m ensurepip --default-pip</pre></code>
+						
+						
+						</p>
+						<p>As modern versions of Python (3.4+) have “pip” auto-installed, expediting the process, if the two methods above do not work, you will likely need to update your Python software. 
+						To find your Python version run the code below:
+
+<code><pre>python --version</pre></code>
+
+						If your software is older than Python 3.4 then you can download the most recent version <a href= "https://www.python.org/downloads/">here</a>.
+
+					</p>
+					<p>
+						Once your software is up to date and pip is installed we are free to install and check our version of the pandas software using the command below:
+
+<code><pre>import pandas as pd
+print(pd.__version__)</pre></code>
+					
+						<h3 id="toc_3.2">Our Datasets</h3><br>
+						<p>
+						Although I will be introducing these data sets in the <a id="toc_4">Problem at Hand</a> section, if you are following along this article and would like an early peak at my choice datasets you may download each linked file: 
+						<a href="https://github.com/jldbc/coffee-quality-database/blob/master/data/arabica_data_cleaned.csv">Arabica Dataset</a>, 
+						<a href="https://github.com/jldbc/coffee-quality-database/raw/master/data/robusta_data_cleaned.csv">Robusta Dataset</a>.<br>
+						Now, if everything is up to date and running properly, we can begin.
+						</p>
+		
+							
+
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+
+
+				<!-- ##################### start of row - section 4 ##################### -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+
+						<h2 id="toc_4">Problem at Hand</h2><br>
+							<p>
+							To begin let’s start off with identifying the issue at hand, which will work as our example as we move through the pandas software: 
+							</p>
+							<blockquote>
+							“I wake up groggy after a late night of homework, I need a coffee, but I am out of beans. 
+							So, I grab my keys, next thing I know I’m walking into a Target, Whole Foods, Publix, etc. staring down fifty options. 
+							I want to know which coffee is the best. Everybody likes coffee, and nobody likes bad coffee. So, how do I determine the best coffee? 
+							Is coffee from Ethiopia better than Guatemala? Does altitude matter?”
+							</blockquote>
+							<p>
+							I will need to either develop or discover a data set that is applicable to my question, 
+							and for the purpose of this journal, and time efficiency, I found an applicable data set. 
+							Looking on GitHub I found two data sets that cover over 1300 different coffees: the 
+							<a href="https://github.com/jldbc/coffee-quality-database/blob/master/data/arabica_data_cleaned.csv">Arabica</a> and  
+							<a href="https://github.com/jldbc/coffee-quality-database/raw/master/data/robusta_data_cleaned.csv">Robusta </a>datasets.
+							But, before getting into any coding, an understanding of the question we are asking and the datasets we are using is absolutely necessary. 
+							</p>
+							
+							<h3 id="toc_4.1">Question at Hand</h3><br>
+								<p>
+								At first glance a logical question may be, “What is the single best coffee?”, but this question will not allow us to fully utilize the pandas software. 
+								You can google which coffee is the highest rated. So, then where does our interest in our datasets lay? 
+								Rather than a specific coffee, we will be looking at correlations between location, altitude, ownership, etc. and the coffee’s rating. 
+								So the question we are looking to answer is:
+								</p>
+								<blockquote>
+								“Depending only on it's characteristics, how do we identify a “good” coffee, and what characteristics serve as the most important factors in quality?”
+								</blockquote>
+								
+							<h3 id="toc_4.2">Understanding Datasets</h3><br>
+								<p>
+								Each of the datasets is based on the same grading rubric, and as such have the same columns. 
+								Looking at the raw data we can see characteristics such as altitude, country of origin, flavor, aroma, etc. 
+								Each of these variables will play an important part in answering the question above. 
+								</p>
+								<p>
+								On a more technical level, each data set is in the CSV format and have 44 columns. 
+								This mass of information will serve us as we move forward answering our question, but some data is more important than others. 
+								One of our first steps as we move forward is to actually clean up our datasets further, removing any extraneous data.
+								</p>
+								
+							<h3 id="toc_4.3">Problems to Solve</h3><br>
+								<p>
+								Many issues can arise when using other software to process data. 
+								Excel, which is the most commonly taught software used to do what we’re doing, can run into many issues as one explores the field of Data Science. 
+								These are outlined below.
+								</p>
+								<h4>I. Magnitude</h4>
+									<p>
+									Data Sets become very large in the field of Data Science. 
+									Programs such as Microsoft Excel begin to slow down and crash around 10,000 rows of information, and while 10,000 may seem like a lot, it is just a drop in the bucket of larger data sets. 
+									Pandas can run expansive data sets with the only limitation being the hardware it is being run on. 
+									Using the <i>chunksize</i> attribute we can further allow slower machines to read through massive files. This allows us to maximize our computer’s memory and again separates pandas from the likes of Microsoft’s excel.
+									</p>
+								<h4>II. File Format</h4>
+									<p>
+									While excel requires us to take time to change our file types before importing, pandas supports the import and export of over 15 file types. 
+									From HTML, CSV, PDF, Images, etc. Pandas also allows us to export our data in the same 15 files types. 
+									In any instance where the data you have is not the file type you want to export pandas fairs much better than its opponents.
+									</p>
+								<h4>III. Cleaning Data</h4>
+									<p>
+									Comparative again to Excel, Pandas has a much more intelligent machine learning foundation. 
+									This will repair data, fix holes, remove duplicates - allowing us the privilege of not hunting down issues throughout thousands of data points. 
+									While it may seem pretty simple to fix a few holes and patch a few leaks, when your data set runs hundreds of columns by millions of rows this becomes "brain-bleedingly" difficult.
+									</p>
+									
+
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+
+
+
+				<!-- ##################### start of row - section 5 ##################### -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h2 id="toc_5">The Solution</h2><br>
+						<p>
+						In this section I will be traversing my general thought process while trying to accomplish my goal - finding a damn good cup of coffee. 
+						I am posting my code as well as an abbreviated view of the output, and I am adding a <code>print()</code> function at the end of each segment to help with visualization.
+						This output will be in the grey box beneath out input.
+						We have downloaded our software, identified our problem, and gained a solid understanding of the question we are asking. <br>So, it is time to begin the fun part.
+						</p>
+						<h3 id="toc_5.1">Experimentation</h3><br>
+						<p>
+						The first step when using Pandas is to import your data. 
+						For the purpose of this journal I will be demonstrating the importation of CSV files, other file type will work the exact same way. 
+						So, let’s begin by importing our data sets:
+						</p>
+
+<code><pre>arabica_data = pd.read_csv('arabica_data.csv')
+robusta_data = pd.read_csv('robusta_data.csv')
+print(arabica_data)
+print(robusta_data)</pre></code>
+
+<consoleoutput>
+<center id="out1">OUTPUT I</center>
+	Unnamed: 0  Species  ... altitude_high_meters altitude_mean_meters
+0              1  Arabica  ...              2200.00              2075.00
+1              2  Arabica  ...              2200.00              2075.00
+2              3  Arabica  ...              1800.00              1700.00
+3              4  Arabica  ...              2200.00              2000.00
+4              5  Arabica  ...              2200.00              2075.00
+...          ...      ...  ...                  ...                  ...
+1310        1312  Arabica  ...              1400.00              1400.00
+
+[1311 rows x 44 columns]
+	Unnamed: 0  Species  ... altitude_high_meters altitude_mean_meters
+0            1  Robusta  ...               1488.0               1488.0
+1            2  Robusta  ...               3170.0               3170.0
+2            3  Robusta  ...               1000.0               1000.0
+3            4  Robusta  ...               1212.0               1212.0
+...        ...      ...  ...                  ...                  ...
+27          28  Robusta  ...                  NaN                  NaN
+
+[28 rows x 44 columns]
+</consoleoutput>
+
+						<p>
+						As seen above we are actually going to be working through two separate datasets. 
+						While we could run the same commands through each data set, it is much easier to combine them. 
+						There are multiple ways to combine data sets, but thanks to our parallel columns in each data set we can concatenate the two together, becoming the new data set - comb:
+						</p>
+
+<code><pre>comb = pd.concat([arabica_data, robusta_data])
+print(comb)</pre></code>
+
+
+<consoleoutput>
+<center id="out2">OUTPUT II</center>
+[28 rows x 44 columns]
+	Unnamed: 0  Species  ... Mouthfeel Uniform.Cup
+0            1  Arabica  ...       NaN         NaN
+1            2  Arabica  ...       NaN         NaN
+2            3  Arabica  ...       NaN         NaN
+3            4  Arabica  ...       NaN         NaN
+4            5  Arabica  ...       NaN         NaN
+..         ...      ...  ...       ...         ...
+23          24  Robusta  ...      5.08       10.00
+24          25  Robusta  ...      5.17       10.00
+25          26  Robusta  ...      7.50        9.33
+26          27  Robusta  ...      7.25        9.33
+27          28  Robusta  ...      6.92        9.33
+
+[1339 rows x 49 columns]
+</consoleoutput>
+
+						<p>
+						While the next few steps aren’t absolutely necessary, they helped me go through this project a bit quicker. 
+						First, I went ahead and checked what all my columns were named in the raw code with the column attribute. 
+						This allowed me to see the different variables that were included, allowing me to identify the most important:
+						</p>
+
+<code><pre>print(comb.columns)</pre></code>
+
+<consoleoutput>
+<center id="out3">OUTPUT III</center>
+Index(['Unnamed: 0', 'Species', 'Owner', 'Country.of.Origin', 'Farm.Name',
+       'Lot.Number', 'Mill', 'ICO.Number', 'Company', 'Altitude', 'Region',
+       'Producer', 'Number.of.Bags', 'Bag.Weight', 'In.Country.Partner',
+       'Harvest.Year', 'Grading.Date', 'Owner.1', 'Variety',
+       'Processing.Method', 'Aroma', 'Flavor', 'Aftertaste', 'Acidity', 'Body',
+       'Balance', 'Uniformity', 'Clean.Cup', 'Sweetness', 'Cupper.Points',
+       'Total.Cup.Points', 'Moisture', 'Category.One.Defects', 'Quakers',
+       'Color', 'Category.Two.Defects', 'Expiration', 'Certification.Body',
+       'Certification.Address', 'Certification.Contact', 'unit_of_measurement',
+       'altitude_low_meters', 'altitude_high_meters', 'altitude_mean_meters',
+       'Fragrance...Aroma', 'Salt...Acid', 'Bitter...Sweet', 'Mouthfeel',
+       'Uniform.Cup'],
+      	dtype='object')
+</consoleoutput>
+
+						<p>
+						Now we have a list of every variable, after doing this I wanted to see how our data was laid out, were the ratings out of 100/10/etc.? 
+						This attribute allows the print of a single row/coffee along with its data. For example, I wanted to see all the properties of row four:
+						</p>
+
+<code><pre>print(comb.iloc[4])</pre></code>
+
+<consoleoutput>
+<center id="out4">OUTPUT IV</center>
+Unnamed: 0                                                      5
+Species                                                   Arabica
+Owner                                                   metad plc
+Country.of.Origin                                        Ethiopia
+Farm.Name                                               metad plc
+Lot.Number                                                    NaN
+Mill                                                    metad plc
+ICO.Number                                              2014/2015
+Company                         metad agricultural developmet plc
+Altitude                                                1950-2200
+Region                                               guji-hambela
+Producer                                                METAD PLC
+Number.of.Bags                                                300
+Bag.Weight                                                  60 kg
+In.Country.Partner             METAD Agricultural Development plc
+Harvest.Year                                                 2014
+Grading.Date                                      April 4th, 2015
+Owner.1                                                 metad plc
+Variety                                                     Other
+Processing.Method                                    Washed / Wet
+Aroma                                                        8.25
+Flavor                                                        8.5
+Aftertaste                                                   8.25
+Acidity                                                       8.5
+Body                                                         8.42
+Balance                                                      8.33
+Uniformity                                                     10
+Clean.Cup                                                      10
+Sweetness                                                      10
+Cupper.Points                                                8.58
+Total.Cup.Points                                            88.83
+Moisture                                                     0.12
+Category.One.Defects                                            0
+Quakers                                                         0
+Color                                                       Green
+Category.Two.Defects                                            2
+Expiration                                        April 3rd, 2016
+Certification.Body             METAD Agricultural Development plc
+Certification.Address    309fcf77415a3661ae83e027f7e5f05dad786e44
+Certification.Contact    19fef5a731de2db57d16da10287413f5f99bc2dd
+unit_of_measurement                                             m
+altitude_low_meters                                          1950
+altitude_high_meters                                         2200
+altitude_mean_meters                                         2075
+Fragrance...Aroma                                             NaN
+Salt...Acid                                                   NaN
+Bitter...Sweet                                                NaN
+Mouthfeel                                                     NaN
+Uniform.Cup                                                   NaN
+Name: 4, dtype: object
+</consoleoutput>
+
+						<p>
+						I wanted to see the mean of all my data, as long as it was numerically applicable. By doing this I found a “cut-off level” to begin removing some of the more extraneous data. 
+						While not always necessary, I chose to do this because we are only looking for information on the best coffee:
+						</p>
+		
+<code><pre>print(comb.describe())</pre></code>
+
+<consoleoutput>
+<center id="out5">OUTPUT V</center>
+ Unnamed: 0  Number.of.Bags  ...  Mouthfeel  Uniform.Cup
+count  1339.000000     1339.000000  ...  28.000000    28.000000
+mean    642.586258      154.182972  ...   7.506786     9.904286
+std     385.707857      129.987162  ...   0.725152     0.238753
+min       1.000000        0.000000  ...   5.080000     9.330000
+25%     307.500000       14.000000  ...   7.500000    10.000000
+50%     642.000000      175.000000  ...   7.670000    10.000000
+75%     976.500000      275.000000  ...   7.830000    10.000000
+max    1312.000000     1062.000000  ...   8.250000    10.000000
+
+[8 rows x 25 columns]
+</consoleoutput>
+
+
+		<p>
+		As I stated earlier, printing off my column descriptors allowed me to realize there were two columns on defects, so I chose to combine these into one column, creating our 45th column. 
+		This process can use data from columns to create new columns:
+		</p>
+
+<code><pre>comb['Total.Defects'] = comb['Category.One.Defects'] + comb['Category.Two.Defects']
+print(comb['Total.Defects'])</pre></code>
+
+
+<consoleoutput>
+<center id="out6">OUTPUT VI</center>
+0      0
+1      1
+2      0
+3      2
+4      2
+...    ...
+23     1
+24     0
+25     6
+26    21
+27    72
+Name: Total.Defects, Length: 1339, dtype: int64
+</consoleoutput>
+
+		<p>
+		After creating this new column, I decided it was time to cut down from our 45 columns, many of which were either repetitive or lacking information. 
+		Above we learned how to add new columns, and below we will learn the inverse. 
+		I printed the remaining columns to make sure I didn’t accidentally delete any useful information:
+		</p>
+
+<code><pre>comb = comb.drop(columns=['Farm.Name',
+              'Lot.Number', 'Mill', 'ICO.Number', 'Altitude',
+              'Region', 'Producer', 'Number.of.Bags', 'Bag.Weight',
+              'Harvest.Year', 'Owner', 'Variety',
+              'Processing.Method', 'Category.One.Defects',
+              'Quakers', 'Color', 'Category.Two.Defects',
+              'Expiration', 'Certification.Body',
+              'Certification.Address', 'Certification.Contact',
+              'unit_of_measurement', 'altitude_low_meters',
+              'altitude_high_meters', 'Moisture',
+              'In.Country.Partner', 'Owner.1', 'Fragrance...Aroma',
+              'Salt...Acid', 'Bitter...Sweet', 'Mouthfeel',
+              'Uniform.Cup'])
+
+print(comb.columns)</pre></code>
+
+<consoleoutput> 
+<center id="out7">OUTPUT VII</center>
+Index(['Unnamed: 0', 'Species', 'Country.of.Origin', 'Company', 'Grading.Date',
+       'Aroma', 'Flavor', 'Aftertaste', 'Acidity', 'Body', 'Balance',
+       'Uniformity', 'Clean.Cup', 'Sweetness', 'Cupper.Points',
+       'Total.Cup.Points', 'altitude_mean_meters', 'Total.Defects'],
+      dtype='object')
+      
+
+</consoleoutput>
+
+		<p>
+		Now we have practiced with a few pandas commands and turned two chunky datasets into a streamlined version of their previous selves. 
+		Practicing the addition and subtraction of columns, alongside learning how to visualize specific data plots will come in handy in our next section.
+		</p>
+
+		<h3 id="toc_5.2">Cleaning Datasets</h3><br>
+
+		<p>In this section I focus on answering the first half of our question: </p>
+		<p><blockquote>“Depending only on it's characteristics, how do we <i>identify a “good” coffee</i>, and what characteristics serve as the most important factors in quality?”</blockquote></p>
+		<p>
+		Using my personal opinions to determine what a good coffee looks like to me, I decided what characteristics were the most important to me, and the first characteristic I saw was the <code>‘Total_Cup_Points’</code>, which is the sum of all the graded values. 
+		So, I figured that if the sum was less than eighty-three points then I didn’t want it included in my “good” coffee dataset:
+		<br>Also, pay close attention to the number of columns we have as we clean our dataset.
+		</p>
+
+<code><pre>comb = comb.loc[(comb['Total.Cup.Points'] > 83)]
+print(comb)</pre></code>
+
+<consoleoutput>
+<center id="out8">OUTPUT VII</center>
+	Unnamed: 0  Species  ... altitude_mean_meters Total.Defects
+0             1  Arabica  ...               2075.0             0
+1             2  Arabica  ...               2075.0             1
+2             3  Arabica  ...               1700.0             0
+3             4  Arabica  ...               2000.0             2
+4             5  Arabica  ...               2075.0             2
+..          ...      ...  ...                  ...           ...
+494         495  Arabica  ...               1350.0             0
+495         496  Arabica  ...                  NaN             1
+0             1  Robusta  ...               1488.0             2
+1             2  Robusta  ...               3170.0             2
+2             3  Robusta  ...               1000.0             0
+
+[499 rows x 18 columns]
+</consoleoutput>
+
+		<p>
+		Nobody wants to buy a bag of coffee with a lot of defects, so this became my next factor - 
+		with less than five total defects per bag being necessary, and I was able to use the column I created earlier:
+		</p>
+
+<code><pre>comb = comb.loc[(comb['Total.Defects'] < 5)]
+print(comb)</pre></code>
+
+<consoleoutput>
+<center id="out9">OUTPUT IX</center>
+	Unnamed: 0  Species  ... altitude_mean_meters Total.Defects
+0             1  Arabica  ...               2075.0             0
+1             2  Arabica  ...               2075.0             1
+2             3  Arabica  ...               1700.0             0
+3             4  Arabica  ...               2000.0             2
+4             5  Arabica  ...               2075.0             2
+..          ...      ...  ...                  ...           ...
+494         495  Arabica  ...               1350.0             0
+495         496  Arabica  ...                  NaN             1
+0             1  Robusta  ...               1488.0             2
+1             2  Robusta  ...               3170.0             2
+2             3  Robusta  ...               1000.0             0
+
+[405 rows x 18 columns]
+</consoleoutput>
+
+		<p>
+		I decided going one factor at a time was becoming inefficient so I ran through multiple factors at once, adjusting the “cut off level” until I found a balance between having enough brands to give a good overview, 
+		but now too many that it includes “bad” coffee (I ended up deciding that 83 was a bit too low.):
+		</p>
+
+
+<code><pre>comb = comb.loc[(comb['Aroma'] > 7.75) & (comb['Flavor'] > 7.75) & (comb['Aftertaste'] > 7.75) | (comb['Total.Cup.Points'] > 85)]
+print(comb)</pre></code>
+
+<consoleoutput>
+<center id="out10">OUTPUT X</center>
+	Unnamed: 0  Species  ... altitude_mean_meters Total.Defects
+0             1  Arabica  ...              2075.00             0
+1             2  Arabica  ...              2075.00             1
+2             3  Arabica  ...              1700.00             0
+3             4  Arabica  ...              2000.00             2
+4             5  Arabica  ...              2075.00             2
+..          ...      ...  ...                  ...           ...
+254         255  Arabica  ...                  NaN             0
+269         270  Arabica  ...               950.00             0
+303         304  Arabica  ...               853.44             1
+329         330  Arabica  ...              1450.00             1
+414         415  Arabica  ...                  NaN             0
+
+[92 rows x 18 columns]
+</consoleoutput>
+
+		<p>
+		Upon getting down to 92 columns/brands I decided I had found equilibrium and decided to move past the processing of the data, 
+		into the final steps that would answer my question.
+		</p>
+
+		
+		<h3 id="toc_5.3">Processing Datasets</h3><br>
+		<p>Now we begin answering the second half of our question:</p>
+		<p><blockquote>“Depending only on it's characteristics, how do we identify a “good” coffee, and <i>what characteristics serve as the most important factors in quality?</i>”</blockquote></p>
+		<p>
+		In this section we will analyze aspects of our new dataset, which I re-indexed and renamed to be <code>'new_comb'</code>. 
+		For all these calculations we will be using <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html">“groupby”</a> attributes. 
+		This cleaned dataset that will allow us to finally decide which coffees give us the greatest chance of a good cup:
+		</p>
+
+
+<code><pre>new_comb = comb
+new_comb.reset_index(drop=True, inplace=True)
+print(new_comb)</pre></code>
+
+
+<consoleoutput>
+<center id="out11">OUTPUT XI</center>
+	Unnamed: 0  Species  ... altitude_mean_meters Total.Defects
+0            1  Arabica  ...              2075.00             0
+1            2  Arabica  ...              2075.00             1
+2            3  Arabica  ...              1700.00             0
+3            4  Arabica  ...              2000.00             2
+4            5  Arabica  ...              2075.00             2
+...        ...      ...  ...                  ...           ...
+87         255  Arabica  ...                  NaN             0
+88         270  Arabica  ...               950.00             0
+89         304  Arabica  ...               853.44             1
+90         330  Arabica  ...              1450.00             1
+91         415  Arabica  ...                  NaN             0
+
+[92 rows x 18 columns]
+</consoleoutput>
+
+
+		<p>
+		So, as seen all of our data has been crunched together within our outputs as ‘…’. 
+		Which does not permit the visualization of all of our data. 
+		So, I will change the display of the output to show all of the data. 
+		I am only going to do this for one OUTPUT example as to keep the article shorter. I just want to demonstrate the visual change caused below:
+		</p>
+
+
+<code><pre>pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_columns', 100)
+pd.set_option('display.width', 100)
+print(comb)</pre></code>
+
+
+<consoleoutput>
+<center id="out12">OUTPUT XII</center>
+	Unnamed: 0  Species             Country.of.Origin  \
+0            1  Arabica                      Ethiopia   
+1            2  Arabica                      Ethiopia   
+2            3  Arabica                     Guatemala   
+3            4  Arabica                      Ethiopia   
+4            5  Arabica                      Ethiopia   
+5            6  Arabica                        Brazil   
+6            7  Arabica                          Peru   
+7            8  Arabica                      Ethiopia   
+8            9  Arabica                      Ethiopia   
+9           10  Arabica                      Ethiopia   
+10          11  Arabica                      Ethiopia   
+11          12  Arabica                 United States   
+12          13  Arabica                 United States   
+13          14  Arabica        United States (Hawaii)   
+14          15  Arabica                      Ethiopia   
+15          16  Arabica                 United States   
+16          17  Arabica                     Indonesia   
+17          18  Arabica                      Ethiopia   
+18          19  Arabica                         China   
+19          21  Arabica                 United States   
+20          22  Arabica                    Costa Rica   
+21          23  Arabica                        Mexico   
+22          24  Arabica                 United States   
+23          25  Arabica                      Ethiopia   
+24          26  Arabica                        Brazil   
+25          27  Arabica                      Ethiopia   
+26          28  Arabica                        Uganda   
+27          29  Arabica                      Honduras   
+28          30  Arabica                        Taiwan   
+29          31  Arabica                     Nicaragua   
+30          32  Arabica  Tanzania, United Republic Of   
+31          33  Arabica                        Brazil   
+32          34  Arabica                    Costa Rica   
+33          35  Arabica                      Ethiopia   
+34          36  Arabica                         Kenya   
+35          38  Arabica        United States (Hawaii)   
+36          39  Arabica                      Ethiopia   
+37          40  Arabica                 United States   
+38          42  Arabica                        Brazil   
+39          43  Arabica                        Brazil   
+40          44  Arabica                        Taiwan   
+41          45  Arabica                         Kenya   
+42          46  Arabica                        Brazil   
+43          47  Arabica                        Uganda   
+44          48  Arabica                      Colombia   
+45          49  Arabica                         Kenya   
+46          50  Arabica                        Uganda   
+47          51  Arabica                      Ethiopia   
+48          52  Arabica        United States (Hawaii)   
+49          53  Arabica                     Guatemala   
+50          54  Arabica                        Uganda   
+51          55  Arabica                      Colombia   
+52          56  Arabica                        Panama   
+53          57  Arabica                      Ethiopia   
+54          58  Arabica                     Guatemala   
+55          59  Arabica                     Guatemala   
+56          62  Arabica              Papua New Guinea   
+57          63  Arabica                   El Salvador   
+58          64  Arabica                   El Salvador   
+59          65  Arabica        United States (Hawaii)   
+60          66  Arabica                        Panama   
+61          67  Arabica                         Kenya   
+62          69  Arabica                        Uganda   
+63          70  Arabica                     Guatemala   
+64          74  Arabica                        Brazil   
+65          75  Arabica                   El Salvador   
+66          76  Arabica                         China   
+67          77  Arabica                     Guatemala   
+68          78  Arabica                    Costa Rica   
+69          79  Arabica                    Costa Rica   
+70          80  Arabica                         Kenya   
+71          82  Arabica                      Ethiopia   
+72          83  Arabica                      Ethiopia   
+73          84  Arabica                     Guatemala   
+74          85  Arabica                      Colombia   
+75          86  Arabica                      Colombia   
+76          87  Arabica                     Indonesia   
+77          90  Arabica                      Colombia   
+78          92  Arabica        United States (Hawaii)   
+79          96  Arabica        United States (Hawaii)   
+80         100  Arabica                        Mexico   
+81         103  Arabica                        Brazil   
+82         110  Arabica  Tanzania, United Republic Of   
+83         131  Arabica                    Costa Rica   
+84         148  Arabica                         Kenya   
+85         162  Arabica                    Costa Rica   
+86         170  Arabica                        Brazil   
+87         255  Arabica                      Thailand   
+88         270  Arabica                        Taiwan   
+89         304  Arabica   United States (Puerto Rico)   
+90         330  Arabica                     Guatemala   
+91         415  Arabica        United States (Hawaii)   
+SORRY THAT WAS SO LONG <3
+</consoleoutput>
+
+		<p>
+		So my first question is, because I notice that the Country of origin of a coffee is often displayed, “Does <code>'Country_of_Origin’</code> actually influence the taste?” 
+		The code below prints the means of all coffees' columns organized by their "birthplace":
+		</p>	
+
+
+<code><pre>print(new_comb.groupby(['Country.of.Origin']).mean())</pre></code>
+
+<consoleoutput>
+<center id="out13">OUTPUT XIII</center>
+
+                              Unnamed: 0     Aroma    Flavor  Aftertaste   Acidity      Body  \
+Country.of.Origin                                                                              
+Brazil                         60.333333  8.256667  8.082222    8.005556  7.888889  7.894444   
+China                          47.500000  8.210000  8.125000    8.040000  8.000000  7.875000   
+Colombia                       72.800000  7.934000  7.950000    7.832000  8.032000  7.898000   
+Costa Rica                     84.333333  8.043333  7.928333    7.873333  7.806667  7.886667   
+...                           ...         ...       ...         ...       ...       ...
+United States (Puerto Rico)   304.000000  7.830000  7.830000    7.830000  7.670000  8.000000   
+
+                               Balance  Uniformity  Clean.Cup  Sweetness  Cupper.Points  \
+Country.of.Origin                                                                         
+Brazil                        8.027778    9.944444   10.00000  10.000000       8.070000   
+China                         7.875000   10.000000   10.00000  10.000000       8.170000   
+Colombia                      7.934000   10.000000   10.00000  10.000000       7.920000   
+Costa Rica                    8.040000   10.000000   10.00000   9.888333       8.085000   
+...                           ...         ...         ...       ...            ...
+United States (Puerto Rico)   8.170000    9.330000    9.33000  10.000000       7.750000   
+
+                              Total.Cup.Points  altitude_mean_meters  Total.Defects  
+Country.of.Origin                                                                    
+Brazil                               86.167778            882.000000       2.222222  
+China                                86.290000           1575.000000       0.000000  
+Colombia                             85.500000           1732.000000       1.000000  
+Costa Rica                           85.555000           1441.666667       0.666667  
+...                                   ...                   ...            ...
+United States (Puerto Rico)          83.750000            853.440000       1.000000  
+</consoleoutput>
+
+
+		<p>
+		This is where I became a bit distraught. All countries had very similar stats when it came to their “best” coffees, which logically makes sense. 
+		So rather than looking at the means as a way of finding which country has the “best” coffee, I decided to see which Country had the highest probability of giving me a good brew. 
+		I did this by creating a sum of how many of the 92 coffees were from each country:
+		</p>
+
+<code><pre>country_count = new_comb.groupby(['Country.of.Origin']).count()print (country_count['Unnamed: 0'])</pre></code>
+
+<consoleoutput>
+<center id="out14">OUTPUT XIV</center>
+Country.of.Origin
+Brazil                           9
+China                            2
+Colombia                         5
+Costa Rica                       6
+El Salvador                      3
+Ethiopia                        18
+Guatemala                        8
+Honduras                         1
+Indonesia                        2
+Kenya                            6
+Mexico                           2
+Nicaragua                        1
+Panama                           2
+Papua New Guinea                 1
+Peru                             1
+Taiwan                           3
+Tanzania, United Republic Of     2
+Thailand                         1
+Uganda                           5
+United States                    6
+United States (Hawaii)           7
+United States (Puerto Rico)      1
+Name: Unnamed: 0, dtype: int64
+</consoleoutput>
+
+		<p>
+		Next, just because I always hear the word, I chose to see if “altitude” had any direct correlation to quality of coffee, using both the mean and count method to test for correlation:
+		</p>
+
+<code><pre>print(new_comb.groupby(['altitude_mean_meters']).mean())
+altitude_count = new_comb.groupby(['altitude_mean_meters']).count()
+print (altitude_count['Unnamed: 0'])</pre></code>
+
+
+<consoleoutput>
+<center id="out15">OUTPUT XV</center>
+ 			Unnamed: 0     Aroma    Flavor  Aftertaste   Acidity      Body   Balance  \
+altitude_mean_meters                                                                             
+12.000                 42.500000  8.295000  7.920000    7.960000  7.750000  8.125000  8.000000   
+426.720                52.000000  8.330000  8.170000    7.750000  8.000000  7.750000  7.830000   
+609.600                14.000000  8.330000  8.420000    8.080000  8.250000  8.250000  8.000000   
+853.440               304.000000  7.830000  7.830000    7.830000  7.670000  8.000000  8.170000   
+  ...                   ...       ...       ...         ...       ...       ...       ...  
+2560.000               90.000000  8.170000  7.830000    7.580000  8.080000  8.000000  7.750000   
+
+                      Uniformity  Clean.Cup  Sweetness  Cupper.Points  Total.Cup.Points  \
+altitude_mean_meters                                                                      
+12.000                 10.000000    10.0000  10.000000       8.125000         86.170000   
+426.720                10.000000    10.0000  10.000000       8.170000         86.000000   
+609.600                10.000000    10.0000  10.000000       8.580000         87.920000   
+853.440                 9.330000     9.3300  10.000000       7.750000         83.750000   
+  ...                   ...          ...      ...            ...               ... 
+2560.000               10.000000    10.0000  10.000000       7.670000         85.080000   
+
+                      Total.Defects  
+altitude_mean_meters                 
+12.000                     2.500000  
+426.720                    0.000000  
+609.600                    2.000000  
+853.440                    1.000000  
+  ...                      ...
+2560.000                   0.000000  
+</consoleoutput>
+
+
+		<p>
+		Lastly, primarily for learning purposes, 
+		I wanted to test for a relation between <code>'Country.of.Origin'</code> and <code>'Total_Cup_Points'</code>:
+		</p>
+
+
+<code><pre>print(new_comb.groupby(['Country.of.Origin', 'Total.Cup.Points']).count()['Unnamed: 0'])</pre></code>
+
+
+<consoleoutput>
+<center id="out16">OUTPUT XVI</center>
+Country.of.Origin             Total.Cup.Points
+Brazil                        84.50               1
+                              85.00               1
+                              85.42               1
+                              86.08               1
+                              86.17               2
+                              86.42               1
+                              86.92               1
+                              88.83               1
+China                         85.33               1
+                              87.25               1
+Colombia                      85.08               1
+                              85.25               2
+                              85.92               1
+                              86.00               1
+Costa Rica                    84.50               1
+                              84.67               1
+                              85.33               2
+                              86.33               1
+                              87.17               1
+El Salvador                   85.42               1
+                              85.58               2
+Ethiopia                      85.33               2
+                              85.83               1
+                              86.00               1
+                              86.25               2
+                              86.92               1
+                              87.08               1
+                              87.33               1
+                              87.83               1
+                              88.08               1
+                              88.25               1
+                              88.42               1
+                              88.67               1
+                              88.83               1
+                              89.00               1
+                              89.92               1
+                              90.58               1
+Guatemala                     83.67               1
+                              85.25               1
+                              85.33               1
+                              85.50               1
+                              85.83               2
+                              85.92               1
+                              89.75               1
+Honduras                      86.67               1
+Indonesia                     85.17               1
+                              87.42               1
+Kenya                         84.58               1
+                              85.33               1
+                              85.50               1
+                              86.00               1
+                              86.08               1
+                              86.25               1
+Mexico                        85.00               1
+                              87.17               1
+Nicaragua                     86.58               1
+Panama                        85.50               1
+                              85.83               1
+Papua New Guinea              85.75               1
+Peru                          88.75               1
+Taiwan                        83.92               1
+                              86.08               1
+                              86.58               1
+Tanzania, United Republic Of  84.92               1
+                              86.50               1
+Thailand                      84.00               1
+Uganda                        85.50               1
+                              85.92               1
+                              86.00               2
+                              86.83               1
+United States                 86.17               1
+                              87.08               1
+                              87.25               1
+                              87.58               1
+                              87.92               2
+United States (Hawaii)        83.33               1
+                              85.08               2
+                              85.58               1
+                              86.00               1
+                              86.25               1
+                              87.92               1
+United States (Puerto Rico)   83.75               1
+Name: Unnamed: 0, dtype: int64
+
+
+</consoleoutput>
+
+<p>
+	( Again, I am sorry for the length but this will serve as very important data in our Conclusion section. <3 )
+</p>
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+
+
+
+
+
+				<!-- ##################### start of row ##################### -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h2 id="toc_6">Conclusions</h2><br>
+						<p>
+						With my experimenting, cleaning, and processing done, it was time to use my findings to come to some conclusions. 
+						Hopefully with these conclusions I can go anywhere with an understanding of which coffees will have the highest probability of pleasing my taste buds.
+						</p>
+							<h4>I.</h4>
+								<p>
+								I.	The Outputs <a href="#out14">XIV</a> and <a href="#out16">XVI</a> showed me that while all countries have relatively similar numbers, due to the fact that I got rid of all the worst coffees, 
+								using the count attribute I saw that by far, there were more brands from Ethiopia and America that survived the cleaning. 
+								With thirty-two brands between them, these two countries provided 35% of the best coffees. 
+								So, when given the choice, American and Ethiopian coffees are more likely to deliver a pleasurable experience.
+								</p>
+							<h4>II.</h4>
+								<p>
+								II.	Digging through Output <a href="#out15">XV</a> I realized that altitude is largely a buzzword meant to entice you into thinking a coffee is superior because it is grown at a different altitude. 
+								Regardless of the column looked at, nothing changed linearly as you went higher in altitude. Altitude remained a random variable in relation to taste and total point counts.
+								The placebo effect and ingenious marketing powerful forces, no?
+								</p>
+							<h4>III.</h4>
+								<p>
+								III.	Lastly, running through Output <a href="#out16">XVI</a> I noticed that while the U.S. had a lot of coffees that ended up in the final 92, none of the these had a coffee above 88 total cup points. 
+								Ethiopia had 44% of their coffees in the final 92 scoring above an 88. Not only do they hold a higher percentage of our "Top 92", but they hold this with a higher overall score than their biggest contenders.
+								</p>
+						<p>
+						The number one characteristic to having a good probability of getting a “good” coffee, at least in relation to my tastes, belongs solely to the country of origin. 
+						And, running through multiple tests and experimenting with my variables, I have decided that the country that has the highest chance of giving me the <i>finest</i> coffee is Ethiopia. 
+						Next time I go into Wholefoods I will search for my next mug of beans with two major conclusions. One, Altitude is pointless, and just serves as a way to upsell the same beans. Two, a coffee from America will probably be fine, 
+						but one from Ethiopia will give me the highest chance of buying the perfect grinds for myself.<br>
+						Now, while we all enjoy coffee, we also all have our own opinions on a "good characteristic." Feel free to download pandas, run through the tutorial one more time, and enjoy Python's method to hunting for your own perfect cup.
+						</p>
+						
+
+						
+	
+
+					</div>
+					<!-- end of col -->
+				
+				</div>
+				<!-- end of row -->
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style="border: 0px solid; ">
+						
+
+					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #FF5126; padding: 2px; padding-bottom: 0px; text-align: center; color: #ffffff; margin-bottom: 4px;">
+
+						<p style="margin-bottom: 0px;">
+							Want Help With <span ><b><a href="../offerings/data_engineering.html" style="color:#ffffff;">Data Engineering? Check out our Data Engineering page for a list of services.</a>
+
+						</p>
+
+					</div>	
+
+				</div>
+				<!-- end of row -->
+
+
+
+			</div>
+			<!-- end of container -->
+		</div>
+		<!-- end of section -->
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

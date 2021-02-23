@@ -110,6 +110,11 @@ tr:nth-child(even) {
 
 }
 
+tr:nth-child(even) {background: #ffffff}
+tr:nth-child(odd) {background: #f2f2f2}
+
+th {background: #d9e7ff}
+
 </style>	
 
 	<script src="../js/modernizr-2.6.2.min.js"></script>
@@ -186,11 +191,14 @@ tr:nth-child(even) {
 
 					<div class="col-md-12" id="fh5co-content">
 						<h1 style="font-weight: bold !important;">Forecasting Your AWS GPU Cloud Spend for Deep Learning</h1>
-						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a>
-							<br/>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a><br/>
+							Date: 2/24/2021
+							
 							
 
 							</p>
+
+							<br/>
 
 
 <!--
@@ -202,24 +210,46 @@ tr:nth-child(even) {
 -->
 						<p>
 
-							In this post we look at how to forecast your AWS GPU spend.
-							we cover:
-							- how a typical user consumes GPU hours over the course of a month
-							- the types of users in an organization for GPUs
+							In this post we look at how to forecast your AWS GPU spend for Deep Learning workloads.
 
-							- general resource requirements for working with different types of models
-							
-							- what kinds of GPUs the users typically train models on
+							To do this we cover the following topics:
 
-							- build a spreadsheet model for how to forecast a monthly and yearly GPU spend
+							<ol>
+								<li>How a typical user consumes GPU hours over the course of a month</li>
+								<li>The types of users in an organization for GPUs</li>
+
+								<li>General resource requirements for working with different types of models</li>
+								
+								<li>What kinds of GPUs the users typically train models on</li>
+
+								<li>Building a spreadsheet model for how to forecast a monthly and yearly GPU spend</li>
+
+							</ol>
 
 
 						</p>
 						<p>
+							Why is this a compelling exercise?
 
-							We're going to focus purely on modeling GPU usage in this post. There are other services that a team may use but for the purposes of this analysis we are going to leave those AWS components out of the cost model for now.
 
 						</p>
+
+						<p>
+							Organizations are <a href="https://www.theregister.com/2020/09/03/cloud_control_costs/">over-budget for their cloud spend by an average of 23-percent</a>.
+
+						</p>
+						<p>
+							Beyond that an organization can easily <A href="https://info.flexera.com/SLO-CM-REPORT-State-of-the-Cloud-2020">waste 30% of their cloud spend</A> if they aren't careful. This challenge is only getting bigger with organizations expecting to spend 47% more on the cloud in 2021. Organizations are struggling to control costs because they are spending more than they expect in many cases. Although cloud providers offer nice discounts for future commitments, these only work out if you use the resources you commit to in the future, making resource forecasting a useful topic.
+
+						</p>
+						<p>
+
+							In this post we focus on a specific type of workload to give you a better sense of how to more realistically forecast your GPU spend for Deep Learning training.
+
+							We're going to focus purely on modeling GPU usage in this post. There are other services that a team may use but for the purposes of this analysis we are going to leave those AWS components (outside of <a href="https://aws.amazon.com/sagemaker/">SageMaker</a>) out of the cost model for now.
+
+						</p>
+
 
 
 						
@@ -239,23 +269,20 @@ tr:nth-child(even) {
 
 						<p>
 
-							What we we trying to calculate here?
 
-							why is this key to our argument?
+							The foundation of modeling GPU usage on the cloud is to document how our prototypical data scientist works.
 
-						</p>
-						<p>
 
-							what is our methodology?
+							To profile a typical organization's data scientist's deep learning habits, we'll consider the following areas:
 
 							<ol>
-								<li>Build criteria for what kind of workfloads we'll run</li>
-								<li>Take a look at different types of public cloud GPU options on AWS</li>
+								<li>What are the types of specific Deep Learning workloads they run and how many resources they require</li>
+								<li>Note the different types of public cloud GPU options on AWS</li>
 								<li>Understand any other tools on AWS, such as SageMaker, that may be relevant to building our cost model</li>
 
 							</ol>
 
-							we are looking to model "who are our users" and "what do they do", giving us the parameters to forecast our GPU spend on AWS.
+							This information will give us the required context needed to model how our organization's data scientists will consume AWS GPU resources.
 
 						</p>
 
@@ -265,27 +292,12 @@ tr:nth-child(even) {
 
 					<div class="col-md-12" id="fh5co-content">
 
-						<h2>Resource Requirements for Different Types of Data Science Workflows</h2>
+						<h2>Resource Requirements for Different Types of Deep Learning Workflows</h2>
 						
-							<p>
-
-								What are some common models that are run by data scientists?
-
-								What are the GPU requirements?
-
-								what are the memory requirements for the GPU and model size?
-							
-
-							</p>
-
-							<p>
-								If we're looking at modeling our GPU spend on AWS then its likely that we're supporting a team that is doing at least some deep learning workloads, so we'll focus our efforts on those types of workflows.
-
-							</p>
 
 							<p>
 
-								For context, we note <A href="https://timdettmers.com/2020/09/07/which-gpu-for-deep-learning/">Tim Dettmer's blog article on "Which GPU for Deep Learning"</A> where he makes some rough guidelines for memory requirements:
+								We'll use <A href="https://timdettmers.com/2020/09/07/which-gpu-for-deep-learning/">Tim Dettmer's blog article on "Which GPU for Deep Learning"</A> as a good starting place for both Deep Learning tasks and memory requirements per task type:
 
 								<ul>
 									<li>Using pretrained transformers; training small transformer from scratch >= 11GB</li>
@@ -294,22 +306,63 @@ tr:nth-child(even) {
 									<li>Kaggle competitions >= 8 GB</li>
 									<li>Applying computer vision >= 10GB</li>
 									<li>Neural networks for video: 24 GB</li>
-									<li>Reinforcement learning =10GB + a strong deep learning desktop the largest Threadripper or EPYC CPU you can afford.</li>
+									<li>Reinforcement learning: 10GB (+ a strong deep learning desktop the largest Threadripper or EPYC CPU you can afford).</li>
 								</ul>
 
-								For the purposes of modeling an enterprise data science group doing deep learning on AWS GPUs, we'll say that our "normal users" are running workloads that need from 8GB up to 16GB of GPU RAM (applying pre-trained networks and doing things in the "Kaggle"-class/jupyter notebooks).
+							</p>
+							<p>
+								Many times (especially on twitter) the discussion around Deep Learning only focuses on the academic research aspect of training and development. For our case we're focused on the prototypical Fortune 500 company's data science group, so the workloads are going to be more diverse (read: not everyone is training GPT3).
+
+							</p>
+
+							<p>
+
+								For the purposes of modeling an enterprise data science group doing deep learning on AWS GPUs, we will split our users into two groups:
+
+								<ol>
+									<li>Power Users</li>
+									<li>Normal Users</li>
+
+								</ol>
 
 
-
+								We'll say that our "normal users" are running workloads that need from 8GB up to 16GB of GPU RAM (applying pre-trained networks and doing things in the "Kaggle"-class/jupyter notebooks).
 
 
 
 							</p>
 							<p>
-								Beyond that, some of our power users may want to do things such as train transformer or convolutional neural networks and that will require more than 24GB of ram.
+								Beyond that, we'll say that some of our "power users" may want to do things such as "train a new transformer" or train convolutional neural networks and that will require more than 24GB of GPU RAM in many cases.
 
 							</p>
+							<p>
+								A quick note on the relationship between GPUs and model accuracy below.
 
+							</p>
+							
+							
+						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
+						  <p style="font-size: 14px;"><i>
+
+						  "We want to make a clear distinction around what we gain from GPUs, as many times this seems to be conflated in machine learning marketing. We define “predictive accuracy of model” as how accurate the model’s predictions are with respect to the task at hand (and there are multiple ways to rate models).
+Another facet of model training is “training speed,” which is how long it takes us to train for a number of epochs (passes over an entire input training dataset) or to a specific accuracy/metric. We call out these two specific definitions because we want to make sure you understand:
+<ol>
+<li>GPUs will not make your model more accurate.</li>
+<li>However, GPUs will allow us to train a model faster and find better models (which may be more accurate) faster.</li>
+</ol>
+So GPUs can indirectly help model accuracy, but we still want to set expectations here.."</i></p>
+
+						  <p>Oreilly's <a href="http://www.pattersonconsultingtn.com/content/kubeflow_operations_oreilly_book.html">"Kubeflow Operations Guide"</a>, Patterson, Katzenellenbogen, Harris (2020)</p>
+						</blockquote>	
+
+							<p>
+
+								Now that we've established our groups of users, what kinds of workloads they want to do, and also what some minimum GPU RAM requirements are for those workloads, we can move on and see what kind of AWS instances are offered that will support these workloads.
+
+
+
+
+							</p>
 
 					</div>	
 
@@ -318,51 +371,61 @@ tr:nth-child(even) {
 					<div class="col-md-12" id="fh5co-content">
 
 						<h2>Understanding the Different Types of Public Cloud GPU Options</h2>
+
+							<p>
+								In this section we're going to document which GPUs are offered in which instance types on AWS (and which GPUs are not). Using this table of GPUs, we can then compare their RAM and relative power to best determine which are best suited for our enterprise deep learning team's use cases.
+
+							</p>
+
+							<p>
+								There are many different type of GPU chipsets offered by NVIDIA and sometimes it gets confusing as to which GPU is best for your workload. On top of that, AWS offers different GPUs in different instance types, so you need a map of instance type to GPU type as well. Additionally, <a href="https://www.theregister.com/2018/01/03/nvidia_server_gpus/">NVIDIA won't allow certain types of GPUs to be used in a datacenter</a> so this further filters down which GPUs are offered by AWS.
+
+							</p>
 						
+
+
 							<p>
+								Here we're looking at the enterprise / data center as context for our GPU usage so we'll begin by listing the GPUs you won't find as public cloud instances (due to <a href="https://www.cnbc.com/2017/12/27/nvidia-limits-data-center-uses-for-geforce-titan-gpus.html">NVIDIA not rating them as suitable for data center use</a>):
 
-								what GPUs are available to us on AWS?
 
-								what instances match up?
+								<ul>
+									<li>Titan V</li>
+									<li>Titan RTX</li>
+									<li>RTX 2080 Ti</li>
+									<li>RTX 2080</li>
+								</ul>
 
-								which make the most sense for our workloads?
+								With those out of the way, we list below the NVIDIA GPUs you'll commonly find on most public clouds along with its associated AWS instance name:
+
+								<ul>
+									<li>M60 (g3 instances)</li>
+									<li>K80 (p2 instances)</li>
+									<li>T4 (g4 instances)</li>
+									<li>V100 (p3 instances)</li>
+									<li>A100 (p4 instances)</li>
+								</ul>
+
+								The 4 GPUs above are listed in order of power with the new A100 ("Amphere") design being the most powerful GPU in the NVIDIA line today. Beyond that, we give the following notes on the relative power of each chipset.
+
+							</p>
 							
-
-							</p>	
-
-
-							<p>
-								here we're looking at the enterprise / data center as context for our GPU usage
-
-								there are certain restrictions around using certain types of GPUs in a data center (RTX), etc
-
-								GPUs that are not "data center"-rated, so they won't show up as an option in the public cloud: (Titan V, Titan RTX, RTX 2080 Ti, and RTX 2080)
-
-								we are focused on the ones available (K80, T4, V100, A100)
-
-							</p>
-							<p>
-								For an analysis of deep learning GPUs from the perpsective of the research / non-data center crowd, check out:
-
-								https://timdettmers.com/2020/09/07/which-gpu-for-deep-learning/
-
-							</p>
 							<p>
 
-								NVIDIA restricted use of the Geforce / Titan line of Cards (Titan)
+								<ul>
+									<li>M60s are considered virtual workstations for graphics work, should be considered last options for Deep Learning in this group</li>
 
-								https://www.cnbc.com/2017/12/27/nvidia-limits-data-center-uses-for-geforce-titan-gpus.html
+									<li>The K80 is the p2.xlarge on amazon and is roughly 1/5 as powerful as the V100</li>
+									<li>The T4 chipset (G4 AWS Instances) is focused on inference workloads</li>
+									<li>The V100 GPU is the same series as in the NVIDIA DGX-1 cluster</li>
+									<li>The A100 is only offered (as of today) in an 8xGPU configuration</li>
 
-								https://www.theregister.com/2018/01/03/nvidia_server_gpus/
-
-							</p>
-							<p>
-								The K80 is the p2.xlarge on amazon and is roughly 1/5 as powerful as the V100 .
+								</ul>
 
 
 							</p>
+							<!--
 							<p>
-								The T4 chipset (G4 AWS Instances) is focused on inference workloads
+								
 
 								"Best single-GPU instance for developing, testing and prototyping: g4dn.xlarge(T4, 16 GB GPU). Consider g4dn.(2/4/8/16)xlarge for more vCPUs and higher system memory."
 
@@ -374,6 +437,8 @@ tr:nth-child(even) {
 								"G3 instances give you access to NVIDIA M60 GPUs based on the NVIDIA Maxwell architecture. NVIDIA refers to the M60 GPUs as virtual workstations and positions them for professional graphics, but you can also use them for deep learning. However, with much more powerful and cost-effective options for deep learning with P3 and G4 instances, G3 instances should be your last option for deep learning."
 
 							</p>
+
+						
 
 							<p>
 								Why are we focused on the V100 as the core instance for training here? (p3)
@@ -394,104 +459,213 @@ tr:nth-child(even) {
 
 							</p>
 
+						-->
+
+						<p>
+							Our regular users need from 8GB to 16GB of ram for their workloads, as described above, and they would either be using a T4 (g4 instance) or a V100 (16GB GPU RAM) as their main training GPU. Given that most users will go for more power if available, we imagine most of our users will opt for the more powerful <code>p3.2xlarge</code> instance but we'll cap them at a single GPU-profile to keep costs down.
+
+						</p>
+
+						<p>
+							Our power users need a bit more ram so we'll give them the <code>p3.8xlarge</code> instance with 64GB GPU RAM. In the next section we'll show the full table of p3 instances and their pricing. Let's now build up a hypothetical group of data scientists based on our profiles and calculate the team's GPU spend.
+
+
+						</p>
+
+
+
 					</div>		
 
 				
+
+				
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Building the GPU Spend Forecast</h1>
+
+						<p>
+
+							At this point in our process we know what workloads we are running and what kind of AWS GPU instances we're going to forecast our spend based on, so now we need to come up with a group of data scientists and how often they use GPU hours in the cloud.
+						</p>
+						<p>
+
+							Once we have our total monthly hours per group, we can forecast out our yearly AWS GPU spend.
+
+						</p>	
+
+					</div>
+					<div class="col-md-12" id="fh5co-content">
+
+						<h2>Profiling Our Data Science Team</h2>
+
+						<p>
+
+
+							As we mentioned before we have two groups of users: regular users, and power users. For the purposes of this exercise let's say we have 10 regular users and then 5 power users in our overall data science group.
+
+
+						</p>
+
+						<p>
+
+							Model training workflows can take seconds up to days to run, depending on the complexity of the model, the amount of data, and other factors. The regular users' jobs will tend to take less time to train because they will be less complex. 
+						</p>
+						<p>
+
+
+							The power users we've queried say some of their GPU-based training jobs can take multiple days, and then other times maybe a few hours. We will set their monthly budget of GPU hours at 900 GPU hours per month as they are training multiple models at the same time in some cases.
+
+						</p>	
+
+						<p>
+							We'll set our regular users' GPU hours at 40% of the power users so that has them consuming 360 GPU hours per month.
+
+						</p>	
+
+						<p>
+							It's worth mentioning that you are charged for hours the instances are allocated, not hours that we're actually training, so its easy for a team to accrue cloud usage hours faster than they think.
+
+						</p>	
+
+
+					</div>
+					<div class="col-md-12" id="fh5co-content">
+
+						<h2>AWS P3 Instance Pricing</h2>
+
+						<p>
+							In the table below we show AWS' pricing for the p3 instances.
+
+						</p>
+
+						<table class="c8">
+							<tbody>
+								<tr class="c11">
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Instance Size</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">GPUs - Tesla V100</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">GPU Peer to Peer</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">GPU Memory (GB)</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">vCPUs</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Memory (GB)</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Network Bandwidth</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">EBS Bandwidth</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">On-Demand Price/hr*</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">1-yr Reserved Instance Effective Hourly*</span></p></th><th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">3-yr Reserved Instance Effective Hourly*</span></p></th><th class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3">Blended Price Avg(OnDemand and 1yr Reserved)</span></p></th>
+								</tr>
+									<tr class="c9"><td class="c2" colspan="1" rowspan="1"><p class="c4"><span class="c1">p3.2xlarge</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">1</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">N/A</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">16</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">8</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">61</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Up to 10 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">1.5 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$3.06</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$1.99</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$1.05</span></p></td><td class="c5" colspan="1" rowspan="1"><p class="c10"><span class="c3">$2.53</span></p></td></tr><tr class="c9"><td class="c2" colspan="1" rowspan="1"><p class="c4"><span class="c1">p3.8xlarge</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">4</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">NVLink</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">64</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">32</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">244</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">10 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">7 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$12.24</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$7.96</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$4.19</span></p></td><td class="c5" colspan="1" rowspan="1"><p class="c10"><span class="c3">$10.10</span></p></td></tr><tr class="c9"><td class="c2" colspan="1" rowspan="1"><p class="c4"><span class="c1">p3.16xlarge</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">8</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">NVLink</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">128</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">64</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">488</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">25 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">14 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$24.48</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$15.91</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$8.39</span></p></td><td class="c5" colspan="1" rowspan="1"><p class="c10"><span class="c3">$20.20</span></p></td></tr><tr class="c9"><td class="c2" colspan="1" rowspan="1"><p class="c4"><span class="c1">p3dn.24xlarge</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">8</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">NVLink</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">256</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">96</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">768</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">100 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">19 Gbps</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$31.22</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$18.30</span></p></td><td class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">$9.64</span></p></td><td class="c5" colspan="1" rowspan="1"><p class="c10"><span class="c3">$24.76</span></p></td></tr>
+							</tbody>
+						</table>	
+						<br/>
+
+						<p>
+							We've added a column at the end where we've averaged the price of On-Demand instance pricing and 1-Year Reserved Instances. For this cost model this is the hourly cost we use for instances because we want to account for the fact that some AWS resources will be used by good forecasting and 1-Year Reserved instances at the lower price. However, we also want to account for users who will end up using On-Demand instances, so we average the two prices together. 
+
+						</p>					
+
+					</div>
+
+
 					<div class="col-md-12" id="fh5co-content">
 
 						<h2>AWS EC2 and SageMaker</h2>
 						
 							<p>
 
-								you may run ML just a stock GPU images
+								In some cases a data scientist may choose to simply send a container to a cloud instance and run it from the command-line. However, modern machine learning tooling uses dashboards, model metadata tracking, and other libraries. 
+							</p>
+							<p>
+								AWS offers SageMaker as their machine learning platform in this case.
 
-								a lot of people like a jupyter notebook env, so SageMaker often comes into play
+AWS SageMaker is a development platform for machine learning practitioners that offers a fully-managed environment for building, training, and deploying machine learning at scale.
 
-								how do we model the cost of sagemaker usage?
+SageMaker offers a Jupyter Notebook instance that allows the user to train a model and further use SageMaker’s API to drive other AWS services for tasks such as model deployment or hyperparameter tuning. All of the services are available via a high-level Python API in SageMaker.
+							</p>
+							<p>
+
+Under the hood SageMaker uses Docker images and S3 storage for training and model inference. You can also provide a Docker image to SageMaker containing your machine learning training code in any framework or language you want to use.
+
 							
 
 							</p>	
+							<p>
+AWS does not provide a clear pricing model for SageMaker as compared to traditional EC2 instances, so this makes it harder to forecast for pricing. 
+
+For the purposes of this document and pricing model we assume SageMaker introduces a 40% increase in cost compared to running a regular EC2 instance.
+
+							</p>
+<p>
+							At this point we have enough information to build our GPU cost forecast, so let's get to it.
+
+						</p>							
 
 
 					</div>				
 
 
-				
-				</div>
-				<!-- end of section -->
+					<div class="col-md-12" id="fh5co-content">
 
-				<!-- start of section -->
+						<h2>Calculating the Forecast</h2>
+						
+							<p>
 
-				<div class="row row-bottom-padded-sm">
+								For both groups, we take their projected GPU hours per month and calculate the GPU hours per year (Monthly GPU Hours x 12 months). For the power users we are allocating <code>p3.8xlarge</code> instances and we're using the averaged cost (On Demand and 1-Year Reserved averaged price) to calculate the yearly cost per user. From that we multiply the user cost by <code>1.4x</code> to get the SageMaker overhead cost per year. We can see the math displayed in the spreadsheet shot below.
+							
+
+							</p>
+
+							<img src="./images/aws_dl_gpu_forecast_example.png">
+
+							<br/>
+							<br/>
+
+							<p>
+								Once we have a cost per user per year, we multiply that number by the "Number of Users" in each group and add both of those numbers together. 
+							</p>
+							<p>
+									This give us a yearly AWS cost for GPUs (with SageMaker) of <code>$916,272.00</code>.
+
+
+							</p>
+
+
+					</div>		
 
 					<div class="col-md-12" id="fh5co-content">
 
-
-						<h1>Modeling an Organization's Group of Data Scientists</h1>
-
-						<p>
-
-							What kinds of data scientists do we have?
-
-						</p>	
-
-						<p>
-
-							how many of each group do we have?
-
-						</p>	
-
-						<p>
-
-							how many hours per month does a DS use a GPU?
-
-						</p>	
-
-						<p>
-							what does this make for a monthly GPU hour budget?
-
-						</p>			
-
-
-					</div>
-				
-				</div>
-				<!-- end of section -->
-
-
-
-
-
-				<!-- start of section -->
-
-				<div class="row row-bottom-padded-sm">
-
-					<div class="col-md-12" id="fh5co-content">
-
-
-						<h1>Forecasting Your Yearly Public Cloud GPU Spend</h1>
-
-						<p>
-
-							If we know
-							- what kind of gpus / instances we'll use
-							- how many DSs of each type
-							- how many hours / month each type uses
-
-							we can now forecast a monthly spend on AWS gpus
-
-						</p>	
 
 						<h2>Other Considerations</h2>
 
 						<p>
+							Now that we've walked through the complete sizing exercise, we'll note a few other relevant topics that can impact your cloud spending decisions.
 
-							- capex vs opex
+						</p>
 
-							- budgets
+						<p>
+							Some accounting departments will want a certain amount of spend to be a capital expense (CapEx) as opposed to an operational expenses (OpEx). Using cloud services is purely an operational expense, for reference. The reason accounting likes some of the expenses to be CapEx is that they can depreciate the hardware over time and help pay for the cost through reduced taxable income.
 
-							- is the cloud easier? how?
+						</p>
+						<p>
+							Another aspect of using cloud is how the billing is percieved. Previously your company dealt with many different enterprise vendors for different components. Once you started consolidating infrastructure services on public cloud, this began to consolidate cost into a single vendor's line item and accounting will note this increase for a single vendor as anomalous (and in some cases you are <a href="https://www.theregister.com/2020/09/03/cloud_control_costs/">using more cloud services than anticipated</a>). Combine this with the fact that you've moved a non-trivial amount of capital expenses over to the operational expenses column and this creates an interesting discussion with accounting. It's not good or bad, but it will change how accounting approaches things and there will likely be discussions to be had. From a pure cost perspective, these are aspects of using cloud services you'll need to consider as you find your way in the public cloud landscape.
 
+						</p>
+						<p>
+							The cost discussion is often intense, but many times IT will fire back "but the cloud is easier!"
+
+						</p>
+
+						<p>
+							In many cases this is true. For a real-time application we see the cloud services designed to be redundant, fault tolerant, and geographically-aware out of the box. In other cases, for workloads such as deep learning, many of these benefits are not as useful as you are looking for pure GPU horsepower in many cases.
+
+
+
+						</p>
+						<p>
+							Lastly we'll reiterate that you are charged for what you forget to turn off, and those GPU hours consumed can quickly pile up from notebook servers that are sitting idle. Another hidden cost is data that is transferred between AWS availability zones, where this is not a cost in an on-premise data center. We call these out to illustrate the need to be aware of the true cost of the agility of public cloud services.
 
 						</p>
 
@@ -516,12 +690,15 @@ tr:nth-child(even) {
 
 						<p>
 
-							TODO
+							As an AWS partner, we hope this article was useful for your organization, or just made you more aware about how to think about public cloud cost analysis.
+						</p>
+						<p>
+							Did you like the article? Do you think we are making a poor estimation somewhere in our calculations? <a href="../contact.html">Reach out and tell us</a>.
 
-						</p>	
+						</p>
+
 
 						<p>
-							If you'd like to better understand your company's GPU usage or would like us to build you a free customized forecast report of your company's specific GPU spend, please reach out.
 
 						</p>
 						
@@ -531,11 +708,60 @@ tr:nth-child(even) {
 				</div>
 				<!-- end of section -->											
 
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 28px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; ">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h2 style="color: #ffffff;">Free GPU Cloud Spend Analysis</h2>
+					
+						<p>
+							Would you like a customized cloud GPU spend analysis for your organization? Reach out and we’ll provide your company this GPU usage analysis report free of charge.
+
+
+
+						</p>
+					</div>
+				</div>
+
+
+
+
+
 			</div>
 		</div>
 
 
 
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
 
 	</div>
 	</div>

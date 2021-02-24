@@ -398,14 +398,14 @@ So GPUs can indirectly help model accuracy, but we still want to set expectation
 								With those out of the way, we list below the NVIDIA GPUs you'll commonly find on most public clouds along with its associated AWS instance name:
 
 								<ul>
-									<li>M60 (g3 instances)</li>
-									<li>K80 (p2 instances)</li>
-									<li>T4 (g4 instances)</li>
-									<li>V100 (p3 instances)</li>
-									<li>A100 (p4 instances)</li>
+									<li>M60 (<a href="https://aws.amazon.com/ec2/instance-types/g3/">g3 instances</a>)</li>
+									<li>K80 (<a href="https://aws.amazon.com/ec2/instance-types/p2/">p2 instances</a>)</li>
+									<li>T4 (<a href="https://aws.amazon.com/ec2/instance-types/g4/">g4 instances</a>)</li>
+									<li>V100 (<a href="https://aws.amazon.com/ec2/instance-types/p3/">p3 instances</a>)</li>
+									<li>A100 (<a href="https://aws.amazon.com/ec2/instance-types/p4/">p4 instances</a>)</li>
 								</ul>
 
-								The 4 GPUs above are listed in order of power with the new A100 ("Amphere") design being the most powerful GPU in the NVIDIA line today. Beyond that, we give the following notes on the relative power of each chipset.
+								The GPUs above are listed in descending order of power with the new <A href="https://images.nvidia.com/aem-dam/Solutions/Data-Center/nvidia-dgx-a100-datasheet.pdf">A100 ("Amphere") design being the most powerful GPU in the NVIDIA line today</A>. Beyond that, we give the following notes on the relative power of each chipset.
 
 							</p>
 							
@@ -462,7 +462,13 @@ So GPUs can indirectly help model accuracy, but we still want to set expectation
 						-->
 
 						<p>
-							Our regular users need from 8GB to 16GB of ram for their workloads, as described above, and they would either be using a T4 (g4 instance) or a V100 (16GB GPU RAM) as their main training GPU. Given that most users will go for more power if available, we imagine most of our users will opt for the more powerful <code>p3.2xlarge</code> instance but we'll cap them at a single GPU-profile to keep costs down.
+							Our regular users need from 8GB to 16GB of ram for their workloads, as described above, and they would either be using a T4 (g4 instance) or a V100 (16GB GPU RAM) as their main training GPU. <span style="font-weight: bold;">A V100 is roughly 3x more powerful than a T4 GPU</span>, for reference. Both p3 and g4 instances allow support for larger models (via more GPU RAM), high throughput, and low-latency access to CUDA. Both of these instances have support for mixed-precision training as well. Given that we can "just wait longer" in many cases for training, the gating mechanism for choosing an instance type ends up being "enough GPU memory for our use case".
+						</p>
+
+						<p>
+
+
+							Given that most users will go for more power if available, we imagine most of our users will opt for the more powerful <code>p3.2xlarge</code> instance but we'll cap them at a single GPU-profile to keep costs down.
 
 						</p>
 
@@ -541,6 +547,203 @@ So GPUs can indirectly help model accuracy, but we still want to set expectation
 
 
 					</div>
+					
+					<div class="col-md-12" id="fh5co-content">
+
+						<h2>AWS G4 Instance Pricing</h2>
+
+						<p>
+							In the table below we show AWS' pricing for the g4 instances.
+
+						</p>
+						<p>
+							It's worth noting that <a href="https://docs.amazonaws.cn/en_us/AmazonECS/latest/developerguide/ecs-gpu.html">all single GPU T4-based g4 instances have 16GB of GPU RAM</a> as this is not completely clear from the <a href="https://aws.amazon.com/ec2/instance-types/g4/">g4 instance page</a>.
+
+						</p>
+
+						<table class="">
+							<thead>
+								<tr>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Instance Size</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">GPUs - Tesla T4</span></p></th>
+
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">---</span></p></th>
+									
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">GPU Memory (GB)</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">vCPUs</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Memory (GB)</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">Network Bandwidth (Gbps)</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">EBS Bandwidth</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">On-Demand Price/hr*</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">1-yr Reserved Instance Effective Hourly*</span></p></th>
+									<th class="c2" colspan="1" rowspan="1"><p class="c0"><span class="c1">3-yr Reserved Instance Effective Hourly*</span></p></th>
+									<th class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3">Blended Price Avg(OnDemand and 1yr Reserved)</span></p></th>								
+								</tr>
+								
+							</thead>
+							<tbody>
+
+								<tr>
+									<td>g4dn.xlarge</td>
+									<td>1 GPU</td>
+									<td></td>
+									<td>16 GiB</td>
+									<td>4</td>
+									<td>16</td>
+									<td>Up to 25</td>
+									<td>Up to 3.5</td>
+									<td>$0.526</td>
+									<td>$0.316</td>
+									<td>$0.210</td>
+									<td>$0.421</td>
+
+								</tr>
+
+
+								<tr>
+									<td>g4dn.2xlarge</td>
+									<td>1 GPU</td>
+									<td></td>
+									<td>16 GiB</td>
+									<td>8</td>
+									<td>32</td>
+									<td>Up to 25</td>
+									<td>Up to 3.5</td>
+									<td>$0.752</td>
+									<td>$0.452</td>
+									<td>$0.300</td>
+									<td>$0.602</td>
+
+								</tr>		
+
+
+								<tr>
+									<td>g4dn.4xlarge</td>
+									<td>1 GPU</td>
+									<td></td>
+									<td>16 GiB</td>
+									<td>16</td>
+									<td>48</td>
+									<td>Up to 25</td>
+									<td>4.75</td>
+
+									<td>$1.204</td>
+									<td>$0.722</td>
+									<td>$0.482</td>
+									<td>$0.963</td>
+
+								</tr>
+
+								<tr>
+									<td>g4dn.8xlarge</td>
+									<td>1 GPU</td>
+									<td></td>
+									<td>16 GiB</td>
+									<td>32</td>
+									<td>128</td>
+									<td>50</td>
+									<td>9.5</td>
+
+
+									<td>$2.176</td>
+									<td>$1.306</td>
+									<td>$0.870</td>
+									<td>$1.741</td>
+
+								</tr>
+
+
+
+
+								<tr>
+									<td>g4dn.16xlarge</td>
+									<td>1 GPU</td>
+									<td></td>
+									<td>16 GiB</td>
+									<td>64</td>
+									<td>256</td>
+									<td>50</td>
+									<td>9.5</td>
+
+									<td>$4.352</td>
+									<td>$2.612</td>
+									<td>$1.740</td>
+									<td>$3.482</td>
+
+								</tr>	
+
+
+								<tr>
+									<td></td>
+									<td style="font-weight: bold;"></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+
+
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+
+								</tr>
+								<tr>
+									<td>Multi-GPUs:</td>
+									<td style="font-weight: bold;"></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+
+
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+
+								</tr>
+
+								<tr>
+									<td>g4dn.12xlarge</td>
+									<td style="font-weight: bold;">4 GPU</td>
+									<td></td>
+									<td>64 GiB</td>
+									<td>48</td>
+									<td>192</td>
+									<td>50</td>
+									<td>9.5</td>
+
+
+									<td>$3.912</td>
+									<td>$2.348</td>
+									<td>$1.564</td>
+									<td>$3.130</td>
+
+								</tr>
+
+
+							</tbody>
+
+						</table>
+
+						<br/>
+
+						<p>
+
+							Given the limited GPU memory ceiling (16GB outside of the <code>g4dn.12xlarge</code>) and the T4 being 1/3 as powerful as the V100, the g4 ends up being most appropriate for our "Kaggle"-users who are exploring notebooks or doing inference with pre-trained models.
+
+						</p>
+
+					</div>
+
+
+
+
 					<div class="col-md-12" id="fh5co-content">
 
 						<h2>AWS P3 Instance Pricing</h2>

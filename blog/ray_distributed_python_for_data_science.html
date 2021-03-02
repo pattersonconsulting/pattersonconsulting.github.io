@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: Ray: Distributed Python for Data Science and Other Applications</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="ray, distributed, Reinforcement learning, blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Ray: Distributed Python for Data Science and Other Applications"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/ray_distributed_python_for_data_science.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we have our friend Dr. Dean Wampler from Domino Data Lab writing a guest blog post about Ray and it's use cases."/>
+	
+
+	<meta name="twitter:title" content="Ray: Distributed Python for Data Science and Other Applications" />
+	<meta data-rh="true" property="twitter:description" content="In this post we have our friend Dr. Dean Wampler from Domino Data Lab writing a guest blog post about Ray and it's use cases."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/ray_distributed_python_for_data_science.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+tr:nth-child(even) {background: #ffffff}
+tr:nth-child(odd) {background: #f2f2f2}
+
+th {background: #d9e7ff}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+
+
+
+
+
+
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+<!--
+	<div id="cta_overlay_panel" class="overlay">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <div class="overlay-content">
+
+
+			<div class="input_container_popup" style="width: ; height: 700px; padding: 10px;">
+
+			</div>
+
+		</div>
+	</div>
+-->
+	
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="../index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+
+
+					<div class="col-md-12" id="fh5co-content">
+						<h1 style="font-weight: bold !important;">Ray: Distributed Python for Data Science and Other Applications</h1>
+						<p>Author: <a href="http://deanwampler.com">Dean Wampler</a>, <a href="https://dominodatalab.com">Domino Data Lab</a><br/>
+							Date: 3/3/2021
+							
+							
+
+						</p>
+
+							<br/>
+
+
+						<p>
+							<span style="font-weight: bold;">Editorial Note</span><br/>
+
+							<i>In this post we have our friend Dr. Dean Wampler from Domino Data Lab writing a guest blog post about Ray and it's use cases. We hope you enjoy the post.</i>
+
+
+						</p>
+
+
+
+						
+
+
+					</div>
+
+					<!-- end content -->
+
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+
+						<h1>Why Do We Need Ray?</h1>
+
+						<p>
+
+						Training machine learning models, especially neural networks, is compute intensive. However, much of the load can be partitioned into smaller tasks and distributed over a large cluster. Several years ago, artificial intelligence researchers at the University of California, Berkeley, needed an easy way to do this for the algorithms they were researching and developing. They were expert Python programmers, but they didn’t want to spend lots of time and energy using most toolkits available. They didn’t need a lot of sophistication or fine-grained controls. They just needed the simplest possible API that made good default choices behind the scenes to scale the work over a cluster, leveraging available resources, restarting failed tasks, and managing the computation results for easy consumption.  
+						</p>
+						<p>
+						Out of this need emerged <a href="https://ray.io/">Ray</a>, an open-source system for scaling Python (and now Java) applications from single machines to large clusters. What appeals to me about Ray is that the API is simple, concise, and intuitive to use, especially for people without distributed computing experience, yet it is very flexible for a wide class of problems. 
+						</p>
+						<p>
+
+						You can certainly find more sophisticated toolkits with greater extensibility and flexibility, but they always require more effort to learn and use. That may be the right choice for many projects, but when you need an easy-to-use framework and you don’t need absolute control over how it works, say for example in order to achieve the maximum possible performance and efficiency, then Ray is ideal.
+
+							
+
+						</p>
+
+					</div>	
+
+						
+
+				
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Ray Tasks</h1>
+
+						<p>
+Let’s look at a simple example that illustrates how easy it is to use Ray for “low-level” distribution over a cluster. Then I’ll briefly mention several higher-level toolkits for machine learning that leverage Ray. The <a href="https://docs.ray.io/en/latest/package-ref.html">Ray API documentation</a> and <a href="https://ray.io">Ray website</a> provide a lot more information than I can cover here.
+</p>
+<p>
+Suppose we want to implement a simple DNS server. We could start as follows. If you’re playing along at home, copy and paste this code into the Python interpreter:
+</p>
+<code><pre>import time                       # We'll use sleep to simulate long operations.
+
+addresses = {                     # Some absolutely correct addresses.
+  "google.com":    "4.3.2.1",
+  "microsoft.com": "4.3.2.2",
+  "amazon.com":    "4.3.2.3",
+}
+
+def lookup(name):                 # A function to return an address for a name.
+  time.sleep(0.5)                 # It takes a long time to run!
+  return name, addresses[name]    # Also return the name with the address.
+
+start = time.time()               # How long will this take?
+for name in addresses:            # Use the keys in addresses...
+  n, address = lookup(name)       # ... but go through lookup for the values.
+  delta = time.time() - start
+  print(f"{name}:\t {address}   ({delta:.3f} seconds)")
+
+# The results:
+# google.com:      4.3.2.1   (0.504 seconds)
+# microsoft.com:   4.3.2.2   (1.008 seconds)
+# amazon.com:      4.3.2.3   (1.511 seconds)
+</pre></code>
+<p>
+
+The comments at the end show that it takes about 0.5 seconds per query. Let’s reduce this overhead with Ray.
+</p>
+<p>
+
+First, you’ll need to install Ray using <code>pip install ray</code>. That’s all you need to do for this exercise, where we’ll just run Ray in a single process, but it will leverage as many threads across our CPU cores as we want. If you wanted to run Ray in a cluster, there are setup steps you would do as described in the <a href="https://docs.ray.io/en/latest/cluster/index.html">documentation</a>.
+</p>
+<p>
+
+Restart the Python interpreter after pip installing Ray. Now we can create a Ray task to run these queries in parallel. 
+</p>
+<code><pre>import time
+import ray                        # Import the Ray library
+
+ray.init()                        # Initialize Ray in this application
+
+addresses = {
+  "google.com":    "4.3.2.1",
+  "microsoft.com": "4.3.2.2",
+  "amazon.com":    "4.3.2.3",
+}
+
+@ray.remote                       # Decorator turns functions into Ray Tasks.
+def ray_lookup(name):             # Otherwise, it's identical to lookup(). 
+  time.sleep(0.5)
+  return name, addresses[name]
+
+start = time.time()
+for name in addresses:
+  reference = ray_lookup.remote(name)   # Start async. task with foo.remote().
+  n, address = ray.get(reference)       # Block to get the result.
+  delta = time.time() - start
+  print(f"{name}:\t {address}   ({delta:.3f} seconds)")
+
+# google.com:      4.3.2.1   (0.520 seconds)
+# microsoft.com:   4.3.2.2   (1.024 seconds)
+# amazon.com:      4.3.2.3   (1.530 seconds)
+</pre></code>
+<p>
+
+We didn’t improve our results, but we’ll fix that in a moment. First, let’s discuss what’s new.
+</p>
+<p>
+
+You import the Ray library and call <code>ray.init()</code> to initialize it in your application. You could pass arguments to <code>ray.init()</code> to connect to a running cluster, configure some behaviors, etc.
+</p>
+<p>
+
+When you decorate a Python function with <code>@ray.remote</code>, you convert it into a Ray task. When invoked, it will run asynchronously somewhere in your cluster, or just the CPU cores on our laptop, in our case. Already, this gives the ability to easily break the one-thread limitation of Python itself. All the cores are belong to us!
+</p>
+<p>
+
+Notice how the loop has changed. When you invoke a task, you append <code>.remote(...)</code> to the function. A benefit of this required change is documentation for the reader; it’s clear that a Ray task is being invoked.
+</p>
+<p>
+
+Tasks immediately return a reference that can be used to retrieve the result of the task, once it has finished. We do this immediately by calling <code>ray.get(reference)</code>, which blocks until the task is finished.
+</p>
+<p>
+
+That’s why we didn’t improve our performance. We waited for each task to finish, one at a time. However, this is easy to fix. Instead of calling <code>ray.get(reference)</code> immediately, we should “fire off” all the tasks, then wait on the results all at once:
+</p>
+<code><pre>start = time.time()
+references = [ray_lookup.remote(name) for name in addresses]                 
+
+ns_addresses = ray.get(references)           # Wait on all of them together.
+for name, address in ns_addresses:
+  delta = time.time() - start
+  print(f"{name}:\t {address}   ({delta:.3f} seconds)")
+
+# google.com:      4.3.2.1   (0.513 seconds)
+# microsoft.com:   4.3.2.2   (0.513 seconds)
+# amazon.com:      4.3.2.3   (0.513 seconds)
+
+</pre></code>
+<p>
+
+Much better! It still takes at least 0.5 seconds, because no one task can finish faster than that. The call to <code>ray.get(array)</code> still blocks until all of them finish. There is also a <code>ray.wait()</code> API call that can be used to avoid blocking and to process results as they become available. See the <a href="https://docs.ray.io/en/latest/package-ref.html#ray-wait">documentation for it</a> and the <a href="https://github.com/anyscale/academy/blob/master/ray-crash-course/01-Ray-Tasks.ipynb">Ray tutorials</a> for details.
+						</p>
+
+
+
+					</div>
+
+
+
+				
+				</div>
+				<!-- end of section -->		
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Ray Actors</h1>
+
+						<p>
+A big challenge in distributed programming is managing distributed state. Ray addresses this problem with the concept of Actors. If you have ever worked with the Erlang language or the Akka system for the JVM, you have used actors.
+</p>
+<p>
+Basically, an actor is implemented with a Python class and any state is held by fields in the class instances. The Ray actor encapsulation of these instances ensures thread safety when many Ray tasks or other actors are simultaneously interacting with the actor. Our actors are like “mini servers”.
+</p>
+<p>
+Let’s use an actor to hold the DNS data. Until now, we’ve had a bottleneck trying to access the single dictionary and it was “stuck” in our driver ipython process. With actors, we can spin up as many of them as we want over a cluster and distribute the load to them. There are even facilities in Ray where you can query Ray for the running actors. We won’t look at those two features now, we’ll just use a single actor.
+</p>
+<p>
+First, here’s the <code>DNSServer</code> Ray actor:
+</p>
+
+<code><pre>import ray
+
+@ray.remote
+class DNSServer(object):
+    def __init__(self, initial_addresses):
+        # A dictionary of names to IP addresses.
+        self.addresses = initial_addresses
+
+    def lookup(self, name):
+        return name, self.addresses[name]
+
+    def get_addresses(self):
+        return self.addresses
+
+    def update_address(self, name, ip):
+        self.addresses[name] = ip
+</pre></code>
+<p>
+Except for the familiar <code>@ray.remote</code> decorator, this looks like a regular Python class, although we also added a <code>get_addresses</code> method. In a normal Python object, you could just read fields like addresses. Ray actors require getter methods to read fields.
+</p>
+<p>
+Now let’s use it. For convenience, I’ll show the whole Python script, including some things we already defined above. Let’s start with the setup of the actor:
+</p>
+
+<code><pre>import ray
+import time
+from dns_server import DNSServer
+
+#ray.init()                       # Uncomment if this is a new ipython session.
+
+server = DNSServer.remote({       # Construct actor instances with .remote
+  "google.com":    "4.3.2.1",
+  "microsoft.com": "4.3.2.2",
+  "amazon.com":    "4.3.2.3",
+})
+server.update_address.remote("twitter.com", "4.3.2.4")
+server.update_address.remote("instagram.com", "4.3.2.5")
+
+ref = server.get_addresses.remote()
+names_addresses = ray.get(ref)
+for name, address in names_addresses.items():
+  print(f"{name}:\t {address}")
+
+# google.com:      4.3.2.1
+# microsoft.com:   4.3.2.2
+# amazon.com:      4.3.2.3
+# twitter.com:     4.3.2.4
+# instagram.com:   4.3.2.5
+</pre></code>
+<p>
+Note that instances are constructed and methods are invoked with remote, just like we did for tasks. Now we can use the actor:
+</p>
+
+<code><pre>@ray.remote                 
+def ray_lookup(name):             # Now use the server.
+  time.sleep(0.5)
+  return name, server.lookup.remote(name)
+
+
+start = time.time()
+refs = [ray_lookup.remote(name) for name in names_addresses.keys()]
+
+names_refs2 = ray.get(refs)
+for name, ref2 in names_refs2:
+  delta = time.time() - start
+  name2, address = ray.get(ref2)
+  print(f"{name}:\t {address}   ({delta:.3f} seconds)")
+
+# google.com:      4.3.2.1   (0.512 seconds)
+# microsoft.com:   4.3.2.2   (0.512 seconds)
+# amazon.com:      4.3.2.3   (0.516 seconds)
+# twitter.com:     4.3.2.4   (0.517 seconds)
+# instagram.com:   4.3.2.5   (0.519 seconds)
+</pre></code>
+<p>
+We don’t really need to go through <code>ray_lookup</code> to call the server, but we’ll do it anyway. There are two levels of references that result. First, <code>ray_lookup</code> returns a name and a reference to the IP address that the server returns. Therefore <code>names_refs</code> is an array of name-reference pairs. Then, when we call <code>ray.get(ref2)</code> on each reference, we get back another copy of the name and the address. It’s worth printing out what each call to <code>ray.get</code> returns, to understand what’s happening.
+</p>
+<p>
+If you write a lot of Python code and you occasionally find yourself needing to parallelize work to make it faster, whether on your laptop or in a cluster, I hope you can appreciate how concise Ray is for this purpose. You can even manage state with actors. As the last example showed, you have to carefully manage the “indirection” through references so it doesn’t become too complex, but in most real-world applications, this is not that hard to do.
+</p>
+<p>
+The Ray API is quite general purpose and flexible for all kinds of applications. While it emerged in the ML/AI world, it is not restricted to data science applications at all.
+
+
+						</p>
+						
+
+					</div>
+				
+				</div>
+				<!-- end of section -->											
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Ray for Machine Learning</h1>
+
+						<p>
+
+							However, because Ray emerged in the ML/AI research community, most of the available libraries that use Ray are ML and AI focused. I’ll discuss a few now.
+						</p>
+
+						<h2>Ray RLlib</h2>
+						<p>
+Reinforcement Learning became a hot topic in ML when Deep Mind used it to achieve expert-level game play, first in Atari games, and then to beat the world’s best Go players. 
+
+<a href="http://rllib.io">Ray RLlib</a> is one of the world’s leading libraries for RL, with performance on par with custom implementations of RL algorithms, yet it is very general purpose to support a wide class of algorithms for RL and environments, like games, robotics, etc., for which you might train an RL system. 
+
+Here is a quick example using the command-line tool for RLlib, although you could also use the Python API. 
+First, you need to install RLlib, <code>pip install ‘ray[rllib]’</code>. Then you can run the following command. The $ is the command prompt (*NIX or  Windows). The command wraps across two lines. There is a lot of output. I’ll show the first and last “status” messages, which I edited to fit the page:
+</p>
+
+<code><pre>$ rllib train --run PPO --env CartPole-v1 --stop='{"training_iteration": 20}' --checkpoint-freq 10 --checkpoint-at-end</pre></code>
+<consoleoutput>…
+== Status ==
+Memory usage on this node: 19.4/32.0 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 3/8 CPUs, 0/0 GPUs, 0.0/11.52 GiB heap, 0.0/3.96 GiB objects
+Result logdir: /Users/deanwampler/ray_results/default
+Number of trials: 1 (1 RUNNING)
++--------------------+------------+-------+------+--------------+-------+----------+
+| Trial name         | status     | loc   | iter |     time (s) |    ts |   reward |
++--------------------+------------+-------+------+--------------+-------+----------+
+| PPO_CartPole-v1_…. | RUNNING    | ip:N  |    1 |      7.39127 |  4000 |  22.2011 |
++--------------------+------------+-------+------+--------------+-------+----------+
+
+
+…
+== Status ==
+Memory usage on this node: 19.3/32.0 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 0/8 CPUs, 0/0 GPUs, 0.0/11.52 GiB heap, 0.0/3.96 GiB objects
+Result logdir: /Users/deanwampler/ray_results/default
+Number of trials: 1 (1 TERMINATED)
++--------------------+------------+-------+------+--------------+-------+----------+
+| Trial name         | status     | loc   | iter |     time (s) |    ts |   reward |
+|--------------------+------------+-------+------+--------------+-------+----------|
+| PPO_CartPole-v1_…. | TERMINATED | ip:N  |   20 |       95.503 | 80000 |   494.77 |
++--------------------+------------+-------+------+--------------+-------+----------+
+</consoleoutput>
+
+<p>
+The command trains a neural network on the CartPole environment, which I’ll describe in a moment. It uses a popular distributed training algorithm called PPO (“proximal policy optimization”) with a stopping condition that it should run for 20 iterations only. You could also specify stopping conditions related to performance, such as the reward value. The --checkpoint* flags control how often a checkpoint of the “agent” (the thing that operates in the CartPole environment) is saved. This includes a simple neural network being trained. We mostly care about the final agent, which --checkpoint-at-end saves, but the --checkpoint-freq flag is useful in case the job fails for some reason. We can restart from the last checkpoint.
+</p>
+<p>
+<a href="https://gym.openai.com/envs/CartPole-v1/">CartPole</a> is the “hello world” of training environments. It is part of the <a href="http://openai.com/">OpenAI</a> library of “gyms” for “exercising” RL algorithms. The idea is to train a cart to balance a vertical pole, where the cart can move left or right and the pole is restricted to two dimensions. Here is a screenshot in action.
+
+						</p>
+
+						<img src="https://raw.githubusercontent.com/tensorflow/agents/master/docs/tutorials/images/cartpole.png" style="border: 1px solid #cccccc;" />
+
+
+						<p>
+
+You can see an animation on the <a href="https://gym.openai.com/envs/CartPole-v1/">CartPole-v1 page</a>, which also describes this environment.
+</p>
+<p>
+I said the model was checkpointed, but where? By default, it’s written to your <code>$HOME/ray_results directory</code>. We can use the last checkpoint to “rollout” the model and see how well it works. Here I have elided the full directory name starting with <code>PPO_CartPole-v1</code>. Once again, the command takes two lines:
+</p>
+
+<code><pre>$ rllib rollout ~/ray_results/default/PPO_CartPole-v1.../checkpoint_20/checkpoint-20 --run PPO</pre></code>
+
+<consoleoutput>…
+Episode #0: reward: 500.0
+Episode #1: reward: 484.0
+...
+Episode #19: reward: 458.0
+Episode #20: reward: 488.0
+Episode #21: reward: 367.0
+</consoleoutput>
+<p>
+A dialog will pop up that animates the rollout so you can see how well it works. You’ll see the pole start to fall left or right and the cart will move in an attempt to keep it upright. The reward points count the number of iterations where it successfully stays vertical and the cart doesn’t hit the left or right boundary, for a maximum of 500 iterations. It works very well.
+</p>
+<p>
+So, the command line rllib is great for many quick training runs and experiments, but there is a full Python API when you need to dive deeper. See the <a href="https://github.com/anyscale/academy/tree/master/ray-rllib">Anyscale Academy RLlib tutorials</a> for in-depth examples. 							
+
+						</p>
+
+						<h2>Ray Tune</h2>
+
+						<p>
+
+I said that we trained a neural network with RLlib, but what were the parameters of that network and were they optimal? By default, a network with two hidden layers of 256 parameters each is used. These are two of many hyperparameters that we might want to tune to optimize the architecture of the neural network and the effectiveness of our RL agent. 
+</p>
+<p>
+
+<a href="http://tune.io">Ray Tune</a> is built for this purpose. Using its own CLI or API, you specify the hyperparameters you want to tune, usually specifying a range of allowed values, along with any fixed hyperparameters, then Tune runs experiments for you to find the optimal performance. Tune uses several algorithms to optimize this potentially-expensive process, such as early termination of training runs for hyperparameter sets that appear to be suboptimal.							
+
+						</p>
+
+						<h2>Other Ray Libraries</h2>
+
+						<p>
+
+							Several other libraries come with Ray, as shown in the <a href="https://docs.ray.io/en/latest/index.html">documentation</a> and many third-party libraries now use Ray to implement scalable computation.
+
+
+						</p>
+						
+
+					</div>
+				
+				</div>
+				<!-- end of section -->											
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Where to Go from Here</h1>
+
+						<p>
+
+							I hope you found this short introduction to Ray intriguing. To learn more about Ray, check out these resources:
+
+							<ul>
+								<li><a href="https://ray.io">Ray website</a> - Information about the community, <a href="https://github.com/anyscale/academy">tutorials</a>, and <a href="https://docs.ray.io/en/latest/index.html">documentation</a>.</li>
+								<li>Talks I’ve given about Ray with more depth:
+
+									<ul>
+										<li><a href="https://deanwampler.github.io/polyglotprogramming/papers/ClusterWideScalingOfMLWithRay.pdf">Ray - Scalability from a Laptop to a Cluster</a></li>
+										<li><a href="https://deanwampler.github.io/polyglotprogramming/papers/ReinforcementLearningWithRayRLlib.pdf">Reinforcement Learning with Ray</a></li>
+										<li><a href="https://deanwampler.github.io/polyglotprogramming/papers/RayForNLP.pdf">Ray for Natural Language Processing</a></li>
+
+									</ul>
+								</li>
+								<li><a href="https://anyscale.com">Anyscale</a> - the commercial company developing Ray and Ray-based products and services. The <a href="https://www.anyscale.com/blog">blog</a> and <a href="https://www.anyscale.com/events">events</a> pages provide lots of useful information about usage of Ray in a variety of organizations and industries.</li>
+
+							</ul>
+						
+
+						</p>
+
+
+						<p>
+
+						</p>
+						
+
+					</div>
+				
+				</div>
+				<!-- end of section -->											
+
+
+
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

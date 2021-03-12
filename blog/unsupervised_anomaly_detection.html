@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: GANs for Unsupervised Anomaly Detection</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, gans, unsupervised learning, anomaly detection, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="GANs for Unsupervised Anomaly Detection"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/unsupervised_anomaly_detection.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this article we’ll discuss why unsupervised learning is so compelling, especially in industries like manufacturing. We’ll build and train a Generative Adversarial Network (GAN) on a manufacturing dataset, create an anomaly detection algorithm using our trained GAN, and explore its performance."/>
+	
+
+	<meta name="twitter:title" content="GANs for Unsupervised Anomaly Detection" />
+	<meta data-rh="true" property="twitter:description" content="In this article we’ll discuss why unsupervised learning is so compelling, especially in industries like manufacturing. We’ll build and train a Generative Adversarial Network (GAN) on a manufacturing dataset, create an anomaly detection algorithm using our trained GAN, and explore its performance."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/unsupervised_anomaly_detection.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>GANs for Unsupervised Anomaly Detection</h1>
+
+
+						<p>Author: <a href="https://www.linkedin.com/in/stephencwelch">Stephen Welch</a>
+							<br/>
+							
+
+							</p>
+
+						<p>
+
+							In this article we’ll discuss why unsupervised learning is so compelling, especially in industries like manufacturing. We’ll build and train a Generative Adversarial Network (GAN) on a manufacturing dataset, create an anomaly detection algorithm using our trained GAN, and explore its performance.
+
+
+						</p>
+<!--
+						<iframe width="1120" height="630" src="https://www.youtube.com/embed/33wVaI7NUPw?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+-->
+						<iframe width="1120" height="630" src="https://www.youtube.com/embed/nauCbzLLd8E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+						<h2>The Dream of Unsupervised Learning</h2>
+						
+						<p>
+							It’s difficult to fully grasp the scale of modern manufacturing. This year manufacturers will churn out over 50 billion square feet of carpet, more than 100 quintillion transistors, and in excess of one billion toothbrushes. That’s over 1900 new toothbrushes every second. Now, let’s say you work for one of these manufacturers, and it’s your job to ensure that each product that reaches your customers is of good quality. 
+						</p>
+						<p>
+							How do you do it? You could hire an army of inspectors to manually inspect each item, but as you can imagine this can bring huge training and labor challenges, and repeating a task like this day in and day out is just not something we humans are terribly good at. 
+						</p>
+						<p>
+							For the last 30 years or so, a relatively common approach in modern manufacturing is to automate inspection using cameras and computers. Snap a picture of each product, process the pixels in that image using an algorithm to determine if a part is of good quality, and output a signal to factory equipment to automatically remove bad parts from production.
+
+						</p>
+
+						<p>
+							Now, if you have experience with Computer Vision, you may know that things are not always so straightforward. Sure, for some applications, simple computer vision algorithms ran reliably differentiate good from bad product, but for many applications, it’s just not so easy to develop algorithms to spot bad products in images. 
+						</p>
+
+						<p>
+							Fortunately, thanks to deep learning, the state of the art in Computer Vision has advanced dramatically in the last 5-10 years. We can now train deep learning models to solve Computer Vision tasks, such as ImageNet classification, that simply weren’t solvable before modern deep neural nets. However, the performance improvement we gain with deep learning does come at a cost. Since deep learning is an aggressively empirical approach - deep neural networks learn basically everything they know from data - our performance will only as good as the data we train on. 
+						</p>
+
+						<p>
+							In the early days of deep learning this meant good performance could only be had at the cost of very large labeled datasets - the dataset used in the infamous 2012 alexnet paper came from the <a href="http://www.image-net.org/challenges/LSVRC/2012">ImageNet ILSVRC challenge</a> - which contains around one million labeled training images. 
+
+						</p>
+							And while we’ve made strong progress as a community around required dataset size, we’ve made significantly less progress on the other big deep learning requirement: labels. Today, most production-grade deep learning models use supervised learning, meaning these models need labeled data to learn anything. 
+						<p>
+
+						<p>
+							Labeling is such a pain point today that we see a plethora of <a href="https://fortune.com/2020/02/04/artificial-intelligence-data-labeling-labelbox/">new companies</a> popping up offering labeling tools and services. Labeling can be particularly difficult in the manufacturing industry, where the labeling questions become more nuanced and can require significant domain expertise (e.g. does the shift in color across the body of this transistor indicate poor thermal performance?)
+						</p>
+
+
+						<p>
+							Alright, you probably know where we’re going here. 
+						</p>
+
+
+						<p>
+							What if…we didn’t have to label? 
+						</p>
+
+
+						<p>
+							What if we could just hand our deep learning models a bunch of images, and let it sort out what’s what? As you may already know, this is exactly the idea behind our topic today: unsupervised learning. 
+						</p>
+
+						<h2>But like, how?</h2>
+
+						<p>
+							So how the heck to we get a deep learning algorithm to learn to identify bad products without providing it any examples explicitly labeled bad? 
+
+						</p>
+
+						<p>
+							There’s quite a few approaches to unsupervised learning out there, for our discussion today, let’s hone in on a terrific (and underrated) 2019 paper from researchers at the Machine Vision company MVTec. The paper introduces the MVTec AD dataset we’ll be using, and importantly explores a number of state of the art unsupervised anomaly detection approaches on the dataset.
+						</p>
+
+						<span style="display: inline-block; text-align: center; ">
+							<figure>
+								<img src="./images/figure_1.png" style=" width: 80%;" />
+								<figcaption>Figure 1. Sample from the MVTec AD Dataset</figcaption>
+							</figure>
+						</span>	
+
+						<p>
+							At the core of these approaches is a simple plan of attack. Provide a learning algorithm with a sample of images of good products, let it learn something about the distribution or typical appearance of these good products, and then use this acquired knowledge to automatically detect if a new image has wandered too far from that typical appearance or distribution, and if it has, flag it as anomalous. Easy right?
+
+						</p>
+
+						<p>
+							Now, you may be raising your eye brow here, and thinking something like “if we’re providing known good examples, is this really an unsupervised approach?” This is a fair point, and we sometimes hear approaches like these called “one class learning” - I really prefer this name, because it helps differentiate these approaches from fully unsupervised approaches like feature-space clustering, where we would provide our unsupervised learner with samples from many classes to learn from, not just the good samples. 
+
+						<div class="col-md-6" id="fh5co-content" style="float: right;">
+							<figure>
+								<img src="./images/figure_2.png" style=" width: 80%;" />
+								<figcaption>Figure 2. Performance table from MVTec AD paper.</figcaption>
+							</figure>
+						</div>	
+
+						<p>
+						
+							Alright - now all we need to do is pick an approach, and we’re off to the races. As we can see in figure 2, the authors explore 6 different methods, and the autoencoders (AE) perform the best on average. Autoencoders are one of the most mature unsupervised technique in deep learning for computer vision, and as we see here, can offer very respectable performance. 
+						</p>
+
+						<p>
+							Today we’ll explore a newer approach to anomaly detection - Generative Adversarial Networks (GANs). GANs use a super interesting training mechanism where two neural networks compete in a game to improve overall performance, and although GANs do not deliver the top performance of the methods we see here, GANs are a hot research topic these days, and performance is quickly increasing, meaning that that figure 2 may look quite different in a few years. 
+						</p>
+
+						<h2>The Data</h2>
+
+						<p>
+						Before we start training our GAN, let’s have a quick look at our data. As you can see in figure 1, the MVTec dataset includes examples from Y different types of products. For each product type, the dataset includes a few hundred good examples, and tens of examples of different types of defects. The images are relatively high resolution, around 1000 by 1000 pixels. 
+						</p>
+						<p>
+						For labels, we’re given the class of each image, and a segmentation mask, as shown as colored regions in the lower portion of Figure 3. These masks indicate the location of each defect in our images. 
+						</p>
+						<span style="display: inline-block; text-align: center; ">
+							<figure>
+								<img src="./images/figure_3.png" style=" width: 80%;" />
+								<figcaption>Figure 3. Some MVTec AD Labels</figcaption>
+							</figure>
+						</span>	
+
+
+						<p>
+						As a deep learning practitioner working in manufacturing, I was really excited to see this dataset come out - you just don’t see public datasets like this our industry - this is really something I hope we see more of. 
+						</p>
+						<p>
+
+						<h2>The Algorithm</h2>
+						<p>
+							Alright, the fun part. It’s time to train our anomaly detection GAN. Notice in figure 2 that the MVTec paper authors don’t just use any GAN, they use an approach called AnoGAN. AnoGAN comes from a terrific <a href="https://arxiv.org/pdf/1703.05921.pdf">2017 paper</a> focused on identifying anomalies in medical imagery. 
+
+					 	</p>
+						<p>
+							If you read the AnoGAN paper, you’ll see in section 3 that the authors begin by training a DCGAN. Taking our paper inception on step deeper , DCGAN  refers to an important <a href="https://arxiv.org/pdf/1511.06434.pdf">2016 paper</a> by Alec Radford, Luke Metz, and Soumith Chintala. 
+					 	</p>
+						<p>
+							Now, we should pause and point out here that traditional GANs like DCGAN really have nothing to do with anomaly detection. The GAN technique was invented by Ian Goodfellow in 2014  as a way to create realistic fake data. The key insight of the AnoGAN paper is a technique for using GANs to perform anomaly detection. With this in mind, let’s dive into GANs, and once we have a trained GAN in hand, we’ll zoom back out and use the AnoGAN approach with our trained GAN to fine anomalies. 
+					 	</p>
+						
+						<span style="display: inline-block; text-align: center; ">
+							<figure>
+								<img src="./images/figure_4.png" style=" width: 100%;" />
+								<figcaption>Figure 4. GAN Arechitecture</figcaption>
+							</figure>
+						</span>	
+
+						<p>
+							Figure 4 shows how GANs are built. Unlike traditional supervised approaches, or unsupervised approaches like autoencoders, GANs use two separate neural networks - one called a generator (G in figure 4) and one called a discriminator (D in figure 4). The discriminator very similar to traditional image classification neural networks - it takes in an image and predicts a discrete class. However, our discriminator has a simpler job than a traditional image classifier - instead of predicting the class of the image (e.g. cat, dog, bicycle, chicken…), the discriminator’s job is to determine if its input image belongs to just one of two classes: real or fake. 
+
+					    </p>
+						
+						<p>
+							Our generator neural network looks a bit different than most traditional deep neural networks. The biggest difference is that our generator outputs a full image, not a discrete class. The generator’s job is to take a relatively small vector (length 100 in DCGAN) and generate a fake image from this vector. In practice researches mostly just use random values for this vector during training. That may sound a bit weird (because it is), but don’t let this randomness fool you - although the vectors are chosen randomly during training - the fact that they are low dimensional (compared to our images) means that our generator will effectively learning a transformation from a low dimensional “latent” space to the high-dimensional space of images of good products - this mapping will be critical later, as the low dimensional latent space represented a manifold of good products in a higher dimensional space of all other images, including bad products - cool, right? We’re getting a bit ahead of ourselves though, lets discuss how these pieces fit together to create a GAN. 
+					    </p>
+						
+						<p>
+							So we have to two neural networks, one that’s supposed to learn to generate fake images, and not that’s supposed to learn to differentiate real from fake images. 
+						</p>
+
+						<p>
+							Now, how do we train these suckers?
+
+					    </p>
+						
+						<p>
+							This is where GANs get really clever. To train our GAN we have our two networks play a game. We keep score in this game using a value function, as shown in figure 4. The value function is just a way to measure how well each network is doing. The first term of our value function, $E(log(D(x)))..$ captures how well our discriminator is able to correctly classify real data $x$ as real. The second term of our value function, $E(log(1-D(G(x)))$ captures the dynamic between our generator and discriminator. Larger values of this function correspond to our Discriminator doing well (correctly classifying fake images and fake), and smaller values correspond to our generator doing well (fooling our discriminator into classifying fake images as real). 
+					    </p>
+						
+						<p>
+							Adding our two terms together, a large overall V means that our discriminator is doing well, and a small overall V means that our generator is doing well. This function is how we keep score, and is the objective that drives our optimization. 
+						</p>
+
+						<p>
+							The trick then is to train our generator to minimize V and our discriminator to maximize V - at the same time. There’s some interesting theory behind all of this that Goodfellow lays out in his original 2014 paper - in a way-too-oversimplified nutshell: by making some simplifying assumptions we can show that this GAN framework will achieve a Nash Equilibrium - where any change for a given players strategy will result in a worse outcome for that player - and in theory, this will result in identical probability distributions between our real and fake data, making for fake images that are indistinguishable from real data. The theory is really interesting, I recommend checking out <a href="https://arxiv.org/pdf/1406.2661.pdf">Goodfellow’s original paper</a> , and outstanding <a href="https://www.deeplearningbook.org"/>book</a> on deep learning for more information.
+							
+						</p>
+
+						<p>
+						Now, as interesting as the theory behind GANs is, just like much of deep learning, the practical state-of-the arts is significantly ahead of any theoretical understanding. The assumptions required to achieve Nash Equilibrium can not be implemented in practice, and the best theory can really do today is act as a guide for experimentation. 
+						</p>
+
+						<p>
+						With this in mind, let’s press forward with implementing and training DCGAN. We'll pick up in a <a href="https://github.com/pattersonconsulting/pattersonconsulting.github.io/blob/master/content/hold/Unsupervised_Anomaly_Detection.ipynb">Jupyter Notebook</a> start by implementing the DCGAN archtecture (figure 5, below) in pytorch. 
+						</p>
+
+						<span style="display: inline-block; text-align: center; ">
+							<figure>
+								<img src="./images/figure_5.png" style=" width: 80%;" />
+								<figcaption>Figure 5. The DCGAN Architecture</figcaption>
+							</figure>
+						</span>	
+
+
+					</div>
+
+				</div>
+				<!-- end of section -->
+
+			</div>
+		</div>
+
+
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+
+
+					<div class="col-md-12" id="fh5co-content" >
+
+						<h1>Jupyter Notebook to Implement the DCGAN Architecture</h1>
+
+						<p>
+
+							In the <a href="https://github.com/pattersonconsulting/pattersonconsulting.github.io/blob/master/content/hold/Unsupervised_Anomaly_Detection_wreqs.ipynb">embedded notebook</a> below we begin implementing the DCGAN archtecture (figure 5, above) in pytorch.
+
+						</p>
+						<p>
+							Note: the embedded notebook below is just a render. If you want to take the notebook for a live spin, check out the <a href="https://colab.research.google.com/github/pattersonconsulting/pattersonconsulting.github.io/blob/master/content/hold/Unsupervised_Anomaly_Detection_wreqs.ipynb">live Jupyter notebook on Google Colab</a>.
+
+						</p>
+
+						<iframe width="1120" height="1030" src="https://nbviewer.jupyter.org/github/pattersonconsulting/pattersonconsulting.github.io/blob/master/content/hold/Unsupervised_Anomaly_Detection_wreqs.ipynb"></iframe>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+
+
+					<div class="col-md-9" id="fh5co-content" >
+
+						<h1>Summary</h1>
+					
+
+						<p>
+							If you'd like to know more about <a href="https://www.kubeflow.org/">Kubeflow</a> and <a href="https://www.kubeflow.org/docs/components/serving/kfserving/">KFServing</a>, please check out the project homepage, contact us, or check out our <a href="../content/kubeflow_operations_oreilly_book.html"> book with Oreilly on "Kubeflow Operations"</a>.
+
+						</p>	
+						
+
+						<p>
+							Patterson Consulting also provides a <a href="../offerings/managed_kubeflow.html">managed service offering for Kubeflow clusters</a> (on-premise and in the cloud).
+
+						</p>
+
+					</div>
+
+					<div class="col-md-3" id="fh5co-content" >
+
+						
+
+						<a href="../content/kubeflow_operations_oreilly_book.html">
+							<img src="../images/kfops_book_cover_final.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+
+					</div>
+
+
+
+					</div>
+
+				</div>
+				<!-- end of section -->
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

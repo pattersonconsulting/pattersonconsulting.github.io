@@ -1,0 +1,1074 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: A Cloud GPU Value Model for NVIDIA Multi-Instance GPUs (MIG) Compute Instances</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="gpu, cloud, cost, forecast, aws, blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Forecasting Your AWS GPU Cloud Spend"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/forecasting_your_aws_gpu_cloud_spend.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we look at how to forecast your AWS GPU spend for Deep Learning workloads."/>
+	
+
+	<meta name="twitter:title" content="Forecasting Your AWS GPU Cloud Spend" />
+	<meta data-rh="true" property="twitter:description" content="In this post we look at how to forecast your AWS GPU spend for Deep Learning workloads."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/forecasting_your_aws_gpu_cloud_spend.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+tr:nth-child(even) {background: #ffffff}
+tr:nth-child(odd) {background: #f2f2f2}
+
+th {background: #d9e7ff}
+
+</style>	
+
+
+<style>
+
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+
+}
+
+.overlay-content {
+  position: relative;
+  top: 20px;
+  
+
+
+  max-width: 1000px;
+  margin: 0 auto;
+
+  
+  
+  text-align: left;
+  margin-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  background-color: ;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+
+	<script>
+	function show_cta_form() {
+	  document.getElementById("cta_overlay_panel").style.display = "block";
+	}
+
+	function closeNav() {
+	  document.getElementById("cta_overlay_panel").style.display = "none";
+	}
+	</script>	
+
+	</head>
+	<body class="boxed">
+
+
+
+
+
+
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+
+	<div id="cta_overlay_panel" class="overlay">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <div class="overlay-content">
+
+
+			<div class="input_container_popup" style="width: ; height: 700px; padding: 10px;">
+
+				<!-- Begin Sendinblue Form -->
+				<!-- START - We recommend to place the below code in head tag of your website html  -->
+				<style>
+				  @font-face {
+				    font-display: block;
+				    font-family: Roboto;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
+				  }
+
+				  @font-face {
+				    font-display: fallback;
+				    font-family: Roboto;
+				    font-weight: 600;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")
+				  }
+
+				  @font-face {
+				    font-display: fallback;
+				    font-family: Roboto;
+				    font-weight: 700;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")
+				  }
+
+				  #sib-container input:-ms-input-placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+
+				  #sib-container input::placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+
+				  #sib-container textarea::placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+				</style>
+				<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+				<!--  END - We recommend to place the above code in head tag of your website html -->
+
+				<!-- START - We recommend to place the below code where you want the form in your website html  -->
+				<div class="sib-form" style="text-align: center;
+				         background-color: #EFF2F7;                                 ">
+				  <div id="sib-form-container" class="sib-form-container">
+				    <div id="error-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;max-width:540px;">
+				      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+				        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+				          <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z"
+				          />
+				        </svg>
+				        <span class="sib-form-message-panel__inner-text">
+				                          Your report request could not be saved. Please try again.
+				                      </span>
+				      </div>
+				    </div>
+				    <div></div>
+				    <div id="success-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#085229; background-color:#e7faf0; border-radius:3px; border-color:#13ce66;max-width:540px;">
+				      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+				        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+				          <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z"
+				          />
+				        </svg>
+				        <span class="sib-form-message-panel__inner-text">
+				                          You GPU Usage Custom Report Request is Being Processed
+				                      </span>
+				      </div>
+				    </div>
+				    <div></div>
+				    <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center; background-color:rgba(255,255,255,1); max-width:540px; border-radius:3px; border-width:1px; border-color:#C0CCD9; border-style:solid;">
+				      <form id="sib-form" method="POST" action="https://dbe3e836.sibforms.com/serve/MUIEAF3TB50wbPZ7gHiRkaSdU_-lcKI1FDA8afiZ2w6_3OikE1a6H8lUMHbPnh4fhHGEIdtO5HjUgz-RiPSd3T4a9gO7FXPX2hU_CbvPRg6e1XBiUWCznmJ4Clw7OTn3sGuMydpH7mQBYOQrhxal48JNlcx2WCtx0nhYTP2MBmPUtjMG-T73njpfvUOt184apalKLfjtAznVvt0_"
+				        data-type="subscription">
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="font-size:32px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3C4858; background-color:transparent;">
+				            <p>Request a Custom GPU Cloud Spend Report</p>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#3C4858; background-color:transparent;">
+				            <div class="sib-text-form-block">
+				              <p>Fill-out the form below to request a custom analysis report of your projected cloud gpu costs</p>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="EMAIL" data-required="*">
+				                  Enter your email address
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Provide your email address to subscribe. For e.g abc@xyz.com
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="FIRSTNAME" data-required="*">
+				                  Enter your FIRSTNAME
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="off" placeholder="FIRSTNAME" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Customize this optional help text before publishing your form.
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="LASTNAME" data-required="*">
+				                  Enter your LASTNAME
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="LASTNAME" name="LASTNAME" autocomplete="off" placeholder="LASTNAME" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Customize this optional help text before publishing your form.
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="COMPANY" data-required="*">
+				                  Enter your COMPANY
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="COMPANY" name="COMPANY" autocomplete="off" placeholder="COMPANY" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                The Name of Your Company
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="JOB_TITLE" data-required="*">
+				                  Enter your JOB_TITLE
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="JOB_TITLE" name="JOB_TITLE" autocomplete="off" placeholder="JOB_TITLE" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                What you role is at the Company
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="text-align: left">
+				            <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#FFFFFF; background-color:#3E4857; border-radius:3px; border-width:0px;"
+				              form="sib-form" type="submit">
+				              <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
+				                <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z"
+				                />
+				              </svg>
+				              Request Custom Report
+				            </button>
+				          </div>
+				        </div>
+
+				        <input type="text" name="email_address_check" value="" class="input--hidden">
+				        <input type="hidden" name="locale" value="en">
+				      </form>
+				    </div>
+				  </div>
+				</div>
+				<!-- END - We recommend to place the below code where you want the form in your website html  -->
+
+				<!-- START - We recommend to place the below code in footer or bottom of your website html  -->
+				<script>
+				  window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+
+				  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+
+				  window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank. ";
+
+				  window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+
+
+
+
+				  window.translation = {
+				    common: {
+				      selectedList: '{quantity} list selected',
+				      selectedLists: '{quantity} lists selected'
+				    }
+				  };
+
+				  var AUTOHIDE = Boolean(0);
+				</script>
+
+				<script src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+				<!-- END - We recommend to place the above code in footer or bottom of your website html  -->
+				<!-- End Sendinblue Form -->				
+
+			</div>
+
+		</div>
+	</div>
+	
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="../index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+
+
+					<div class="col-md-12" id="fh5co-content">
+						<h1 style="font-weight: bold !important;">An Introduction to NVIDIA's Multi-Instance GPUs Under Kubernetes</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a><br/>
+							Date: 2/24/2021
+							
+							
+
+							</p>
+
+							<br/>
+
+
+<!--
+					<div class="col-md-3" id="fh5co-content" style="float: right;">
+						<a href="../content/kubeflow_operations_oreilly_book.html">
+							<img src="../images/kfops_book_cover_final.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+					</div>
+-->
+						<p>
+
+							In this post we provide an overview of NVIDIA's Multi-Instance (MIG) GPU technology as managed by Kubernetes.
+
+							To do this we cover the following topics:
+
+							<ol>
+								<li>Key terms and definitions</li>
+								
+
+								
+								
+								<li>Core Concepts of MIG</li>
+
+								<li>How to Configure MIG under Kubernetes</li>
+
+							</ol>
+<!--
+							In a previous post, <a href="">Forecasting Your AWS GPU Cloud Spend for Deep Learning</a>, we built a model for forecasting cloud GPU spend. We continue that theme in this post and build off some of the same concepts.
+-->
+
+						</p>
+
+						<p>
+							GPU hardware is getting bigger and faster, but the need to dedicate a single GPU to a single user or task is hitting the headwinds of heterogenous workloads in the enterprise. Allow a CPU to be shared amongst multiple processes is not a new concept and as GPUs become more general purpose they are gaining similar capabilities via NVIDIA's MIG technology in the A100 line of GPUs.
+
+						</p>
+
+						<p>
+							In the realm of shared infrastructure efficiency is what IT is focused on and Kubernetes helps maximize resource usage. <span style="font-weight: bold;">Allowing a full A100 GPU to be shared across multiple workloads with MIG and then all of these partitioned MIG resources to be managed by Kubernetes helps maximize efficiency and utilization in a data center</span>.
+
+						</p>
+
+						<p>
+
+							There are 3 Form Factors of GPU Infrastructure:
+
+							<ol>
+								<li>Single GPU Workstations (for single users)</li>
+								<li>Single GPU Servers (for development teams or small teams)</li>
+								<li>Clusters of GPU Servers (larger organizations)</li>
+
+
+							</ol>
+
+							For the purpose of this article, we are focused on the latter two form factors, where we would be <span style="font-weight: bold; color: ;">managing from 1 to N GPU servers (DGX-A100s) with Kubernetes</span>.
+
+						</p>
+						
+
+
+						<p>
+
+							The <a href="https://www.nvidia.com/en-us/data-center/dgx-a100/">NVIDIA DGX-A100</a> is the latest in NVIDIA's DGX line of cluster GPU packages for the data center and has :
+
+
+							<ul>
+
+								<li>8 x NVIDIA A100 GPUs, each with 40GB (or 80GB, depending on model) of GPU RAM (320GB / 640GB GPU RAM, total)</li>
+
+								<li>6 NVIDIA NVSwitches</li>
+								<li>dual AMD Rome 7742 CPUs (128 cores total)</li>
+								<li>either 2TB or 1TB system RAM</li>
+
+							</ul>
+
+							It is a considerably powerful system and offers 5 petaFLOPS of processing power for machine learning jobs at that compute density.
+
+						</p>
+						<p>
+							This amount of GPU compute density coupled with the rising demand to colocate 
+
+							<ul>
+
+							<li>different classes of machine learning training workloads</li>
+							<li>data prep and data engineering workflows</li>
+							<li>inference serving</li>
+
+							</ul>
+
+							and has prompted NVIDIA to introduce MIG into the DGX ecosystem.
+
+						</p>
+
+
+
+
+					</div>
+
+					<!-- end content -->
+
+
+
+
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+
+						<h1>An Overview of NVIDIA's Multi-Instance GPUs (MIG)</h1>
+
+
+
+						<p>
+
+							With MIG a single NVIDIA A100 GPU can be partitioned into up to 7 independent <code>MIG devices</code>. Each MIG device runs concurrently and has its own memory, cache, and streaming multiprocessors. With 8 physical GPUs in the DGX-A100 system, you could potentially have up to 56 separate MIG Devices at the same time.
+
+						</p>
+						<p>
+							In the diagram below we see how a MIG-capable GPU can be divided up into multiple MIG devices
+
+						</p>
+
+						<center>
+
+
+						<img src="https://docs.nvidia.com/datacenter/tesla/mig-user-guide/graphics/gpu-instances-example-pic.png" />
+
+						</center>
+
+						<p>
+							<br/>
+							Each block in the diagram above represents a potential MIG device that we could configure for use on a single GPU. A MIG device consists of the
+
+							3-tuple of 
+
+							<ol>
+								<li>a top level GPU</li>
+								<li>a <code>GPU Instance</code> created inside that GPU</li>
+								<li>a <code>Compute Instance</code> created inside that GPU Instance</li>
+							</ol> 
+
+
+
+						</p>
+						<p>
+							A GPU instance is the first level of partitioning on a MIG capable GPU. It creates a wrapper around a fixed set of memory slices, a fixed set of compute slices, and a fixed set of "other" GPU engines (such as jpeg encoders, dma engines, etc.)
+
+						</p>
+						<p>
+							A Compute Instance is the second level of partitioning on a MIG capable GPU. It takes some subset of the compute slices inside a GPU Instance and bundles them together. Each Compute Instance has dedicated access to the compute slices it has bundled together, but shared access to its wrapping GPU Instance's memory and "other" GPU Engines.
+
+						</p>
+						<p>
+							While it is possible to subdivide a GPU Instance further with Compute Instances, when dealing with managing MIG devices under Kubernetes <span style="font-weight: bold; color: red;">we always assume that a <a href="https://docs.google.com/document/d/1Dxx5MwG_GiBeKOuMNwv4QbO8OqA7XFdzn7fzzI7AQDg/edit#">MIG device consists of a single GPU Instance and a single Compute Instance</a></span>.
+
+						</p>
+						<p>
+							This gives us a MIG device naming convention that refers to a MIG device by:
+
+						</p>
+						<p>
+							<code>[GPU Instance slice count]g</code>.<code>[total memory]gb</code>
+
+						</p>
+						<p>
+							Example: <code>3g.20gb</code>
+
+						</p>
+						<p>
+							(<i>Note: In this naming convention, the GPU Instance count and Compute Instance count will always be the same.</i>)
+						</p>
+						<p>
+
+							For more details on limitations on GPUs in MIG mode check out NVIDIA's <a href="https://docs.google.com/document/d/1Dxx5MwG_GiBeKOuMNwv4QbO8OqA7XFdzn7fzzI7AQDg/edit#">Challenges Supporting MIG in Kubernetes</a>.
+
+						</p>
+
+
+						<h2>Notes on Enabling MIG Under Kubernetes</h2>
+						<p>
+							There are <a href="https://docs.google.com/document/d/1bshSIcWNYRZGfywgwRHa07C0qRyOYKxWYxClbeJM-WM/edit#">components to install on the DGX to support MIG</a>.
+							Further, all GPUs must be configured into MIG mode and partitioned into MIG devices before we can select a MIG device resource under Kubernetes.
+
+						</p>
+						<p>
+							Assuming we're using the <code>mixed</code> <A href="https://docs.google.com/document/d/1mdgMQ8g7WmaI_XVVRrCvHPFPOMCm5LQD5JefgAh6N8g/edit">strategy for managing GPUs with MIG and Kubernetes</A>, we would configure each GPU with a specific MIG profile. This profile is a set of partitions for that specific GPU that give us a set of MIG Device types that will be available in Kubernetes.
+
+						</p>
+						<p>You can see an example of this below where we are creating 3 different MIG devices of different sizess on the GPU:
+
+						</p>
+<consoleoutput>$ nvidia-smi mig -cgi 19,14,9
+...
+$ nvidia-smi mig -cci
+...
+$ nvidia-smi -L
+GPU 0: Graphics Device (UUID: GPU-afee1305-c8ce-2c7e-ff91-496a76b812fd)
+  MIG 3g.20gb Device 0: (UUID: MIG-GPU-afee1305-c8ce-2c7e-ff91-496a76b812fd/2/0)
+  MIG 2g.10gb Device 1: (UUID: MIG-GPU-afee1305-c8ce-2c7e-ff91-496a76b812fd/3/0)
+  MIG 1g.5gb  Device 2: (UUID: MIG-GPU-afee1305-c8ce-2c7e-ff91-496a76b812fd/9/0)
+</consoleoutput>			
+
+						<br/>
+						<p>
+							When configuring GPUs for MIG partition profiles with the <code>nvidia-smi</code> tool, you'll need to verify the gpu instance profile ids with the following command:
+
+						</p>
+
+<consoleoutput>$ nvidia-smi mig -lgip
++--------------------------------------------------------------------------+
+| GPU instance profiles:                                                   |
+| GPU   Name          ID    Instances   Memory     P2P    SM    DEC   ENC  |
+|                           Free/Total   GiB              CE    JPEG  OFA  |
+|==========================================================================|
+|   0  MIG 1g.5gb     19     7/7        4.95       No     14     0     0   |
+|                                                          1     0     0   |
++--------------------------------------------------------------------------+
+|   0  MIG 2g.10gb    14     3/3        9.90       No     28     1     0   |
+|                                                          2     0     0   |
++--------------------------------------------------------------------------+
+|   0  MIG 3g.20gb     9     2/2        19.79      No     42     2     0   |
+|                                                          3     0     0   |
++--------------------------------------------------------------------------+
+|   0  MIG 4g.20gb     5     1/1        19.79      No     56     2     0   |
+|                                                          4     0     0   |
++--------------------------------------------------------------------------+
+|   0  MIG 7g.40gb     0     1/1        39.59      No     98     5     0   |
+|                                                          7     1     1   |
++--------------------------------------------------------------------------+
+</consoleoutput>
+						
+						<br/>
+
+						<p>
+							(Note: <i>The MIG GPU instance profile ids are somewhat arbitrary and not fixed</i>. For addition help in defining MIG Partitions, check out The <a href="https://github.com/NVIDIA/mig-parted">MIG Partiton Editor</a> (nvidia-mig-parted). It is a tool designed for system administrators to make working with MIG partitions easier.)
+
+						</p>
+						<p>
+							There are multiple ways to combine sets of MIG device types to build MIG partitions. There are constraints and limitations on what you can and cannot do in terms of combining certain MIG device types on a single A100. For more background on this topic, check out <a href="https://docs.google.com/document/d/1mdgMQ8g7WmaI_XVVRrCvHPFPOMCm5LQD5JefgAh6N8g/edit#">NVIDIA's Supporting MIG in Kubernetes</a> document. 
+
+						</p>
+
+						<h2>Notes on Using MIG Devices Under Kubernetes</h2>
+						
+
+						<p>
+							When we request a specific MIG device type, we use the 
+							MIG device naming convention we introduced above (e.g., "<code>3g.20gb</code>"). Our limitations is that per node (e.g., "machine" or "host") all of the GPUs must be of the same product line. However, some GPUs may be MIG-enabled while other GPUs may not be.
+
+						</p>
+						<p>
+							Previously in Kubernetes we'd select a GPU resource type with: 
+						</p>
+						<p>
+
+							<code>nvidia.com/gpu</code>
+
+						</p>
+						<p>
+
+							Now we select a MIG device in Kubernetes with the following resource type schema:
+
+						</p>
+						<p>
+
+							<code>nvidia.com/mig-&lt;slice_count&gt;g.&lt;memory_size&gt;gb</code>
+
+						</p>
+						<p>
+							Let's take a look at how we'd use this in a job definition. The mixed strategy for a (4 memory, 3 compute) device on an A100:
+
+
+						</p>
+
+<code><pre>apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-example
+spec:
+  containers:
+    - name: gpu-example
+      image: nvidia/cuda:11.0-base
+      resources:
+        limits:
+          <span style="color: red;">nvidia.com/mig-3g.20gb: 1</span>
+  nodeSelector:
+    <span style="color: red;">nvidia.com/gpu.product: A100-SXM4-40GB</span>
+</pre></code>						
+
+
+						<br/>
+
+						<p>
+							As you can see above, once you have MIG working under Kubernetes you can select MIG devices in a similar method to how you'd normally select a physical GPU.
+
+
+						</p>
+
+
+<!--
+						<h2>NVIDIA Docs</h2>
+					-->
+<!--
+
+						<p>
+							<span style="color: red;">Revisit this section --- Kevin Klues tells us that there are errors in the docs; refer to the gdoc for source material</span>
+						</p>
+
+
+<blockquote>MIG stands for Multi-Instance-GPU. It is a mode of operation for future Nvidia GPUs that allows one to partition a GPU into a set of MIG devices, each of which appears to the software consuming them as a mini-GPU with a fixed partition of memory and a fixed partition of compute resources.
+</blockquote>
+
+						<blockquote>MIG stands for Multi-Instance-GPU. It is a mode of operation for future Nvidia GPUs that allows one to partition a GPU into a set of MIG devices, each of which appears to the software consuming them as a mini-GPU with a fixed partition of memory and a fixed partition of compute resources.
+
+The amount of memory per MIG device and the number of compute resources per MIG device are configurable in fixed size chunks, called slices. The next generation of Nvidia GPUs will have 8 memory slices and 7 compute slices, with the specific amount of memory and compute resources per slice depending on the actual GPU model in use.
+
+The following diagram is used throughout this document to discuss the way a MIG-capable GPU can be divided up into multiple MIG devices.
+
+</blockquote>
+
+						<p>
+							Definition: "MIG Device": <br/><br/>
+
+							"partition a GPU into a set of MIG devices, each of which appears to the software consuming them as a mini-GPU with a fixed partition of memory and a fixed partition of compute resources"
+
+
+						</p>
+
+						<blockquote>The amount of memory per MIG device and the number of compute resources per MIG device are configurable in fixed size chunks, called slices. The next generation of Nvidia GPUs will have 8 memory slices and 7 compute slices, with the specific amount of memory and compute resources per slice depending on the actual GPU model in use</blockquote>
+
+
+<img src="https://docs.nvidia.com/datacenter/tesla/mig-user-guide/graphics/gpu-instances-example-pic.png" />
+
+						<blockquote>Each block represents a potential MIG device that can be configured for use on a GPU. The horizontal position of a block represents the “physical” location of a MIG device as it spans the set of memory and compute slices available to it. As such, a GPU can only be partitioned into a specific set of MIG devices, such that no two devices overlap vertically in the diagram.</blockquote>
+
+						<p>
+
+
+						</p>
+
+-->
+	
+
+
+						<h2>Matching MIG Devices and Target Workloads</h2>
+
+						<p>
+							To give you a better sense as to what workloads will work best for different types of MIG devices we put together the table below.
+
+						</p>
+
+						<center>
+							<img src="./images/a100_40gb_profile_comparison.png" />
+						</center>
+
+						<p>
+							This table was compiled/estimated based on discussions with NVIDIA engineers and other published A100 benchmarks. Some quick further notes:
+
+							<ul>
+								<li>The A100 GPU is roughly 2.5x more powerful than the V100 GPU</li>
+								<li>A single V100 is <a href="forecasting_your_aws_gpu_cloud_spend.html">available on AWS as a p3.2xl instance</a></li>
+
+
+							</ul>
+
+								When we think about cloud GPU instances, they tend to also include resource such as local storage, memory, and other tools such as SageMaker.
+								
+								When thinking about using the DGX-A100, also consider that you'll need some sort of MLOps platform to manage the GPU resources (e.g., Kubeflow).
+
+
+
+						</p>
+						<p>
+							Although MIG has certain limitations (such as No GPU to GPU P2P (either PCIe or NVLink) is supported), MIG does work with the CUDA programming model with no changes. MIG also works with existing Linux OSs, Containers, and Kubernetes (with plugin install).
+
+						</p>
+						<p>
+							A quick rule of thumb for how to match up workloads (see also: <a href="forecasting_your_aws_gpu_cloud_spend.html">Resource Requirements for Different Types of Deep Learning Workflows</a>) with MIG device types is:
+
+							<table>
+								<tr>
+									<th>MIG Device Type</th>
+									<th>Workload Match</th>
+								</tr>
+
+								<tr>
+									<td><code>7g.40gb</code></td>
+									<td>heavier deep learning training jobs</td>
+								</tr>
+
+								<tr>
+									<td><code>3g.20gb</code></td>
+									<td>medium machine learning training jobs (Kaggle-type notebooks)</td>
+								</tr>
+
+								<tr>
+									<td><code>1g.10gb</code></td>
+									<td>Inference (batch-1) workloads (low-latency models), development Jupyter notebooks</td>
+								</tr>
+
+							</table>
+
+							The MIG Device types (<code>4g.20gb</code>, <code>2g.10gb</code>) between the 3 listed above allow for further flexibility for workloads that "don't exactly fit in one of the buckets".
+
+
+						</p>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Summary</h1>
+
+						<p>
+
+							In this article we gave the reader a light overview of how MIG is enabled and used under Kubernetes.
+						</p>
+						<p>
+							In a future article we will look at how to build an on-premise value-model across MIG devices.
+
+						</p>
+						<p>
+							Did you like the article? Do you think we are making a poor estimation somewhere in our calculations? <a href="../contact.html">Reach out and tell us</a>.
+
+						</p>
+
+
+						<p>
+
+						</p>
+						
+
+					</div>
+				
+				</div>
+				<!-- end of section -->											
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 28px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-12" id="fh5co-content" style="">
+
+						<h3>MLOps Questions?</h3>
+
+
+						<div style="background-color: ; padding: 1px; ">
+						<p>
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

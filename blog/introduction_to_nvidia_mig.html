@@ -549,6 +549,13 @@ th {background: #d9e7ff}
 						</a>
 					</div>
 -->
+
+
+						<div style="width: 580; height: 315; border: 1px solid; float: right; padding: 6px;">
+
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/TJcKYUTaBtg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+						</div>
 						<p>
 
 							In this post we provide an overview of NVIDIA's Multi-Instance (MIG) GPU technology as managed by Kubernetes.
@@ -566,19 +573,22 @@ th {background: #d9e7ff}
 								<li>How to Configure MIG under Kubernetes</li>
 
 							</ol>
-<!--
-							In a previous post, <a href="">Forecasting Your AWS GPU Cloud Spend for Deep Learning</a>, we built a model for forecasting cloud GPU spend. We continue that theme in this post and build off some of the same concepts.
--->
 
 						</p>
 
 						<p>
-							GPU hardware is getting bigger and faster, but the need to dedicate a single GPU to a single user or task is hitting the headwinds of heterogenous workloads in the enterprise. Allow a CPU to be shared amongst multiple processes is not a new concept and as GPUs become more general purpose they are gaining similar capabilities via NVIDIA's MIG technology in the A100 line of GPUs.
+							This post is an entry in a series on the economics of machine learning hardware. A previous post dealt with <a href="./forecasting_your_aws_gpu_cloud_spend.html">Forecasting Your AWS GPU Cloud Spend for Deep Learning</a>.
+
+						</p>
+
+
+						<p>
+							GPU hardware is getting bigger and faster, but the need to dedicate a single GPU to a single user or task is hitting the headwinds of heterogenous workloads in the enterprise. Allowing a CPU to be shared amongst multiple processes is not a new concept and as GPUs become more general purpose they are gaining similar capabilities. Recently NVIDIA introduced MIG technology in the A100 line of GPUs to allow A100 GPUs to be partitioned into smaller virtual GPUs called "MIG devices" to share a single GPU across multiple processes.
 
 						</p>
 
 						<p>
-							In the realm of shared infrastructure efficiency is what IT is focused on and Kubernetes helps maximize resource usage. <span style="font-weight: bold;">Allowing a full A100 GPU to be shared across multiple workloads with MIG and then all of these partitioned MIG resources to be managed by Kubernetes helps maximize efficiency and utilization in a data center</span>.
+							In the realm of shared infrastructure efficiency is key and Kubernetes helps maximize resource usage. <span style="font-weight: bold;">Allowing a full A100 GPU to be shared across multiple workloads with MIG and then all of these partitioned MIG resources to be managed by Kubernetes helps maximize efficiency and utilization in a data center</span>.
 
 						</p>
 
@@ -896,6 +906,18 @@ The following diagram is used throughout this document to discuss the way a MIG-
 							<img src="./images/a100_40gb_profile_comparison.png" />
 						</center>
 
+
+					<div style="border: 0px solid; padding-top: 28px; text-align: center; background-color: ; float: right; margin: 12px; ">
+<!--
+							<a href="http://shop.oreilly.com/product/0636920260929.do">
+-->								
+							<a href="../content/kubeflow_operations_oreilly_book.html">
+								<img src="../images/kfops_book_cover_final.png" style="width: 212px; height: 280px; border: 1px solid; " >
+							</a>
+
+
+					</div>
+
 						<p>
 							This table was compiled/estimated based on discussions with NVIDIA engineers and other published A100 benchmarks. Some quick further notes:
 
@@ -1004,7 +1026,7 @@ The following diagram is used throughout this document to discuss the way a MIG-
 					
 					<div class="col-md-12" id="fh5co-content" style="">
 
-						<h3>MLOps Questions?</h3>
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
 
 
 						<div style="background-color: ; padding: 1px; ">

@@ -1,0 +1,1631 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Patterson Consulting: A Cloud GPU Value Model for NVIDIA Multi-Instance GPUs (MIG) Compute Instances</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="gpu, cloud, cost, forecast, aws, blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Forecasting Your AWS GPU Cloud Spend"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/forecasting_your_aws_gpu_cloud_spend.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we look at how to forecast your AWS GPU spend for Deep Learning workloads."/>
+	
+
+	<meta name="twitter:title" content="Forecasting Your AWS GPU Cloud Spend" />
+	<meta data-rh="true" property="twitter:description" content="In this post we look at how to forecast your AWS GPU spend for Deep Learning workloads."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/forecasting_your_aws_gpu_cloud_spend.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+tr:nth-child(even) {background: #ffffff}
+tr:nth-child(odd) {background: #f2f2f2}
+
+th {background: #d9e7ff}
+
+</style>	
+
+
+<style>
+
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+
+}
+
+.overlay-content {
+  position: relative;
+  top: 20px;
+  
+
+
+  max-width: 1000px;
+  margin: 0 auto;
+
+  
+  
+  text-align: left;
+  margin-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  background-color: ;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+
+	<script>
+	function show_cta_form() {
+	  document.getElementById("cta_overlay_panel").style.display = "block";
+	}
+
+	function closeNav() {
+	  document.getElementById("cta_overlay_panel").style.display = "none";
+	}
+	</script>	
+
+	</head>
+	<body class="boxed">
+
+
+
+
+
+
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+
+	<div id="cta_overlay_panel" class="overlay">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <div class="overlay-content">
+
+
+			<div class="input_container_popup" style="width: ; height: 700px; padding: 10px;">
+
+				<!-- Begin Sendinblue Form -->
+				<!-- START - We recommend to place the below code in head tag of your website html  -->
+				<style>
+				  @font-face {
+				    font-display: block;
+				    font-family: Roboto;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
+				  }
+
+				  @font-face {
+				    font-display: fallback;
+				    font-family: Roboto;
+				    font-weight: 600;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")
+				  }
+
+				  @font-face {
+				    font-display: fallback;
+				    font-family: Roboto;
+				    font-weight: 700;
+				    src: url(https://assets.sendinblue.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"), url(https://assets.sendinblue.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")
+				  }
+
+				  #sib-container input:-ms-input-placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+
+				  #sib-container input::placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+
+				  #sib-container textarea::placeholder {
+				    text-align: left;
+				    font-family: "Helvetica", sans-serif;
+				    color: #c0ccda;
+				  }
+				</style>
+				<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+				<!--  END - We recommend to place the above code in head tag of your website html -->
+
+				<!-- START - We recommend to place the below code where you want the form in your website html  -->
+				<div class="sib-form" style="text-align: center;
+				         background-color: #EFF2F7;                                 ">
+				  <div id="sib-form-container" class="sib-form-container">
+				    <div id="error-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;max-width:540px;">
+				      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+				        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+				          <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z"
+				          />
+				        </svg>
+				        <span class="sib-form-message-panel__inner-text">
+				                          Your report request could not be saved. Please try again.
+				                      </span>
+				      </div>
+				    </div>
+				    <div></div>
+				    <div id="success-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#085229; background-color:#e7faf0; border-radius:3px; border-color:#13ce66;max-width:540px;">
+				      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+				        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+				          <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z"
+				          />
+				        </svg>
+				        <span class="sib-form-message-panel__inner-text">
+				                          You GPU Usage Custom Report Request is Being Processed
+				                      </span>
+				      </div>
+				    </div>
+				    <div></div>
+				    <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center; background-color:rgba(255,255,255,1); max-width:540px; border-radius:3px; border-width:1px; border-color:#C0CCD9; border-style:solid;">
+				      <form id="sib-form" method="POST" action="https://dbe3e836.sibforms.com/serve/MUIEAF3TB50wbPZ7gHiRkaSdU_-lcKI1FDA8afiZ2w6_3OikE1a6H8lUMHbPnh4fhHGEIdtO5HjUgz-RiPSd3T4a9gO7FXPX2hU_CbvPRg6e1XBiUWCznmJ4Clw7OTn3sGuMydpH7mQBYOQrhxal48JNlcx2WCtx0nhYTP2MBmPUtjMG-T73njpfvUOt184apalKLfjtAznVvt0_"
+				        data-type="subscription">
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="font-size:32px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3C4858; background-color:transparent;">
+				            <p>Request a Custom GPU Cloud Spend Report</p>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#3C4858; background-color:transparent;">
+				            <div class="sib-text-form-block">
+				              <p>Fill-out the form below to request a custom analysis report of your projected cloud gpu costs</p>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="EMAIL" data-required="*">
+				                  Enter your email address
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Provide your email address to subscribe. For e.g abc@xyz.com
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="FIRSTNAME" data-required="*">
+				                  Enter your FIRSTNAME
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="off" placeholder="FIRSTNAME" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Customize this optional help text before publishing your form.
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="LASTNAME" data-required="*">
+				                  Enter your LASTNAME
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="LASTNAME" name="LASTNAME" autocomplete="off" placeholder="LASTNAME" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                Customize this optional help text before publishing your form.
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="COMPANY" data-required="*">
+				                  Enter your COMPANY
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="COMPANY" name="COMPANY" autocomplete="off" placeholder="COMPANY" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                The Name of Your Company
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-input sib-form-block">
+				            <div class="form__entry entry_block">
+				              <div class="form__label-row ">
+				                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="JOB_TITLE" data-required="*">
+				                  Enter your JOB_TITLE
+				                </label>
+
+				                <div class="entry__field">
+				                  <input class="input" maxlength="200" type="text" id="JOB_TITLE" name="JOB_TITLE" autocomplete="off" placeholder="JOB_TITLE" data-required="true" required />
+				                </div>
+				              </div>
+
+				              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+				              </label>
+				              <label class="entry__specification" style="font-size:12px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#8390A4;">
+				                What you role is at the Company
+				              </label>
+				            </div>
+				          </div>
+				        </div>
+				        <div style="padding: 8px 0;">
+				          <div class="sib-form-block" style="text-align: left">
+				            <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#FFFFFF; background-color:#3E4857; border-radius:3px; border-width:0px;"
+				              form="sib-form" type="submit">
+				              <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
+				                <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z"
+				                />
+				              </svg>
+				              Request Custom Report
+				            </button>
+				          </div>
+				        </div>
+
+				        <input type="text" name="email_address_check" value="" class="input--hidden">
+				        <input type="hidden" name="locale" value="en">
+				      </form>
+				    </div>
+				  </div>
+				</div>
+				<!-- END - We recommend to place the below code where you want the form in your website html  -->
+
+				<!-- START - We recommend to place the below code in footer or bottom of your website html  -->
+				<script>
+				  window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+
+				  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+
+				  window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank. ";
+
+				  window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+
+
+
+
+				  window.translation = {
+				    common: {
+				      selectedList: '{quantity} list selected',
+				      selectedLists: '{quantity} lists selected'
+				    }
+				  };
+
+				  var AUTOHIDE = Boolean(0);
+				</script>
+
+				<script src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+				<!-- END - We recommend to place the above code in footer or bottom of your website html  -->
+				<!-- End Sendinblue Form -->				
+
+			</div>
+
+		</div>
+	</div>
+	
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="../index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+
+
+					<div class="col-md-12" id="fh5co-content">
+						<h1 style="font-weight: bold !important;">A Cloud GPU Value Model for NVIDIA Multi-Instance GPUs (MIG)</h1>
+						<p>Author: <a href="http://www.twitter.com/jpatanooga">Josh Patterson</a><br/>
+							Date: 5/11/2021
+							
+							
+
+							</p>
+
+							<br/>
+
+
+<!--
+					<div class="col-md-3" id="fh5co-content" style="float: right;">
+						<a href="../content/kubeflow_operations_oreilly_book.html">
+							<img src="../images/kfops_book_cover_final.png" style="width: 212px; height: 280px; border: 1px solid;" >
+						</a>
+					</div>
+-->
+						<p>
+
+							In this post we build a cloud value model for NVIDIA Multi-Instance GPUs (MIG) devices in the context that they can be managed under Kubernetes as "GPUs as a Service" (GaaS), similar to spinning up a GPU instance on AWS.
+
+						</p>
+
+
+						<p>
+							In previous posts we <a href="./introduction_to_nvidia_mig.html">introduced MIG and how it operates as managed by Kubernetes</a>, demonstrated <a href="./forecasting_your_aws_gpu_cloud_spend.html">Forecasting Your AWS GPU Cloud Spend for Deep Learning</a>, and introduced an <a href="./aws_cloud_gpu_calculator_v1.html">online AWS GPU Cost Calculator</a>. We continue to further build off these posts to develop our valuation model for the DGX-A100, MIG, and Kubernetes.
+						</p>
+<!--
+						<p>
+
+							To do this we cover the following topics:
+
+							<ol>
+								<li>Key terms and definitions</li>
+								
+
+								
+								
+								<li>What kinds of GPUs the users typically train models on</li>
+
+								<li>Building a spreadsheet model for how to forecast a monthly and yearly GPU spend</li>
+
+							</ol>
+
+							
+
+
+						</p>
+					-->
+
+
+					</div> <!-- end col -->
+
+				</div> <!-- end row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border-top: 0px solid;"> <!-- start section 2 -->
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Framing Our Valuation</h1>
+
+
+
+						<p style="color: ;">
+
+							The target audience for this article are the people who run MLOps platforms / infrastructure in enterprise IT organizations. These people (.e.g., "Head of Global Infrastructure"), are interested in optimizing their cloud and on-premise infrastructure spend to get the right balance.
+
+						</p>
+						<p>
+							To build our valuation we will:
+
+							<ol>
+								<li>Frame the context for valuing the resources</li>
+								<li>Create a valuation for a hypothetical single-GPU A100-based AWS instance</li>
+								<li>Extrapolate MIG Device values from the single-GPU instance pricing</li>
+								<li>Calculate the cloud-value of MLOps software (on the DGX-A100) that would be analogous to SageMaker</li>
+
+							</ol>
+
+							With that said, let's jump right into it.
+
+						</p>
+
+<!--
+						<p style="color: red;">
+
+							[ What are other variations that we may not discuss nor consider? ]
+
+							<ul>
+								<li>p4 instance with EKS + KF: does not consider customized install, training, best practices, support cost -- not a common way cloud is used</li>
+								<li>putting a few RTX boxes together and managing with KF</li>
+								<li></li>
+							</ul>
+
+						</p>
+-->
+<!--
+
+						<p style="color: red;">
+
+							<ul>
+								<li>obviously there are a lot of ways to purchase resources from AWS</li>
+								<li>we're focused on the case where a company has a team of data scientists all doing their own projects</li>
+								<li>in this scenario, these data scientist teams likely will not coordinate their cloud buying activities</li>
+
+							</ul>
+
+						</p>							
+-->
+						<h2>Why is this a Compelling Exercise?</h2>
+
+						<p>
+							Why is this building a valuation of MIG Devices (under Kubernetes) in a DGX-A100 a compelling exercise?
+
+
+						</p>
+
+						<p>
+							Many times in customer discussions the question "how does X system's cost compare to a similar, apples-to-apples, system's TCO in the cloud?" come up. This series of blog posts seek to answer questions we get during customer conversations, or share generalized notes from past discussions. This post is intended to inform you on when where both cloud and on-premise GPUs (e.g., DGX-A100) are a better fit for your needs.
+
+						</p>						
+						<p>
+							There is a lot of compute-dense hardware and a lot of different types of workloads, on-premise and in the cloud. Understanding the cost model for what a user in a multi-tenant system is consuming (in terms of resources) is valuable when comparing Total Cost of Ownership of on-premise infrastructure with cloud infrastructure.
+
+						</p>
+						<p>
+							GPU hardware is getting bigger and faster, but the need to dedicate a single GPU to a single user or task is hitting the headwinds of heterogenous workloads in the enterprise. Allowing a CPU to be shared amongst multiple processes is not a new concept and as GPUs become more general purpose they are gaining similar capabilities via NVIDIA's MIG technology (in the A100 line of GPUs).
+
+						</p>
+
+						<p>
+							In the realm of shared infrastructure, efficiency is key and Kubernetes helps maximize resource usage. <span style="font-weight: bold;">Allowing a full A100 GPU to be shared across multiple workloads with MIG and then all of these partitioned MIG resources to be managed by Kubernetes helps maximize efficiency and utilization in a data center</span>. Topics such as these are common amongst MLOps engineers today.
+
+						</p>
+
+
+						<h2>MLOps is More Than Just GPUs</h2>
+
+
+						<div style="width: 580; height: 315; border: 1px solid; float: right; padding: 6px;">
+
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/oCqZen5g4Jk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+						</div>
+
+						<p style="color: ;">
+
+							MLOps in practice involves more than GPUs and hardware.
+
+							The context of our evaluation of MIG's value compared to the cloud is as part of a machine learning platform.
+
+							From that point of view, we define our machine learning platform as:
+
+							<ul>
+								<li>compute hardware; here, GPUs and GPU memory</li>
+								<li>multi-tenant resource management and container orchestration; here: kubernetes</li>
+								<li>MLOps Platform: 3 common ones we see are SageMaker (AWS), Kubeflow (DGX), and MLFlow (local)</li>
+
+							</ul>
+
+							There are other schedulers/resource managers for GPUs (such as <a href="https://arc.umich.edu/armis2/slurm-user-guide/">SLURM</a>). In this scenario we are evaluating GPU management in the context of containers and Kubernetes as that is the most popular container orchestration system today and is more common than SLURM in enterprise datacenters.
+
+						</p>
+
+						<p>
+							The function of MIG is to provide more compute surface area from a finite amount of compute hardware (e.g., the DGX-A100).
+
+							In this way MIG is creating potentially many more GPU "compute slots" than physically are available as single GPUs in the host. This is a good feature for organizations wanting to provide GPU computing power for a large pool of data scientists.
+						</p>
+						<p>
+
+							From that perspective we are focused on mapping our pricing model based on how a group of data scientists would use a pool of GPU instances on AWS.
+
+							
+
+						</p>
+
+					</div>
+
+				</div>
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>						
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h2>How are GPUs Used Today by Data Scientists?</h2>
+
+
+						<p>
+
+							We're building a value model based on cloud GPU resources so we'll consider this quesiton from the perspective of a team operating on AWS. Today a data science user (on the cloud) <a href="./forecasting_your_aws_gpu_cloud_spend.html">typically wants to</a>:
+
+							<ul>
+								<li>spin up an GPU/EC2 instance quickly, do their work, and then (hopefully) shut it down</li>
+								<li>most of the time this will involve an EC2 instance with a single gpu</li>
+								<li>to do this quickly, they'll likely have their python code saved as a container</li>
+
+
+
+							</ul>
+
+								
+								The power users tend to use docker to package up their code and then run it on a cloud GPU.
+								Other data scientists on a team may want to use a UI tool such as AWS SageMaker. In both cases the users are leveraging the cloud resources as "GPUs as a Service" (GaaS). Based on what we see in the wild with customers most users are using a single GPU for their work. They tend to upgrade to a more powerful GPU instance when (e.g., K80 to T4) when they want to train faster as opposed to using multiple GPUs because of the risk of having to make code changes to get their code running on multiple GPUs.
+
+						</p>
+
+<!--
+						<p style="color: red;">
+
+							we do this analysis from the perspective of cloud GPUs are the baseline (big-mac index, here)
+
+							<ul>
+								<li>our base case is an organization that is letting teams of DS's use GPU-enabled cloud instances (e.g., p3.2xl)</li>
+								<li>the org is likely not using the instance alone, but also a tool such as sagemaker</li>
+								<li>are there ways for the organization to do this cheaper? yes. the MIG+KF offering is one of them</li>
+
+
+							</ul>
+
+						</p>
+-->
+<!--
+						<p style="color: red;">
+
+							on hte DGX side: we are focused on usage patterns in the data center for:
+
+							<ul>
+								<li>lighter machine learning training workloads</li>
+								<li>heavier deep learning training workloads</li>
+								<li>data ETL and prep with pandas and RAPIDS</li>
+								<li>different class of inference serving (batch-1, larger batches, larger models)</li>
+
+							</ul>
+
+
+						</p>	
+
+						<p>
+
+							[ reference: first gpu article on forecasting ]
+
+						</p>
+
+
+						<p>
+
+							[ referenc: target workloads from "intro to MIG article" ]
+
+						</p>	
+
+
+						<p>
+
+							[ discuss issues with working with Multi-GPUs on single machine ]
+
+						</p>
+
+-->
+<!--
+						<p style="color: red;">
+
+							how often do people use multiple gpus?
+
+							distributed gpus vs multi-gpus
+
+							multi-gpu code with horovod - https://www.kubeflow.org/docs/components/training/mpi/
+
+							multi-gpu code with tf / keras / pytorch
+
+						</p>
+						<p>
+							Multiple GPUs do not always show linear speed-up
+
+						</p>
+
+						<p>
+							Point of diminishing returns: I can't always use more gpus, and a V100 is many times "just right". Getting 8xA100 may make an hour job take 5 minutes, but AWS <span style="color: red;"> come back and look at this</span>
+
+						</p>
+
+
+
+						<p>
+
+							[ discuss issues with working with distributed systems and GPUs ]
+
+						</p>
+
+
+
+
+
+						<p style="color: red;">
+
+							[ Question: does this cost analysis only have merit in the context of the AIAC? ]
+
+						</p>	
+-->
+
+
+
+
+
+
+
+<!--
+
+						<h3>The Devil's Advocate</h3>					
+
+
+						<p style="color: red;">
+
+							[ reference: why not just use a p4 instance? ]
+
+							<ul>
+
+								<li>if you can just install KF on a p4 instance, then this would disrupt the SageMaker pricing model (potentially)</li>
+								<li>what kind of networking issues would show up here?</li>
+								<li>does identity management play a role? or cause issues</li>
+
+							</ul>
+
+							we're not considering different A100 form factors here --- we're only comparing the value provided by MIG devices based on the valuation model of AWS p-series instances.
+
+
+
+						</p>
+						<p>
+							There does exist the possibility to buy a p4d instance, set up EKS, set up MIG, and manage MIG devices with EKS. In theory you could run Kubeflow on top of that and provide single A100 gpu container jobs in KF at a much lower AWS cost than just a bunch of p3 instances.
+
+
+						</p>
+						<p>
+							However, this scenario ignores the cost of the following factors:
+
+							<ul>
+								<li>users would no longer be using sagemaker on AWS, but KF</li>
+								<li>the install of KF would be custom, and have some overhead</li>
+								<li>there would need to be more effort in dedicated support as you are now in the business of running the mlops</li>
+								<li>user, admin training</li>
+								<li>loss of depreciation with p4d instance being pure OpEx</li>
+
+
+							</ul>
+
+							If you going to try something like this, I'd advise just wrapping up some TITAN gpus in a few boxes and running a custom KF install there. You'll save money on GPU cost that you can then put towards the additional care and feeding of the platform.
+
+						</p>
+						<p>
+							What is the cost of 8 x TITANs?
+
+							Thought: What about the Lambda line of servers?
+
+							[ pros and cons here ]
+
+						</p>
+-->
+
+						<!--						
+						<p>
+
+							3 Form Factors of GPU Infrastructure:
+
+							<ol>
+								<li>Single GPU Workstations (for single users)</li>
+								<li>Single GPU Servers (for development teams or small teams)</li>
+								<li>Clusters of GPU Servers (larger organizations)</li>
+
+
+							</ol>
+
+							For the purpose of this article, we are focused on the latter two form factors, where we would be <span style="font-weight: bold; color: red;">managing from 1 to N GPU servers (DGX-A100s) with Kubernetes</span>.
+
+						</p>
+					-->
+						
+
+<!--
+						<p>
+
+							The NVIDIA DGX-A100 is the latest in NVIDIA's DGX line of cluster GPU packages for the data center and has :
+
+
+							<ul>
+
+								<li>8 x NVIDIA A100 GPUs, each with 40GB (or 80GB, depending on model) of GPU RAM (320GB / 640GB GPU RAM, total)</li>
+
+								<li>6 NVIDIA NVSwitches</li>
+								<li>dual AMD Rome 7742 CPUs (128 cores total)</li>
+								<li>either 2TB or 1TB system RAM</li>
+
+							</ul>
+
+							It is quite a powerful system and offers 5 petaFLOPS of processing power for machine learning jobs at that compute density.
+
+						</p>
+						<p>
+							This amount of GPU compute density coupled with the rising demand to colocate 
+
+							<ul>
+
+							<li>different classes of machine learning training workloads</li>
+							<li>data prep and data engineering workflows</li>
+							<li>inference serving</li>
+
+							</ul>
+
+							has prompted NVIDIA to introduce MIG into the DGX ecosystem.
+
+						</p>
+-->
+
+					</div> <!-- end col -->
+
+				</div> <!-- end row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border-top: 0px solid;"> <!-- start section 3 -->
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>A Cloud Value Model for MIG Devices on the DGX-A100</h1>
+
+						<p>
+							Based on the usage patterns from the previous section, we are looking to base our price analysis around a pool of instances each with a single GPU.
+
+						</p>
+<!--
+						<p>
+							With this in mind, our goal is to make a grounded comparison of the value of the MIG Devices with our example company’s standard public cloud GPU instance (p3.2xlarge, V100). Since our MIG compute instances are based on slicing up the resources of an A100, we have to assign a “cloud value” to the A100 based on how resources are priced on the public cloud (here, AWS).
+
+						</p>
+
+					-->
+
+						<p>
+							With this in mind we now seek to build a valuation of a hypothetical instance with a single A100 GPU attached. We already know the rough translations of the power of different MIG Device profiles, so once we have the single instance A100 GPU price, we can divide the price by the comparable fraction of resources it provides (or the most comparable cloud GPU instance price for those resources).
+
+
+						</p>
+
+					</div>
+
+					<!-- end content -->
+
+
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+						<h2>Forecasting the Value of a single A100 GPU-instance on AWS</h2>
+
+
+
+
+									<!-- START: Sidebar -->
+									<div style="float: right; width: 700px; border: 1px solid; padding: 12px; margin-left: 6px; font-size: 12px; background-color: #eeeeee;">
+
+
+										<h4>Why GPU Compute Power is a Unique Driver of Value</h4>
+
+										<p>
+
+											Other resources on public cloud have value beyond the compute power of the instance such as:
+
+											<ul>
+												<li>reliability</li>
+												<li>durability</li>
+												<li>fail-over</li>
+												<li>...more...</li>
+
+
+											</ul>
+
+											GPU instances as applied to machine learning training workflows are unique in that we are focused on leveraging specialized compute to perform more linear algebra operations faster. The above benefits are less useful in this case.
+
+
+											Machine learning training takes longer on CPU than it does on GPU.
+
+										</p>
+										<p>
+
+											By using a GPU we don't buy better accuracy, we shorten our training time, allowing us to try more variations and find  better solutions/models.
+
+
+											Therefore, value in the space of cloud GPUs is directly tied to GPU relative power. E.g., I can use any GPU instance I want on AWS, but some instances will train the same model in a shorter amount of time. I am trading money for time in this case, so it makes sense to view cloud GPUs in a relative compute power sense and then compare that to the difference in price.
+
+										</p>
+<!--
+										<p>
+											Contrast the MLOps infrastructure needed with the direct-line compute power of the training for machine learning workflows
+
+										</p>
+
+										<p>
+
+											[ note: reference this thought when we make the point that more powerful GPUs get cheaper; "you get more productive and it is cheaper" ]
+
+											[ also: compute time is cheaper than engineering time, so if we can get beyond engineering mistakes faster, we're in a better shape ]
+
+											[ "figure out what needs to be computed is costly --- computing the thing is less costly" ]
+
+											[ edit here ! ]
+
+										</p>
+-->
+									</div>
+									<!-- END: Sidebar -->
+
+
+
+
+
+
+
+						<!--
+						<h3>Building a Relative Model of AWS GPUs</h3>
+-->
+						<p>
+
+							There are a lot of ways to estimate what the value of an A100 GPU-based instance should be, but we wanted to visually take a look at how the price and performance has changed across progressively more powerful GPU-instances offered on AWS. If our pricing model is decent, our forecasted price of the A100 single-GPU instance will "visually" fall in line with the trajectories of the other instances on AWS.
+						</p>
+						<p>
+
+							To create these visual trajectories, we based our calculations on the power and price of the K80 GPU chip (AWS <a href="https://aws.amazon.com/ec2/instance-types/p2/">p2 instance</a>) so that we can see the relative trends in price and performance.
+						</p>
+						<p>
+
+
+							In the graph below we can see two series:
+
+							<ol>
+								<li>The speedup multiple of major GPU-type compared to the K80 GPU</li>
+								<li>The price multiple of the same GPUs compared to the K80 GPU</li>
+
+							</ol>
+
+						</p>
+
+						<img src="./images/aws_gpu_changes_price_perf_multiples.png" />
+
+						<p>
+
+							We also have <a href="forecasting_your_aws_gpu_cloud_spend.html">collected notes that give us relative computation power comparisons</a> between the 4 GPUs ("Speedup Multiple (over K80)"), as you can see represented by the blue series in the graph above.
+
+						</p>
+						<p>
+							We can also visually see how the price changes across the same 3 GPU-instances on AWS and then where the forecasted A100-instance multiple should land. The A100-hypothetical instance price multiple is extrapolated based on how the price was changing vs how the performance was changing. Based on the trajectory of both trends, the price multiple (over the K80) should "visually land somewhere in the orange box area". We derived this multiple to be 9.5x the price of the K80 instance on AWS.
+
+						</p>
+
+						<p>
+							We also want to note that we feel this A100 price multiple (9.5x) over the K80 "feels right" because if it were lower it would start to canabalize the sales of the V100-based p3 instances (e.g., "why get a V100 when I can get a A100 for nearly the same price?"). If the price multiple were higher then it would incentivize users to fall back to a better deal with the V100-based p3.2xl instances.
+
+						</p>
+<!--
+						<p>
+
+							Before we move on, we want to note that for AWS GPU instances it appears that as the gpus get more powerful, you get more "compute value" for the same dollar (e.g., the speedup multiple is increasing faster than the price multiple).
+
+							This trend suggests more powerful gpus are better value on AWS.
+
+						</p>
+-->
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<div style="border: 0px solid; width: 600px; float: right;">
+
+										<h4>GPU Power vs Value Trend</h4>
+									  <p style="font-size: 14px; ">
+									  <i>Before we move on, we want to note that for AWS GPU instances it appears that as the GPUs get more powerful, you get more "compute value" for the same dollar (e.g., the speedup multiple is increasing faster than the price multiple).
+									  </i></p>
+
+									  <p style="font-size: 14px; "><i>
+
+									This trend suggests more powerful gpus are better value on AWS.</i></p>
+
+								</div>
+							  
+							</div>	
+
+						</div>
+
+
+
+						<h3>Wait a Minute -- Doesn't AWS Already have an A100-based Instance?</h3>					
+
+						<p>
+
+							The short answer is "yes"
+						</p>
+						<p>
+
+							This leads us to ask:
+
+						</p>
+
+						<blockquote>Why not assign value of a MIG device based off the existing <code>p4d.24xlarge</code> instance?</blockquote>
+
+						<p>
+							Now, the longer answer:
+
+						</p>
+
+						<p>
+							The <code>p4d.24xlarge</code> does offer A100 GPUs, but it offers 8 of them in a single instance. While this instance type gives us the same core GPU, it is not in a form factor that a data scientist using a MIG device for computation would actually be using in practice. 
+
+						</p>
+						<p>
+							 As a user I'm probably not going to do this because the economics don't work for my use case (and I'd have to write my code to be able to use multiple-GPUs, which can be non-trivial in some cases). Therefore, the p4 instance does not fit our valuation model (and we'll address this further in a moment).
+
+						</p>
+<!--
+						<p>
+							[ breakout: the difference between valuing a single large GPU instance vs a system that serves as entire enterprise DS group ]
+
+							[ our user base is using a pool of resources; if they all got p4's because they were "better value", it would be lots of people blowing up our budget. the DS's are going to be getting single GPU instances, and we'll be getting lots of them, so our valuation has to be based on what the comparable hardware would cost on AWS. from this perspective, the p4 instance does not fit our valuation model ]
+
+
+						</p>
+-->
+<!--
+						<p>
+
+							[ note: a big part of cloud value is the flexibility; when you start buying 1-yr and 3-yr reservations, you are just buying IaaS and losing the flexibility to "not use the infrastructure" flexibility of the cloud ]
+
+						</p>
+-->
+<!--
+						<p style="color: red;">
+Our goal is to build a valuation model for the DGX-A100 as a multi-tenant environment that can serve many users concurrently with MIG and Kubeflow.
+If we value the system as a single DGX-A100 (p4 instance) from AWS we are not capturing the value created by serving multiple users as opposed to a single user. 
+</p>
+-->
+						<h3>Now Let's Translate the Single-A100 Price Multiple Into a Price</h3>
+
+
+						<p>
+
+							AWS does not offer a single A100 card GPU instance so we have to extrapolate what that would cost if it did exist based on other GPU instance prices on AWS that offer single GPUs.
+
+						</p>
+
+						<p>
+							To calculate the forecasted price of the single-A100 GPU instance we take the blended (<a href="forecasting_your_aws_gpu_cloud_spend.html">average of the on-demand and 1-yr reserve</a>) price of the K80 p2 instance (<code>$0.66 / hr</code>) and multiply it by the price multiple factor (<code>9.5x</code>) to <span style="font-weight: bold;">get an A100-instance price of <code>$6.33 / hr</code></span>.
+
+						</p>
+
+						<p>
+
+							A good quick back of the envelope check on this price is to multiply the <code>2.5x</code> performance multiple of the A100 over the V100 GPU (in a <code>p3.2xlarge</code>) by the price of the <code>p3.2xlarge</code> instance. This gives us: <code>2.5</code> x <code>$2.53/hr</code> == <code>$6.31/hr</code>, only 2 cents off our <code>9.5x</code> multiple projection.
+
+							<!--
+								If AWS tries to price it as 1/8 of the p4d instance, it would force them to re-price all of their other gpu instances
+
+							-->
+
+						</p>
+
+						<p>
+							At this point we have a hourly value for the hypothetical AWS A100-based GPU instance that should hold up based on our calculations and the constraints of the pricing of the adjacent GPU-instances. Let's now move on and build a valuation of a pool of DGX-A100-based MIG devices managed by Kubernetes.
+
+						</p>
+<!--
+						<p>
+							Amazon GPU instance pricing generally correlates with the amount hardware on the instance, such as:
+
+							<ul>
+								<li>GPU chip type</li>
+								<li>GPU memory</li>
+								<li>vCPUs</li>
+								<li>Memory</li>
+
+
+							</ul>
+
+						</p>
+
+						<p>
+							An example of this can be seen comparing the <code>p3.2xl</code> (v100-based) instance with 
+							the <code>g4dn.4xlarge</code> (t4-based) instances. The t4 line of chips are known to be around 1/3 as powerful as the v100 line of chips. There are multiple versions of the g4dn instance (with a single GPU), but the <code>g4dn.4xlarge</code> has the same amount of GPU memory. However, it has 2x more vCPUs yet less system memory (p3.2xl has 27% more).
+
+
+						</p>
+						<p>
+							Going back to the t4 chip being 1/3 as powerful as the v100, if we take the On-Demand price of the <code>g4dn.4xlarge</code> and multiply it by 3, we should get a price that is slightly more than what the actual <code>p3.2xl</code> price is in reality.
+
+						</p>
+						<p>
+							This gives us:<br/><br/>
+
+							<code>$1.204 x 3 == $3.612</code>
+
+							The actual price of the On-Demand <code>p3.2xl</code> instance is <code>$3.06</code>, which is 18% less than our projected price based on the pure 3x multiple. In this case, Amazon bumped the price of the extra vCPUs of the instance up by ~18%, it seems.
+
+						</p>
+
+
+
+
+
+
+
+
+
+
+						<p>
+
+
+						Instead, we chose the <code>p3.2xlarge</code> (V100 card with 16GB GPU RAM) instance as a our basis because it would be closest in general function to a single GPU that a data scientist uses commonly. 
+						</p>
+
+						<p>
+
+						Given that there are multiple ways to buy EC2 instances on AWS, we compute the cost of the <code>p3.2xlarge</code> instance as the average of the On Demand and the 1Yr Reserved Instance cost. This adjusted cost is <code>$2.53</code> per hour.
+						</p>
+-->
+
+
+
+
+					</div> <!-- end col -->
+
+
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h2>Extrapolating MIG Device Value from AWS GPU Pricing</h2>
+
+						<p>
+							To build out valuations for the remaining MIG Device profiles we take the $6.33 / hr price for the 7g.40gb full A100 GPU instance and then subdivide this price based on the fraction of resources the MIG Device profile gets, as seen in the table below.
+
+						</p>
+
+
+
+
+
+
+						<p>
+							
+
+							<table>
+								<tr>
+									<th>MIG Device Type</th>
+									<th>Equivalent GPU</th>
+									<th>Workload Match</th>
+									<th>Cloud Value ($/Hr)</th>
+									<th>MLOps + GPU Cloud Value ($/Hr)</th>
+								</tr>
+
+								<tr>
+									<td><code>7g.40gb</code></td>
+									<td>A100</td>
+									<td>heavier deep learning training jobs</td>
+									<td><code>$6.33</code></td>
+									<td><code>$8.86</code></td>
+
+								</tr>
+
+
+								<tr>
+									<td><code>4g.20gb</code></td>
+									<td></td>
+									<td></td>
+									<td><code>$3.62</code></td>
+									<td><code>$5.06</code></td>
+
+								</tr>								
+
+								<tr>
+									<td><code>3g.20gb</code></td>
+									<td>V100 (+4GB RAM)</td>
+									<td>medium machine learning training jobs (Kaggle-type notebooks)</td>
+									<td><code>$2.71</code></td>
+									<td><code>$3.80</code></td>
+
+
+								</tr>
+
+
+								<tr>
+									<td><code>2g.10gb</code></td>
+									<td></td>
+									<td></td>
+									<td><code>$1.81</code></td>
+									<td><code>$2.53</code></td>
+
+								</tr>
+
+								<tr>
+									<td><code>1g.5gb</code></td>
+									<td>T4</td>
+									<td>Inference (batch-1) workloads (low-latency models), development Jupyter notebooks</td>
+									<td><code>$0.90</code></td>
+									<td><code>$1.27</code></td>
+
+								</tr>
+
+							</table>
+
+							<br/>
+
+							
+						</p>	
+
+
+						<p>
+
+						With MIG (managed with Kubernetes) we can offer a single A100 GPU-based MIG Device (e.g., "Container-based compute instance running on Kubernetes with access to the local DGX hardware") with 40GB of GPU RAM (MIG Profile: <code>7g.40gb</code>, or 80GB per GPU for a <code>7g.80gb</code> if you have the 640GB GPU RAM version of the DGX-A100) that is roughly 2.5x times as powerful as a V100 card. Each DGX-A100 provides 8 x A100 GPUs and these GPUs can be sliced up in different ways, providing up to 56 individual MIG Devices from a single DGX-A100. 
+
+<!--
+						As we established previously in the article, AWS tends to scale cost with compute power, so we multiply this 2.5x compute factor by the hourly cost of the AWS instance p3.2xlarge to get an adjusted hourly “cloud value” of the MIG A100 (7g.80gb) cloud instance. The cost for this compute instance becomes (2.5 * $2.53 ==) $6.31.
+					-->
+						</p>
+
+						<p>
+
+
+							The MIG Device types (<code>4g.20gb</code>, <code>2g.10gb</code>) between the 3 listed above allow for further flexibility for workloads that "don't exactly fit in one of the buckets". (see also: <a href="forecasting_your_aws_gpu_cloud_spend.html">Resource Requirements for Different Types of Deep Learning Workflows</a>).
+
+						</p>
+
+
+
+						<p>
+							So depending on how we slice up our DGX-A100, that means a single DGX-A100 could be configured to offer up to 56 individual <code>1g.10gb</code>-based Kubernetes-managed "compute slots". Each of these 56 "compute slots" are roughly equivalent to a g4 instance on AWS, for reference.
+
+						</p>
+
+
+
+
+						<p>
+							No matter how we slice an A100 GPU up with MIG to create combinations of MIG Devices, we can easily look up the corresponding value in the chart above. Now let's move on to understanding the last column "MLOps + GPU Cloud Value".
+
+						</p>
+
+
+
+						<h3>Valuing the A100 GPU When Used with a Machine Learning Platform</h3>
+
+						<p>
+							If we're just using a <code>p3.2xl</code> (for example) AWS instance and running some python machine learning code in a container on it, we're leveraging <span style="font-weight: bold;">"GPUs as a Service" (GaaS)</span>.
+
+						</p>
+						<p>
+							If you use a DGX-A100 with MIG where the MIG Devices are managed by Kubernetes, then we can launch containers with machine learning code via <code>kubectl</code> similarly to how we'd use an AWS p3.2xl instance. In this way, the DGX-A100 with MIG and Kubernetes can provide multi-tenant shared "GPUs as a Service" (GaaS) similar to how the cloud offers GPUs as a service with equivalently powered instances.
+
+						</p>
+
+						<p>
+
+						Given that the DGX-A100 with MIG and a MLOps platform (e.g., <a href="https://www.kubeflow.org">Kubeflow</a>, etc) offers Jupyter notebook servers and model hosting functionality, we further compute the hourly cost of a “cloud GPU compute instance” with the <a href="forecasting_your_aws_gpu_cloud_spend.html">AWS SageMaker cost multiple of 1.4x</a> to give us a final "MLOps + GPU Cloud Value" of $8.84 for the full <code>7g.40gb</code> MIG Device running on the MLOps platform. We similarly prorate each of the MIG Device profiles for the rest of the "MLOps + GPU Cloud Value" column.
+
+
+
+						</p>
+
+
+
+					</div>
+
+				</div>
+
+					<!-- end content -->
+
+
+
+
+
+
+
+
+
+				<!-- start of section -->
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-6" id="fh5co-content">
+
+
+						<h1>Summary and Next Steps</h1>
+
+						<p>
+							In this article we gave a breakdown of how the DGX-A100 with MIG and Kubernetes compared to similar Cloud GPU resources.
+
+						</p>
+
+						<p>
+
+							If you'd like to know more about how you can use the DGX-A100 with MIG and Kubeflow, check out our <a href="../AIAC">AI Accelerator Package with ePlus and NVIDIA</a>. It can help your organization save up to 85% on its cloud GPU bill -- check out the AI Acceleartor Package homepage to download the <a href="../AIAC">cost study eBook</a>.
+						</p>
+						<p>
+							Did you like the article? Do you think we are making a poor estimation somewhere in our calculations? <a href="../contact.html">Reach out and tell us</a>.
+
+						</p>
+
+
+						
+
+					</div>
+
+					<div class="col-md-6" id="fh5co-content" style="padding-top: 60px;">
+
+
+<iframe width="492" height="227" src="https://www.youtube.com/embed/St5YGNDpJ0o?theme=light&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>						
+
+					</div>
+				
+				</div>
+				<!-- end of section -->											
+
+
+				<div class="row row-bottom-padded-sm">
+
+					<div class="col-md-6" id="fh5co-content">
+
+
+						<p>
+
+							If you'd like to know more about MLOps in general and Kubeflow, check out our latest book with <a href="../content/kubeflow_operations_oreilly_book.html">O'Reilly, "Kubeflow Operations Guide"</a>.
+						</p>
+						
+
+						<p>
+							If you want to run a quick variation on your AWS Cloud GPU costs, check out our <a href="../content/aws_cloud_gpu_calculator_v1.html">online GPU cost calculator</a>.
+
+
+
+						</p>
+						
+
+					</div>
+
+					<div class="col-md-6" id="fh5co-content">
+
+							<a href="../content/kubeflow_operations_oreilly_book.html">
+								<img src="../images/kfops_book_cover_final.png" style="width: 148px; height: 196px; border: 1px solid;" >
+							</a>
+					</div>
+
+				</div>
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>	
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>

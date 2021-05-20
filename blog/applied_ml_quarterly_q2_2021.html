@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Applied Machine Learning Quarterly (Q2 2021)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/images/exec_strategy_bg.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Machine Learning Quarterly (Q2 2021)</h1>
+
+					<div>
+						<p>
+							Author: <a href="https://www.linkedin.com/in/rebekah-thompson/" target="_blank">Rebekah Thompson</a>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							For all of you who enjoyed <a href="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html"  target="_blank">our list of tools and infrastructures from Q2 of 2020</a>, we're back with another list for you all! <br><br> 
+							For those of you who are new to our Applied Machine Learning Quartly, welcome! This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020. Updated roughly quarterly.
+						</p>
+					</div>
+
+                        <br><br>
+                    <div>    
+						<h1>May 2021</h1>
+                        
+						<h2>Tools and Infrastructure</h2> 
+						<br>
+					</div>
+
+						<!--
+							List begins here. Need news_item classes added (based on May 2020 blog post code)
+						-->
+
+						<!-- Model Search -->
+					<div>	
+						<h3>Model Search</h3>
+						
+						<img src="https://raw.githubusercontent.com/google/model_search/master/model_search/images/model_search_logo.png" style="width: 25%; float: right;">
+
+						<p>
+							Choosing the best model for your machine learning project can feel daunting at times, but researchers at Google have developed a new, open-source Python framework to hopefully help alleviate that feeling — Model Search (MS). <br><br>
+
+							Google’s Model Search GitHub page describes the framework as:
+						</p>
+
+						<blockquote>
+							“Model search (MS) is a framework that implements AutoML algorithms for model architecture search at scale. It aims to help researchers speed up their exploration process for finding the right model architecture for their classification problems (i.e., DNNs with different types of layers).”
+                            <br><br>
+									- <a href="https://github.com/google/model_search" target="_blank">Google’s Model Search GitHub Repository</a>
+						</blockquote>
+
+						<p>
+							A depiction of the MS model from <a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">Google AI’s blog post on Model Search</a> is shown below. The researchers explained their model as follows:
+						</p>
+
+						<blockquote>
+							“Model Search schematic illustrating the distributed search and ensembling. Each trainer runs independently to train and evaluate a given model. The results are shared with the search algorithm, which it stores. The search algorithm then invokes mutation over one of the best architectures and then sends the new model back to a trainer for the next iteration. S is the set of training and validation examples and A are all the candidates used during training and search.”
+                            <br><br>
+									- Hanna Mazzawi and Xavi Gonzalvo (Authors of the Model Search article)
+						</blockquote>
+
+                        <p>Based on the currently available version, this library enables you to: </p>
+                        <ul>
+                            <li>Run many AutoML algorithms out of the box on your data - including automatically searching for the right model architecture, the right ensemble of models, and the best-distilled models</li>
+                            <li>Compare many different models that are found during the search</li>
+                            <li>Create your own search space to customize the types of layers in your neural networks</li>
+                        </ul>
+
+                        <p><b>Resources to get started with Model Search:</b></p>
+                        <ul>
+                            <li><a href="https://github.com/google/model_search" target="_blank">Model Search GitHub Repository</a></li>
+                            <li><a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">GoogleAI Model Search Article</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=eptyMYo6ukw" target="_blank">Quick Video from Przemek Chojecki Explaining Model Search</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=-7TZ-IKMJi8" target="_blank">Video from AIEngineering Exploring Model Search</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+                        <!-- RAFT -->
+					<div>	
+                        <h3>RAFT: Recurrent All-Pairs Field Transforms for Optical Flow</h3>
+                        
+                        <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"> Click this link to read the full research paper for RAFT </a>
+
+                        <p>
+                            Zachary Teed and Jia Deng of Princeton University have introduced a new end-to-end deep neural network architecture for optical flow, which is one of the long-standing problems in accurate video analysis. Optical flow is the task of estimating the motion, or direction, of an object between video frames and is often limited by fast-moving objects, a tracked object being blocked by another object, or motion blur. 
+                            <br>
+                            <br>
+                            RAFT consists of three main components:
+                        </p>
+                       
+                        <ol>
+                            <li>A feature encoder that extracts a feature vector for each pixel in two different frames</li>
+                            <li>A correlation layer that produces a 4D correlation volume for all pairs of pixels, with subsequent pooling to produce lower-resolution volumes</li>
+                            <li>A recurrent GRU-based update operator that retrieves values from the correlation volumes and iteratively updates a flow field initialized at zero</li>
+                        </ol>
+
+                        <div style="padding: 12px; margin: 6px; border: 1px solid;">
+
+                        	<img src="images/RAFT_framework.png" style="width: 75%">
+
+                        	<p>
+                        		Image From the Paper: <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"><i>"RAFT: Recurrent All-Pairs Field Transforms forOptical Flow"</i></a>
+
+                        	</p>
+
+                        </div>
+
+                        <p>
+                            According to Teed and Deng’s results in the publication, RAFT’s strengths include the following based on the <a href="http://www.cvlibs.net/datasets/kitti/" target="_blank">KITTI Vision Benchmark Suite</a>:
+                        </p>
+
+                        <ul>
+                            <li><b>State-of-the-Art Accuracy:</b> achieved an F1-all error of 5.10%, a 16% error reduction from the best-published result, and an end-point-error of 2.855 pixels, a 30% error reduction from the best-published result</li>
+                            <li><b>Strong Generalization:</b> When trained only on synthetic data, RAFT achieved an end-point-error of 5.04% on KITTI, a 40% error reduction from the best deep learning network trained on the same data</li>
+                            <li><b>High Efficiency:</b> RAFT processes 1088 x 436 videos at 10 frames per second on a 1080Ti GPU with 10X fewer iterations than other architectures.</li>
+                        </ul>
+
+                        <p><b>Resources to get started with RAFT:</b></p>
+                        <ul>
+                            <li><a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank">Full RAFT Research Paper</a></li>
+                            <li><a href="https://github.com/princeton-vl/RAFT" target="_blank">RAFT GitHub Repository</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=OSEuYBwOSGI" target="_blank">YouTube Video from What’s AI with His Explanation on RAFT</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+                        <!-- OpenAI DALLE -->
+					<div>	
+						<h3>DALL&#9679E</h3>
+
+                        <p>
+                            DALL·E, cleverly named after the artist Salvalor Dalí and Pixar’s WALL·E, is a trained neural network from OpenAI that can create images from user input text captions using PyTorch.
+                        </p>
+
+                        <p>According to OpenAI’s page introducing DALL·E:</p>
+                        <blockquote>
+                            “DALL·E is a 12-billion parameter version of GPT-3 trained to generate images from text descriptions, using a dataset of text-image pairs. We’ve [DALL·E developers] found that it has a diverse set of capabilities, including creating anthropomorphized versions of animals and objects, combining unrelated concepts in plausible ways, rendering text, and applying transformations to existing images.”
+                            <br><br>
+	                        - <a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a>
+                        </blockquote>
+
+                        <p>
+                            The captions are not just limited to a single word, such as “dog” or “cat.” With this network, the user can input a phrase such as “an illustration of a baby daikon radish in a tutu walking a dog” and get just that — an illustration of a baby daikon radish in a tutu walking a dog.
+                        </p>
+
+                        <img src="images/DALLE_radishTutu.png" style="width: 75%">
+						<br><br>
+                        <p>
+                            Not only does DALL·E work on text prompts, it will also work with the combination of image and text prompts. The image below shows DALL·E attempting to replicate an image of a cat as a sketch after receiving an image and text prompt based on that image. 
+                        </p>
+						<br>
+                        <img src="images/DALLE_catSketch.png" style="width: 75%">
+
+                        <p><b>Resources to get started with DALL·E:</b></p>
+                        <ul>
+                            <li><a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a></li>
+                            <li><a href="https://github.com/openai/DALL-E" target="_blank">DALL·E GitHub Repository</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+						<!-- Jraph -->
+					<div>
+                        <h3>Jraph</h3>
+
+                        <img src="images/JraphLogo.png" style=" float: left;">
+
+                        <p>
+                            Jraph is a <a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">graph neural network</a> developed by DeepMind and joins the JAX family, a machine learning framework developed by Google Researchers, as one of its newest members. The developers of Jraph describe it as follows:
+                        </p>
+
+                        <blockquote>
+                            “Jraph (pronounced "giraffe") is a lightweight library for working with graph neural networks in jax. It provides a data structure for graphs, a set of utilities for working with graphs, and a 'zoo' of forkable graph neural network models.”
+                            <br><br>
+	                        - <a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a>
+                        </blockquote>
+                        
+                        <p>
+                            Jraph takes inspiration from Tensorflow’s <a href="https://github.com/deepmind/graph_nets" target="_blank">graph_nets library</a> when defining its GraphsTuple data structure, a named tuple that contains one or more directed graphs.
+                            <br><br>
+                            <b>Resources to get started with Jraph:</b>
+                        </p>
+
+                        <ul>
+                            <li><a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a></li>
+                            <li><a href="https://github.com/google/jax" target="_blank">JAX GitHub Repository</a></li>
+                            <li><a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">Introduction to Graph Neural Networks</a> by NeptuneBlog</li>
+                        </ul>
+					</div>
+
+					<br>
+
+						 <!-- Petting Zoo -->
+					<div>
+                         <h3>Petting Zoo</h3>
+
+                         <img src="images/PettingZoo_LogoWithName.png" style="width: 75%">
+
+                         <p>
+                            <a href="https://www.pettingzoo.ml">Petting Zoo</a> is a Python library created by Justin Terry, currently a Ph.D. Student at the University of Maryland, for conducting and researching multi-agent reinforcement learning. It is similar to <a href="https://gym.openai.com/" target="_blank">OpenAI’s Gym</a> library, but instead of focusing on a single agent, the models focus on training multiple agents. If you have experience with Gym, or even if you don’t, and want to try your hand at training multiple agents, give Petting Zoo a try.
+                            <br>
+                            Petting Zoo offers six families of learning environments to train and test your agents including:
+                         </p>
+
+                         <ul>
+                             <li><a href="https://www.pettingzoo.ml/atari" target="_blank">Atari</a>: Multi-player Atari 2600 games (both cooperative and competitive)</li>
+                             <li><a href="https://www.pettingzoo.ml/butterfly" target="_blank">Butterfly</a>: Cooperative graphical games developed by us, requiring a high degree of coordination</li>
+                             <li><a href="https://www.pettingzoo.ml/classic" target="_blank">Classic</a>: Classical games including card games, board games, etc.</li>
+                             <li><a href="https://www.pettingzoo.ml/magent" target="_blank">MAgent</a>: Configurable environments with massive numbers of particle agents, originally from <a href="https://github.com/geek-ai/MAgent" target="_blank">https://github.com/geek-ai/MAgent</a></li>
+                             <li><a href="https://www.pettingzoo.ml/mpe" target="_blank">MPE</a>: A set of simple non-graphical communication tasks, originally from <a href="https://github.com/openai/multiagent-particle-envs" target="_blank">https://github.com/openai/multiagent-particle-envs</a></li>
+                             <li><a href="https://www.pettingzoo.ml/sisl" target="_blank">SISL</a>: 3 cooperative environments, originally from <a href="https://github.com/sisl/MADRL" target="_blank">https://github.com/sisl/MADRL</a></li>
+                         </ul>
+
+                         <img src="images/PettingZoo_PZEnvironments.png" style="width: 75%">
+
+                         <p>
+                            For more information check out the links below and also <a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">this interview with Justin</a> hosted on <a href="https://www.youtube.com/channel/UC8oMaBaY6L6KRjvoQWVYCWg" target="_blank">Synthetic Intelligence Forum’s YouTube channel</a> for a deeper dive into Petting Zoo and how it can potentially help you with your projects.
+                            <br><br>
+                            <b>Resources to get started with Petting Zoo:</b>
+                        </p>
+
+                        <ul>
+                            <li><a href="https://github.com/PettingZoo-Team/PettingZoo" target="_blank">Petting Zoo GitHub Repository</a></li>
+                            <li><a href="https://www.pettingzoo.ml" target="_blank">Petting Zoo Website</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">Interview with Petting Zoo creator</a></li>
+                            <li><a href="https://towardsdatascience.com/multi-agent-deep-reinforcement-learning-in-15-lines-of-code-using-pettingzoo-e0b963c0820b" target="_blank">Article by Justin Terry Introducing Petting Zoo on Towards Data Science</a></li>
+						</ul>
+					</div>
+
+					<br>
+
+						<!-- Vision Transformer (ViT) -->
+					<div>
+                        <h3>Vision Transformer (ViT)</h3>
+
+                        <p>
+                            The use of <a href="https://papers.nips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf" target="_blank">transformers</a> in image-based tasks and models, such as convolutional neural networks (CNNs), has been gaining in popularity. Imagining the possibilities this addition could bring to the world of image analysis, Google Researchers have introduced Vision Transformer (ViT), a vision model-based as closely as possible to the transformer architecture used in text-based models. 
+                            <br>
+                            In their <a href="https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html" target="_blank">Google AI article</a> presenting the new model, the authors explained ViT as the following:
+                        </p>
+
+                        <blockquote>
+                            “ViT represents an input image as a sequence of image patches, similar to the sequence of word embeddings used when applying Transformers to text, and directly predicts class labels for the image. ViT demonstrates excellent performance when trained on sufficient data, outperforming a comparable state-of-the-art CNN with four times fewer computational resources.”
+                            <br><br>
+	                        - Google Research Scientists, <a href="https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html" target="_blank">ViT Article</a>
+                        </blockquote>
+
+                        <div style="border: 1px solid; float: right; width: 380px; height: 285px; padding: 6px;">
+
+                        	<img src="images/ViT_framework.png" style="width: 360px; height: 244px;">
+
+                        	<p>
+                        		Image Source: <a href="https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html">Google article on ViT</a>
+
+                        	</p>
+
+                        </div>
+
+                        <p>
+                            So, how does this model work? In the same article, the researchers go on to explain just that:
+                        </p>
+
+                        <blockquote>
+                            “ViT divides an image into a grid of square patches. Each patch is flattened into a single vector by concatenating all pixels’ channels in a patch and then linearly projecting it to the desired input dimension. Because Transformers are agnostic to the structure of the input elements we add learnable position embeddings to each patch, which allows the model to learn about the structure of the images. A priori, ViT does not know about the relative location of patches in the image, or even that the image has a 2D structure — it must learn such relevant information from the training data and encode structural information in the position embeddings.”
+                            <br><br>
+	                        - Google Research Scientists, <a href="https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html" target="_blank">ViT Article</a>
+                        </blockquote>
+
+                        <p>
+                            Resources to get started with Vision Transformer (ViT):
+                        </p>
+                        <ul>
+                            <li><a href="https://github.com/google-research/vision_transformer" target="_blank">Google Research's ViT GitHub Repository</a></li>
+                            <li><a href="https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html" target="_blank">Google AI ViT Article</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+						<!-- RxR -->
+					<div>
+                        <h3>Room-Across-Room (RxR) - Google Research Dataset</h3>
+
+                        <p>
+                            One of the latest datasets from Google Research Scientists is called “Room-Across-Room (RxR).” RxR is a multilingual dataset for Vision-and-Language Navigation (VLN) in <a href="https://niessner.github.io/Matterport/" target="_blank">Matterport3D environments</a>. 
+                            <br><br>
+                            The research scientists for RxR describes the dataset as the following from <a href="https://ai.googleblog.com/2021/01/rxr-multilingual-benchmark-for.html" target="_blank">their article</a>: 
+                        </p>
+
+
+                        <div style="border: 1px solid; float: right; width: 380px; height: 345px; padding: 6px">
+
+                       		 <img src="images/RxR_agent.png" style="width: 360px;" />
+
+                       		 <p>
+                       		 	Image Source: <a href="https://ai.googleblog.com/2021/01/rxr-multilingual-benchmark-for.html">Google Article on RxR</a>
+
+                       		 </p>
+
+                       	</div>
+
+                        <blockquote>
+                                “the first multilingual dataset for VLN, containing 126,069 human-annotated navigation instructions in three typologically diverse languages — English, Hindi and Telugu. Each instruction describes a path through a photorealistic simulator populated with indoor environments from the Matterport3D dataset, which includes 3D captures of homes, offices and public buildings.”
+                        </blockquote>
+
+                        <p>
+                                For those who are unfamiliar with Matterport3D, it is a large, diverse RGB-D dataset for scene understanding that contains 10,800 panoramic views from 194,400 RGB-D images of 90 building-scale scenes. Google Researchers took this large dataset and made it even bigger — 10x bigger!
+                        </p>
+
+                        <p>
+                                As you can see in the image below, the agent using the RxR dataset moves throughout the different rooms and is being depicted by different colors in the image called “pose traces,” which can be found in further detail in the RxR article. The agent then outputs a corresponding description of what it is seeing. If you compare the text to the agent trajectory, the color of the text matches the colored path in the image. 
+                        </p>
+
+
+
+                        <p>
+                                On top of the introduction of this new dataset, Google Researchers also announced that to keep track of the progression of VLN, they are announcing the <a href="https://ai.google.com/research/rxr/" target="_blank">RxR Challenge</a>. The RxR Challenge is “a competition that encourages the machine learning community to train and evaluate their instruction following agents on RxR instructions.” If you’re interested in learning more or participating in the competition, visit the link in the resources below.
+                                <br><br>
+                                <b>Resources to get started with RxR:</b>
+                        </p>
+
+                        <ul>
+                            <li><a href="https://github.com/google-research-datasets/RxR" target="_blank"> RxR GitHub Repository</a></li>
+                            <li><a href="https://ai.googleblog.com/2021/01/rxr-multilingual-benchmark-for.html" target="_blank">RxR Article from GoogleAI</a></li>
+                            <li><a href="https://ai.google.com/research/rxr/" target="_blank">RxR Challenges</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+						<!-- Extended Summ -->
+					<div>
+                        <h3>Extended Summ</h3>
+
+
+                        <div style="border: 1px solid; float: right; width: 580px; height: 345px; padding: 6px">
+
+                       		 <img src="images/ExtendedSumm_ESmodel.png" style="width: 560px;">
+
+                       		 <p>
+                       		 	Image Source: <a href="https://arxiv.org/pdf/2012.14136.pdf">ExtendedSumm Paper</a>
+
+                       		 </p>
+
+                       	</div>
+
+
+                        <p>
+                            Full Paper: <a href="https://arxiv.org/pdf/2012.14136.pdf" target="_blank">On Generating Extended Summaries of Long Documents</a>
+                        </p>
+
+                        <p>
+                            Do you wish there was a way to help summarize your latest paper or document instead of going back and forth trying to decide what is most important to include? Give ExtendedSumm a try.                             
+                        </p>
+
+                        <p>
+                            Researchers Sajad Sotudeh, Arman Cohan, and Nazli Goharian from the IR Lab at Georgetown University created a method that expands upon previous research that was used to create high-level summaries for short documents. Their method is used to generate a more in-depth, extended summary for longer documents such as research papers, legal documents, and books.
+                        </p>
+
+                        <p>
+                            They describe their method as one that “aims at jointly learning to predict sentence importance and its corresponding section” and they describe their methodology as the following in the abstract of <a href="https://arxiv.org/pdf/2012.14136.pdf" target="_blank">their publication</a>:
+                        </p>
+
+                        <blockquote>
+                                “Our method exploits hierarchical structure of the documents and incorporates it into an extractive summarization model through a multi-task learning approach. We then present our results on three long summarization datasets, arXiv-Long, PubMed-Long, and Longsumm.”
+                        </blockquote>
+
+
+                        
+
+                        <p>
+                            The study showed that their method either matched or exceeded the baseline, BertSumExt, over a dataset of mixed summarizations that varied in size. 
+                        </p>
+
+
+
+                        <div style="border: 1px solid; float: right; width: 1050px;  padding: 6px">
+
+                        	<img src="images/ExtendedSumm_BaselineComparison.png" style="width: 90%">
+
+                       		 <p>
+                       		 	Image Source: <a href="https://arxiv.org/pdf/2012.14136.pdf">ExtendedSumm Paper</a>
+
+                       		 </p>
+
+                       	</div>
+
+
+
+                        <p><b>Datasets used for this model:</b></p>
+                        <ul>
+                            <li>Longsumm (<a href="https://github.com/guyfe/LongSumm" target="_blank">GitHub Repository</a>)</li>
+                            <li>ArXiv-Long (<a href="https://drive.google.com/file/d/1gXTgjFxUw9OxaXFgkUzB5M0NOaL0oVgR/view?usp=sharing" target="_blank">ArXiv-Long</a>)</li>
+                            <li>PubMed-Long (<a href="https://drive.google.com/file/d/1yQnt9uWf0fUakOYKZNnNOvJgEytB8MMp/view?usp=sharing" target="_blank">RxR Challenges</a>)</li>
+                        </ul>
+
+                        <p><b>Resources to get started with Extended Summ:</b></p>
+                        <ul>
+                            <li>Longsumm (<a href="https://github.com/Georgetown-IR-Lab/ExtendedSumm" target="_blank">GitHub Repository</a>)</li>
+                            <li>Full Research Paper: <a href="https://arxiv.org/pdf/2012.14136.pdf" target="_blank">On Generating Extended Summaries of Long Documents</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+						<!-- Natural Language Image Search with a Dual Encoder  -->
+					<div>
+                        <h3>Natural Language Image Search with a Dual Encoder</h3>
+
+                        <p>
+                            Khalid Salama, author of the <a href="https://keras.io/examples/nlp/nl_image_search/" target="_blank">original article featured on the Kera’s website</a>, gives us a tutorial of how to build a duel-encoder neural network model to search for images using natural language.
+                        </p>
+
+                        <blockquote>
+                            “The idea is to train a vision encoder and a text encoder jointly to project the representation of images and their captions into the same embedding space, such that the caption embeddings are located near the embeddings of the images they describe.”
+                            <br><br>
+                            - Khalid Salama, <a href="https://keras.io/examples/nlp/nl_image_search/" target="_blank">Natural language image search with a Dual Encoder</a>
+                        </blockquote>
+
+                        <p>
+                            We will be giving a high-level description and steps involved in this method, but if you’re interested in the full tutorial with screenshots of the code after reading our summary, you can <a href="https://keras.io/examples/nlp/nl_image_search/" target="_blank">find his full article here</a>.
+                        </p>
+
+                        <p><b>Requirements for initial setup:</b></p>
+                        <ul>
+                            <li><a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a> 2.4 or higher</li>
+                            <li><a href="https://www.tensorflow.org/hub" target="_blank">TensorFlow Hub</a> (required for BERT model)</li>
+                            <li><a href="https://www.tensorflow.org/tutorials/tensorflow_text/intro" target="_blank">TensorFlow Text</a> (required for BERT model)</li>
+                            <li><a href="https://www.tensorflow.org/addons" target="_blank">TensorFlow Addons</a> ((required for the AdamW optimizer)</li>
+                        </ul>
+
+                        <p><b>Key steps used in this method:</b></p>
+                        <ol>
+                            <li>Prepare the Data: This example uses the <a href="https://cocodataset.org/#home" target="_blank">MS-COCO</a> dataset. The MS-COCO dataset contains over 82,000 images that contain 5 different annotations for each image.
+                                <li>Process and save the data to TFRecord files</li>
+                                <li>Create “tf.data.Dataset” for training and evaluation</li>
+                            </li>
+                            <li>
+                                Implement the Projection Head: The projection head is used to transform the image and the text embeddings to the same embedding space with the same dimensionality
+                            </li>
+                            <li>
+                                Implement the Vision Encoder: <a href="https://keras.io/api/applications/xception/" target="_blank">Xception</a> from <a href="https://keras.io/api/applications/" target="_blank">Keras Applications </a> is used as the vision encoder for this example
+                            </li>
+                            <li>
+                                Implement the Text Encoder: <a href="https://tfhub.dev/tensorflow/small_bert/bert_en_uncased_L-12_H-256_A-4/1" target="_blank">BERT</a> from <a href="https://tfhub.dev/" target="_blank">TensorFlow Hub</a> is used for the text encoder for this example
+                            </li>
+                            <li>
+                                Implement the Dual Encoder: Use cross entropy to compute the loss between the targets and the predictions
+                            </li>
+                            <li>
+                                Train the Dual Encoder: Freeze the base encoders for text and images. Use only the projection head (created in step 2) trainable
+                            </li>
+                            <li>
+                                Search for Images Using Natural Language Input: Put your algorithm to the test to see what images you can generate via a natural language query by:
+                                <li>
+                                    Generating embeddings for the image encoder
+                                </li>
+                                
+                                <li>
+                                    Providing a natural language query to the text encoder
+                                </li>
+                                
+                                <li>
+                                    Computing the similarity between the query embedding and the image embeddings in the index to retrieve the indices of the top matches
+                                </li>
+                                
+                                <li>
+                                    Looking for the image paths with the top results
+                                </li>
+                            </li>
+                        </ol>
+
+                        <p>
+                            If all goes according to plan, here’s an example of the results you may receive. These results are based on <a href="https://keras.io/examples/nlp/nl_image_search/#retrieve-relevant-images" target="_blank">the generated results from Khalid Salama’s article</a>.
+                            <br><br>
+                            <b>Resources to get started:</b>
+                        </p>
+
+                        <ul>
+                            <li><a href="https://github.com/keras-team/keras-io/blob/master/examples/nlp/nl_image_search.py" target="_blank">GitHub Repository (Python)</a></li>
+                            <li><a href="https://keras.io/examples/nlp/nl_image_search/" target="_blank">Khalid Salama's Full Article</a></li>
+                        </ul>
+					</div>
+
+					<br>
+
+						<!-- NeurIPS 2020 Conference Papers  -->
+					<div>
+                        <h3>NeurIPS 2020 Conference Papers</h3>
+
+                        <p>
+                            Imagine reading most, if not all, of the research papers from a conference full of innovative work that you may want to implement yourself. It would take a lot of time, right?
+                        </p>
+
+                        <p>
+                            Luckily, Prabhu Prakash Kagitha has done the work for us in his articles <a href="https://towardsdatascience.com/neurips-2020-papers-a-deep-learning-engineers-takeaway-4f3066523151" target="_blank">NeurIPS 2020 Papers: Takeaways for a Deep Learning Engineer</a> and <a href="https://towardsdatascience.com/neurips-2020-papers-takeaways-of-a-deep-learning-engineer-part-2-of-3-computer-vision-ef5ea1abe525" target="_blank">NeurIPS 2020 Papers: Takeaways of a Deep Learning Engineer— Computer Vision</a>. Featured on the blog <a href="https://towardsdatascience.com/" target="_blank">Towards Data Science</a>, he shares summaries from <a href="https://neurips.cc/" target="_blank">2020 Neural Information Processing Systems (NeurIPS) conference</a> with the first blog post based on general deep learning papers and a second post dedicated specifically to papers related to computer vision.
+                        </p>
+
+                        <p>
+                            The links below will take you to each of the featured papers, but I highly recommend reading his summaries first if you’re short on time. He does a great job of summarizing the main topic, results, and provides a practical, key takeaway for deep learning engineers who do not have the time to read through the entire paper or summary.
+                            <br>
+                            The images below, created by Prabhu, show an overview of the topics covered in each section.                         
+                        </p>
+
+
+
+                        <div style="border: 1px solid; float: right; width: 1050px;  padding: 6px">
+
+                        	<img src="images/NeurIPS_generalDL.png" style="width: 90%">
+
+                       		 <p>
+                       		 	Image Source: <a href="https://towardsdatascience.com/neurips-2020-papers-a-deep-learning-engineers-takeaway-4f3066523151" target="_blank">NeurIPS 2020 Papers: Takeaways for a Deep Learning Engineer</a>
+
+                       		 </p>
+
+                       	</div>
+
+
+                        
+
+                        <p><b>Papers featured in Prabhu's <a href="https://towardsdatascience.com/neurips-2020-papers-a-deep-learning-engineers-takeaway-4f3066523151" target="_blank">general deep learning post</a> include:</b></p>
+                        <ul>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_a1140a3d0df1c81e24ae954d935e8926.html" target="_blank">Accelerating Training of Transformer-Based Language Models with Progressive Layer Dropping</a> - Minjia Zhang and Yuxiong He</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_8493eeaccb772c0878f99d60a0bd2bb3.html" target="_blank">Coresets for Robust Training of Neural Networks against Noisy Labels</a> - Baharan Mirzasoleiman, Kaidi Cao, and Jure Leskovec</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_b6af2c9703f203a2794be03d443af2e3.html" target="_blank">The Lottery Ticket Hypothesis for Pre-trained BERT Networks</a> - Tianlong Chen, Jonathan Frankle et al</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_c3a690be93aa602ee2dc0ccab5b7b67e.html" target="_blank">MPNet: Masked and Permuted Pre-training for Language Understanding</a> - Kaitao Song, Xu Tan et al</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_c6102b3727b2a7d8b1bb6981147081ef.html" target="_blank">Identifying Mislabeled Data using the Area Under the Margin Ranking</a> - Geoff Pleiss, Tianyi Zhang et al</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_e025b6279c1b88d3ec0eca6fcb6e6280.html" target="_blank">Rethinking the Value of Labels for Improving Class-Imbalanced Learning</a> - Yuzhe Yang and Zhi Xu</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_c8512d142a2d849725f31a9a7a361ab9.html" target="_blank">Big Bird: Transformers for Longer Sequences</a> - Manzil Zaheer, Guru Guruganesh et al</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_dc49dfebb0b00fd44aeff5c60cc1f825.html" target="_blank">Improving Auto-Augment via Augmentation-Wise Weight Sharing</a> - Keyu Tian, Chen Lin et al</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_f6a8dd1c954c8506aadc764cc32b895e.html" target="_blank">Fast Transformers with Clustered Attention</a> - Apoorv Vyas, Angelos Katharopoulos, and François Fleuret</li>
+                            <li><a href="https://neurips.cc/virtual/2020/public/poster_ff4dfdf5904e920ce52b48c1cef97829.html" target="_blank">Limits to Depth Efficiencies of Self-Attention</a> - Yoav Levine, Noam Wies et al</li>
+                        </ul>
+
+						<br><br>
+
+
+                        <div style="border: 1px solid; float: right; width: 1050px;  padding: 6px">
+
+                        	<img src="images/NeurIPS_ComputerVision.png" style="width: 90%">
+
+                       		 <p>
+                       		 	Image Source: Prabhu's <a href="https://towardsdatascience.com/neurips-2020-papers-takeaways-of-a-deep-learning-engineer-part-2-of-3-computer-vision-ef5ea1abe525" target="_blank">computer vision post</a>
+
+                       		 </p>
+
+                       	</div>
+
+
+                        
+
+                        <p><b>Papers featured in Prabhu's <a href="https://towardsdatascience.com/neurips-2020-papers-takeaways-of-a-deep-learning-engineer-part-2-of-3-computer-vision-ef5ea1abe525" target="_blank">computer vision post</a> include:</b></p>
+
+                        <ul>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_27e9661e033a73a6ad8cefcde965c54d.html" target="_blank">Rethinking Pre-training and Self-training</a> - Barret Zoph, Golnaz Ghiasi et al</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_9d684c589d67031a627ad33d59db65e5.html" target="_blank">RelationNet++: Bridging Visual Representations for Object Detection via Transformer Decoder</a> - Cheng Chi, Fangyun Wei, and Han Hu</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_98dce83da57b0395e163467c9dae521b.html" target="_blank">Quantifying Learnability and Describability of Visual Concepts Emerging in Representation Learning</a> - Iro Laina, Ruth Fong, and Andrea Vedaldi</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_b2eeb7362ef83deff5c7813a67e14f0a.html" target="_blank">A Ranking-based, Balanced Loss Function Unifying Classification and Localisation in Object Detection</a> - Kemal Oksuz, Baris Can Cam et al</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_b5d17ed2b502da15aa727af0d51508d6.html" target="_blank">Disentangling Human Error from the Ground Truth in Segmentation of Medical Images</a> - Le Zhang, Ryu Tanno et al</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_bacadc62d6e67d7897cef027fa2d416c.html" target="_blank">Variational Amodal Object Completion</a> - Huan Ling, David Acuna et al</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_d85b63ef0ccb114d0a3bb7b7d808028f.html" target="_blank">RandAugment: Practical Automated Data Augmentation with a Reduced Search Space</a> - Dogus Cubuk, Barret Zoph et al</li>
+							<li><a href="https://neurips.cc/virtual/2020/public/poster_2ba596643cbbbc20318224181fa46b28.html" target="_blank">Learning Loss for Test-Time Augmentation</a> - Ildoo Kim, Younghoon Kim, and Sungwoong Kim</li>
+						</ul>
+					</div>
+
+					<br>
+
+						<!-- Papers with Code’s Trending Papers, Libraries, and Benchmarks of 2020  -->
+					<div>
+                        <h3>Papers with Code’s Trending Papers, Libraries, and Benchmarks of 2020</h3>
+
+                        <p>
+                            Instead of scouring the internet for the latest or most popular journals and models, it’s always nice to have a nice list to make the search easier, right? Well, you’re in luck! 
+                        </p>
+
+                        <p>
+                            In his featured article, <a href="https://medium.com/paperswithcode/papers-with-code-2020-review-938146ab9658" target="_blank">Papers with Code 2020: A Year in Review</a>, Ross Taylor lists the top 10 research papers, libraries, and benchmarks for 2020 from the <a href="https://paperswithcode.com/" target="_blank">Papers with Code blog</a>. Below, we’ve listed five links from each section that we believe you will find interesting.
+                            <br>
+                            After you’ve finished reading the summaries below, you can click here to read the rest of <a href="https://medium.com/paperswithcode/papers-with-code-2020-review-938146ab9658" target="_blank">Ross Taylor’s article</a> and see what else trended last year on Paper with Code.
+                        </p>
+
+                        <p><b>Top Research Papers:</b></p>
+
+                        <ul>
+                            <li>
+                                <a href="https://arxiv.org/pdf/1911.09070v7.pdf" target="_blank">EfficientDet: Scalable and Efficient Object Detection</a> — Tan et al
+                                <ul>
+									<li>
+										In this paper, the authors study neural network architecture design choices for object detection and propose optimizations to improve efficiency. They first proposed a weighted bi-directional feature pyramid (BiFPN) and a compound scaling method which helped them develop a new family of object detectors called EfficientDet. 
+										<br><br>
+										The code for <a href="https://github.com/google/automl/tree/master/efficientdet" target="_blank">EfficientDet can be found at this URL</a>. 
+									</li>
+                                </ul>
+							</li>
+							<br>
+                            <li>
+								<a href="https://arxiv.org/pdf/2003.08237v5.pdf" target="_blank">Fixing the train-test resolution discrepancy: FixEfficientNet</a> — Touvron et al
+								<ul>
+									<li>
+										The authors of this paper provide an extensive analysis of the <a href="https://arxiv.org/abs/1905.11946" target="_blank">EfficientNet model</a> and corrects the discrepancy between training and test images. With this correction, they developed a new model called FixEfficientNet, which, according to the authors, “significantly outperforms the initial architecture with the same number of parameters.” 
+										<br><br>
+										The code for <a href="https://github.com/facebookresearch/FixRes" target="_blank">FixEfficientNet can be found at this URL</a>.
+									</li>
+								</ul>
+							</li>
+							<br>
+                            <li>
+                                <a href="https://arxiv.org/pdf/1911.04252v4.pdf" target="_blank">Self-training with Noisy Student improves ImageNet classification</a> — Xie et al
+								<ul>
+									<li>
+									Noisy Student is a semi-supervised learning method that achieves 88.4% top-1 accuracy on ImageNet. The authors describe their methods as the following in <a href="https://arxiv.org/abs/1911.04252v4" target="_blank">the abstract of this paper</a>, “On ImageNet, we first train an EfficientNet model on labeled images and use it as a teacher to generate pseudo labels for 300M unlabeled images. We then train a larger EfficientNet as a student model on the combination of labeled and pseudo labeled images. We iterate this process by putting back the student as the teacher. During the learning of the student, we inject noise such as dropout, stochastic depth, and data augmentation via RandAugment to the student so that the student generalizes better than the teacher.” 
+									<br><br>
+									The models for Noisy Student can be found at <a href="https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet" target="_blank">this URL</a>.
+									<br>
+									The code for Noisy Student can be found at <a href="https://github.com/google-research/noisystudent" target="_blank">this URL</a>.
+									</li>
+								</ul>
+							</li>
+							<br>
+                            <li>
+                                <a href="https://arxiv.org/pdf/2004.10934v1.pdf" target="_blank">YOLOv4: Optimal Speed and Accuracy of Object Detection</a> — Bochkovskiy et al
+								<ul>
+									<li>
+										This paper explains the most recent version of one of the most popular object detection algorithms, <a href="https://arxiv.org/abs/1506.02640" target="_blank">YOLO</a>. In the abstract of their publication, the developers state the following in regards to new features in their model: “We use new features: WRC, CSP, CmBN, SAT, Mish activation, Mosaic data augmentation, CmBN, DropBlock regularization, and CIoU loss, and combine some of them to achieve state-of-the-art results: 43.5% AP (65.7% AP50) for the MS COCO dataset at a realtime speed of ∼65 FPS on Tesla V100.”
+										<br><br>
+										The code for YOLOv4 can be found at <a href="https://github.com/AlexeyAB/darknet" target="_blank">this URL</a>.
+									</li>
+								</ul>
+							</li>
+							<br>
+                            <li>
+								<a href="https://arxiv.org/pdf/1910.10683v3.pdf" target="_blank">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</a> — Raffel et al
+								<ul>
+									<li>
+										In this paper, the authors explore <a href="https://towardsdatascience.com/transfer-learning-in-nlp-fecc59f546e4" target="_blank">transfer learning for natural language processing (NLP)</a>. The authors state that they have achieved state-of-the-art results on many benchmarks covering summarization, question answering, text classification, and more through their study that compares pre-training objectives, architectures, unlabeled data sets, transfer approaches, and other factors on dozens of language understanding tasks.
+										<br><br>
+										The code for this project can be found at <a href="https://github.com/google-research/text-to-text-transfer-transformer" target="_blank">this URL</a>.
+									</li>
+								</ul>
+                        </ul>
+
+                        <p><b>Top Libraries:</b></p>
+
+                        <ul>
+                            <li><a href="https://github.com/huggingface/transformers" target="_blank">Transformers</a> - HuggingFace
+                                <ul>
+                                    <li>
+                                        Transformers from HuggingFace is currently one of the most popular libraries in the world of natural language processing. According to <a href="https://github.com/huggingface/transformers" target="_blank">their GitHub</a>, “Transformers provides thousands of pretrained models to perform tasks on texts such as classification, information extraction, question answering, summarization, translation, text generation, etc in 100+ languages. Its aim is to make cutting-edge NLP easier to use for everyone.” Transformers also provides seamless integration between <a href="https://pytorch.org/" target="_blank">PyTorch</a> and <a href="https://www.tensorflow.org/" target="_blank">Tensorflow</a>, which allow you to train in one and load it into the other, if you wish to do so. 
+                                    </li>
+                                </ul>
+							</li>
+							<br>
+                            <li><a href="https://github.com/facebookresearch/detectron2" target="_blank">Dectron2</a> - Facebook AI Research
+                                <ul>
+                                    <li>
+                                        Dectron2 is a ground-up rewrite of its previous version, <a href="https://github.com/facebookresearch/Detectron/" target=_blank">Dectron</a>, powered by the PyTorch deep learning framework. New features in this update include: panoptic segmentation, Densepose, Cascade R-CNN, rotated bounding boxes, PointRend, DeepLab, and more. Researchers also emphasize a faster training time and the ability to export models to TorchScript format of Caffe2 format for deployment.
+                                    </li>
+                                </ul>
+							</li>
+							<br>
+                            <li><a href="https://github.com/pjreddie/darknet" target="_blank">DarkNet</a> - pjreddie
+                                <ul>
+                                    <li>
+                                        DarkNet is an open-source neural network framework for computer vision written in C and CUDA that supports CPU and GPU computation. The DarkNet framework is the framework used for all versions of <a href="https://arxiv.org/abs/1506.02640" target="_blank">YOLO</a>, which was mentioned above as one of the top research papers on <a href="https://paperswithcode.com/" target="_blank">Papers with Code</a> for 2020 with <a href="https://arxiv.org/abs/2004.10934" target="_blank">YOLOv4</a>.
+
+                                    </li>
+                                </ul>
+							</li>
+							<br>
+                            <li><a href="https://github.com/rwightman/pytorch-image-models" target="_blank">PyTorch Image Models</a> — Ross Wightman
+                                <ul>
+                                    <li>
+                                        “PyTorch Image Models (timm) is a collection of image models, layers, utilities, optimizers, schedulers, data-loaders / augmentations, and reference training / validation scripts that aim to pull together a wide variety of SOTA models with ability to reproduce ImageNet training results.” - Ross Wightman (<a href="https://github.com/rwightman/pytorch-image-models" target="_blank">PyTorch Image Models GitHub</a>)
+                                    </li>
+                                </ul>
+							</li>
+							<br>
+                            <li><a href="https://github.com/pytorch/fairseq" target="_blank">FairSeq</a> — PyTorch
+                                <ul>
+                                    <li>
+                                        “Fairseq is a sequence modeling toolkit written in <a href="http://pytorch.org/" target="_blank">PyTorch</a> that allows researchers and developers to train custom models for translation, summarization, language modeling and other text generation tasks.” - <a href="https://fairseq.readthedocs.io/en/latest/" target="_blank">FairSeq Full Documentation Pages</a>
+                                    </li>
+                                </ul>
+                            </li>
+						</ul>
+						
+						<p><b>Top Benchmark Datasets:</b></p>
+
+						<ul>
+							<li><a href="https://www.cityscapes-dataset.com/" target="_blank">Cityscapes</a> — Semantic Segmentation</li>
+							<ul>
+								<li>
+									Cityscapes is a large-scale dataset that specifically focuses on semantic understanding in urban environments. This dataset consists of 5,000 annotated images with fine annotations and 20,000 annotated images with coarse annotations from 50 cities during various times of the day and weather conditions.
+									<br><br>
+									Download the <a href="https://www.cityscapes-dataset.com/" target="_blank">Cityscapes dataset at this URL</a>. <br>
+									Find the <a href="https://paperswithcode.com/sota/semantic-segmentation-on-cityscapes" target="_blank">full Papers with Code article for Cityscapes at this URL</a>.
+								</li>
+							</ul>
+							<br>
+							
+							<li><a href="http://image-net.org/index" target="_blank">ImageNet</a> — Image Classification</li>
+							<ul>
+								<li>
+									Created and introduced by Deng, et al in their paper <a href="https://ieeexplore.ieee.org/document/5206848" target="_blank">ImageNet: A large-scale hierarchical image database</a>, ImageNet is a large dataset containing millions of annotated images used for object recognition, image classification, and more. 
+									<br><br>
+									Find the <a href="http://image-net.org/index" target="_blank">ImageNet dataset at this URL</a>. <br>
+									Find the <a href="https://ieeexplore.ieee.org/document/5206848" target="_blank">full research paper at this URL</a>. <br>
+									Find the <a href="https://paperswithcode.com/sota/image-classification-on-imagenet" target="_blank">full Papers with Code article for ImageNet at this URL</a>.
+								</li>
+							</ul>
+							<br>
+
+							<li><a href="https://cocodataset.org/#home" target="_blank">COCO</a> — Object Detection / Instance Segmentation</li>
+							<ul>
+								<li>
+									COCO, or MS COCO, short for Microsoft Common Objects in Context, is a large dataset focused on object detection,segmentation, key-point detection, and captioning. This dataset aims to identify objects based on a natural, everyday scene (in context) compared to the object in isolation.
+									<br><br>
+									Download the <a href="https://cocodataset.org/#download" target="_blank">COCO dataset at this URL</a>. <br>
+									Find the <a href="https://paperswithcode.com/sota/object-detection-on-coco" target="_blank">full Papers with Code article for COCO at this URL</a>.
+								</li>
+							</ul>
+							<br>
+
+							<li><a href="http://human-pose.mpi-inf.mpg.de/#overview" target="_blank">MPII Human Pose</a> — Pose Estimation</li>
+							<ul>
+								<li>
+									This dataset is used for human pose estimation. The dataset includes approximately 25,000 images of approximately 40,000 people with annotated body joints. This dataset captures individuals performing 410 activities each with an activity label.
+									<br><br>
+									Download the <a href="http://human-pose.mpi-inf.mpg.de/" target="_blank">MPII Human Pose dataset at this URL</a>. <br>
+									Find the <a href="https://openaccess.thecvf.com/content_cvpr_2014/papers/Andriluka_2D_Human_Pose_2014_CVPR_paper.pdf" target="_blank">full research paper related to MPII Human Pose at this URL</a>. <br>
+									Find the <a href="https://paperswithcode.com/dataset/mpii-human-pose" target="_blank">full Papers with Code article for MPII Human Pose at this URL</a>.
+								</li>
+							</ul>
+							<br>
+
+							<li><a href="https://www.kaggle.com/pengcw1/market-1501/data" target="_blank">Market-1501</a> — Person Re-Identification</li>
+							<ul>
+								<li>
+									Market-1501 is a large-scale dataset for person re-identification. The dataset contains 1501 identities captured by six different cameras, so each person in the dataset has approximately 3.6 images at each viewpoint.
+									<br><br>
+									Download the <a href="https://www.kaggle.com/pengcw1/market-1501/data" target="_blank">Market-1501 dataset at this URL</a>. <br>
+									Find the <a href="https://www.researchgate.net/publication/306358716_A_Discriminative_Null_Space_based_Deep_Learning_Approach_for_Person_Re-Identification" target="_blank">full research paper related to Market-1501 at this URL</a>. <br>
+									Find the <a href="https://paperswithcode.com/sota/person-re-identification-on-market-1501" target="_blank">full Papers with Code article for Market-1501 at this URL</a>.
+								</li>
+							</ul>
+							<br>
+						</ul>
+					</div>
+
+					<div>
+						<p>
+							Don’t forget to take a look at <a href="http://www.pattersonconsultingtn.com/blog/blog_index.html" target="_blank">other posts from our blog</a> to see how we used some of these items for ours and our partners’ projects!
+						</p>
+					</div>
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

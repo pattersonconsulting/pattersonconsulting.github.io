@@ -1218,6 +1218,36 @@ th {background: #d9e7ff}
 							 As a user I'm probably not going to do this because the economics don't work for my use case (and I'd have to write my code to be able to use multiple-GPUs, which can be non-trivial in some cases). Therefore, the p4 instance does not fit our valuation model (and we'll address this further in a moment).
 
 						</p>
+
+
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>Trying to Manage a <code>p4d.24xlarge</code> Instance with MIG and EKS</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  	It is technically possibly to <a href="https://aws.amazon.com/blogs/containers/utilizing-nvidia-multi-instance-gpu-mig-in-amazon-ec2-p4d-instances-on-amazon-elastic-kubernetes-service-eks/">manage a <code>p4d.24xlarge</code> instance on AWS with MIG and EKS</a>. However, this is non-trivial to stand up and would require a tricky install along with integration with an MLOps platform. This combination of factors is likely going to be beyond what most IT departments want to take on in terms of system management overhead.
+
+
+							  </i>
+							  </p>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  	Companies use the cloud for flexibility and to offload their IT overhead. Users don't want to get tangled up into system management and just want "self-service GPUs". From this perspective, we set aside the value comparison of a single <code>p4d.24xlarge</code> instance because it does not fit in our valuation model.
+
+							  </i>
+							  </p>
+
+
+
+							</div>
+							  
+							</div>	
+						</div>							
 <!--
 						<p>
 							[ breakout: the difference between valuing a single large GPU instance vs a system that serves as entire enterprise DS group ]
@@ -1336,7 +1366,7 @@ If we value the system as a single DGX-A100 (p4 instance) from AWS we are not ca
 						<h2>Extrapolating MIG Device Value from AWS GPU Pricing</h2>
 
 						<p>
-							To build out valuations for the remaining MIG Device profiles we take the $6.33 / hr price for the 7g.40gb full A100 GPU instance and then subdivide this price based on the fraction of resources the MIG Device profile gets, as seen in the table below.
+							To build out valuations for the remaining MIG Device profiles we take the $6.33 / hr price for the <code>7g.40gb</code> full A100 GPU instance and then subdivide this price based on the fraction of resources the MIG Device profile gets, as seen in the table below.
 
 						</p>
 
@@ -1497,7 +1527,7 @@ If we value the system as a single DGX-A100 (p4 instance) from AWS we are not ca
 
 						<p>
 
-							If you'd like to know more about how you can use the DGX-A100 with MIG and Kubeflow, check out our <a href="../AIAC">AI Accelerator Package with ePlus and NVIDIA</a>. It can help your organization save up to 85% on its cloud GPU bill -- check out the AI Acceleartor Package homepage to download the <a href="../AIAC">cost study eBook</a>.
+							If you'd like to know more about how you can use the DGX-A100 with MIG and Kubeflow, check out our <a href="../AIAC">AI Accelerator Package with ePlus and NVIDIA</a>. It can help your organization save up to 85% on its cloud GPU bill -- check out the AI Accelerator Package homepage to download the <a href="../AIAC">cost study eBook</a>.
 						</p>
 						<p>
 							Did you like the article? Do you think we are making a poor estimation somewhere in our calculations? <a href="../contact.html">Reach out and tell us</a>.

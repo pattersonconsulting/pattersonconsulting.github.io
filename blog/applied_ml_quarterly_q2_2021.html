@@ -185,232 +185,270 @@ tr:nth-child(even) {
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Applied Machine Learning Quarterly (Q2 2021)</h1>
 
-					<div>
-						<p>
-							Author: <a href="https://www.linkedin.com/in/rebekah-thompson/" target="_blank">Rebekah Thompson</a>
-						</p>
-					</div>
+						<div>
+							<p>
+								Author: <a href="https://www.linkedin.com/in/rebekah-thompson/" target="_blank">Rebekah Thompson</a>
+							</p>
+						</div>
 
-					<div>
-						<p>
-							For all of you who enjoyed <a href="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html"  target="_blank">our list of tools and infrastructures from Q2 of 2020</a>, we're back with another list for you all! <br><br> 
-							For those of you who are new to our Applied Machine Learning Quartly, welcome! This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020. Updated roughly quarterly.
-						</p>
-					</div>
+						<div>
+							<p>
+								For all of you who enjoyed <a href="http://www.pattersonconsultingtn.com/blog/list_of_applied_ml_methods_and_tools_2020.html"  target="_blank">our list of tools and infrastructures from Q2 of 2020</a>, we're back with another list for you all! <br><br> 
+								For those of you who are new to our Applied Machine Learning Quartly, welcome! This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2020. Updated roughly quarterly.
+							</p>
+						</div>
 
-                        <br><br>
-                    <div>    
-						<h1>May 2021</h1>
-                        
-						<h2>Tools and Infrastructure</h2> 
+	                        <br><br>
+	                    <div>    
+							<h1>May 2021</h1>
+	                        
+							<h2>Tools and Infrastructure</h2> 
+							<br>
+						</div>
+
+							<!--
+								List begins here. Need news_item classes added (based on May 2020 blog post code)
+							-->
+
+							<!-- Model Search -->
+						<div>	
+							<h3>Model Search</h3>
+							
+							<img src="https://raw.githubusercontent.com/google/model_search/master/model_search/images/model_search_logo.png" style="width: 25%; float: right;">
+
+							<p>
+								Choosing the best model for your machine learning project can feel daunting at times, but researchers at Google have developed a new, open-source Python framework to hopefully help alleviate that feeling — Model Search (MS). <br><br>
+
+								Google’s Model Search GitHub page describes the framework as:
+							</p>
+
+							<blockquote>
+								“Model search (MS) is a framework that implements AutoML algorithms for model architecture search at scale. It aims to help researchers speed up their exploration process for finding the right model architecture for their classification problems (i.e., DNNs with different types of layers).”
+	                            <br><br>
+										- <a href="https://github.com/google/model_search" target="_blank">Google’s Model Search GitHub Repository</a>
+							</blockquote>
+
+							<p>
+								A depiction of the MS model from <a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">Google AI’s blog post on Model Search</a> is shown below. The researchers explained their model as follows:
+							</p>
+
+							<blockquote>
+								“Model Search schematic illustrating the distributed search and ensembling. Each trainer runs independently to train and evaluate a given model. The results are shared with the search algorithm, which it stores. The search algorithm then invokes mutation over one of the best architectures and then sends the new model back to a trainer for the next iteration. S is the set of training and validation examples and A are all the candidates used during training and search.”
+	                            <br><br>
+										- Hanna Mazzawi and Xavi Gonzalvo (Authors of the Model Search article)
+							</blockquote>
+
+	                        <p>Based on the currently available version, this library enables you to: </p>
+	                        <ul>
+	                            <li>Run many AutoML algorithms out of the box on your data - including automatically searching for the right model architecture, the right ensemble of models, and the best-distilled models</li>
+	                            <li>Compare many different models that are found during the search</li>
+	                            <li>Create your own search space to customize the types of layers in your neural networks</li>
+	                        </ul>
+
+	                        <p><b>Resources to get started with Model Search:</b></p>
+	                        <ul>
+	                            <li><a href="https://github.com/google/model_search" target="_blank">Model Search GitHub Repository</a></li>
+	                            <li><a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">GoogleAI Model Search Article</a></li>
+	                            <li><a href="https://www.youtube.com/watch?v=eptyMYo6ukw" target="_blank">Quick Video from Przemek Chojecki Explaining Model Search</a></li>
+	                            <li><a href="https://www.youtube.com/watch?v=-7TZ-IKMJi8" target="_blank">Video from AIEngineering Exploring Model Search</a></li>
+	                        </ul>
+						</div>
+
 						<br>
+
+	                        <!-- RAFT -->
+						<div>	
+	                        <h3>RAFT: Recurrent All-Pairs Field Transforms for Optical Flow</h3>
+	                        
+	                        <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"> Click this link to read the full research paper for RAFT </a>
+
+	                        <p>
+	                            Zachary Teed and Jia Deng of Princeton University have introduced a new end-to-end deep neural network architecture for optical flow, which is one of the long-standing problems in accurate video analysis. Optical flow is the task of estimating the motion, or direction, of an object between video frames and is often limited by fast-moving objects, a tracked object being blocked by another object, or motion blur. 
+	                            <br>
+	                            <br>
+	                            RAFT consists of three main components:
+	                        </p>
+	                       
+	                        <ol>
+	                            <li>A feature encoder that extracts a feature vector for each pixel in two different frames</li>
+	                            <li>A correlation layer that produces a 4D correlation volume for all pairs of pixels, with subsequent pooling to produce lower-resolution volumes</li>
+	                            <li>A recurrent GRU-based update operator that retrieves values from the correlation volumes and iteratively updates a flow field initialized at zero</li>
+	                        </ol>
+
+	                        <div style="padding: 12px; margin: 6px; border: 1px solid;">
+
+	                        	<img src="images/RAFT_framework.png" style="width: 75%">
+
+	                        	<p>
+	                        		Image From the Paper: <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"><i>"RAFT: Recurrent All-Pairs Field Transforms forOptical Flow"</i></a>
+
+	                        	</p>
+
+	                        </div>
+
+	                        <p>
+	                            According to Teed and Deng’s results in the publication, RAFT’s strengths include the following based on the <a href="http://www.cvlibs.net/datasets/kitti/" target="_blank">KITTI Vision Benchmark Suite</a>:
+	                        </p>
+
+	                        <ul>
+	                            <li><b>State-of-the-Art Accuracy:</b> achieved an F1-all error of 5.10%, a 16% error reduction from the best-published result, and an end-point-error of 2.855 pixels, a 30% error reduction from the best-published result</li>
+	                            <li><b>Strong Generalization:</b> When trained only on synthetic data, RAFT achieved an end-point-error of 5.04% on KITTI, a 40% error reduction from the best deep learning network trained on the same data</li>
+	                            <li><b>High Efficiency:</b> RAFT processes 1088 x 436 videos at 10 frames per second on a 1080Ti GPU with 10X fewer iterations than other architectures.</li>
+	                        </ul>
+
+	                        <p><b>Resources to get started with RAFT:</b></p>
+	                        <ul>
+	                            <li><a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank">Full RAFT Research Paper</a></li>
+	                            <li><a href="https://github.com/princeton-vl/RAFT" target="_blank">RAFT GitHub Repository</a></li>
+	                            <li><a href="https://www.youtube.com/watch?v=OSEuYBwOSGI" target="_blank">YouTube Video from What’s AI with His Explanation on RAFT</a></li>
+	                        </ul>
+						</div>
+
+
+
+
+
 					</div>
 
-						<!--
-							List begins here. Need news_item classes added (based on May 2020 blog post code)
-						-->
+				</div>
 
-						<!-- Model Search -->
-					<div>	
-						<h3>Model Search</h3>
-						
-						<img src="https://raw.githubusercontent.com/google/model_search/master/model_search/images/model_search_logo.png" style="width: 25%; float: right;">
 
-						<p>
-							Choosing the best model for your machine learning project can feel daunting at times, but researchers at Google have developed a new, open-source Python framework to hopefully help alleviate that feeling — Model Search (MS). <br><br>
 
-							Google’s Model Search GitHub page describes the framework as:
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
 						</p>
-
-						<blockquote>
-							“Model search (MS) is a framework that implements AutoML algorithms for model architecture search at scale. It aims to help researchers speed up their exploration process for finding the right model architecture for their classification problems (i.e., DNNs with different types of layers).”
-                            <br><br>
-									- <a href="https://github.com/google/model_search" target="_blank">Google’s Model Search GitHub Repository</a>
-						</blockquote>
-
-						<p>
-							A depiction of the MS model from <a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">Google AI’s blog post on Model Search</a> is shown below. The researchers explained their model as follows:
-						</p>
-
-						<blockquote>
-							“Model Search schematic illustrating the distributed search and ensembling. Each trainer runs independently to train and evaluate a given model. The results are shared with the search algorithm, which it stores. The search algorithm then invokes mutation over one of the best architectures and then sends the new model back to a trainer for the next iteration. S is the set of training and validation examples and A are all the candidates used during training and search.”
-                            <br><br>
-									- Hanna Mazzawi and Xavi Gonzalvo (Authors of the Model Search article)
-						</blockquote>
-
-                        <p>Based on the currently available version, this library enables you to: </p>
-                        <ul>
-                            <li>Run many AutoML algorithms out of the box on your data - including automatically searching for the right model architecture, the right ensemble of models, and the best-distilled models</li>
-                            <li>Compare many different models that are found during the search</li>
-                            <li>Create your own search space to customize the types of layers in your neural networks</li>
-                        </ul>
-
-                        <p><b>Resources to get started with Model Search:</b></p>
-                        <ul>
-                            <li><a href="https://github.com/google/model_search" target="_blank">Model Search GitHub Repository</a></li>
-                            <li><a href="https://ai.googleblog.com/2021/02/introducing-model-search-open-source.html" target="_blank">GoogleAI Model Search Article</a></li>
-                            <li><a href="https://www.youtube.com/watch?v=eptyMYo6ukw" target="_blank">Quick Video from Przemek Chojecki Explaining Model Search</a></li>
-                            <li><a href="https://www.youtube.com/watch?v=-7TZ-IKMJi8" target="_blank">Video from AIEngineering Exploring Model Search</a></li>
-                        </ul>
+						</div>
 					</div>
 
-					<br>
 
-                        <!-- RAFT -->
-					<div>	
-                        <h3>RAFT: Recurrent All-Pairs Field Transforms for Optical Flow</h3>
-                        
-                        <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"> Click this link to read the full research paper for RAFT </a>
+				</div>						
 
-                        <p>
-                            Zachary Teed and Jia Deng of Princeton University have introduced a new end-to-end deep neural network architecture for optical flow, which is one of the long-standing problems in accurate video analysis. Optical flow is the task of estimating the motion, or direction, of an object between video frames and is often limited by fast-moving objects, a tracked object being blocked by another object, or motion blur. 
-                            <br>
-                            <br>
-                            RAFT consists of three main components:
-                        </p>
-                       
-                        <ol>
-                            <li>A feature encoder that extracts a feature vector for each pixel in two different frames</li>
-                            <li>A correlation layer that produces a 4D correlation volume for all pairs of pixels, with subsequent pooling to produce lower-resolution volumes</li>
-                            <li>A recurrent GRU-based update operator that retrieves values from the correlation volumes and iteratively updates a flow field initialized at zero</li>
-                        </ol>
 
-                        <div style="padding: 12px; margin: 6px; border: 1px solid;">
 
-                        	<img src="images/RAFT_framework.png" style="width: 75%">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
 
-                        	<p>
-                        		Image From the Paper: <a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank"><i>"RAFT: Recurrent All-Pairs Field Transforms forOptical Flow"</i></a>
 
-                        	</p>
-
-                        </div>
-
-                        <p>
-                            According to Teed and Deng’s results in the publication, RAFT’s strengths include the following based on the <a href="http://www.cvlibs.net/datasets/kitti/" target="_blank">KITTI Vision Benchmark Suite</a>:
-                        </p>
-
-                        <ul>
-                            <li><b>State-of-the-Art Accuracy:</b> achieved an F1-all error of 5.10%, a 16% error reduction from the best-published result, and an end-point-error of 2.855 pixels, a 30% error reduction from the best-published result</li>
-                            <li><b>Strong Generalization:</b> When trained only on synthetic data, RAFT achieved an end-point-error of 5.04% on KITTI, a 40% error reduction from the best deep learning network trained on the same data</li>
-                            <li><b>High Efficiency:</b> RAFT processes 1088 x 436 videos at 10 frames per second on a 1080Ti GPU with 10X fewer iterations than other architectures.</li>
-                        </ul>
-
-                        <p><b>Resources to get started with RAFT:</b></p>
-                        <ul>
-                            <li><a href="https://arxiv.org/pdf/2003.12039.pdf" target="_blank">Full RAFT Research Paper</a></li>
-                            <li><a href="https://github.com/princeton-vl/RAFT" target="_blank">RAFT GitHub Repository</a></li>
-                            <li><a href="https://www.youtube.com/watch?v=OSEuYBwOSGI" target="_blank">YouTube Video from What’s AI with His Explanation on RAFT</a></li>
-                        </ul>
-					</div>
-
-					<br>
-
-                        <!-- OpenAI DALLE -->
-					<div>	
-						<h3>DALL&#9679E</h3>
-
-                        <p>
-                            DALL·E, cleverly named after the artist Salvalor Dalí and Pixar’s WALL·E, is a trained neural network from OpenAI that can create images from user input text captions using PyTorch.
-                        </p>
-
-                        <p>According to OpenAI’s page introducing DALL·E:</p>
-                        <blockquote>
-                            “DALL·E is a 12-billion parameter version of GPT-3 trained to generate images from text descriptions, using a dataset of text-image pairs. We’ve [DALL·E developers] found that it has a diverse set of capabilities, including creating anthropomorphized versions of animals and objects, combining unrelated concepts in plausible ways, rendering text, and applying transformations to existing images.”
-                            <br><br>
-	                        - <a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a>
-                        </blockquote>
-
-                        <p>
-                            The captions are not just limited to a single word, such as “dog” or “cat.” With this network, the user can input a phrase such as “an illustration of a baby daikon radish in a tutu walking a dog” and get just that — an illustration of a baby daikon radish in a tutu walking a dog.
-                        </p>
-
-                        <img src="images/DALLE_radishTutu.png" style="width: 75%">
-						<br><br>
-                        <p>
-                            Not only does DALL·E work on text prompts, it will also work with the combination of image and text prompts. The image below shows DALL·E attempting to replicate an image of a cat as a sketch after receiving an image and text prompt based on that image. 
-                        </p>
 						<br>
-                        <img src="images/DALLE_catSketch.png" style="width: 75%">
 
-                        <p><b>Resources to get started with DALL·E:</b></p>
-                        <ul>
-                            <li><a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a></li>
-                            <li><a href="https://github.com/openai/DALL-E" target="_blank">DALL·E GitHub Repository</a></li>
-                        </ul>
-					</div>
+	                        <!-- OpenAI DALLE -->
+						<div>	
+							<h3>DALL&#9679E</h3>
 
-					<br>
+	                        <p>
+	                            DALL·E, cleverly named after the artist Salvalor Dalí and Pixar’s WALL·E, is a trained neural network from OpenAI that can create images from user input text captions using PyTorch.
+	                        </p>
 
-						<!-- Jraph -->
-					<div>
-                        <h3>Jraph</h3>
+	                        <p>According to OpenAI’s page introducing DALL·E:</p>
+	                        <blockquote>
+	                            “DALL·E is a 12-billion parameter version of GPT-3 trained to generate images from text descriptions, using a dataset of text-image pairs. We’ve [DALL·E developers] found that it has a diverse set of capabilities, including creating anthropomorphized versions of animals and objects, combining unrelated concepts in plausible ways, rendering text, and applying transformations to existing images.”
+	                            <br><br>
+		                        - <a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a>
+	                        </blockquote>
 
-                        <img src="images/JraphLogo.png" style=" float: left;">
+	                        <p>
+	                            The captions are not just limited to a single word, such as “dog” or “cat.” With this network, the user can input a phrase such as “an illustration of a baby daikon radish in a tutu walking a dog” and get just that — an illustration of a baby daikon radish in a tutu walking a dog.
+	                        </p>
 
-                        <p>
-                            Jraph is a <a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">graph neural network</a> developed by DeepMind and joins the JAX family, a machine learning framework developed by Google Researchers, as one of its newest members. The developers of Jraph describe it as follows:
-                        </p>
+	                        <img src="images/DALLE_radishTutu.png" style="width: 75%">
+							<br><br>
+	                        <p>
+	                            Not only does DALL·E work on text prompts, it will also work with the combination of image and text prompts. The image below shows DALL·E attempting to replicate an image of a cat as a sketch after receiving an image and text prompt based on that image. 
+	                        </p>
+							<br>
+	                        <img src="images/DALLE_catSketch.png" style="width: 75%">
 
-                        <blockquote>
-                            “Jraph (pronounced "giraffe") is a lightweight library for working with graph neural networks in jax. It provides a data structure for graphs, a set of utilities for working with graphs, and a 'zoo' of forkable graph neural network models.”
-                            <br><br>
-	                        - <a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a>
-                        </blockquote>
-                        
-                        <p>
-                            Jraph takes inspiration from Tensorflow’s <a href="https://github.com/deepmind/graph_nets" target="_blank">graph_nets library</a> when defining its GraphsTuple data structure, a named tuple that contains one or more directed graphs.
-                            <br><br>
-                            <b>Resources to get started with Jraph:</b>
-                        </p>
+	                        <p><b>Resources to get started with DALL·E:</b></p>
+	                        <ul>
+	                            <li><a href="https://openai.com/blog/dall-e/" target="_blank">OpenAi’s DALL·E Article</a></li>
+	                            <li><a href="https://github.com/openai/DALL-E" target="_blank">DALL·E GitHub Repository</a></li>
+	                        </ul>
+						</div>
 
-                        <ul>
-                            <li><a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a></li>
-                            <li><a href="https://github.com/google/jax" target="_blank">JAX GitHub Repository</a></li>
-                            <li><a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">Introduction to Graph Neural Networks</a> by NeptuneBlog</li>
-                        </ul>
-					</div>
+						<br>
 
-					<br>
+							<!-- Jraph -->
+						<div>
+	                        <h3>Jraph</h3>
 
-						 <!-- Petting Zoo -->
-					<div>
-                         <h3>Petting Zoo</h3>
+	                        <img src="images/JraphLogo.png" style=" float: left;">
 
-                         <img src="images/PettingZoo_LogoWithName.png" style="width: 75%">
+	                        <p>
+	                            Jraph is a <a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">graph neural network</a> developed by DeepMind and joins the JAX family, a machine learning framework developed by Google Researchers, as one of its newest members. The developers of Jraph describe it as follows:
+	                        </p>
 
-                         <p>
-                            <a href="https://www.pettingzoo.ml">Petting Zoo</a> is a Python library created by Justin Terry, currently a Ph.D. Student at the University of Maryland, for conducting and researching multi-agent reinforcement learning. It is similar to <a href="https://gym.openai.com/" target="_blank">OpenAI’s Gym</a> library, but instead of focusing on a single agent, the models focus on training multiple agents. If you have experience with Gym, or even if you don’t, and want to try your hand at training multiple agents, give Petting Zoo a try.
-                            <br>
-                            Petting Zoo offers six families of learning environments to train and test your agents including:
-                         </p>
+	                        <blockquote>
+	                            “Jraph (pronounced "giraffe") is a lightweight library for working with graph neural networks in jax. It provides a data structure for graphs, a set of utilities for working with graphs, and a 'zoo' of forkable graph neural network models.”
+	                            <br><br>
+		                        - <a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a>
+	                        </blockquote>
+	                        
+	                        <p>
+	                            Jraph takes inspiration from Tensorflow’s <a href="https://github.com/deepmind/graph_nets" target="_blank">graph_nets library</a> when defining its GraphsTuple data structure, a named tuple that contains one or more directed graphs.
+	                            <br><br>
+	                            <b>Resources to get started with Jraph:</b>
+	                        </p>
 
-                         <ul>
-                             <li><a href="https://www.pettingzoo.ml/atari" target="_blank">Atari</a>: Multi-player Atari 2600 games (both cooperative and competitive)</li>
-                             <li><a href="https://www.pettingzoo.ml/butterfly" target="_blank">Butterfly</a>: Cooperative graphical games developed by us, requiring a high degree of coordination</li>
-                             <li><a href="https://www.pettingzoo.ml/classic" target="_blank">Classic</a>: Classical games including card games, board games, etc.</li>
-                             <li><a href="https://www.pettingzoo.ml/magent" target="_blank">MAgent</a>: Configurable environments with massive numbers of particle agents, originally from <a href="https://github.com/geek-ai/MAgent" target="_blank">https://github.com/geek-ai/MAgent</a></li>
-                             <li><a href="https://www.pettingzoo.ml/mpe" target="_blank">MPE</a>: A set of simple non-graphical communication tasks, originally from <a href="https://github.com/openai/multiagent-particle-envs" target="_blank">https://github.com/openai/multiagent-particle-envs</a></li>
-                             <li><a href="https://www.pettingzoo.ml/sisl" target="_blank">SISL</a>: 3 cooperative environments, originally from <a href="https://github.com/sisl/MADRL" target="_blank">https://github.com/sisl/MADRL</a></li>
-                         </ul>
+	                        <ul>
+	                            <li><a href="https://github.com/deepmind/jraph" target="_blank">Jraph GitHub Repository</a></li>
+	                            <li><a href="https://github.com/google/jax" target="_blank">JAX GitHub Repository</a></li>
+	                            <li><a href="https://neptune.ai/blog/graph-neural-network-and-some-of-gnn-applications" target="_blank">Introduction to Graph Neural Networks</a> by NeptuneBlog</li>
+	                        </ul>
+						</div>
 
-                         <img src="images/PettingZoo_PZEnvironments.png" style="width: 75%">
+						<br>
 
-                         <p>
-                            For more information check out the links below and also <a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">this interview with Justin</a> hosted on <a href="https://www.youtube.com/channel/UC8oMaBaY6L6KRjvoQWVYCWg" target="_blank">Synthetic Intelligence Forum’s YouTube channel</a> for a deeper dive into Petting Zoo and how it can potentially help you with your projects.
-                            <br><br>
-                            <b>Resources to get started with Petting Zoo:</b>
-                        </p>
+							 <!-- Petting Zoo -->
+						<div>
+	                         <h3>Petting Zoo</h3>
 
-                        <ul>
-                            <li><a href="https://github.com/PettingZoo-Team/PettingZoo" target="_blank">Petting Zoo GitHub Repository</a></li>
-                            <li><a href="https://www.pettingzoo.ml" target="_blank">Petting Zoo Website</a></li>
-                            <li><a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">Interview with Petting Zoo creator</a></li>
-                            <li><a href="https://towardsdatascience.com/multi-agent-deep-reinforcement-learning-in-15-lines-of-code-using-pettingzoo-e0b963c0820b" target="_blank">Article by Justin Terry Introducing Petting Zoo on Towards Data Science</a></li>
-						</ul>
-					</div>
+	                         <img src="images/PettingZoo_LogoWithName.png" style="width: 75%">
 
-					<br>
+	                         <p>
+	                            <a href="https://www.pettingzoo.ml">Petting Zoo</a> is a Python library created by Justin Terry, currently a Ph.D. Student at the University of Maryland, for conducting and researching multi-agent reinforcement learning. It is similar to <a href="https://gym.openai.com/" target="_blank">OpenAI’s Gym</a> library, but instead of focusing on a single agent, the models focus on training multiple agents. If you have experience with Gym, or even if you don’t, and want to try your hand at training multiple agents, give Petting Zoo a try.
+	                            <br>
+	                            Petting Zoo offers six families of learning environments to train and test your agents including:
+	                         </p>
+
+	                         <ul>
+	                             <li><a href="https://www.pettingzoo.ml/atari" target="_blank">Atari</a>: Multi-player Atari 2600 games (both cooperative and competitive)</li>
+	                             <li><a href="https://www.pettingzoo.ml/butterfly" target="_blank">Butterfly</a>: Cooperative graphical games developed by us, requiring a high degree of coordination</li>
+	                             <li><a href="https://www.pettingzoo.ml/classic" target="_blank">Classic</a>: Classical games including card games, board games, etc.</li>
+	                             <li><a href="https://www.pettingzoo.ml/magent" target="_blank">MAgent</a>: Configurable environments with massive numbers of particle agents, originally from <a href="https://github.com/geek-ai/MAgent" target="_blank">https://github.com/geek-ai/MAgent</a></li>
+	                             <li><a href="https://www.pettingzoo.ml/mpe" target="_blank">MPE</a>: A set of simple non-graphical communication tasks, originally from <a href="https://github.com/openai/multiagent-particle-envs" target="_blank">https://github.com/openai/multiagent-particle-envs</a></li>
+	                             <li><a href="https://www.pettingzoo.ml/sisl" target="_blank">SISL</a>: 3 cooperative environments, originally from <a href="https://github.com/sisl/MADRL" target="_blank">https://github.com/sisl/MADRL</a></li>
+	                         </ul>
+
+	                         <img src="images/PettingZoo_PZEnvironments.png" style="width: 75%">
+
+	                         <p>
+	                            For more information check out the links below and also <a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">this interview with Justin</a> hosted on <a href="https://www.youtube.com/channel/UC8oMaBaY6L6KRjvoQWVYCWg" target="_blank">Synthetic Intelligence Forum’s YouTube channel</a> for a deeper dive into Petting Zoo and how it can potentially help you with your projects.
+	                            <br><br>
+	                            <b>Resources to get started with Petting Zoo:</b>
+	                        </p>
+
+	                        <ul>
+	                            <li><a href="https://github.com/PettingZoo-Team/PettingZoo" target="_blank">Petting Zoo GitHub Repository</a></li>
+	                            <li><a href="https://www.pettingzoo.ml" target="_blank">Petting Zoo Website</a></li>
+	                            <li><a href="https://www.youtube.com/watch?v=IMpf_X1IN_0" target="_blank">Interview with Petting Zoo creator</a></li>
+	                            <li><a href="https://towardsdatascience.com/multi-agent-deep-reinforcement-learning-in-15-lines-of-code-using-pettingzoo-e0b963c0820b" target="_blank">Article by Justin Terry Introducing Petting Zoo on Towards Data Science</a></li>
+							</ul>
+						</div>
+
+						<br>
 
 						<!-- Vision Transformer (ViT) -->
 					<div>
@@ -585,6 +623,41 @@ tr:nth-child(even) {
 					</div>
 
 					<br>
+
+
+					</div>
+
+				</div>
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>						
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
 
 						<!-- Natural Language Image Search with a Dual Encoder  -->
 					<div>

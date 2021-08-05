@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Workflows for Dealing with Class Imbalance" href="methods_class_imbalance.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -85,7 +85,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Introduction
   </a>
  </li>
 </ul>
@@ -193,9 +193,31 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#here-s-my-first-section">
-   Here’s my first section
+  <a class="reference internal nav-link" href="#what-is-exploratory-data-analysis-eda">
+   What is Exploratory Data Analysis (EDA)?
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-purpose-of-eda">
+   The Purpose of EDA
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-cleaning-guiding-principles">
+   Data Cleaning Guiding Principles
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-generalized-eda-worfklow">
+   A Generalized EDA Worfklow
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-conclusions">
+     Working Conclusions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -211,9 +233,116 @@
   <div class="section" id="exploratory-data-analysis-workflows">
 <h1>Exploratory Data Analysis Workflows<a class="headerlink" href="#exploratory-data-analysis-workflows" title="Permalink to this headline">¶</a></h1>
 <p>This is some sample text.</p>
-<div class="section" id="here-s-my-first-section">
-<span id="section-label"></span><h2>Here’s my first section<a class="headerlink" href="#here-s-my-first-section" title="Permalink to this headline">¶</a></h2>
-<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="methods_class_imbalance.html#section-label"><span class="std std-ref">Here’s my first section</span></a>.</p>
+<div class="section" id="what-is-exploratory-data-analysis-eda">
+<span id="what-is-eda"></span><h2>What is Exploratory Data Analysis (EDA)?<a class="headerlink" href="#what-is-exploratory-data-analysis-eda" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="the-purpose-of-eda">
+<span id="purpose-of-eda"></span><h2>The Purpose of EDA<a class="headerlink" href="#the-purpose-of-eda" title="Permalink to this headline">¶</a></h2>
+<p>“It’s always good to have some hypotheses in mind before diving into modeling, and exploratory analysis can help in generating them.”</p>
+</div>
+<div class="section" id="data-cleaning-guiding-principles">
+<span id="id1"></span><h2>Data Cleaning Guiding Principles<a class="headerlink" href="#data-cleaning-guiding-principles" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="a-generalized-eda-worfklow">
+<span id="our-eda-workflow"></span><h2>A Generalized EDA Worfklow<a class="headerlink" href="#a-generalized-eda-worfklow" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Preliminary data analysis</p>
+<ul>
+<li><p>Check shape, see if any extra data is included</p></li>
+<li><p>Change target variable into right format if needed</p></li>
+<li><p>Drop unneeded columns</p></li>
+<li><p>Check columns for NA values</p>
+<ul>
+<li><p>Get counts of NAs</p></li>
+<li><p>For columns with lots of NAs: drop column</p></li>
+<li><p>For columns with few NAs: replace with median or mean</p>
+<ul>
+<li><p>Use variable boxplots to decide which method of replacement</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Split data on dependent / y column</p>
+<ul>
+<li><p>Calculate the mean of all features for both classes</p></li>
+<li><p>Plot the frequency distributions of the features to visualize which features capture the most variability</p></li>
+</ul>
+</li>
+<li><p>Compare distributions of features</p>
+<ul>
+<li><p>Some features will have different distributions per class</p></li>
+<li><p>Some features will not</p></li>
+<li><p>Features with different distributions will be better predictors of the dependent variable in our model</p></li>
+<li><p>Continue on with all of the features (for now)</p></li>
+</ul>
+</li>
+<li><p>Split data into training, validation, test sets</p></li>
+<li><p>Separately, look at the distribution of classes in our dataset</p>
+<ul>
+<li><p>Apply a dummy classifier to give us a baseline (e.g., “pick largest class”)</p></li>
+</ul>
+</li>
+<li><p>Normalize the features</p></li>
+<li><p>Train multiple classifiers</p>
+<ul>
+<li><p>Tune the top 2-3 classifiers</p></li>
+</ul>
+</li>
+<li><p>For NNs / AutoKeras</p>
+<ul>
+<li><p>Use all features</p></li>
+</ul>
+</li>
+<li><p>For LR, GB, RF</p>
+<ul>
+<li><p>Perform feature selection</p>
+<ul>
+<li><p>how?</p></li>
+<li><p>What is methodology here?</p></li>
+</ul>
+</li>
+<li><p>Feature selection</p>
+<ul>
+<li><p>How is EDA information used to do feature selection?</p></li>
+<li><p>How are preliminary modeling results used to do feature selection?</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="working-conclusions">
+<h3>Working Conclusions<a class="headerlink" href="#working-conclusions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>if you have two “independent” variables that are not independent but rather are correlated with each other</p>
+<ul>
+<li><p>they will each show up lower levels of significance than they would if the other correlated variable were removed. One variable “steals” prediction from the other</p></li>
+</ul>
+</li>
+<li><p>With NNs</p>
+<ul>
+<li><p>Throw all features in there, let it sort them out</p></li>
+<li><p>But we lose the ability to interpret the output</p></li>
+</ul>
+</li>
+<li><p>With linear models</p>
+<ul>
+<li><p>Need to do some feature selection to get better results</p></li>
+</ul>
+</li>
+<li><p>Models we’ll try</p>
+<ul>
+<li><p>Dummy Classifier (sklearn)</p></li>
+<li><p>Logistic regression</p></li>
+<li><p>Neural Network</p></li>
+<li><p>Gradient Boosting Decision Tree</p></li>
+<li><p>Random Forest Classifier</p></li>
+</ul>
+</li>
+</ul>
+<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="#what-is-eda"><span class="std std-ref">What is Exploratory Data Analysis (EDA)?</span></a>.</p>
+</div>
 </div>
 </div>
 
@@ -242,7 +371,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Welcome to your Jupyter Book</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Introduction</a>
     <a class='right-next' id="next-link" href="methods_class_imbalance.html" title="next page">Workflows for Dealing with Class Imbalance</a>
 
         </div>

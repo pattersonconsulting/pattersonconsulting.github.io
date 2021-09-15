@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workflows for Dealing with Class Imbalance &#8212; Notes on Machine Learning Methods</title>
+    <title>A ML Workflow for Dealing with Class Imbalance in Tabular Data &#8212; Applied Data Science Methods</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Forecasting Model Business Value" href="forecasting_model_value.html" />
+    <link rel="next" title="Forecasting the Business Value of a Model" href="forecasting_model_value.html" />
     <link rel="prev" title="Exploratory Data Analysis Workflows" href="exploratory_data_analysis_workflows.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -74,7 +74,7 @@
       <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Notes on Machine Learning Methods</h1>
+      <h1 class="site-logo" id="site-title">Applied Data Science Methods</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -85,7 +85,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Introduction
   </a>
  </li>
 </ul>
@@ -97,12 +97,22 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Workflows for Dealing with Class Imbalance
+   A ML Workflow for Dealing with Class Imbalance in Tabular Data
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="forecasting_model_value.html">
-   Forecasting Model Business Value
+   Forecasting the Business Value of a Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
+   Demo Colab Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="concepts_and_definitions.html">
+   Concepts and Definitions
   </a>
  </li>
 </ul>
@@ -162,11 +172,11 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmethods_class_imbalance.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev/issues/new?title=Issue%20on%20page%20%2Fmethods_class_imbalance.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -193,8 +203,109 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#here-s-my-first-section">
-   Here’s my first section
+  <a class="reference internal nav-link" href="#introduction-and-motivations">
+   Introduction and Motivations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-our-class-imbalance-modeing-workflow">
+   Overview of Our Class Imbalance Modeing Workflow
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#threshold-tuning">
+     Threshold Tuning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-group-of-models-with-grid-search">
+   Building a Group of Models with Grid Search
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#baselining-our-data-with-a-simple-model">
+     Baselining Our Data with a Simple Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#select-an-evaluation-metric-to-guide-grid-search">
+     Select an Evaluation Metric to Guide Grid Search
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-role-of-eda-in-choosing-an-evaluation-metric">
+     The Role of EDA in Choosing an Evaluation Metric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choosing-an-evaluation-metric">
+     Choosing an Evaluation Metric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#select-a-group-of-promising-model-types-for-grid-search">
+     Select a Group of Promising Model Types for Grid Search
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-grid-search">
+     Run Grid Search
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#select-the-top-3-models-for-refinement">
+     Select the Top 3 Models for Refinement
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#perform-feature-selection">
+     Perform Feature Selection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-learning-curves">
+     Check Learning Curves
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-trained-classifiers">
+     Evaluate the Trained Classifiers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visually-evaluating-a-classifier">
+     Visually Evaluating a Classifier
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#threshold-moving-and-model-evaluation">
+   Threshold Moving and Model Evaluation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rank-with-classifier-probabilities">
+     Rank with Classifier Probabilities
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#thresholds-and-confusion-matricies">
+     Thresholds and Confusion Matricies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choosing-a-threshold-on-the-profit-curve">
+     Choosing a Threshold on the Profit Curve
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading">
+   Further Reading
   </a>
  </li>
 </ul>
@@ -208,12 +319,357 @@
         
               <div>
                 
-  <div class="section" id="workflows-for-dealing-with-class-imbalance">
-<h1>Workflows for Dealing with Class Imbalance<a class="headerlink" href="#workflows-for-dealing-with-class-imbalance" title="Permalink to this headline">¶</a></h1>
-<p>This is some sample text.</p>
-<div class="section" id="here-s-my-first-section">
-<span id="section-label3"></span><h2>Here’s my first section<a class="headerlink" href="#here-s-my-first-section" title="Permalink to this headline">¶</a></h2>
-<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="#section-label3"><span class="std std-ref">Here’s my first section</span></a>.</p>
+  <div class="section" id="a-ml-workflow-for-dealing-with-class-imbalance-in-tabular-data">
+<h1>A ML Workflow for Dealing with Class Imbalance in Tabular Data<a class="headerlink" href="#a-ml-workflow-for-dealing-with-class-imbalance-in-tabular-data" title="Permalink to this headline">¶</a></h1>
+<p>What is our goal with this project? To maximize line of business value</p>
+<p>What contributes to business success/value?</p>
+<p>Model accuracy
+Tuning the model decision threshold based on the class distribution and cost matrix</p>
+<p>Foundationally we want to collect data about how well a model learns the structure in the general population of data by looking at how the model makes predictions. Based on this data we build a confusion matrix for this version of the model.</p>
+<p>Out of the box models assume a 50/50 (binary classification model) decision boundary. This built-in assumption is based on the idea that the class priors are all balanced. In practice, this is not true of most datasets.</p>
+<p>Class imbalance tends to come up in most tabular datasets in the wild</p>
+<p>we care about it because…</p>
+<p>I wanted to put this article together because I felt many workflows on class imbalance methods were either too simplistic (e.g., “downsampling”) or were tied to some specific problem implementation (what do we mean here?)</p>
+<p>This article is meant to take information from my article on <a class="reference internal" href="exploratory_data_analysis_workflows.html"><span class="doc std std-doc">Exploratory Data Analysis Workflows</span></a> and then segue into the article on <a class="reference internal" href="forecasting_model_value.html"><span class="doc std std-doc">Forecasting the Business Value of a Model</span></a>. Together, these 3 articles should allow you to find solid ground approaching imbalanced data problems such as</p>
+<ul class="simple">
+<li><p>predictive maintenace</p></li>
+<li><p>predicting disease</p></li>
+<li><p>churn predicton (note: generally modeled as survivor analysis)</p></li>
+<li><p>click prediction</p></li>
+<li><p>fraud detection</p></li>
+<li><p>anomaly detection</p></li>
+</ul>
+<p>The previous (companion) article on <a class="reference internal" href="exploratory_data_analysis_workflows.html"><span class="doc std std-doc">EDA workflows</span></a> will provide you with the understanding you need to make decisions about how to customize and run the workflow in this article.</p>
+<div class="section" id="introduction-and-motivations">
+<span id="intro-class-imbalance-workflow"></span><h2>Introduction and Motivations<a class="headerlink" href="#introduction-and-motivations" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Research on imbalanced classes often considers imbalanced to mean a minority class of 10% to 20%. In reality, datasets can get far more imbalanced than this. Here are some examples: About 2% of credit card accounts are defrauded per year1. (Most fraud detection domains are heavily imbalanced.) Medical screening for a condition is usually performed on a large population of people without the condition, to detect a small minority with it (e.g., HIV prevalence in the USA is ~0.4%). Disk drive failures are approximately ~1% per year. The conversion rates of online ads has been estimated to lie between 10-3 to 10-6. Factory production defect rates typically run about 0.1%.</p>
+</div></blockquote>
+<blockquote>
+<div><p>In the real world, imbalanced domains are the rule, not the exception! Outside of academia, I have never dealt with a balanced dataset. The reason is fairly straightforward. In many cases, machine learning is used to process populations consisting of a large number of negative (uninteresting) examples and a small number of positive (interesting, alarm-worthy) examples.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Examples of such domains are fraud detection (1% fraud is a huge problem; 0.1% is closer), HIV screening (prevalence in the USA is ~0.4%), predicting disk drive failures (~1% per year), click-through advertising response rates (0.09%), factory production defect rates (0.1%) — the list goes on. Imbalance is everywhere.</p>
+</div></blockquote>
+<blockquote>
+<div><p>That said, here is a rough outline of useful approaches. These are listed approximately in order of effort: Do nothing. Sometimes you get lucky and nothing needs to be done. You can train on the so-called natural (or stratified) distribution and sometimes it works without need for modification. Balance the training set in some way: Oversample the minority class. Undersample the majority class. Synthesize new minority classes. Throw away minority examples and switch to an anomaly detection framework. At the algorithm level, or after it: Adjust the class weight (misclassification costs). Adjust the decision threshold. Modify an existing algorithm to be more sensitive to rare classes. Construct an entirely new algorithm to perform well on imbalanced data.</p>
+</div></blockquote>
+<p>[ todo: why do we care about grid search? ]</p>
+<p>we dont know entirely which threshold we’re going to use on the ROC curve, so building models that are optimized for our task as best as we can is a key focus for our modeling workflows</p>
+<p>[ todo: why do we care about specific eval metrics? ]</p>
+<blockquote>
+<div><p>Don’t use accuracy (or error rate) to evaluate your classifier! There are two significant problems with it. Accuracy applies a naive 0.50 threshold to decide between classes, and this is usually wrong when the classes are imbalanced. Second, classification accuracy is based on a simple count of the errors, and you should know more than this. You should know which classes are being confused and where (top end of scores, bottom end, throughout?).</p>
+</div></blockquote>
+<p><a class="reference external" href="https://www.svds.com/tbt-learning-imbalanced-classes/">https://www.svds.com/tbt-learning-imbalanced-classes/</a></p>
+<div class="admonition-segue admonition">
+<p class="admonition-title">Segue</p>
+<blockquote>
+<div><p>“When you get probability estimates, don’t blindly use a 0.50 decision threshold to separate classes. Look at performance curves and decide for yourself what threshold to use (see next section for more on this). Many errors were made in early papers because researchers naively used 0.5 as a cut-off.
+“
+<a class="reference external" href="https://www.svds.com/tbt-learning-imbalanced-classes/">https://www.svds.com/tbt-learning-imbalanced-classes/</a></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="overview-of-our-class-imbalance-modeing-workflow">
+<span id="ovr-class-imbalance-workflow"></span><h2>Overview of Our Class Imbalance Modeing Workflow<a class="headerlink" href="#overview-of-our-class-imbalance-modeing-workflow" title="Permalink to this headline">¶</a></h2>
+<p>[ todo: what are we going to do here? whats our general workflow? ]</p>
+<ul class="simple">
+<li><p>Split data into training, validation, test sets</p></li>
+<li><p>Separately, look at the distribution of classes in our dataset</p>
+<ul>
+<li><p>Apply a dummy classifier to give us a baseline (e.g., “pick largest class”)</p></li>
+</ul>
+</li>
+<li><p>Normalize the features</p></li>
+<li><p>Train multiple classifiers</p>
+<ul>
+<li><p>Tune the top 2-3 classifiers</p></li>
+</ul>
+</li>
+<li><p>For NNs / AutoKeras</p>
+<ul>
+<li><p>Use all features</p></li>
+</ul>
+</li>
+<li><p>For LR, GB, RF</p>
+<ul>
+<li><p>Perform feature selection</p>
+<ul>
+<li><p>how?</p></li>
+<li><p>What is methodology here?</p></li>
+</ul>
+</li>
+<li><p>Feature selection</p>
+<ul>
+<li><p>How is EDA information used to do feature selection?</p></li>
+<li><p>How are preliminary modeling results used to do feature selection?</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="threshold-tuning">
+<h3>Threshold Tuning<a class="headerlink" href="#threshold-tuning" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>“Nevertheless, many machine learning algorithms are capable of predicting a probability or scoring of class membership, and this must be interpreted before it can be mapped to a crisp class label. This is achieved by using a threshold, such as 0.5, where all values equal or greater than the threshold are mapped to one class and all other values are mapped to another class.”</p>
+</div></blockquote>
+<p><a class="reference external" href="https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/">https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/</a></p>
+<p><a class="reference external" href="https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall">https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall</a></p>
+<p>[ HOW do we delineate “threshold tuning” from “model training”? ]</p>
+<ul class="simple">
+<li><p>how do we show when one starts and the other stops???</p></li>
+</ul>
+<p>Key steps in tuning a threshold</p>
+<ul class="simple">
+<li><p>“The default threshold for interpreting probabilities to class labels is 0.5, and tuning this hyperparameter is called threshold moving.””</p></li>
+<li><p>“How to calculate the optimal threshold for the ROC Curve and Precision-Recall Curve directly.”</p></li>
+<li><p>“How to manually search threshold values for a chosen model and model evaluation metric.”</p></li>
+</ul>
+<p>outline</p>
+<ul class="simple">
+<li><p>most classification models can output labels or probabilities for a given label</p></li>
+<li><p>we use a threshold (default: 0.5) to divide the probability value into 1 of 2 classes</p></li>
+<li><p>in many cases, such as under severe class imbalance, or a specific business situation, this default threshold works poorly for our business case</p></li>
+<li><p>while there are many methods for dealing with class imbalance in machine learning, the most direct approach for optimizing the model for a business goal is to optimize the threshold informed by business costs and benefits</p></li>
+</ul>
+<p>Reasons to choose different threshold than default:</p>
+<ul class="simple">
+<li><p>using ROC Curves and probabilites</p>
+<ul>
+<li><p>ROC curves are useful when analyzing the predicted probabilities of a model</p></li>
+<li><p>ROC AUC scores are useful for selecting the best model</p></li>
+<li><p>we want to choose a threshold on the ROC Curve that gives us the best tradeoff between TPR and FPR</p></li>
+</ul>
+</li>
+<li><p>PR and PR-AUC can be used similarly</p>
+<ul>
+<li><p>but we still need to choose the best threshold</p></li>
+</ul>
+</li>
+<li><p>TPs and FPs, etc, may all have different associated costs (“cost benefit matrix”)</p>
+<ul>
+<li><p>need to choose the best threshold for maximizing business case profit</p></li>
+</ul>
+</li>
+</ul>
+<p>we need to search the range of threshold values and find the best one for our use case or business needs</p>
+</div>
+</div>
+<div class="section" id="building-a-group-of-models-with-grid-search">
+<span id="modeling-class-imbalance-workflow"></span><h2>Building a Group of Models with Grid Search<a class="headerlink" href="#building-a-group-of-models-with-grid-search" title="Permalink to this headline">¶</a></h2>
+<p>what are we doing and where do we start?</p>
+<div class="section" id="baselining-our-data-with-a-simple-model">
+<span id="baseline-class-imbalance-workflow"></span><h3>Baselining Our Data with a Simple Model<a class="headerlink" href="#baselining-our-data-with-a-simple-model" title="Permalink to this headline">¶</a></h3>
+<p>we use DummyModel from sklearn</p>
+<p>it will pick the majority class for every prediction</p>
+<p>its accuracy will be high, but in this case this is misleading</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Accuracy fails with imbalanced datasets where the distribution of examples across the classes is not equal. accuracy is often used earlier in machine learning when dealing with examples where the distribution of the classes is equal, so that’s why practitioners tend to start with it as an evaluation metric</p>
+</div>
+<blockquote>
+<div><p>Achieving 90 percent classification accuracy, or even 99 percent classification accuracy, may be trivial on an imbalanced classification problem. One limitation of these metrics is that they assume that the class distribution observed in the training dataset will match the distribution in the test set and in real data when the model is used to make predictions. This is often the case, but when it is not the case, the performance can be quite misleading</p>
+</div></blockquote>
+<p>“even with slightly skewed class distributions accuracy can be usefl metric however, in practice many practical problems in machine learning deal with highly imbalanced datasets”</p>
+<div class="admonition-segue admonition">
+<p class="admonition-title">Segue</p>
+<p>[ segue: if not accuracy, then what do we use ]</p>
+</div>
+</div>
+<div class="section" id="select-an-evaluation-metric-to-guide-grid-search">
+<span id="select-metric-class-imbalance-workflow"></span><h3>Select an Evaluation Metric to Guide Grid Search<a class="headerlink" href="#select-an-evaluation-metric-to-guide-grid-search" title="Permalink to this headline">¶</a></h3>
+<p>Accuracy doesnt work when evaluating classifiers built from imbalanced datasets</p>
+<blockquote>
+<div><p>Unlike standard evaluation metrics that treat all classes as equally important, imbalanced classification problems typically rate classification errors with the minority class as more important than those with the majority class.</p>
+</div></blockquote>
+<blockquote>
+<div><p>As such performance metrics may be needed that focus on the minority class, which is made challenging because it is the minority class where we lack observations required to train an effective model.</p>
+</div></blockquote>
+<blockquote>
+<div><p>For imbalanced classification problems, the majority class is typically referred to as the negative outcome (e.g. such as “no change” or “negative test result“), and the minority class is typically referred to as the positive outcome (e.g. “change” or “positive test result“).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Majority Class: Negative outcome, class 0.</p></li>
+<li><p>Minority Class: Positive outcome, class 1.</p></li>
+</ul>
+<p>For the purposes of this modeling exercise we denote a prediction of “failure” with numeric value 1 in the “Failure” column.</p>
+<p>this is the tricky part, and this is where we need specific information from the line of business</p>
+<p>[ discuss: predictive maintenance doesnt work the same across companies, nor industries ]</p>
+<p>[ discuss: what are we most sensitive to? ]</p>
+<blockquote>
+<div><p>The two-dimensional graphs in the first bullet above are always more informative than a single number, but if you need a single-number metric, one of these is preferable to accuracy:</p>
+</div></blockquote>
+<blockquote>
+<div><p>The Area Under the ROC curve (AUC) is a good general statistic. It is equal to the probability that a random positive example will be ranked above a random negative example.
+The F1 Score is the harmonic mean of precision and recall. It is commonly used in text processing when an aggregate measure is sought.
+Cohen’s Kappa is an evaluation statistic that takes into account how much agreement would be expected by chance.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Unlike the ROC Curve, a precision-recall curve focuses on the performance of a classifier on the positive (minority class) only.</p>
+</div></blockquote>
+<blockquote>
+<div><p>There are two groups of metrics that may be useful for imbalanced classification because they focus on one class; they are</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Sensitivity-specificity</p>
+<ul>
+<li><p>G-Mean</p></li>
+</ul>
+</li>
+<li><p>Precision-recall</p></li>
+</ul>
+</div>
+<div class="section" id="the-role-of-eda-in-choosing-an-evaluation-metric">
+<h3>The Role of EDA in Choosing an Evaluation Metric<a class="headerlink" href="#the-role-of-eda-in-choosing-an-evaluation-metric" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="choosing-an-evaluation-metric">
+<h3>Choosing an Evaluation Metric<a class="headerlink" href="#choosing-an-evaluation-metric" title="Permalink to this headline">¶</a></h3>
+<p>[ how do we choose one of these? ]</p>
+<blockquote>
+<div><p>Examples of measures that are a combination of precision and recall are the F-measure (the weighted harmonic mean of precision and recall), or the Matthews correlation coefficient, which is a geometric mean of the chance-corrected variants: the regression coefficients Informedness (DeltaP’) and Markedness (DeltaP).</p>
+</div></blockquote>
+<p>[ explain: PR-AUC ]</p>
+<p>Making a Decision on which eval to use:</p>
+<p>Is the positive class more important?
+Use Precision-Recall AUC</p>
+<p>Are both classes important?
+Use ROC AUC</p>
+<p>What about other options?</p>
+<ul class="simple">
+<li><p>Use Brier Score and Brier Skill Score</p></li>
+<li><p>f1-measure, f2-measure, etc</p></li>
+<li><p>G-Mean</p></li>
+</ul>
+</div>
+<div class="section" id="select-a-group-of-promising-model-types-for-grid-search">
+<span id="select-models-class-imbalance-workflow"></span><h3>Select a Group of Promising Model Types for Grid Search<a class="headerlink" href="#select-a-group-of-promising-model-types-for-grid-search" title="Permalink to this headline">¶</a></h3>
+<p>why do we care about grid search?</p>
+<p>we’re searching not only multiplde model types, but also parameters within those model types</p>
+<p>we want to start with some model architectures that are known to perform well:</p>
+<ul class="simple">
+<li><p>Logistic Regression</p></li>
+<li><p>Neural network</p></li>
+<li><p>Gradient Boosting Classifier</p></li>
+<li><p>Random Forests</p></li>
+<li><p>xgBoost</p></li>
+</ul>
+<p>For each of these model architectures we’ll scan regions of hyperparameter space to get a general idea of how well they will work for a given problem</p>
+<p>once we find a few good models, we’ll narrow our focus to tuning those 2-3 models</p>
+</div>
+<div class="section" id="run-grid-search">
+<span id="run-gridsearch-class-imbalance-workflow"></span><h3>Run Grid Search<a class="headerlink" href="#run-grid-search" title="Permalink to this headline">¶</a></h3>
+<p>Plot the distribution of accuracies of the models</p>
+<p>[ TODO: how do we handle cross validation in this context? ]</p>
+<p>Take the top 3 models</p>
+<ul class="simple">
+<li><p>examine the confusion matrix of each of the [best] models</p></li>
+<li><p>Manually check the [ Train, Validation, Test ] scores for each one</p></li>
+</ul>
+<p>optionally: do further feature analysis here</p>
+<ul class="simple">
+<li><p>look at feature importance for random forests</p></li>
+<li><p>for tree-based methods, use Recursive feature elimination and Cross Validation selection (RFECV)</p></li>
+<li><p>Principal Component Analysis</p></li>
+</ul>
+<p>[ TODO: how do we make the case to transition from analyzing performance on validation data to analyzing performance on test data? ]</p>
+</div>
+<div class="section" id="select-the-top-3-models-for-refinement">
+<h3>Select the Top 3 Models for Refinement<a class="headerlink" href="#select-the-top-3-models-for-refinement" title="Permalink to this headline">¶</a></h3>
+<p>compare scores, select top model based on scoring parameter (“average_precision”)</p>
+<p>Fine tune each model by hand a bit – this is where we’d do feature selection further (whereas before we’d use all the features)</p>
+</div>
+<div class="section" id="perform-feature-selection">
+<h3>Perform Feature Selection<a class="headerlink" href="#perform-feature-selection" title="Permalink to this headline">¶</a></h3>
+<p>[ here we analyze which features work best for which models ]</p>
+<blockquote>
+<div><p>“A benefit of using ensembles of decision tree methods like gradient boosting is that they can automatically provide estimates of feature importance from a trained predictive model.”</p>
+</div></blockquote>
+<blockquote>
+<div><p>“Tree based algorithms like random forest, gradient boosting decision tree and even vanilla decision tree give us useful information about feature importance when we fit the classifier. However we are not entirely sure on the number of features to retain (or feature importance threshold). Recursive feature elimination and Cross Validation selection (RFECV) can help us to quantitatively decide the number of features to retain based on the highest cross validation score we get.”</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>random forest, gradient boosting decision tree, decision tree: RFECV</p></li>
+<li><p>xgboost: plot_importance() method</p></li>
+<li><p>NNs: just let network learn features</p></li>
+<li><p>all: PCA</p></li>
+</ul>
+</div>
+<div class="section" id="check-learning-curves">
+<h3>Check Learning Curves<a class="headerlink" href="#check-learning-curves" title="Permalink to this headline">¶</a></h3>
+<p>Calculate “Learning Curves” for each model</p>
+<p>Why? examine bias / variance of models</p>
+<p>[ helps understand overfitting ]</p>
+</div>
+<div class="section" id="evaluate-the-trained-classifiers">
+<span id="eval-gridsearch-class-imbalance-workflow"></span><h3>Evaluate the Trained Classifiers<a class="headerlink" href="#evaluate-the-trained-classifiers" title="Permalink to this headline">¶</a></h3>
+<p>Model selection conclusion</p>
+<ul class="simple">
+<li><p>show the best N models used (with hyperparams)</p>
+<ul>
+<li><p>show the features used</p></li>
+<li><p>show validation [score]</p></li>
+<li><p>show test [score]</p></li>
+</ul>
+</li>
+</ul>
+<p>[ more here ]</p>
+</div>
+<div class="section" id="visually-evaluating-a-classifier">
+<h3>Visually Evaluating a Classifier<a class="headerlink" href="#visually-evaluating-a-classifier" title="Permalink to this headline">¶</a></h3>
+<p>[ discuss: when to use ROC Curves, when to use PR Curves ]</p>
+<ul class="simple">
+<li><p>what is a ROC curve best for?</p></li>
+<li><p>what is a PR curve best for?</p></li>
+</ul>
+<blockquote>
+<div><p>“ROC Curves summarize the trade-off between the true positive rate and false positive rate for a predictive model using different probability thresholds.”</p>
+</div></blockquote>
+<blockquote>
+<div><p>“Precision-Recall curves summarize the trade-off between the true positive rate and the positive predictive value for a predictive model using different probability thresholds.”</p>
+</div></blockquote>
+<blockquote>
+<div><p>“ROC curves are appropriate when the observations are balanced between each class, whereas precision-recall curves are appropriate for imbalanced datasets.”</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="threshold-moving-and-model-evaluation">
+<h2>Threshold Moving and Model Evaluation<a class="headerlink" href="#threshold-moving-and-model-evaluation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>“One last thing to note is that when we performed the Grid Search, we selected the best model using average_precision , which is important. If we had used the f1 score then for example, we would have relied on the default threshold only and therefore could have missed a combination of hyperparameters that yield a better f1 score at a different threshold. Therefore, I made sure to select the model using a metric agnostic to the threshold, and only then tuned the threshold.”</p>
+</div></blockquote>
+<p><a class="reference external" href="https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a">https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</a></p>
+<p>Working with Average Precision</p>
+<p><a class="reference external" href="https://sanchom.wordpress.com/tag/average-precision/">https://sanchom.wordpress.com/tag/average-precision/</a></p>
+<p>[ explain: the default threshold concept, the inherent assumptions, and how this breaks with class imbalance ]</p>
+<div class="section" id="rank-with-classifier-probabilities">
+<h3>Rank with Classifier Probabilities<a class="headerlink" href="#rank-with-classifier-probabilities" title="Permalink to this headline">¶</a></h3>
+<p>[ we want to rank here, so we need the probabilities from the model ]</p>
+</div>
+<div class="section" id="thresholds-and-confusion-matricies">
+<h3>Thresholds and Confusion Matricies<a class="headerlink" href="#thresholds-and-confusion-matricies" title="Permalink to this headline">¶</a></h3>
+<p>[ discuss: each threshold point on the ROC curve is a new Confusion Matrix ]</p>
+<p>[ how do we think of ROC curves in the context of using only the 50-50 threshold? ]</p>
+</div>
+<div class="section" id="choosing-a-threshold-on-the-profit-curve">
+<h3>Choosing a Threshold on the Profit Curve<a class="headerlink" href="#choosing-a-threshold-on-the-profit-curve" title="Permalink to this headline">¶</a></h3>
+<p>[ explain ]</p>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Learning from Imbalanced Data Sets</p>
+<ul>
+<li><p><a class="reference external" href="https://www.amazon.com/Learning-Imbalanced-Data-Alberto-Fern%C3%A1ndez/dp/3319980734/ref=as_li_ss_tl?keywords=Learning+from+Imbalanced+Data+Sets&amp;qid=1568679479&amp;s=books&amp;sr=1-1&amp;linkCode=sl1&amp;tag=inspiredalgor-20&amp;linkId=214f8d8144c94e7f48543e0200abdbdf&amp;language=en_US">https://www.amazon.com/Learning-Imbalanced-Data-Alberto-Fernández/dp/3319980734/ref=as_li_ss_tl?keywords=Learning+from+Imbalanced+Data+Sets&amp;qid=1568679479&amp;s=books&amp;sr=1-1&amp;linkCode=sl1&amp;tag=inspiredalgor-20&amp;linkId=214f8d8144c94e7f48543e0200abdbdf&amp;language=en_US</a></p></li>
+</ul>
+</li>
+<li><p>Machine Learning from Imbalanced Datasets 101</p>
+<ul>
+<li><p><a class="reference external" href="https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf">https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf</a></p></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
@@ -243,7 +699,7 @@
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="exploratory_data_analysis_workflows.html" title="previous page">Exploratory Data Analysis Workflows</a>
-    <a class='right-next' id="next-link" href="forecasting_model_value.html" title="next page">Forecasting Model Business Value</a>
+    <a class='right-next' id="next-link" href="forecasting_model_value.html" title="next page">Forecasting the Business Value of a Model</a>
 
         </div>
         

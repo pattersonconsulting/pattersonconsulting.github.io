@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forecasting Model Business Value &#8212; Notes on Machine Learning Methods</title>
+    <title>Forecasting the Business Value of a Model &#8212; Applied Data Science Methods</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Workflows for Dealing with Class Imbalance" href="methods_class_imbalance.html" />
+    <link rel="next" title="Demo Colab Notebook" href="kubeflow_gpu_validation_notebook.html" />
+    <link rel="prev" title="A ML Workflow for Dealing with Class Imbalance in Tabular Data" href="methods_class_imbalance.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -73,7 +74,7 @@
       <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Notes on Machine Learning Methods</h1>
+      <h1 class="site-logo" id="site-title">Applied Data Science Methods</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -84,7 +85,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Introduction
   </a>
  </li>
 </ul>
@@ -96,12 +97,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="methods_class_imbalance.html">
-   Workflows for Dealing with Class Imbalance
+   A ML Workflow for Dealing with Class Imbalance in Tabular Data
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Forecasting Model Business Value
+   Forecasting the Business Value of a Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
+   Demo Colab Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="concepts_and_definitions.html">
+   Concepts and Definitions
   </a>
  </li>
 </ul>
@@ -161,11 +172,11 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fforecasting_model_value.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev/issues/new?title=Issue%20on%20page%20%2Fforecasting_model_value.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -192,8 +203,67 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#here-s-my-first-section">
-   Here’s my first section
+  <a class="reference internal nav-link" href="#introduction-and-motivations">
+   Introduction and Motivations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-the-goodness-of-a-model">
+   Measuring the Goodness of a Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forecasting-model-value-with-expected-value">
+   Forecasting Model Value with Expected Value
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-cost-benefit-matrix">
+     The Cost-Benefit Matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-expected-value">
+     Computing Expected Value
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-model-value-with-profit-curves">
+   Visualizing Model Value with Profit Curves
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-probability-estimates-instead-of-classification-labels">
+     Using Probability Estimates Instead of Classification Labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#threshold-tuning">
+     Threshold Tuning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-the-profit-curve">
+     Plotting the Profit Curve
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpreting-a-profit-curve-graph">
+     Interpreting a Profit Curve Graph
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading-and-other-resources">
+   Further Reading and Other Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -207,12 +277,354 @@
         
               <div>
                 
-  <div class="section" id="forecasting-model-business-value">
-<h1>Forecasting Model Business Value<a class="headerlink" href="#forecasting-model-business-value" title="Permalink to this headline">¶</a></h1>
-<p>This is some sample text.</p>
-<div class="section" id="here-s-my-first-section">
-<span id="section-label2"></span><h2>Here’s my first section<a class="headerlink" href="#here-s-my-first-section" title="Permalink to this headline">¶</a></h2>
-<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="#section-label2"><span class="std std-ref">Here’s my first section</span></a>.</p>
+  <div class="section" id="forecasting-the-business-value-of-a-model">
+<h1>Forecasting the Business Value of a Model<a class="headerlink" href="#forecasting-the-business-value-of-a-model" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter  we look at how to frame and forecast the business value of a model. The concepts in this chapter are based on the concepts in the book “<a href="https://data-science-for-biz.com/">Data Science for Business</a>” (Provost, Fawcett, O’Reilly 2013).</p>
+<div class="section" id="introduction-and-motivations">
+<span id="forecasting-biz-value-intro"></span><h2>Introduction and Motivations<a class="headerlink" href="#introduction-and-motivations" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter we are focused on a workflow to evaluate the business value of a model, but also models that are trained on imbalanced data (the most common data in the wild). Choosing the right evaluation metric is key (for data science) and no single metric works for every problem.</p>
+<p>Model performance is about balancing precision and recall in the context of a specific goal. However, finding the “correct” balance point in the precision and recall curve that is the most appropriate for the business problem can be a trick (Many times a data scientist will choose to use the best F1 score, which balances precision and recall).</p>
+<p>If we’re doing pure (or arbitrary) data science with no line of business information, the modeling process can become a game of maximizing the AUC for a specific evaluation metric.</p>
+<p>The trouble with evaluation metrics such as Accuracy, ROC Curves, and Precision Recall Curves is that they can be hard to communicate to the line of business. The business owners tend not to be able to grok these measures and can be confused or frustrated by the data science team’s results.</p>
+<p>We close out the article measuring the value of the model performance with Expected Value and visualizing model performance with profit curves.</p>
+<p>Let’s now do a quick review on how we choose an evaluation metric for a model and the implications involved.</p>
+</div>
+<div class="section" id="measuring-the-goodness-of-a-model">
+<h2>Measuring the Goodness of a Model<a class="headerlink" href="#measuring-the-goodness-of-a-model" title="Permalink to this headline">¶</a></h2>
+<p>Many data scientists start with an accuracy measure for their model, but we outline the issues with accuracy as a measure in imbalanced datasets.</p>
+<p>The <a href="http://www.svds.com/the-basics-of-classifier-evaluation-part-1/">big issue with accuracy is that we can simply cheat and have our model predict the majority class every time</a>. Given that most datasets in the wild are highly imbalanced, a majority classifier will get a high (many times +90%) accuracy rating and have no real predictive value for our minority class.</p>
+<p>There are a <a href="https://scikit-learn.org/stable/modules/model_evaluation.html">lot of ways to evaluate the performance</a> of a classifier beyond accuracy.</p>
+<p>Some good ideas for general model evaluation are:</p>
+<ul class="simple">
+<li><p>for relatively balanced datasets, use a <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html">ROC Curve</a></p></li>
+<li><p>for imbalanced dataset modeling, use a <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html">precision-recall curve</a></p></li>
+</ul>
+<p>Both of these plots are effective at understanding relative performance between mutliple models, as seen in the example precision-recall curve below.</p>
+<p><img alt="profit_curve_example" src="_images/pr_curve_example.png" /></p>
+<p>This is helpful in our machine learning workflow as we train multiple types of models against our dataset and need to understand which models are getting the most effective performance for the problem at hand.</p>
+<p>However, neither ROC Curves nor Precision Curves communicate business value (directly). We generally understand that “more effective models are more valuable”, but the business wants to know more specifics about expected return on investment.</p>
+<p>Beyond general modeling, to communicate model business value you should consider:</p>
+<ul class="simple">
+<li><p>Lift Curves</p></li>
+<li><p>Profit Curves (discussed further in this chapter)</p></li>
+</ul>
+<p>These graphs can communicate business value in a way that the line of business will recognize. We now will look at how to build a profit curve that incorporates business costs and benefits, and the y-axis values are based on the concept of expected value.</p>
+</div>
+<div class="section" id="forecasting-model-value-with-expected-value">
+<h2>Forecasting Model Value with Expected Value<a class="headerlink" href="#forecasting-model-value-with-expected-value" title="Permalink to this headline">¶</a></h2>
+<p>To build a profit curve to show classifier value across a range of usage, we need to compute expected value of the classifier.</p>
+<p>To calculate expected value (or “Profit”) we take a confusion matrix and a cost-benefit matrix and compute the expected value. <strong>Expected value implies that if we use this model to predict actions for a new set of instances, then for the instances it predicts as positive we can expect to make (on average) the amount per prediction as computed from the expected value function.</strong></p>
+<p>We’ll use this expected value function as a key building block when we plot our profit curve. Let’s now work through how a cost-benefit matrix works.</p>
+<div class="section" id="the-cost-benefit-matrix">
+<h3>The Cost-Benefit Matrix<a class="headerlink" href="#the-cost-benefit-matrix" title="Permalink to this headline">¶</a></h3>
+<p>A cost benefit matrix is a 2x2 matrix describing the costs and benefits of the business impacts of the values in a confusion matrix generated for a classifier.</p>
+<p>We map costs (negative values) and benefits (positive values) to the following counts:</p>
+<ul class="simple">
+<li><p>TP: saying the action will be true, and it is actually true</p></li>
+<li><p>TN: saying the action will not occur, and the outcome does not occur</p></li>
+<li><p>FP: saying the action will be true, and the outcome does actually occur</p></li>
+<li><p>FN: saying the action will not be true, and the outcome actually does occur</p></li>
+</ul>
+<p>In the table below we should the hypothetical scenario where a manufacturing company is making:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Outcome</p></th>
+<th class="head"><p>Cost</p></th>
+<th class="head"><p>Benefit</p></th>
+<th class="head"><p>Outcome Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TP</p></td>
+<td><p>60</p></td>
+<td><p>2500</p></td>
+<td><p>2440</p></td>
+</tr>
+<tr class="row-odd"><td><p>TN</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>FP</p></td>
+<td><p>60</p></td>
+<td><p>0</p></td>
+<td><p>-60</p></td>
+</tr>
+<tr class="row-odd"><td><p>FN</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Rows that have a positive outcome value show how the outcome is a net benefit in the valuation of a model.</p>
+<p>We can take these values and arrange them in the same fashion as a traditional confusion matrix:</p>
+<table>
+  <th>
+    <td></td>
+    <td></td>
+    <td colspan="2">Actual</td>
+    <td></td>
+  </th>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td>p</td>
+    <td>n</td>
+  </tr>
+  <tr>
+    <td>predicted</td>
+    <td>Y</td>
+    <td style="border: 1px solid;">$2440</td>
+    <td style="border: 1px solid;">-$60</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>N</td>
+    <td style="border: 1px solid;">$0</td>
+    <td style="border: 1px solid;">$0</td>
+  </tr>
+</table>
+<p>We define a cost-benefit matrix in Python simply as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cost_benefit_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2440</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Costs and Benefits</p>
+<p>Note: mathematically there is no difference between a benefit and a cost in this context. The only difference is the sign of the outcome value. From this perspective, we can consider all outcome values as “benefits” where costs are considered “negative benefits”.</p>
+</div>
+<p>Given that we treat costs and benefits the same (just with different signs), this gives us a single function:</p>
+<p><code class="docutils literal notranslate"><span class="pre">b(</span> <span class="pre">predicted,</span> <span class="pre">actual</span> <span class="pre">)</span></code></p>
+<p>We’ll use this notation in a moment when we define the expected value function. Now let’s take the cost benefit matrix and use it in an expected profit calculation</p>
+</div>
+<div class="section" id="computing-expected-value">
+<h3>Computing Expected Value<a class="headerlink" href="#computing-expected-value" title="Permalink to this headline">¶</a></h3>
+<p>There are different versions of the expected value equation, but we focus on the version<sup>1</sup> that accounts for the class priors (p(positive) and p(negative)):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expected_value</span> <span class="o">=</span> 
+  <span class="n">p</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span> <span class="n">p</span><span class="p">(</span><span class="n">Y</span><span class="o">|</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">N</span><span class="o">|</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="p">]</span> <span class="o">+</span>
+  <span class="n">p</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span> <span class="n">p</span><span class="p">(</span><span class="n">N</span><span class="o">|</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">Y</span><span class="o">|</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>where the equation has 3 groups of components:</p>
+<p>The class priors:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p(p)</span></code>: the likelihood of seeing a positive instance in the dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p(n)</span></code>: the likelihood of seeing a negative instance in the dataset</p></li>
+</ul>
+<p>Information from the Confusion Matrix:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p(Y|p)</span></code>: True Positive Rate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p(N|p)</span></code>: False Negative Rate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p(N|n)</span></code>: True Negative Rate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p(Y|n)</span></code>: False Positive Rate</p></li>
+</ul>
+<p>Information from the Cost-Benefit Matrix:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">b(Y,p)</span></code>: True Positive Cost/Benefit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b(N,p)</span></code>: False Negative Cost/Benefit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b(N,n)</span></code>: True Negative Cost/Benefit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b(Y,n)</span></code>: False Positive Cost/Benefit</p></li>
+</ul>
+<p>To see expected value implemented in python, check out this <a href="https://github.com/pattersonconsulting/ml_tools/blob/main/ml_valuation/model_valuation.py#L133">open source implementation of the equation</a>.</p>
+<p>To quickly use the expected value formula in python, you can use our open source python package <code class="docutils literal notranslate"><span class="pre">ml-valuation</span></code> by installing it via <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pattersonconsulting</span><span class="o">/</span><span class="n">ml_tools</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>From there you can import the package in python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ml_valuation</span> <span class="kn">import</span> <span class="n">model_valuation</span>
+<span class="kn">from</span> <span class="nn">ml_valuation</span> <span class="kn">import</span> <span class="n">model_visualization</span>
+</pre></div>
+</div>
+<p>And then we’d use it with the method <code class="docutils literal notranslate"><span class="pre">expected_value_calculation_with_class_priors(...)</span></code> in our code (<a href="https://github.com/pattersonconsulting/ml_tools/blob/main/test/TestExpectedProfit.py#L128">unit test example</a>). A simple code snippet of it being used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">scmtrx</span> <span class="o">=</span> <span class="n">model_valuation</span><span class="o">.</span><span class="n">standard_confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">cost_benefit_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2440</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">exp_value</span> <span class="o">=</span> <span class="n">model_valuation</span><span class="o">.</span><span class="n">expected_value_calculation_with_class_priors</span><span class="p">(</span><span class="n">scmtrx</span><span class="p">,</span> <span class="n">cost_benefit_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we run this function we compute expected value for the combination of our business constraints and our current model’s performance on the test data. This expected value implies that if we use this model to predict actions for a new set of instances, then for the instances it predicts as positive we can expect to make (on average) the amount computed from this function.</p>
+<p>Now let’s move on to how we can visualize expected value with profit curves in the context of machine learning models.</p>
+</div>
+</div>
+<div class="section" id="visualizing-model-value-with-profit-curves">
+<h2>Visualizing Model Value with Profit Curves<a class="headerlink" href="#visualizing-model-value-with-profit-curves" title="Permalink to this headline">¶</a></h2>
+<p>Profit curves show us how expected value of the application of a classifier changes as we apply it to more data as <a href="https://www.svds.com/classifiers2/">ranked by the probability estimates of the classifier’s predictions</a>, as we see in the example image below.</p>
+<p><img alt="profit_curve_example" src="_images/profit_curve_0.png" /></p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Why Rank Estimated Probabilities?</p>
+<p>In some cases we may want to dial back how many positive predictions a classifier makes for business purposes (e.g., “less staff to handle positive predictions than normal”). If we’re going to process less positive instances, then we want the ones we work with to be the most certain predictions from the classifier.</p>
+<p>In other cases we may want to see more positive predictions (e.g., in predictive maintenance we might want to find more machines that are possibly going to fail soon than we currently are analyzing). Again, we’d want a list of machines ranked by estimated probability to fail, and we’d just work farther down this list of machines than before. However, the model is going to be less “certain” about the prediction the farther we go down the list, so we run the risk of getting predictions that are incorrect.</p>
+</div>
+<p>A profit curve shows the expected average profit for each classifier as progressively larger proportions of the consumer base are targeted.</p>
+<p>Each point on the a profit curve graph represents</p>
+<ul class="simple">
+<li><p>x-axis: a percent of the total test records (corresponding to estimated probability thresholds)</p></li>
+<li><p>y-axis: <strong>expected value based on the confusion matrix represented by a threshold cut-off</strong> on the rank-ordered set of test-record probabilities</p></li>
+</ul>
+<p>Each estimated probability threshold on the x-axis represents a point in the list where we classify all instances above the threshold as positive and below as negative. Each threshold cut-off point creates a specific confusion matrix because it generates different counts for TP, TN, FP, FNs.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>How is the confusion matrix created at each threshold?</p>
+<p>The process is:</p>
+<ul class="simple">
+<li><p>we sort all of the prediction by the model on the test set by their score (1.0 to 0.0)</p></li>
+<li><p>we have a threshold (between 1.0 to 0.0), dropping it below the next prediction score in the prediction list at each step</p></li>
+<li><p>For a given threshold, we create an array of predictions such that any prediction above the threshold is 1.0 and any prediction below the threshold is 0.0</p></li>
+<li><p>we then compute a new confusion matrix from these predictions and their associated label values</p></li>
+</ul>
+</div>
+<p>Let’s start out by understanding how to get estimated probabilities from a machine learning model.</p>
+<div class="section" id="using-probability-estimates-instead-of-classification-labels">
+<h3>Using Probability Estimates Instead of Classification Labels<a class="headerlink" href="#using-probability-estimates-instead-of-classification-labels" title="Permalink to this headline">¶</a></h3>
+<p>So we don’t want the traditional “hard” classifications (e.g., <code class="docutils literal notranslate"><span class="pre">.predict()</span></code>) from our model that we’d normally use. Here we want the estimated probability, which is typically executed with code similar to sklearn’s <code class="docutils literal notranslate"><span class="pre">.predict_proba()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The scores output from this method are typically referred to as “<strong>probability estimates</strong>” (Provost and Fawcett use the term “scores”).</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Tom Fawcett on “Using the Default Model Threshold”</p>
+<p>It’s hard to <a href="https://www.svds.com/classifiers2/">say it better than Tom Fawcett about using the default (0.5) threshold</a>:</p>
+<blockquote>
+<div><p>Your classifier would be brain-damaged (the technical term) and could only provide the prediction labels that made sense when it was trained — not when it was used.</p>
+</div></blockquote>
+<p>So we get the probability estimate (“score”) and throw away the default threshold label prediction.</p>
+<p>Out of the box models assume a 50/50 (binary classification model) decision boundary. This built-in assumption is based on the idea that the class priors are all balanced. In practice, this is not true of most datasets, especially considering the abundance of imbalanced datasets in the wild.</p>
+</div>
+<p>Normally the model will use a default (0.5) threshold internally when we call (for sklearn, for example) the <code class="docutils literal notranslate"><span class="pre">.predict()</span></code> method. This is where in our workflow we want to change things up and just use the probability estimates as a tool to <strong>rank</strong> as opposed to classifying (just yet).</p>
+<p>Using a threshold other than 0.5 is relevant to getting the best performance for our trained model as informed by our business context and cost-benefit matrix. However, how do we decide which custom threshold to use? We can determine the best threshold to use for our classifier through a process known as “threshold tuning”.</p>
+</div>
+<div class="section" id="threshold-tuning">
+<h3>Threshold Tuning<a class="headerlink" href="#threshold-tuning" title="Permalink to this headline">¶</a></h3>
+<p>In threshold tuning we take a classifier and a set of test instances and we get the probability estimates (for a positive prediction) for each test instance. We then rank the instances by their estimated probability, highest to lowest. From there we can apply a series of thresholds to classify all instances above the threshold as positive and below the threshold as negative. Each of these threshold produces a different confusion matrix that we can use to combine with the cost-benefit matrix to compute the expect value for that threshold. The threshold with the highest expected value will give the line of business the best outcome for the use of the classifier (combined with the given threshold value).</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Threshold Tuning vs Model Training</p>
+<p>Model training is the process of learning parameters to minimize the error in making predictions. With model training we are able to generate probability estimates about input instances. The default threshold in most classifiers is 0.5 that seperates a positive and negative prediction based on its probability estimate.</p>
+<p>Threshold tuning is the process where we change the threshold for the classifier to make it more conservative or relaxed in how the classifier makes a positive prediction. We need the modeling phase to rank the test instances in order to perform the threshold tuning phase.</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Did We Train Our Classifier “Enough”?</p>
+<p>The idea of maximizing expected profit gives us a lot more to think about when training machine learning models.</p>
+<p>When combined with a total project budget, a decently trained model, a cost-benefit matrix, and a high threshold may easily produce enough true positives to saturate our business capacity for processing the positive results and we just “don’t need more true positives”.</p>
+<p>Quality training methods give us better ranking of the records, giving us a more effective projection of the value of the model. It definitely makes rendering a profit curve a key part of the complete modeling process as it can tell us to stop modeling sooner if we’ve hit our business goals already.</p>
+</div>
+<p>In most cases precision increases as recall decreases as we increase the threshold (with the opposite holding true as well). If the threshold is set to a high estimated probability, then the model will only predict a positive class if the predicted estimated probability is &gt;= 0.9. A threshold this high tends to be more discriminatory in predicting a positive class.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>How are the model and threshold used in practice?</p>
+<p>We only take actions (such as perform preventative maintenance on a machine) if the model predicts failure (e.g., the “positive” or “minority class”).</p>
+<p>In practice, if we had a 50/50 threshold, a model would predict a lot of positives with an estimated probability that isn’t that high (e.g., 0.6)</p>
+<p>If we include our business cost-benefit information in how we set our threshold, we only predict positive under more confident predictions, cutting down on false positives — situations where we’d pay for “preventative maintenance” — but the machine was not going to fail. This is how the interplay of thresholding and business cost-benefit information help make a more effective classifier in practice.</p>
+</div>
+<!--
+* we find the sweet spot of a PR-curve by maximizing the F1 measure as it is the ideal balance mathematically between precision and recall.
+-->
+<p>Now let’s take these concepts and walk through how to build our profit curve.</p>
+</div>
+<div class="section" id="plotting-the-profit-curve">
+<h3>Plotting the Profit Curve<a class="headerlink" href="#plotting-the-profit-curve" title="Permalink to this headline">¶</a></h3>
+<p>To generate the profit curve we need to (for each classifier):</p>
+<ol class="simple">
+<li><p>Train the classifiers (how well should they be trained? depends on how profitable we need to be under our budget constraints!)</p></li>
+<li><p>Use the classifier to predict an estimated probability for each of the test instances</p></li>
+<li><p>Rank the estimated probabilities (highest to lowest)</p></li>
+<li><p>Compute confusion matricies for each threshold along the set of ranked test instances</p></li>
+<li><p>Collect the busines information to build the cost-benefit matrix</p></li>
+<li><p>Compute expected profit for each {threshold-confusion-matrix, cost-benefit-matrix} combination along the x-axis</p></li>
+<li><p>Plot these x,y pairs on the graph</p></li>
+</ol>
+<p>To do this with our python module, check out the unit test or the code snippet below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">model_data_tuples</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.85</span><span class="p">],</span> <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># split into train/test sets</span>
+<span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainy</span><span class="p">,</span> <span class="n">testy</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="c1"># fit a model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainy</span><span class="p">)</span>
+<span class="c1"># predict probabilities</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">testX</span><span class="p">)</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">yhat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model_data_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">((</span><span class="n">testy</span><span class="p">,</span> <span class="n">yhat</span><span class="p">,</span> <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">)))</span>
+
+
+<span class="c1"># baseline dummy model</span>
+<span class="n">clf_dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;stratified&#39;</span><span class="p">)</span>
+<span class="n">clf_dummy</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainy</span><span class="p">)</span>
+
+<span class="n">dummy_predicted</span> <span class="o">=</span> <span class="n">clf_dummy</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">testX</span><span class="p">)</span>
+<span class="n">dummy_predicted</span> <span class="o">=</span> <span class="n">dummy_predicted</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model_data_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">((</span><span class="n">testy</span><span class="p">,</span> <span class="n">dummy_predicted</span><span class="p">,</span> <span class="s1">&#39;Dummy Classifier&#39;</span><span class="p">)))</span>
+
+<span class="c1"># create a cost-benefit matrix</span>
+<span class="n">cost_benefit_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">175</span><span class="p">,</span> <span class="o">-</span><span class="mi">150</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">model_visualization</span><span class="o">.</span><span class="n">plot_profit_curves</span><span class="p">(</span> <span class="n">cost_benefit_matrix</span><span class="p">,</span> <span class="n">model_data_tuples</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="s2">&quot;profit_curve_multiple_models&quot;</span><span class="p">,</span> <span class="n">total_budget</span><span class="o">=</span><span class="mi">1500</span> <span class="p">)</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="section" id="interpreting-a-profit-curve-graph">
+<h3>Interpreting a Profit Curve Graph<a class="headerlink" href="#interpreting-a-profit-curve-graph" title="Permalink to this headline">¶</a></h3>
+<p>So ideally we want to select the classifier that reaches the highest apex on the y-axis. In the graph above that would be the Gradient Boosting Decision tree model (max profit per customer: $51.60). This peak correspondes to a threshold which we need to use in practice with the model so that we will only predict positive instances above this threshold in practice. The threshold peak also corresponds to a cut point in the percentage of instances we predict as positive instances.</p>
+<p>If we use this model and the associated threshold (and our production data population is roughly the same as our training/test class priors), our expected value calculation tells us (from our example image above) that we should expect to make around $51.60 per positive instance predicted.</p>
+<p>What happens if we have a budget constraint?</p>
+<ul class="simple">
+<li><p>our budget might not let us get to the max profit peak</p></li>
+<li><p>and we might end up using a different { model, threshold } to maximize our expected value</p></li>
+</ul>
+<p>It’s interesting how what we saw in our precision-recall curve a list of classifiers that excelled better or worse at different combinations of precision and recall. However, the profit curve puts a different “lens” on things and accounts for business constraints such as budget and cost-benefit matricies. However, we probably could not infer the same information from the precision-recall curve that we can quickly learn from the profit curve.</p>
+<p>Profit curves are powerful tools to take into meetings with line of business owners and can help you more effectively communicate the value of machine learning in real dollars.</p>
+<!--
+## Brainstorming
+
+* Forecasting the value of a dataset
+  * data value is a function of use case, cost matrix, and profit curves
+  * if we can forecast the value of a trained model for a line of business, can we take this valuation and build a data model?
+  * what if we built a valuation, and then begin progressively stripping out training data and re-training the model, each time measuring the drop in predictive value of the model
+  * we then could apply this value back to a generalized value curve (with a point of diminishing returns as it appoaches the full population of the data)
+  * how would expected value and task-response-threshold work together?
+  * what if we use gradient descent or NN's to "learn" a cost-benefit matrix?
+-->
+</div>
+</div>
+<div class="section" id="further-reading-and-other-resources">
+<h2>Further Reading and Other Resources<a class="headerlink" href="#further-reading-and-other-resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Check out “<a href="https://data-science-for-biz.com/">Data Science for Business</a>” (Provost, Fawcett, O’Reilly 2013). We highly recommend this book.</p></li>
+<li><p>Cost-based / cost-aware modeling and optimization</p></li>
+<li><p>Expected Value</p></li>
+<li><p>Lift Curves</p></li>
+</ul>
+<!--
+* https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a
+-->
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Provost, F., &amp; Fawcett, T. (2013). <a href="https://data-science-for-biz.com/">Data science for business: [what you need to know about data mining and data-analytic thinking]</a>. Sebastopol, Calif.: O’Reilly.</p></li>
+</ol>
 </div>
 </div>
 
@@ -241,7 +653,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="methods_class_imbalance.html" title="previous page">Workflows for Dealing with Class Imbalance</a>
+    <a class='left-prev' id="prev-link" href="methods_class_imbalance.html" title="previous page">A ML Workflow for Dealing with Class Imbalance in Tabular Data</a>
+    <a class='right-next' id="next-link" href="kubeflow_gpu_validation_notebook.html" title="next page">Demo Colab Notebook</a>
 
         </div>
         

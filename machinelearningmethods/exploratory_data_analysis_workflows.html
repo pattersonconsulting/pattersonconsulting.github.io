@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exploratory Data Analysis Workflows &#8212; Notes on Machine Learning Methods</title>
+    <title>Exploratory Data Analysis Workflows &#8212; Applied Data Science Methods</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Workflows for Dealing with Class Imbalance" href="methods_class_imbalance.html" />
+    <link rel="next" title="A ML Workflow for Dealing with Class Imbalance in Tabular Data" href="methods_class_imbalance.html" />
     <link rel="prev" title="Introduction" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -74,7 +74,7 @@
       <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Notes on Machine Learning Methods</h1>
+      <h1 class="site-logo" id="site-title">Applied Data Science Methods</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -97,12 +97,22 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="methods_class_imbalance.html">
-   Workflows for Dealing with Class Imbalance
+   A ML Workflow for Dealing with Class Imbalance in Tabular Data
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="forecasting_model_value.html">
-   Forecasting Model Business Value
+   Forecasting the Business Value of a Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
+   Demo Colab Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="concepts_and_definitions.html">
+   Concepts and Definitions
   </a>
  </li>
 </ul>
@@ -162,11 +172,11 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fexploratory_data_analysis_workflows.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev/issues/new?title=Issue%20on%20page%20%2Fexploratory_data_analysis_workflows.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -196,16 +206,25 @@
   <a class="reference internal nav-link" href="#what-is-exploratory-data-analysis-eda">
    What is Exploratory Data Analysis (EDA)?
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-purpose-of-eda">
-   The Purpose of EDA
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-purpose-of-eda">
+     The Purpose of EDA
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-cleaning-guiding-principles">
    Data Cleaning Guiding Principles
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pitfalls-of-eda">
+     Pitfalls of EDA
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-generalized-eda-worfklow">
@@ -213,11 +232,68 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#working-conclusions">
-     Working Conclusions
+    <a class="reference internal nav-link" href="#preliminary-data-analysis-correlation">
+     Preliminary Data Analysis: Correlation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-off-label-or-dependent-variable-column">
+     Split Off Label or Dependent Variable Column
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-distributions-of-features">
+     Compare distributions of features
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variable-analysis-methods">
+   Variable Analysis Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numeric-vs-numeric">
+     Numeric vs Numeric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numeric-vs-categorical">
+     Numeric vs Categorical
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#categorical-vs-categorical">
+     Categorical vs Categorical
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hexplots-to-combat-overplotting">
+     HexPlots to Combat Overplotting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-t-tests-to-check-distributions">
+     Using T-Tests to Check Distributions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#eda-visualization-methods">
+   EDA Visualization Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-conclusions">
+   Working Conclusions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference-topics-and-more-reading">
+   Reference Topics and More Reading
+  </a>
  </li>
 </ul>
 
@@ -232,19 +308,85 @@
                 
   <div class="section" id="exploratory-data-analysis-workflows">
 <h1>Exploratory Data Analysis Workflows<a class="headerlink" href="#exploratory-data-analysis-workflows" title="Permalink to this headline">¶</a></h1>
-<p>This is some sample text.</p>
+<p>This article is meant to provide a generalized exploratory data analysis workflow. It’s a great workflow to get you started with EDA. In some cases you’ll also want to consider variations on this workflow to better accomodate different data challenges.</p>
+<p>This article is meant to be a precursor to my <a class="reference internal" href="methods_class_imbalance.html"><span class="doc std std-doc">article on a workflow for dealing with class imbalance in tabular data</span></a>.</p>
 <div class="section" id="what-is-exploratory-data-analysis-eda">
 <span id="what-is-eda"></span><h2>What is Exploratory Data Analysis (EDA)?<a class="headerlink" href="#what-is-exploratory-data-analysis-eda" title="Permalink to this headline">¶</a></h2>
-</div>
+<p>EDA is…</p>
+<blockquote>
+<div><p>Exploratory Data Analysis (EDA) is an approach to analyzing data. It’s where the researcher takes a bird’s eye view of the data and tries to make some sense of it.
+It’s often the first step in data analysis, implemented before any formal statistical techniques are applied. Although specific statistical techniques can be used, like creating histograms or box plots, EDA is not a set of techniques or procedures;</p>
+</div></blockquote>
+<blockquote>
+<div><p>the Engineering Statistics Handbook calls EDA a “philosophy.” EDA is considered by some to be more of an art form than a science.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exploratory data analysis is a complement to inferential statistics, which tends to be fairly rigid with rules and formulas.
+EDA involves the analyst trying to get a “feel” for the data set, often using their own judgment to determine what the most important elements in the data set are.
+For example, multidimensional scaling is an EDA that uses visual representations of distances or similarities between sets of objects; It’s up to the user to interpret exactly what the distances represent.</p>
+</div></blockquote>
+<p>Segue? EDA informs the modeling process in the following ways…</p>
 <div class="section" id="the-purpose-of-eda">
-<span id="purpose-of-eda"></span><h2>The Purpose of EDA<a class="headerlink" href="#the-purpose-of-eda" title="Permalink to this headline">¶</a></h2>
+<span id="purpose-of-eda"></span><h3>The Purpose of EDA<a class="headerlink" href="#the-purpose-of-eda" title="Permalink to this headline">¶</a></h3>
 <p>“It’s always good to have some hypotheses in mind before diving into modeling, and exploratory analysis can help in generating them.”</p>
+<p>The purpose of exploratory data analysis is to:</p>
+<blockquote>
+<div><p>Check for missing data and other mistakes.
+Gain maximum insight into the data set and its underlying structure.
+Uncover a parsimonious model, one which explains the data with a minimum number of predictor variables.
+Check assumptions associated with any model fitting or hypothesis test.
+Create a list of outliers or other anomalies.
+Find parameter estimates and their associated confidence intervals or margins of error.
+Identify the most influential variables.</p>
+</div></blockquote>
+<blockquote>
+<div><p>…understand the objectives of EDA as such:</p>
+</div></blockquote>
+<blockquote>
+<div><p>To gain an understanding of data and find clues from the data,
+– to formulate assumptions and hypothesis for our modelling; and
+– to check the quality of data for further processing and cleaning if necessary.
+To better illustrate the concept of EDA, we shall be using the Rossmann store sales “train.csv” data from Kaggle. Keeping in mind that the problem statement is to forecast store sales, our EDA objectives are, therefore:
+– To check for features that can help in forecasting sales; and
+– To check for anomalies or outliers that may impact our forecasting model.</p>
+</div></blockquote>
+</div>
 </div>
 <div class="section" id="data-cleaning-guiding-principles">
 <span id="id1"></span><h2>Data Cleaning Guiding Principles<a class="headerlink" href="#data-cleaning-guiding-principles" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Using three basic rules of thumb can help you avoid incorrectly making claims about your data:</p>
+</div></blockquote>
+<blockquote>
+<div><p>Look at your data and think about what it is you want to know. Do you want to prove that the Earth is round? Or do you want to prove that the Earth has a circumference? Framing this question is what we call stating the hypothesis.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Estimate a Central Tendency for your Data. Examples of measures of central tendency are the mean and median. Which one you use will depend on your hypothesis in Step 1. For example, if you wanted to prove the Earth was round, you might choose to look at the average volume, or the average circumference.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Consider the exceptions to the central tendency. If you’ve measured the average, look at the figures that are not average. If you’ve measured a median, look at the figures that don’t meet that expectation. Exceptions can help you spot problems with your conclusion. A simple example: your child’s average score in school is 70. Not bad, right? But if you look at the exceptions, you might find they are getting 100 in three classes (great!) and 40 in three other classes (uh oh). In this case, the average is completely misleading.</p>
+</div></blockquote>
+<div class="section" id="pitfalls-of-eda">
+<h3>Pitfalls of EDA<a class="headerlink" href="#pitfalls-of-eda" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Why do so many cases of data analysis end with faulty claims? One of the main reasons is that analyzing data is a complicated and tedious process. It’s never as easy as plugging numbers into a computer. Some issues that can lead to faulty data analysis include:</p>
+</div></blockquote>
+<blockquote>
+<div><p>Not having the right analysis skills.
+Using the wrong tools to analyze data. For example, using a z score when your data doesn’t have a normal distribution.
+Letting bias influence your results.
+Not figuring out statistical significance.
+Incorrectly stating the null hypothesis and alternate hypothesis.
+Using misleading graphs and charts.</p>
+</div></blockquote>
+</div>
 </div>
 <div class="section" id="a-generalized-eda-worfklow">
 <span id="our-eda-workflow"></span><h2>A Generalized EDA Worfklow<a class="headerlink" href="#a-generalized-eda-worfklow" title="Permalink to this headline">¶</a></h2>
+<p>[ Formulate this like an SoW ]</p>
+<p>State: What is our starting Point</p>
+<p>State: What is process</p>
+<p>State: What is our exit / completion / acceptance state?</p>
 <ul class="simple">
 <li><p>Preliminary data analysis</p>
 <ul>
@@ -278,42 +420,91 @@
 <li><p>Continue on with all of the features (for now)</p></li>
 </ul>
 </li>
-<li><p>Split data into training, validation, test sets</p></li>
-<li><p>Separately, look at the distribution of classes in our dataset</p>
-<ul>
-<li><p>Apply a dummy classifier to give us a baseline (e.g., “pick largest class”)</p></li>
 </ul>
-</li>
-<li><p>Normalize the features</p></li>
-<li><p>Train multiple classifiers</p>
-<ul>
-<li><p>Tune the top 2-3 classifiers</p></li>
+<p>[ TODO : check against these steps ]</p>
+<ol class="simple">
+<li><p>Preview data</p></li>
+<li><p>Check total number of entries and column types</p></li>
+<li><p>Check any null values</p></li>
+<li><p>Check duplicate entries</p></li>
+<li><p>Plot distribution of numeric data (univariate and pairwise joint distribution)</p></li>
+<li><p>Plot count distribution of categorical data</p></li>
+<li><p>Analyse time series of numeric data by daily, monthly and yearly frequencies</p></li>
+</ol>
+<div class="section" id="preliminary-data-analysis-correlation">
+<h3>Preliminary Data Analysis: Correlation<a class="headerlink" href="#preliminary-data-analysis-correlation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>James: “The first thing I like to do when analyzing my variables is visualizing it through a correlation matrix because it’s the fastest way to develop a general understanding of all of my variables. A correlation matrix is a table that shows the correlation coefficients between many variables.
+I used sns.heatmap() to plot a correlation matrix of all of the variables in the used car dataset.”</p>
+</div></blockquote>
+<p>James: pair plots between each independent and the dependent</p>
+<ul class="simple">
+<li><p>to see how they move together…</p></li>
+<li><p>and if I have categorical data it gets more complex</p></li>
+<li><p>as I might want pairs for each category</p></li>
+<li><p>this gets impossible with 10 categorical variables… too many slices</p></li>
 </ul>
-</li>
-<li><p>For NNs / AutoKeras</p>
-<ul>
-<li><p>Use all features</p></li>
+<p>Other notes:</p>
+<ul class="simple">
+<li><p>Check shape, see if any extra data is included</p></li>
+<li><p>Change target variable into right format if needed</p></li>
+<li><p>Drop unneeded columns</p></li>
+<li><p>Check columns for NA values</p></li>
 </ul>
-</li>
-<li><p>For LR, GB, RF</p>
-<ul>
-<li><p>Perform feature selection</p>
-<ul>
-<li><p>how?</p></li>
-<li><p>What is methodology here?</p></li>
+</div>
+<div class="section" id="split-off-label-or-dependent-variable-column">
+<h3>Split Off Label or Dependent Variable Column<a class="headerlink" href="#split-off-label-or-dependent-variable-column" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Calculate the mean of all features for both classes</p></li>
+<li><p>Plot the frequency distributions of the features to visualize which features capture the most variability</p></li>
 </ul>
-</li>
-<li><p>Feature selection</p>
-<ul>
-<li><p>How is EDA information used to do feature selection?</p></li>
-<li><p>How are preliminary modeling results used to do feature selection?</p></li>
+</div>
+<div class="section" id="compare-distributions-of-features">
+<h3>Compare distributions of features<a class="headerlink" href="#compare-distributions-of-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Some features will have different distributions per class</p></li>
+<li><p>Some features will not</p></li>
+<li><p>Features with different distributions will be better predictors of the dependent variable in our model</p></li>
+<li><p>Continue on with all of the features (for now)</p></li>
 </ul>
-</li>
+</div>
+</div>
+<div class="section" id="variable-analysis-methods">
+<h2>Variable Analysis Methods<a class="headerlink" href="#variable-analysis-methods" title="Permalink to this headline">¶</a></h2>
+<p>In this section we document ways to analyze correlation between different types of variables</p>
+<div class="section" id="numeric-vs-numeric">
+<h3>Numeric vs Numeric<a class="headerlink" href="#numeric-vs-numeric" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="numeric-vs-categorical">
+<h3>Numeric vs Categorical<a class="headerlink" href="#numeric-vs-categorical" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="categorical-vs-categorical">
+<h3>Categorical vs Categorical<a class="headerlink" href="#categorical-vs-categorical" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="hexplots-to-combat-overplotting">
+<h3>HexPlots to Combat Overplotting<a class="headerlink" href="#hexplots-to-combat-overplotting" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="using-t-tests-to-check-distributions">
+<h3>Using T-Tests to Check Distributions<a class="headerlink" href="#using-t-tests-to-check-distributions" title="Permalink to this headline">¶</a></h3>
+<p>todo: T-test for Difference in Means</p>
+</div>
+</div>
+<div class="section" id="eda-visualization-methods">
+<h2>EDA Visualization Methods<a class="headerlink" href="#eda-visualization-methods" title="Permalink to this headline">¶</a></h2>
+<p>[ when and where to use each? ]</p>
+<ul class="simple">
+<li><p>frequency histogram</p></li>
+<li><p>pair plots</p></li>
+<li><p>correlation matrix</p></li>
+<li><p>box plots</p></li>
 </ul>
-</li>
-</ul>
+</div>
 <div class="section" id="working-conclusions">
-<h3>Working Conclusions<a class="headerlink" href="#working-conclusions" title="Permalink to this headline">¶</a></h3>
+<h2>Working Conclusions<a class="headerlink" href="#working-conclusions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>if you have two “independent” variables that are not independent but rather are correlated with each other</p>
 <ul>
@@ -341,8 +532,20 @@
 </ul>
 </li>
 </ul>
-<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="#what-is-eda"><span class="std std-ref">What is Exploratory Data Analysis (EDA)?</span></a>.</p>
 </div>
+<div class="section" id="reference-topics-and-more-reading">
+<h2>Reference Topics and More Reading<a class="headerlink" href="#reference-topics-and-more-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Boxplot Analysis</p></li>
+<li><p>The Normal Distribution</p></li>
+<li><p>Analyzing Distribution Shape</p></li>
+<li><p>Zero Mean and Unit Variance</p></li>
+<li><p>Class Priors</p></li>
+<li><p>P-Values and Coefficients in Regression</p></li>
+<li><p>F-stat</p></li>
+<li><p>T-tests</p></li>
+</ul>
+<p>Here is a <a class="reference internal" href="intro.html"><span class="doc std std-doc">reference to the intro</span></a>. Here is a reference to <a class="reference internal" href="#what-is-eda"><span class="std std-ref">What is Exploratory Data Analysis (EDA)?</span></a>.</p>
 </div>
 </div>
 
@@ -372,7 +575,7 @@
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Introduction</a>
-    <a class='right-next' id="next-link" href="methods_class_imbalance.html" title="next page">Workflows for Dealing with Class Imbalance</a>
+    <a class='right-next' id="next-link" href="methods_class_imbalance.html" title="next page">A ML Workflow for Dealing with Class Imbalance in Tabular Data</a>
 
         </div>
         

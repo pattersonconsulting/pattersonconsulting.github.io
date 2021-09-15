@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concepts and Definitions &#8212; Applied Data Science Methods</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Demo Colab Notebook" href="kubeflow_gpu_validation_notebook.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Applied Data Science Methods</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="exploratory_data_analysis_workflows.html">
+   Exploratory Data Analysis Workflows
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="methods_class_imbalance.html">
+   A ML Workflow for Dealing with Class Imbalance in Tabular Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="forecasting_model_value.html">
+   Forecasting the Business Value of a Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
+   Demo Colab Notebook
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Concepts and Definitions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/concepts_and_definitions.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev/issues/new?title=Issue%20on%20page%20%2Fconcepts_and_definitions.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#probability">
+   Probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#class-prior">
+   Class Prior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prior-probability">
+   Prior Probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation-metrics">
+   Evaluation Metrics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#majority-class">
+     Majority Class
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#threshold-tuning">
+   Threshold Tuning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#expected-value">
+   Expected Value
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expected-value-to-frame-classifier-use">
+     Expected Value to Frame Classifier Use
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-expected-value-to-frame-classifier-evaluation">
+     Using Expected Value to Frame Classifier Evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rates-or-estimated-probabilities">
+     Rates or “Estimated Probabilities”
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#factoring-out-class-priors">
+     Factoring Out Class Priors
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-benefit-matrix">
+   Cost Benefit Matrix
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#costs-and-benefits">
+     Costs and Benefits
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Cost Benefit Matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#profit-curve">
+   Profit Curve
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="concepts-and-definitions">
+<h1>Concepts and Definitions<a class="headerlink" href="#concepts-and-definitions" title="Permalink to this headline">¶</a></h1>
+<p>This article is meant to provide a [ TODO ]</p>
+<div class="section" id="probability">
+<span id="what-is-probability"></span><h2>Probability<a class="headerlink" href="#probability" title="Permalink to this headline">¶</a></h2>
+<p>(what-is-class-prior)</p>
+</div>
+<div class="section" id="class-prior">
+<h2>Class Prior<a class="headerlink" href="#class-prior" title="Permalink to this headline">¶</a></h2>
+<p>A class prior is the probability that the event occurs in a dataset.</p>
+<p>To calculate the class event probability we divide the number of occurences of this event by the total number of events in the dataset.</p>
+<blockquote>
+<div><p>The prior is, generally speaking, a probability distribution that expresses one’s beliefs about a quantity before some evidence is taken into account. If we restrict ourselves to an ML model, the prior can be thought as of the distribution that is imputed before the model starts to see any data.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The class prior is an estimate of the probability that randomly sampling an instance from a population will yield the given class (regardless of any attributes of the instance). Weka is assuming that your training data are randomly drawn from a population such that the proportions of classes in your training set are indicative of their relative abundance in the sampled population.</p>
+</div></blockquote>
+<p>[ how is this related to “probability priors”? ]</p>
+<blockquote>
+<div><p>Put simply, and without any mathematical symbols, prior means initial beliefs about an event in terms of probability distribution. You then set up an experiment and get some data, and then “update” your belief (and hence the probability distribution) according to the outcome of the experiment, (the posteriori probability distribution).</p>
+</div></blockquote>
+<p>also:</p>
+<blockquote>
+<div><p>Prior: Probability distribution representing knowledge or uncertainty of a data object prior or before observing it</p>
+</div></blockquote>
+</div>
+<div class="section" id="prior-probability">
+<h2>Prior Probability<a class="headerlink" href="#prior-probability" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>[wikipedia] “In Bayesian statistical inference, a prior probability distribution, often simply called the prior, of an uncertain quantity is the probability distribution that would express one’s beliefs about this quantity before some evidence is taken into account. For example, the prior could be the probability distribution representing the relative proportions of voters who will vote for a particular politician in a future election. The unknown quantity may be a parameter of the model or a latent variable rather than an observable variable.”</p>
+</div></blockquote>
+<!--
+  
+## Injecting Prior Knowledge
+
+> Therefore, a perhaps not so obvious way to inject prior knowledge and beliefs into the process is through the training data selection. Indeed, by selecting and labeling training samples for any supervised learning model, we encode knowledge into the learning model. The data labeling process might be trivial in some domains, but will require a good deal of domain knowledge in others. For example, to label cats and dogs we need to understand the difference between these two animals, which might seem very “common sense”, but to label medical images as “cancer” or “not cancer”, we need deep medical expertise.
+
+also:
+
+> incorporate prior knowledge into DL systems by using synthetic data.
+
+
+## Likelihood
+
+[ todo ]
+
+## Odds
+
+[ todo ]
+
+-->
+<p>(what-are-eval-metrics)</p>
+</div>
+<div class="section" id="evaluation-metrics">
+<h2>Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this headline">¶</a></h2>
+<p>Need to reference:</p>
+<p><a class="reference external" href="https://aaaipress.org/Papers/KDD/1997/KDD97-007.pdf">https://aaaipress.org/Papers/KDD/1997/KDD97-007.pdf</a></p>
+<!--
+
+(what-is-average-precision)=
+### Average Precision
+
+-->
+<div class="section" id="majority-class">
+<h3>Majority Class<a class="headerlink" href="#majority-class" title="Permalink to this headline">¶</a></h3>
+<p>[ todo ]</p>
+</div>
+</div>
+<div class="section" id="threshold-tuning">
+<h2>Threshold Tuning<a class="headerlink" href="#threshold-tuning" title="Permalink to this headline">¶</a></h2>
+<p>[ why do we have to train in classifcation? – to get a baseline set of rankings from a classifier so we can then adjust the threshold ]</p>
+<blockquote>
+<div><p>“Note: “Tuning” a threshold for logistic regression is different from tuning hyperparameters such as learning rate. Part of choosing a threshold is assessing how much you’ll suffer for making a mistake. For example, mistakenly labeling a non-spam message as spam is very bad. However, mistakenly labeling a spam message as non-spam is unpleasant, but hardly the end of your job.”</p>
+</div></blockquote>
+<p><a class="reference external" href="https://developers.google.com/machine-learning/crash-course/classification/thresholding">https://developers.google.com/machine-learning/crash-course/classification/thresholding</a></p>
+<blockquote>
+<div><p>“Ranking is better than classifying (or: Don’t brain-damage your classifier)”
+<a class="reference external" href="https://www.svds.com/classifiers2/">https://www.svds.com/classifiers2/</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a">https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</a></p>
+<ul class="simple">
+<li><p>Training Stage</p>
+<ul>
+<li><p>calibration can give better scores / probs [todo:investigate further]</p></li>
+</ul>
+</li>
+<li><p>we can’t skip training, because it gives us a ranked list by prob. estimates</p>
+<ul>
+<li><p>we need to do a good job in training, as if our ranked list is bad, our threshold tuning will be less effective</p></li>
+</ul>
+</li>
+<li><p>Threshold tuning stage</p>
+<ul>
+<li><p>take the ranked list and adjust the threshold until we maximize our goal (expected value, or other class-imbalance sensitive goals)</p></li>
+<li><p>does this stage ever impact the training stage?</p></li>
+</ul>
+</li>
+</ul>
+<p>Questions</p>
+<ul class="simple">
+<li><p>what is the interplay between grid search and</p></li>
+</ul>
+</div>
+<div class="section" id="expected-value">
+<span id="what-is-expected-value"></span><h2>Expected Value<a class="headerlink" href="#expected-value" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.svds.com/the-basics-of-classifier-evaluation-part-1/">https://www.svds.com/the-basics-of-classifier-evaluation-part-1/</a></p>
+<ul class="simple">
+<li><p>expected value == [ possible outcome 1 ] x [ weight ]</p></li>
+<li><p>weight == probability( occurrence )</p></li>
+<li><p>EV == p( outcome1 ) x v( outcome1 ) + p( outcome2 ) x v( outcome2 ) …</p>
+<ul>
+<li><p>outcome-N: possible decision outcome</p></li>
+<li><p>p( outcome-N ): probability</p></li>
+<li><p>v( outcome-N ): value</p></li>
+<li><p>the probabilities can often be estimated from the data</p></li>
+<li><p>the business values need to input from other ways (cost benefit matrix)</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="expected-value-to-frame-classifier-use">
+<h3>Expected Value to Frame Classifier Use<a class="headerlink" href="#expected-value-to-frame-classifier-use" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Expected benefit of targetting == Pr(x) x Vr + (1 - Pr(x)) x Vnr</p>
+<ul>
+<li><p>x: feature input vector for model input</p></li>
+<li><p>Pr(x): probability of response based on model and input x</p></li>
+<li><p>Vr: value of the response of the offer</p></li>
+<li><p>Vnr: value of no response (cost of offer)</p></li>
+</ul>
+</li>
+<li><p>Example</p>
+<ul>
+<li><p>our Vr == $99</p></li>
+<li><p>our Vnr == $1 (or -$1 as a cost)</p></li>
+<li><p>do we target customer denoted by the x set of attributes?</p></li>
+<li><p>mathematically: Pr(x) x $99 - [1 - Pr(x)] x $1</p>
+<ul>
+<li><p>rearranged: Pr(x) &gt; 0.01</p></li>
+</ul>
+</li>
+<li><p>we should target the consumer as long as the estimated probability of response is greater than 1%</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="using-expected-value-to-frame-classifier-evaluation">
+<h3>Using Expected Value to Frame Classifier Evaluation<a class="headerlink" href="#using-expected-value-to-frame-classifier-evaluation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>shifting mindset from a single decision to collections of decisions</p></li>
+<li><p>goal is to evaluate if one model is better than other models</p></li>
+<li><p>Expected Value Calculation</p>
+<ul>
+<li><p>Take the Confusion Matrix -&gt; normalize to “expected rates” (matrix of probabilities)</p></li>
+<li><p>multiply the matrix times a cost/benefit matrix</p></li>
+<li><p>we take the counts in the Confusion Matrix for each of the 4 entries and divide them by the total records in the test dataset</p>
+<ul>
+<li><p>estimated probabilities == count( hypothesized, actual ) / [total instances]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="rates-or-estimated-probabilities">
+<h3>Rates or “Estimated Probabilities”<a class="headerlink" href="#rates-or-estimated-probabilities" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Calculating probability: divide the number of occurences of an event by the total number of events</p></li>
+<li><p>rate: we calculate a TP Rate or a TN Rate as:</p>
+<ul>
+<li><p>TP Rate == TP / Total Instances</p></li>
+</ul>
+</li>
+<li><p>this is also known as the estimated probability of a TP</p></li>
+<li><p>Further Notes</p>
+<ul>
+<li><p>wikipedia: “Sensitivity (True Positive Rate) refers to the proportion of those who have the condition (when judged by the ‘Gold Standard’) that received a positive result on this test.”</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="factoring-out-class-priors">
+<h3>Factoring Out Class Priors<a class="headerlink" href="#factoring-out-class-priors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>TODO: deal with the version of the profit curve that considers class priors – which version are they using later in the book?</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cost-benefit-matrix">
+<span id="what-is-cost-benefit-matrix"></span><h2>Cost Benefit Matrix<a class="headerlink" href="#cost-benefit-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define cost-benefit matrix with input from business managers, other stakeholders, etc.</span>
+<span class="c1"># REDO THIS</span>
+<span class="n">costbenefit_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="mi">175</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="section" id="costs-and-benefits">
+<h3>Costs and Benefits<a class="headerlink" href="#costs-and-benefits" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>to compute expected profit, we need the cost and benefit values that go with each p( hypothesized, actual ) pair in the confusion matrix</p></li>
+<li><p>these will form the cost benefit matrix that has the same matrix-structure (rows, columns) as the Confusion matrix</p></li>
+<li><p>In the table below we break down how [correct, incorrect] classifications match up to different cost-benefit cells</p></li>
+</ul>
+<table>
+  <th>
+    <td></td>
+    <td></td>
+    <td colspan="2">Actual</td>
+    <td></td>
+  </th>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td>p</td>
+    <td>n</td>
+  </tr>
+  <tr>
+    <td>predicted</td>
+    <td>Y</td>
+    <td style="border: 1px solid;">b(Y,p)</td>
+    <td style="border: 1px solid;">c(Y,n)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>N</td>
+    <td style="border: 1px solid;">c(N,p)</td>
+    <td style="border: 1px solid;">b(N,n)</td>
+  </tr>
+</table>
+<ul class="simple">
+<li><p>correct classifications</p>
+<ul>
+<li><p>TP: b(Y,p)</p></li>
+<li><p>TN: b(N,n)</p></li>
+</ul>
+</li>
+<li><p>incorrect classifications</p>
+<ul>
+<li><p>FP: c(Y,n)</p></li>
+<li><p>FN: c(N,p)</p></li>
+</ul>
+</li>
+<li><p>we need to calculate the estimated probabilities for each of the 4 “decision pairs” from the data</p>
+<ul>
+<li><p>estimated probability: count of each decision pair divided by the total number of examples</p></li>
+</ul>
+</li>
+<li><p>while we can estimate the probabilities, we have to manually build the cost benefit matrix (next section)</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h3>Cost Benefit Matrix<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>we want to model a cost per action metric (Cost per Action)</p></li>
+<li><p>then we want to account for the benefit of the action if the outcome is as we hope (Value of TP)</p></li>
+<li><p>Predictions vs Actual</p>
+<ul>
+<li><p>TP: saying the action will be true, and it is actually true</p></li>
+<li><p>TN: saying the action will not occur, and the outcome does not occur</p></li>
+<li><p>FP: saying the action will be true, and the outcome does actually occur</p></li>
+<li><p>FN: saying the action will not be true, and the outcome actually does occur</p></li>
+</ul>
+</li>
+</ul>
+<p>In the table below we should the hypothetical scenario where a manufacturing company is making</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Outcome</p></th>
+<th class="head"><p>Cost</p></th>
+<th class="head"><p>Benefit</p></th>
+<th class="head"><p>Outcome Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TP</p></td>
+<td><p>60</p></td>
+<td><p>2500</p></td>
+<td><p>2440</p></td>
+</tr>
+<tr class="row-odd"><td><p>TN</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>FP</p></td>
+<td><p>60</p></td>
+<td><p>0</p></td>
+<td><p>-60</p></td>
+</tr>
+<tr class="row-odd"><td><p>FN</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Rows that have a positive outcome value show how the outcome is a net benefit in the valuation of a model.</p>
+<p>Note: mathematically there is no difference between a benefit and a cost in this context. The only difference is the sign of the outcome value. From this perspective, we can consider all outcome values as “benefits” where costs are considered “negative benefits”.</p>
+<p>This gives us a single function: benefit( predicted, actual) [TODO: more narrative here ]</p>
+<table>
+  <th>
+    <td></td>
+    <td></td>
+    <td colspan="2">Actual</td>
+    <td></td>
+  </th>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td>p</td>
+    <td>n</td>
+  </tr>
+  <tr>
+    <td>predicted</td>
+    <td>Y</td>
+    <td style="border: 1px solid;">$2440</td>
+    <td style="border: 1px solid;">-$60</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>N</td>
+    <td style="border: 1px solid;">$0</td>
+    <td style="border: 1px solid;">$0</td>
+  </tr>
+</table>
+<p>Now let’s take the cost benefit matrix and use it in an expected profit calculation</p>
+<p>(what-are-profit-curves)</p>
+</div>
+</div>
+<div class="section" id="profit-curve">
+<h2>Profit Curve<a class="headerlink" href="#profit-curve" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Inputs</p>
+<ul>
+<li><p>model object</p></li>
+<li><p>cost benefit matrix in the same format as the confusion matrix above</p></li>
+<li><p>predicted probabilities</p></li>
+<li><p>actual labels</p></li>
+</ul>
+</li>
+<li></li>
+</ul>
+<p>the calculation for the profit curve is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profit</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">confusion_matrix</span> <span class="o">*</span> <span class="n">cost_benefit_matrix</span> <span class="p">)</span> <span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span> <span class="n">examples</span> <span class="p">)</span>
+</pre></div>
+</div>
+<!--
+
+(what-are-frequency-distributions)
+## Frequency Distribution
+
+[ todo ]
+
+
+(what-are-frequency-histograms)
+## Frequency Histograms
+
+[ todo ]
+
+
+(what-are-bias-and-variance)
+## Bias and Variance
+
+[ todo ]
+
+
+(what-are-validation-and-learning-curves)
+## Validation vs Learning Curves
+
+[ todo ]
+
+https://vitalflux.com/validation-curves-explained-python-sklearn-example/
+
+"validation curves helps in assessing the model bias-variance issue (underfitting vs overfitting problem)  against the model parameters"
+
+"A learning curve plots the score over varying numbers of training samples, while a validation curve plots the score over a varying hyper parameter."
+
+(what-is-null-hypothesis)=
+## Null Hypothesis
+
+[ todo ]
+
+
+(what-is-f-stat)=
+## F-stat
+
+[ todo ]
+
+
+(what-are-p-values)=
+## P-Values
+
+[ todo ]
+
+
+(what-is-calibration)=
+## Calibration
+
+[ todo ]
+
+(what-is-t-test)=
+## T-Tests
+
+[ todo ]
+
+--></div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="kubeflow_gpu_validation_notebook.html" title="previous page">Demo Colab Notebook</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Josh Patterson<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

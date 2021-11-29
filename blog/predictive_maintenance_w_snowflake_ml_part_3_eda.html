@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Predictive Maintenance with Snowflake and Machine Learning - A Blog Series - Part 3</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Predictive Maintenance</h1>
+						<p>
+							<h3>Part 3 of 6: "Exploratory Data Analysis"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: Sept 2021
+						</p>
+						
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6.html">Going to Production with Snowpark</a></li>
+
+							</ul>
+
+
+						</p>
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+						<p>
+							In the last post in this series on Applied Predictive Maintenance, the ACME Tool Co. Data Science (ATDS) team built out their data management platform on cloud-based Snowflake data warehouse and got a notebook connected to it from Google Colab.
+
+						</p>
+						<p>
+							In this post the team will explore the data in Snowflake (via Google Colab) with an exploratory data analysis (EDA) workflow as a first step in understanding the dataset before they start any statistical modeling work.
+
+						</p>
+
+						<p>
+							This section of the series is based directly on the EDA Workflows chapter in our online book for "Applied Data Science Methods"
+
+						</p>
+
+						<p>
+							Key Take-Aways from this post:
+							<ul>
+								<li>Understanding the role of Exploratory Data Analysis</li>
+								<li>Hands-on experience with Jupyter notebooks on Google Colab</li>
+								
+								<li>Learning how to inform a machine learning workflow based on conclusions from an EDA workflow</li>
+
+							</ul>
+
+						</p>
+						<p>
+							So let's jump right into "What is EDA?"
+
+						</p>
+
+						
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+						<h1>What is Exploratory Data Analysis (EDA)?</h1>
+
+						<p>
+
+							Exploratory Data Analysis (EDA) is an approach to exploring and understanding a dataset. EDA is a process that helps a data scientist make sense of the data they are working with before they move on and start building machine learning models.
+
+
+						</p>
+
+						<p>
+
+							Some consider EDA a bit of an art form, others call it a "philosphy". In this article we try and give the reader some guidelines to work from to further evolve their own "EDA philosophy".
+
+						</p>
+						
+						<p>
+							The purpose of EDA is to find missing data and other mistakes before they cause issues downstream in the modeling process. EDA also allows the data scientist to gain insight into the data set and its underlying structure. We'd like to find the best model that can fit the dataset with a minimum number of features and EDA can help inform that process. EDA also helps check assumptions about the data and create a list of outliers in the data. Finally, EDA can help us note the most influential variables in the dataset which helps make the modeling process more effective.
+
+						</p>
+
+						<p>
+							So now that we know what EDA is, let's define a generalized workflow that can help us perform EDA (keeping in mind that this workflow may/will be adapted to different situations as the data requires).
+
+						</p>
+
+									<div style="float: right; width: 500px; border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 12px; font-size: 12px; background-color: #eeeeee;">
+
+										<h4>Generalized EDA Workflow</h4>
+
+											<p>
+												If you liked this example EDA, checkout our online eBook chapter for EDA workflows.
+											</p>
+
+									</div>
+
+						<p>
+							A general way to think about performing EDA on your data is:
+							<ol>
+								<li>Start with the raw data loaded into a dataframe in python / notebook</li>
+								<li>convert target variable into usable format</li>
+								<li>drop unneeded columns</li>
+								<li>check for NA values, duplicate data entries</li>
+								<li>split data on DV and calculate mean, then plot frequency distributions</li>
+								<li>compare distributions of features per class</li>
+								<li>run correlation matrix</li>
+								<li>pair plots</li>
+
+							</ol>
+
+						</p>
+
+
+						<p>
+							Let's now apply some of these concepts to the UCI predictive maintenance dataset.
+
+						</p>
+
+
+					</div>
+				</div>
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+						<h1>Exploratory Data Analysis of the Predictive Maintenance Data</h1>
+
+						<p>
+							In the embedded frame below you can see the notebook we used for the analysis of the data. If you'd like to try the notebook live, click on this <a href="">link to google Colab</a> (you'll need to use your own Snowflake credentials and have ingested the UCI predictive maintenance data from post-2 in this series).
+
+						</p>
+
+						<p>
+
+						<iframe width="1000" height="300" src="https://nbviewer.jupyter.org/github/pattersonconsulting/pattersonconsulting.github.io/blob/master/content/hold/Unsupervised_Anomaly_Detection_wreqs.ipynb?flush_cache=true"></iframe>
+
+						</p>
+
+
+
+						<p>
+
+							For this specific predictive maintenance dataset we use the following EDA steps as listed below:
+
+							<ul>
+								<li>mapped categorical variables to numeric values</li>
+								
+								<li>checked for missing values</li>
+								<li>checked the means of each features grouped by dependent variable ("failure")</li>
+								<li>Plot frequency distributions of the features to visualize which features capture the most variability</li>
+								<li>Plotted Corrlation matrix</li>
+								<li>Created box plots for cat variables </li>
+								<li>Created hexbins (to fix overplotting)</li>
+
+							</ul>
+
+						</p>
+
+						<p>
+							So now let's take a look what at what happened in these steps and understand what the step told us about the predictive maintenance data (we skip the details on discussing a few things, such as removing NA records, but you can check this out for yourself in the live notebook).
+
+						</p>
+
+
+
+						<h2>General Analysis of Dataset Properties</h2>
+
+						<p>
+							After we have done some basic cleanup on the data (categorical conversion, checked for missing values, etc), we group the records by the dependent variable (<code>MACHINE_FAILURE</code>) and look at the mean of different features for both the classes to see which features capture the variability. We can see the results from the notebook in the table below.
+
+
+						</p>
+<table>
+	<tr>
+		<th>MACHINE_FAILURE</th>
+		<th>AIR_TEMPERATURE</th>
+		<th>PROCESS_TEMPERATURE</th>
+		<th>ROTATIONAL_SPEED</th>
+		<th>TORQUE</th>
+		<th>TOOL_WEAR</th>
+	</tr>
+	<tr>
+		<td>0</td><td>299.973999</td><td>309.995570</td><td>1540.260014</td><td>39.629655</td><td>106.693717</td>
+	</tr>
+	<tr>
+		<td>1</td><td>300.886431</td><td>310.290265</td><td>1496.486726</td><td>50.168142</td><td>143.781711</td>
+	</tr>
+</table><br/>
+						<p>
+							The two variables that show variability of note are <code>TORQUE</code> and <code>TOOL_WEAR</code>. Let's now move on and check out the distribution of the two classes (Normal, Failure) in the dataset.
+
+						</p>
+
+
+									<div style="float: right; width: 500px; border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 12px; font-size: 12px; background-color: #eeeeee;">
+
+										<h4>Imbalanced Data is Everywhere</h4>
+
+											<p>
+												Outside of academic or toy datasets we rarely find datasets that are balanced. Most of the time in enterprise data science you will be dealing with highly imbalanced data and the exploratory data analysis process helps us confirm that in any dataset.
+											</p>
+											<p>
+												Examples of domains with highly imbalanced classes include:
+
+												<ul>
+													<li>manufacturing defect rates (0.1% positive class)</li>
+													<li>Fraud detection (0.1% positive class)</li>
+													<li>HIV screening (0.4% positive class)</li>
+													<li>advertising click-through response rates (0.09% positive class)</li>
+												</ul>
+
+											</p>
+												<p>
+													Sometimes our minority class is so small we have to take special measures in how we treat it in the modeling process. In the next article we'll look at some ways to mitigate class imbalance in our machine learning workflow.
+
+												</p>
+
+						</div>
+
+						<p>
+							In the code output below (from the notebook), we can see the results of some quick class counts on the data.
+
+						</p>						
+<pre>
+Total records in dataset: 10000
+Total normal records in dataset: 9661
+Total failure records in dataset: 339
+Percent failure records in dataset: 0.0339
+</pre>						
+
+						<p>
+							As suspected, the failure class occurs rarely (~3%) in the dataset, confirming our suspicions that this dataset is an imbalanced class dataset. This percent may sound low, but compared to some of the other imbalanced dataset examples in the sidebar, its sounds typical for the industry.
+
+						</p>
+						<br/><br/><br/><br/>
+
+						<h2>Analysis of Numerical Variables</h2>
+
+						<p>
+							To better understand our data let's plot the correlation matrix. The correlation matrix shows which variable pairs are correlated and is useful to understand which variables we might drop during the machine learning workflow process.
+
+
+							We can see the correlation matrix of the variables below.
+
+						</p>
+						
+						<img src="./images/pm_eda_corr_matrix.png" />
+
+						<p>
+							Given the domain knowledge of the team (working in manufacturing), they instantly recognize that it makes sense that <code>PROCESS_TEMPERATURE</code> and <code>AIR_TEMPERATURE</code> correlating strongly (0.88) makes sense given that machines that are operating faster create more heat.
+
+						</p>
+						<p>
+							The ATDS team also notices the negative (-0.88) correlation between <code>TORQUE</code> and <code>ROTATIONAL_SPEED</code>, which makes sense as well.
+
+						</p>
+
+						<p>
+							JAMES notes: For the correlation matrix: DROP categoricals
+Data is highly skewed
+Spearman vs pearson (look into this)
+
+
+						</p>
+
+						<p>
+							Another useful visualization method is the frequency distribution graph. It shows visually which independent variables can provide signal for the dependent variable prediction.
+
+						
+
+
+						<p>
+							In the graph below we can see the frequency distribution of the features visualized.
+
+						</p>						
+						<img src="./images/pm_eda_frequency_dist_by_class.png" />
+							<p>
+							what did the frequence distribution histogram tell us?
+
+						</p>
+						<p>
+							The plots above indicate that the variables <code>TORQUE</code> and <code>TOOL_WEAR</code> both provide some signal for our dependend variable (<code>MACHINE_FAILURE</code>) prediction.
+
+						</p>
+
+						<p>
+							What about the pair plots (hexbins)?
+
+						</p>
+						<img src="./images/pm_eda_pair_plots_hexbins.png" width="1000px" />
+
+						<p>
+
+							The hexbin pair plots above show [what] and that correlates with [what-what].
+							
+
+						</p>
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Use Hexbins for Dense Pair Plots</h4>
+							  <p style="font-size: 14px; ">
+							  <i>Normally you'll see a stock pair plot, but with the density and count of our data points we needed to make sure and not  [more].</i></p>
+							  
+							</div>	
+
+						</div>
+
+
+						<p>
+							In the above pair plots we left one variable out (on purpose): the variable <code>TYPE</code>. This is because <code>TYPE</code> is a categorical variable and it does not plot well in a pair plot.
+
+						</p>
+						<h2>Analysis of Categorical Variables</h2>
+						<p>
+							Categorical variables have to be visualized differently than numerical variables. Instead of the pair plots we used above, a great way to visualize categorical variables is to create a box plot for each combination of { categorical_var, numerical_var } in our dataset. We have a single categorical variable in our dataset (<code>TYPE</code>) and we can see it visualized with box plots below.
+
+						</p>
+						<img src="./images/pm_eda_cat_type_vs_all.png" />
+
+						<p>
+							If you'll notice in the plot above, in none of the plots do we see a significant difference in the box plots of the <code>TYPE</code> variable vs the numeric variables when grouped visually by the type value.
+
+						</p>
+						<p>
+							[note: how does <code>TYPE</code> affect <code>MACHINE_FAILURE</code>?]
+
+						</p>
+
+						<p>
+							At this point we have done a decent job of exploring the data, let's now summarize what initial conclusions we can make to help inform the statistical modeling process.
+
+						</p>
+
+
+						<h2>Sensor Data Conclusions from EDA</h2>
+
+
+
+
+						<p>
+							In this section we summarize our findings from the EDA process for the predictive maintenance dataset.
+
+						</p>
+
+						<p>
+							Through EDA the ATDS team found that the data:
+
+							<ul>
+
+								<li>has some features that have predictive value</li>
+								<li>is highly imbalanced</li>
+								
+
+							</ul>
+
+
+						</p>
+						<p>
+							We summarize both finds below.
+
+						</p>
+
+						<h3>Feature Analysis Summary</h3>
+						
+
+						<p>
+							In terms of predictive signal, the most interesting independent variables appear to be:
+
+							<ul>
+								<li>TORQUE</li>
+								<li>TOOL_WEAR</li>
+
+
+							</ul>
+
+							We saw this in the mean analysis part of the EDA workflow and also the frequency distribution graph. While we need to keep these variables in our feature list, it remains to be seen if the other variables will help or hinder us in the modeling process. We need to do some other experiments to confirm our suspicians.
+
+						</p>
+						<h3>Class Analayis Summary</h3>
+						<p>
+							Based on the class analysis of the dataset we only have 3% instances of the failure ("positive") class in the dataset, indicating we need to consider methods to deal with class imbalance in our machine learning workflow.
+
+						</p>
+
+
+						<p>
+							Now that we have some basic understanding of what is in the data, the ATDS team can move on to the next phase.
+
+						</p>
+
+						
+
+
+					</div>
+				</div>
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Analytics Help?</h3>
+						<span>(This is an Ad)</span>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with Snowflake analytics.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Next Steps: Build a Machine Learning Workflow</h1>
+
+						<p>
+							The value of EDA is that it informs us on "how to better set up our machine learning workflow". The imbalanced nature of the classes in the dataset will have a non-trivial impact on how we configure our machine learning workflow.
+
+						</p>	
+
+						<p>
+							We now have a good idea on where to start modeling, but how do we know when to stop modeling?
+
+						</p>
+
+						<p>
+							In this <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">next post in this series</a> we'll explore some ways to analyze the progress our modeling workflow is making towards our key business goals.
+
+						</p>
+
+					</div>
+				</div>
+
+
+
+				<!-- END of Content -->
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

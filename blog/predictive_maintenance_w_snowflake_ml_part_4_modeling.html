@@ -1,0 +1,1403 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Predictive Maintenance with Snowflake and Machine Learning - A Blog Series - Part 4</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+
+		span.editing_segue_in {
+			color: #00FF00;
+			font-style: italic;
+		}		
+
+		span.editing_segue_out {
+			color: #0000FF;
+			font-style: italic;
+		}		
+
+
+		span.editing_todo {
+			color: #CC0000;
+			font-style: italic;
+		}		
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+h2 {
+	color: #666666;
+}
+
+
+h3 {
+	color: #888888;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Predictive Maintenance</h1>
+						<p>
+							<h3>Part 4 of 6: "Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: Sept 2021
+						</p>
+						
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6.html">Going to Production with Snowpark</a></li>
+
+							</ul>
+
+
+						</p>
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+						<p>In our last post we performed exploratory data analysis (EDA) on the predictive maintenance data and gained insight into the data.
+
+						In this post we will use the EDA insights to stand up and configure our machine learning workflow.
+					</p>
+
+
+						<p>
+							Achieving our business goals is (and should be) our top priority, so translating our business goals into a set of model performance metrics tells us when we can reliably stop the model building process. From that perspective, we can frame our goal and focus on the key objective for this pilot.
+
+
+						</p>
+
+						<p>
+							What matters to the line of business?
+
+							<ul>
+								<li>Deep Learning? nope.</li>
+								<li>Scikit Learn? nope.</li>
+								<li>MLOps? nope.</li>
+								<li>Imbalanced data? nope.</li>
+							</ul>
+						</p>
+						<p>
+
+							What matters to the line of business is being able to add the extra manufacturing capacity while reliably minimizing extra operational support costs.
+
+
+						</p>
+						<p>
+							In this article we are going to show:
+
+							<ol>
+								<li>How to translate a business goal into a modeling evaluation metric</li>
+								<li>How to baseline the modeling process</li>
+								<li>How to build a modeling workflow around grid search and k-fold cross validation</li>
+
+								<li>How to evaluate the results</li>
+
+							</ol>
+
+						</p>
+
+
+						<!-- START: CAUTION NOTE -->
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>Can We Do This Project Without Machine Learning?</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+										
+						<p>
+							
+
+							At the start of any project, we should always ask ourselves "Can we do this project without machine learning?"
+
+						</p>
+						<p>
+
+							 If "yes", then we should not involve machine learning.
+							</p>
+							<p>
+
+								In the case of our predictive maintenance pilot, we potentially could try and come up with some if-thens for different columns (e.g., "heuristic-based methods"), but that might be brittle and hard to maintain. Based on what we saw in the data variables, it might also be hard to hand-code the combination of variables that indicate failure. Given how much nuance is condensed from the vapor of the patterns in the data with machine learning, it is likely a good fit for this problem --- if we can achieve performance on the problem that makes us relevant in a business sense.
+
+
+						</p>				
+
+									</i>
+								</p>
+							</div>
+							</div>
+						</div>
+
+
+									<!-- --------------------------------- END: Note --------------------------------- -->
+		
+						<p>
+							Let's kick off by focusing on what the line of business is most interested in (detecting enough failures) and how to translate that into a modeling evaluation metric.
+
+						</p>
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Translating Business Goals Into Modeling Evaluation Metrics</h1>
+
+						<p>
+<!--
+							EDA gives us good ideas about "how to start our modeling process". We should use our business goals (translated into performance metrics) as our guide on when we've modeled "enough". We've already built a profile of our data sample in the previous post on EDA. Now let's review our business goals and translate them into specific performance metrics for our pilot model to meet or exceed.
+-->
+
+							To build our modeling evaluation metric let's start off by reviewing the goals for the pilot as defined by the line of business.
+
+						</p>
+
+
+						<p>
+							In this pilot we get the opportunity to present the line of business every day with 18 machines (18 is equal to the number of machines we have budget to repair each night) that our pilot system projects to be the most likely to fail in the next 24 hours.
+
+						</p>
+						<p>
+							Out of those 18 machines the maintenance team works on:
+
+							<ul>
+								<li>minimal goal: have selected 11 machines (in the top 18, 61% correct for top18) that actually were going to fail</li>
+								<li>stretch goal: have selected 14 machines (in the top 18, 78% correct for top18) that actually were going to fail</li>
+							</ul>
+
+							No matter what, the accuracy for the 18 predictions needs to hold up 95% of the days in the year (347 days per year out of 365) if the business model is going to stay intact. 
+
+						</p>
+						<p>
+
+							The company is willing to pay for extra overtime during the next day to fix the 5% of days (e.g., 18 days a year) that the system is wrong and performs possibly worse, missing machines that will fail (some of this will even out when the model performs better than its average case top18 accuracy, as well). 
+
+
+						</p>
+						<p>
+							With the above context in mind, we set off with a goal of producing a system capable of identifying at least 11, up to 14, machines out of 18 total predictions that will fail (minimum goal: 61% accuracy in the top 18 predictions ranked by estimated probability). This accuracy measure needs to be correct 95% of the days of the year as well.
+
+						</p>
+
+
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>A Note About Data Distributions</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+									It's worth noting that for the model's top 18 predictions to be 61% correct 95% of the time, the distribution of the data in our sample (e.g., "training data") has to stay consistent with the larger population of the data (e.g., "data produced by the manufacturing machines in the future"). If the data produced later starts to have a different distribution, then our modelling assumptions will likely break down over time as well.
+
+								</p>
+								<!--
+								<p>
+Our dataset has 10,000 machines in it that the manufacturer says is representative of the population of machines we have 500 machines in our company each day, under the increased load on production, cumulatively our production lines will put 7200 new minutes of wear on the machines based on a MTBF of 137 minutes (calculated from the base population of data from the manufacturer), we will see 52 total failures per day we have staff to take care of 37 failure per day that means we need to detect 10 true positive failures per day we will make 500 new predictions each night based on the accumulated service time of all the machines
+</p>
+<p>
+Based on the statistics of the dataset, we should see 3% positives per day out of the entire distribution that means 3% of the predictions made will be for a positive machine failure 3% of 500 is 15 positive cases of machine failure ( which 3%, though? ) Machine Learning!
+
+								</p>
+								<p>
+									Will the Predictive Model Consistently Find the Same Number of Failures Per Day in Production?
+
+								</p>
+								<p>
+									It's worth noting that we are making best efforts at modeling the population of data with our sample data (training data). We can only do the best that our methods allow us in terms of modeling our sample data. [ todo: where are we going with this? ]
+
+								</p>
+								<p>
+As long as we have the same type of machines from the same manufacturer, our class distribution will likely stay stable each day, the machines should collectively (on avg) experience 52 failures based on historical data and our calculated MTBF we're already dealing with 37 of these per day reactively, but with downtime
+Note: what if we get newer generation machines? or different manufacturers? -- class distribution assumptions are likely going to shift (Concept Drift)
+
+								</p>
+			-->
+							</i></p>
+							</div>
+							  
+							</div>	
+
+						</div>
+						<!-- NOTE -->
+
+						<p>
+							With our business requirements clearly defined, let's work out how we'll measure this in a machine learning workflow.
+
+						</p>
+
+
+
+
+
+
+
+						<h2>Building a Model Evaluation Metric</h2>
+
+
+
+						<p>
+							For simple machine learning evaluation purposes you'll see data scientists use a basic metric such as "accuracy" (total correct / total predictions). However, in this case, we only want the 18 predictions the model is "most sure about", and that is a bit trickier. Most models will output discrete labels by default such as sklearn:
+
+
+						</p>
+
+<pre><code>classifications = classifier.predict( Xtest )
+</code></pre>
+
+						<p>
+							In this case we want the raw estimated probability from the model instead of the discrete label classification. To do this, you want to use a different method on your model such as:
+
+						</p>
+
+<pre><code>class_estimated_prob = classifier.predict_proba( Xtest )
+</code></pre>
+
+						<p>
+							Once we have the estimated probabilities for all of the machine data we can get an estimated probability for failure for every machine and then rank in descending order the most likely to fail. From there, we take the top 18 predictions and that will give us the 18 machines our model think are the most likely to fail in the next 24 hours. For the purposes of (final) model comparison/evaluation, these are the only predictions that matter to our evaluation process.
+
+						</p>
+
+						<p>
+
+Once we have the estimated probabilities from our classifier, we will sort descending the predictions by "estimated probability". Think of this as a "predictive maintenance queue"; the better our model is, the more the model will produce more "failure" true positives at the "front of the queue".
+
+						</p>
+
+
+
+						<p>
+							In this case we simplied this calculation for you with our <code>ml-tools</code> library:
+
+						</p>
+
+<pre><code>probas_ = classifier.predict_proba( Xtest )
+prediction_est_prob = probas_[:, 1]
+confusion_matrix = model_valuation.standard_confusion_matrix_for_n_ranked_instances(ytest, prediction_est_prob, 0.1, 18)
+
+[[tp, fp], [fn, tn]] = confusion_matrix
+total_predictions = (tp + tn + fp + fn)
+acc_top_N_predictions = (tp + tn) / (tp + tn + fp + fn)
+</code></pre>
+
+						<p>
+							The code sample from above is from the companion example notebook that goes with this article. It pulls the top 18 predictions and then computes the accuracy score as <code>acc_top_N_predictions</code>.
+
+						</p>
+
+
+
+						<!-- START: CAUTION NOTE -->
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>When Model Accuracy is a Misnomer</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+										<p>
+
+							Accuracy as a modeling metric can produce worthless models when training on imbalanced datasets where the distribution of examples across the classes is not equal.
+						</p>
+						<p>
+
+							Accuracy is often used earlier in machine learning when dealing with examples where the distribution of the classes is equal, so that's why practitioners tend to start with it as an evaluation metric. 
+						</p>
+						<p>
+							Your accuracy score during evalution on imbalanced data may report 95% or more, but this is trivial to accomplish in highly imbalanced datasets because the model only has to learn to predict the majority class every time to get a high accuracy score. Thus, accuracy becomes misleading in many modeling situations --- especially considering how prevaliant imbalanced data is in the wild.
+
+						</p>
+						<p>
+							Just remember: if you are trying to predict the minority class im an imbalanced dataset, accuracy will not be a good evaluation metric to use. It's worth noting that in this article we're not using "accuracy" as canonically defined; We're looking at how many correct predictions are in the top 18 of the highest estimated probability for the minority class.
+
+
+										</p>
+
+									</i>
+								</p>
+							</div>
+							</div>
+						</div>
+
+
+									<!-- --------------------------------- END: Note --------------------------------- -->
+
+
+						<p>
+							Our business objectives, financial goals, and cost-benefit information tell us when to "stop" modeling (as opposed to a Kaggle-style competition where everyone keeps trying to eek out 0.05% more accuracy, for instance).
+
+						</p>
+
+
+						<p>
+
+								Now that we have an specific way to evaluate how close we are to our business goal with a given model, let's move on to baseline our modeling workflow with some simple models.
+
+						</p>
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Baselining Our Modeling Process</h1>
+
+
+
+						<p>
+
+								Anytime you start out with a new modeling process you should baseline the dataset with a simple dummy model. This is a great practice because if more complex models can't beat simple no-effort models we know instantly they are not that good.
+
+
+
+						</p>
+						<p>
+						
+							For instance, if our metric is accuracy and we have an imbalanced dataset, our baseline model could easily just predict the minority class and have a high accuracy. Any model we trained after that would need to be able to classify all of those negative instances along with picking up at least some of the true positive instances. Even picking up a few true positives would likely only change the accuracy score a trivial amount. 
+
+						</p>
+
+						<p>
+							Defining an evaluation metric and baselining a modeling process go hand in hand. In many cases for imbalanced datasets, we should look at other evaluation metrics such as precision-recall area under the curve (PR-AUC). Metrics such as these better reflect how a model performs with respect to the tradeoffs of precision and recall. A metric such as PR-AUC also better indicates how well a model picks up the rare true positives while correctly predicting the many true negatives.
+
+
+						</p>
+
+
+						<p>
+							Let's now look at how we can stand up the simplest baseline model possible.
+
+						</p>
+
+
+
+
+						<h2>Baselining with SKLearns Dummy Model</h2>
+
+
+						<p>
+
+							We'll use Sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">DummyClassifier</a> as our first attempt at a baseline model. As the documentation states, 
+
+							"DummyClassifier is a classifier that makes predictions using simple rules" and you can configure the rules so that the classifier will behave certain ways. For the purposes of this section, we're going to use the setting
+
+							<code>most_frequent</code> as this always predicts the most frequent label in the training set.
+
+
+
+
+
+						</p>
+
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>Converting Dataframes into Vectors</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+									We don't spend a lot of time explaining it here, but in the notebook we use <code>sklearn_pandas</code>'s <code>DataFrameMapper</code> to do per column feature processing. Check out the notebook to see the details.
+
+								</p>
+								<p>
+
+
+								</p>
+								
+							</i></p>
+							</div>
+							  
+							</div>	
+
+						</div>
+						<!-- NOTE -->						
+
+<p>
+Beyond that, our performance metric is top18 accuracy; to get that we dont use a standard confusion matrix because we dont care about using the default model threshold
+
+						</p>
+
+<pre><code>...
+from sklearn.dummy import DummyClassifier
+
+dummy_model = DummyClassifier(strategy='most_frequent',random_state=0)
+
+k = 10
+cv = StratifiedKFold( n_splits=k )
+
+for i, (train_index, test_index) in enumerate(cv.split(X, y)):
+
+  # convert the data indexes into references
+  Xtrain, Xtest = X.iloc[train_index], X.iloc[test_index]
+  ytrain, ytest = y.iloc[train_index], y.iloc[test_index]
+
+  # fit the model on the training data (Xtrain) and labels (ytrain)
+  dummy_model.fit( Xtrain, ytrain.values.ravel() )
+
+  # now get the probabilites of the predictions for the text input (data: Xtest, labels: ytest)
+  probas_ = dummy_model.predict_proba( Xtest )
+
+  
+  prediction_est_prob = probas_[:, 1]
+
+  scmtrx_lr_full_testset = model_valuation.standard_confusion_matrix_for_n_ranked_instances(ytest, prediction_est_prob, 0.1, 18)
+
+  [[tp, fp], [fn, tn]] = scmtrx_lr_full_testset
+
+  total_predictions = (tp + tn + fp + fn)
+
+  acc_top_N_predictions = (tp + tn) / (tp + tn + fp + fn)
+
+...
+</code></pre>
+
+<p>
+	So this dummy model happens to get a really great accuracy score on the full dataset. However, if we look at the confusion matrix breakdown of a cross validation fold, we see:
+	</p>
+<consoleoutput>total_predictions: 18
+TP: 0
+TN: 18
+FP: 0
+FN: 0
+</consoleoutput>
+
+						<p>
+							The problem with the code above is that the dummy model reports a high full dataset accuracy, but a poor top18 accuracy --- it never predicts a positive (e.g., "failure") case. This a great example of how accuracy can trick us if we are not paying attention. Most of the time, functionally we use a dummy model as a "placeholder" for our baseline -- can we do better than predict the majority class?
+
+						</p>
+<!--
+<p>
+model performance metrics can be misleading; that's why we need to evaluate with these metrics, but also test against against business goals as well -- we need both aspects to find the right model for the problem
+</p>
+
+<p>
+The dummy model in this case doesnt generate a usable baseline because of how imbalance the data is; if the class split was closer to 60/40, a majority classifier might be a more realistic baseline model.
+</p>
+-->
+
+
+
+
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+										<h4>Using Cross Validation to Evaluate Classifiers</h4>
+
+										
+										<p>
+																						
+											Cross validation is a key standard for estimating the test error of a machine learning model. It works by partitioning a dataset into k equal-sized subsets ("folds"). We then train our model on the subsets k times, leaving 1 subset out each time to use as the test set. At the end we average the k error scores to get an estimated error score for the model on the entire dataset. This estimated error score gives an unbiased estimate of the test error with lower variance than a single train/test split could give us.
+											</p>
+
+											<p>
+
+											Another interesting note about cross validation is that once we have scored multiple models and we've chosen the model (with hyperparameters) that we want to use, we don't use an individual fold as the final model. We disgard the previous models and re-train the selected model architecture using the whole dataset.
+
+										</p>
+											<p>
+											Stone, M. (1974). Cross-validatory choice and assessment of statistical predictions. Journal of the Royal Statistical Society. Series B (Methodological), 36(2):111–147.
+											</p>
+
+
+									</div>
+								</div>
+							</div>
+
+									<!-- --------------------------------- END: Sidebar --------------------------------- -->
+
+
+
+						<p>
+							Let’s now move to a more realistic baseline model by using a Logistic Regression model.
+						</p>
+
+						
+
+
+
+						<h2>Baselining Our Model With Logistic Regression</h2>
+
+
+
+						<p>
+							Logistic Regression is a great baseline model as its simple, easy to use, and well-known. Before we do that, we want to highlight a helper function we've provided that will take a sklearn classifier and parameters and compute:
+
+							<ul>
+								<li>the average score across k-folds</li>
+								<li>the standard error of the error scores</li>
+								<li>a 95% confidence interval for the standard error</li>
+
+							</ul>
+
+							This helper function will allow us to quickly evaluate multiple different types of models against the same criteria in our notebook.
+						
+
+
+							Below you can see this function highlighted:
+
+						</p>
+
+<code><pre>def calculate_cv_standard_error_ci(cv, model, X, y, k, top_N_predictions):
+
+  stats = list()
+
+  for i, (train_index, test_index) in enumerate(cv.split(X, y)):
+
+    # convert the data indexes into references
+    Xtrain, Xtest = X.iloc[train_index], X.iloc[test_index]
+    ytrain, ytest = y.iloc[train_index], y.iloc[test_index]
+
+    print("Running CV Fold-" + str(i))
+
+    # fit the model on the training data (Xtrain) and labels (ytrain)
+    model.fit( Xtrain, ytrain.values.ravel() )
+
+    # now get the probabilites of the predictions for the text input (data: Xtest, labels: ytest)
+    probas_ = model.predict_proba( Xtest )
+    prediction_est_prob = probas_[:, 1]
+
+    scmtrx_lr_full_testset = model_valuation.standard_confusion_matrix_for_n_ranked_instances(ytest, prediction_est_prob, 0.1, top_N_predictions)
+
+    [[tp, fp], [fn, tn]] = scmtrx_lr_full_testset
+
+    total_predictions = (tp + tn + fp + fn)
+
+    acc_top_N_predictions = (tp + tn) / (tp + tn + fp + fn)
+
+    stats.append(acc_top_N_predictions)
+    
+    '''    
+    print("Logistic Regression (full test set): ")
+    print("total_predictions: " + str(total_predictions))
+    print("TP: " + str(tp))
+    print("TN: " + str(tn))
+    print("FP: " + str(fp))
+    print("FN: " + str(fn))
+    '''
+
+  mean_score = np.mean(stats)
+  std_dev_score = np.std(stats)
+  standard_error_score = (1/np.sqrt(k)) * std_dev_score
+
+  # https://en.wikipedia.org/wiki/Standard_error#:~:text=Assumptions%20and%20usage%5Bedit%5D
+  # https://en.wikipedia.org/wiki/1.96
+  # 95% of values will lie within ±1.96
+  ci_95 = 1.96 * standard_error_score
+  #print("CI Ranges 95%:")
+
+  low_end_range = mean_score - ci_95
+  high_end_range = mean_score + ci_95
+
+  return mean_score, std_dev_score, standard_error_score, ci_95, low_end_range, high_end_range
+</pre></code>
+
+						<p>
+							Standard Error and confidence intervals are a way we can communicate to the business unit how certain this model is in its predictions.
+
+							</p>
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+										<h4>Building Confidence Intervals for Cross Validation Error Estimation</h4>
+
+										<p>
+											There are multiple ways to build confidence intervals for an error estimate in machine learning training. For a broader discussion of this topic, check out the page on "<a href="">Confidence Intervals for Cross Validation Error Estimates</a>" in our <a href="">online data science book</a>.
+
+										</p>
+
+										<p>
+											Standard error "<i>of a statistic (usually an estimate of a parameter) is the standard deviation of its sampling distribution or an estimate of that standard deviation. If the statistic is the sample mean, it is called the standard error of the mean (SEM)</i>" (source: <a href="https://en.wikipedia.org/wiki/Standard_error">wikipedia.org</a>)
+
+										</p>
+										<p>
+
+											Standard error measures the accuracy of how a data sample represents the larger population of data. It is the approximate standard deviation of a statistical sample. Put another way, the standard error is the deviation of a sample mean from the actual population mean.
+
+										</p>
+										<p>
+											(also note, we're taking the "sample standard deviation" here of the sample represented by the training records; we don't have the full population of data to train on, so our training records, from a statistical viewpoint, are considered a "sample")
+
+										</p>
+										<p>
+											We can <a href="https://www.stat.cmu.edu/~ryantibs/advmethods/notes/errval.pdf">compute the standard error of the cross validation error estimate</a> by dividing the sample standard deviation by the square root of the number of observations. (another nice <a href="https://lmc2179.github.io/posts/cvci.html#foot2">write-up on the topic here</a>.)
+
+
+										</p>
+										<p>
+											With the standard error of the sample mean, we can then calculate the 95% confidence intervals for our cross validation error estimate (e.g., "95% confidence interval for the population mean", or to put it another way: "confidence intervals for the error estimate of the full population of data our model might encounter in the wild").
+
+
+										</p>
+										<p>
+
+A confidence interval gives us a range of values that bound a statistic's mean (above and below). These bounds likely contain the unknown population parameter we're interested in measuring. These bounds (e.g., "confidence interval") refer to a percentage of probability ("certainty") that the confidence interval range would capture the true population parameter if we were to draw random samples from the population a lot of times.
+</p>
+<p>
+
+If confidence level refers to "percentage of probability" of certainty, then for a 95% confidence interval we can assume that 95% of the time our accuracy should be between the lower and upper bound of the estimate.
+										</p>
+										<p>
+											Other methods to build error confidence intervals include:
+
+											<ul>
+												<li>Bootstrap</li>
+												<li>Binomial proportion confidence intervals</li>
+												<li>Student's t distribution confidence intervals </li>
+
+											</ul>
+
+											Check out our online resource on "<a href="">Confidence Intervals for Cross Validation Error Estimates</a>" in our <a href="">online data science book</a> to see more live notebook examples of each method.
+
+										</p>
+<!--
+										<p>
+											To validate the SE CV EE method, we created:
+
+											<ul>
+												<li>A stock cross validation notebook (on a sklearn built-in dataset)</li>
+												<li>The same notebook but then with the SE CV EE score CIs computed as explained above</li>
+												<li>Another version of the same notebook, but this time we compute the CIs via 632bootstrap</li>
+
+
+											</ul>
+
+										</p>
+									-->
+
+									</div>
+								</div>
+							</div>
+
+									<!-- --------------------------------- END: NOTE --------------------------------- -->
+
+						<p>
+
+
+
+							Below you can see a snippet of code where we are running 10-Fold cross validation with SKLearn's Logistic Regression:
+
+						</p>
+
+<pre><code>classifier_kfold_LR = LogisticRegression(solver='lbfgs')
+
+# test method for cv-se-ci
+mean_score_lr, std_dev_score_lr, standard_error_score_lr, ci_95_lr, low_end_range_lr, high_end_range_lr = calculate_cv_standard_error_ci(cv, classifier_kfold_LR, X, y, k, 18)
+
+print("\n\navg top 18 acc: " + str("{:.4f}".format(mean_score_lr)))
+print("\n\nSTD DEV: " + str(std_dev_score_lr))
+print("\n\nStandard Error (Accuracy) Across All Folds: ( " + str("{:.4f}".format(standard_error_score_lr)) + ")")
+print("High: " + str(high_end_range_lr))
+print("Low : " + str(low_end_range_lr))
+</code></pre>
+
+						<p>
+							Using the helper function we can quickly compute the average top 18 accuracy, the standard error, and the 95% confidence interval, as shown below:
+
+
+						</p>
+
+<consoleoutput>avg top 18 acc: 0.6667
+
+STD DEV: 0.20637972912229677
+
+Standard Error (Accuracy) Across All Folds: ( 0.0653)
+CI Ranges 95%:
+High: 0.7945821480220148
+Low : 0.5387511853113187
+
+</consoleoutput>	
+<br/>
+
+						<p>
+
+							The logistic regression model does a decent job of modeling the imbalanaced predictive maintenance data (66.7% accuracy on top 18 predictions), but the error bound is with the 95% confidence interval is <code>79.4%</code> to <code>53.9%</code>. 
+
+						</p>
+						<p>
+If the confidence level refers to "percentage of probability" of certainty, then our error estimate at 95% confidence interval tells us we can assume that 95% of the time our accuracy should be between the lower and upper bound of the estimate.
+
+						</p>
+						<p>
+							From that perspective it's difficult to go back to the line of business and say "this model will do hit our performance goal ... some of the time". What we need is a model that will do no worse than our minimum performance goal 95% of the time, so it's worth spending some effort to see if we can get a better lower bound on the model performance.
+
+
+						</p>
+
+
+
+<!--<p>
+
+Progression: Logistic Regression (as used normally with 0.5 decision threshold) - note that it does not have enough predictive power to find 5 TPs Logistic Regression (only looking at est prob) - note that it gives us more TPs, but still not enough - note how this produces a more intelligent queue, functionally - we still can compute a Confusion Matrix, just apply a threshold of 0.1 ( no reason to show graphs between 0.5 and 0.1 )
+						</p>
+						<p>
+
+If our model finds 10 failures, but we need 12 discovered per day, then we'll get hit by the 2 extra failures each day, meaning 4 hours of unplanned downtime ($960 dollars lost per day, a yearly loss of $230,400)
+						</p>
+						<p>
+
+given that we're just walking down the list of "estimated probabilities", is there a reason to use a threshold at all? no we have to hit a quota of TPs (10-12), so we need to process N number of machines for failure at the top of the queue
+						</p>
+					-->
+						<p>
+
+
+</p>
+
+
+
+						<p>
+Imbalanced data problems can be tough as shown with scores with this wide of variance.
+
+At this point we have a nice baseline model but we know we're going to have to put a little more effort into modeling to get closer to our minimum pilot goal, so let's look at doing some light grid search across a few different model architectures that have been known to perform well.
+						</p>
+<!--
+						<p>
+
+								Now that we have a great baseline with a basic logistic regression model and a 95% confidence interval on the error, we can move on and try some light grid search to see if we can beat logistic regression's average and worse case performance.
+
+
+
+						</p>-->
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+				<!-- Section 3: Grid Search Workflow -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Building a Preditive Maintenance Machine Learning Workflow with Grid Search and Sci-Kit Learn</h1>
+
+
+							<p>
+
+									With our evaluation metric and model baseline in hand, we can now let grid search explore hyperparameter space a bit with some models that are known to perform well based on Kaggle competitions.
+
+
+
+							</p>
+							<p>
+								We will use the following models:
+
+								<ul>
+									<li>XGBoost</li>
+									<li>Gradient Boosting Decision Trees</li>
+									<li>Random Forests</li>
+									<li>Light GBM</li>
+									<li>Logistic Regression (for relative comparison)</li>
+									
+
+								</ul>
+
+								We'll set them up in sklearn's grid search framework to explore a range of specific hyperparameters for each model type. From there we'll take the top 3 model types as selected based on their best model's average cross validation accuracy and we'll compute the Top 18 Accuracy.
+
+							</p>
+
+						<p>
+							A generalized grid search workflow might look like the following:
+
+							<ul>
+								<li>exploratory data analysis</li>
+								<li>split data into train, validate, and test datasets</li>
+								<li>normalize, standardize features</li>
+								<li>use grid search to find decent models based on our data</li>
+								<li>Manually tune the top 3-4 models, perform feature analysis</li>
+								<li>do we have enough predictive value yet? no? train more. yes? then stop</li>
+
+							</ul>
+
+							In our case we've already done the EDA (<a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">part 3</a>). In our notebook we do the data split and normalize/standardization of the features near the beginning of the notebook.
+
+						</p>
+						<p>
+							Grid search gives us the option to provide a specific metric to guide its direction in hyperparameter search space. We can use simple options such as "accuracy", but depending on your training goal other options may help more.
+						</p>
+						<p>
+							In our EDA work we also surface that the dataset was imbalanced (only <code>3%</code> positive cases). As discussed previously in this article, the accuracy metric likely will not give great feedback for an imbalanced dataset as it treats all classes equally important. We want to push grid search towards hyperparameters that will focus on detecting the minority (e.g., "machine failure") class. This task is challenging because there are not many positive classes in the dataset.
+
+						</p>
+						<p>
+
+
+							An alternative to the ROC curve is the precision-recall curve. The precision-recall curve focuses on the positive (minority) class only and is useful for imbalanced classification problems such as predictive maintenance (e.g., "failure", "no failure"). 
+
+
+						</p>
+
+						<p>
+							The area under the precision curve (PR-AUC) sumarizes the performance of the classifier as a single number. sklearn provides an a different calculation of PR-AUC called "<a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">average precision score</a>". Average precision summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold. (reference: <A href="https://stats.stackexchange.com/questions/157012/area-under-precision-recall-curve-auc-of-pr-curve-and-average-precision-ap">Cross Validated discussion</a>).
+
+						</p>
+
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>Average Precision vs Top-18 Accuracy</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+									So while we're ultimately after a model that predicts well in its most confident top 18 predictions, the average precision metric indicates which models are doing better at predicting the rare class in an imbalanced dataset. We'll use average precision to guide grid search towards hyper parameters that will pick up the rare machine failure classifications and then evaluate (via top-18 accuracy) the model for each architecture that had the best average precision score.
+
+								</p>
+			
+							</i></p>
+							</div>
+							  
+							</div>	
+
+						</div>
+						<!-- NOTE -->
+
+						<p>
+							Now that we've decided on the best way to guide grid search that aligns with our business goal metrics, let's configure grid search and see how it goes.
+
+						</p>
+
+
+
+
+
+						<h2>Building a Grid Search Workflow</h2>
+
+						<p>In the notebook code excerpt below we can see the relevant portion that registers the models we want to test out and configures <code>GridSearchCV</code>. There is an extended portion of code before this section that configures which hyperparameters we want to explore, but we'll leave that inspection to the reader as a further exercise.</p>
+
+<code><pre><p>
+...
+models_opt = []
+
+models_opt.append(('Logistic Regression', LogisticRegression(), LR_params))
+models_opt.append(('Random Forest Classifiers', RandomForestClassifier(), RF_params))
+models_opt.append(('Gradient Boosting Decision Trees', GradientBoostingClassifier(), GBC_params))
+models_opt.append(('XGBoost', xgb_estimator, XGB_params))
+models_opt.append(('LGBMClassifier', lightGBM_mdl, lgbm_gs_params))
+
+
+# now set up Cross Validation parameters
+
+results = []
+names = []
+best_models = []
+
+
+plt.figure(1)
+fig_pr, ax_pr = plt.subplots(1,1,figsize = (12,12))
+
+
+# now let's run Grid Search for each model listed in model_opts
+for name, model, params in models_opt:
+
+    start_time = datetime.datetime.now()
+
+    model_grid = GridSearchCV(model, params, cv=cv, scoring='average_precision') # 
+    model_grid.fit(x_train_scaled, y_train_scaled)
+...
+</p></pre></code>
+
+
+						<p>
+							When you run the notebook on Google Colab, it will run in this section for a while and you'll see some console output in the notebook. You can largely ignore that output, and focus on the precision recall curve that is generated at the end.
+							Below we can see the best models found for each architecture as compared by their respective precision recall curves.
+
+
+						</p>
+
+<img src="./images/pm_nov2021_part4_pr_curve.png" />
+						<p>
+							
+							As we discussed previously, the precision recall curve is a great want to compare models for a given imbalanced classification problem. Curves that reach farther out to the northeast corner of the graph area better overall and will have better "average precision" scores (closer to 1.0 is better).
+						</p>
+
+
+						<!-- NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+									<div style="border: solid 0px; overflow: auto;">
+
+
+								<h4>What Does GridSearchCV Return to Us?</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+									If you will recall, earlier in this article we wrote about how the final model in cross validation would be trained on the full dataset after the error estimate was calculated.
+
+								</p>
+								<p>
+									The is exactly what <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
+">GridSearchCV</a> returns to us as the best model per model type. Unless you tell it explicitly not to, GridSearchCV will take the best hyperparameters found for the model type and refit the entire dataset with the model type and hyperparameters.
+
+								</p>
+			
+							</i></p>
+							</div>
+							  
+							</div>	
+
+						</div>
+						<!-- NOTE -->
+
+
+						<h2>When Do We Stop Modeling?</h2>
+
+						<p>EDA informs us on how the better places to start our modeling journey, and our evaluation metric helps us know when we arrive there.</p>
+
+						<p>
+							Average precision (and precision recall curves) are great tools to work with inside a data science group, but they are terrible metrics to send to a business group. We use these scores to find the best hyperparameters for imbalanced classification. Once we find those model hyperparameters, we then calculate the Top 18 failure score which we've established as something that will directly be application to the line of business.
+
+						
+						</p>
+						<p>
+							Alternatively, we could just train until we hit some arbitrary metric goal or ... we run out of cloud budget. From that perspective, its best to continually check against the business metrics to see if we've met our business goals within our required confidence intervals.
+
+						</p>
+						<p>
+							Earlier in this article we established that the confidence level (of a confidence interval) refers to "percentage of probability" of certainty. Our error estimate at 95% confidence interval tells us we can assume that 95% of the time our accuracy should be between the lower and upper bound of the estimate. Given this, we need a model that has a 95% confidence interval lower bound that is greater than our minimum performance on the top 18 failure ranked failure predictions. If we have a model that meets or exceeds these conditions then we can move on to the next stage of our pilot program.
+
+
+						</p>
+
+						<p>
+							In the bar chart below we see the 3 best models (with confidence interval bars) as ranked by their average precision score along with the logistic regression model for reference.
+
+
+						</p>
+
+<img src="./images/pm_nov2021_part4_top18.png" />
+
+						<p>
+							As you can see in the bar chart above, the 3 top grid search models (other than logistic regression) all had their lower bound on the 95% confidence interval exceed the minimum performance (the dotted horizontal red line).
+
+							</p>
+							<p>
+
+								When we have the option to choose from multiple candidates with acceptable scores, we normally would select the model with the highest evaluation metric score. Here, unsurprisingly, XGBoost performed the best --- and also had the best (e.g., "tightest") confidence interval.
+
+							</p>
+							<p>
+								Normally in a grid search workflow we might want to do some manual tuning or further analysis, 
+
+
+								but at this point our team has a model (XGBoost) that should realistically hit our business goals (at least 83% accurate on top18 predictions 95% of the time), so we can pause our modeling efforts (for now).
+
+
+						</p>
+					</div>
+
+				</div>
+				<!-- Section 3: Grid Search Workflow -->
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					<div class="col-md-3" id="fh5co-content" style="">
+						<h3 style="color: #ffffff;">MLOps Questions?</h3>
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Are you looking for a comparison of different MLOps platforms? Or maybe you just want to discuss the pros and cons of operating a ML platform on the cloud vs on-premise? Sign up for our free 
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">MLOps Briefing</a></b></span> -- its completely free and you can bring your own questions or set the agenda.
+
+						</p>
+						</div>
+					</div>
+				</div>						
+
+
+
+
+				<!-- Section 4: Evaluation of the Model -->
+				<!--
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+
+						<h1>4. Evaluating the Progress of the Machine Learning Workflow</h1>
+
+						<p>
+							plot PR-curve, explain
+
+						</p>
+
+						<h2>Precision-Recall Curve Analysis</h2>
+
+						<p>
+							plot PR-curve, explain
+
+						</p>
+						<p>
+							tradeoffs of precision and recall -- how do you find the best threshold point?
+
+						</p>
+
+						<p>
+							What about model performance in terms of financial impact on LOB?
+
+						</p>
+		-->
+
+
+
+<!--
+						
+						<h2>Plot the Profit Curve</h2>
+
+						<p>Explain what {Expected Value, Profit Curve} are, link ebook, link Fawcett/Provost</p>
+
+
+						<p>
+							At this point, with an imbalanced dataset, we've established that accuracy as a metric is useless in a practical sense to the ACME Tool Co's pilot. We've done some training, and then evaluated the group of models with PR-Curves, but those graphs do not fulfill the requirements by the business unit at ACME Tool Co. The profit curve shows us performance under different scenarios, but now we need to write a report on what those scenarios mean and how they impact the line of business in real financial terms.
+
+						</p>
+-->
+<!--
+					</div>
+
+				</div>
+			-->
+				<!-- Section 4: Evaluation of the Model -->
+
+
+
+
+
+
+		
+				<!-- Section 5: Conclusions and Next Steps -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Summary and Next Steps</h1>
+
+						<p>In this point we built several quality models with grid search to model the imbalanced predictive maintenance dataset in snowflake.</p>
+
+
+						<p>
+							In the next post we'll review our business plan with the line of business and make a decision on if we can safely put this pilot program into production.
+
+						</p>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

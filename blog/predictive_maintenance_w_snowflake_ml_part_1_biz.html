@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Predictive Maintenance with Snowflake and Machine Learning - A Blog Series - Part 1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+		span.editing_todo {
+			color: #CC0000;
+			font-style: italic;
+		}		
+
+		span.editing_refactor {
+			color: #CC00CC;
+			font-style: italic;
+		}				
+
+h2 {
+	color: #555555;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Predictive Maintenance</h1>
+						<p>
+							<h3>Part 1 of 6: "Making the Business Case for Predictive Maintenance"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: Sept 2021
+						</p>
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6.html">Going to Production with Snowpark</a></li>
+
+							</ul>
+
+
+						</p>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+
+
+									<!-- --------------------------------- START: Sidebar --------------------------------- -->
+									<div style="float: right; width: 500px; border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 12px; font-size: 12px; background-color: #eeeeee;">
+
+
+										<h4>Applications of Predictive Maintenance</h4>
+
+											<p>
+												<a href="https://en.wikipedia.org/wiki/Predictive_maintenance">Predictive maintenance</a> allows us to estimate when maintenance should be performed through predicting the condition of operational equipment. It improves uptime in industrial sectors and lowers costs.
+
+												Relevant industries and applications:
+
+												<table>
+													<thead>
+														<tr>
+															<th>Industry</th>
+															<th>Application Area</th>
+
+														</tr>
+
+													</thead>
+
+													<tbody>
+
+														<tr><td>Smart City</td><td>Traffic management, road safety, security, parking management, automotive telematics, public transport, environment protection</td></tr>
+
+														<tr><td>Oil and Gas</td><td>Equipment+infrastructure reliabiltiy and efficiency</td></tr>
+
+														<tr><td>Logistics</td><td>Predictive Maintenance and equipment optimization</td></tr>
+
+														<tr><td>Power and Utilities</td><td>Transmission, Generation, and Distribution infrastructure reliabiltiy and efficiency</td></tr>
+
+														<tr><td>Manufacturing</td><td>Predicting device failure</td></tr>
+
+														<tr><td>Mining</td><td>Equipment and vehicle predictive failure/maintenance</td></tr>
+
+														<tr><td>Heavy Equipment</td><td>Predictive analytics and failure detection</td></tr>
+
+													</tbody>
+
+												</table>
+
+
+											</p>
+
+
+									</div>
+									<!-- --------------------------------- END: Sidebar --------------------------------- -->
+
+
+
+						<p>
+							In this blog post series on building a real-world predictive maintenance application, we'll start with a business case from a fictional manufacturing company (ACME Tool Co.) and we'll work through how the company makes a business case and then builds a predictive application to meet the business requirements.
+
+						</p>
+						<p>
+							Series Key Take-Aways:
+							<ol>
+								<li>Learning how to formulate a business case for a data science project</li>
+								<li>Operationalizing the live application in cloud-based Jupyter notebooks and on Snowflake</li>
+								<li>Understanding how to forecast the financial value of a data science project</li>
+
+							</ol>
+
+						</p>
+
+						<p>
+							Far too many data science projects fail due to poorly defined (or no) business goals. Many times this comes down to the fact that the line of business does nto know how to create an operational framework around a data science project that gives the data science team the latitude to operate while keeping them focused on a real financial target.
+
+						</p>
+
+						<p>
+							In this series we'll look at how to define start with our business objectives, financial goals, and cost-benefit information. This information will then be leveraged to inform the data science team where to start and then when they have "enough performance" to hit realistic financial goals with the model.
+
+						</p>
+
+						<p>
+							This framework of clearly defining a start point and delivery criteria for the relationship between the line of business and the data science group is critical to building successful data science products in the enterprise.
+
+
+						</p>
+
+
+							<p>
+								
+							
+							In this article we're going to document 
+
+							<ul>
+								<li>the business case for predictive maintenance at ACME Tool Co</li>
+								<li>business contraints on the project</li>
+								<li>minimum viable outcomes based on financial targets</li>
+							</ul>
+
+							Let's now get to know ACME Tool Company.
+
+						</p>
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section 2 of 5: The Scenario and Business Case -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>The Business Case for Predictive Maintenance: ACME Tool Manufacturing Co</h1>
+
+						<p>
+							In a highly competitive market, manufacturing companies are under pressure to raise output with the same or less resources. This puts pressure on the operations management team of manufacturing plants to find ways to reduce error (see also: anomaly detection article) and raise production uptime.
+						</p>
+						<p>
+							In this scenario we have ACME Tool Manufacturing Co. (ATMC) that produces a specialized wrench for oil rig maintenance. ACME mantains the following:
+
+							<ul>
+								<li>5 Manufacturing sites</li>
+								<li>50 manufacturing lines across the 50 manufacturing sites</li>
+								<li>Each manufacturing line has 10 stations with a key tool with a specific manufacturing step</li>
+
+								<li>In total, this gives the company 500 station machines to maintain to keep the production lines operational</li>
+								<li>Each tool is worth $20 in sales to the company, and the company can theoretically produce 5783 tools per day</li>
+								<!--
+								<li>The company can manufacture $115,662 worth of tools per day at full capacity (no theoretical downtime)</li>
+								<li>ACME Tool Manufacturing can theoretically produce $28,915,662 per year if no machine goes down</li>
+							-->
+							</ul>
+
+							The above metrics give you an idea of what peak operations look like for ACME Tool Manufacturing. We note that in reality AMCE Tool never has "no downtime" and machines go down quite consistently, as we'll see in the operations analysis below. Now, let's dig into how market pressures are forcing ATMC to evolve.
+
+
+
+						</p>
+						<h2>The Red Queen Never Sleeps</h2>
+						<p>
+
+								A major competitor in the manufacturing space has just announced it plans to not only start producing a similar tool for oil rigs, but they will price the tool at 15% below the price point of ATMC to aggressively capture market share. This sends shockwaves through the market.
+							</p>
+							<p>
+									In a margin-based business, this is a big deal, and nobody at ATMC is having a good week.
+							</p>
+							<p>
+								The executive team realizes that ACME will have to match this price or lose major market share.
+								This means 15% less revenue coming in which would put a non-trivial dent in the companies operating profit margin overnight (from <code>12%</code> to <code>4.86%</code>). This operating profit margin drop would adversely affect the value of the business to shareholders and negatively affect ACME's ability to raise new capital to compete in the market or expand. This would create many challenges to continue operations long term in the market for ACME.
+							</p>
+							<p>
+								ACME aquired this manufacturing unit 3 years prior with the expectation of being able to grow the market, but that was predicated on the ability to maintain or improve operating profit margins. Enduring a sudden reduction in operating profit margin would be disasterous from an investment standpoint.
+
+							</p>
+							<!--
+
+							<p>
+								Given that the production lines already are producing a lot of product per hour, the first suggestion is to build out more production lines. However, due to the timeline and limitations on physical space this is a non-starter. Building out new manufacturing sites would also be costly.
+							</p>
+							<p>
+								Instead, the executive team wants to increase tool production per hour per line (from <code>14.46 tools per line per hour</code> to <code>17.49 tools per line per hour</code>) by <code>21%</code> with the existing 50 production lines. To do this they realize they'll have to modernize they operations.
+
+
+						</p>
+					-->
+
+						<p>
+							The management team lays out two paths forward:
+							<ol>
+								<li>Try and use the existing operations to produce more tools at a lower margin to make up some of the missing operating profit</li>
+								<li>Use modern sensors and predictive maintenance methods to reduce downtime</li>
+
+							</ol>
+
+							The team analyzes the first option and decides that putting more stress on their manufacturing operations would be difficult at best, wearing down the equipment faster for less money per tool sold. Their manufacturing plants have largely been operated in a reactive maintenance manner, because "thats how its always been done", and more throughput would create more downtime as well.
+
+						</p>
+						<p>
+							The ACME management team is nervous with the second option, but if they could pull it off they could potentially slightly improve their operating profit margin (even with the price drop from $20 to $18.50) by recapturing some of the operational downtime in the manufacturing lines. The worry amongst the team is that traditionally it has been hard to model the value of machine learning models and their associated effectiveness over time. However, their data science team has the support of the Patterson Consulting team, allowing them to explore their options quickly and in a cost-effective manner.
+
+						</p>
+
+						<p>
+
+								ACME realizes that if they are going to transition into a modern manufacturing operation then the time is now. It's never going to get easier to compete going forward that it is now, so ACME has to adapt or be relegated to continually losing market share. In many ways, the cycle of "<code>software eating the world</code>" is really the old story where the Red Queen tells Alice that we have to "<code>run as fast as we can to stay in the same place</code>". ACME has to run faster than they ever have --- and they have no choice but to adapt.
+
+
+						</p>
+
+
+
+									<h2>Analyzing Current Operations and Maintenance Team</h2>
+
+									<p>
+										Currently the 5 manufacturing sites produce:
+
+										<table>
+											<tr>
+												<th>Metric</th>
+												<th></th>
+											</tr>
+											<tr>
+												<td>Tools produced per hour per line</td>
+												<td>14.46</td>
+											</tr>
+											<tr>
+												<td>Old Value of Tool</td>
+												<td>$20</td>
+											</tr>
+											<tr>
+												<td>Total tools production capacity per day (theoretical, if no downtime)</td>
+												<td>5783</td>
+											</tr>
+											<tr>
+												<td>Value of Tools Produced Per day (all lines, no theoretical downtime)</td>
+												<td>$115,662</td>
+											</tr>
+
+											<tr>
+												<td>Actual tools produced per day (with downtime)</td>
+												<td>3875</td>
+											</tr>
+
+											<tr>
+												<td>Value of Tools Produced Per day  (with downtime)</td>
+												<td>$77,493.98</td>
+											</tr>
+
+										</table>
+
+
+									</p>
+
+							<p>
+								The company has downtime that prevents production during 33% of its operating hours. Unfortunately, the company is still paying the rent, electric bill, executives, and production personnel while the production line is down, so downtime is expensive. The team knows they need to reduce downtime, but first they have to analyze what is specificically causing the dowtime.
+
+							</p>
+
+							<p>
+								Manufacturing puts wear and tear on the machines producing product in a manufacturing line and the machines frequently break down. The manufacturing industry measures and tracks how much life a machine has with a metric called "mean time between failures".
+
+						</p>
+
+
+						<h2>Mean Time Between Failure</h2>
+
+						<p>
+							<a href="https://en.wikipedia.org/wiki/Mean_time_between_failures">Mean time between failures</a> (MTBF) "is the predicted elapsed time between inherent failures of a mechanical or electronic system, during normal system operation". Using the MTBF model we can get a good estimate on how often our machines will fail based off historical data.
+
+						</p>
+						<p>
+							Using the <a href="https://reliability.readthedocs.io/en/latest/Reliability%20test%20planner.html">reliability open source python module</a> and the ACME Tool historical data the operational team <a href="https://colab.research.google.com/gist/jpatanooga/cb31908661af830717d236c468a3c4e3/predictive_maintenance_mtbf_calcs.ipynb">calculates their MTBF to be 131.4 minutes </a>. This calculation was based on 10,000 different tools in the dataset so the team is reasonably confident (95% confidence interval) that the MTBF metric will hold up.
+
+						</p>
+
+									<p>
+
+										With the MTBF metric in hand, the ACME team analyzed their plant based on the sensor data collected:
+
+
+										<table>
+											<tr>
+												<th>Metric</th>
+												<th></th>
+											</tr>
+											<tr>
+												<td>Avg Machine Manufacturing Minutes per Tool</td>
+												<td>0.15 min (9 seconds)</td>
+											</tr>
+											<tr>
+												<td>Abg Machine wear per day</td>
+												<td>17.35 min</td>
+											</tr>
+											<tr>
+												<td>Avg Total machine wear across all tools per day</td>
+												<td>8674.70</td>
+											</tr>
+											<tr>
+												<td>Mean Time Between Failure (MTBF)</td>
+												<td>131.42</td>
+											</tr>
+
+											<tr>
+												<td>Average Machine Failures per Day</td>
+												<td>66</td>
+											</tr>
+
+
+											<tr>
+												<td>Lost production hours per machine failure</td>
+												<td>2</td>
+											</tr>
+
+											<tr>
+												<td>Lost production hours per day due to machine failures</td>
+												<td>132</td>
+											</tr>
+
+											<tr>
+												<td>Lost Revenue per Day Due to machine failures</td>
+												<td>$38,168 (33% of theoretical revenue max per day)</td>
+											</tr>											
+										</table>										
+
+
+									</p>
+
+
+						<p>
+							If any machine in a manufacturing line goes down, the line cannot produce any tools, and the company loses <code>$289.16</code> every hour the line is down. The ACME team has analyzed just how much revenue is lost each week (<code>$190,843</code>) and year (<code>$9,542,168</code>) due to downtime as part of quarterly operations management reviews.
+
+						</p>
+						<p>
+							ACME has grown into this space quickly and only recently started analyzing lost revenue and ways to mitigate the machine downtime (such as proactively maintaining all machines, but due to the large number of machines this would take a lot of labor hours). 
+
+						</p>
+
+						<p>
+							Now obviously no plant is going to operate with 100% uptime, but this is still a staggering number to deal with. Obviously there will be "some" downtime in manufacturing plants, but what could we do with statistics and machine learning to reduce at least a portion of this downtime? If we could prevent a few of those machine failures per day, ACME could recoup some of that lost revenue that they are already paying expenses for.
+
+						</p>
+
+
+						<p>
+							Each machine issue takes around 2 hours to service by a technician (they have to get to the specific location and line, triage, etc)
+							This means a technician can fix around 3-4 issues per day 
+							and it takes 16 techs to keep operations running (and they are stretched thin currently as well).
+									</p>
+
+
+
+
+
+
+									<!-- --------------------------------- START: Sidebar --------------------------------- -->
+									<!--
+									<div style="float: right; width: 500px; border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 12px; font-size: 12px; background-color: #eeeeee;">
+
+											<h4>What About Reactive Maintenance?</h4>
+							<span class="editing_refactor">
+
+											<p>
+
+												Why not just have techs fix the machines all the time? The problem with relying on reactive maintenance is that it creates periods of unplanned downtime that is costly. As we scale out to more lines and more machines in manufacturing this because difficult to manage.
+											</p>
+											<p>
+												<p>From a reactive standpoint:</p>
+												<ul>
+												<li>ACME Tool Co. has enough technicians to fix the issues each day</li>
+												<li>but they lose production hours due to the 5 failures per day, every single day</li>
+												<li>this amounts to $12,500 lost revenue <em>each day</em></li>
+												</ul>
+
+											</p>
+
+											<p>
+												The next question that comes up in meetings was: 
+											</p>
+
+											<p style="padding: 20px;"><i>"Why not just scan the data and figure out which types of machines (e.g., &quot;high torque fail in 3 days&quot;) will fail and then just put them on a maintenance schedule?</i></p>
+
+
+											<p>
+												
+												The issue wtih this stance is that machines are used at different rates, by different personnel, and in slightly different ways.
+											</p>
+											<p>
+												For example: two different personnel might apply the tool in ways that produces 20% more/less torque on average, thereby, changing the timeline for device failure.
+												The usage patterns on each tool produce a unique data fingerprint (even among tools of the same type) -- here, a statisical model does well as it can take into account all of the acculumulated usage patterns over time to determine which tools are likely to fail &quot;soon&quot;, causing unplanned downtime
+												
+
+											</p>
+										</span>
+
+
+									</div>
+								-->
+									<!-- --------------------------------- END: Sidebar --------------------------------- -->
+
+
+<!--
+						<h2>Analyzing Cost of Downtime</h2>
+
+
+						<p>
+							This allows the ACME Tool team to summarize the following analysis:
+						</p>
+						<p>
+
+														<span class="editing_refactor">
+
+							
+							
+							Its not about number of devices, MTBF is based on how much usage we&#39;re putting on a pool of devices.
+							In this case we know that ACME Tool is manufacturing tools 5 days a week, 8 hours a day, across 5 lines. 
+
+							Each line produces 100 tools per day (theoretically) over 8 hours (with no downtime). 
+						</span>
+						</p>
+						<p>
+
+							If each machine is used only 0.15 minutes (9 seconds) per tool produced, this means each day on average tool production puts 15 minutes total of wear on all machines in the manufacturing lines on average.
+
+
+						</p>
+
+						<p>
+							<span class="editing_refactor">
+
+							Across 50 machines this means we are accruing 750 minutes of machine run time. If we know that every 137 minutes (e.g., "MTBF") a machine will likely need maintenance (somewhere) in our manufacturing lines, then we can estimate that ACME Tool Co. will experience 5.47 machine failures per day (to make numbers easier we'll round to 5 failures per day). 
+						</span>
+
+						</p>
+
+							<span class="editing_refactor">
+
+						<p>
+							If there are 20 working days per month for the manufacturing shop, then we'll see around 100 machine failures per working month, or around 25 failures per week.
+
+						</p>
+						<p>
+							If we go back and consider that each incident costs ACME Tool Co $2500 and we are currently experiencing 25 unplanned downtime events per week, then we can estimate our lost revenue to be $62,500 per week due to unplanned downtime.
+
+						</p>
+						<p>
+							If ACME Tool Co can in theory hit $50,000 in manufactured tools per day and we are losing $12,500 per day in those 5 unplanned machine failures (5 events x 4 hours == 20 lost hours x $2500 == $12,500) then each day we've lost 25% of manufacturing capacity and revenue to unplanned downtime.
+
+						</p>
+						<p>
+							This means unplanned downtime is currently causing ACME Tool Co. to lose (50 weeks x $62,500 == ) $3,125,000 in revenue per year. ACME Tool Co. is losing 25% of its theoretical capacity to unplanned downtime (note: operating at 100% capacity all year long is obviously unrealistic).
+
+						</p>
+					</span>
+						<p>
+							Downtime is terribly expensive for ACME Tool Co, it seems.
+
+						</p>
+
+						<p>
+
+							Now that we know we need more than reactive maintenance to capture lost revenue and roughly how often machines will fail, its time to look at ways to help fix the machines that will most likely fail --- before they fail.
+
+						</p>
+
+-->
+
+
+
+
+					</div>
+
+				</div>
+
+				<!-- Section 2 of 5: The Scenario and Business Case -->
+
+
+
+
+
+				<!-- Section 3 of 5: Goals, Contraints -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+						<h1>Predictive Maintenance Pilot: Business Goals and Constraints Defined</h1>
+
+						<p>
+							The ACME Tool Co. operations management team now knows that:
+
+							<ul>
+								<li>The company faces an existential threat from reduction in operating profit margin</li>
+								<li>there is $190,843 of revenue per week that is not realized --- due to unplanned downtime</li>
+								<li>they have a rough idea on how many machines per week will fail (66), causing unplanned downtime</li>
+								<li>they don't have the resources to make a major overhaul of how they are operating (e.g., changing the maintenance patterns completely)</li>
+								<li>predictive models have the potential to build an ordered list of the most likely to fail machines</li>
+							</ul>
+
+
+						</p>
+
+						<p>
+							After internal discussion, the line of business and operations management team conclude that their operations likely will not change over night "magically". They are aware, however, that predictive maintenance has the potential to rank the list of machines by which are most likely to fail based on their historical data. They are also aware that data science can be tricky to "get right" and that there will be some growing pains if they choose the path of predictive maintenance.
+
+
+						</p>
+
+						<p>
+							ACME Tool decides to investigate the prospect of a predictive maintenance pilot program but under tight yet realistic constraints. They realize that machine learning is not "magic" and it will not just "tell them the machines that will fail with zero error". They do, however, want to understand "how good the predictive model can be" and "what are the tolerance of error" --- because if they invest in this path they are betting the financial future of the company on getting close to the expected results from the pilot program.
+							
+
+						</p>
+						
+						<p>
+							The executive team commits to funding a small team of technicians to do overnight maintenance on 18 machines each night on the machines that are likely to fail the next day. These 18 machines will be selected based on the data science team's model's top 18 most likely to fail machines.
+
+						</p>
+
+
+						<h2>Pilot Financial Goals</h2>
+
+						<p>
+							The finance team has calculated that if they drop the price of the product from $20 to $18.50 (dropping annual revenue to $17,203,662) then this would drop the operating profit margin of the company from 12% (decent) to <code>4.86%</code> (not good) because (in theory) cost of goods sold and operational expenses would stay the same (if they sold the same number of tools).
+
+						</p>						
+						<p>
+							Based on financial analysis ACME realizes that an operating profit margin of <code>4.86%</code> does not bode well for long term operations of the company.
+
+						</p>
+
+						<h3>PM Program Cost</h3>
+						<p>
+							The finance and operations team came up with the following metrics and costs that it would take to perform preventative maintenance on 18 machines each night:
+
+							<ul>
+
+								<li>Hours per Shift: 9 hours</li>
+								<li>Time required per PM Fix: 1 hour</li>
+								<li>Fixes per PM Shift: 9 machines fixed</li>
+								<li>Required PM Technicians: 2</li>
+								<li>Cost per Year per PM Technician: $64,800</li>
+								<li>Total PM Program Cost: $129,600</li>
+
+							</ul>
+
+							With this overhead in mind, let's take a look at our goals for the pilot.
+
+
+
+						</p>
+
+
+						<h3>Minimum Viable Goal</h3>
+						<p>
+
+							The finance team has determined that an operations margin of around <code>9.6%</code> is a realistic minimal viable number to shoot for if the management team wants to remain minimally competitive in the market (e.g., being able to raise capital, etc).
+
+						</p>
+						<p>
+							In the best case, the finance team would like to get closer to the original operating profit margin (<code>12%</code>), but they realize this could be a difficult goal under the current circumstances. Regardless, the team decides to set that as the stretch goal for the project.
+
+						</p>
+						<p>
+							
+							The team has calculated that if they can detect 11 failures (out of 18 predictions, or 61% accuracy) per day, they could reach a margin of <code>9.6%</code> with PM Program costs included. This seems like a safe and reasonable minimum viable goal, but given the stakes, the team needs goals they have a high chance of clearing.
+						</p>
+						<h3>Stretch Goal</h3>
+						<p>
+							The stretch goal is to get back to the <code>12%</code> operating margin, however, and if they can detect 14 out of 18 (78% on the top 18 predictions) then this would get them back to an <code>10.9%</code> operating profit margin.
+
+
+							If they could hit this rate 95% of the time, this would reduce daily failures from 66 to 52 (detecting and preventing 21% of the failures). 
+							However, with the lowered price but also using predictive maintenance to reduce downtime, the company summarized that:
+
+							<ul>
+								<li>they could operate the same hours and produce 1,027,084 (+10.45%) tools</li>
+								<li>operational expenses would hold constant </li>
+								<li>cost of goods sold would increase slightly (labor would hold constant, but more products produced costs +10.45% more materials)</li>
+							</ul>
+
+							The finance team concluded that with the reduced downtime and lower price that ACME would sell <code>$19,001,060</code> in product as well, with an operating profit margin of <code>10.9%</code>.
+
+						</p>
+
+						<p>
+							Needless to say, the executive team was excited at the prospect of being able to combat the price drop and potentially salvage their operating profit margin.
+
+						</p>
+
+
+						<p>
+							With this information in hand, the ACME Tool Co operations team sets up a meeting with the data science team to map out the best path to produce a pilot project.
+
+						</p>
+
+
+
+
+
+
+
+						<h3>Summary of Pilot Goals</h3>
+
+
+												
+						<p>To implement the new pilot system, ACME Tool Co. does not want to make major changes to their process, so they keep the reactive maintenance process in place during the normal daily operational hours.</p>
+
+						<p>
+							Based off past experimentation, both the executive team and the data science team know that predictive models are not perfect and you have to set expectations to have any shot at being successful with a machine learning project. With this in mind, the executive team works with the data science team to set the following pilot parameters:
+
+							</p>
+
+
+						<ul>
+
+							<li>the company is willing to pay for a small team of technicians to do overnight maintenance on <code>18</code> machines that are likely to fail the next day</li>
+							<li>minimum viable goal:  at least <code>11</code> out of 18 correct (<code>61%</code> out of top 18) 95% of the time</li>
+							<li>stretch goal: <code>14</code> out of 18 predictions correct (<code>78%</code> out of top 18) 95% of the time</li>
+						</ul>
+
+
+
+						</p>
+
+						<p>
+							The IT team started collecting machine sensor data about 2 years ago. They currently continue to daily collect the sensor data on how each machine on the line is used (torque, minutes, etc). The manufacturer of the machines also provides data on 10k known devices across multiple companies in a data share agreement to help with maintenance modeling. So ACME Tool Co. has some data to work with, but it remains to be seen how valuable the data really is in the pursuit of predicting machine failure.
+
+
+						</p>
+					
+
+
+
+						<h2>Operational Contract Between Line of Business and Data Science Team</h2>
+
+						<p>
+							The line of business doesn't need to understand everything that goes on in data science land, but there should be some sync points along with an start state and then acceptance criteria for completion.
+
+						</p>
+
+						<p>
+							The data science team is provided the 10k machines worth of historical data to begin their analysis with.
+						</p>
+						<p>
+
+
+							At this point, the data science team has a starting point (data, resources, ROI targets), and they commit to delivering a model and an analysis of the expected performance of the model under the supplied conditions (first deliverable). Together, the data science team and the business team will analyze how the model's performance impacts the business in financial terms.
+						</p>
+						<p>
+
+							The (second) deliverable from the data science team to the operations management team is a simple report of the top 18 "most likely to fail machines" every day based on the data up to that day. The data science team doesn't have to build any fancy apps, just a simple text report via email or SQL view.
+
+						</p>
+						<p>
+							With the 2 clear established goals, parameters for the pilot, and a collaborative framework, the data science team now sets off to write a plan to achieve the business team's target goals for ROI with a predictive model.
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- Section 3 of 5: Goals, Contraints -->
+
+
+
+
+
+
+
+
+
+
+				<!-- Section 5 of 5: Segue to Part 2, EDA -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Next Steps: Ingest and Store the Manufacturing Sensor Data</h1>
+
+						<p>
+							The ACME Tool Co. team has collectively established the goals and business constraints for their predictive maintenance pilot program.
+
+						</p>
+						<p>
+							Let's now <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">move on to part 2 of our series</a> where the ACME Tool Co. data science team starts their journey managing and analyzing the machine failure sensor data.
+
+						</p>
+
+					</div>
+				</div>
+				<!-- Segue to Part 2: EDA -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

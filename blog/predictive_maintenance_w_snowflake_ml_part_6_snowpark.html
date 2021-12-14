@@ -1,0 +1,785 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Predictive Maintenance with Snowflake and Machine Learning - A Blog Series - Part 6</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+		span.editing_todo {
+			color: #CC0000;
+			font-style: italic;
+		}		
+
+		span.editing_refactor {
+			color: #CC00CC;
+			font-style: italic;
+		}			
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Predictive Maintenance</h1>
+						<p>
+							<h3>Part 6 of 6: "Continuous Applied Predictive Maintenance with Snowflake and Snowpark"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: Sept 2021
+						</p>
+						
+
+
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a></li>
+
+							</ul>
+
+
+						</p>
+						
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+
+						<p>
+							In the previous article (<a href="./predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Part 5</a>) in this series, we validated that the best model did meet the business requirements set by the business unit.
+
+						</p>
+						<p>
+							In this article we put our pilot project into production with Snowpark to scalably deliver predicted machine failures to the maintenance teams each day.
+
+						</p>
+
+						<p>
+							Key Take Aways:
+							<ol>
+								<li>Introduction to the Snowpark API</li>
+								<li>Building and running code to run Snowpark dataframes inside Snowflake</li>
+								<li>Using a PMML Model to score machine sensor data inside Snowflake</li>
+
+							</ol>
+
+						</p>
+
+						<p>Other relevant articles on our blog:
+							<ul>
+
+								<li><a href="./deploying_huggingface_with_kfserving.html">Deploying a HuggingFace NLP Model with KFServing</a></li>
+								<li><a href="./unsupervised_anomaly_detection.html">Unsupervised Image Anomaly Detection in Manufacturing Lines</a></li>
+							</ul>
+
+							</p>
+
+						<p>
+							In <a href="./predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Part 4</a> of this series we built an XGBoost model and saved it as PMML. In this article we'll take the saved PMML model and run it inside the Snowflake cloud database to score data in the cloud. We'll then build a quick dashboard that displays the daily Top 18 most likely to fail machines.
+
+
+						</p>
+						<p>
+							With that out of the way, let's dig into Snowpark.
+
+						</p>
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>What is Snowpark</h1>
+
+						<span class="quote_to_rewrite">
+							<p>
+								The Snowpark API provides programming language constructs for building SQL statements. For example, the API provides a select method that you can use to specify the column names to return, rather than writing 'select column_name' as a string.
+
+								https://docs.snowflake.com/en/developer-guide/snowpark/index.html
+
+
+
+							
+							</p>
+							<p>
+Snowpark operations are executed lazily on the server, which reduces the amount of data transferred between your client and the Snowflake database.
+
+
+
+
+							</p>
+
+							<p>
+The core abstraction in Snowpark is the DataFrame, which represents a set of data and provides methods to operate on that data. In your client code, you construct a DataFrame object and set it up to retrieve the data that you want to use (for example, the columns containing the data, the filter to apply to rows, etc.).
+
+							</p>
+
+							<p>
+The data isn’t retrieved at the time when you construct the DataFrame object. Instead, when you are ready to retrieve the data, you can perform an action that evaluates the DataFrame objects and sends the corresponding SQL statements to the Snowflake database for execution.
+
+							</p>
+
+							<p>
+You can create user-defined functions (UDFs) in your code, and Snowpark can push your code to the server, where the code can operate on the data.
+
+You can write functions in the same language that you use to write your client code (for example, by using anonymous functions in Scala). To use these functions to process data in the Snowflake database, you define and call user-defined functions (UDFs) in your custom code.
+
+Snowpark automatically pushes the custom code for UDFs to the Snowflake database. When you call the UDF in your client code, your custom code is executed on the server (where the data is). You don’t need to transfer the data to your client in order to execute the function on the data.
+							</p>
+
+<p>
+
+	When you use the Snowpark API to create an UDF, the Snowpark library uploads the code for your function to an internal stage. When you call the UDF, the Snowpark library executes your function on the server, where the data is. As a result, the data doesn’t need to be transferred to the client in order for the function to process the data.
+
+</p>
+						</span>
+
+					</div>
+				</div>
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Deploying Our XGBoost Model to Snowflake with Snowpark</h1>
+
+						<p>
+							The  steps to use our model to score new data in a Snowflake database are:
+
+							<ul>
+								<li>Save model as PMML</li>
+								<li>Set up Snowpark API</li>
+								<li>Write UDF code for Snowpark to use PMML model</li>
+								<li>Run job via Snowpark Session and save predictions</li>
+
+							</ul>
+
+							In this section we'll walk through all of the above while <a href="https://github.com/pattersonconsulting/predictive_maintenance/tree/main/snowpark/snowpark_pm">referencing our Snowpark code</a> specficially.
+
+						</p>
+
+						<p>
+							If you'd like to try out the code for yourself check out the following repository:
+
+						</p>
+
+<pre>
+git clone https://github.com/pattersonconsulting/predictive_maintenance.git
+</pre>
+						<p>
+							Now let's dig into how to use the Snowpark API to work with data in Snowflake.
+
+							</p>
+
+						<h2>Using the Snowpark API to Process Data in Snowflake</h2>
+
+						<p>
+							Our functional goal is to use the model to make a machine failure prediction based on each row in the table <code>SUMMARY_SENSOR_DATA_TEST</code>.
+							To do this we need to use the snowpark API.
+							We'll create a Snowpark <a href="https://docs.snowflake.com/en/developer-guide/snowpark/reference/scala/com/snowflake/snowpark/Session.html">session</a> and a <a href="https://docs.snowflake.com/en/developer-guide/snowpark/reference/scala/com/snowflake/snowpark/DataFrame.html">dataframe</a> for the table <code>SUMMARY_SENSOR_DATA_TEST</code>.
+						</p>
+						<p>
+							We then load our model via <code>pmml4s</code> (PMML implementation for scala) to load our pmml model file.
+							Once we have our Snowpark table data represented by a snowpark dataframe, we can apply a <a href="https://docs.snowflake.com/en/developer-guide/snowpark/reference/scala/com/snowflake/snowpark/UserDefinedFunction.html">UDF</a> in a functional programming-style that makes a prediction for each record in the table.
+							The results are stored back in new table linking the machine ID to the failure score predicted by the model.
+
+
+						</p>
+						<p>
+							NOTE: 
+
+						</p>
+
+
+						<!-- ###### START NOTE ####### -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Scaling Up Batch Inference with UDFs</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+							  	Dataframes processed with UDFs in a functional style will scale well as the size of the input table grows large.
+							
+								</p>
+			
+								</i></p>
+							  
+							</div>	
+
+						</div>	
+						<!-- ###### START NOTE ####### -->						
+
+
+
+
+						<h2>Building a PMML Wrapper for our Model</h2>
+
+						<p>
+							Previously we saved the <a href="https://github.com/pattersonconsulting/predictive_maintenance/tree/main/snowpark/snowpark_pm/lib/pmml">XGBoost model as a pmml file</a>. Let's now take that file and package it in a jar file so that snowflake can upload it as a dependency.
+
+						</p>
+
+<pre>
+jar cfm pm_pmml_model.jar pmml/pm_sklearn_xgb.jar
+</pre>	
+
+						<p>
+
+						</p>
+
+
+
+						<h2>Writing Snowpark Code to Run Our Model on Snowflake</h2>
+
+						<p>
+
+							Below we can see the <a href="https://github.com/pattersonconsulting/predictive_maintenance/blob/main/snowpark/snowpark_pm/src/main/scala/Main.scala">main function of our scala code</a> that will run inside Snowflake via Snowpark:
+
+						</p>
+
+
+<pre>
+  def main(args: Array[String]): Unit = {
+    
+    Console.println("\n=== Creating the session ===\n")
+
+    val session = Session.builder.configFile("conn.properties").create
+
+    val df_raw_device_data_test = session.table("SUMMARY_SENSOR_DATA_TEST") //.select(col())
+    df_raw_device_data_test.show()
+
+    val libPath = new java.io.File("").getAbsolutePath
+    println(libPath)
+    
+    session.addDependency(s"$libPath/lib/pmml4s_2.12-0.9.11.jar")
+    session.addDependency(s"$libPath/lib/spray-json_2.12-1.3.5.jar")
+    session.addDependency(s"$libPath/lib/scala-xml_2.12-1.2.0.jar")
+    // have to wrap pmml in a jar for this to work
+    session.addDependency(s"$libPath/lib/pm_pmml_model.jar")
+
+    session.sql("drop function if exists model_PM_UDF_predict(DOUBLE);").show()
+    session.udf.registerTemporary("model_PM_UDF_predict", UDFCode.predictFailureScoreUDF)    
+    session.sql("SHOW USER FUNCTIONS;").show()
+
+    val df_machines_scored = df_raw_device_data_test.withColumn("FAILURE_SCORE", callUDF("model_PM_UDF_predict", col("TYPE"), col("AIR_TEMPERATURE"), col("PROCESS_TEMPERATURE"), col("ROTATIONAL_SPEED"), col("TORQUE"), col("TOOL_WEAR"))) 
+    df_machines_scored.show()
+    df_machines_scored.write.mode(SaveMode.Overwrite).saveAsTable("DAILY_SCORED_MACHINES")
+
+    Console.println("\n=== CLOSING the session ===\n")
+
+    session.close();
+
+  }
+</pre>
+
+						<p>
+							Once we have our code the way we want it, we need to connect to Snowflake with the Snowpark API.
+
+						</p>
+
+
+
+
+						<h2>Running the Snowpark Code</h2>
+
+						<p>
+
+							To connect to Snowflake via the Snowpark API with scala we need to <a href="https://docs.snowflake.com/en/developer-guide/snowpark/creating-session.html">create a session</a>:
+
+						</p>
+<pre>    val session = Session.builder.configFile("conn.properties").create</pre>
+
+						<p>
+							If we take a look at the contents of the <code>conn.properties</code> file we see:
+
+						</p>					
+
+<pre>
+URL = https://nna57244.us-east-1.snowflakecomputing.com
+USER = your_user_name
+PASSWORD = your_password
+#
+# Note: To use key-pair authentication instead of a password,
+# comment out (or remove) PASSWORD. Then, uncomment PRIVATE_KEY_FILE
+# and set it to the path to your private key file.
+# PRIVATE_KEY_FILE = </path/to/private/key/file>
+#
+# If your private key is encrypted, you must also uncomment
+# PRIVATE_KEY_FILE_PWD and set it to the passphrase for decrypting the key.
+# "PRIVATE_KEY_FILE_PWD" -> "<passphrase_to_decrypt_private_key_file>",
+#
+ROLE = SYSADMIN
+WAREHOUSE = ANALYTICS_WH
+DB = PREDICTIVE_MAINTENANCE
+SCHEMA = PUBLIC
+</pre>
+
+						<p>
+							There are multiple ways to run scala code locally and one of the most popular is SBT.
+
+							</p>
+
+							<h3>Snowpark Dependencies</h3>
+
+							<p>
+There are multiple languages supported for Snowpark, but if you are going to use SBT with scala then <a href="https://docs.snowflake.com/en/developer-guide/snowpark/setup-other-environments.html#label-snowpark-download-library">install snowpark as dependency in build.sbt</a>. Your versions may vary, but below are the dependencies we used with this version of the code.
+
+							</p>
+
+<pre>
+
+scalaVersion := "2.12.13"
+
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
+
+libraryDependencies += "com.snowflake" % "snowpark" % "0.11.0"
+
+libraryDependencies += "org.pmml4s" %%  "pmml4s" % "0.9.11"
+</pre>
+
+	
+
+
+
+						<p>
+							Once the above code is compiled by SBT (or your favorite tool) and run locally, Snowpark connects to Snowflake and compiles the code down to SQL that Snowflake understands natively, as shown below.
+
+						</p>
+
+<consoleoutput>
+
+[run-main-0] INFO com.snowflake.snowpark.internal.ServerConnection - Execute query [queryID: 01a0dc6d-0501-7279-004e-7f83000691ae]  CREATE  OR  REPLACE  TABLE DAILY_SCORED_MACHINES AS  SELECT  *  FROM ( SELECT "UDI", "PRODUCT_ID", "TYPE", "AIR_TEMPERATURE", "PROCESS_TEMPERATURE", "ROTATIONAL_SPEED", "TORQUE", "TOOL_WEAR", "MACHINE_FAILURE", "TWF", "HDF", "PWF", "OSF", "RNF", model_PM_UDF_predict("TYPE", "AIR_TEMPERATURE", "PROCESS_TEMPERATURE", "ROTATIONAL_SPEED", "TORQUE", "TOOL_WEAR") AS "FAILURE_SCORE" FROM ( SELECT  *  FROM (SUMMARY_SENSOR_DATA_TEST)))
+</consoleoutput>
+
+						<p>
+							Note the <code>model_PM_UDF_predict</code> function being referenced inline in the SQL. This is referencing our scala UDF that was uploaded to stage for the snowflake table.
+
+						</p>
+
+
+<p>We can see the results of the snowpark UDF operation in the new table <code>DAILY_SCORED_MACHINES</code> as shown below.</p>
+
+<consoleoutput>
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|"UDI"  |"PRODUCT_ID"  |"TYPE"  |"AIR_TEMPERATURE"  |"PROCESS_TEMPERATURE"  |"ROTATIONAL_SPEED"  |"TORQUE"  |"TOOL_WEAR"  |"MACHINE_FAILURE"  |"TWF"  |"HDF"  |"PWF"  |"OSF"  |"RNF"  |"FAILURE_SCORE"        |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|1      |M14860        |M       |298.1              |308.6                  |1551.0              |42.8      |0.0          |0                  |0      |0      |0      |0      |0      |0.0016097500313497588  |
+|2      |L47181        |L       |298.2              |308.7                  |1408.0              |46.3      |3.0          |0                  |0      |0      |0      |0      |0      |0.002551409878500267   |
+|3      |L47182        |L       |298.1              |308.5                  |1498.0              |49.4      |5.0          |0                  |0      |0      |0      |0      |0      |0.0020588162930308294  |
+|4      |L47183        |L       |298.2              |308.6                  |1433.0              |39.5      |7.0          |0                  |0      |0      |0      |0      |0      |0.002986053042197225   |
+|5      |L47184        |L       |298.2              |308.7                  |1408.0              |40.0      |9.0          |0                  |0      |0      |0      |0      |0      |0.002335747891485407   |
+|6      |M14865        |M       |298.1              |308.6                  |1425.0              |41.9      |11.0         |0                  |0      |0      |0      |0      |0      |0.0027666157713178356  |
+|7      |L47186        |L       |298.1              |308.6                  |1558.0              |42.4      |14.0         |0                  |0      |0      |0      |0      |0      |0.0016097500313497588  |
+|8      |L47187        |L       |298.1              |308.6                  |1527.0              |40.2      |16.0         |0                  |0      |0      |0      |0      |0      |0.0016097500313497588  |
+|9      |M14868        |M       |298.3              |308.7                  |1667.0              |28.6      |18.0         |0                  |0      |0      |0      |0      |0      |0.0025132880609650995  |
+|10     |M14869        |M       |298.5              |309.0                  |1741.0              |28.0      |21.0         |0                  |0      |0      |0      |0      |0      |0.0019359489653722097  |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+</consoleoutput>
+
+
+
+					<p>
+						We'd want to run this table scan at the end of each workday to update the <code>FAILURE_SCORE</code> field for each machine being tracked. This gives the maintenance crew a list of machines they need to focus on for their nightly maintenance run.
+
+					</p>
+					<p>
+
+						We should not have to rebuild the model for this population of machines unless new types of brands of machines were added to the manufacturing lines (potentially changing the distribution of the data). However, checking the distributions with some EDA work would not be that hard.
+
+					</p>
+					<p>
+						Let's now move on to providin the report on these specific 18 machines most likely to fail to the maintenance team.
+
+					</p>
+
+
+
+						<!-- ###### START NOTE ####### -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Wiring Up a Daily Machine Scan</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+							  	To round out operationalizing this pilot program, we'd likely take the scala code and then have a <code>cron</code> job on a schedule execute the scala code each day. This would have the snowpark API code take the most current pmml model and scan the summarized sensor data. In this setup, each day as the minutes per machine accumulated, the model would pick up the changes and make nuanced predictions for which machines were most likely to fail.
+							
+
+
+
+								</p>
+			
+								</i></p>
+							  
+							</div>	
+
+						</div>	
+						<!-- ###### START NOTE ####### -->						
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Deploying a Notebook-Based Dashboard for the Predictive Maintenance Team</h1>
+
+						<p>
+							The maintenance team just needs a simple daily report with a list of machine numbers to go service to execute the predictive maintenance program.
+
+						</p>
+						<p>
+							The notebook the data science team provides is shown below.
+
+						</p>
+
+
+
+						<p>
+						<iframe width="1000" height="500" src="https://nbviewer.jupyter.org/github/pattersonconsulting/predictive_maintenance/blob/main/notebooks/pm_snowflake_daily_top18_dec2021_v1.ipynb?flush_cache=true"></iframe>
+
+						</p>
+
+						<p>
+							We can see the top 4 rows from the embedded notebook above in the table below:
+
+						</p>
+						<p>
+							<table>
+
+<tr>
+	<th>UDI</th><th>FAILURE_SCORE</th>
+</tr>
+<tr>
+	<td>4463</td><td>0.988231</td>
+</tr>
+<tr>
+	<td>4418</td><td>0.985929</td>
+</tr>
+<tr>
+	<td>1017</td><td>0.984222</td>
+</tr>
+<tr>
+	<td>4422</td><td>0.984187</td>
+</tr>
+
+							</table>
+
+						</p>
+					</div>
+
+				</div>				
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Analytics Help?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with Snowflake analytics.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Summary and Next Steps</h1>
+
+						<p>In this series we analyzed the core business case for ACME manufacturing and how predictive modeling affected the financial health of their business under different scenarios.</p>
+
+						<p>
+							Further, we analyzed the raw data, built a predictive model, and deployed it to the cloud to provide the line of business with operational intelligence.
+
+						</p>
+
+						<p>
+							If you would like to get a free report on the potential value of a specific machine learning use for your business, <a href="../contact.html">please reach out and contact us</a>.
+
+
+
+						</p>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

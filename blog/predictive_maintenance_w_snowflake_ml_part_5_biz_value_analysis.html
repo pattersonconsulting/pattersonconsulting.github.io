@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Predictive Maintenance with Snowflake and Machine Learning - A Blog Series - Part 5</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="blog page for Patterson Consulting" />
+	<meta name="keywords" content="blog, patterson consulting, deep learning, machine learning, apache hadoop, apache spark, etl, consulting, model search, petting zoo, open ai, computer vision" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Applied Machine Learning Quarterly (Q2 2021)"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+	
+
+	<meta name="twitter:title" content="Applied Machine Learning Quarterly (Q2 2021)" />
+	<meta data-rh="true" property="twitter:description" content="This is an ongoing curated list of interesting new open source machine learning models, tools, and visualizations for 2021."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/applied_ml_quarterly_og_meta_card_q2_2021.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/applied_ml_quarterly_q2_2021.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Applied Predictive Maintenance</h1>
+						<p>
+							<h3>Part 5 of 6: "Forecasting the Business Value of Machine Learning Models"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: Sept 2021
+						</p>
+						
+
+
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a></li>
+
+							</ul>
+
+
+						</p>
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>The Predictive Maintenance Business Case Revisted</h1>
+
+						<p>
+						In the last post we built a series of models with our minimum model performance and stretch goals in mind.
+						</p>
+
+						<p>
+
+							In this post we revist the business scenario and then examine how our model projects to impact the operating profit margin of ACME Tool Co.
+						</p>
+
+
+						<p>
+							The business team set the following business and model performance goals.
+
+							</p>
+
+
+						<ul>
+
+							<li>the company is willing to pay for a small team of technicians to do overnight maintenance on <code>18</code> machines that are likely to fail the next day</li>
+							<li>minimum viable goal:  at least <code>11</code> out of 18 correct (<code>61%</code> out of top 18) 95% of the time</li>
+							<li>stretch goal: <code>14</code> out of 18 predictions correct (<code>78%</code> out of top 18) 95% of the time</li>
+						</ul>
+
+						<p>
+							With the business goals in mind, let's now take a look at how our data science team fared with the modeling efforts.
+
+
+						</p>
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+	
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Impact of Model Results on Business</h1>
+
+						<p>
+							In the chart below we can see the model performance from the top 3 models from the data science teams data science workflow (along with the baseline model, logistic regression, for comparison).
+
+						</p>
+
+<img src="./images/pm_nov2021_part4_top18.png" />
+
+						<p>
+							The red line represents the minimum performance for the model to hit the most conservative business goal (at least <code>11</code> out of 18 correct [<code>61%</code> out of top 18] 95% of the time).
+
+							</p>
+
+
+							<p>
+							The blue line represents the ideal outcome for the business in this context (<code>14</code> out of 18 predictions correct [<code>78%</code> out of top 18] 95% of the time).
+
+							</p>
+
+
+							<p>
+							The ranges ("whiskers" on the bars) on the model performance chart represent the 95% confidence intervals (or variability) in the average performance of each model.
+
+							</p>
+							<p>
+								We have to calculate and take into consider the 95% confidence intervals because the model is built around the statistics of the training data. We don't train models on the entire population of data (all data that would be possible) because we simply do not have this data. We train models on a sample that (hopefully) represents the true population of the data. The closer our training data represents the full population of the data, the lower the standard deviation and the tighter our confidence intervals will be. Therefore we calculate the confidence intervals for the model based on how well the training data represents the population data.
+
+							</p>
+							<p>
+								We conservatively only want to consider the lower range of the confidence intervals so that our business cases is accurate 95% of the time, so we want a model that has a lower range that clears our goal line (red and blue lines). If the average performance of the model is above the goal line but the lower range of the confidence interval doesn't clear the goal line, then the model would only meet our performance goal "some of the time".
+
+
+							</p>
+
+							<p>
+								The modeling team was able to produce 3 models that would achieve performance better than the red line 95% of the time.
+
+
+							</p>
+							<p>
+								Even better, one of the models found was able to achieve performance better than the blue line 95% of the time. In the next section, we'll analyze how these modeling results translated into financial impact on the line of business.
+
+							</p>
+
+
+						<!-- ###### START NOTE ####### -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Probabilities of Occurrence of Rare Events</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+							
+
+								</p>
+
+
+									<table>
+											<tr>
+												<th>std. deviations</th>
+												<th>Probability (%)</th>
+												<th>Events/year</th>
+												<th>Events/five years</th>
+
+											</tr>
+
+											<tr>
+												<td>-1.0</td>
+												<td>15.87</td>
+												<td>40</td>
+												<td>200</td>
+
+											</tr>
+
+											<tr>
+												<td style="font-weight: bold;">-2.0</td>
+												<td style="font-weight: bold;">2.28</td>
+												<td style="font-weight: bold;">6</td>
+												<td style="font-weight: bold;">29</td>
+
+											</tr>
+
+											<tr>
+												<td>-2.5</td>
+												<td>0.62</td>
+												<td>2</td>
+												<td>8</td>
+
+											</tr>
+
+											<tr>
+												<td>-3.0</td>
+												<td>0.13</td>
+												<td>0</td>
+												<td>2</td>
+
+											</tr>																		
+
+
+
+									</table>
+									<br/>
+									<p>
+
+									Table Source: <A href="https://www.amazon.com/Advanced-Portfolio-Management-Fundamental-Investors/dp/1119789796/ref=sr_1_3?crid=OHH49WRDMO4L&keywords=advanced+portfolio+management+by+paleologo&qid=1638288877&qsid=142-2453615-6550551&sprefix=advanced+portfolio%2Caps%2C163&sr=8-3&sres=1119789796%2CB071Y3MSRK%2CB07236Q2C3%2CB075332F51%2CB07SVG5N45%2CB08N46B7HJ%2CB07MPNMGHS%2CB08QMCHBM2%2CB07PC3FXV5%2CB01N74KH32%2CB0931YYH25%2CB08S7NMR8Q%2CB01FKZSCRW%2CB086JWBF8M%2CB093L8B373%2CB084STCZNP&srpt=ABIS_BOOK">Advanced Portfolio Management: A Quant's Guide for Fundamental Investors 1st Edition</A>
+								</p>
+
+								<p>
+									The above chart represents a single tail metric (the "bad tail", as opposed to the tail on the other side of the mean) for how often a "rare event" occurs. It's another way to think about how often our model error would be outside its confidence interval in terms of "days per year".
+
+
+								</p>
+								<p>
+									A 95% confidence interval is roughly the same as -1.96 std. deviations from the mean.
+								</p>
+								<p>
+
+									So model performance outside of the 95% confidence interval should be 12 days (240 days * .95 = ~228 days, 240 - 228 == 12 days).
+
+
+								</p>
+								<p>
+									The means that half of those days outside of the confidence interval should be below the low bound, so 6 days per year we'd fall under the lower end of the confidence interval.
+
+								</p>
+			
+								</i></p>
+							  
+							</div>	
+
+						</div>	
+						<!-- ###### START NOTE ####### -->						
+
+
+
+					</div>
+
+				</div>
+
+
+	
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+						<h1>Analysis of Model Results Impact on Business Financials</h1>
+
+						<p>
+							We'll start with a quick overview of what is projected to happen post-price drop without any changes to the maintenance processes.
+
+						</p>
+
+						<p>
+
+							<ul>
+								<li>Net sales drops due to price drop</li>
+								<li>Cost of Goods Sold stays the same because we still are forecast to sell the same number of tools (in this static forecast)</li>
+								<li>Operating expenses are the same year to year in this comparison as well</li>
+								<li>The company sells the same number of tools, but they make less per tool, resulting in a reduced operating profit margin (4.86%)</li>
+							</ul>
+						</p>
+						<p>
+
+This drop in operating profit margin would create a large drop in
+shareholder equity for ACME Holding Company.
+
+This drop in operating profit margin would also make it harder to raise
+capital to compete and grow in the market. The board would like to avoid both of this scenarios.
+						</p>
+
+
+						<p>
+
+							Now let's take a quick look at what these same numbers will look like once a predictive maintenace program is applied.
+							
+
+						</p>
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #4287f5; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					<div class="col-md-3" id="fh5co-content" style="">
+						<h3 style="color: #ffffff;">Income Statement Download</h3>
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							If you'd like to see more detailed numbers on how the model performance affected ACME's income statement, download our pdf report:
+							<span style="color:red"><b><a href="../offerings/mlops_briefing.html">ACME Tool Company Predictive Maintenance Business Impact Analysis</a></b></span>.
+
+						</p>
+						</div>
+					</div>
+				</div>					
+
+
+						<h2>Minimum Case Model Performance Results</h2>
+
+						<p>
+							Any model the data science team produce that could hit the baseline goal of the model (at least <code>11</code> out of 18 correct [<code>61%</code> out of top 18] 95% of the time) produces an operating profit margin of 9.63%. 
+
+						</p>
+						<p>
+							This operating profit margin is inclusive of the yearly cost ($129,600) of predictive maintenance program.
+
+
+						</p>
+						<p>
+
+							While this is lower than the 2021 (current) operating profit margin, it's still considerably higher than what could be the 2022 operating profit margin if nothing changes.
+
+						</p>
+
+						<h2>XGBoost Performance Results</h2>
+
+						<p>
+							The best model produced gets ACME Tool Co’s operating profit margin back to <code>11.34%</code> (within 0.66% of the original 12.00%). This is considered a positive outcome by the whole team (and a pleasant surprise, given the situation). 
+
+
+
+						</p>
+						<p>
+
+							Further:
+							<ul>
+								<li>Operating expenses (outside of extra maintenance costs) stay constant compared to 2021</li>
+
+								<li>The PM program is in this bucket, but we list it separately as “PM Program
+Cost” ($129,600) in the Income Statement</li>
+
+<li>We now bring in 7.5% less per tool sold, but we have less downtime by fixing 14.92
+failures per night (95% of the time) through the predictive maintenance system</li>
+
+<li>Cost of goods sold increase slightly because we are now producing more tools due to
+reduced downtime</li>
+							</ul>
+
+						</p>
+
+						<h2>Implications of Modeling Results</h2>
+
+						<p>
+							The news of the best model produced by the data science team is welcomed by everyone at ACME Tool Co. This gets the executive team off their heels and gives them the flexibility to compete or sell at a better price.
+
+						</p>
+
+						<p>
+							The market is commoditized and no other clear points of differentiation are expected with the new $18.50 version, customers will likely flip on price.
+
+
+						</p>
+
+
+						<p>
+
+							However, ACME Tool can leverage predictive maintenance to possibly drop price further and put pressure back on competitors, defending their market from new entrants.
+							
+
+						</p>
+
+						<p>
+
+							ACME Tool can also put more resources into further improving the model, further improving their income statement and sharpening their competitive edge.
+
+						</p>
+
+
+						<!-- ###### START NOTE ####### -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+								<div style="border: solid 0px; overflow: auto;">
+
+								<h4>Improving Efficiency of Use of Existing Operations</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+						<p>
+							Many times we see machine learning and data science over-marketing to provide seemingly "magic" applications. What often gets overlooked is that a foundational application of machine learning is to solve low-hanging use cases such as more efficiently operating a business with existing resources.
+
+						</p>
+						<p>
+							Many businesses similar to ACME Tool Company likely have other aspects of their business that could be improved with machine learning. Often if they inspect their income statement, they can identify aspects of their business that could operate better with the same amount of overhead, producing better operating profit margins.
+
+						</p>
+
+
+
+
+			
+								</i></p>
+							</div>
+							  
+							</div>	
+
+						</div>	
+						<!-- ###### START NOTE ####### -->						
+
+
+<!--
+
+						<h2>Understanding the Limits of Model Performance</h2>
+
+
+						<p>
+
+							executive wants to use the current model on more machines (it can predict more, right?)
+
+
+							
+
+						</p>
+						<p>
+							Show profit curve to explain how model performance degrades as we shift the threshold
+
+						</p>
+						<p>
+							the point: top of sorted prediction are going to be the best/most certain
+
+						</p>
+-->
+
+					</div>
+
+				</div>
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Moving from Proof of Concept to Production Pilot</h1>
+
+						<p>
+							The business team has now confirmed that the model has met the goal criteria and we can now move the model into a pilot production state.
+
+						</p>
+
+						<p>
+							We don't have to re-train the model everyday -- as long as the distribution of the data stays the same.
+
+						</p>
+
+
+					<div style="width:900px; margin:0 auto;">
+
+						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+							<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
+
+							<h4>Watch Out for Concept Drift</h4>
+						  <p style="font-size: 14px; ">
+						  <i>Models are constructed based on statistical properties of datasets. If/As those statistics change (e.g., "Concept Drift"), our model output will perform worse.</i></p>
+
+						</div>
+						  
+						</div>	
+					</div>	
+			
+						<p>
+
+							However, there is wear on our tools each day we are operational, so we need to re-scan our tool sensor data each day to build a queue of the most likely tools to fail.
+
+							The evening maintenance team will use the rebuilt queue each day, provided to them as a daily report that shows them the 18 machines to perform the nightly maintenance on. Snowflake is a great place to store these predictions, and in our next article (Part 6: <a href="./predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a>) we will deliver this report based on our best model.
+
+						</p>
+						
+<!--
+
+						<p>
+							How do we know its working?
+
+							Run Pilot for a few weeks, and then shut off PM pilot for a week. Compare failure Counts.
+
+						</p>
+-->
+
+
+
+						<!-- ###### START NOTE ####### -->
+						<!--
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Machine Learning and Reliance on Data Distributions</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+						<p>
+							why is it key that the data distribution holds firm over time?
+
+						</p>
+
+
+
+						<p>
+							How would we track that the data distribution is shifting over time?
+
+						</p>
+
+
+						<p>
+							What would we do to mitigate the threat of concept drift?
+
+						</p>
+
+						<p>
+							how could we test in the future that we are fixing real potential failures? ("stop using PM for a week")
+
+							
+
+						</p>
+
+			
+								</i></p>
+							  
+							</div>	
+
+						</div>	
+					-->
+						<!-- ###### START NOTE ####### -->						
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

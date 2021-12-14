@@ -399,6 +399,7 @@ git clone https://github.com/pattersonconsulting/predictive_maintenance.git
 
 							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
 								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
 
 								<h4>Scaling Up Batch Inference with UDFs</h4>
 							  <p style="font-size: 14px; ">
@@ -410,6 +411,7 @@ git clone https://github.com/pattersonconsulting/predictive_maintenance.git
 								</p>
 			
 								</i></p>
+							</div>
 							  
 							</div>	
 
@@ -419,7 +421,7 @@ git clone https://github.com/pattersonconsulting/predictive_maintenance.git
 
 
 
-						<h2>Building a PMML Wrapper for our Model</h2>
+						<h2>Building a Scala PMML Wrapper for our Model</h2>
 
 						<p>
 							Previously we saved the <a href="https://github.com/pattersonconsulting/predictive_maintenance/tree/main/snowpark/snowpark_pm/lib/pmml">XGBoost model as a pmml file</a>. Let's now take that file and package it in a jar file so that snowflake can upload it as a dependency.
@@ -478,6 +480,84 @@ jar cfm pm_pmml_model.jar pmml/pm_sklearn_xgb.jar
 
   }
 </pre>
+
+
+						<p>
+							The above code section represents a "typical" Snowpark API <code>main()</code> entry point to drive your analysis code. In the following line, you can see where we register our specific UDF with the Snowpark API:
+
+
+						</p>
+<pre>session.udf.registerTemporary("model_PM_UDF_predict", UDFCode.predictFailureScoreUDF)    </pre>
+
+						<p>
+							Once we have this UDF registered with Snowpark, we can use it in our Snowpark API dataframe code:
+
+							</p>
+
+<pre>
+val df_machines_scored = df_raw_device_data_test.withColumn("FAILURE_SCORE", callUDF("model_PM_UDF_predict", col("TYPE"), col("AIR_TEMPERATURE"), col("PROCESS_TEMPERATURE"), col("ROTATIONAL_SPEED"), col("TORQUE"), col("TOOL_WEAR"))) 
+</pre>
+
+						<p>
+							The <code>callUDF("model_PM_UDF_predict...</code> part of the dataframe API calls our UDF code and passes in the column data. We can see our UDF code below.
+
+
+							</p>
+<pre>
+
+  object UDFCode extends Serializable {
+
+    lazy val udf_model = {
+
+      import java.io._
+
+      val resourceName = "/pmml/pm_sklearn_xgb.pmml" // this is the path of the pmml in the .jar
+      val inputStream = classOf[com.snowflake.snowpark.DataFrame].getResourceAsStream(resourceName)
+      Model.fromInputStream(inputStream)
+
+    }
+
+    val predictFailureScoreUDF = (TYPE_col: String, AIR_TEMPERATURE: Double, PROCESS_TEMPERATURE: Double, ROTATIONAL_SPEED: Double, TORQUE: Double, TOOL_WEAR: Double) => {
+      udf_model.predict(Map("TYPE" -> TYPE_col, "AIR_TEMPERATURE" -> AIR_TEMPERATURE, "PROCESS_TEMPERATURE" -> PROCESS_TEMPERATURE, "ROTATIONAL_SPEED" -> ROTATIONAL_SPEED, "TORQUE" -> TORQUE, "TOOL_WEAR" -> TOOL_WEAR)).get("probability(1)").get.asInstanceOf[Double]
+    }
+
+  }
+</pre>
+						<p>
+							Our <code>UDFCode</code> class needs to extend <code>Serializable</code> and inside the class, we only want the UDF to instantiate the PMML model once, we we tag the <code>udf_model</code> variable with the <a href="https://stackoverflow.com/questions/7484928/what-does-a-lazy-val-do"><code>lazy</code> keyword</a>.
+
+						</p>
+						<p>
+							As we can see, this function loads the pmml file from the jar class we packed it in for transport to Snowflake.
+
+						</p>
+						<p>
+							The method <code>predictFailureScoreUDF</code> is where we call <code>.predict()</code> on our pmml model, passing in the column data from the dataframe, and returning the output from the model as the output of the UDF.
+
+						</p>
+
+
+					<div style="width:900px; margin:0 auto;">
+
+						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+							<div style="border: solid 0px; overflow: auto;">
+
+							<h4>Advantages of Using <code>PMMLPileline</code></h4>
+						  <p style="font-size: 14px; ">
+						  <i>Back in Part 4 of this series, at the end of the Jupyter Notebook, we save the model as a PMML file. As part of this process, we wrap the xgboost model in a <code>PMMLPipeline</code> (from <a href="https://github.com/jpmml/sklearn2pmml"><code>sklearn2pmml</code></a>) object that includes the <code>DataFrameMapper</code> instance (from <a href="https://github.com/scikit-learn-contrib/sklearn-pandas"><code>sklearn_pandas</code></a>) used to transform the training and test data.</i></p>
+							
+							<p style="font-size: 14px; ">
+						  <i>		
+						  	This all comes in handy at this point in our Scala UDF, because we can now feed the model raw column data and let our pmml model (with the built in data transforms) take care of the vector transforms for us before it makes the prediction.
+
+						  </i>
+						  </p>				  
+
+						</div>
+						  
+						</div>	
+					</div>	
 
 						<p>
 							Once we have our code the way we want it, we need to connect to Snowflake with the Snowpark API.

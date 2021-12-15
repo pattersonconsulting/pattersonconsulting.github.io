@@ -290,49 +290,23 @@ tr:nth-child(even) {
 
 						<h1>What is Snowpark</h1>
 
-						<span class="quote_to_rewrite">
-							<p>
-								The Snowpark API provides programming language constructs for building SQL statements. For example, the API provides a select method that you can use to specify the column names to return, rather than writing 'select column_name' as a string.
-
-								https://docs.snowflake.com/en/developer-guide/snowpark/index.html
-
-
-
-							
-							</p>
-							<p>
-Snowpark operations are executed lazily on the server, which reduces the amount of data transferred between your client and the Snowflake database.
-
-
-
-
-							</p>
-
-							<p>
-The core abstraction in Snowpark is the DataFrame, which represents a set of data and provides methods to operate on that data. In your client code, you construct a DataFrame object and set it up to retrieve the data that you want to use (for example, the columns containing the data, the filter to apply to rows, etc.).
-
-							</p>
-
-							<p>
-The data isn’t retrieved at the time when you construct the DataFrame object. Instead, when you are ready to retrieve the data, you can perform an action that evaluates the DataFrame objects and sends the corresponding SQL statements to the Snowflake database for execution.
-
-							</p>
-
-							<p>
-You can create user-defined functions (UDFs) in your code, and Snowpark can push your code to the server, where the code can operate on the data.
-
-You can write functions in the same language that you use to write your client code (for example, by using anonymous functions in Scala). To use these functions to process data in the Snowflake database, you define and call user-defined functions (UDFs) in your custom code.
-
-Snowpark automatically pushes the custom code for UDFs to the Snowflake database. When you call the UDF in your client code, your custom code is executed on the server (where the data is). You don’t need to transfer the data to your client in order to execute the function on the data.
-							</p>
-
 <p>
-
-	When you use the Snowpark API to create an UDF, the Snowpark library uploads the code for your function to an internal stage. When you call the UDF, the Snowpark library executes your function on the server, where the data is. As a result, the data doesn’t need to be transferred to the client in order for the function to process the data.
+<a href="https://docs.snowflake.com/en/developer-guide/snowpark/index.html">Snowpark</a> is an API created by Snowflake that is based on data frames and provides its own classes and methods. These classes and methods can be used to assist in transferring and working with your data within the Snowflake database. In order to do this, the API provides language constructs for building SQL statements that will be used on the server. For example, rather than writing ‘select column_name’ as a string to select a column of data, you can simply use a select method provided by the Snowpark API. You may still use the string statement to work with your data, if you wish to do so, but by using the constructs Snowpark provides, you also get the added benefit of Snowpark’s intelligent code completion, which may help when first getting to know Snowpark’s syntax. 
+</p>
+<p>
+By using the Snowpark API, client applications can process data within the Snowflake database without needing to move their data to the same location as the client application. They can simply connect to the Snowpark API by adding the API libraries to their client code, which is great for those wanting to process large sets of data for machine learning or artificial intelligence projects.
+</p>
+<p>
+Once you connect to the Snowpark API, you will be able to construct a Snowpark <a href="https://docs.snowflake.com/en/developer-guide/snowpark/reference/scala/com/snowflake/snowpark/DataFrame.html">DataFrame</a> to store the data you want to use for the project. Snowpark DataFrames are executed lazily, so Snowpark will only retrieve and operate on the defined range of data when you actively choose to run the client code. Lazy execution is a great perk of this service as it saves time and money when you want to use and pay for Snowflake’s resources on a smaller section of the data rather than the entire dataset. The DataFrame class also provides a set of methods you can use on the created DataFrame, giving the user the flexibility to use built-in functions or create their own user-defined functions (UDFs) to upload to Snowflake, which we will briefly cover below.
+</p>
+<p>
+If you have a specific task you need to perform on your data that doesn’t have a Snowpark equivalent, the Snowpark API also supports the use of UDFs in the programming language of your choice to create custom functions you need for your project. Snowflake explains how to perform this process from a lambda or function in Scala <a href="https://docs.snowflake.com/en/developer-guide/snowpark/creating-udfs.html">in this section of their documentation</a>. You don’t need to transfer the data back to your client from Snowflake. Simply write the function on your client, push the code to the server through Snowflake, and use it to work with your data in Snowflake. 
+</p>
+<p>
+ 
+Snowpark supports anonymous UDFs, where you can assign and call the function using a variable, and named UDFs, which uses a custom name. 
 
 </p>
-						</span>
-
 					</div>
 				</div>
 

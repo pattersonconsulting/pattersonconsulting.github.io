@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Municipal / Smart City &#8212; Data Science Use Case Repository</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Manufacturing" href="manufacturing_vertical.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science Use Case Repository</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Municipal / Smart City
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="manufacturing_vertical.html">
+   Manufacturing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="finserv_vertical.html">
+   Financial Services
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/municipal_vertical.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmunicipal_vertical.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intelligent-transport-systems-its">
+   Intelligent Transport Systems (ITS)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#value-models-for-its-applications">
+     Value Models for ITS Applications
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#its-collect-and-report-applications">
+     ITS Collect and Report Applications
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#its-analytics">
+     ITS Analytics
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#its-analytical-use-cases">
+       ITS Analytical Use Cases
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#its-predictive-modeling">
+     ITS Predictive Modeling
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#its-predictive-use-cases">
+       ITS Predictive Use Cases
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="municipal-smart-city">
+<h1>Municipal / Smart City<a class="headerlink" href="#municipal-smart-city" title="Permalink to this headline">¶</a></h1>
+<p>There are 3 levels to the municipal vertical:</p>
+<ol class="simple">
+<li><p>Intelligent Transport Systems (ITS)</p></li>
+<li><p>Smart Mobility Systems</p></li>
+<li><p>The Greater Smart City Domain</p></li>
+</ol>
+<p>In the current version of this document we focus on the Intelligent Transport Systems domain.</p>
+<div class="section" id="intelligent-transport-systems-its">
+<h2>Intelligent Transport Systems (ITS)<a class="headerlink" href="#intelligent-transport-systems-its" title="Permalink to this headline">¶</a></h2>
+<p>Intelligence Transport Systems follow a specific pattern of application evolution.</p>
+<p>The successful market cycle of Intelligence Transport Systems (ITS) applications (based on Patterson Consulting customer analysis) is:</p>
+<ol class="simple">
+<li><p>Collect / Report Applications</p>
+<ul class="simple">
+<li><p>Deploy application to service specific market function around tracking an asset (typically here a vehicle) and providing a summarized report to the end user</p></li>
+<li><p>Reporting / Cost Savings</p></li>
+<li><p>Deliver incremental value that helped the industry achieve efficiency (or other objective improved safety) before jumping right into automation</p></li>
+</ul>
+</li>
+<li><p>Analytic Applications</p>
+<ul class="simple">
+<li><p>Operations / Compliance for a customer fleet</p></li>
+</ul>
+</li>
+<li><p>Automation / Prediction Applications</p>
+<ul class="simple">
+<li><p>Analytics across the population of all fleets</p></li>
+<li><p>Automation / Prediction</p></li>
+<li><p>Operations / Planning / Infrastructure design</p></li>
+</ul>
+</li>
+</ol>
+<p>Applications begin life as a way to collect and track basic data about a municipal function (e.g., “counting cars as they pass”). Eventually these applications into other applicaitons that produce analytical insights into the municipal data. Finally, in some use cases it makes sense to make predictions about the data to better provide insights into municipal activities.</p>
+<p>In the next section we break out 3 core business model categories for ITS Applications.</p>
+<div class="section" id="value-models-for-its-applications">
+<h3>Value Models for ITS Applications<a class="headerlink" href="#value-models-for-its-applications" title="Permalink to this headline">¶</a></h3>
+<p>Three models of utility or value to consider when looking to frame a business value model for a given customer need:</p>
+<ol class="simple">
+<li><p>User-Based Insurance as a Generalized Smart City Business Model</p>
+<ul class="simple">
+<li><p>Example: <em>“Lowering a cities insurance costs through monitoring”</em></p></li>
+</ul>
+</li>
+<li><p>Applications That Save Cities Money</p>
+<ul class="simple">
+<li><p>Example: <em>“Quantify and prioritize repairs”</em></p></li>
+</ul>
+</li>
+<li><p>Applications That Mitigate City’s Operational Risk</p>
+<ul class="simple">
+<li><p>Example: <em>“reviewing historical data to understand cause”</em></p></li>
+</ul>
+</li>
+</ol>
+<p>Creating the above triage list allows us to more easily map a potential use case into a value model quickly. With the value model expressed, let’s now look at the first tier of ITS Applications: “Collect and Report Applications”.</p>
+</div>
+<div class="section" id="its-collect-and-report-applications">
+<h3>ITS Collect and Report Applications<a class="headerlink" href="#its-collect-and-report-applications" title="Permalink to this headline">¶</a></h3>
+<p>Building a new ITS application (first tier ITS) for a given segment (e.g., water, road, air) MUST understand the objective of the city at the current time and make sure the product fit we can provide helps solve those specific problems. Typically the earliest form of ITS Applications are “Collect and Report” applications.</p>
+<p>This phase is characterized by:</p>
+<ul class="simple">
+<li><p>Repeatable integrations to support consistent data collection</p></li>
+<li><p>basic reporting</p></li>
+<li><p>Focus on fulfilling customer utility</p></li>
+</ul>
+<p>As described in the previous section, the value customers see in “collect and report”-class of applications are:</p>
+<ul class="simple">
+<li><p>Quantify the outstanding maintenance issues</p></li>
+<li><p>Prioritize repairs &amp; maintenance</p></li>
+<li><p>Push alerts to 3rd party service contractors for timely response, and SLA management</p></li>
+<li><p>Recall historical data to evaluate / review</p>
+<ul>
+<li><p>Example: <em>Access to this information allows the city to adjust service schedules to save costs</em></p></li>
+</ul>
+</li>
+</ul>
+<p>While these applications may be simpler than the more “exciting” predictive applications, it is difficult to jump directly beyond this stage for a new application in a given domain. Specifically, the need to deliver incremental value that helps the industry achieve efficiency (or other objective improved safety) is critical before jumping right into machine learning or automation.</p>
+<!--
+#### Key identified transportation segments:
+
+- traffic management
+- environment protection
+- freight management
+- public transport
+- road safety and security
+- automotive telematics
+- road user charging
+- parking management
+- Road tolling
+-->
+</div>
+<div class="section" id="its-analytics">
+<h3>ITS Analytics<a class="headerlink" href="#its-analytics" title="Permalink to this headline">¶</a></h3>
+<p>This phase is characterized by:</p>
+<ul class="simple">
+<li><p>Generating incremental value from the consistent data collection</p></li>
+<li><p>Generation of analytical data to inform the customer</p></li>
+<li><p>Focus on areas of cost savings and efficiency, improve operations</p></li>
+</ul>
+<div class="section" id="its-analytical-use-cases">
+<h4>ITS Analytical Use Cases<a class="headerlink" href="#its-analytical-use-cases" title="Permalink to this headline">¶</a></h4>
+<style>
+th, td {
+padding: 6px;
+text-align: left;
+vertical-align: top;
+font-size: 12px;
+}
+td.use_case_desc {
+	font-size: 10px;
+}
+th {
+  background-color: #666666;
+  color: white;
+}
+tr:nth-child(even) {background-color: #e2e2e2;}
+tbody{
+    width: 100%;
+    display: table;
+}
+</style>
+<table style="width: 100%; border: 1px solid;">
+<tr>
+<th>Use Case</th>
+<th>Sub-Group</th>
+<th>Benefit</th>
+<th>Dataset</th>
+<th>Method</th>
+<th>Paper</th>
+</tr>
+<tr>
+<td>Public tansport optimization</td>
+<td>ITS Analytics</td>
+<td>better use of municpal funds</td>
+<td>public transport records</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Sidewalk accessibility analysis</td>
+<td>ITS Analytics</td>
+<td>better use of municpal funds</td>
+<td>public transport records</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Traffic Accident analysis</td>
+<td>ITS Analytics</td>
+<td>better municpal safety</td>
+<td>accident data, roadway geometrics</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Rail Crossings and Emergency Transportation Interference analysis</td>
+<td>ITS Analytics</td>
+<td>better municpal safety</td>
+<td>accident data, roadway geometrics</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Electric Car Charging Pattern Reporting and Analysis</td>
+<td>ITS Analytics</td>
+<td>Municipal Planning</td>
+<td>traffic data</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Healthcare and City Planning: Modeling PM2.5 and Traffic <br/>See Also: <a href="http://www.pattersonconsultingtn.com/blog/cuip_smart_city_data_challenge_2019.html">Our Blog Article on pm2.5 Analysis</a></td>
+<td>ITS Analytics</td>
+<td>Municpal planning</td>
+<td>pm2.5 data, traffic data</td>
+<td>Python, Pandas</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="section" id="its-predictive-modeling">
+<h3>ITS Predictive Modeling<a class="headerlink" href="#its-predictive-modeling" title="Permalink to this headline">¶</a></h3>
+<p>This is the most mature phase of the 3, where more advanced Statistical models are used to make predictions (or drive the automation of municipal systems). This is the phase where KPIs could be generated from analytical data, and then compared to global analytical data to understand how well the city operates.</p>
+<p>An example of building predictive modeling applications based on sensor data can be seen in our series on <a class="reference external" href="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html">Predictive Maintenance in Manufacturing</a></p>
+<div class="section" id="its-predictive-use-cases">
+<h4>ITS Predictive Use Cases<a class="headerlink" href="#its-predictive-use-cases" title="Permalink to this headline">¶</a></h4>
+<table style="width: 100%; border: 1px solid;">
+<tr>
+<th>Use Case</th>
+<th>Sub-Group</th>
+<th>Benefit</th>
+<th>Dataset</th>
+<th>Method</th>
+<th>Paper</th>
+</tr>
+<tr>
+<td>Predicting Traffic Ticket Locations</td>
+<td>ITS Preditictive Application</td>
+<td>better use of municpal funds</td>
+<td>traffic data, traffic citation records</td>
+<td>Analytic and machine learning tools, neural networks, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Predicting Traffic Accident Locations</td>
+<td>ITS Preditictive Application</td>
+<td>Municipal planning, better use of municpal funds</td>
+<td>traffic data, accident records</td>
+<td>Analytic and machine learning tools, gradient boosted trees, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Predicting air pollition levels based on traffic data</td>
+<td>ITS Preditictive Application</td>
+<td>Municipal planning</td>
+<td>traffic data, air sensor data</td>
+<td>Analytic and machine learning tools, neural networks, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Predicting salt truck maintenance</td>
+<td>ITS Preditictive Application</td>
+<td>Municipal cost savings</td>
+<td>vehicle sensor data</td>
+<td>Analytic and machine learning tools, decision trees, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Predicting garbage truck maintenance</td>
+<td>ITS Preditictive Application</td>
+<td>Municipal cost savings</td>
+<td>vehicle sensor data</td>
+<td>Analytic and machine learning tools, decision trees, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+<tr>
+<td>Predicting public bus transport maintenance</td>
+<td>ITS Preditictive Application</td>
+<td>Municipal cost savings</td>
+<td>vehicle sensor data</td>
+<td>Analytic and machine learning tools, decision trees, xgBoost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="manufacturing_vertical.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Manufacturing</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Patterson Consulting<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

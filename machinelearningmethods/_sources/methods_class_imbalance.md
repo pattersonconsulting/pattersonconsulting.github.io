@@ -196,6 +196,8 @@ todo
 
 ### Choosing an Evaluation Metric
 
+
+
 [ how do we choose one of these? ]
 
 > Examples of measures that are a combination of precision and recall are the F-measure (the weighted harmonic mean of precision and recall), or the Matthews correlation coefficient, which is a geometric mean of the chance-corrected variants: the regression coefficients Informedness (DeltaP') and Markedness (DeltaP).
@@ -215,6 +217,51 @@ What about other options?
 * Use Brier Score and Brier Skill Score
 * f1-measure, f2-measure, etc
 * G-Mean
+
+
+> The two-dimensional graphs in the first bullet above are always more informative than a single number, but if you need a single-number metric, one of these is preferable to accuracy:
+
+> The Area Under the ROC curve (AUC) is a good general statistic. It is equal to the probability that a random positive example will be ranked above a random negative example.
+> The F1 Score is the harmonic mean of precision and recall. It is commonly used in text processing when an aggregate measure is sought.
+Cohen’s Kappa is an evaluation statistic that takes into account how much agreement would be expected by chance.
+
+
+  <!-- --------------------------------- START: Sidebar --------------------------------- -->
+  <div style=" border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 6px; font-size: 12px; background-color: #eeeeee;">
+    <h4>Understanding Evaluation of Machine Learning Models</h4>
+    <p>
+      Machine learning has its own metrics that are useful when evaluating the performance of a model. We share some relevant measures and their definitions below.
+    </p>
+    <p>
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>True Positive (TP)</td><td>samples that were correctly classified</td></tr>
+            <tr><td>True Negative (TN)</td><td>samples that were correctly classified</td></tr>
+            <tr><td>False Positive (FP)</td><td>samples that were <span style="color: red;">incorrectly</span> classified</td></tr>
+            <tr><td>False Negative (FN)</td><td>samples that were <span style="color: red;">incorrectly</span> classified</td></tr>
+            <tr><td>Accuracy</td><td>percentage of examples correctly classified; Note: <i>accuracy is not a good way to evaluate a classifier trained on an imbalanced dataset</i></td></tr>
+            <tr><td>Precision</td><td>percentage of predicted positives that were correctly classified: TP / (TP + FP)</td></tr>
+            <tr><td>Recall</td><td>percentage of actual positives that were correctly classified: TP / (TP + FN)</td></tr>
+            <tr><td>Sensitivity</td><td>refers to the <b>true positive rate</b> and summarizes how well the positive class was predicted (same formula as Recall): TP / (TP + FN)</td></tr>
+            <tr><td>Specificity</td><td> the complement to sensitivity, or the <b>true negative rate</b>, and summarises how well the negative class was predicted: TP / (FP + TN)</td></tr>
+            <tr><td>F-Measure</td><td>a single score that seeks to balance both concerns of precision and recall: (2 * Precision * Recall) / (Precision + Recall)</td></tr>
+            <tr><td>Area Under the Curve (AUC)</td><td>refers to the Area Under the Curve of a Receiver Operating Characteristic curve (ROC-AUC)</td></tr>
+          </tbody>
+        </table>
+    </p>
+    <div style="border: 1px solid #cccccc; width: 440px; padding: 6px; text-align: center;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sensitivity_and_specificity_1.01.svg/683px-Sensitivity_and_specificity_1.01.svg.png" style="width: 380px; margin: 2px; margin-bottom: 12px;"/>
+      <p>Image Source: Wikipedia article on <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">Sensitivity and Specificity</a>
+      </p>
+    </div>
+  </div>
+  <!-- --------------------------------- END: Sidebar --------------------------------- -->
 
 
 (select-models-class-imbalance-workflow)=

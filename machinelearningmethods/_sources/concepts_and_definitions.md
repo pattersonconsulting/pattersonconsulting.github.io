@@ -6,6 +6,31 @@ This article is meant to provide a [ TODO ]
 ## Probability
 
 
+(what-is-the-normal-distribution)=
+## The Normal Distribution
+
+> The normal distribution carries with it assumptions and can be completely specified by two parameters: the mean and the standard deviation. If the mean and standard deviation are known, you can access every data point on the curve.
+> The empirical rule is a handy quick estimate of the data's spread given the mean and standard deviation of a data set that follows a normal distribution.
+
+[ stats on standard deviations ]
+
+> Thus, almost all the data lies within 3 standard deviations. This rule enables us to check for Outliers and is very helpful when determining the normality of any distribution.
+
+### Relationship Between the Normal Distribution and Machine Learning
+
+> In Machine Learning, data satisfying Normal Distribution is beneficial for model building. It makes math easier. Models like LDA, Gaussian Naive Bayes, Logistic Regression, Linear Regression, etc., are explicitly calculated from the assumption that the distribution is a bivariate or multivariate normal. Also, Sigmoid functions work most naturally with normally distributed data.
+
+> Many natural phenomena in the world follow a log-normal distribution, such as financial data and forecasting data. By applying transformation techniques, we can convert the data into a normal distribution. Also, many processes follow normality, such as many measurement errors in an experiment, the position of a particle that experiences diffusion, etc.
+
+> So it’s better to critically explore the data and check for the underlying distributions for each variable before going to fit the model.
+
+
+[ relationship with EDA ]
+
+> Note: Normality is an assumption for the ML models. It is not mandatory that data should always follow normality. ML models work very well in the case of non-normally distributed data also. Models like decision tree, XgBoost, don’t assume any normality and work on raw data as well. Also, linear regression is statistically effective if only the model errors are Gaussian, not exactly the entire dataset.
+
+
+
 (what-is-class-prior)
 ## Class Prior
 

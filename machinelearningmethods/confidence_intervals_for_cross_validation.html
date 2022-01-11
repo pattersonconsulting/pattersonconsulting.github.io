@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confidence Intervals for Cross Validation Error Estimates &#8212; Applied Data Science Methods</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"]]}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Notes on Using K-Fold Cross Validation" href="notes_on_using_kfold_cv.html" />
+    <link rel="prev" title="Forecasting the Business Value of a Model" href="forecasting_model_value.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Applied Data Science Methods</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="forecasting_model_value.html">
+   Forecasting the Business Value of a Model
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Confidence Intervals for Cross Validation Error Estimates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="notes_on_using_kfold_cv.html">
+   Notes on Using K-Fold Cross Validation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/confidence_intervals_for_cross_validation.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jpatanooga/kubeflow_ops_book_dev/issues/new?title=Issue%20on%20page%20%2Fconfidence_intervals_for_cross_validation.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-are-confidence-intervals">
+   What Are Confidence Intervals?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-are-confidence-intervals-useful-in-machine-learning">
+     How Are Confidence Intervals Useful in Machine Learning?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methods-to-build-confidence-intervals">
+   Methods to Build Confidence Intervals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-standard-error-to-calculate-the-cross-validation-error-estimate-confidence-interval">
+   Using Standard Error to Calculate the Cross Validation Error Estimate Confidence Interval
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-the-cross-validation-error-estimate">
+     Calculating the Cross Validation Error Estimate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-the-z-score">
+     Calculating the Z-Score
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-the-standard-error-of-the-cross-validation-error-mean">
+     Calculating the Standard Error of the Cross Validation Error Mean
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Confidence Intervals for Cross Validation Error Estimates
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-bootstrap-to-calculate-error-estimate-confidence-intervals">
+   Using Bootstrap to Calculate Error Estimate Confidence Intervals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-the-student-s-t-distribution-to-calculate-cross-validation-error-estimate-confidence-intervals">
+   Using the Student’s t-Distribution to Calculate Cross Validation Error Estimate Confidence Intervals
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-a-95-confidence-interval-for-a-population-mean">
+     Calculating a 95% confidence interval for a population mean
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="confidence-intervals-for-cross-validation-error-estimates">
+<h1>Confidence Intervals for Cross Validation Error Estimates<a class="headerlink" href="#confidence-intervals-for-cross-validation-error-estimates" title="Permalink to this headline">¶</a></h1>
+<p>We use cross validation to estimate the extra-sample (“training data”) accuracy (or “error estimate”) for a given model. This error metric gives us a good estimation on how well the model will likely perform on data it has not yet seen (e.g., the greater population of data).</p>
+<p>The cross-validation error estimate (the average of the error estimates across all folds) is a great way to compare different models as well.</p>
+<p>Adding a confidence interval to the cross validation error estimate gives us a better idea of how well the model will perform over time as it encounters the population of data in the wild.</p>
+<div class="section" id="what-are-confidence-intervals">
+<h2>What Are Confidence Intervals?<a class="headerlink" href="#what-are-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>A confidence interval gives us a range of values that bound a statistic’s mean (above and below). These bounds likely contain the unknown population parameter we’re interested in measuring. These bounds (e.g., “confidence interval”) refer to a percentage of probability (“certainty”) that the confidence interval range would capture the true population parameter if we were to draw random samples from the population a lot of times.</p>
+<p>“A confidence interval is a range of values, bounded above and below the statistic’s mean, that likely would contain an unknown population parameter. Confidence level refers to the <em>percentage of probability</em>, or certainty, that the confidence interval would contain the true population parameter when you draw a random sample many times.”</p>
+<div class="section" id="how-are-confidence-intervals-useful-in-machine-learning">
+<h3>How Are Confidence Intervals Useful in Machine Learning?<a class="headerlink" href="#how-are-confidence-intervals-useful-in-machine-learning" title="Permalink to this headline">¶</a></h3>
+<p>A confidence interval for cross validation error estimates gives us a good explanation of the range of performance of a machine learning model.</p>
+<p>We sometimes may want to give a measure of the uncertainty around the error estimate. This can help us understand the range of potential outcomes which may impact how a line of business would use a given model. In these situations we want to compute a “confidence interval” for the error estimation of cross-validation.</p>
+<p>If “confidence level” refers to “percentage of probability” of certainty, then we can assume that 95% of the time our accuracy should be between the lower and upper bound of the estimate.</p>
+<p>Based on statistics we can then calculate how often (e.g., “number of days per year”) a model will perform outside of the confidence interval. This is useful when expressing to non-data science folks how often to expect the model to hold within the confidence interval range. The sidebar below explains how to calculate this “number of days” metric.</p>
+<style>
+th, td {
+padding: 15px;
+text-align: left;
+}
+th {
+  background-color: #666666;
+  color: white;
+}
+tr:nth-child(even) {background-color: #e2e2e2;}
+tbody{
+    width: 100%;
+    display: table;
+}
+</style>
+<div style="width: 100%; margin:0 auto;">
+<div style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left; background-color: #eeeeee;">
+<img src="./spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+<h4>Probabilities of Occurrence of Rare Events</h4>
+<p style="font-size: 14px; ">
+<i>
+<table style="width: 100%; border: 1px solid;">
+<tr>
+<th>std. deviations</th>
+<th>Probability (%)</th>
+<th>Events/year</th>
+<th>Events/five years</th>
+</tr>
+<tr>
+<td>-1.0</td>
+<td>15.87</td>
+<td>40</td>
+<td>200</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">-2.0</td>
+<td style="font-weight: bold;">2.28</td>
+<td style="font-weight: bold;">6</td>
+<td style="font-weight: bold;">29</td>
+</tr>
+<tr>
+<td>-2.5</td>
+<td>0.62</td>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr>
+<td>-3.0</td>
+<td>0.13</td>
+<td>0</td>
+<td>2</td>
+</tr>																		
+</table>
+<br/>
+<p>
+Table Source: <A href="https://www.amazon.com/Advanced-Portfolio-Management-Fundamental-Investors/dp/1119789796/ref=sr_1_3?crid=OHH49WRDMO4L&keywords=advanced+portfolio+management+by+paleologo&qid=1638288877&qsid=142-2453615-6550551&sprefix=advanced+portfolio%2Caps%2C163&sr=8-3&sres=1119789796%2CB071Y3MSRK%2CB07236Q2C3%2CB075332F51%2CB07SVG5N45%2CB08N46B7HJ%2CB07MPNMGHS%2CB08QMCHBM2%2CB07PC3FXV5%2CB01N74KH32%2CB0931YYH25%2CB08S7NMR8Q%2CB01FKZSCRW%2CB086JWBF8M%2CB093L8B373%2CB084STCZNP&srpt=ABIS_BOOK">Advanced Portfolio Management: A Quant's Guide for Fundamental Investors 1st Edition</A>
+</p>
+<p>
+The above chart represents a single tail metric (the "bad tail", as opposed to the tail on the other side of the mean) for how often a "rare event" occurs. It's another way to think about how often our model error would be outside its confidence interval in terms of "days per year".
+</p>
+<p>
+A 95% confidence interval is roughly the same as -1.96 std. deviations from the mean.
+</p>
+<p>
+So model performance outside of the 95% confidence interval should be 12 days (240 days * .95 = ~228 days, 240 - 228 == 12 days).
+</p>
+<p>
+The means that half of those days outside of the confidence interval should be below the low bound, so 6 days per year we'd fall under the lower end of the confidence interval.
+</p>
+</i></p>
+</div>	
+</div>	
+</div>
+</div>
+<div class="section" id="methods-to-build-confidence-intervals">
+<h2>Methods to Build Confidence Intervals<a class="headerlink" href="#methods-to-build-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>Below we list 4 ways that we can calculate a confidence interval for a model’s performance.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#se-cv-err-estimate-model"><span class="std std-ref">Using Standard Error to Calculate the Cross Validation Error Estimate Confidence Interval</span></a></p></li>
+<li><p><a class="reference internal" href="#using-bootstrap-calc-err-estimate-ci"><span class="std std-ref">Using Bootstrap to Calculate Error Estimate Confidence Intervals</span></a></p></li>
+<li><p><a class="reference internal" href="#using-student-t-calc-err-estimate-ci"><span class="std std-ref">Using the Student’s t-Distribution to Calculate Cross Validation Error Estimate Confidence Intervals</span></a></p></li>
+<li><p>Binomial proportion</p></li>
+</ul>
+<p>In the following sections, we give explanations and live notebook code for 3 of the the methods.</p>
+</div>
+<div class="section" id="using-standard-error-to-calculate-the-cross-validation-error-estimate-confidence-interval">
+<span id="se-cv-err-estimate-model"></span><h2>Using Standard Error to Calculate the Cross Validation Error Estimate Confidence Interval<a class="headerlink" href="#using-standard-error-to-calculate-the-cross-validation-error-estimate-confidence-interval" title="Permalink to this headline">¶</a></h2>
+<p>With K-fold cross-validation it is often useful to understand the quantitative notion of variability for the cross-validation error (evaluation metric) estimate. One method to build this confidence interval is to use standard error.</p>
+<p>This method is based on:</p>
+<ul class="simple">
+<li><p>Cross-validation: what does it estimate and how well does it do it? by Stephen Bates, Trevor Hastie, and Robert Tibshirani, (2021) available at <a class="reference external" href="https://arxiv.org/abs/2104.00673">https://arxiv.org/abs/2104.00673</a></p></li>
+<li><p><a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/advmethods/notes/errval.pdf">Dr. Ryan Tibshirani’s notes on CV error</a></p></li>
+</ul>
+<p>We compute the confidence intervals with the following formula:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{e} - z_{1-\alpha/2}\cdot\hat{SE}, \\
+\bar{e} + z_{1-\alpha/2}\cdot\hat{SE} \\\end{split}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p>$\bar{e}$ is the cross validation error estimate (e.g., average of the cross validation folds’ errors)</p></li>
+<li><p>$z_{1-\alpha/2}$ is the z-score</p></li>
+<li><p>$\hat{SE}$ is the standard error of the cross validation error estimate</p></li>
+</ul>
+<div class="section" id="calculating-the-cross-validation-error-estimate">
+<h3>Calculating the Cross Validation Error Estimate<a class="headerlink" href="#calculating-the-cross-validation-error-estimate" title="Permalink to this headline">¶</a></h3>
+<p>The cross validation error estimate is computed by averaging the error scores of each of the held out cross validation K folds. This is the normal error estimate produced by any cross validation modeling building process.</p>
+</div>
+<div class="section" id="calculating-the-z-score">
+<h3>Calculating the Z-Score<a class="headerlink" href="#calculating-the-z-score" title="Permalink to this headline">¶</a></h3>
+<p>The z-score (also called hte “standard normal deviate”, or the “normal score”) is calcuated based on the level of confidence interval we want. For a 95% confidence interval, the z-score is the approximate value of the 97.5 percentile point of the standard normal distribution. This 97.5 percentile point gives us the <a class="reference external" href="https://en.wikipedia.org/wiki/1.96">approximate value of 1.96 standard deviations</a>.</p>
+<p><a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/2/25/The_Normal_Distribution.svg"><img alt="The Normal Distribution via Wikipedia" src="https://upload.wikimedia.org/wikipedia/commons/2/25/The_Normal_Distribution.svg" /></a></p>
+<p>This 1.96 standard deviations value is what we substitute back into the original confidence interval equation for z when calculating a 95% confidence interval.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It’s worth mentioning that 95% of the values for our distribution fall inside the range of (-1.96 standard deviations, +1.96 standard deviaions)</p>
+</div>
+<p>To understand how the z term gives us the value 1.96 standard deviations (via the 97.5 percentile point, as seen in the “cumulative %” band in the graph above) for the 95% confidence interval, let’s quickly work through calculating the term $z_{1-\alpha/2}$ by resolving its subscript value (aka the “percentile point”, or “cumulative %”):</p>
+<div class="math notranslate nohighlight">
+\[ = 1 - \alpha / 2\]</div>
+<p>And to calculate alpha we use a 0.95 confidence level:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\alpha = 1 - 0.95 \\
+\alpha = 0.05\end{split}\]</div>
+<p>Substituting $\alpha$ back into the percentile point equation, this gives us:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} = 1 - 0.05 / 2 \\
+ = 1 - 0.025 \\
+ = 0.975\end{split}\]</div>
+<p>From the 0.975 (the 97.5% percentile point) value we can look up our z-score on the graph above, giving us 1.96 as the z-score to substitute back into the confidence interval equation.</p>
+</div>
+<div class="section" id="calculating-the-standard-error-of-the-cross-validation-error-mean">
+<h3>Calculating the Standard Error of the Cross Validation Error Mean<a class="headerlink" href="#calculating-the-standard-error-of-the-cross-validation-error-mean" title="Permalink to this headline">¶</a></h3>
+<p>We can <a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/advmethods/notes/errval.pdf">compute the standard error of the cross validation error estimate</a> by dividing the sample standard deviation by the square root of the number of observations (K, for K folds).</p>
+<div class="math notranslate nohighlight">
+\[\hat{SE} = \frac{sd(cverr_0, cverr_1,...,cverr_K)}{\sqrt{K}}\]</div>
+<p>where $sd$ denotes the sample standard deviation and $cverr_n$ are the errors from each of the cross validation folds.</p>
+<p>Standard error is defined as:</p>
+<blockquote>
+<div><p>Standard Error of a statistic (usually an estimate of a parameter) is the standard deviation of its sampling distribution or an estimate of that standard deviation. If the statistic is the sample mean, it is called the standard error of the mean (SEM)</p>
+</div></blockquote>
+<p>(source: <a href="https://en.wikipedia.org/wiki/Standard_error">wikipedia.org</a>)</p>
+<p>Standard error measures the accuracy of how a data sample represents the larger population of data. It is the approximate standard deviation of a statistical sample. Put another way, the standard error is the deviation of a sample mean from the actual population mean.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the context of machine learning, we’re taking the “sample standard deviation” here of the sample represented by the training records; we don’t have the full population of data to train on, so our training records, from a statistical viewpoint, are considered a “sample”.</p>
+<ul class="simple">
+<li><p>For further reading on the intuition of Standard Error, check out <a class="reference external" href="https://stats.stackexchange.com/questions/60484/why-is-the-formula-for-standard-error-the-way-it-is">this discussion on Stack Exchange</a></p></li>
+</ul>
+</div>
+<p>With the standard error of the sample mean (here, the mean of the fold errors), we can then calculate the 95% confidence intervals for our cross validation error estimate (e.g., “95% confidence interval for the population mean”, or to put it another way: “confidence intervals for the error estimate of the full population of data our model might encounter in the wild”).</p>
+<p>This is useful for helping us understand if the difference between two models is statistically significant, which is certainly useful.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<!--
+This method is from [Dr. Ryan Tibshirani’s notes on CV error](https://www.stat.cmu.edu/~ryantibs/advmethods/notes/errval.pdf) where he reminds us that the standard deviation and the standard error of the cross-validation error estimate are the same thing because n > 30 for CV K = 10 (where we’re using the error estimates of each fold as our samples of population). 
+-->
+<!-- 
+He goes on to state it more directly:
+
+> The standard error is the standard deviation of the Student t-distribution
+
+And if we treat each error estimate as a sample then n = 10 (e.g., “small sample size”) and we only have the sample standard deviation, we need to use the Student’s T distribution.
+
+> TODO: explain how this is different than the other section below
+
+The method given in Ryan's notes pdf is the one given in his lecture notes and also the book [Elements of Statistical Learning](https://web.stanford.edu/~hastie/ElemStatLearn//printings/ESLII_print12_toc.pdf); the k averages are treated as data and we use our usual standard error formula.
+
+If we wish to “assign a quantitative notion of variability to the cv error estimate” (aka “quick estimate of the standard error of the out-of-sample error”), then we can take the average of the fold errors and calculate the standard error of the model error estimate as: 
+CV_SE = stddev( fold errors ) / sqrt( K )
+-->
+<p>To read more on calculating standard error for cross validation, take a look at:</p>
+<p>The Paper: Cross-validation: what does it estimate and how well does it do it? by Stephen Bates, Trevor Hastie, and Robert Tibshirani, (2021) available at <a class="reference external" href="https://arxiv.org/abs/2104.00673">https://arxiv.org/abs/2104.00673</a></p>
+<p>The CMU course lecture <a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/datamining/lectures/18-val1.pdf">notes 1</a>, <a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/datamining/lectures/19-val2.pdf">notes 2</a> on Data Mining: 36-462/36-662 with Dr. Ryan Tibshirani.</p>
+<p>Additionally take a look at section 7.10 of the book <a class="reference external" href="https://web.stanford.edu/~hastie/ElemStatLearn//printings/ESLII_print12_toc.pdf">Elements of Statistical Learning</a>.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Confidence Intervals for Cross Validation Error Estimates<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>A confidence interval gives us a range of values that bound a statistic’s mean (above and below). These bounds likely contain the unknown population parameter we’re interested in measuring. These bounds (e.g., “confidence interval”) refer to a percentage of probability (“certainty”) that the confidence interval range would capture the true population parameter if we were to draw random samples from the population a lot of times.</p>
+<p>If confidence level refers to “percentage of probability” of certainty, then for a 95% confidence interval we can assume that 95% of the time our accuracy should be between the lower and upper bound of the estimate.</p>
+<p>Returning to our confidence interval equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{e} - z_{1-\alpha/2}\cdot\hat{SE}, \\
+\bar{e} + z_{1-\alpha/2}\cdot\hat{SE} \\\end{split}\]</div>
+<p>Substituting 1.96 for the z-score for the 95% confidence interval gives us:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{e} - 1.96\cdot\hat{SE}, \\
+\bar{e} + 1.96\cdot\hat{SE} \\\end{split}\]</div>
+<p>This will give a high CI and a low CI around the mean accuracy for the Cross Validation process</p>
+<!--
+<a href="https://en.wikipedia.org/wiki/Standard_error#:~:text=is%20much%20simpler.-,Assumptions,-and%20usage%5Bedit">SE is equal to the standard error for the sample mean</a>, and 1.96 is the approximate value of the 97.5 percentile point of the normal distribution:
+-->
+<!--
+Check out p.264 in 
+
+The <a href="https://web.stanford.edu/~hastie/ElemStatLearn//printings/ESLII_print12_toc.pdf">book "The Elements of Statistical Learning" by Hastie, Tibshirani and Friedman</a> for an example of how this number is used in computing a confidence interval.
+-->
+<p>We can see this in action in the live notebook: [ link ]</p>
+<!--
+#### Notes from JD
+> “so what's going on with both the t-dist and the sqrt(n) adjustment is an attempt to consider variation that comes from sample size”
+> “t-dist is really just a Gaussian distribution with some uncertainty built in bc. of sample size (degrees of freedom) but they are slightly different ways of getting there “
+-->
+<p>
+<iframe width="800" height="500" src="https://nbviewer.jupyter.org/github/pattersonconsulting/predictive_maintenance/blob/main/notebooks/confidence_intervals/ml_sklearn_breastcancer_cross_validation_standard_error_nov2021.ipynb?flush_cache=true"></iframe>
+</p>
+</div>
+</div>
+<div class="section" id="using-bootstrap-to-calculate-error-estimate-confidence-intervals">
+<span id="using-bootstrap-calc-err-estimate-ci"></span><h2>Using Bootstrap to Calculate Error Estimate Confidence Intervals<a class="headerlink" href="#using-bootstrap-to-calculate-error-estimate-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>Another variant of calculation for the error estimate is to use bootstrap to calculate our model’s error estimate confidence intervals.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information on what is bootstrap, check out the following resources:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/advmethods/notes/bootstrap.pdf">https://www.stat.cmu.edu/~ryantibs/advmethods/notes/bootstrap.pdf</a></p></li>
+<li><p><a class="reference external" href="https://www.stat.cmu.edu/~ryantibs/advmethods/shalizi/ch06.pdf">https://www.stat.cmu.edu/~ryantibs/advmethods/shalizi/ch06.pdf</a></p></li>
+<li><p>The book “Regression Modeling Strategies” by Harrell</p></li>
+<li><p>The book <a class="reference external" href="http://www.ru.ac.bd/stat/wp-content/uploads/sites/25/2019/03/501_02_Efron_Introduction-to-the-Bootstrap.pdf">“An Introduction to the Bootstrap”</a> by Efron and Tibshirani</p></li>
+</ul>
+</div>
+<p>We can see this in action in the live notebook: [ link ]</p>
+<p>
+<iframe width="800" height="500" src="https://nbviewer.jupyter.org/github/pattersonconsulting/predictive_maintenance/blob/main/notebooks/confidence_intervals/ml_sklearn_breastcancer_mlxtend_632bootstrap_nov2021.ipynb?flush_cache=true"></iframe>
+</p>
+</div>
+<div class="section" id="using-the-student-s-t-distribution-to-calculate-cross-validation-error-estimate-confidence-intervals">
+<span id="using-student-t-calc-err-estimate-ci"></span><h2>Using the Student’s t-Distribution to Calculate Cross Validation Error Estimate Confidence Intervals<a class="headerlink" href="#using-the-student-s-t-distribution-to-calculate-cross-validation-error-estimate-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>Another way to compute the 95% Confidence Intervals for 10-Fold Cross Validation is with the Student’s t-Table.</p>
+<p>The standard error is the standard deviation of the Student t-distribution. T-distributions are slightly different from Gaussian, and vary depending on the size of the sample.</p>
+<div class="section" id="calculating-a-95-confidence-interval-for-a-population-mean">
+<h3>Calculating a 95% confidence interval for a population mean<a class="headerlink" href="#calculating-a-95-confidence-interval-for-a-population-mean" title="Permalink to this headline">¶</a></h3>
+<p>(Step 1) determine if you need to use:</p>
+<ul class="simple">
+<li><p>the normal distribution</p></li>
+<li><p>the student’s t-distribution</p></li>
+</ul>
+<p>(Step 2) if we have the sample standard deviation</p>
+<ul class="simple">
+<li><p>this is an indication to use the student’s t distribution</p></li>
+</ul>
+<p>(Step 3) sample size as another indicator</p>
+<ul class="simple">
+<li><p>when n &gt;= 30 then we use the normal distribution</p></li>
+<li><p>when n &lt; 30 we use the student t distribution</p></li>
+</ul>
+<p>(Step 4) Compute confidence intervals for the population mean</p>
+<p>The equation to compute the low and high confidence intervals is:</p>
+<div class="math notranslate nohighlight">
+\[CIs = \bar{e} \pm EBM\]</div>
+<p>where EBM stands for error bound for a population mean:</p>
+<div class="math notranslate nohighlight">
+\[EBM = t_{v, \alpha/2} * \frac{s}{\sqrt(n)}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p>t is the t-score</p></li>
+<li><p>v is the degrees of freedom (df), df = n – 1 degrees of freedom</p></li>
+<li><p>$\alpha$ (“significance level”) is the probability that the interval does not contain the unknown population parameter</p></li>
+<li><p>s is the sample standard deviation</p></li>
+<li><p>n is the number of samples</p></li>
+</ul>
+<p>The error bound (EBM) depends on the confidence level (abbreviated CL).</p>
+<p>The confidence level is often considered the probability that the calculated confidence interval estimate will contain the true population parameter. Also, the $\alpha$ variable is the probability that the interval does not contain the unknown population parameter:</p>
+<p>$cl = 1 - \alpha$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The most commonly used significance level is $\alpha$ = 0.05.</p>
+<p>From the section above, we recall that to calculate alpha we use a confidence level. For a 95% confidence level we’d use 0.95:</p>
+<p>$\alpha = 1 - cl$</p>
+<p>$\alpha = 1 - 0.95$</p>
+<p>$\alpha = 0.05$</p>
+<p>For a two-sided test, we compute:</p>
+<p>$1 - \frac{\alpha}{2}$</p>
+<p>or</p>
+<p>$1 - \frac{0.05}{2} = 0.975$</p>
+<p>And so we use 0.975 as our lookup column in the Student’s t-table, as we’ll see below.</p>
+</div>
+<p>If we substitute EBM back into the original confidence intervals equation we get:</p>
+<div class="math notranslate nohighlight">
+\[CIs = \bar{e} \pm t_{v, \alpha/2} * \frac{s}{\sqrt(n)}\]</div>
+<p>To calculate the value of t, we need to first calculate the value of v and $\alpha$ where $\alpha$ is the significance level.</p>
+<p>The v parameter is the “degrees of freedom”, and is calculated as number of samples minus 1:</p>
+<div class="math notranslate nohighlight">
+\[v = n - 1\]</div>
+<p>Now we can lookup t in student’s t-distribuion table. The table gives t-scores that correspond to the confidence level (column) and degrees of freedom (row). From above, we have degrees of freedom (v: 9) and confidence level (0.975):</p>
+<pre>
+  ν         0.90    0.95   0.975    0.99   0.995   0.999
+
+  1.       3.078   6.314  12.706  31.821  63.657 318.313
+  2.       1.886   2.920   4.303   6.965   9.925  22.327
+  3.       1.638   2.353   3.182   4.541   5.841  10.215
+  4.       1.533   2.132   2.776   3.747   4.604   7.173
+  5.       1.476   2.015   2.571   3.365   4.032   5.893
+  6.       1.440   1.943   2.447   3.143   3.707   5.208
+  7.       1.415   1.895   2.365   2.998   3.499   4.782
+  8.       1.397   1.860   2.306   2.896   3.355   4.499
+ <b> 9.       1.383   1.833   <span style="color:red;">2.262</span>   2.821   3.250   4.296</b>
+ 10.       1.372   1.812   2.228   2.764   3.169   4.143
+</pre>
+<p>In the table above we find the value 2.262 for these parameters. Let’s now substitute this value back into the original confidence intervals equation:</p>
+<div class="math notranslate nohighlight">
+\[CIs = \bar{e} \pm 2.262 * \frac{s}{\sqrt(n)}\]</div>
+<p>Let’s also change n to k, because we have k-folds:</p>
+<div class="math notranslate nohighlight">
+\[CIs = \bar{e} \pm 2.262 * \frac{s}{\sqrt(k)}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It’s worth mention how similar this equation ends up looking to the “Standard Error” version of calculating confidence intervals. The difference is that the student-t version factors in a wider range with its larger 2.262 value (where 2.262 is larger than 1.96 from above).</p>
+</div>
+<!--
+What does this confidence interval mean?
+
+This confidence interval means that we are 95% sure that the "average accuracy for this model on of all breast cancer data in the full population of breast cancer data is somewhere between 93.7% and 97.1%"
+-->
+<p>In the example notebook below, you can see the 95% confidence intervals calculated with the student-t method.</p>
+<p>
+<iframe width="800" height="500" src="https://nbviewer.jupyter.org/github/pattersonconsulting/predictive_maintenance/blob/main/notebooks/confidence_intervals/ml_sklearn_breastcancer_cross_validation_student_T_CI_nov2021.ipynb?flush_cache=true"></iframe>
+</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="forecasting_model_value.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Forecasting the Business Value of a Model</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="notes_on_using_kfold_cv.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Notes on Using K-Fold Cross Validation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Josh Patterson<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

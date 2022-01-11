@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Concepts and Definitions &#8212; Applied Data Science Methods</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
@@ -51,9 +51,11 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Demo Colab Notebook" href="kubeflow_gpu_validation_notebook.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -70,6 +72,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
       
       
@@ -79,7 +85,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -88,30 +94,20 @@
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="exploratory_data_analysis_workflows.html">
-   Exploratory Data Analysis Workflows
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="methods_class_imbalance.html">
-   A ML Workflow for Dealing with Class Imbalance in Tabular Data
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="forecasting_model_value.html">
    Forecasting the Business Value of a Model
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
-   Demo Colab Notebook
+  <a class="reference internal" href="confidence_intervals_for_cross_validation.html">
+   Confidence Intervals for Cross Validation Error Estimates
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Concepts and Definitions
+ <li class="toctree-l1">
+  <a class="reference internal" href="notes_on_using_kfold_cv.html">
+   Notes on Using K-Fold Cross Validation
   </a>
  </li>
 </ul>
@@ -199,12 +195,24 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#probability">
    Probability
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-normal-distribution">
+   The Normal Distribution
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#relationship-between-the-normal-distribution-and-machine-learning">
+     Relationship Between the Normal Distribution and Machine Learning
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#class-prior">
@@ -298,7 +306,34 @@
 <p>This article is meant to provide a [ TODO ]</p>
 <div class="section" id="probability">
 <span id="what-is-probability"></span><h2>Probability<a class="headerlink" href="#probability" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="the-normal-distribution">
+<span id="what-is-the-normal-distribution"></span><h2>The Normal Distribution<a class="headerlink" href="#the-normal-distribution" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The normal distribution carries with it assumptions and can be completely specified by two parameters: the mean and the standard deviation. If the mean and standard deviation are known, you can access every data point on the curve.
+The empirical rule is a handy quick estimate of the data’s spread given the mean and standard deviation of a data set that follows a normal distribution.</p>
+</div></blockquote>
+<p>[ stats on standard deviations ]</p>
+<blockquote>
+<div><p>Thus, almost all the data lies within 3 standard deviations. This rule enables us to check for Outliers and is very helpful when determining the normality of any distribution.</p>
+</div></blockquote>
+<div class="section" id="relationship-between-the-normal-distribution-and-machine-learning">
+<h3>Relationship Between the Normal Distribution and Machine Learning<a class="headerlink" href="#relationship-between-the-normal-distribution-and-machine-learning" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>In Machine Learning, data satisfying Normal Distribution is beneficial for model building. It makes math easier. Models like LDA, Gaussian Naive Bayes, Logistic Regression, Linear Regression, etc., are explicitly calculated from the assumption that the distribution is a bivariate or multivariate normal. Also, Sigmoid functions work most naturally with normally distributed data.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Many natural phenomena in the world follow a log-normal distribution, such as financial data and forecasting data. By applying transformation techniques, we can convert the data into a normal distribution. Also, many processes follow normality, such as many measurement errors in an experiment, the position of a particle that experiences diffusion, etc.</p>
+</div></blockquote>
+<blockquote>
+<div><p>So it’s better to critically explore the data and check for the underlying distributions for each variable before going to fit the model.</p>
+</div></blockquote>
+<p>[ relationship with EDA ]</p>
+<blockquote>
+<div><p>Note: Normality is an assumption for the ML models. It is not mandatory that data should always follow normality. ML models work very well in the case of non-normally distributed data also. Models like decision tree, XgBoost, don’t assume any normality and work on raw data as well. Also, linear regression is statistically effective if only the model errors are Gaussian, not exactly the entire dataset.</p>
+</div></blockquote>
 <p>(what-is-class-prior)</p>
+</div>
 </div>
 <div class="section" id="class-prior">
 <h2>Class Prior<a class="headerlink" href="#class-prior" title="Permalink to this headline">¶</a></h2>
@@ -349,7 +384,7 @@ also:
 <div class="section" id="evaluation-metrics">
 <h2>Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this headline">¶</a></h2>
 <p>Need to reference:</p>
-<p><a class="reference external" href="https://aaaipress.org/Papers/KDD/1997/KDD97-007.pdf">https://aaaipress.org/Papers/KDD/1997/KDD97-007.pdf</a></p>
+<p>https://aaaipress.org/Papers/KDD/1997/KDD97-007.pdf</p>
 <!--
 
 (what-is-average-precision)=
@@ -367,12 +402,12 @@ also:
 <blockquote>
 <div><p>“Note: “Tuning” a threshold for logistic regression is different from tuning hyperparameters such as learning rate. Part of choosing a threshold is assessing how much you’ll suffer for making a mistake. For example, mistakenly labeling a non-spam message as spam is very bad. However, mistakenly labeling a spam message as non-spam is unpleasant, but hardly the end of your job.”</p>
 </div></blockquote>
-<p><a class="reference external" href="https://developers.google.com/machine-learning/crash-course/classification/thresholding">https://developers.google.com/machine-learning/crash-course/classification/thresholding</a></p>
+<p>https://developers.google.com/machine-learning/crash-course/classification/thresholding</p>
 <blockquote>
 <div><p>“Ranking is better than classifying (or: Don’t brain-damage your classifier)”
-<a class="reference external" href="https://www.svds.com/classifiers2/">https://www.svds.com/classifiers2/</a></p>
+https://www.svds.com/classifiers2/</p>
 </div></blockquote>
-<p><a class="reference external" href="https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a">https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</a></p>
+<p>https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</p>
 <ul class="simple">
 <li><p>Training Stage</p>
 <ul>
@@ -398,7 +433,7 @@ also:
 </div>
 <div class="section" id="expected-value">
 <span id="what-is-expected-value"></span><h2>Expected Value<a class="headerlink" href="#expected-value" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://www.svds.com/the-basics-of-classifier-evaluation-part-1/">https://www.svds.com/the-basics-of-classifier-evaluation-part-1/</a></p>
+<p>https://www.svds.com/the-basics-of-classifier-evaluation-part-1/</p>
 <ul class="simple">
 <li><p>expected value == [ possible outcome 1 ] x [ weight ]</p></li>
 <li><p>weight == probability( occurrence )</p></li>
@@ -723,15 +758,13 @@ https://vitalflux.com/validation-curves-explained-python-sklearn-example/
               </div>
               
         
-        <div class='prev-next-bottom'>
-            
-    <a class='left-prev' id="prev-link" href="kubeflow_gpu_validation_notebook.html" title="previous page">Demo Colab Notebook</a>
-
-        </div>
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
@@ -747,8 +780,7 @@ https://vitalflux.com/validation-curves-explained-python-sklearn-example/
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>

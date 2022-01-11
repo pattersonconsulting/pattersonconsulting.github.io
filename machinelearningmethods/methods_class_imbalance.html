@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A ML Workflow for Dealing with Class Imbalance in Tabular Data &#8212; Applied Data Science Methods</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
@@ -51,10 +51,11 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Forecasting the Business Value of a Model" href="forecasting_model_value.html" />
-    <link rel="prev" title="Exploratory Data Analysis Workflows" href="exploratory_data_analysis_workflows.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -71,6 +72,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="_static/pct_box_logo_big.png" class="logo" alt="logo">
       
       
@@ -80,7 +85,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -89,30 +94,20 @@
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="exploratory_data_analysis_workflows.html">
-   Exploratory Data Analysis Workflows
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   A ML Workflow for Dealing with Class Imbalance in Tabular Data
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="forecasting_model_value.html">
    Forecasting the Business Value of a Model
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="kubeflow_gpu_validation_notebook.html">
-   Demo Colab Notebook
+  <a class="reference internal" href="confidence_intervals_for_cross_validation.html">
+   Confidence Intervals for Cross Validation Error Estimates
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="concepts_and_definitions.html">
-   Concepts and Definitions
+  <a class="reference internal" href="notes_on_using_kfold_cv.html">
+   Notes on Using K-Fold Cross Validation
   </a>
  </li>
 </ul>
@@ -200,7 +195,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction-and-motivations">
@@ -360,13 +355,13 @@ Tuning the model decision threshold based on the class distribution and cost mat
 <blockquote>
 <div><p>Don’t use accuracy (or error rate) to evaluate your classifier! There are two significant problems with it. Accuracy applies a naive 0.50 threshold to decide between classes, and this is usually wrong when the classes are imbalanced. Second, classification accuracy is based on a simple count of the errors, and you should know more than this. You should know which classes are being confused and where (top end of scores, bottom end, throughout?).</p>
 </div></blockquote>
-<p><a class="reference external" href="https://www.svds.com/tbt-learning-imbalanced-classes/">https://www.svds.com/tbt-learning-imbalanced-classes/</a></p>
+<p>https://www.svds.com/tbt-learning-imbalanced-classes/</p>
 <div class="admonition-segue admonition">
 <p class="admonition-title">Segue</p>
 <blockquote>
 <div><p>“When you get probability estimates, don’t blindly use a 0.50 decision threshold to separate classes. Look at performance curves and decide for yourself what threshold to use (see next section for more on this). Many errors were made in early papers because researchers naively used 0.5 as a cut-off.
 “
-<a class="reference external" href="https://www.svds.com/tbt-learning-imbalanced-classes/">https://www.svds.com/tbt-learning-imbalanced-classes/</a></p>
+https://www.svds.com/tbt-learning-imbalanced-classes/</p>
 </div></blockquote>
 </div>
 </div>
@@ -413,8 +408,8 @@ Tuning the model decision threshold based on the class distribution and cost mat
 <blockquote>
 <div><p>“Nevertheless, many machine learning algorithms are capable of predicting a probability or scoring of class membership, and this must be interpreted before it can be mapped to a crisp class label. This is achieved by using a threshold, such as 0.5, where all values equal or greater than the threshold are mapped to one class and all other values are mapped to another class.”</p>
 </div></blockquote>
-<p><a class="reference external" href="https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/">https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/</a></p>
-<p><a class="reference external" href="https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall">https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall</a></p>
+<p>https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/</p>
+<p>https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall</p>
 <p>[ HOW do we delineate “threshold tuning” from “model training”? ]</p>
 <ul class="simple">
 <li><p>how do we show when one starts and the other stops???</p></li>
@@ -541,6 +536,50 @@ Use ROC AUC</p>
 <li><p>f1-measure, f2-measure, etc</p></li>
 <li><p>G-Mean</p></li>
 </ul>
+<blockquote>
+<div><p>The two-dimensional graphs in the first bullet above are always more informative than a single number, but if you need a single-number metric, one of these is preferable to accuracy:</p>
+</div></blockquote>
+<blockquote>
+<div><p>The Area Under the ROC curve (AUC) is a good general statistic. It is equal to the probability that a random positive example will be ranked above a random negative example.
+The F1 Score is the harmonic mean of precision and recall. It is commonly used in text processing when an aggregate measure is sought.
+Cohen’s Kappa is an evaluation statistic that takes into account how much agreement would be expected by chance.</p>
+</div></blockquote>
+  <!-- --------------------------------- START: Sidebar --------------------------------- -->
+  <div style=" border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 6px; font-size: 12px; background-color: #eeeeee;">
+    <h4>Understanding Evaluation of Machine Learning Models</h4>
+    <p>
+      Machine learning has its own metrics that are useful when evaluating the performance of a model. We share some relevant measures and their definitions below.
+    </p>
+    <p>
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>True Positive (TP)</td><td>samples that were correctly classified</td></tr>
+            <tr><td>True Negative (TN)</td><td>samples that were correctly classified</td></tr>
+            <tr><td>False Positive (FP)</td><td>samples that were <span style="color: red;">incorrectly</span> classified</td></tr>
+            <tr><td>False Negative (FN)</td><td>samples that were <span style="color: red;">incorrectly</span> classified</td></tr>
+            <tr><td>Accuracy</td><td>percentage of examples correctly classified; Note: <i>accuracy is not a good way to evaluate a classifier trained on an imbalanced dataset</i></td></tr>
+            <tr><td>Precision</td><td>percentage of predicted positives that were correctly classified: TP / (TP + FP)</td></tr>
+            <tr><td>Recall</td><td>percentage of actual positives that were correctly classified: TP / (TP + FN)</td></tr>
+            <tr><td>Sensitivity</td><td>refers to the <b>true positive rate</b> and summarizes how well the positive class was predicted (same formula as Recall): TP / (TP + FN)</td></tr>
+            <tr><td>Specificity</td><td> the complement to sensitivity, or the <b>true negative rate</b>, and summarises how well the negative class was predicted: TP / (FP + TN)</td></tr>
+            <tr><td>F-Measure</td><td>a single score that seeks to balance both concerns of precision and recall: (2 * Precision * Recall) / (Precision + Recall)</td></tr>
+            <tr><td>Area Under the Curve (AUC)</td><td>refers to the Area Under the Curve of a Receiver Operating Characteristic curve (ROC-AUC)</td></tr>
+          </tbody>
+        </table>
+    </p>
+    <div style="border: 1px solid #cccccc; width: 440px; padding: 6px; text-align: center;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sensitivity_and_specificity_1.01.svg/683px-Sensitivity_and_specificity_1.01.svg.png" style="width: 380px; margin: 2px; margin-bottom: 12px;"/>
+      <p>Image Source: Wikipedia article on <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">Sensitivity and Specificity</a>
+      </p>
+    </div>
+  </div>
+  <!-- --------------------------------- END: Sidebar --------------------------------- -->
 </div>
 <div class="section" id="select-a-group-of-promising-model-types-for-grid-search">
 <span id="select-models-class-imbalance-workflow"></span><h3>Select a Group of Promising Model Types for Grid Search<a class="headerlink" href="#select-a-group-of-promising-model-types-for-grid-search" title="Permalink to this headline">¶</a></h3>
@@ -638,9 +677,9 @@ Use ROC AUC</p>
 <blockquote>
 <div><p>“One last thing to note is that when we performed the Grid Search, we selected the best model using average_precision , which is important. If we had used the f1 score then for example, we would have relied on the default threshold only and therefore could have missed a combination of hyperparameters that yield a better f1 score at a different threshold. Therefore, I made sure to select the model using a metric agnostic to the threshold, and only then tuned the threshold.”</p>
 </div></blockquote>
-<p><a class="reference external" href="https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a">https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</a></p>
+<p>https://towardsdatascience.com/how-to-add-decision-threshold-tuning-to-your-end-to-end-ml-pipelines-7077b82b71a</p>
 <p>Working with Average Precision</p>
-<p><a class="reference external" href="https://sanchom.wordpress.com/tag/average-precision/">https://sanchom.wordpress.com/tag/average-precision/</a></p>
+<p>https://sanchom.wordpress.com/tag/average-precision/</p>
 <p>[ explain: the default threshold concept, the inherent assumptions, and how this breaks with class imbalance ]</p>
 <div class="section" id="rank-with-classifier-probabilities">
 <h3>Rank with Classifier Probabilities<a class="headerlink" href="#rank-with-classifier-probabilities" title="Permalink to this headline">¶</a></h3>
@@ -661,12 +700,12 @@ Use ROC AUC</p>
 <ul class="simple">
 <li><p>Learning from Imbalanced Data Sets</p>
 <ul>
-<li><p><a class="reference external" href="https://www.amazon.com/Learning-Imbalanced-Data-Alberto-Fern%C3%A1ndez/dp/3319980734/ref=as_li_ss_tl?keywords=Learning+from+Imbalanced+Data+Sets&amp;qid=1568679479&amp;s=books&amp;sr=1-1&amp;linkCode=sl1&amp;tag=inspiredalgor-20&amp;linkId=214f8d8144c94e7f48543e0200abdbdf&amp;language=en_US">https://www.amazon.com/Learning-Imbalanced-Data-Alberto-Fernández/dp/3319980734/ref=as_li_ss_tl?keywords=Learning+from+Imbalanced+Data+Sets&amp;qid=1568679479&amp;s=books&amp;sr=1-1&amp;linkCode=sl1&amp;tag=inspiredalgor-20&amp;linkId=214f8d8144c94e7f48543e0200abdbdf&amp;language=en_US</a></p></li>
+<li><p>https://www.amazon.com/Learning-Imbalanced-Data-Alberto-Fern%C3%A1ndez/dp/3319980734/ref=as_li_ss_tl?keywords=Learning+from+Imbalanced+Data+Sets&amp;qid=1568679479&amp;s=books&amp;sr=1-1&amp;linkCode=sl1&amp;tag=inspiredalgor-20&amp;linkId=214f8d8144c94e7f48543e0200abdbdf&amp;language=en_US</p></li>
 </ul>
 </li>
 <li><p>Machine Learning from Imbalanced Datasets 101</p>
 <ul>
-<li><p><a class="reference external" href="https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf">https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf</a></p></li>
+<li><p>https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf</p></li>
 </ul>
 </li>
 </ul>
@@ -696,16 +735,13 @@ Use ROC AUC</p>
               </div>
               
         
-        <div class='prev-next-bottom'>
-            
-    <a class='left-prev' id="prev-link" href="exploratory_data_analysis_workflows.html" title="previous page">Exploratory Data Analysis Workflows</a>
-    <a class='right-next' id="next-link" href="forecasting_model_value.html" title="next page">Forecasting the Business Value of a Model</a>
-
-        </div>
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
@@ -721,8 +757,7 @@ Use ROC AUC</p>
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>

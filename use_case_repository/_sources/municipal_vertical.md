@@ -118,6 +118,17 @@ tbody{
 <th>Paper</th>
 </tr>
 
+
+<tr>
+<td>Analysis of Hospital Admissions after Catastrophic Hurricanes</td>
+<td>ITS Analytics</td>
+<td>Better disaster response planning</td>
+<td>Medicare Provider and Analysis Review (MedPAR) file combined with the Master Beneficiary Summary File (MBSF)</td>
+<td>Analytic tools</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+
+
 <tr>
 <td>Public tansport optimization</td>
 <td>ITS Analytics</td>
@@ -254,3 +265,73 @@ An example of building predictive modeling applications based on sensor data can
 <td><a href="./request_use_case_report.html">Request Custom Report</a></td>
 </tr>
 </table>
+
+## Water
+
+The current use case sub-groups we track for water:
+
+* Storm Water Management
+
+
+### Storm Water Management
+
+
+<table style="width: 100%; border: 1px solid;">
+<tr>
+<th>Use Case</th>
+<th>Sub-Group</th>
+<th>Benefit</th>
+<th>Dataset</th>
+<th>Method</th>
+<th>Paper</th>
+</tr>
+
+<tr>
+<td>Estimation of Total Suspended Solids in Urban Watersheds</td>
+<td></td>
+<td>Better protection of ecosystems and human health</td>
+<td>National stormwater quality database</td>
+<td>Random Forest (RF), Adaptive Boosting (AdB)</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+
+<tr>
+<td>Setting Stormwater Rates</td>
+<td></td>
+<td>Better rate setting, lower costs</td>
+<td>Image Data</td>
+<td>Convolutional Neural Networks</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+
+<tr>
+<td>Detecting Inflow and Infiltration water in wastewater channels</td>
+<td></td>
+<td>Better hazard detection</td>
+<td>Sensor Data</td>
+<td>Regression Modeling, Neural Networks</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+
+<tr>
+<td>Detect simulated increases of de facto reuse and urban stormwater surges in surface water</td>
+<td></td>
+<td>Better prevention of hazards to drinking water consumers</td>
+<td>TOC, UVA254, tryptophan-like fluorescence, and chlorophyll-a.</td>
+<td>Adaboost</td>
+<td><a href="./request_use_case_report.html">Request Custom Report</a></td>
+</tr>
+
+
+
+
+
+</table>
+
+
+<!--
+## Energy
+
+> TODO: "Predicting Transformer Failure"
+-->
+

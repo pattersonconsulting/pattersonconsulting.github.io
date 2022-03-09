@@ -1,16 +1,9 @@
 # Introduction
 
-This is a small sample book to give you a feel for how book content is
-structured.
+Welcome to the Patterson Consulting Data Science Use Case Repository
 
-:::{note}
-Here is a note!
-:::
+This online resource is divided into logical chapters based on industry vertical.
 
-And here is a code block:
+Each vertical contains multiple sub-verticals, and then a list of use cases specific to that sub-vertical.
 
-```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.
+Feel free to request a free customized use case architecture report for any use case listed in the repository.

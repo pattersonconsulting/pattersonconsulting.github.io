@@ -113,6 +113,13 @@ Below we list 4 ways that we can calculate a confidence interval for a model's p
 
 In the following sections, we give explanations and live notebook code for 3 of the the methods.
 
+```{note}
+For more reading on Confidence Intervals and various methods to generate them, check out Sebastian Raschka's paper:
+
+* Raschka, S. (2018). <a href="https://arxiv.org/abs/1811.12808">Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning
+</a>, Arxiv.org
+```
+
 
 (se-cv-err-estimate-model)=
 ## Using Standard Error to Calculate the Cross Validation Error Estimate Confidence Interval

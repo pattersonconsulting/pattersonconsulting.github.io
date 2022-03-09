@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 3: Loading the Credit Card Transaction Data Into Snowflake</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this blog post series on ....." />
+	<meta name="keywords" content="snowflake, predictive maintenance, exploratory data analysis, machine learning, data science, snowpark" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 3: Loading the Credit Card Transaction Data Into Snowflake"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this blog post series o...."/>
+	
+
+	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 3: Loading the Credit Card Transaction Data Into Snowflake" />
+	<meta data-rh="true" property="twitter:description" content="In this blog post series ...."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
+						<p>
+							<h3>Part 1 of 3: Loading the Credit Card Transaction Data Into Snowflake</h3>
+
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: zzzzzzz xxth, 2022
+						</p>
+						
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
+								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Grid Search Model Construction with Sagemaker Studio Lab</a></li>
+							</ul>
+
+
+						</p>
+
+						For more use cases like these, check out our <a href="http://www.pattersonconsultingtn.com/use_case_repository/finserv_vertical.html">Financial Services vertical</a> in our <a href="http://www.pattersonconsultingtn.com/use_case_repository/intro.html">Use Case Repository</a>.
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+
+
+
+						<p>
+							In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data.
+
+						</p>
+						<p>
+							Series Key Take-Aways:
+							<ol>
+								<li>Learning how to manage timeseries data on Snowflake</li>
+								<li>Perform scalable feature engineering with Snowpark on Snowflak</li>
+								<li>Use Amazon Sagemaker Studio Lab to build multiple models</li>
+
+							</ol>
+
+						</p>
+
+						<p>
+							In this series we further explore feature engineering on Snowpark and then show you have to use Amazon Sagemaker Studio Lab to model the feature data in Snowflake.
+
+						</p>
+
+
+
+							<p>
+								
+							
+							In this article (Part 1 of the series) we're going to document 
+
+							<ul>
+								<li>Working with data in Parquet files</li>
+								<li>Setting up tables and other configuration in Snowflake</li>
+								<li>Ingesting timeseries data into Snowflake</li>
+							</ul>
+
+							Now let's take a closer look at our credit card transaction dataset.
+
+						</p>
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h2>The Credit Card Transaction Dataset</h2>
+
+						<p>
+							
+							The work in this series is based on the dataset and general workflow from the online book:
+						</p>
+						<p>
+<figure>
+<figcaption>			
+
+
+						<a href="https://github.com/Fraud-Detection-Handbook/fraud-detection-handbook"><cite>Reproducible Machine Learning for Credit Card Fraud Detection - Practical Handbook</cite></a>, by Le Borgne, Yann-Aël and Siblini, Wissam and Lebichot, Bertrand and Bontempi, Gianluca, 2022, Université Libre de Bruxelles
+</figcaption>
+</figure>
+					</p>
+
+					<p>
+						The project also includes a seperate <a href="https://github.com/Fraud-Detection-Handbook/simulated-data-raw">github repository containing the raw transaction data in .pkl files</a>, which we'll use in our example further below in this article.
+
+					</p>
+
+					<p>
+						In places we've transformed the data to other formats or used different models for modeling the data, but the overall workflow ideas are the same. This also gives us a good reference baseline on which to compare Snowpark's dataframe API against the pandas dataframe API.
+
+
+
+
+						</p>
+						<p>
+							We'll start out by taking a look at how to convert the raw dataset's file format (pkl) into something that we can ingest into a Snowflake table.
+
+						</p>
+
+
+						<h2>Creating Parquet Files from the Raw PKL Transaction Files</h2>
+
+<div style="float: right;">
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">There is a bit of magic in the new 🤗nlp library besides giving dead-simple access to 120+ datasets🧙‍♂️<br><br>We&#39;ve tested it with <a href="https://twitter.com/qlhoest?ref_src=twsrc%5Etfw">@qlhoest</a> and loading a 17GB+ dataset like English Wikipedia only takes... 9MB in RAM🐣<br><br>And you can iterate over the data at 2-3 Gbit/s🚀<br><br>Try it yourself👇 <a href="https://t.co/wx7x7fzhqf">pic.twitter.com/wx7x7fzhqf</a></p>&mdash; Thomas Wolf (@Thom_Wolf) <a href="https://twitter.com/Thom_Wolf/status/1272512974935203841?ref_src=twsrc%5Etfw">June 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+						<p>
+
+							When <a href="https://community.snowflake.com/s/article/How-to-Load-Terabytes-Into-Snowflake-Speeds-Feeds-and-Techniques">bulk loading a lot of data into Snowflake</a> there are multiple things to think about, such as:
+							
+							<ul>
+								<li>what are the source files?</li>
+								<li>what type of data is in the source files?</li>
+								<li>how many files are there and how big should they be?</li>
+								
+
+
+							</ul>
+						</p>
+						<p>
+							We note that Snowflake supports the following file formats for data loading:
+
+							<ul>
+								<li>CSV</li>
+								<li>JSON</li>
+								<li>AVRO</li>
+								<li>ORC</li>
+								<li>PARQUET</li>
+								<li>XML</li>
+							</ul>
+
+						</p>
+						<p>
+							We're not going to delve too deeply into the file format arguments (outside of the sidebar below), but for this blog series we're going to convert the pkl files to parquet files.
+							</p>
+
+							<p>
+							 Our reasoning here is that while <a href="https://community.snowflake.com/s/article/How-to-Load-Terabytes-Into-Snowflake-Speeds-Feeds-and-Techniques">CSV files can load faster into Snowflake</a>, 
+
+								CSVs are row-orientated (which means they’re slow to query by themselves) and difficult to store efficiently. CSVs also lack the ability to carry a schema embedded in the file format.
+							</p>
+							<p>
+							 We want to explore using Parquet files as they carry the schema embedded in the file format, compress the best (Parquet is an efficient columnar data storage format that supports complex nested data structures in a flat columnar format), and are ideal for working with huge amounts of complex data (as Parquet offers a variety of data compression and encoding options). Parquet files are also easier to work with because they are supported by so many different projects.
+
+						</p>
+
+						<!-- START NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Parquet and Arrow</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  	<p>
+							  		The simple way to describe the purpose of each project:
+							  		
+							  	</p>
+
+
+							  
+							  <p>
+							  	<ul>
+							  		<li>Parquet is the standard for columnar data on disk</li>
+							  		<li>Apache Arrow to represent columnar data in memory</li>
+							  	</ul>
+
+
+								</p>
+
+								<p>
+									Parquet is stored in a highly efficient way to work with data on disk, reducing the volume of data read in (e.g., by working with only the columns you need at that moment). Parquet stores the file schema in the file metadata. CSV files don't store file metadata, so readers need to either be supplied with the schema or the schema needs to be inferred. Supplying a schema is tedious and inferring a schema is error prone / expensive.
+								</p>
+								<p>
+
+
+									We still need to bring data into memory to work with it and Arrow’s standard format allows zero-copy reads which removes virtually all serialization overhead. In a blog-post Wes McKinney summarizes how Arrow helps here as follows:
+
+								</p>
+
+<figure>
+
+<blockquote>"...you can memory map huge, bigger-than-RAM datasets and evaluate pandas-style algorithms on them in-place without loading them into memory like you have to with pandas now. You could read 1 megabyte from the middle of a 1 terabyte table, and you only pay the cost of performing those random reads totalling 1 megabyte"
+</blockquote>						
+<figcaption>			
+						<a href="https://wesmckinney.com/blog/apache-arrow-pandas-internals/"><cite>W. McKinney, Apache Arrow and the “10 Things I Hate About pandas”</cite></a>  (2017), Blog
+</figcaption>
+</figure>
+							
+
+						<p>
+
+Interoperability between Parquet and Arrow has been a key design goal from the start. Given that both are columnar the projects include efficient vectorized converters from one to the other where we can read from Parquet to Arrow much faster than in a row-oriented representation.
+						</p>								
+							</i>
+						</p>
+					</div>
+				</div>
+					<!-- END NOTE -->
+
+						
+
+						<p>
+
+								An example of a tool using both projects is Pandas. A user can save a Pandas data frame to Parquet and read a Parquet file to in-memory Arrow. Pandas can work directly with the Arrow columns as a great example of interoperability.
+
+						</p>
+
+						<p>
+							 A great example of how performant Parquet files can be is how <a href="https://huggingface.co/docs/datasets/about_arrow">HuggingFace is able to iterate through 17GB of data in less than a minute with a RAM footprint of 9MB by using Apache Arrow under the hood</a>.
+
+						</p>
+
+<figure>
+
+<blockquote>Apache Arrow is a cross-language development platform for in-memory data. It specifies a standardized language-independent columnar memory format for flat and hierarchical data, organized for efficient analytic operations on modern hardware. It also provides computational libraries and zero-copy streaming messaging and interprocess communication.
+</blockquote>						
+<figcaption>			
+						<a href="https://arrow.apache.org/"><cite>Apache Arrow, Landing Page (2020)</cite></a>, Apache Arrow Website
+</figcaption>
+</figure>
+
+
+<p>
+Using Apache Arrow for internal serialization allows us to map blobs of data on-drive without doing any deserialization. This gives us the advantage of using our dataset directly on disk where we can use memory-mapping and pay effectively zero cost. Additionally, random access is O(1) which is powerful from an algorithmic standpoint.
+
+</p>
+<p>
+	So while we may only be using Parquet (and Arrow under the hood) to move data into Snowflake in this example, understanding how Parquet files work is a useful tool in our toolbelt, especially if we had to do any pre-processing on the data before loading into Snowflake.
+	</p>
+
+						<h3>Script to Convert PKL Files to Parquet Files</h3>
+
+						<p>
+							To get a copy of the raw credit card transaction data from the project mentioned above, clone the github repository with the command below:
+
+						</p>
+<pre>
+git clone https://github.com/Fraud-Detection-Handbook/simulated-data-raw
+</pre>						
+
+						<p>
+							That will give you a local copy of the raw credit card transaction data from the online book project (in the .pkl file format).
+						</p>
+
+						<p>
+							In the code listing below we show how to use the pyarrow python module to convert <code>.pkl</code> files into a single Parquet file containing <code>1,754,155 rows</code> × <code>9 columns</code>.
+
+						</p>
+
+
+<pre>
+
+import pandas as pd
+import os
+import pyarrow.parquet as pq
+import pyarrow as pa
+
+for pickle_file_name in os.listdir("./source/pkl/data/path/"):
+  print(pickle_file_name)
+
+all_df = pd.concat([pd.read_pickle(strBasePath + pickle_file_name) for pickle_file_name in os.listdir(strBasePath)]).reset_index(drop=True)
+
+table = pa.Table.from_pandas(all_df)
+
+parquet_path = "./your/path/here/cc_txn_data_pkl_all_files_noindex.parquet"
+pq.write_table(table, parquet_path, version='1.0') 
+
+</pre>
+
+
+						<p>
+
+							Once we have our parquet file(s), we can now load it into the a Snowflake database in the Snowflake data cloud.
+
+						</p>
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
+
+
+
+
+
+
+
+				<!-- Section 3 of 5: Snowflake bulk load -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+
+						<h1>Managing Credit Card Transaction Data with Snowflake</h1>
+
+						<p>
+When data is loaded into Snowflake, Snowflake reorganizes that data into its internal optimized, compressed, columnar format. 
+
+This Snowflake columnar database engine is based on SQL and supports ANSI SQL.
+						</p>
+						
+						<p>
+							Some things we want to consider when choosing where to manage our transaction data:
+
+
+
+							<ul>
+								<li>what happens when we have to load large amounts of data? what should we consider?</li>
+								<li>what happens when we need to process (feature engineering) large amounts of transaction data for model?</li>
+								<li>what type of files can we load into our data storage system?</li>
+						</ul>
+
+						<p>
+							When we have to load large amounts of data we may want to look at efficient file formats that enable compression. Snowflake recommends data files roughly <code>100-250 MB</code> (or larger) in size compressed.
+
+						</p>
+
+						<p>
+							Transactional data (e.g., credit card transactions, here) creates large amounts of repetitive data. Scalable systems such as Snowflake help us in the feature creation phase of machine learning because many times the data we actually model is smaller than the incoming raw transaction data.
+
+						</p>
+						<p>
+							As we wrote previously in this article, Snowflake supports many types of files including Parquet, which we're focused on in this article.
+
+						</p>
+
+
+						</p>
+
+						<h1>Loading Raw Transaction Data Into Snowflake with Parquet Files</h1>
+
+						<img src="./images/snowflake_logo_wide_sept_2021.png" width="400px;" style="float: right;"/>
+
+
+
+
+						<p>
+							Snowflake Cloud Data Warehouse is a cloud-native, fully relational ANSI SQL data warehouse service available in both AWS and Azure
+							It's scalability and ability to quickly provision a data warehouse make it the right place to start our sensor data management operation for our pilot program.
+
+						</p>
+
+						
+						<p>
+							
+						<p>
+
+							We have our data in parquet but we need to do a few things before we can load the data into Snowflake:
+
+
+
+							<ul>
+								<li>Sign-up for a Snowflake account (<a href="https://signup.snowflake.com/">free, if you don't already have one</a>)</li>
+
+								<li>Create a database</li>
+								<li>Create a table in the new database to hold the transaction data</li>
+								<li>Create a temporary stage in Snowflake (with a file format) to hold the data before loading</li>
+								<li>Upload the parquet data into the stage</li>
+								<li>Copy the data from the stage over into the final table</li>
+
+							</ul>
+
+							Let's start off by creating a database for our project in Snowflake.
+
+						</p>							
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Snowflake Help?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with <a href="../offerings/snowflake_services.html" style="color: #EEEEEE;">Snowflake platform operations, analytics, and machine learning</a>.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+
+
+
+						<h2>Creating a Credit Card Company Database in Snowflake</h2>
+
+
+						<p>
+							You'll need to use either the online Web UI for Snowflake or the command-line interface (SnowSQL CLI Client). We're going to do everything from the command line via the SnowSQL in this blog post:
+						</p>
+
+						<p>
+
+							<a href="https://docs.snowflake.com/en/user-guide/snowsql.html">https://docs.snowflake.com/en/user-guide/snowsql.html</a>
+
+						</p>
+
+					<p>
+						Once you have the SnowSQL CLI Client installed, open a terminal window and log into your Snowflake account from the command line with the following command:
+
+					</p>
+
+<pre>
+$ snowsql -a [account_name] -u [user_name]
+</pre>
+						<p>
+							This should show console output similar to the output below:
+
+						</p>		
+
+<consoleoutput>jpatanooga#COMPUTE_WH@(no database).(no schema)>
+</consoleoutput><br/>		
+
+
+
+
+						<p>
+							Now that we have connectivity, let's move on to creating a database and table for our transaction data
+
+						</p>
+
+
+
+
+
+						<h2>Creating a Database for Our Credit Card Transaction Data on Snowflake</h2>
+
+						<p>
+							Now let's use the SnowSQL client to create a database and a table to manage our data. 
+
+							
+						</p>
+
+						<p>
+							To create a database (<code>CREDIT_CARD_COMPANY_DB</code>) use the following command from SnowSQL CLI:
+
+						</p>
+<pre>
+create or replace database CREDIT_CARD_COMPANY_DB;
+
+</pre>
+
+						<h2>Creating a Table to Hold the Credit Card Transaction Data</h2>
+
+
+
+						<p>
+							If we change our current datasbase to <code>CREDIT_CARD_COMPANY_DB</code> the output should look like:
+
+							</p>
+
+
+
+<consoleoutput>jpatanooga#COMPUTE_WH@(no database).(no schema)>use CREDIT_CARD_COMPANY_DB;
++----------------------------------+                                            
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.386s
+jpatanooga#COMPUTE_WH@CREDIT_CARD_COMPANY_DB.PUBLIC>
+</consoleoutput><br/>
+
+
+						<p>
+
+							Next we want to create a table in our Snowflake database.
+
+						</p>
+
+<pre>
+
+create or replace table CUSTOMER_CC_TRANSACTIONS (
+
+TRANSACTION_ID int,
+TX_DATETIME timestamp,
+CUSTOMER_ID int,
+TERMINAL_ID int,
+TX_AMOUNT FLOAT,
+TX_TIME_SECONDS int,
+TX_TIME_DAYS int,
+TX_FRAUD int,
+TX_FRAUD_SCENARIO int
+  
+);
+</pre>
+
+						<p>
+							We can execute the the commands above from SnowSQL or from a file via SnowSQL:
+
+
+
+						</p>
+
+<pre>
+snowsql -a [xxxxxxx.us-east-1] -u [user_name] -f ./create_pm_db_and_table.sql 
+</pre>						
+	
+
+						<p>
+							Now let's move on to uploading the Parquet-based credit card transaction data into our Snowflake table.
+
+						</p>
+
+
+
+
+						<h2>Load Credit Card Transaction Dataset into Snowflake as Parquet Files</h2>
+
+
+
+							<p>
+							We can get more detail on our table <code>CUSTOMER_CC_TRANSACTIONS</code> with the <code>describe table</code> command:
+
+							</p>						
+
+<consoleoutput>describe table CUSTOMER_CC_TRANSACTIONS;
++-------------------+------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------+
+| name              | type             | kind   | null? | default | primary key | unique key | check | expression | comment | policy name |
+|-------------------+------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------|
+| TRANSACTION_ID    | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_DATETIME       | TIMESTAMP_NTZ(9) | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| CUSTOMER_ID       | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TERMINAL_ID       | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_AMOUNT         | FLOAT            | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_TIME_SECONDS   | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_TIME_DAYS      | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_FRAUD          | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
+| TX_FRAUD_SCENARIO | NUMBER(38,0)     | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
++-------------------+------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------+
+9 Row(s) produced. Time Elapsed: 0.556s
+
+
+</consoleoutput><br/>			
+
+						<h3>Create a Snowflake File Format</h3>
+
+						<p>
+							When we load the data into the Snowflake stage, we'll need to tell the system a bit about how the data is formatted. Since we're using parquet files we'll <a href="https://docs.snowflake.com/en/sql-reference/sql/create-file-format.html#type-parquet">create a parquet file format</a> called <code>parquet_format</code> inside our database.
+
+
+						</p>
+<pre>
+create or replace file format parquet_format
+  type = parquet
+</pre>						
+
+						<p>
+							We'll take the default option values for our file format.
+
+						</p>						
+
+
+						<h3>Create Stage and Load Data into the Stage</h3>
+
+
+						<p>
+							We next need to put the data in an internal staging table on snowflake. First we need to create our temporary internal stage with the command below:
+
+						</p>
+
+<pre>
+create or replace temporary stage parquet_cc_data_loading_stage
+	file_format = parquet_format;
+</pre>
+
+
+
+						<p>
+							Each table has a Snowflake stage allocated to it by default for storing files (when using "Table Stage", <a href="https://docs.snowflake.com/en/user-guide/data-load-local-file-system-stage.html">check out the staging documentation</a>).
+						</p>
+						<p>
+							We can see what all stages have been created for a database with the command <code>show stages;</code>.
+						</p>
+						<p>
+							We will use the associated staging table (<code>@parquet_cc_data_loading_stage</code>) to load the data into Snowflake. We can see this commadn below:
+
+
+						</p>
+
+<pre>
+PUT file:///tmp/cc_txn_data_pkl_all_files_noindex.parquet @parquet_cc_data_loading_stage;
+</pre>
+
+
+					<h3>Copy Transaction Data from Stage to Final Table</h3>
+
+
+					<p>
+						We note that by default Snowflake reads Parquet data into a single <code>Variant</code> column (<code>Variant</code> is a tagged universal type that can hold up to 16 MB of any data type supported by Snowflake). The data in this <code>Variant</code> column can be queried with standard SQL (including joining against its data). 
+
+					</p>
+					<p>
+						There is also the option to move the Parquet columns directly into separate Snowflake columns (extracting the individual columns into a structured schema) during the data load phase from stage to table.
+
+
+The structured approach gives us a little more performance on the load phase, and is easier to manage with the defined schema.
+
+
+						We can see this load statement in action below.
+
+						
+
+					</p>
+
+
+<pre>
+copy into CUSTOMER_CC_TRANSACTIONS
+  from (select
+  $1:TRANSACTION_ID,
+  $1:TX_DATETIME::varchar,
+  $1:CUSTOMER_ID,
+  $1:TERMINAL_ID,
+  $1:TX_AMOUNT,
+  $1:TX_TIME_SECONDS,
+  $1:TX_TIME_DAYS,
+  $1:TX_FRAUD,
+  $1:TX_FRAUD_SCENARIO  
+  from @parquet_cc_data_loading_stage/cc_txn_data_pkl_all_files_noindex.parquet);
+</pre>
+
+					<p>
+
+					In the SQL-listing above, the main body of the <code>COPY</code> statment includes extraction of the labeled fields contained in the Parquet data, mapping them directly to the corresponding column in <code>CUSTOMER_CC_TRANSACTIONS</code>.
+
+					</p>
+					<p>
+
+Loading data into fully structured (columnarized) schema is <code>~10-20%</code> faster than landing it into a <code>VARIANT</code> (Reference: <a href="https://community.snowflake.com/s/article/How-to-Load-Terabytes-Into-Snowflake-Speeds-Feeds-and-Techniques
+">"How to Load Terabytes into Snowflake"</a>).
+
+
+
+</p>
+
+						<!-- START NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>A Note About Date Fields</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  
+							  <p>
+									It's worth noting that if we do not explicitly copy the <code>datetime</code> column from Parquet to a Snowflake column as a <code>varchar</code>, it will be treated as a number. Treating the column as a number (and not <code>varchar</code>) causes Snowflake to interpret the <code>datetime</code> incorrectly, resulting in weird date-things happening (e.g., "bad dates"). A maddening wrinkle, no doubt!
+
+								</p>
+								<p>
+									You can see us explicitly calling this out in the line <code>$1:TX_DATETIME::varchar,</code> above.
+
+
+								</p>
+
+			
+							</i></p>
+							  
+							</div>	
+
+						</div>
+						<!-- END NOTE -->									
+						<p>
+							To do a quick visual check that the transaction data loaded correctly, run the following command:
+
+						</p>
+<pre>
+select * from CUSTOMER_CC_TRANSACTIONS limit 4;
+</pre>
+
+						<p>
+							The output should look similar to the following:
+
+
+							</p>
+<consoleoutput>+----------------+-------------------------------+-------------+-------------+-----------+-----------------+--------------+----------+-------------------+
+| TRANSACTION_ID | TX_DATETIME                   | CUSTOMER_ID | TERMINAL_ID | TX_AMOUNT | TX_TIME_SECONDS | TX_TIME_DAYS | TX_FRAUD | TX_FRAUD_SCENARIO |
+|----------------+-------------------------------+-------------+-------------+-----------+-----------------+--------------+----------+-------------------|
+|         412660 | 2018-05-14 00:00:01.000000000 |         851 |        9335 |     61.65 |         3715201 |           43 |        0 |                 0 |
+|         412661 | 2018-05-14 00:01:46.000000000 |        2462 |        8563 |    125.74 |         3715306 |           43 |        0 |                 0 |
+|         412662 | 2018-05-14 00:02:22.000000000 |         923 |        1514 |     97.75 |         3715342 |           43 |        0 |                 0 |
+|         412663 | 2018-05-14 00:03:02.000000000 |        3142 |        3268 |     11.09 |         3715382 |           43 |        0 |                 0 |
++----------------+-------------------------------+-------------+-------------+-----------+-----------------+--------------+----------+-------------------+
+</consoleoutput><br/>
+		
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+				<!-- Section 3 of 5: Snowflake bulk load -->
+
+
+
+
+
+				<!-- Section 5 of 5: Next Steps: EDA -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Next Steps: Ready for Feature Engineering</h1>
+
+
+						<p>
+
+							In this post in our series we learned some basics around Parquet files and how to load them into Snowflake.
+
+						</p>
+
+						<p>Now that we have established our cloud-based credit card transaction data management platform and loaded our data, let's move on to building some features with Snowflake and Snowpark.</p>
+						<p>
+
+						<p>
+							Normally do lots of EDA (as in our <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">previous blog series on Applied Predictive Maintenance</a>), but here we're going to skip that as its been done for us by the <a href="https://github.com/Fraud-Detection-Handbook/fraud-detection-handbook">authors of the original project</a>, so we're going to focus on building out the project on Snowpark and SageMaker Studio Lab in the next 2 entries in this series.
+
+						</p>
+						<p>
+							Next: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Part 2 of 3: Scalable Feature Engineering with Snowpark</a>
+
+						</p>
+
+					</div>
+
+				</div>
+				<!-- Section 5 of 5: Next Steps: EDA -->
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Snowflake Help?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with <a href="../offerings/snowflake_services.html" style="color: #EEEEEE;">Snowflake platform operations, analytics, and machine learning</a>.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

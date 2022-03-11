@@ -137,6 +137,11 @@ pre {
 
 }
 
+blockquote.rewrite {
+
+	color:  red;
+}
+
 </style>	
 
 	<script src="../js/modernizr-2.6.2.min.js"></script>
@@ -218,16 +223,15 @@ pre {
 
 							<ul>
 
-								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
-								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
-								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
-								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
-								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Analyzing the Results</a></li>
-								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a></li>
+								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
+								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Grid Search Model Construction with Sagemaker Studio Lab</a></li>
 							</ul>
 
 
 						</p>
+
+						For more use cases like these, check out our <a href="http://www.pattersonconsultingtn.com/use_case_repository/finserv_vertical.html">Financial Services vertical</a> in our <a href="http://www.pattersonconsultingtn.com/use_case_repository/intro.html">Use Case Repository</a>.
 
 
 
@@ -245,30 +249,23 @@ pre {
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 
-						<h1>Managing Predictive Maintenance Data with the Cloud and Snowflake</h1>
+						<h1>Introduction</h1>
 
 						<p>
-							In our last article The ACME Tool Co. team collectively established their goals and business constraints for their predictive maintenance pilot program.
+							In our last article ....
 
 						</p>
-						<p>
-							In part 2 of this series, ACME Tool Co. data science (ATDS) team starts their journey managing and analyzing the machine failure sensor data.
-
-						</p>						
+					
 						<p>
 							Key Take Aways:
 							<ol>
-								<li>Introduction to the Snowflake Cloud Analytics Platform</li>
-								<li>How to ingest data into Snowflake tables</li>
-								<li>Connecting Google Colab Jupyter Notebooks to Snowflake</li>
+								<li>a</li>
+								<li>b</li>
+								<li>c</li>
 
 							</ol>
 
 						</p>
-
-						
-						<p>The ATDS team knows what their requirements are, now let's introduce the sensor dataset the company provided the ATDS team for the predictive maintenance pilot project.</p>
-
 
 					</div>
 				</div>
@@ -284,44 +281,53 @@ pre {
 					<div class="col-md-12" id="fh5co-content">
 
 
-						<h1>The Predictive Maintenance Dataset</h1>
+						<h1>What is AWS Sagemaker Studio Lab?</h1>
 
 						<p>
-							The dataset we will use for this post is the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset Data Set</a> from the UCI Machine Learning Repository. 
 
+							Reference: https://aws.amazon.com/blogs/machine-learning/load-and-transform-data-from-delta-lake-using-amazon-sagemaker-studio-and-apache-spark/							
 
 						</p>
 
-						<p>
-							The associated publication released with the dataset goes on to explain their rationale for using synthetic data:
+<blockquote class="rewrite">
 
-						</p>
+ Amazon SageMaker is a fully managed service that provides a versatile workbench for building ML solutions and provides highly tailored tooling for data ingestion, data processing, model training, and model hosting						
+</blockquote>
 
-
-						<blockquote class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px;">
-						  <p style="font-size: 14px;"><i>
-						  	"Since real predictive maintenance datasets are generally difficult to obtain and in particular difficult to publish, we present and provide a synthetic dataset that reflects real predictive maintenance encountered in industry to the best of our knowledge."
-
-						  	
-
-						  </i></p>
-
-						  <p>"Explainable Artificial Intelligence for Predictive Maintenance Applications", Stephan Matzka, Third International Conference on Artificial Intelligence for Industries (AI4I 2020), 2020 (in press)</p>
-						</blockquote>	
 
 						<p>
-							Likewise, for our ACME Tool Co. blog series, we will use this dataset for analyis and modeling as it is available yet realistic. It's worth noting that this data is an aggregate of sensor data over time per machine. If we were working with the raw logs of sensor data then before modeling (if we desired a tabular data structure) we'd run some type of aggregation query across the logs to build a similar aggregate form of the sensor data. In this way, this aggregated form of sensor data is an appropriate and realistic dataset to work with in this scenario.
+							
 
-						</p>
-
-						<p>
-
-							Right now we know little about what the data contains. Before we can do any data exploration (before any modeling work), we need to get some data management and analysis tooling up and running. Let's start with getting our data into an analytic platform that can handle our aggregated data or could continuously ingest sensor data if we had that.
+							[ we have a lot of content from slides that go here ]
+							
+We will use SageMaker Studio Lab (SMSL)
+AWS Recommends:
+When you're starting a new notebook, we recommend that you create the notebook in Amazon SageMaker Studio instead of launching a notebook instance from the Amazon SageMaker console. 
+And pimp the upgrade to Studio
+Compare it to Google CoLab
+Also: similar to Kubeflow UX
+Request an account
+https://studiolab.sagemaker.aws/
+Getting data from Snowflake  to SMSL
 
 						</p>
 
 
+<p>
+	<pre>
+"Amazon SageMaker Studio Lab is cloud-hosted ML environment based on JupyterLab that is free to use and quick to set up for teaching, learning, and experimenting with ML"
 
+1/ No-charge, no billing, no AWS account required
+2/ Based on open-source JupyterLab, so you can install open-source JupyterLab extensions
+3/ CPU (t3.xlarge) and GPU (g4dn.xlarge) option
+4/ 15GB persistent storage and 16GB of RAM
+5/ Git integration: Git command line and Git UI / Share content via GitHub
+6/ You can export your projects and transition from Studio Lab to production-grade SageMaker if needed
+7/ Package management: Persistent installation of pip/conda packages within notebooks and from command line
+8/ Provides terminal access
+</pre>
+
+</p>
 
 
 					</div>
@@ -332,634 +338,315 @@ pre {
 				<!-- Section 2 of 5: UCI Dataset -->
 
 
-
-
-
-
-				<!-- Section 3 of 5: Snowflake bulk load -->
+				<!-- Section 2 of 5: UCI Dataset -->
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						
 
 
-						<h1>Snowflake as the Sensor Data Management Platform</h1>
-
-						<img src="./images/snowflake_logo_wide_sept_2021.png" width="400px;" style="float: right;"/>
+						<h1>Connecting SageMaker to Snowflake</h1>
 
 						<p>
-							In part 1 of this blog series the ACME Tool Co management team made it clear they had some constraints for the pilot:
 
-							<ul>
-								<li>Dont stand up new hardware</li>
-								<li>need to move quickly</li>
-								<li>wants a platform for analysis that is cost-effective but scalable</li>
+<blockquote class="rewrite">
 
-							</ul>
+In this post, we describe how to use SageMaker Studio notebooks to easily load and transform data stored in the Delta Lake format. We use a standard Jupyter notebook to run Apache Spark commands that read and write table data in CSV and Parquet format. The open-source library delta-spark allows you to directly access this data in its native format. This library allows you to take advantage of the many API operations to apply data transformations, make schema modifications, and use time-travel or as-of-timestamp queries to pull a particular version of the data.
 
-						</p>
-
-						<p>
-							The ACME Tool Co. pilot project needs to move fast to prove to the line of business that they can hit our ROI metrics in our operational contract. 
-
-						</p>
-						<p>
-							This also means the the team needs to find a data platform in the cloud (because they can't bring in new on-premise hardware right now) that allows them to quickly prototype the pilot components while being scalable and cost-effective if the pilot program becomes a longer-term production system.
-						</p>
-
-
-						<p>
-							These constraints and timeline make the <a href="https://www.snowflake.com/">Snowflake Cloud Data Warehouse</a> a great fit for data management and analytics components in this project.
-
-						</p>
-<!--
-						<p>
-
-
-							Working in the cloud with Snowflake also means we don't have to deal with procuring hardware, software, database configuration, nor writing ETL logic. We can focus on the analytical and data science aspect of our pilot project which makes us more likely to be successful.
-
-						</p>
--->
-									<!-- --------------------------------- START: Sidebar --------------------------------- -->
-									<div style="float: right; width: 612px; border: 1px solid; padding: 12px; padding-left: 18px; margin-left: 12px; font-size: 12px; background-color: #eeeeee;">
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xojAXXRo_S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
-									</div>
-
-
-						<p>
-							Traditional analytical applications require extensive effort around building out platform infrastructure, which means your team spends a lot of time on non-value generating activities (procuring hardware, software, configuring databases, ETL, etc). These are activities the ACME Tool Co team will not have time nor budget for in this pilot project.
-
-						</p>
-
-
-
-						<p>
-							Snowflake Cloud Data Warehouse is a cloud-native, fully relational ANSI SQL data warehouse service available in both AWS and Azure
-							It's scalability and ability to quickly provision a data warehouse make it the right place to start our sensor data management operation for our pilot program.
-
-						</p>
-
-						
-						<p>
-							Snowflake has features such as:
-
-							<ul>
-								<li>Native JSON Support</li>
-								<li>Aggregation Using Streams and Tasks</li>
-								<li>Time-series optimized data ingestion with snowpipe</li>
-								<li>ability to query data in object storage via external tables</li>
-
-							</ul>
-
-						</p>
-
-
-						<p>
-							
-							Snowflake provides us with a rock solid analytical store in the cloud to collect raw machine data over time. Once we need to rebuild our model, we can query the raw data to pull the subset of data we need to build our model.
-
-						</p>
-
-						<p>
-							Historically you'd have to wait or request the sensor/machine data to be pre-processed; Snowflake simplifies this aspect of data processing as there is
-
-							no need for data engineering tricks or complex Spark jobs.
-
-						</p>
-						<p>
-
-							Given Snowflake's ability to scalably and quickly ingest diverse data sets we don't have to expend a lot of energy and time on building out an ingestion framework. This let's our team focus on data processing to achieve line of business goals more quickly.
-
-
-							Further, Snowflake only charges for what we use so it provides us with a efficient data ingest mechanism and low-cost data managagement platform for large amounts of machine-generated (e.g., "IoT") data.
-
-						</p>
-						
-
-
-
-						<p>
-							With all of this in mind, let's get started working with Snowflake.
-							
-
-						</p>
-
-
-
-
-
-				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
-					
-					<div class="col-md-3" id="fh5co-content" style="">
-
-						<h3 style="color: #ffffff;">Looking for Snowflake Help?</h3>
-
-					</div>
-					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
-
-
-						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
-						<p style="margin: 0px;">
-							Our team can help -- we help companies with <a href="../offerings/snowflake_services.html" style="color: #EEEEEE;">Snowflake platform operations, analytics, and machine learning</a>.
-
-						</p>
-						</div>
-					</div>
-
-
-				</div>		
-
-
-
-
-						<h2>Creating a Predictive Maintenance Database in Snowflake</h2>
-
-
-						<p>
-							To get started with managing our sensor data in Snowflake we need to do the following:
-
-							<ol>
-								<li>Sign-up for a Snowflake account (<a href="https://signup.snowflake.com/">free, if you don't already have one</a>)</li>
-								<li>Create a database in Snowflake for the project</li>
-								<li>Create a table in the database for our sensor data</li>
-								<li>Load the sensor data into the table</li>
-
-							</ol>
-
-
-
-						</p>
-
-
-						<p>
-							Let's get to signing up for Snowflake first.
-
-						</p>
-
-
-						<p>
-							If you already have a snowflake account head to the site and log in. If you don't have an account, head to <a href="https://signup.snowflake.com/">this link and sign up for the free account</a>.
-
-						</p>
-
-						<p>
-							We're going to do everything from the command line via the SnowSQL (CLI Client):
-
-							https://docs.snowflake.com/en/user-guide/snowsql.html
-
-						</p>
-
-					<p>
-						Once you have the SnowSQL CLI Client installed, open a terminal window and log into your Snowflake account from the command line with the following command:
-
-					</p>
-
-<pre>
-$ snowsql -a [account_name] -u [user_name]
-</pre>
-						<p>
-							This should show console output similar to the output below:
-
-						</p>		
-
-<consoleoutput>jpatanooga#COMPUTE_WH@(no database).(no schema)>
-</consoleoutput><br/>		
-
-
-
-
-						<p>
-							Now that we have connectivity, let's move on to creating a database and table for our sensor data
-
-						</p>
-
-
-
-
-
-						<h2>Creating a Database and Table for Our Sensor Data on Snowflake</h2>
-
-						<p>
-							Now let's use the SnowSQL client to create a database and a table to manage our data. This tutorial has an associated github repository with the SQL scripts and Jupyter notebooks referenced: <a href="https://github.com/pattersonconsulting/predictive_maintenance">https://github.com/pattersonconsulting/predictive_maintenance</a>
-
-						</p>
-						<p>
-							For reference, if you have <code>git</code> installed, you can quickly clone the project repository with the following command:
-
-						</p>
-<pre>
-git clone https://github.com/pattersonconsulting/predictive_maintenance.git
-</pre>						
-
-						<p>
-							Tp create a database (<code>predictive_maintenance</code>) and table in the database (<code>summary_sensor_data</code>) use the following script (<code>create_pm_db_and_table.sql</code>):
-
-						</p>
-<pre>
-create or replace database predictive_maintenance;
-
-create or replace table summary_sensor_data (
-  UDI int ,
-  Product_ID string ,
-  Type string ,
-  Air_temperature float ,
-  Process_temperature float ,
-  Rotational_speed float ,
-  Torque float ,
-  Tool_wear float ,
-
-  Machine_failure int ,
-
-  TWF int ,
-  HDF int ,
-  PWF int ,
-  OSF int ,
-  RNF int 
-  
-  );
-</pre>
-						<p>
-							We can execute the script included in the github repository from the terminal command line with the command:
-
-
+In our sample notebook, we load raw data into a Spark DataFrame, create a Delta table, query it, display audit history, demonstrate schema evolution, and show various methods for updating the table data. We use the DataFrame API from the PySpark library to ingest and transform the dataset attributes. We use the delta-spark library to read and write data in Delta Lake format and to manipulate the underlying table structure, referred to as the schema.
+</blockquote>
 
 						</p>
 
 <pre>
-snowsql -a [xxxxxxx.us-east-1] -u [user_name] -f ./create_pm_db_and_table.sql 
-</pre>						
-						<p>
-							And we should see output
-
-						</p>
-
-<consoleoutput>* SnowSQL * v1.2.18
-Type SQL statements or !help
-+-------------------------------------------------------+                       
-| status                                                |
-|-------------------------------------------------------|
-| Database PREDICTIVE_MAINTENANCE successfully created. |
-+-------------------------------------------------------+
-1 Row(s) produced. Time Elapsed: 0.183s
-+-------------------------------------------------+                             
-| status                                          |
-|-------------------------------------------------|
-| Table SUMMARY_SENSOR_DATA successfully created. |
-+-------------------------------------------------+
-1 Row(s) produced. Time Elapsed: 0.267s
-</consoleoutput><br/>
-
-						<p>
-							Now let's move the sensor data into our Snowflake table.
-
-						</p>
-
-
-						<div style="width:900px; margin:0 auto;">
-
-							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
-								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
-
-								<h4>Continuous Sensor Data Ingestion with Snowflake</h4>
-							  <p style="font-size: 14px; ">
-							  <i>
-							  
-							  <p>
-							It's worth noting that we'd normally use Snowpipe, Apache Kafka, and/or AWS for sensor data ingestion, but for this demo, we're going to bulk load the data as a single CSV file. We'd also use snowflake to create the daily aggregates from the raw sensor data updates for machine learning training.
-
-						</p>
-						<p>
-
-
-							Typically we might see the data being streamed from a system such as Apache Kafka, and then Snowpipe (by Snowflake) allows for a streaming-based data ingest approach. This allows for micro-batch processing of the data as well which best supports the underlying distributed computations in the Snowflake parallel data warehouse.
-						</p>
-
-							<p>
-							If you'd like to know more about Snowpipe check out the <a href="https://docs.snowflake.com/en/user-guide/data-load-snowpipe.html">documentation</a> or check out the <a href="https://developers.snowflake.com/wp-content/uploads/2020/09/SNO-e-Book-20004_SNO-eBook-7-Reference-Architectures-for-Application-Builders-IoT.pdf">Snowflake IoT Reference Architecture</a>.
-
-			
-
-						</p>
-
-			
-							</i></p>
-							  
-							</div>	
-
-						</div>
-
-
-						<h2>Copy Predictive Maintenance Dataset into Snowflake</h2>
-
-
-						<p>
-							Download the UCI dataset from the following URL:
-
-						</p>
-						<p>
-							<a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset Data Set</a> (from the UCI Machine Learning Repository).
-
-						</p>
-
-						<p>
-
-							We now we load this raw CSV sensor data into Snowflake. For reference, check out the Snowflake documentation on "Loading data into Snowflake":
-						</p>
-						<p>
-
-							
-
-							<a href="https://docs.snowflake.com/en/user-guide-data-load.html">https://docs.snowflake.com/en/user-guide-data-load.html</a>
-
-
-						</p>
-
-
-						<p>
-							If we change our current datasbase to <code>PREDICTIVE_MAINTENANCE</code> the output should look like:
-
-							</p>
-
-
-
-<consoleoutput>jpatanooga#COMPUTE_WH@(no database).(no schema)>use PREDICTIVE_MAINTENANCE;
-+----------------------------------+                                            
-| status                           |
-|----------------------------------|
-| Statement executed successfully. |
-+----------------------------------+
-1 Row(s) produced. Time Elapsed: 0.386s
-jpatanooga#COMPUTE_WH@PREDICTIVE_MAINTENANCE.PUBLIC>
-</consoleoutput><br/>
-
-						<p>
-							Now we can ask Snowflake to <code>show tables;</code> and it will output:
-
-						</p>
-
-<consoleoutput>show TABLES;
-+-------------------------------+---------------------+------------------------+-------------+-------+---------+------------+------+-------+----------+----------------+----------------------+-----------------+-------------+
-| created_on                    | name                | database_name          | schema_name | kind  | comment | cluster_by | rows | bytes | owner    | retention_time | automatic_clustering | change_tracking | is_external |
-|-------------------------------+---------------------+------------------------+-------------+-------+---------+------------+------+-------+----------+----------------+----------------------+-----------------+-------------|
-| 2021-09-21 12:15:32.144 -0700 | SUMMARY_SENSOR_DATA | PREDICTIVE_MAINTENANCE | PUBLIC      | TABLE |         |            |    0 |     0 | SYSADMIN | 1              | OFF                  | OFF             | N           |
-+-------------------------------+---------------------+------------------------+-------------+-------+---------+------------+------+-------+----------+----------------+----------------------+-----------------+-------------+
-1 Row(s) produced. Time Elapsed: 0.149s
-
-</consoleoutput><br/>			
-
-							<p>
-							We can get more detail on our table <code>RAW_DEVICE_DATA</code> with the <code>describe table</code> command:
-
-							</p>
-<consoleoutput>describe table SUMMARY_SENSOR_DATA;
-+---------------------+-------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------+
-| name                | type              | kind   | null? | default | primary key | unique key | check | expression | comment | policy name |
-|---------------------+-------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------|
-| UDI                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| PRODUCT_ID          | VARCHAR(16777216) | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| TYPE                | VARCHAR(16777216) | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| AIR_TEMPERATURE     | FLOAT             | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| PROCESS_TEMPERATURE | FLOAT             | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| ROTATIONAL_SPEED    | FLOAT             | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| TORQUE              | FLOAT             | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| TOOL_WEAR           | FLOAT             | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| MACHINE_FAILURE     | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| TWF                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| HDF                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| PWF                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| OSF                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-| RNF                 | NUMBER(38,0)      | COLUMN | Y     | NULL    | N           | N          | NULL  | NULL       | NULL    | NULL        |
-+---------------------+-------------------+--------+-------+---------+-------------+------------+-------+------------+---------+-------------+
-14 Row(s) produced. Time Elapsed: 0.436s
-</consoleoutput><br/>
-
-
-
-						<p>
-							Put the data in an internal staging table on snowflake
-
-Video: Explain how the implied stage table is addressed via syntax (%)
-View the staged data
-Copy the staged data into the target table
-
-
-						</p>
-
-
-						<p>Each table has a Snowflake stage allocated to it by default for storing files (when using "Table Stage", <a href="https://docs.snowflake.com/en/user-guide/data-load-local-file-system-stage.html">check out the staging documentation</a>).
-							We will use the associated staging table (<code>@predictive_maintenance.public.%SUMMARY_SENSOR_DATA</code>) to load the data into Snowflake. To stage the sensor data in Snowflake for loading use the following command (referencing the sql script <code>stage_sensor_data.sql</code> included):
-
-
-						</p>
-
-<pre>
-snowsql -a nna57244.us-east-1 -u jpatanooga -f ./stage_sensor_data.sql     
-</pre>
-
-				<p>
-					Depending on where you downloaded the UCI sensor data csv file you have need to update the staging script sql. Once the command is run, you should see output similar to the output below.
-
-				</p>
-
-<consoleoutput>
-ai4i2020.csv_c.gz(0.13MB): [##########] 100.00% Done (0.506s, 0.25MB/s).        
-+--------------+-----------------+-------------+-------------+--------------------+--------------------+----------+---------+
-| source       | target          | source_size | target_size | source_compression | target_compression | status   | message |
-|--------------+-----------------+-------------+-------------+--------------------+--------------------+----------+---------|
-| ai4i2020.csv | ai4i2020.csv.gz |      522048 |      134490 | NONE               | GZIP               | UPLOADED |         |
-+--------------+-----------------+-------------+-------------+--------------------+--------------------+----------+---------+
-1 Row(s) produced. Time Elapsed: 1.288s
-Goodbye!                                                   
-</consoleoutput><br/>
-
-<p>
-	To confirm we staged the file on snowflake use the following <code>list</code> command from SnowSQL:
-</p>
-<pre>
-list @predictive_maintenance.public.%SUMMARY_SENSOR_DATA;
-</pre>
-					<p>
-						You should see something similar to the output below:
-
-					</p>
-
-<consoleoutput>+-----------------+--------+----------------------------------+-------------------------------+
-| name            |   size | md5                              | last_modified                 |
-|-----------------+--------+----------------------------------+-------------------------------|
-| ai4i2020.csv.gz | 134496 | 8871341f84e4f56a7f689f1ac8b32fba | Tue, 21 Sep 2021 19:48:22 GMT |
-+-----------------+--------+----------------------------------+-------------------------------+
-1 Row(s) produced. Time Elapsed: 0.410s
-</consoleoutput><br/>
-
-					<p>
-						Now let's copy the staged data into the target table. We'll use the included script that has the following contents:
-
-					</p>
-<pre>
-use database PREDICTIVE_MAINTENANCE;
-
-COPY INTO summary_sensor_data
-From @%summary_sensor_data
-FILE_FORMAT = ( TYPE = CSV, SKIP_HEADER=1 )
-
-</pre>
-
-						<p>
-							Run this script with the command:
-
-						</p>
-<pre>
-snowsql -a nna57244.us-east-1 -u jpatanooga -f ./copy_staged_data_to_table.sql
-</pre>
-						<p>
-
-							And the output should look like:
-
-						</p>						
-
-<consoleoutput>+----------------------------------+                                            
-| status                           |
-|----------------------------------|
-| Statement executed successfully. |
-+----------------------------------+
-1 Row(s) produced. Time Elapsed: 0.099s
-+-----------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
-| file            | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name |
-|-----------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------|
-| ai4i2020.csv.gz | LOADED |       10000 |       10000 |           1 |           0 | NULL        |             NULL |                  NULL | NULL                    |
-+-----------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
-1 Row(s) produced. Time Elapsed: 0.787s
-</consoleoutput><br/>
-
-						<p>
-							Now if we log into the SnowSQL console and run the query:
-
-						</p>
-
-<pre>
-select * from SUMMARY_SENSOR_DATA limit 5;
-</pre>
-						<p>We should see:</p>
-
-<consoleoutput>+-----+------------+------+-----------------+---------------------+------------------+--------+-----------+-----------------+-----+-----+-----+-----+-----+
-| UDI | PRODUCT_ID | TYPE | AIR_TEMPERATURE | PROCESS_TEMPERATURE | ROTATIONAL_SPEED | TORQUE | TOOL_WEAR | MACHINE_FAILURE | TWF | HDF | PWF | OSF | RNF |
-|-----+------------+------+-----------------+---------------------+------------------+--------+-----------+-----------------+-----+-----+-----+-----+-----|
-|   1 | M14860     | M    |           298.1 |               308.6 |             1551 |   42.8 |         0 |               0 |   0 |   0 |   0 |   0 |   0 |
-|   2 | L47181     | L    |           298.2 |               308.7 |             1408 |   46.3 |         3 |               0 |   0 |   0 |   0 |   0 |   0 |
-|   3 | L47182     | L    |           298.1 |               308.5 |             1498 |   49.4 |         5 |               0 |   0 |   0 |   0 |   0 |   0 |
-|   4 | L47183     | L    |           298.2 |               308.6 |             1433 |   39.5 |         7 |               0 |   0 |   0 |   0 |   0 |   0 |
-|   5 | L47184     | L    |           298.2 |               308.7 |             1408 |   40   |         9 |               0 |   0 |   0 |   0 |   0 |   0 |
-+-----+------------+------+-----------------+---------------------+------------------+--------+-----------+-----------------+-----+-----+-----+-----+-----+
-5 Row(s) produced. Time Elapsed: 0.226s
-</consoleoutput><br/>
-
-
-						<div style="width:900px; margin:0 auto;">
-
-							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
-								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
-
-								<h4>Data Load, Ingest, and Queries with Snowflake</h4>
-							  <p style="font-size: 14px; ">
-							  <i>In the "olden days" (as my kids say) it was a challenge to build out ingest pipleines for systems such as Hadoop and then manage how new data came in while running queries against the data being changed. A great aspect of the Snowflake platform is that we can write to a logical table all day long and we don't have to manage the updates or which temporary copy of the data is being processed -- it just all happens behind the scenes.</i></p>
-							  
-							</div>	
-
-						</div>
-
-
-<!--
-					<div style="width:900px; margin:0 auto;">
-
-						<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
-							<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
-							<div style="border: solid 0px; overflow: auto;">
-
-							<h4><code>rtree</code> is Challenging to Install</h4>
-						  <p style="font-size: 14px; ">
-						  <i><code>rtree</code> will not install via pip and the normal requirements.txt  dependencies. It will conflict with multiple other methods of install (depending on your platform) via a normal <code>pip</code>, so to get it working we need to use <code>apt</code> to install a key dependency (<code>libspatialindex-dev</code>) and build a custom docker image. Otherwise we could use the standard docker image for Kubeflow notebooks and load the dependencies at runtime in the notebook.</i></p>
-
-						</div>
-
-
-						</div>	
-					</div>		
--->					
-						<p>Now that we have established our cloud-base sensor data management platform and loaded our data, let's connect some data science tools to snowflake.</p>
-
-
-
-
-
-
-					</div>
-
-				</div>
-
-				<!-- Section 3 of 5: Snowflake bulk load -->
-
-
-
-
-				<!-- Section 4 of 5: Connecting Google Co-lab to Snowflake -->
-				<div class="row row-bottom-padded-sm">
-					<div class="col-md-12" id="fh5co-content">
-
-						<h1>Google Colaboratory ("Google Colab") as EDA and Data Science Platform</h1>
-
-						<p>
-							<a href="https://colab.research.google.com/notebooks/intro.ipynb?utm_source=scs-index">Google Colaboratory</a> is a cloud-based Jupyter notebook server that is free to use. Given that we have a small team of data scientists that want to use python in Jupyter notebooks and we need to run notebooks in the cloud, its a great option for the ACME Tool Co. data science team to "move fast".
-
-						</p>
-
-
-						<p>
-							The ACME Tool Co. data science team needs to explore the sensor data before any modeling occurs and has some existing exploratory data analysis methods they want to use to analyze the data before modeling. Fortunately there is a Snowflake python connector and it works from inside Google Colab, keeping all of our analysis and data management in the cloud.
-
-						</p>
-
-						
-						<h2>Connecting to Snowflake from Google Colab</h2>
-
-						<p>The nice thing about the Snowflake Connector for Python is that we can just <code>pip</code> install it in the Colab notebook and keep on moving via:</p>
-
-<pre>
-!pip install snowflake-connector-python						
-</pre>
-
-						<p>Once we do that, we can quickly test our connection to our Snowflake account with the following code:</p>
-
-<pre>
-import snowflake.connector
 
 # Gets the version
 ctx = snowflake.connector.connect(
-    user='[your_account_here]',
-    password='[your_pw_here],
-    account='[xxxxxxxxxx.us-east-1]'
-    )
+  user=snowflake_username,
+  password=snowflake_pwd,
+  account=snowflake_acct
+  )
 cs = ctx.cursor()
 try:
     cs.execute("SELECT current_version()")
     one_row = cs.fetchone()
     print(one_row[0])
+
+
+
+    #cs.cursor().execute("USE WAREHOUSE tiny_warehouse_mg")
+    #cs.execute("USE DATABASE PREDICTIVE_MAINTENANCE;")    
+    cs.execute("USE DATABASE CREDIT_CARD_COMPANY_DB;")    
+
+
+    #qry_out = 
+    all_rows = cs.execute("select * FROM CUSTOMER_CC_TRANSACTION_FEATURES;")
+    #all_rows = cs.execute("select TYPE, AIR_TEMPERATURE, PROCESS_TEMPERATURE, ROTATIONAL_SPEED, TORQUE, TOOL_WEAR, MACHINE_FAILURE  from SUMMARY_SENSOR_DATA;")
+    df_cc_customer_txn_features = all_rows.fetch_pandas_all()
+
+    #one_row = cs.fetchone()
+    #print("Records with Failures: " + str(one_row[0]))
+
+    #query_output = cs.execute( "select TYPE, AIR_TEMPERATURE, PROCESS_TEMPERATURE, ROTATIONAL_SPEED, TORQUE, TOOL_WEAR, MACHINE_FAILURE  from SUMMARY_SENSOR_DATA;" )
+
+    #df_cc_customer_txn_features = qry_out.fetch_pandas_all() #.to_csv("/path/to/write/table.csv")	
+    #df.to_csv("./data/full_snowflake_dataset.csv", index=False)	
+
+    #print( df )
+
+
 finally:
     cs.close()
+
+
+
 ctx.close()
 </pre>
 
 
-						<p>At this point the ACME Tool Co. data science (ATDS) team has a platform they can ingest sensor data into and then pull into a juypter notebook for analytics and machine learning in the cloud.</p>
 
 					</div>
 
 				</div>
 
-				<!-- Section 4 of 5: Connecting Google Co-lab to Snowflake -->
 
+
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Grid Search with scikit-learn for Credit Card Fraud Detection AWS Sagemaker Studio Lab</h1>
+
+						<p>
+							what data did we start with?
+							
+
+						</p>
+
+
+						<h2>Load Data from Snowflake</h2>
+
+						<p>
+							where did the data come from?
+
+							[ give the original project some pub ]
+							
+
+						</p>
+
+						<h2>Create Terminal Features</h2>
+
+						<p>
+
+reference original code
+
+						</p>
+
+<pre>
+def get_count_risk_rolling_window(terminal_transactions, delay_period=7, windows_size_in_days=[1,7,30], feature="TERMINAL_ID"):
+    
+    terminal_transactions=terminal_transactions.sort_values('TX_DATETIME')
+    
+    terminal_transactions.index=terminal_transactions.TX_DATETIME
+    
+    NB_FRAUD_DELAY=terminal_transactions['TX_FRAUD'].rolling(str(delay_period)+'d').sum()
+    NB_TX_DELAY=terminal_transactions['TX_FRAUD'].rolling(str(delay_period)+'d').count()
+    
+    for window_size in windows_size_in_days:
+    
+        NB_FRAUD_DELAY_WINDOW=terminal_transactions['TX_FRAUD'].rolling(str(delay_period+window_size)+'d').sum()
+        NB_TX_DELAY_WINDOW=terminal_transactions['TX_FRAUD'].rolling(str(delay_period+window_size)+'d').count()
+    
+        NB_FRAUD_WINDOW=NB_FRAUD_DELAY_WINDOW-NB_FRAUD_DELAY
+        NB_TX_WINDOW=NB_TX_DELAY_WINDOW-NB_TX_DELAY
+    
+        RISK_WINDOW=NB_FRAUD_WINDOW/NB_TX_WINDOW
+        
+        terminal_transactions[feature+'_NB_TX_'+str(window_size)+'DAY_WINDOW']=list(NB_TX_WINDOW)
+        terminal_transactions[feature+'_RISK_'+str(window_size)+'DAY_WINDOW']=list(RISK_WINDOW)
+        
+    terminal_transactions.index=terminal_transactions.TRANSACTION_ID
+    
+    # Replace NA values with 0 (all undefined risk scores where NB_TX_WINDOW is 0) 
+    terminal_transactions.fillna(0,inplace=True)
+    
+    return terminal_transactions
+
+</pre>
+
+
+
+						<h2>Split Dataset into Train and Test</h2>
+
+						<p>
+
+							yadda
+
+						</p>
+
+<pre>
+	def get_train_test_set(transactions_df,
+                       start_date_training,
+                       delta_train=7,delta_delay=7,delta_test=7):
+    
+    # Get the training set data
+    train_df = transactions_df[(transactions_df.TX_DATETIME&le;=start_date_training) &
+                               (transactions_df.TX_DATETIME&ge;start_date_training+datetime.timedelta(days=delta_train))]
+    
+    # Get the test set data
+    test_df = []
+    
+    # Note: Cards known to be compromised after the delay period are removed from the test set
+    # That is, for each test day, all frauds known at (test_day-delay_period) are removed
+    
+    # First, get known defrauded customers from the training set
+    known_defrauded_customers = set(train_df[train_df.TX_FRAUD==1].CUSTOMER_ID)
+    
+    # Get the relative starting day of training set (easier than TX_DATETIME to collect test data)
+    start_tx_time_days_training = train_df.TX_TIME_DAYS.min()
+    
+    # Then, for each day of the test set
+    for day in range(delta_test):
+    
+        # Get test data for that day
+        test_df_day = transactions_df[transactions_df.TX_TIME_DAYS==start_tx_time_days_training+
+                                                                    delta_train+delta_delay+
+                                                                    day]
+        
+        # Compromised cards from that test day, minus the delay period, are added to the pool of known defrauded customers
+        test_df_day_delay_period = transactions_df[transactions_df.TX_TIME_DAYS==start_tx_time_days_training+
+                                                                                delta_train+
+                                                                                day-1]
+        
+        new_defrauded_customers = set(test_df_day_delay_period[test_df_day_delay_period.TX_FRAUD==1].CUSTOMER_ID)
+        known_defrauded_customers = known_defrauded_customers.union(new_defrauded_customers)
+        
+        test_df_day = test_df_day[~test_df_day.CUSTOMER_ID.isin(known_defrauded_customers)]
+        
+        test_df.append(test_df_day)
+        
+    test_df = pd.concat(test_df)
+    
+    # Sort data sets by ascending order of transaction ID
+    train_df=train_df.sort_values('TRANSACTION_ID')
+    test_df=test_df.sort_values('TRANSACTION_ID')
+    
+    return (train_df, test_df)
+
+</pre>
+
+						<h2>Pull in Helper Functions</h2>
+
+						<p>
+							yadda
+
+						</p>
+
+<pre>!curl -O https://raw.githubusercontent.com/Fraud-Detection-Handbook/fraud-detection-handbook/main/Chapter_References/shared_functions.py
+%run shared_functions.py</pre>
+
+
+
+
+						<h2>Define List of Models to Perform Grid Search</h2>
+
+						<p>
+							In our last series we did grid search.
+
+							In this series we're going to try a new variant of grid search where we focus on gradient boosting methods do and hypertuning with <code>shap-hypetune</code>
+
+
+
+						</p>
+
+<blockquote class="rewrite">
+Hyperparameters tuning and features selection are two common steps in every machine learning pipeline. Most of the time they are computed separately and independently. This may result in suboptimal performances and in a more time expensive process.
+
+shap-hypetune aims to combine hyperparameters tuning and features selection in a single pipeline optimizing the optimal number of features while searching for the optimal parameters configuration. Hyperparameters Tuning or Features Selection can also be carried out as standalone operations.
+
+</blockquote>
+
+						<p>
+
+https://github.com/cerlymarco/shap-hypetune
+						</p>
+
+						<p>
+
+							TODO: ADD SOME ACTUAL "GRID SEARCH" TO THE CODE
+
+
+						</p>
+
+						<h3>Automated Feature Selection</h3>
+
+						<p>
+
+
+
+
+						</p>
+
+<blockquote class="rewrite">
+
+shap-hypetune aims to combine hyperparameters tuning and features selection in a single pipeline optimizing the optimal number of features while searching for the optimal parameters configuration. Hyperparameters Tuning or Features Selection can also be carried out as standalone operations.
+
+</blockquote>
+
+
+						<h2>Define Evaluation Function to Meet Our Goals for Fraud Detection</h2>
+
+						<p>
+							yadda
+
+						</p>
+
+
+
+						<h2>Define Performance Assessment Metric</h2>
+
+						<p>
+							yadda - mention discussion from last series
+
+						</p>
+
+
+
+						<h2>How do our <code>shap-hypetune</code> models compare to original models?</h2>
+
+						<p>
+							yadda 
+
+						</p>
+
+
+						<h2>Understanding Model Features with Shap</h2>
+
+						<p>
+							yadda 
+
+						</p>
+
+						<p>
+<blockquote class="rewrite">
+
+							SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions (see papers for details and citations).
+</blockquote>
+
+
+						</p>
+
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
 
 
 
@@ -967,17 +654,17 @@ ctx.close()
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						
-						<h1>Next Steps: Ready for Data Exploration</h1>
+						<h1>Conclusion and Next Steps</h1>
 
 
 						<p>
 
 
-							In this post in our series we learned how Snowflake provides us with a rock solid analytical store in the cloud to collect raw machine data over time. Once the ATDS team needs to rebuild their model, they can query the raw data to build any summary aggregates for analysis and modeling.
+							In this post we ....
 
 						</p>
 						<p>
-							Before the ATDS team can start building machine learning models they need to better understand what is in the current dataset. This exploratory process is known as "Exploratory Data Analysis" (EDA) and is key to informing how to best start our machine learning activities. In the next post (<a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">part 3</a>) we are going to dive straight into performing an EDA workflow on the sensor data stored in Snowflake.
+							todo
 
 						</p>
 

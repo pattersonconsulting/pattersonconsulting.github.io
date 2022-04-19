@@ -111,7 +111,137 @@ td.offering_desc {
 }
 
 
+div.stair_offering_spacer {
+	background-color: #ffffff;
+	color:  #FFFFFF;
+	border-radius: 6px;
+	padding: 6px;
+
+	display: table-cell;
+	
+
+}
+
+
+div.stair_offering_title {
+	background-color: #4287f5;
+	color:  #FFFFFF;
+	border-radius: 6px;
+	padding: 6px;
+	
+	display: table-cell;
+	vertical-align: middle;
+
+}
+
+
+
+div.stair_offering_desc {
+	padding: 6px;
+	margin-left:  12px;
+
+	background-color: #eeeeee;
+	color:  #666666;
+	border-radius: 6px;
+	padding: 6px;
+	width: 20%;
+	font-size:12px;
+
+	display: table-cell;
+
+	height: 80px;
+
+}
+
+div.stair_offering_row {
+		display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+
+
+}
+
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+#streamlit_stair {
+/*  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  */
+}
+
+#streamlit_stair:hover,
+#streamlit_stair:focus {
+  
+  text-decoration: none;
+  cursor: pointer;
+}
+
 	</style>
+	<script>
+// When the user clicks on the button, open the modal
+function streamlit_stair_onmouseover() {
+
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("streamlit_stair");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	//alert('modal: ' + modal)
+
+
+	//alert('foo')
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+function modal_dialog_click() {
+	var modal = document.getElementById("myModal");	
+	
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+
+	// Get the modal
+	var modal = document.getElementById("myModal");	
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+	</script>
 	<script src="../js/modernizr-2.6.2.min.js"></script>
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -269,7 +399,7 @@ td.offering_desc {
 
 
 				<!-- start row -->
-
+<!--
 				<div class="row row-bottom-padded-sm" style="padding-left: 20px;">
 
 
@@ -284,18 +414,18 @@ td.offering_desc {
 							<table>
 								<tr>
 									<td class="offering_title">Customer Onboarding and Data Migration Services</td>
-									<td class="offering_desc">We help customers with getting accounts provissioned and data migrated into Snowflake so they can begin taking advantage of the Snowflake platform quickly.</td>
+									<td class="offering_desc"></td>
 
 									<td class="offering_title_alt">Custom Streamlit Applications</td>
-									<td class="offering_desc">We help customers build out and deploy custom data science applications built on the streamlit framework. Try out our <a href="https://share.streamlit.io/pctliveapps/cc_fraud_ds_app_front_end/main/streamlit_analyst_fraud_workbench.py">live Credit Card Fraud Detection Workbench</a> on Streamlit's Cloud</td>
+									<td class="offering_desc"></td>
 								</tr>
 
 								<tr>
 									<td class="offering_title">Managed Platform Services Analytics</td>
-									<td class="offering_desc">We provide platform managed services (security, monitoring, and support) for your Snowflake platform</td>
+									<td class="offering_desc"></td>
 
 									<td class="offering_title_alt">Data Engineering with Snowpark</td>
-									<td class="offering_desc">We help customers <a href="../blog/predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">build scalable feature engineering pipelines</a> on Snowflake with Snowpark</td>
+									<td class="offering_desc"></td>
 								</tr>
 
 								<tr>
@@ -303,7 +433,7 @@ td.offering_desc {
 									<td class="offering_desc">Get insights about your organization's data with our analytical services</td>
 
 									<td class="offering_title_alt">Data Science</td>
-									<td class="offering_desc">Our team has a deep background in data science and can help you build out practical machine learning models</td>
+									<td class="offering_desc"></td>
 								</tr>
 
 							</table>
@@ -325,7 +455,101 @@ td.offering_desc {
 
 
 				</div>	
+			-->
 				<!-- end row -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" onclick="javascript:modal_dialog_click()">&times;</span>
+    <iframe src="https://share.streamlit.io/pctliveapps/cc_fraud_ds_app_front_end/main/streamlit_analyst_fraud_workbench.py" width="1200" height="600"></iframe>
+  </div>
+
+</div>
+
+				<!-- start row -->
+
+				<div class="row row-bottom-padded-sm" style="padding-left: 20px;">
+
+
+					
+					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; ">
+						<h2>How Does Patterson Consulting Help Snowflake Customers?</h2>
+
+
+
+
+						<p>
+							<div>
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 35%;"> </div>
+									<div id="streamlit_stair" class="stair_offering_title" onmouseover="javascript:streamlit_stair_onmouseover()" style="width: 25%; background-color: #0757d9;">End-User Applications with Streamlit</div>
+									<div class="stair_offering_desc" style="width: 40%;">We help customers build out and deploy custom data science applications built on the streamlit framework. Try out our <a href="https://share.streamlit.io/pctliveapps/cc_fraud_ds_app_front_end/main/streamlit_analyst_fraud_workbench.py">live Credit Card Fraud Detection Workbench</a> on Streamlit's Cloud</div>
+								</div>
+
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 29%;"> </div>
+									<div class="stair_offering_title" style="width: 31%; background-color: #7dadfa; color: #000000;">Data Science Proof of Concepts</div>
+									<div class="stair_offering_desc" style="width: 40%;">Our team has a deep background in data science and can help you build out practical machine learning models</div>
+								</div>
+
+<!--
+Analytics
+
+Data Engineering
+
+-->
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 23%;"> </div>
+									<div class="stair_offering_title" style="width: 37%; background-color: #afccfa; color: #000000;">Data Engineering with Snowpark</div>
+									<div class="stair_offering_desc" style="width: 40%;">We help customers <a href="../blog/predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">build scalable feature engineering pipelines</a> on Snowflake with Snowpark</div>
+								</div>
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 17%;"> </div>
+									<div class="stair_offering_title" style="width: 43%; background-color: #cccccc; color: #000000;">Exploratory Business Analysis</div>
+									<div class="stair_offering_desc" style="width: 40%;">Working with customers on "Selection of Business Goals", "Data Science Project Discovery", and "Data Science Project PoC Architecture"</div>
+								</div>
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 11%;"> </div>
+									<div class="stair_offering_title" style="width: 49%; background-color: #93f5e4; color: #000000;">Managed Snowflake Platform Services</div>
+									<div class="stair_offering_desc" style="width: 40%;">We provide platform managed services (security, monitoring, and support) for your Snowflake platform</div>
+								</div>
+
+
+								<div class="stair_offering_row">
+									<div class="stair_offering_spacer" style="width: 5%;"> </div>
+									<div class="stair_offering_title" style="width: 55%; background-color: #38a865;">Snowflake Onboarding Services</div>
+									<div class="stair_offering_desc" style="width: 40%;">We help customers with getting accounts provissioned and data migrated into Snowflake so they can begin taking advantage of the Snowflake platform quickly.</div>
+								</div>
+
+
+							</div>
+
+						</p>
+
+
+				<div  style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 16px; text-decoration: underline; font-size: 16px;">
+					
+						
+							Reach out and <a href="../contact.html" style="color: #ffffff;">let's talk about working together</a>.
+
+						
+					</div>						
+						
+						</div>
+		
+
+
+
+				</div>	
+				<!-- end row -->				
 
 
 				<!-- start row -->

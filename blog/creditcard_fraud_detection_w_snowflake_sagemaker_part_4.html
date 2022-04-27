@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 3: Grid Search Model Construction with Sagemaker Studio Lab</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this blog post series on ....." />
+	<meta name="keywords" content="snowflake, predictive maintenance, exploratory data analysis, machine learning, data science, snowpark" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 3: Grid Search Model Construction with Sagemaker Studio Lab"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this blog post series o...."/>
+	
+
+	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 3: Grid Search Model Construction with Sagemaker Studio Lab" />
+	<meta data-rh="true" property="twitter:description" content="In this blog post series ...."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+blockquote.rewrite {
+
+	color:  red;
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
+						<p>
+							<h3>Part 4 of 5: Grid Search Model Construction with Sagemaker Studio Lab</h3>
+
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: zzzzzzz xxth, 2022
+						</p>
+						
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
+								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
+							</ul>
+
+
+						</p>
+
+						For more use cases like these, check out our <a href="http://www.pattersonconsultingtn.com/use_case_repository/finserv_vertical.html">Financial Services vertical</a> in our <a href="http://www.pattersonconsultingtn.com/use_case_repository/intro.html">Use Case Repository</a>.
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Grid Search with scikit-learn for Credit Card Fraud Detection AWS Sagemaker Studio Lab</h1>
+
+						<p>
+							In the last post in this series we introduced AWS Sagemaker Studio Lab and then connected it to Snowflake inside a notebook. We also did some further feature creation with the data from Snowflake inside the Jupyter notebook.
+							
+
+						</p>
+
+						<p>
+							In this this post in the series we'll cover the following topics:
+
+							<ol>
+								<li>Establishing a model performance metric</li>
+								<li>Building baseline models</li>
+								<li>Hyperparameter search with Shap-Hypertune</li>
+								<li>Shap value analysis to understand our features</li>
+								<li>Persisting the model and pipeline as PMML</li>
+
+
+
+							</ol>
+
+							<p>
+								Let's jump into selecting our model performance metric
+
+							</p>
+
+
+
+
+						</p>
+
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Exploratory Data Analysis?</h4>
+							  <p style="font-size: 14px; ">
+							  <i>Normally we'd spend a good amount of time on <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">exploratory data analysis</a> to better understand what features to create. The <a href="https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_3_GettingStarted/BaselineFeatureTransformation.html">original paper</a> this series is based on covers that in depth, so we'll leave that as an exercise for the reader and focus on our contributions to modeling the credit card data.</i></p>
+							  
+							</div>	
+
+						</div>
+
+						<h2>Selecting a Model Performance Metric</h2>
+
+
+						<p>
+							The original book notebook evaluates 3 performance metrics:
+
+							<ol>
+								<li>The <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html">AUC ROC</a></li>
+								<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">Average Precision (AP)</a></li>
+								<li><a href="https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_4_PerformanceMetrics/TopKBased.html#precision-top-k-metrics">Card Precision top- (CP@k)</a></li>
+
+							</ol>
+
+						</p>
+
+
+						<h3>Average Precision</h3>
+
+						<p>
+							Average precision summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold (reference: <a href="https://stats.stackexchange.com/questions/157012/area-under-precision-recall-curve-auc-of-pr-curve-and-average-precision-ap">Cross Validated discussion</a>).
+
+						</p>
+						<p>
+							The average precision metric indicates which models are doing better at predicting the rare class in an imbalanced dataset.
+
+						</p>
+
+						<h3>Card Precision @100</h3>
+
+						<p>
+							The <a href="https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_4_PerformanceMetrics/TopKBased.html#precision-top-k-metrics">original book describes the Card Precision Top-K metric</a> as:
+
+						</p>
+
+						<p>
+
+
+
+						</p>
+
+
+<blockquote>"The Card Precision top- is the most pragmatic and interpretable measure. It takes into account the fact that investigators can only check a maximum of  potentially fraudulent cards per day. It is computed by ranking, for every day in the test set, the most fraudulent transactions, and selecting the  cards whose transactions have the highest fraud probabilities. The precision (proportion of actual compromised cards out of predicted compromised cards) is then computed for each day. The Card Precision top- is the average of these daily precisions."</blockquote>
+
+						<p>
+
+							Now that we've established our evaluation metrics, let's establish some model performance baselines.
+
+						</p>
+
+
+						<h2>Random Baseline</h2>
+
+						<p>
+							You can find a copy of the <a href="">notebook to generate all of these numbers over in our github account</a>.
+
+
+						</p>
+
+						<p>
+							We can baseline our predictive models with a simple model where the prediction is a "coin flip". We can see the results of the performance of this type of random model below.
+
+						</p>
+
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th></th>
+						      <th>AUC ROC</th>
+						      <th>Average precision</th>
+						      <th>Card Precision@100</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th>Random (coin flip)</th>
+						      <td>0.5</td>
+						      <td>0.007</td>
+						      <td>0.017</td>
+						    </tr>
+						  </tbody>
+						</table>
+						
+						<br/>
+
+						<p>
+							While the area under the curve (AUC) for the ROC curve might be 0.5, the average precision and the Card Precision @ 100 are terribly low. Let's look at a little better baseline next.
+
+						</p>
+
+
+						<h2>Model Baseline</h2>
+
+						<p>
+							Our next baseline is a basic <code>DecisionTreeClassifier</code> (depth = 2):
+
+						</p>
+
+
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th></th>
+						      <th>AUC ROC</th>
+						      <th>Average precision</th>
+						      <th>Card Precision@100</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th>DecisionTreeClassifier (depth=2)</th>
+						      <td>0.763</td>
+						      <td>0.496</td>
+						      <td>0.241</td>
+						    </tr>
+						  </tbody>
+						</table>
+
+						<br/>
+
+						<p>
+							Here we can see better numbers across the board and these will serve as a minimal bar to clear for all other models we can come up with.
+
+						</p>
+
+						<p>
+							With our model baseline in hand, let's look at the performance of a few well-known model architectures on our test data.
+
+
+						</p>
+
+
+						<h2>First Group of Models</h2>
+
+						<p>
+							Next we test a group of promising model architectures 
+
+
+						</p>
+
+
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th></th>
+						      <th>AUC ROC</th>
+						      <th>Average precision</th>
+						      <th>Card Precision@100</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th>Logistic regression</th>
+						      <td>0.833</td>
+						      <td>0.555</td>
+						      <td>0.271</td>
+						    </tr>
+						    <tr>
+						      <th>Decision tree with depth of two</th>
+						      <td>0.763</td>
+						      <td>0.496</td>
+						      <td>0.241</td>
+						    </tr>
+						    <tr>
+						      <th>Decision tree - unlimited depth</th>
+						      <td>0.757</td>
+						      <td>0.113</td>
+						      <td>0.204</td>
+						    </tr>
+						    <tr>
+						      <th>Random forest</th>
+						      <td>0.835</td>
+						      <td>0.578</td>
+						      <td>0.274</td>
+						    </tr>
+						    <tr>
+						      <th>XGBoost</th>
+						      <td>0.830</td>
+						      <td>0.558</td>
+						      <td>0.259</td>
+						    </tr>
+						    <tr>
+						      <th>HistGradientBoostingClassifier</th>
+						      <td>0.833</td>
+						      <td>0.518</td>
+						      <td>0.249</td>
+						    </tr>
+						  </tbody>
+						</table>
+
+
+						<br/>
+
+						<p>
+							We can see that logistic regression performs well on this data even though its a relatively simple model compared to the others in the group. It has the 3rd best average precision and then 2nd best card precision @ 100 score
+
+
+						</p>
+						<p>
+							We can also see the random forrest has the best card precision @100 score of the group, so let's fine tune it a bit to see if we can improve its score with grid search.
+
+						</p>
+						<p>
+
+						</p>
+
+						<h2>GridSearch with Random Forrest</h2>
+
+						<p>
+							Let's work with RF to do some grid search fine tuning
+
+						</p>
+
+
+
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th></th>
+						      <th>AUC ROC</th>
+						      <th>Average precision</th>
+						      <th>Card Precision@100</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th>Random Forrest with Grid Search</th>
+						      <td>0.838</td>
+						      <td>0.595</td>
+						      <td>0.279</td>
+						    </tr>
+						  </tbody>
+						</table>
+
+						<br/>
+
+						<p>
+							so we've improved our scores a bit
+
+
+						</p>
+
+						<p>
+							Let's see if we can use a similar method and improve xgboost as well with shap-hypertune
+
+						</p>
+
+
+
+
+
+
+
+
+						<h2>Finetuning xgboost with Shap-Hypertune</h2>
+
+
+<div style="float: right; margin: 18px;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-taOhqkiuIo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+						<p>
+							We'll take one of the other promising models (<code>xgboost</code>), and perform further hyperparameter tuning with <code>shap-hypetune</code>
+
+
+						</p>
+
+
+
+						<p>
+							SHAPley Additive exPlanations (SHAP) is a game theoretic approach that explains the output of any model using Shapley values. SHAP associates optimal credit allocation with local explanations by using SHAPley values.
+
+
+						</p>
+						<p>
+							It can be used for making a machine learning model more explainable by visualizing its output.
+							SHAP can be used on any blackbox model but is more efficient on models such as tree esembles.
+
+
+
+						</p>
+						<p>
+							SHAP supports libraries like SciKit-Learn, PySpark, TensorFlow, Keras, and PyTorch making it a flexible tool for most modeling pipelines.
+
+
+						</p>
+						<p>
+							SHAP is effective at explaining the prediction of any model by computing the contribution of each feature to the prediction.
+							We see SHAP used for model monitoring, fairness and cohort analysis. SHAP is also effective at data visualization as well.
+
+						</p>
+
+
+
+
+
+
+						<p>
+							For more context about SHAP check out this article:
+						</p>
+
+
+<figure>
+<figcaption>			
+
+
+						<a href="https://christophm.github.io/interpretable-ml-book/shap.html"><cite>Interpretable machine learning</cite></a>, by Christoph Molnar, Lulu.com, 2020
+</figcaption>
+</figure>						
+
+						<p>
+
+
+
+
+							Or the original SHAP paper:
+						</p>
+
+							
+
+
+<figure>
+<figcaption>			
+
+
+						<a href="https://proceedings.neurips.cc/paper/2017/file/8a20a8621978632d76c43dfd28b67767-Paper.pdf"><cite>A Unified Approach to Interpreting Model Predictions</cite></a>, by Lundberg, Scott and Lee, Su-In, NIPS 2017
+</figcaption>
+</figure>						
+
+						<h3>Grid Search wit shap-hypertune</h3>
+
+
+
+						<p>
+							
+
+							Previously in this article we did standard grid search with Random Forrests. Here we'll try grid search where we focus on gradient boosting methods and to hyperparamter tuning with <a href="https://github.com/cerlymarco/shap-hypetune"><code>shap-hypetune</code></a>.
+
+
+
+						</p>
+
+						<p>
+							Many times we see feature selection  adn hyperparameter tuning as separate steps in a machine learning pipeline. <code>shap-hypertune</code> allows us to do both steps at the same time where we search for the optimal selection of features and the optimal parameter configuration. We can also separate the two stages with <code>shap-hypertune</code> as well.
+
+
+
+						</p>
+
+
+						<p>
+							In the table below we can see the results of <code>shap-hypertune</code> on optimizing <code>xgboost</code> for our training dataset.
+
+
+						</p>
+
+						<p>
+
+
+
+						</p>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AUC ROC</th>
+      <th>Average precision</th>
+      <th>Card Precision@100</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>xgboost with shap-hypertune</th>
+      <td>0.809</td>
+      <td>0.577</td>
+      <td>0.279</td>
+    </tr>
+  </tbody>
+</table>				
+
+
+
+						<p>
+							In the next section we summarize all results together. 
+
+						</p>
+
+
+						<h2>Summary Table of all Modeling Results</h2>
+
+						<p>
+							We can see the results of all models attempted below.
+
+
+						</p>
+
+
+
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th></th>
+						      <th>AUC ROC</th>
+						      <th>Average precision</th>
+						      <th>Card Precision@100</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th>Logistic regression</th>
+						      <td>0.833</td>
+						      <td>0.555</td>
+						      <td>0.271</td>
+						    </tr>
+						    <tr>
+						      <th>Decision tree with depth of two</th>
+						      <td>0.763</td>
+						      <td>0.496</td>
+						      <td>0.241</td>
+						    </tr>
+						    <tr>
+						      <th>Decision tree - unlimited depth</th>
+						      <td>0.757</td>
+						      <td>0.113</td>
+						      <td>0.204</td>
+						    </tr>
+						    <tr>
+						      <th>Random forest</th>
+						      <td>0.835</td>
+						      <td>0.578</td>
+						      <td>0.274</td>
+						    </tr>
+						    <tr>
+						      <th>XGBoost</th>
+						      <td>0.830</td>
+						      <td>0.558</td>
+						      <td>0.259</td>
+						    </tr>
+						    <tr>
+						      <th>HistGradientBoostingClassifier</th>
+						      <td>0.833</td>
+						      <td>0.518</td>
+						      <td>0.249</td>
+						    </tr>
+						    <tr>
+						      <th style="color: red; font-weight: bold;">Random Forrest with Grid Search</th>
+						      <td style="color: red; font-weight: bold;">0.838</td>
+						      <td style="color: red; font-weight: bold;">0.595</td>
+						      <td style="color: red; font-weight: bold;">0.279</td>
+						    </tr>
+						    <tr>
+						      <th style="color:  black; font-weight: bold;">xgboost with shap-hypertune</th>
+						      <td>0.809</td>
+						      <td>0.577</td>
+						      <td style="color: red; font-weight: bold;">0.279</td>
+						    </tr>
+
+						  </tbody>
+						</table>
+
+						<br/>
+
+
+
+						<p>
+							Our efforts with grid search and random forrests yeilded some nice improvements. We also were able to improve xgboost some, but not enough to be better in average precision than random forrests.
+
+
+						</p>
+						<p>
+							<code>shap-hypertune</code> still seems to be compelling to keep in the toolbox, especially because of the feature analysis tools SHAP can offer us as we'll see in the next section.
+
+
+						</p>
+
+					</div>
+
+				</div>
+
+
+
+
+
+
+				<!-- Section Analysis of Features -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Analyzing Feature Importance with SHAP Values</h1>
+
+
+						<p>
+
+
+							The short explanation of SHAP Feature Importance is that  "<a href="https://christophm.github.io/interpretable-ml-book/shap.html#shap-feature-importance">featues with large absolute Shapley values are important</a>". In the plot below we'll take a look at a SHAP summary plot that gives us not only a ranking of features but also other information about how each feature affect predictions.
+
+
+						</p>
+<!--
+						<h2>Visualizing SHAP Feature Importance</h2>
+
+						<p>
+
+							To visualize the global importance of each feature we average the absolute Shapley values per feature across the data and then sort the features by decreasing importance. We can then plot them as a bar chart:
+
+
+						</p>
+
+
+						<p>
+
+							[ graph: shap.plots.bar(shap_values) ]
+
+						</p>
+						<p>
+							An interesting note about the feature importance chart above is that it expresses the model output in magnitude inpact.
+
+						</p>
+
+<blockquote class="rewrite">
+	The feature importance plot is useful, but contains no information beyond the importances. For a more informative plot, we will next look at the summary plot.
+</blockquote>
+-->
+
+						<h2>Visualizing SHAP Summary Plot for the Random Forest Model</h2>
+
+						<p>
+
+							A summary plot of all the computed Shapley values gives a sense of the overall behavior of the estimator:
+
+
+
+						</p>
+
+						<img src="./images/rf_shapley_feature_analysis_cc_txns.png" />
+				
+
+						<p>
+							In the charge above we see the features sorted in decreasing order of importance where the importance is defined as the "mean of the absolute value of all the computed SHAP values".
+
+						</p>
+						<p>
+							This type of plot gives us more information than the standard "feature importance plot" for tree ensembles as it shows us how the variables affect the prediction.
+
+						</p>
+						<p>
+							In the plot above the color of the point represents the feature value and for categorical variables (fraud: 1) red is the positive class and blue is the negative class (fraud: 0). 
+
+							The position on the y-axis is determined by the feature and on the x-axis by the Shapley value.
+
+
+							The points are all the examples together and the points are vertically jittered when they end up too close to one another.
+
+						</p>
+						<p>
+							Quick analysis of the random forest model's top 3 most important features are:
+
+							<ul>
+								<li><code>TERMINAL_ID_RISK_7DAY_WINDOW</code></li>
+								<li><code>TX_AMOUNT</code></li>
+								<li><code>CUST_AVG_AMOUNT_30</code></li>
+							</ul>
+
+							One interpretation of this combination of variables is that "when a terminal has been used for fraud in the past 7 days and the amount is non-trivially different than the customers average amount over the past 30 days then the transaction has a good change to be fradulent".
+
+
+
+						</p>
+<!--
+						<p>
+
+							[ graph: shap.plots.beeswarm(shap_values) ]
+
+						</p>
+
+						<p>
+							how do we interpret what we see from Shap plots?
+
+						</p>
+
+
+
+						<p>
+							how does this model feature feedback impact the modeling process?
+
+						</p>
+						<p>
+							What is an example of a change or action we'd make based on shap feature analysis?
+
+						</p>
+
+						<h2>Visualizing SHAP Interaction Values</h2>
+
+						<p>
+							[ we spent a lot of time building features with snowpak --- which features ended up being valuable in the model? ]
+
+						</p>
+
+						<p>
+							What did xgboost say were important features?
+
+						</p>
+
+						<p>
+							[ Explain difference between shap and xgboost interpretation of features ]
+
+						</p>
+
+						<p>
+							[ Does SHAP bring advantages here? why and how? ]
+
+						</p>
+-->
+
+						<h2>Save to PMML for Deployment in Applications</h2>
+
+						<p>
+							We can now take either of our best models (xgboost or random forrest) and save them to disk for usage in our end-user application. To do this we'll save the model and the data pre-processor code together as a PMML payload as seen in the example code below: 
+
+						</p>
+
+<code><pre>from sklearn2pmml import PMMLPipeline
+from sklearn2pmml import sklearn2pmml
+
+xgb_pmml_pipeline = PMMLPipeline(
+    [
+        ('preprocessor', x_train_mapper),
+        ('classifier', fitted_models_and_predictions_dictionary["XGBoost"]['classifier'])
+    ]
+)
+
+sklearn2pmml(xgb_pmml_pipeline, "xgb_cc_fraud_20220405_v2.pmml")
+</pre></code>						
+						<p>
+							Now that we have our model saved, we can start thinking about building our <a href="https://streamlit.io/">streamlit application</a>.
+
+						</p>
+
+					</div>
+
+				</div>
+
+
+				<!-- Section 2 of 5: UCI Dataset -->
+
+
+
+				<!-- Section 5 of 5: Next Steps: EDA -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Conclusion and Next Steps</h1>
+
+
+						<p>
+
+
+							In this post we built some baseline models based on our performance metrics and then did some grid search to fine tune the better performing models we found.
+
+						</p>
+						<p>
+							We then did some SHAP value analysis to better understand how our model made decisions about the input data.
+
+						</p>
+						<p>
+							In our next and final post in this series we will take the model we built and <a href="https://streamlit.io/cloud">deploy it as a user-facing cloud application</a> with <a href="https://streamlit.io/">streamlit</a>.
+
+						</p>
+
+					</div>
+
+				</div>
+				<!-- Section 5 of 5: Next Steps: EDA -->
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Snowflake Help?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with <a href="../offerings/snowflake_services.html" style="color: #EEEEEE;">Snowflake platform operations, analytics, and machine learning</a>.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

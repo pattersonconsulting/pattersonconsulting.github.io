@@ -208,7 +208,7 @@ blockquote.rewrite {
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
 						<p>
-							<h3>Part 2 of 3: Scalable Feature Engineering with Snowpark</h3>
+							<h3>Part 2 of 5: Scalable Feature Engineering with Snowpark</h3>
 
 
 						</p>
@@ -225,9 +225,10 @@ blockquote.rewrite {
 
 								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
 								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
-								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Grid Search Model Construction with Sagemaker Studio Lab</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
 							</ul>
-
 
 						</p>
 
@@ -250,13 +251,20 @@ blockquote.rewrite {
 
 						<h1>Introduction</h1>
 
+						<img src="./images/snowflake_logo_wide_sept_2021.png" width="400px;" style="float: right;"/>
+
+
 						<p>
-							In our last article ....
+							In our last article we loaded our synthetic credit card data into the Snowflake platform.
 
 						</p>
 
 						<p>
-							Before we get to Sagemaker Studio Lab, we need to do some scalable feature engineering ...
+							We want to start building some models in Sagemaker Studio Lab, but first we need to do some scalable feature engineering. In many cases we will have a non-trivial amount of raw data in our data warehouse, so anything we can do in-storage / in-database (scalably) is going to be an advantage in terms of saving compute time later on in our pipeline.
+
+						</p>
+						<p>
+							Snowpark in Snowflake gives us a great way to do scalable feature generation. In this article we are going to use Snowpark to build most of our core dataset features for model training.
 
 						</p>
 
@@ -267,40 +275,6 @@ blockquote.rewrite {
 				<!-- Section 1 of 5: Intro, PM in Cloud -->
 
 
-
-
-				<!-- Section 2 of 5: UCI Dataset -->
-
-				<div class="row row-bottom-padded-sm">
-					<div class="col-md-12" id="fh5co-content">
-
-
-						<h1>Credit Card Transaction Data in Snowflake</h1>
-
-						<p>
-							what data did we start with?
-							
-
-						</p>
-
-						<p>
-							where did the data come from?
-
-							[ give the original project some pub ]
-							
-
-						</p>
-
-
-
-
-
-					</div>
-
-				</div>
-
-
-				<!-- Section 2 of 5: UCI Dataset -->
 
 
 
@@ -316,43 +290,59 @@ blockquote.rewrite {
 
 						<h1>Scalable Feature Engineering with Snowpark</h1>
 
-						<img src="./images/snowflake_logo_wide_sept_2021.png" width="400px;" style="float: right;"/>
-
-
 						<p>
-							[ Talk about last project where we used snowpark to do scalable model inference ]
+							Let's start off by giving a specific definition for "feature engineering":
 
 						</p>
 
-<blockquote class="rewrite">"Feature engineering is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. Simply put, we want to create new features (columns) for our dataset using the data we already have in it."</blockquote>
+<blockquote>Feature engineering is process where we use domain expertise to extract features (characteristics, properties) from raw data. We use the data we already have to generate new features (columns) in our dataset.</blockquote>
 
-<blockquote class="rewrite">
-There is unfortunately no standard procedure to deal with non-numerical or categorical features. The topic is known in the machine learning literature as feature engineering or feature transformation. In essence, the goal of feature engineering is to design new features that are assumed to be relevant for a predictive problem. The design of these features is usually problem-dependent, and involves domain knowledge.
-</blockquote>
+
 
 						<p>
-							[ Talk about how we need to do feature engineering with input size is large ]
+							There is no standard way to do feature engineering for non-numerical or categorical features. There are a few core methods that are known to work well in practice (e.g., "1-hot encoding for categorical features"), but most of the time we use a combination of these practictioner methods and domain expertise to generate good features for out modeling workflow.
+
+						</p>
+
+						<p>
+							As previously mentioned, many times the raw dataset is large but the data we want to model is relatively smaller after processing. From this perspective, we want to do as much raw processing of the data in the datawarehouse (e.g., here Snowflake) with tools that will scale linearly with the size of the data input (e.g., Snowpark). Snowpark is nice because it let's us build data processing pipelines in a dataframe-api (similar to Pandas on Python).
 
 						</p>						
 
 
 						<p>
-
-							[ Explain what we plan on doing here --- wrt to building features ]
-
-
+							
+							The work in this series is based on the dataset and general workflow from the online book:
 						</p>
-						
+						<p>
+<figure>
+<figcaption>			
+
+
+						<a href="https://github.com/Fraud-Detection-Handbook/fraud-detection-handbook"><cite>Reproducible Machine Learning for Credit Card Fraud Detection - Practical Handbook</cite></a>, by Le Borgne, Yann-Aël and Siblini, Wissam and Lebichot, Bertrand and Bontempi, Gianluca, 2022, Université Libre de Bruxelles
+</figcaption>
+</figure>
+					</p>
 
 
 
 						<p>
-							With all of this in mind, let's get started working with Snowflake.
-							
+
+							Further, Mats Stellwall (Snowflake Engineer) wrote a blog post <a href="https://medium.com/snowflake/feature-engineering-with-snowflake-9a96ee928b8">Feature Engineering with Snowflake, Using Snowpark and Scala</a> based on the book above.
+						</p>
+						<p>
+							We use portions of Mats' scala code to provide the basis for our Snowflake feature generation pipeline (we provide our implementation <a href="">here on github</a>).
+
 
 						</p>
 
 
+
+						<p>
+							With all of this in mind, let's jump into building our feature engineering pipeline in Snowpark.
+							
+
+						</p>
 
 
 
@@ -377,6 +367,44 @@ There is unfortunately no standard procedure to deal with non-numerical or categ
 
 				</div>		
 
+						<h2>Quick Look at the Raw Transaction Data</h2>
+
+						<p>
+							The raw transaction data has three types of features:
+
+							<ol>
+								<li>identifiers</li>
+								<li>timestamps</li>
+								<li>amounts</li>
+
+							</ol>
+
+							It also has a flag column to indicate if the record was fraudulent or not.
+
+						</p>
+
+						<p>
+							Machine learning works with vectors (or tensors) of floating point numbers requiring us to convert each feature into an integer or real number. In some cases we want to include ordering information about a feature as well.
+
+						</p>
+
+							<p>
+								Identifiers (e.g., transaction-ids, customer-ids, and terminal-ids) are not valuable to machine learning modeling due to high cardinality (e.g., large numbers of unique values), so we generally drop those.
+
+							</p>
+
+
+						<p>
+							Raw rates (strings or ms from a date) do not work well with machine learning so we need to do some feature creation work with dates to create meaningful context for the machine learning algorithm to model.
+
+
+						</p>
+
+						<p>
+							With our high-level notes about the data out of the way, let's now take a look at our specific feature engineering workflow overview.
+
+						</p>
+
 
 
 
@@ -384,66 +412,17 @@ There is unfortunately no standard procedure to deal with non-numerical or categ
 
 
 						<p>
-							[ what features do we want to create? ]
 
-						</p>
-
-						<p>
-
-							Sanity Check: 1,754,155 records --- keep rechecking after each transform
+							The online book <a href="https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_3_GettingStarted/BaselineFeatureTransformation.html">gives a great detailed explanation (Chapter 3: Baseline feature transformation)</a> around the how's and why's of the new features created. In this section we provide a brief summary explanation for these features.
 
 
 						</p>
 
-						<p>
-
-							Talk up the original pipeline:
-
-							https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_3_GettingStarted/BaselineModeling.html
-
-
-						</p>
+						<h4>Methods of Feature Encoding</h4>
 
 						<p>
 
-<blockquote class="rewrite">
-"My colleague Mats Stellwall made an incredible work documenting in his blog post Feature Engineering with Snowflake how to use Snowpark Scala. That was based on the book Reproducible Machine Learning for Credit Card Fraud Detection that explains some feature engineering techniques to enrich your data set and provide better results in your ML algorithm.
-</blockquote>
-							[ Give the feature engineering of the snowflake guy some pub ]
-
-						</p>
-
-<blockquote class="rewrite">The dataset has very few features, as illustrated in the picture below. Date and time for the transaction, id of the customer, what terminal was used and amount. It also has an added feature, or rather a label, that flags if the transaction was fraudulent or not, and that would be our target when training a machine learning model at a later stage.
-
-	<br/>
-	My data have three types of features; identifiers, timestamp and amount.
-
-</blockquote>
-
-<blockquote class="rewrite">
-Machine learning algorithms typically require numerical and ordered features. Numerical means that the type of the variable must be an integer or a real number. Ordered means that the order of the values of a variable is meaningful.
-</blockquote>
-
-<blockquote class="rewrite">
-	Identifiers do not provide any value, primary because they usually has a high cardinality, meaning a high number of unique values, and therefore they would only provide value if a specific customer or terminal is responsible for the majority of the frauds.
-	</blockquote>
-
-<blockquote class="rewrite">
-In this dataset, the only numerical and ordered features are the transaction amount and the fraud label. The date is a Panda timestamp, and therefore not numerical. The identifiers for the transactions, customers, and terminals are numerical but not ordered: it would not make sense to assume for example that the terminal with ID 3548 is ‘bigger’ or ‘larger’ than the terminal with ID 1983. Rather, these identifiers represent distinct ‘entities’, which are referred to as categorical features.
-</blockquote>
-
-
-<blockquote class="rewrite">
-	Date and time is another example of features that does not work well with most machine learning algorithms. This is because the value itself has not so much meaning without domain knowledge, for example, 2019–04–01 and 2019–04–08 is just two different values. However, both you and I can probably see that they are for the year 2019 and the month of April and if using a calendar we can also see that they both are Mondays. This is because we know that they are dates and have the knowledge of how to read those, a machine learning algorithm does not have this knowledge so we need to provide that information in another way.
-</blockquote>
-
-
-
-
-
-						<p>
-
-							3 Types of feature transformations that are known to be relevant for payment card fraud detection
+							The book states that there are 3 types of feature transformations that are known to be relevant for payment card fraud detection:
 
 							<ul>
 
@@ -453,14 +432,22 @@ In this dataset, the only numerical and ordered features are the transaction amo
 
 							</ul>
 
+							Now let's briefly review the types of features we'll use these methods to create.
+
 
 						</p>
 
 						<h4>Creating Temporal Features (Date/Time) Features</h4>
 							<p>
-<blockquote class="rewrite">
-The first type of transformation involves the date/time variable, and consists in creating binary features that characterize potentially relevant periods. We will create two such features. The first one will characterize whether a transaction occurs during a weekday or during the weekend. The second will characterize whether a transaction occurs during the day or the night. These features can be useful since it has been observed in real-world datasets that fraudulent patterns differ between weekdays and weekends, and between the day and night.
-</blockquote>
+
+								With temporal features (data/time) we want to create binary features that indicate potentially actions during relevant periods of time. In this pipeline we create two features of this type:
+
+								<ul>
+									<li>transaction occurs during weekday or weekend</li>
+									<li>transaction occurs during day or night</li>
+								</ul>
+
+								This features tend to be useful based on fraud patterns in real-world datasets.
 
 
 							</p>
@@ -469,9 +456,8 @@ The first type of transformation involves the date/time variable, and consists i
 
 						<h4>Creating Customer Spending Behavior Features</h4>
 							<p>
-<blockquote class="rewrite">
-The second type of transformation involves the customer ID and consists in creating features that characterize the customer spending behaviors. We will follow the RFM (Recency, Frequency, Monetary value) framework proposed in [VVBC+15], and keep track of the average spending amount and number of transactions for each customer and for three window sizes. This will lead to the creation of six new features.
-</blockquote>
+
+								The next type of features we want to create are centered on how customer spending behaviors. To create these features we use RFM the (Recency, Frequency, Monetary value) method. We will create 6 total new features that keep track of the average spending amount and number of transactions for each customer over 3 time window sizes.
 
 
 							</p>
@@ -483,15 +469,8 @@ The second type of transformation involves the customer ID and consists in creat
 
 						<h4>Creating Terminal Risk Features</h4>
 							<p>
-<blockquote class="rewrite">
-The third type of transformation involves the terminal ID and consists in creating new features that characterize the ‘risk’ associated with the terminal. The risk will be defined as the average number of frauds that were observed on the terminal for three window sizes. This will lead to the creation of three new features.
-</blockquote>
 
-
-							</p>
-
-							<p>
-								Note: we're not going to convert these features in Snowflake, but leave this part to be converted inside the AWS Sagemaker Studio Lab notebook to compare execution speeds
+								The final group of features we'll create involve measuring the risk associated with each financial terminal. As more fraud is committed at a terminal, its risk profile will also rise. We will create 6 new features for this group.
 
 
 							</p>
@@ -506,13 +485,13 @@ The third type of transformation involves the terminal ID and consists in creati
 
 						<p>
 
-							The table below shows the details on the features
+							To summarize our the features to create, the table below shows the complete list:
 
 
 						</p>
 
 
-<table class="colwidths-auto table">
+<table class="colwidths-auto table" style="border: 1px solid;">
 <thead>
 <tr class="row-odd"><th class="head"><p>Original feature name</p></th>
 <th class="head"><p>Original feature type</p></th>
@@ -565,12 +544,16 @@ The third type of transformation involves the terminal ID and consists in creati
 
 						<p>
 
-							[in-segue]
+							
 
-							Let's now jump into how to port the weekend and night features to Snowpark.
+							Let's now take a look at how we can build these feature transforms with scala and Snowpark on Snowflake.
 
 
 						</p>
+
+
+
+
 
 
 
@@ -613,39 +596,85 @@ The third type of transformation involves the terminal ID and consists in creati
 
 						</p>
 
+						<p>
+							Our implementation of the snowpark credit card transaction data feature engineering code can be found <a href="https://github.com/pattersonconsulting/cc_fraud_demo/blob/main/snowpark/src/main/scala/CCTxnFeatureEngineering.scala">here on github</a>.
+
+						</p>
+
+						<p>
+							For the sake of time and space we are going to cover the highlights of the feature engineering code in the sub-sections below. You are more than welcome to download the project from github and run it against your own Snowflake account.
+
+						</p>
+
+
 
 
 						<h2>Create Scala Project to Connect to Snowflake and Run Snowpark Code</h2>
 
 						<p>
 
-							Check our last article on how to stand up Snowflake connector 
+							Check our previous Snowpark article to <a href="./predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">understand how to launch snowpark code</a>.
 
 
 						</p>		
 
+
 						<p>
-							This github repo will give you a scala Snowpark pipeline to perform these feature engineering transformations ...
+							Let's connect to Snowflake with a <code>Session</code> object:
 
-						</p>	
+						</p>
 
+
+
+<pre><code>
+val session = Session.builder.configFile("conn.properties").create
+val df_cust_txns = session.table("CUSTOMER_CC_TRANSACTIONS") 
+</code></pre>
+
+						<p>
+							Our Snowflake account information is contained in the <code>conn.properties</code> file in the example above, letting our code authenticate with Snowflake.
+
+						</p>
 
 						<h2>Create Weekend and Night Features in Scala for Snowpark</h2>
 
 						<p>
 
 
+								In the code below we want to generate a feature that has a <code>0</code> if transaction between 6am and 0pm and <code>1</code> if transaction between 0pm and 6am. The new feature is called <code>TX_DURING_NIGHT</code>.
+
 
 						</p>
 
+
 						<p>
-							
+
+
+								The code also generates a feature <code>TX_DURING_WEEKEND</code> that has a <code>0</code> if the transaction's date is during a weekday and <code>1</code> if transaction's date is during the weekend..
+
 
 						</p>						
 
+<pre><code>
+    val dfDateTimeFeat = df_cust_txns.withColumns(
+        Seq("TX_DURING_WEEKEND", "TX_DURING_NIGHT"), 
+        Seq(
+          iff(
+            dayofweek(col("TX_DATETIME")) === 6 || dayofweek(col("TX_DATETIME")) === 0, 
+            lit(1), 
+            lit(0)
+          ), 
+          iff(hour(col("TX_DATETIME")) <= 6 || hour(col("TX_DATETIME")) > 23, lit(1), lit(0)
+        )
+      ))
+</code></pre>						
 
-\
+						<p>
 
+							This feature creation uses the <a href="https://docs.snowflake.com/en/sql-reference/functions/seq1.html"><code>Seq</code> function</a> in the Snowpark code to generate the 0 or 1 value for the features based on conditions in the data.
+							
+
+						</p>						
 
 
 						<h2>Create Customer Transaction Features in Scala for Snowpark</h2>
@@ -655,15 +684,23 @@ The third type of transformation involves the terminal ID and consists in creati
 
 						</p>			
 
-<blockquote class="rewrite">
+						<p>
 
-What I want to do is to calculate the number of transactions and average amount on a day level, but I need to store it on a transaction level. The calculations is to be based on previous one, seven and thirty days and also including the transactions done so far during the current day of a transaction.
-</blockquote>						
+							We want to calculate the number of transactions for the following time windows:
+
+							<ul>
+								<li>previous 1 day</li>
+								<li>previous 7 days</li>
+								<li>previous 30 days</li>
+
+							</ul>
+
+							For both number of transactions and total amount spend across those time periods.
+
+							Snowflake has windowing functions that allow for calculations over time periods (total, average, etc).
 
 
-<blockquote class="rewrite">
-Snowflake has window functions that allows operations on a group of rows and allows you to perform rolling operations, such as calculating a running total or a moving average, on a subset of the rows in the window.
-</blockquote>
+						</p>
 
 
 
@@ -675,11 +712,9 @@ Snowflake has window functions that allows operations on a group of rows and all
 								<h4>Rolling Window Calculations in Snowflake</h4>
 							  <p style="font-size: 14px; ">
 							  <i>
-							  	[ Snowflake does it differently than Pandas ... ]
-							  	
-[ How do the snowpark dataframe operations differ from the pandas operations? --- this is where we talk about Pandas rolling windows:
+							  	The original code from the online book uses the <a href="https://pandas.pydata.org/docs/reference/api/pandas.core.window.rolling.Rolling.count.html">Pandas rolling window function</a>, which calculates some of the values differently than how <a href="https://docs.snowflake.com/en/sql-reference/functions-analytic.html">Snowflake calculates its window functions</a>. In part 3 of this series we'll see the Pandas rolling window function in action when we generate the terminal features in python.
 
-							https://pandas.pydata.org/docs/reference/api/pandas.core.window.rolling.Rolling.count.html ]
+							  	
 
 							  </i></p>
 							  
@@ -687,26 +722,93 @@ Snowflake has window functions that allows operations on a group of rows and all
 
 						</div>
 
-<blockquote class="rewrite">
+
+				<p>
+
+					So we need to create the above 6 features for each transaction. Our general strategy (for both feature groups) for our snowpark code is:
+
+					<ol>
+						<li>create a dataframe with a single row for each customer and day (between min / mx date in our data)</li>
+						<li>calculate transaction count and sum for each customer and day (if no transactions, then 0)</li>
+						<li>use built-in Snowflake window functions to build our { 1, 7, 30 } features, and then join it back with original transactions</li>
 
 
-    calculate the number of transactions and average amount on a day level, 
-    but I need to store it on a transaction level. 
-    The calculations is to be based on previous 
-      one, seven and thirty days 
-    and also including the transactions done so far during the current day of a transaction.
+					</ol>
 
-  divide work into multiple steps and that is something that is easy to do using a programming language and the Snowpark API.<br/><br/>
+					In the code listing below, we can see the code for this part of the feature creation in Snowpark.
 
-  (1.) Generate a dataframe with one row for each customer and day that is between the minimum and maximum date in our data.<br/>
-  (2.) Calculate the number of transaction and amount by customer and day, adding zeros for those days the customer has no transactions.<br/>
-  (3.) Using Snowflake window functions to calculate the number of transaction and average amount during previous one, seven and thirty days, excluding the current day.
-  (4.) Join it with the transactions and also calculate the transactions and amount during the current day.<br/>
-</blockquote>
+
+
+				</p>
+
+
+<pre><code>val dateInfo = df_cust_txns.select(
+  min(col("TX_DATETIME")).alias("END_DATE"), 
+  datediff("DAY", col("END_DATE"), max(col("TX_DATETIME")))
+).collect()    
+
+val dStartDate = new SimpleDateFormat("yyyy-MM-dd").format(dateInfo(0).getTimestamp(0))
+val nDays = dateInfo(0).getInt(1)
+
+val dfDays = session.range(nDays)
+                   .withColumn("TX_DATE", 
+                        to_date(dateadd("DAY", callBuiltin("SEQ4"), lit(dStartDate))))
+
+val num_rows_txns_dfDays = dfDays.count()
+val dfCustomers = session.table("CUSTOMERS").select("CUSTOMER_ID")
+val num_rows_txns_dfCustomers = dfCustomers.count()
+val dfCustDay = dfDays.join(dfCustomers)
+val num_rows_txns_dfCustDay = dfCustDay.count()
+val zeroifnull = builtin("ZEROIFNULL")
+
+// df_cust_txns: the original table of raw transactions
+// dfCustDay: the matrix of customers and possible dates
+
+val dfCustTrxByDay = df_cust_txns.join(dfCustDay, df_cust_txns("CUSTOMER_ID") === dfCustDay("CUSTOMER_ID")
+      && to_date(df_cust_txns("TX_DATETIME")) === dfCustDay("TX_DATE"), "rightouter")
+
+     .select(dfCustDay("CUSTOMER_ID").alias("CUSTOMER_ID"), 
+             dfCustDay("TX_DATE"), 
+             zeroifnull(df_cust_txns("TX_AMOUNT")).as("TX_AMOUNT"), 
+             iff(col("TX_AMOUNT") > 0, lit(1), lit(0)).as("NO_TRX"))
+
+      .groupBy(col("CUSTOMER_ID"), col("TX_DATE"))
+
+      .agg(
+          sum(col("TX_AMOUNT")).alias("TOT_AMOUNT"), 
+           sum(col("NO_TRX")).alias("NO_TRX")
+       )    
+
+val dfSubset = dfCustTrxByDay.filter(col("CUSTOMER_ID") === lit(0)).sort(col("TX_DATE"))
+val custDate = Window.partitionBy(col("customer_id")).orderBy(col("TX_DATE"))
+val win7dCust = custDate.rowsBetween(-7, -1)
+val win30dCust = custDate.rowsBetween(-30, -1)
+
+val dfCustFeatDay = dfCustTrxByDay
+       .select(col("TX_DATE"),col("CUSTOMER_ID"),
+               col("NO_TRX"), col("TOT_AMOUNT"),
+               lag(col("NO_TRX"),1).over(custDate).as("CUST_TX_PREV_1"),
+               sum(col("NO_TRX")).over(win7dCust).as("CUST_TX_PREV_7"),
+               sum(col("NO_TRX")).over(win30dCust).as("CUST_TX_PREV_30"),
+               lag(col("TOT_AMOUNT"),1).over(custDate).as("CUST_TOT_AMT_PREV_1"),
+               sum(col("TOT_AMOUNT")).over(win7dCust).as("CUST_TOT_AMT_PREV_7"),
+               sum(col("TOT_AMOUNT")).over(win30dCust).as("CUST_TOT_AMT_PREV_30"))    
+
+</code></pre>
+
+
+						<p>
+
+							The original project generates 6 features for terminal usage. We're going to leave that function in python in this series to show the difference in how these windows are created.
+
+
+						</p>
 
 						<h2>Save Created Features as New Table in Snowpark</h2>
 
 						<p>
+
+							Finally, we want to save the new features to a table in Snowflake with the Snowpark command:
 
 
 						</p>			
@@ -716,9 +818,29 @@ Snowflake has window functions that allows operations on a group of rows and all
 
 					</div>
 
+
+
+
+						<p>
+
+							
+
+
+						</p>
+
+
+
+
+					<p>
+						At this point we have a table in Snowflake we can use to model over in Sagemaker Studio Lab.
+
+					</p>
+
 				</div>
 
 				<!-- Section 4 of 5: Connecting Google Co-lab to Snowflake -->
+
+
 
 
 
@@ -727,17 +849,17 @@ Snowflake has window functions that allows operations on a group of rows and all
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 						
-						<h1>Next Steps: Build Transaction Fraud Detection Models</h1>
+						<h1>Next Steps: Connecting AWS Sagemaker Studio Lab to Snowflake</h1>
 
 
 						<p>
 
 
-							In this post in our series we learned how ....
+							In this post in our series we learned how to build features in Snowpark for Snowflake.
 
 						</p>
 						<p>
-							....
+							In the <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">next post we'll connect AWS Sagemaker Studio Lab to Snowflake and build out final terminal features</a>.
 
 						</p>
 

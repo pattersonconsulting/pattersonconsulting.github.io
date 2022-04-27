@@ -208,7 +208,7 @@ blockquote.rewrite {
 					<div class="col-md-12" id="fh5co-content">
 						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
 						<p>
-							<h3>Part 3 of 3: Grid Search Model Construction with Sagemaker Studio Lab</h3>
+							<h3>Part 3 of 5: Connecting AWS Sagemaker Studio Lab to Snowflake</h3>
 
 
 						</p>
@@ -225,9 +225,10 @@ blockquote.rewrite {
 
 								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
 								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
-								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Grid Search Model Construction with Sagemaker Studio Lab</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
 							</ul>
-
 
 						</p>
 
@@ -252,18 +253,25 @@ blockquote.rewrite {
 						<h1>Introduction</h1>
 
 						<p>
-							In our last article ....
+							In our last article we built some now features with Snowpark on Snowflake after we loaded our credit card transaction data.
+
+						</p>
+
+						<p>
+							In this post in the series we are going to connect AWS Sagemaker Studio Lab to Snowflake and then calculate a few more features in python and pandas.
+
 
 						</p>
 					
 						<p>
 							Key Take Aways:
 							<ol>
-								<li>a</li>
-								<li>b</li>
-								<li>c</li>
+								<li>How to connect AWS Sagemaker Lab to Snowflake</li>
+								<li>Building rolling window features with Pandas</li>
 
 							</ol>
+
+							Let's learn a bit about AWS Sagemaker Lab.
 
 						</p>
 
@@ -283,51 +291,135 @@ blockquote.rewrite {
 
 						<h1>What is AWS Sagemaker Studio Lab?</h1>
 
-						<p>
 
-							Reference: https://aws.amazon.com/blogs/machine-learning/load-and-transform-data-from-delta-lake-using-amazon-sagemaker-studio-and-apache-spark/							
+						<p>
+							AWS Sagemaker Studio Lab is a cloud-hosted (AWS, of course), machine learning environment that is free to use (once you are in the limited release program). It's great for teaching, learning, and trying out new concepts in data science. Some quick notes:
+
+							<ul>
+								<li>No-charge, no billing, no AWS account required</li>
+								<li>Based on open-source JupyterLab, so you can install open-source JupyterLab extensions</li>
+								<li>CPU (<code>t3.xlarge</code>) and GPU (<code>g4dn.xlarge</code>) option (check out our <a href="./forecasting_your_aws_gpu_cloud_spend.html">article on AWS GPUs</a> for more context here)</li>
+								<li>15GB persistent storage and 16GB of RAM</li>
+								<li>Git integration: Git command line and Git UI / Share content via GitHub</li>
+								<li>You can export your projects and transition from Studio Lab to production-grade SageMaker if needed</li>
+								<li>Package management: Persistent installation of pip/conda packages within notebooks and from command line</li>
+								<li>Provides terminal access</li>
+
+
+							</ul>
+
+							Sagemaker Studio Lab is the free version of <a href="https://aws.amazon.com/sagemaker/studio/">Sagemaker Studio</a>. It is similar in functionality and positioning to <a href="https://colab.research.google.com/">Google Cloud's Colab</a>.
 
 						</p>
 
-<blockquote class="rewrite">
+						<p>
+							To request access to Sagemaker Studio Lab check out <a href="https://studiolab.sagemaker.aws/">this link</a>.
 
- Amazon SageMaker is a fully managed service that provides a versatile workbench for building ML solutions and provides highly tailored tooling for data ingestion, data processing, model training, and model hosting						
-</blockquote>
-
+						</p>
 
 						<p>
-							
 
-							[ we have a lot of content from slides that go here ]
-							
-We will use SageMaker Studio Lab (SMSL)
-AWS Recommends:
-When you're starting a new notebook, we recommend that you create the notebook in Amazon SageMaker Studio instead of launching a notebook instance from the Amazon SageMaker console. 
-And pimp the upgrade to Studio
-Compare it to Google CoLab
-Also: similar to Kubeflow UX
-Request an account
-https://studiolab.sagemaker.aws/
-Getting data from Snowflake  to SMSL
+							In the image below you can see the launch screen for Sagemaker Studio Lab.
 
 						</p>
 
 
-<p>
-	<pre>
-"Amazon SageMaker Studio Lab is cloud-hosted ML environment based on JupyterLab that is free to use and quick to set up for teaching, learning, and experimenting with ML"
+						<img src="./images/aws_sagemaker_studio_lab_launch_2022.png" />
 
-1/ No-charge, no billing, no AWS account required
-2/ Based on open-source JupyterLab, so you can install open-source JupyterLab extensions
-3/ CPU (t3.xlarge) and GPU (g4dn.xlarge) option
-4/ 15GB persistent storage and 16GB of RAM
-5/ Git integration: Git command line and Git UI / Share content via GitHub
-6/ You can export your projects and transition from Studio Lab to production-grade SageMaker if needed
-7/ Package management: Persistent installation of pip/conda packages within notebooks and from command line
-8/ Provides terminal access
-</pre>
+						<h2>Comparing Sagemaker and Sagemaker Studio</h2>
 
-</p>
+
+
+					<p>
+						AWS <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-comparison.html">recommends using Sagemaker Studio over legacy Sagemaker</a> when starting a new notebook. Two of the reasons they give for this recommendation are:
+
+						<ul>
+							<li>Starting a Studio notebook is faster than launching an instance-based notebook. Typically, it is 5-10 times faster than instance-based notebooks.</li>
+
+							<li>Notebook sharing is an integrated feature in SageMaker Studio. Users can generate a shareable link that reproduces the notebook code and also the SageMaker image required to execute it, in just a few clicks.</li>
+						</ul>
+					</p>
+
+					<p>
+						In the image below we can see an example of a notebook launched inside the Jupyter lab system on Sagemaker Studio Lab.
+
+					</p>
+
+
+
+
+						<img src="./images/aws_sagemaker_studio_lab_jupyter_hub.png" style="border: 1px solid; "/>
+
+						<p>
+							Now that we understand the basics about Sagemaker Studio Lab, let's take a look at how Sagemaker Studio is different from the original Sagemaker.
+
+						</p>
+
+
+
+						<h2>Differences Between Sagemaker and Sagemaker Studio </h2>
+
+						<h4>The Original Sagemaker</h4>
+						<p>
+							The original Sagemaker platform on AWS allowed you to configure your on Notebook instance on AWS to run your machine learning workflow. A Sagemaker notebook instance is a machine learning (ML) compute instance running the Jupyter Notebook App.
+
+The user can focus on building models while Sagemaker manages creating the instance and associated AWS resources. 
+
+
+						</p>
+
+						<h4>Sagemaker Studio</h4>
+
+						<p>
+							Sagemaker Studio is an evolution of Sagemaker. A major improvement is how notebook servers are provisioned and operated by making it easier to get your notebook environment working. Sagemaker Studio allows you to manage this from a single screen.
+
+						</p>		
+
+
+						<p>
+							Other differences:
+
+						</p>	
+
+
+<table>
+	<tr>
+
+		<th>Sagemaker Version</th>
+		<th>Login</th>
+		<th>Notebook Servers</th>
+		<th>Storage</th>
+
+	</tr>
+
+	<tr>
+		<td>Sagemaker (original)</td>
+		<td>Through AWS Console</td>
+		<td>Creates a new instance to run the notebook server. 
+All notebooks running on the notebook server</td>
+		<td>Have to manually manage the storage attached to specific notebook instances</td>
+	</tr>
+
+
+	<tr>
+		<td>Sagemaker Studio</td>
+		<td>Through SSO</td>
+		<td><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-comparison.html">Studio notebooks managed from inside Studio</a>. JupyterLabs UI is running on a server somewhere
+No instance is created, and you are not charged for it
+Only charged once you bring up a notebook and start doing some compute
+Can run multiple notebook servers running in the background separately</td>
+		<td>Uses EFS
+Plugged into all of the compute instances that are spun up
+Centralized Storage Concept (major difference between SM and Studio)</td>
+	</tr>
+
+</table>
+					<br/>
+
+					<p>
+						Now that we've covered the differences of the versions of Sagemaker, let's connect our Sagemaker Studio Lab notebook to our Snowflake account.
+
+					</p>
 
 
 					</div>
@@ -347,19 +439,40 @@ Getting data from Snowflake  to SMSL
 						<h1>Connecting SageMaker to Snowflake</h1>
 
 						<p>
+							Before we can finish up our feature creation, we need to establish and test our connection to Snowflake from inside a Sagemaker Studio Lab notebook instance.
 
-<blockquote class="rewrite">
-
-In this post, we describe how to use SageMaker Studio notebooks to easily load and transform data stored in the Delta Lake format. We use a standard Jupyter notebook to run Apache Spark commands that read and write table data in CSV and Parquet format. The open-source library delta-spark allows you to directly access this data in its native format. This library allows you to take advantage of the many API operations to apply data transformations, make schema modifications, and use time-travel or as-of-timestamp queries to pull a particular version of the data.
-
-In our sample notebook, we load raw data into a Spark DataFrame, create a Delta table, query it, display audit history, demonstrate schema evolution, and show various methods for updating the table data. We use the DataFrame API from the PySpark library to ingest and transform the dataset attributes. We use the delta-spark library to read and write data in Delta Lake format and to manipulate the underlying table structure, referred to as the schema.
-</blockquote>
 
 						</p>
 
-<pre>
+						<p>
+							Below we have the code to test out a connection to Snowflake from our notebook.
 
-# Gets the version
+						</p>
+
+						<p>
+							To not include our login information in our notebooks we use <code>getpass</code> as an interactive way to input our login and password as the notebook executes as seen below.
+
+						</p>
+
+<pre><code>import getpass
+# using a simpler way to use your login info without embedding it in the notebook 
+# other enterprise connection patterns (e.g., SSO) are in the Snowflake docs: https://docs.snowflake.com/en/user-guide/python-connector-example.html
+snowflake_username = getpass.getpass("Enter Snowflake Username")
+snowflake_pwd = getpass.getpass("Enter Snowflake Password")
+snowflake_acct = 'nnope777.us-east-1'
+</code></pre>
+
+						<p>
+							Once we have our login information in variables inside our notebook, we can create a snowflake connection to our database <code>CREDIT_CARD_COMPANY_DB</code> and create a cursor to load all of the records from the <code>CUSTOMER_CC_TRANSACTION_FEATURES</code>.
+
+						</p>
+
+						<p>
+							We can see this in action in the code listing below. Once we have the data in a local object, we use the <code>.fetch_pandas_all()</code> method to load all of the data into a pandas dataframe inside our notebook.
+
+						</p>
+
+<pre><code># Gets the version
 ctx = snowflake.connector.connect(
   user=snowflake_username,
   password=snowflake_pwd,
@@ -370,37 +483,20 @@ try:
     cs.execute("SELECT current_version()")
     one_row = cs.fetchone()
     print(one_row[0])
-
-
-
-    #cs.cursor().execute("USE WAREHOUSE tiny_warehouse_mg")
-    #cs.execute("USE DATABASE PREDICTIVE_MAINTENANCE;")    
     cs.execute("USE DATABASE CREDIT_CARD_COMPANY_DB;")    
-
-
-    #qry_out = 
     all_rows = cs.execute("select * FROM CUSTOMER_CC_TRANSACTION_FEATURES;")
-    #all_rows = cs.execute("select TYPE, AIR_TEMPERATURE, PROCESS_TEMPERATURE, ROTATIONAL_SPEED, TORQUE, TOOL_WEAR, MACHINE_FAILURE  from SUMMARY_SENSOR_DATA;")
     df_cc_customer_txn_features = all_rows.fetch_pandas_all()
-
-    #one_row = cs.fetchone()
-    #print("Records with Failures: " + str(one_row[0]))
-
-    #query_output = cs.execute( "select TYPE, AIR_TEMPERATURE, PROCESS_TEMPERATURE, ROTATIONAL_SPEED, TORQUE, TOOL_WEAR, MACHINE_FAILURE  from SUMMARY_SENSOR_DATA;" )
-
-    #df_cc_customer_txn_features = qry_out.fetch_pandas_all() #.to_csv("/path/to/write/table.csv")	
-    #df.to_csv("./data/full_snowflake_dataset.csv", index=False)	
-
-    #print( df )
-
 
 finally:
     cs.close()
 
-
-
 ctx.close()
-</pre>
+</pre></code>
+
+						<p>
+							Once we have the data in a dataframe in our notebook, we are ready to perform the final feature engineering before we begin modeling.
+
+						</p>
 
 
 
@@ -410,42 +506,91 @@ ctx.close()
 
 
 
-
-
 				<!-- Section 2 of 5: UCI Dataset -->
 
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
 
 
-						<h1>Grid Search with scikit-learn for Credit Card Fraud Detection AWS Sagemaker Studio Lab</h1>
-
-						<p>
-							what data did we start with?
-							
-
-						</p>
-
-
-						<h2>Load Data from Snowflake</h2>
-
-						<p>
-							where did the data come from?
-
-							[ give the original project some pub ]
-							
-
-						</p>
 
 						<h2>Create Terminal Features</h2>
 
 						<p>
 
-reference original code
+							When we last left off in part 2 of this series we had generated several new features, but not the "terminal" set of features as listed below.
+
 
 						</p>
 
-<pre>
+
+<table class="colwidths-auto table" style="border: 1px solid;">
+<thead>
+<tr class="row-odd"><th class="head"><p>Original feature name</p></th>
+<th class="head"><p>Original feature type</p></th>
+<th class="head"><p>Transformation</p></th>
+<th class="head"><p>Number of new features</p></th>
+<th class="head"><p>New feature(s) type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TERMINAL_ID</p></td>
+<td><p>Categorical variable</p></td>
+<td><p>Number of transactions on the terminal in the last n+d day(s), for n in {1,7,30} and d=7. The parameter d is called delay and will be discussed later in this notebook. The new features are called TERMINAL_ID_NB_TX_nDAY_WINDOW.</p></td>
+<td><p>3</p></td>
+<td><p>Integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>TERMINAL_ID</p></td>
+<td><p>Categorical variable</p></td>
+<td><p>Average number of frauds on the terminal in the last n+d day(s), for n in {1,7,30} and d=7. The parameter d is called delay and will be discussed later in this notebook. The new features are called TERMINAL_ID_RISK_nDAY_WINDOW.</p></td>
+<td><p>3</p></td>
+<td><p>Real</p></td>
+</tr>
+</tbody>
+</table>
+<!--
+						<p>
+
+							Let us perform the computation of the risk scores by defining a get_count_risk_rolling_window function.
+The function takes as inputs
+the DataFrame of transactions for a given terminal ID,
+the delay period,
+Contrary to customer ID transformations, the time windows will not directly precede a given transaction. Instead, they will be shifted back by a delay period. The delay period accounts for the fact that, in practice, the fraudulent transactions are only discovered after a fraud investigation or a customer complaint. Hence, the fraudulent labels, which are needed to compute the risk score, are only available after this delay period. To a first approximation, this delay period will be set to one week. The motivations for the delay period will be further argued in Chapter 5, Validation strategies.
+and a list of window sizes.
+In the first stage, the number of transactions and fraudulent transactions are computed for the delay period:
+NB_TX_DELAY
+NB_FRAUD_DELAY
+In the second stage, the number of transactions and fraudulent transactions are computed for each window size plus the delay period (NB_TX_DELAY_WINDOW and NB_FRAUD_DELAY_WINDOW).
+The number of transactions and fraudulent transactions that occurred for a given window size, shifted back by the delay period, is then obtained by simply computing
+the differences of the quantities obtained for the delay period,
+and the window size plus delay period:
+NB_FRAUD_WINDOW=NB_FRAUD_DELAY_WINDOW-NB_FRAUD_DELAY
+NB_TX_WINDOW=NB_TX_DELAY_WINDOW-NB_TX_DELAY
+The risk score is finally obtained by computing the proportion of fraudulent transactions for each window size (or 0 if no transaction occurred for the given window):
+
+
+						</p>
+-->
+						<p>
+							In the original online book we see a <a href="https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_3_GettingStarted/BaselineFeatureTransformation.html#terminal-id-transformations">great detailed explanation for these set of feature transforms</a>.
+						</p>
+						<p>
+							Our main goal is build a "risk score" to assess the risk of each terminal for exposure to fraudulent transactions. As explained in the original book,
+
+							<blockquote>
+								"The risk score will be defined as the average number of fraudulent transactions that occurred on a terminal ID over a time window"
+							</blockquote>
+
+							We will again use window sizes of 1, 7, and 30.
+
+						</p>
+
+
+						<p>
+							We build a function <code>get_count_risk_rolling_window()</code> (as seen below) to compute the risk scores. 
+
+						</p>
+
+<pre><code>
 def get_count_risk_rolling_window(terminal_transactions, delay_period=7, windows_size_in_days=[1,7,30], feature="TERMINAL_ID"):
     
     terminal_transactions=terminal_transactions.sort_values('TX_DATETIME')
@@ -475,179 +620,87 @@ def get_count_risk_rolling_window(terminal_transactions, delay_period=7, windows
     
     return terminal_transactions
 
-</pre>
+</code></pre>
+
+							<p>
 
 
+							This fucntion task the inputs:
 
-						<h2>Split Dataset into Train and Test</h2>
+							<ul>
+								<li>DataFrame of transactions for a given terminal ID</li>
+								<li>delay period</li>
+								<li>List of window sizes</li>
 
-						<p>
+							</ul>
 
-							yadda
+							We will get the transactions from our transaction datafrom we just loaded from Snowflake. We have a good intuition about the window sizes from the previous post in this series. Let's take a quick look at the delay period.
 
-						</p>
-
-<pre>
-	def get_train_test_set(transactions_df,
-                       start_date_training,
-                       delta_train=7,delta_delay=7,delta_test=7):
-    
-    # Get the training set data
-    train_df = transactions_df[(transactions_df.TX_DATETIME&le;=start_date_training) &
-                               (transactions_df.TX_DATETIME&ge;start_date_training+datetime.timedelta(days=delta_train))]
-    
-    # Get the test set data
-    test_df = []
-    
-    # Note: Cards known to be compromised after the delay period are removed from the test set
-    # That is, for each test day, all frauds known at (test_day-delay_period) are removed
-    
-    # First, get known defrauded customers from the training set
-    known_defrauded_customers = set(train_df[train_df.TX_FRAUD==1].CUSTOMER_ID)
-    
-    # Get the relative starting day of training set (easier than TX_DATETIME to collect test data)
-    start_tx_time_days_training = train_df.TX_TIME_DAYS.min()
-    
-    # Then, for each day of the test set
-    for day in range(delta_test):
-    
-        # Get test data for that day
-        test_df_day = transactions_df[transactions_df.TX_TIME_DAYS==start_tx_time_days_training+
-                                                                    delta_train+delta_delay+
-                                                                    day]
-        
-        # Compromised cards from that test day, minus the delay period, are added to the pool of known defrauded customers
-        test_df_day_delay_period = transactions_df[transactions_df.TX_TIME_DAYS==start_tx_time_days_training+
-                                                                                delta_train+
-                                                                                day-1]
-        
-        new_defrauded_customers = set(test_df_day_delay_period[test_df_day_delay_period.TX_FRAUD==1].CUSTOMER_ID)
-        known_defrauded_customers = known_defrauded_customers.union(new_defrauded_customers)
-        
-        test_df_day = test_df_day[~test_df_day.CUSTOMER_ID.isin(known_defrauded_customers)]
-        
-        test_df.append(test_df_day)
-        
-    test_df = pd.concat(test_df)
-    
-    # Sort data sets by ascending order of transaction ID
-    train_df=train_df.sort_values('TRANSACTION_ID')
-    test_df=test_df.sort_values('TRANSACTION_ID')
-    
-    return (train_df, test_df)
-
-</pre>
-
-						<h2>Pull in Helper Functions</h2>
-
-						<p>
-							yadda
-
-						</p>
-
-<pre>!curl -O https://raw.githubusercontent.com/Fraud-Detection-Handbook/fraud-detection-handbook/main/Chapter_References/shared_functions.py
-%run shared_functions.py</pre>
-
-
-
-
-						<h2>Define List of Models to Perform Grid Search</h2>
-
-						<p>
-							In our last series we did grid search.
-
-							In this series we're going to try a new variant of grid search where we focus on gradient boosting methods do and hypertuning with <code>shap-hypetune</code>
-
-
-
-						</p>
-
-<blockquote class="rewrite">
-Hyperparameters tuning and features selection are two common steps in every machine learning pipeline. Most of the time they are computed separately and independently. This may result in suboptimal performances and in a more time expensive process.
-
-shap-hypetune aims to combine hyperparameters tuning and features selection in a single pipeline optimizing the optimal number of features while searching for the optimal parameters configuration. Hyperparameters Tuning or Features Selection can also be carried out as standalone operations.
-
-</blockquote>
-
-						<p>
-
-https://github.com/cerlymarco/shap-hypetune
-						</p>
-
-						<p>
-
-							TODO: ADD SOME ACTUAL "GRID SEARCH" TO THE CODE
-
-
-						</p>
-
-						<h3>Automated Feature Selection</h3>
-
-						<p>
 
 
 
 
 						</p>
 
-<blockquote class="rewrite">
-
-shap-hypetune aims to combine hyperparameters tuning and features selection in a single pipeline optimizing the optimal number of features while searching for the optimal parameters configuration. Hyperparameters Tuning or Features Selection can also be carried out as standalone operations.
-
-</blockquote>
-
-
-						<h2>Define Evaluation Function to Meet Our Goals for Fraud Detection</h2>
-
+						<h4>Delay Period</h4>
 						<p>
-							yadda
+							The online book explains that:
 
 						</p>
 
-
-
-						<h2>Define Performance Assessment Metric</h2>
+						<blockquote>"the time windows will not directly precede a given transaction. Instead, they will be shifted back by a delay period. The delay period accounts for the fact that, in practice, the fraudulent transactions are only discovered after a fraud investigation or a customer complaint. Hence, the fraudulent labels, which are needed to compute the risk score, are only available after this delay period"</blockquote>
 
 						<p>
-							yadda - mention discussion from last series
 
-						</p>
+						The default setting for this delay period is 7 days.
 
+					</p>
 
+					<h4>Calling the Function</h4>
 
-						<h2>How do our <code>shap-hypetune</code> models compare to original models?</h2>
-
-						<p>
-							yadda 
-
-						</p>
+					<p>
+						We can see the function being called below.
 
 
-						<h2>Understanding Model Features with Shap</h2>
+					</p>
 
-						<p>
-							yadda 
+<code><pre>df_cc_customer_txn_features=df_cc_customer_txn_features.groupby('TERMINAL_ID').apply(lambda x: get_count_risk_rolling_window(x, delay_period=7, windows_size_in_days=[1,7,30], feature="TERMINAL_ID"))
+</pre></code>
 
-						</p>
-
-						<p>
-<blockquote class="rewrite">
-
-							SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions (see papers for details and citations).
-</blockquote>
+					<p>
+						In the code snippet above, we see the transactions being grouped by the <code>TERMINAL_ID</code> field and then the function being applied to each of these groups.
 
 
-						</p>
+					</p>					
+
+					<p>
+						Once the function returns the results, we then sort the transactions by <code>TX_DATETIME</code> and reset the index on the dataframe, as seen below.
 
 
+					</p>
+
+<code><pre>df_cc_customer_txn_features=df_cc_customer_txn_features.sort_values('TX_DATETIME').reset_index(drop=True)
+</pre></code>
+
+					<p>
+						We can visually inspect the output in the notebook and see that there are 6 new features attached to our dataframe:
+
+						<ul>
+							<li>TERMINAL_ID_NB_TX_1DAY_WINDOW</li>
+							<li>TERMINAL_ID_RISK_1DAY_WINDOW</li>
+							<li>TERMINAL_ID_NB_TX_7DAY_WINDOW</li>
+							<li>TERMINAL_ID_RISK_7DAY_WINDOW</li>
+							<li>TERMINAL_ID_NB_TX_30DAY_WINDOW</li>
+							<li>TERMINAL_ID_RISK_30DAY_WINDOW</li>
+						</ul>
+
+
+
+
+					</p>					
 
 					</div>
-
 				</div>
-
-
-				<!-- Section 2 of 5: UCI Dataset -->
-
 
 
 				<!-- Section 5 of 5: Next Steps: EDA -->
@@ -660,11 +713,7 @@ shap-hypetune aims to combine hyperparameters tuning and features selection in a
 						<p>
 
 
-							In this post we ....
-
-						</p>
-						<p>
-							todo
+							In this post we showed you have to connect a Jupyter notebook in AWS Sagemaker Studio Lab to your data in Snowflake. We also built some more features for our dataset that we'll use in the next post on <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a>.
 
 						</p>
 

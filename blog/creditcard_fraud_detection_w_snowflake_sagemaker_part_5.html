@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 5 of 5: Deploying the Model as a Streamlit Application</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this blog post series on ....." />
+	<meta name="keywords" content="snowflake, predictive maintenance, exploratory data analysis, machine learning, data science, snowpark" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 5 of 5: Deploying the Model as a Streamlit Application"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this blog post series o...."/>
+	
+
+	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 5 of 5: Deploying the Model as a Streamlit Application" />
+	<meta data-rh="true" property="twitter:description" content="In this blog post series ...."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p2_og_card.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+blockquote.rewrite {
+
+	color:  red;
+}
+
+p.outline {
+
+	color:  blue;
+	font-style:  italic;
+	white-space: pre-line;
+
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+		
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
+						<p>
+							<h3>Part 5 of 5: Deploying the Model as a Streamlit Application</h3>
+
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: zzzzzzz xxth, 2022
+						</p>
+						
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
+								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
+							</ul>
+
+
+						</p>
+
+						For more use cases like these, check out our <a href="http://www.pattersonconsultingtn.com/use_case_repository/finserv_vertical.html">Financial Services vertical</a> in our <a href="http://www.pattersonconsultingtn.com/use_case_repository/intro.html">Use Case Repository</a>.
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<!-- Section: START -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Introduction</h1>
+
+						<p>
+							In the last post in this series we introduced AWS Sagemaker Studio Lab and then connected it to Snowflake inside a notebook. We also did some further feature creation with the data from Snowflake inside the Jupyter notebook.
+							
+
+						</p>
+
+						<p>
+							In this this post in the series we'll cover the following topics:
+
+							<ol>
+								<li>What is Streamlit?</li>
+								<li>Building a Streamlit Application</li>
+								<li>Integrating our Preditive PMML Model</li>
+								<li>Deploying the Streamlit Application to the Cloud</li>
+
+
+
+							</ol>
+
+							<p>
+								Let's start out by learning about the streamlit framework.
+
+							</p>
+
+
+
+
+						</p>
+
+
+					</div>
+
+				</div>
+				<!-- Section: END -->
+
+
+
+				<!-- Section: START -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>What is Streamlit?</h1>
+
+
+						<p>
+
+							Streamlit is an easy way to use python to build analytic and data science applications.
+
+							You dont have to know front end web dev, just basic python concepts.
+
+						</p>
+						<p>
+
+							Streamlit also offers a great way to easily deploy data science apps to the cloud from github with <a href="https://streamlit.io/cloud">streamlit cloud</a>.
+
+
+
+						</p>
+
+						<h2>What Do I Use Streamlit For?</h2>
+
+						<p>
+
+Data science mostly exists in the world of R, Python, and Jupyter notebooks. This begs the question:
+
+						</p>
+
+<blockquote>"Why Use Streamlit Over Jupyter Notebooks to Display Data Science Results?"</blockquote>
+
+						<p>
+
+							Jupyter Notebooks:
+
+							<ul>
+								<li>primarily useful to engineers who want to develop software and visualizations</li>
+								<li>data scientists use Jupyter Notebooks to develop code and share it with other engineers/data scientists</li>
+								<li>combined with add-ons, Jupyter notebooks can be similar to Streamlit, but its not notebooks' main goal</li>
+
+							</ul>
+
+						</p>
+
+						<p>
+
+							Streamlit:
+
+							<ul>
+								<li>full data dashboarding solution</li>
+								<li>Engineers use Streamlit to build dashboards for non-technical users</li>
+								<li>can easily deploy a single stand-alone applicaiton to the cloud</li>
+
+							</ul>
+
+						</p>
+
+						<p>
+
+							Now that we've established streamlit's role in the developer ecosystem, let's look at how to build a basic streamlit application.
+
+
+
+						</p>
+
+					</div>
+
+				</div>
+
+
+				<!-- Section: END -->
+
+
+
+
+				<!-- Section: START -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Building a Streamlit Application</h1>
+
+
+						<p>
+
+							To build a streamlit application we need to do a few things:
+
+							<ol>
+
+								<li>install streamlit locally to develop against</li>
+
+								<li>get the basic UI elements of our system working </li>
+
+								<li>wire in our data elements via streamlit bindings for pandas dataframes</li>
+
+								<li>integrate our pmml model</li>
+
+								<li>deploy to the cloud</li>
+
+							</ol>
+
+							With that in mind, let's get into how to install streamlit.
+
+
+
+						</p>
+
+
+						<h2>Installing Streamlit</h2>
+
+						<p>
+							Installing streamlit locally is simple, just use <code>pip install</code> (or your favorite environment management tool):
+
+						</p>
+<code><pre>pip install streamlit</pre></code>
+
+					<p>
+						Just like that, were ready to fire up the text editor and start writing some python code for streamlit.
+
+					</p>
+
+					<h2>Writing Streamlit Applications</h2>
+
+					<p>
+						Once we have our text editor or IDE up and rolling, we can import streamlit to get going:
+
+
+					</p>
+
+<code><pre>import streamlit as st</pre></code>
+
+					<p>
+
+						Once we have our environment ready, we can take a quick look at the <a href="https://docs.streamlit.io/library/get-started/main-concepts">core concepts in streamlit</a>.
+
+					</p>		
+
+					<p>
+
+						Once you are comfortable with those concepts, take a look the the <a href="https://docs.streamlit.io/library/get-started/create-an-app">basic steps to build a streamlit application</a>.
+
+
+					</p>			
+
+
+					<p>
+						The nice thing displayed in these basic concepts is that you realize that you don't have worry about writing backend code, handle HTTP requests, or writing javascript. It really is all just python code.
+
+					</p>
+
+
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Streamlit Applications Automatically Update as Your Change Code</h4>
+							  <p style="font-size: 14px; ">
+							  <i>The application in the web browser will automatically update as you iteratively change the source code. Makes for a nice way to quickly prototype applications.</i></p>
+							  
+							</div>	
+
+						</div>
+		
+
+
+					<h2>Building Our End-User Credit Card Fraud Application</h2>
+
+					<p>
+						We want to build an application that allows an end-user to use the model we created in this series. This application should be point and click and not require the end-user to have any knowledge about data science, pandas, nor machine learning workflows.
+
+					</p>
+
+					<h3>Profiling the End-User</h3>
+
+					<p>
+						
+						Our model is for fraud detection in credit card transacitons and the end-user is an analyst at the bank who is not part of IT, but uses software provided by IT. They will access this application from their web browser.
+
+					</p>
+
+					<h3>End-User Workflow</h3>
+
+					<p>
+						Each day the analyst needs to find the top 20-30 cases per day of fraud to analyze and potentially promote for further analysis.
+
+						They need a way to quickly see those top cases per day and then drill down into a specific customer account to see if they can manually discover any other patterns that may help them with their job.
+
+						
+
+					</p>
+
+
+					<h3>Defining Key Information to Show</h3>
+
+					<p>
+						We need to provide the analyst with:
+
+						<ul>
+							<li>A list of the highest scored fraudulent transactions for a given date</li>
+							<li>A list of all transactions for a given customer</li>
+							<li>The fraud probability for a given transaction</li>
+
+
+
+
+						</ul>
+
+						We want to present the above information in a way that allows a user to visually make association and easily see patterns (across time and space) in the data.
+
+					</p>
+
+
+					<h3>Mapping Data to the UI</h3>
+
+					<p>
+						One of the core concepts in data science applications is working with Pandas dataframes. Our applications many times will need to display a dataframe, and this is easy with streamlit as we can see below.
+
+					</p>	
+
+<code><pre>data = pd.read_csv( "/path/file.csv" )
+st.write(data)
+</pre></code>					
+
+
+					<p>
+						In the example above we're passing in a dataframe and it's rendering as an interactive table. This is a great example of how streamlit just takes care of things for us such as writing a dataframe to a an interactive html table. 
+
+					</p>		
+					<p>
+						In data science python applications we often use dataframes as the input to machine learning models or as the output for machine learning models. Being able to easily display dataframes is a huge help.
+
+					</p>	
+					<p>
+						The other data component of our application is our PMML model. Later on in this article we'll see how to load PMML models and display the output to the user interface with streamlit.
+
+					</p>
+
+					<p>
+						For now, let's dig into the major panels of information we want to provide to our end-user analyst.
+
+					</p>
+
+
+					<h4>Panel 1: "Fraud Case Search"</h4>
+
+					<p>
+
+						One of our stated goals is to get a list of transactions that are scored to be most likely fraudulent for a specific date. Most of the time we'd want to see "today", but some analysts might want to go back and take a look at previous dates as well.
+					</p>
+					<p>
+						Given that each transaction has an associated fraud rating, we also want to be able to quickly filter down the list of transaction records. To do this, we'll use a slider component, as we see below.
+
+					</p>
+
+					<img src="./images/cc_fraud_streamlit_app_top_fraud_txns_ui.png" />			
+
+
+					<p>
+						Snazzy looking user interface, huh? This actually was not a lot (under 25 lines) of code in streamlit, as we can see below:
+
+					</p>	
+
+<code><pre>def renderMainAppBody_Top20Fraud():
+
+	with top_filter_select_col:
+
+		st.subheader("Calendar Date")
+		current_date_select = st.date_input("Date for Fraud", value=current_date)
+
+	with top_map_col:
+
+		st.subheader("Model Threshold Slider")
+		fraud_threshold = st.select_slider('Select Threshold for Fraud', value=0.9, options=[1.0, 0.975, 0.95, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1])
+
+	with mid_container_col:
+
+		st.header("Top Scored Fraudulent Transactions")
+		cols_to_show_top20 = ["CUSTOMER_ID", "TRANSACTION_ID", "TERMINAL_ID", "TX_DATETIME", "TX_AMOUNT", "FRAUD_SCORE"]
+
+		df_rows_found = df_transactions[ (df_transactions["TX_DATETIME"].dt.date == current_date_select) & (df_transactions["FRAUD_SCORE"] >= fraud_threshold) ][cols_to_show_top20].sort_values(by=['FRAUD_SCORE'], ascending=False)
+
+		rows_found = len(df_rows_found.index)
+		st.write('Transactions Found:', rows_found)
+
+		st.dataframe(df_rows_found)
+</pre></code>					
+
+					<p>
+
+						We'll come back to seeing the full application in action in a moment, for now let's move on and take a look at how to build the "customer analysis" panel.
+
+
+					</p>
+
+					<h4>Panel 2: "Customer Analysis"</h4>
+
+					<p>
+						Once we know what transactions have been flagged for a given date, we may want to dig into the customers who have fraud or the locations of the terminals where the fraud was committed.
+					</p>
+
+					<p>
+
+						In the image below we can see the user interface panel that shows the list of all transactions for a given customer. The user interface also includes an interactive map component showing where each transaction occured, along with a component that gives a visual timeline for each customer's transactions.
+
+					</p>				
+
+					<img src="./images/cc_fraud_streamlit_app_workbench_ui.png" />
+
+					<p>
+						This panel gives the analyst to lookup any specific customer to get a better sense of how and where fraud was being committed in a time and space sense.
+
+					</p>	
+
+					<p>
+						Finally, we have one last component on this apge where we can lookup a specific transaction and examine its fraud score as calculated by the pmml model, but also we can look at every attribute for the given record.
+
+					</p>
+
+
+					<img src="./images/cc_fraud_streamlit_app_analyze_txn_ui.png" />
+
+					<p>
+
+						The streamlit python code for the customer analysis panel is similar to the previous panel, but it is longer due to the folium mapping code logic. For the sake of page space, we're not going to list all of it here but you can <a href="https://github.com/pattersonconsulting/cc_fraud_demo/blob/main/streamlit_app/streamlit_analyst_fraud_workbench.py#L155">check it out on github</a>.
+
+
+					</p>
+
+					<p>
+						Let's now take a look at the code to see how we integrated the PMML model from part 4 of this series.
+
+					</p>
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section: END -->
+
+
+
+
+				<!-- Section: START -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Integrating Our Predictive PMML Model</h1>
+
+
+						<p>
+							
+							We saved our model as PMML so that it (in theory) portable across platforms. Here we use <code>pypmml</code> to load the model and reinstantiate the <a href="./creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">saved model from our grid search efforts in part 4 of this series</a> (also: <a href="https://github.com/pattersonconsulting/cc_fraud_demo/tree/main/streamlit_app/models">github link</a>).
+
+
+
+						</p>
+						<p>
+							First we make our python imports:
+
+						</p>
+
+<code><pre>from pypmml import Model</pre></code>
+
+						<p>
+							Once we have our imports, we can reference a pmml file and load it locally:
+
+						</p>
+
+<code><pre>full_model_path = "./models/xgb_cc_fraud_20220405_v2.pmml"
+
+xgb_cc_fraud_pmml_pipeline = Model.load(full_model_path)
+
+# now score all records
+
+input_features = ['TERMINAL_ID_RISK_30DAY_WINDOW', 'CUST_AVG_AMOUNT_1', 'CUST_AVG_AMOUNT_30', 'TX_AMOUNT', 'TERMINAL_ID_RISK_1DAY_WINDOW', 'CUST_CNT_TX_30', 'CUST_CNT_TX_7', 'TERMINAL_ID_NB_TX_30DAY_WINDOW', 'CUST_AVG_AMOUNT_7', 'TERMINAL_ID_NB_TX_7DAY_WINDOW', 'CUST_CNT_TX_1', 'TX_DURING_WEEKEND', 'TERMINAL_ID_RISK_7DAY_WINDOW', 'TX_DURING_NIGHT']
+
+</pre></code>
+
+						<p>
+							Once we load the model with <code>pypmml</code> we're using a similar but slightly different model api to the one we had in our notebook. We can see the code below where we work with the <code>pypmml.Model</code> api to get our fraud predictions for a single transaction:
+
+						</p>			
+
+<code><pre>probs = xgb_cc_fraud_pmml_pipeline.predict( df_view_txns[ input_features ] )
+
+prediction_est_prob = probs.iloc[:, 1]  
+
+df_view_txns["FRAUD_ESTIMATED_PROBABILITY"] = prediction_est_prob.values
+
+st.dataframe(df_view_txns[["TRANSACTION_ID", "TERMINAL_ID", "TX_DATETIME", "TX_AMOUNT", "TX_FRAUD", "FRAUD_ESTIMATED_PROBABILITY", "CUST_AVG_AMOUNT_1", "CUST_AVG_AMOUNT_7", "CUST_AVG_AMOUNT_30"]])
+
+</pre></code>
+
+						<p>
+							As we can see above, at the end once we have the results of the estimated probability of fraud for a transaction, we can easily display the results with a streamlit <code>st.dataframe()</code> or <code>st.write()</code> call.
+
+						</p>
+
+
+
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Notes on Model Integration</h4>
+							  <p style="font-size: 14px; ">
+							  <i>In the case of this application we have a model embedded with the application. Normally we'd want to consider situations where we dynamically deploy new models and that leads up to think about putting the model behind an api endpoint, etc. These concepts are important yet beyond the scope of focus for this article, but we always like to call them out.</i></p>
+							  
+							</div>	
+
+						</div>
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section: END -->
+
+
+
+
+
+
+				<!-- Section: START -->
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>Deploying the Streamlit Application to the Cloud</h1>
+
+						<p>
+							Many times the "last mile" part of software and dev ops will stall and kill a promising data product.
+
+						</p>
+
+						<p>
+							If we never get the results of our data science work into the hands of end-users, we cannot impact the line of business.
+
+
+						</p>
+
+						<p>
+							Streamlit offers a (free/paid) <a href="https://share.streamlit.io/">cloud deployment platform</a> that let's you deploy any streamlit app directly from github.
+
+
+						</p>
+
+						<p>
+							With streamlit when you are developing locally and you save the code, the streamlit app running locally will update. The streamlit cloud deployment has a similar dynamic in that when you push code to the linked github repository, the app will re-deploy itself and pick up the changes.
+
+						</p>
+
+						<p>
+							This means application deployment becomes:
+
+						</p>
+
+<code><pre>git push ...</pre></code>
+
+						<p>
+
+							Streamlit cloud also supports the following <a href="https://docs.streamlit.io/streamlit-cloud/trust-and-security#product-security">security</a> features:
+
+							<ul>
+								<li>SSO</li>
+								<li>Credential Storage</li>
+								<li>Permissions and Role-Based Access Control</li>
+
+							</ul>
+
+						</p>
+
+						<p>
+							
+							Apps can be deployed for free from public github accounts and you can deploy an unlimited number of public applications.
+
+						</p>
+
+						<p>
+							We note that when you sign up for a streamlit cloud account you'll need to link a github account at the same time.
+
+						</p>
+
+						<h2>Deploying Our End-User Credit Card Application to Streamlit Cloud</h2>
+
+						<p>
+							Once you've signed up for a free account and you've logged into streamlit cloud, you'll see a main app dashboard as seen in the image below.
+
+						</p>
+
+						<img src="./images/cc_fraud_streamlit_cloud_main_ui.png" style="border: 1px solid" /><br/><br/>
+
+						<p>
+							To deploy our streamlit app (once we've pushed it to github) we click on the "New App" button as shown in the image below.
+
+
+						</p>
+
+						<img src="./images/cc_fraud_streamlit_cloud_deploy_button.png" /><br/><br/>
+
+						<p>
+							If we choose "From existing repo", we are shown the application configuration screen as shown below.
+
+						</p>
+
+						<img src="./images/cc_fraud_streamlit_cloud_deploy_conf.png" style="border: 1px solid"  /><br/><br/>
+
+						<p>
+							From there, configure which repository we're going to use for this application and the main file path, and hit "Deploy!". Your streamlit application will be live in a matter of seconds.
+
+						</p>
+
+
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/crab_warn_230.png" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>Streamlit Wants Access to Everything in Github</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  	I'd say an important caveat with the current way Community Edition Streamlit Cloud connects to a github repository is that in wants "full access to private repository". We ended up creating a separate github account to protect certain private repositories that we couldn't expose to third-parties for this demo (the Streamlit team <a href="https://github.com/streamlit/streamlit/issues/4344">explains their rationale here</a>).
+
+							  	
+
+							  </i></p>
+							  
+							</div>	
+
+						</div>
+
+
+
+
+						<h3>Try Out the Application</h3>
+
+						<p>
+
+							You can clone our github repository and run the application yourself if you'd like to try it locally.
+
+						</p>		
+
+						<p>
+
+							<a href="https://github.com/pattersonconsulting/cc_fraud_demo/tree/main/streamlit_app">https://github.com/pattersonconsulting/cc_fraud_demo/tree/main/streamlit_app</a>
+
+						</p>
+
+						<p>
+							We'll see how to deploy this application to streamlit cloud in a moment, but you can also try the application out now via this <a href="https://share.streamlit.io/pctliveapps/cc_fraud_ds_app_front_end/main/streamlit_analyst_fraud_workbench.py">link to our live deployment</a>.
+
+						</p>			
+
+
+
+
+					</div>
+
+				</div>
+
+
+				<!-- Section: END -->
+
+
+
+				<!-- Section: START -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Series Conclusion</h1>
+
+
+						<p>
+
+
+							In this series we started with some raw transaction data and took the reader through a series of scalable, deployable, and reasonable steps to build a real-world end-user data application.
+						</p>
+						<p>
+							We hope you enjoyed the series. Questions? Comments? Want to share data jokes? <a href="../contact.html">Please say hello</a>.
+
+						</p>
+
+					</div>
+
+				</div>
+				<!-- Section 5 of 5: Next Steps: EDA -->
+
+
+
+
+
+
+
+				<div class="row row-bottom-padded-sm" style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 30px; ">
+					
+					<div class="col-md-3" id="fh5co-content" style="">
+
+						<h3 style="color: #ffffff;">Looking for Streamlit Help?</h3>
+
+					</div>
+					<div class="col-md-9" id="fh5co-content" style="margin-bottom: 0px;">
+
+
+						<div style="background-color: ; padding: 1px; margin-bottom: 0px;">
+						<p style="margin: 0px;">
+							Our team can help -- we help companies with <a href="../offerings/snowflake_services.html" style="color: #EEEEEE;">Streamlit, Snowflake platform operations, analytics, and machine learning</a>.
+
+						</p>
+						</div>
+					</div>
+
+
+				</div>		
+
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

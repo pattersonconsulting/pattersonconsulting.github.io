@@ -17,7 +17,7 @@
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 5: Connecting AWS Sagemaker Studio Lab to Snowflake</title>
+	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 3 of 5: Connecting Amazon SageMaker Studio Lab to Snowflake</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit" />
@@ -25,14 +25,14 @@
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 5: Connecting AWS Sagemaker Studio Lab to Snowflake"/>
+	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 3 of 5: Connecting Amazon SageMaker Studio Lab to Snowflake"/>
 	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_ccfd_p3_og_card.png"/>
 	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html"/>
 	<meta property="og:site_name" content=""/>
 	<meta property="og:description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit"/>
 	
 
-	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 3 of 5: Connecting AWS Sagemaker Studio Lab to Snowflake" />
+	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 3 of 5: Connecting Amazon SageMaker Studio Lab to Snowflake" />
 	<meta data-rh="true" property="twitter:description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit"/>
 
 	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_ccfd_p3_og_card.png" />
@@ -69,6 +69,14 @@
 			color: #FF0000;
 			font-style: italic;
 		}
+
+
+		span.section_under_edits {
+			color: #0000FF;
+			font-style: italic;
+		}
+
+
 
 table {
   font-family: arial, sans-serif;
@@ -210,9 +218,9 @@ blockquote.rewrite {
 		
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
+						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab</h1>
 						<p>
-							<h3>Part 3 of 5: Connecting AWS Sagemaker Studio Lab to Snowflake</h3>
+							<h3>Part 3 of 5: Connecting Amazon SageMaker Studio Lab to Snowflake</h3>
 
 
 						</p>
@@ -229,8 +237,8 @@ blockquote.rewrite {
 
 								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
 								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
-								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
-								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting Amazon SageMaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with Amazon SageMaker Studio Lab and Shap Hypertune</a></li>
 								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
 							</ul>
 
@@ -262,7 +270,7 @@ blockquote.rewrite {
 						</p>
 
 						<p>
-							In this post in the series we are going to connect AWS Sagemaker Studio Lab to Snowflake and then calculate a few more features in python and pandas.
+							In this post in the series we are going to connect Amazon SageMaker Studio Lab to Snowflake and then calculate a few more features in python and pandas.
 
 
 						</p>
@@ -270,12 +278,12 @@ blockquote.rewrite {
 						<p>
 							Key Take Aways:
 							<ol>
-								<li>How to connect AWS Sagemaker Lab to Snowflake</li>
+								<li>How to connect Amazon SageMaker Studio Lab to Snowflake</li>
 								<li>Building rolling window features with Pandas</li>
 
 							</ol>
 
-							Let's learn a bit about AWS Sagemaker Lab.
+							Let's learn a bit about Amazon SageMaker Studio Lab.
 
 						</p>
 
@@ -293,11 +301,20 @@ blockquote.rewrite {
 					<div class="col-md-12" id="fh5co-content">
 
 
-						<h1>What is AWS Sagemaker Studio Lab?</h1>
+						<h1>What is Amazon SageMaker Studio Lab?</h1>
 
 
 						<p>
-							AWS Sagemaker Studio Lab is a cloud-hosted (AWS, of course), machine learning environment that is free to use (once you are in the limited release program). It's great for teaching, learning, and trying out new concepts in data science. Some quick notes:
+							Amazon SageMaker Studio Lab is a cloud-hosted (AWS, of course), machine learning environment that is free to use (once you are in the limited release program). It's great for teaching, learning, and trying out new concepts in data science. 
+
+
+							</p>
+						<p>
+						Amazon SageMaker Studio Lab is meant to give a new aspiring data scientist a place to just focus on data science –-- where you dont have to worry about instances or configurations. It focuses on the Jupyter Lab + Git workflow experience (with both CPU and GPU resources).
+						</p>
+
+							<p>
+							Some quick notes:
 
 							<ul>
 								<li>No-charge, no billing, no AWS account required</li>
@@ -312,72 +329,122 @@ blockquote.rewrite {
 
 							</ul>
 
-							Sagemaker Studio Lab is the free version of <a href="https://aws.amazon.com/sagemaker/studio/">Sagemaker Studio</a>. It is similar in functionality and positioning to <a href="https://colab.research.google.com/">Google Cloud's Colab</a>.
-
-						</p>
-
-						<p>
-							To request access to Sagemaker Studio Lab check out <a href="https://studiolab.sagemaker.aws/">this link</a>.
-
-						</p>
-
-						<p>
-
-							In the image below you can see the launch screen for Sagemaker Studio Lab.
+							Amazon SageMaker Studio Lab is currently in preview. It is similar in functionality and positioning to <a href="https://colab.research.google.com/">Google Cloud's Colab</a>. Amazon SageMaker Studio Lab is based on the same architecture and user interface as SageMaker Studio, but with limited compute and storage and a subset of SageMaker Studio capabilities.
 
 						</p>
 
 
-						<img src="./images/aws_sagemaker_studio_lab_launch_2022.png" />
+						<p>
 
-						<h2>Comparing Sagemaker and Sagemaker Studio</h2>
+							In the image below you can see the launch screen for Amazon SageMaker Studio Lab.
 
-
-
-					<p>
-						AWS <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-comparison.html">recommends using Sagemaker Studio over legacy Sagemaker</a> when starting a new notebook. Two of the reasons they give for this recommendation are:
-
-						<ul>
-							<li>Starting a Studio notebook is faster than launching an instance-based notebook. Typically, it is 5-10 times faster than instance-based notebooks.</li>
-
-							<li>Notebook sharing is an integrated feature in SageMaker Studio. Users can generate a shareable link that reproduces the notebook code and also the SageMaker image required to execute it, in just a few clicks.</li>
-						</ul>
-					</p>
-
-					<p>
-						In the image below we can see an example of a notebook launched inside the Jupyter lab system on Sagemaker Studio Lab.
-
-					</p>
+						</p>
 
 
-
-
-						<img src="./images/aws_sagemaker_studio_lab_jupyter_hub.png" style="border: 1px solid; "/>
+						<img src="./images/aws_sagemaker_studio_lab_launch_2022.png" /><br/><br/>
 
 						<p>
-							Now that we understand the basics about Sagemaker Studio Lab, let's take a look at how Sagemaker Studio is different from the original Sagemaker.
+						AWS created Amazon SageMaker Studio Lab because they wanted to eliminate having to “create an account” or “pull out a credit card”.
+						AWS wanted to give the users a sandbox where they didn't have to worry about leaving instances running and running up a big bill.
+						</p>
+
+						<p>
+							Amazon SageMaker Studio Lab has a upgrade path for moving to full-blown Studio "when you are ready" as well.
+
+						</p>
+
+
+						<p>
+							To request access to Amazon SageMaker Studio Lab check out <a href="https://studiolab.sagemaker.aws/">this link</a>.
+
+						</p>
+
+
+						<h2>Comparing Amazon SageMaker Studio Lab and Amazon SageMaker Studio</h2>
+
+
+
+
+						<p>
+							Now that we understand the basics about Amazon SageMaker Studio Lab, let's take a look at how Amazon SageMaker Studio is different from the original Amazon SageMaker. We start out by defing exactly "what is Amazon SageMaker?"
+
+						</p>
+
+						<h3>Defining Amazon SageMaker</h3>
+						<p>
+
+							Amazon SageMaker is defined as a collection of components on the AWS platform that include:
+
+							<ul>
+								<li>AWS Console</li>
+								<li>SageMaker Notebooks</li>
+								<li>SageMaker Studio</li>
+								<li>API</li>
+								<li>SDKs</li>
+								<li>SageMaker SDK</li>
+								<li>SageMaker Containers</li>
+								<li>Built-in Algorithm Containers</li>
+								<li>Container Orchestration</li>
+
+
+							</ul>
+
+
 
 						</p>
 
 
 
-						<h2>Differences Between Sagemaker and Sagemaker Studio </h2>
 
-						<h4>The Original Sagemaker</h4>
 						<p>
-							The original Sagemaker platform on AWS allowed you to configure your on Notebook instance on AWS to run your machine learning workflow. A Sagemaker notebook instance is a machine learning (ML) compute instance running the Jupyter Notebook App.
+							Many of the core differences in Amazon SageMaker's notebook system and Amazon SageMaker Studio are subtle but we call them out below.
 
-The user can focus on building models while Sagemaker manages creating the instance and associated AWS resources. 
+						</p>
+
+
+
+
+						<p>
+							The original Amazon SageMaker platform on AWS allowed you to configure your on Notebook instance on AWS to run your machine learning workflow. A SageMaker notebook instance is a machine learning (ML) compute instance running the Jupyter Notebook App.
+
+The user can focus on building models while SageMaker manages creating the instance and associated AWS resources. 
 
 
 						</p>
 
-						<h4>Sagemaker Studio</h4>
+						<h3>Amazon SageMaker Studio</h3>
 
 						<p>
-							Sagemaker Studio is an evolution of Sagemaker. A major improvement is how notebook servers are provisioned and operated by making it easier to get your notebook environment working. Sagemaker Studio allows you to manage this from a single screen.
+							Amazon SageMaker Studio is an evolution of SageMaker. A major improvement is how notebook servers are provisioned and operated by making it easier to get your notebook environment working. Amazon SageMaker Studio allows you to manage this from a single screen.
 
 						</p>		
+
+
+						<!-- START NOTE -->
+						<div style="width:900px; margin:0 auto;">
+
+							<div class="w3-panel w3-leftbar w3-light-grey" style="padding: 16px; font-size: 12px; border: 1px solid #999999; width: 85%; text-align: left;">
+								<img src="./images/spyglass_icon.jpg" style=" width: 80px; height: 80px; float: left; margin-right: 20px;" />
+
+								<h4>The Evolution of Amazon SageMaker Notebooks</h4>
+							  <p style="font-size: 14px; ">
+							  <i>
+							  	
+							  
+							  <p style="overflow: hidden;">
+									What changed with SageMaker Studio is the UI - moving away from those classic (original/legacy) Notebook Instances towards an integrated UI that integrates a lot of the SageMaker capabilities. All ML development activities including notebooks, experiment management, automatic model creation, debugging and profiling, and model drift detection can be performed within the unified SageMaker Studio visual interface.
+								
+
+								</p>
+
+			
+							</i></p>
+							  
+							</div>	
+
+						</div>
+						<!-- END NOTE -->		
+
 
 
 						<p>
@@ -389,7 +456,7 @@ The user can focus on building models while Sagemaker manages creating the insta
 <table>
 	<tr>
 
-		<th>Sagemaker Version</th>
+		<th>Amazon SageMaker Version</th>
 		<th>Login</th>
 		<th>Notebook Servers</th>
 		<th>Storage</th>
@@ -397,7 +464,7 @@ The user can focus on building models while Sagemaker manages creating the insta
 	</tr>
 
 	<tr>
-		<td>Sagemaker (original)</td>
+		<td>Amazon SageMaker (original)</td>
 		<td>Through AWS Console</td>
 		<td>Creates a new instance to run the notebook server. 
 All notebooks running on the notebook server</td>
@@ -406,12 +473,12 @@ All notebooks running on the notebook server</td>
 
 
 	<tr>
-		<td>Sagemaker Studio</td>
+		<td>Amazon SageMaker Studio</td>
 		<td>Through SSO</td>
 		<td><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-comparison.html">Studio notebooks managed from inside Studio</a>. JupyterLabs UI is running on a server somewhere
 No instance is created, and you are not charged for it
 Only charged once you bring up a notebook and start doing some compute
-Can run multiple notebook servers running in the background separately</td>
+Can run multiple notebook servers running in the background separately. Also: can have different notebook kernels (e.g., TensorFlow, Pytorch, etc)</td>
 		<td>Uses EFS
 Plugged into all of the compute instances that are spun up
 Centralized Storage Concept (major difference between SM and Studio)</td>
@@ -421,10 +488,48 @@ Centralized Storage Concept (major difference between SM and Studio)</td>
 					<br/>
 
 					<p>
-						Now that we've covered the differences of the versions of Sagemaker, let's connect our Sagemaker Studio Lab notebook to our Snowflake account.
+						There is a strategic play here where AWS is focusing on Amazon SageMaker Studio. They are showcasing key features in SageMaker Studio such as the plugin system (eg., "SageMaker Pipelines").
 
 					</p>
 
+
+<p>It's also worth pointing out EFS Storage as a key differentiator, an architectural fundamental difference between SageMaker Notebooks and SageMaker Studio.</p>
+
+					<h3>Amazon SageMaker Studio Pricing</h3>
+
+<p>
+There is no additional charge for using Amazon SageMaker Studio. The costs incurred for running Amazon SageMaker Studio notebooks, interactive shells, consoles, and terminals are based on Amazon Elastic Compute Cloud (Amazon EC2) instance usage. When launched, the resource is run on an Amazon EC2 instance of an instance type based on the chosen SageMaker image and kernel. If an instance of that type was previously launched and is available, the resource is run on that instance.
+</p>					
+
+
+					<h3>Recommendation: Move to Amazon SageMaker Studio</h3>
+
+					<p>
+						AWS <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-comparison.html">recommends using Amazon SageMaker Studio over legacy SageMaker</a> when starting a new notebook. Two of the reasons they give for this recommendation are:
+
+						<ul>
+							<li>Starting a Amazon SageMaker Studio notebook is faster than launching an instance-based notebook. Typically, it is 5-10 times faster than instance-based notebooks.</li>
+
+							<li>Notebook sharing is an integrated feature in Amazon SageMaker Studio. Users can generate a shareable link that reproduces the notebook code and also the SageMaker image required to execute it, in just a few clicks.</li>
+						</ul>
+					</p>
+
+					<p>
+						In the image below we can see an example of a notebook launched inside the Jupyter lab system on Amazon SageMaker Studio Lab.
+
+					</p>
+
+
+
+
+						<img src="./images/aws_sagemaker_studio_lab_jupyter_hub.png" style="border: 1px solid; "/>
+
+						<br/><br/>
+
+					<p>
+						Now that we've covered the differences of the versions of Amazon SageMaker, let's connect our Amazon SageMaker Studio Lab notebook to our Snowflake account.
+
+					</p>
 
 					</div>
 
@@ -440,10 +545,10 @@ Centralized Storage Concept (major difference between SM and Studio)</td>
 					<div class="col-md-12" id="fh5co-content">
 
 
-						<h1>Connecting SageMaker to Snowflake</h1>
+						<h1>Connecting Amazon SageMaker Studio Lab to Snowflake</h1>
 
 						<p>
-							Before we can finish up our feature creation, we need to establish and test our connection to Snowflake from inside a Sagemaker Studio Lab notebook instance.
+							Before we can finish up our feature creation, we need to establish and test our connection to Snowflake from inside an Amazon SageMaker Studio Lab notebook instance.
 
 
 						</p>
@@ -717,7 +822,7 @@ def get_count_risk_rolling_window(terminal_transactions, delay_period=7, windows
 						<p>
 
 
-							In this post we showed you have to connect a Jupyter notebook in AWS Sagemaker Studio Lab to your data in Snowflake. We also built some more features for our dataset that we'll use in the next post on <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a>.
+							In this post we showed you have to connect a Jupyter notebook in Amazon SageMaker Studio Lab to your data in Snowflake. We also built some more features for our dataset that we'll use in the next post on <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with Amazon SageMaker Studio Lab and Shap Hypertune</a>.
 
 						</p>
 

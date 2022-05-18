@@ -17,7 +17,7 @@
 		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake</title>
+	<title>Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit" />
@@ -25,14 +25,14 @@
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake with Parquet"/>
+	<meta property="og:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake with Parquet"/>
 	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_ccfd_p1_og_card.png"/>
 	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html"/>
 	<meta property="og:site_name" content=""/>
 	<meta property="og:description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit"/>
 	
 
-	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake with Parquet" />
+	<meta name="twitter:title" content="Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab - Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake with Parquet" />
 	<meta data-rh="true" property="twitter:description" content="In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data and deploying it to the cloud with streamlit"/>
 
 	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_ccfd_p1_og_card.png" />
@@ -209,7 +209,7 @@ span.needs_editing {
 		
 				<div class="row row-bottom-padded-sm">
 					<div class="col-md-12" id="fh5co-content">
-						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and SageMaker Studio</h1>
+						<h1>Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio Lab</h1>
 						<p>
 							<h3>Part 1 of 5: Loading the Credit Card Transaction Data Into Snowflake</h3>
 
@@ -228,8 +228,8 @@ span.needs_editing {
 
 								<li>Part 1: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
 								<li>Part 2: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
-								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
-								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
+								<li>Part 3: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting Amazon SageMaker Studio Lab to Snowflake</a></li>
+								<li>Part 4: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with Amazon SageMaker Studio Lab and Shap Hypertune</a></li>
 								<li>Part 5: <a href="creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
 							</ul>
 
@@ -263,7 +263,7 @@ span.needs_editing {
 							<ol>
 								<li>Learning how to manage timeseries data on Snowflake</li>
 								<li>Perform scalable feature engineering with Snowpark on Snowflake</li>
-								<li>Use Amazon Sagemaker Studio Lab to build multiple models</li>
+								<li>Use Amazon SageMaker Studio Lab to build multiple models</li>
 								<li>Deploying machine learning applications to the cloud with streamlit</li>
 
 							</ol>
@@ -271,7 +271,7 @@ span.needs_editing {
 						</p>
 
 						<p>
-							In this series we further explore feature engineering on Snowpark and then show you have to use Amazon Sagemaker Studio Lab to model the feature data in Snowflake.
+							In this series we further explore feature engineering on Snowpark and then show you have to use Amazon SageMaker Studio Lab to model the feature data in Snowflake.
 
 						</p>
 
@@ -400,7 +400,7 @@ span.needs_editing {
 								<h4>Parquet and Arrow</h4>
 							  <p style="font-size: 14px; ">
 							  <i>
-							  	<p>
+							  	<p style="overflow: hidden;">
 							  		The simple way to describe the purpose of each project:
 							  		
 							  	</p>
@@ -904,7 +904,7 @@ Loading data into fully structured (columnarized) schema is <code>~10-20%</code>
 							  <p style="font-size: 14px; ">
 							  <i>
 							  
-							  <p>
+							  <p style="overflow: hidden;">
 									It's worth noting that if we do not explicitly copy the <code>datetime</code> column from Parquet to a Snowflake column as a <code>varchar</code>, it will be treated as a number. Treating the column as a number (and not <code>varchar</code>) causes Snowflake to interpret the <code>datetime</code> incorrectly, resulting in weird date-things happening (e.g., "bad dates"). A maddening wrinkle, no doubt!
 
 								</p>
@@ -978,7 +978,7 @@ select * from CUSTOMER_CC_TRANSACTIONS limit 4;
 						<p>
 
 						<p>
-							Normally do lots of EDA (as in our <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">previous blog series on Applied Predictive Maintenance</a>), but here we're going to skip that as its been done for us by the <a href="https://github.com/Fraud-Detection-Handbook/fraud-detection-handbook">authors of the original project</a>, so we're going to focus on building out the project on Snowpark and SageMaker Studio Lab in the next 2 entries in this series.
+							Normally do lots of EDA (as in our <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">previous blog series on Applied Predictive Maintenance</a>), but here we're going to skip that as its been done for us by the <a href="https://github.com/Fraud-Detection-Handbook/fraud-detection-handbook">authors of the original project</a>, so we're going to focus on building out the project on Snowpark and Amazon SageMaker Studio Lab in the next 2 entries in this series.
 
 						</p>
 						<p>

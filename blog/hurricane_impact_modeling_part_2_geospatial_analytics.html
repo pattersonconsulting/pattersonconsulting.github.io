@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Geospatial Hurricane Analytics with Snowpark  - A Blog Series - Part 1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="In this blog post series on building a real-world predictive maintenance application, we'll start with a business case from a fictional manufacturing company (ACME Tool Co.) and we'll work through how the company makes a business case and then builds a predictive application to meet the business requirements." />
+	<meta name="keywords" content="snowflake, predictive maintenance, exploratory data analysis, machine learning, data science, snowpark" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Part 1 of 6: Making the Business Case for Predictive Maintenance"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p1_og_card.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this blog post series on building a real-world predictive maintenance application, we'll start with a business case from a fictional manufacturing company (ACME Tool Co.) and we'll work through how the company makes a business case and then builds a predictive application to meet the business requirements."/>
+	
+
+	<meta name="twitter:title" content="Part 1 of 6: Making the Business Case for Predictive Maintenance" />
+	<meta data-rh="true" property="twitter:description" content="In this blog post series on building a real-world predictive maintenance application, we'll start with a business case from a fictional manufacturing company (ACME Tool Co.) and we'll work through how the company makes a business case and then builds a predictive application to meet the business requirements."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p1_og_card.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+		span.editing_todo {
+			color: #CC0000;
+			font-style: italic;
+		}		
+
+		span.editing_refactor {
+			color: #CC00CC;
+			font-style: italic;
+		}				
+
+h2 {
+	color: #555555;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Geospatial Hurricane Analytics</h1>
+						<p>
+							<h3>Part 1 of N: "Using the Snowpark Python API"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: January 12th, 2022
+						</p>
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
+								<li>Part 2: <a href="predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
+								<li>Part 3: <a href="predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
+								<li>Part 4: <a href="predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
+								<li>Part 5: <a href="predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Analyzing the Results</a></li>
+								<li>Part 6: <a href="predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a></li>
+							</ul>
+
+
+						</p>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<!-- Section 5 of 5: Segue to Part 2, EDA -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+
+						<h1>TODO</h1>
+
+						<p>
+							<span class="quote_to_rewrite">
+Snowpark is a new developer framework for Snowflake. It allows data engineers, data scientists
+and data developers to code in their familiar way with their language of choice, and execute data
+pipelines, ML workflows and data apps faster and more securely inside Snowflake. No need to
+move data or stand up separate infrastructure.
+</span>
+</p>
+
+						<p>
+							<span class="quote_to_rewrite">
+Snowpark for Python is composed of a client-side library that provides an API for querying and
+processing data using familiar Python DataFrame constructs and server-side secure sandbox
+where you can bring along your custom python code as user-defined functions (UDFs).
+</span>
+</p>
+						<p>
+							<span class="quote_to_rewrite">
+
+The library enables you to write code from any Python environment whether it is an IDE or
+notebook. You can build queries using DataFrames right in your Python code, and Snowpark
+converts these operations into SQL to efficiently push-down and distribute computation using
+Snowflake’s elastic performance engine so you are never bound to the scale of a single node.
+</span>
+</p>
+						<p>
+							<span class="quote_to_rewrite">
+
+For your custom python code (including open-source libraries) to run seamlessly inside the
+Snowflake processing engine, we’ve pre-installed the most popular packages from the Anaconda
+repository and we’ve also integrated the conda package manager so that you don’t have to worry
+about doing any manual installs or have to deal with broken Python environments because of
+missing dependencies.
+							</span>
+
+						</p>
+
+
+					</div>
+				</div>
+				<!-- Segue to Part 2: EDA -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Geospatial Hurricane Analytics with Snowpark  - A Blog Series - Part 1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="In this blog post series on building ..." />
+	<meta name="keywords" content="snowflake, predictive maintenance, exploratory data analysis, machine learning, data science, snowpark" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Part 1 of N"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p1_og_card.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this blog post series on building ..."/>
+	
+
+	<meta name="twitter:title" content="Part 1 of N..."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_apm_p1_og_card.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+		span.editing_todo {
+			color: #CC0000;
+			font-style: italic;
+		}		
+
+		span.editing_refactor {
+			color: #CC00CC;
+			font-style: italic;
+		}				
+
+h2 {
+	color: #555555;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+}
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+		</header>
+		<!-- Header -->
+
+<!--
+		<div class="fh5co-slider" >
+			<div class="container" >
+				
+				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
+						<h1>Rail, Aquariums, and Data</h1>
+				</div>		
+			</div>
+		</div>
+-->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Geospatial Hurricane Analytics</h1>
+						<p>
+							<h3>Part 1 of N: "Building a Data Pipeline with DBT"</h3>
+
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+							Date: January 12th, 2022
+						</p>
+
+						<p>
+							Other entries in this series:
+
+							<ul>
+
+								<li>Part 1: <a href="a.html">Building a Data Pipeline with DBT</a></li>
+								<li>Part 2: <a href="a.html">Building a Geospatial Hurricane Analytics Tool with Streamlit</a></li>
+								<li>Part 3: <a href="a.html">Data Engineering with the Snowpark Python API</a></li>
+
+							</ul>
+
+
+						</p>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Introduction</h1>
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Collaboration with University of Michigan</h1>
+
+						<p>
+							sue anne bell
+
+							AMS invited talk
+
+						</p>
+
+						<p>
+Started out with a few counties of data
+Couldnt find relationships
+Then moved to a lot more counties worth of data
+Found some of the spikes we were looking for
+But realized there was a larger story
+Then moved to looking at a 5-7 states worth of data
+For admissions
+Added per-county storm data in
+Found compelling results in the analysis
+
+
+						</p>
+
+						<p>
+Talked these results over with another data expert
+They pointed out: Storm (N=1)
+Difficult to draw any generalizations when N = 1
+Now we know we needed to look at 20 years worth of storm data
+And as much admission data as we could get our hands on
+Our geospatial system needed to be more robust
+And we needed to pull our data transform pipelines out of the notebooks
+Enter: DBT
+We used DBT to create a proper shared metrics layer across
+Geospatial analysis tools
+Machine learning workflows
+
+
+						</p>
+
+						<h3>JD: "Data Value Chain"
+
+						<p>
+
+Managing raw data
+Python, R, spark
+Load data into database / store
+Transform data in data store
+DBT
+Metrics Layer here
+Presentation Layer
+Orchestration Layer
+To make all of the above “go”
+Airflow
+
+
+
+						</p>
+
+						<h3>Metrics Layer vs Analytics Layer</h3>
+
+						<p>
+Many tools such as PowerBI have these two layers combined
+But this data is locked away and not available to tools such as R or Python
+Metrics Layer
+With SQL Cloud Data warehouses
+Example: DBT
+Data Pipelines are the T in ELT here
+Exposes metrics data to more than a single report
+
+						</p>
+
+						<p>
+Analytic Layer
+Do as little math as possible here
+Want to keep most of the calculations in the metric layer transformations
+
+						</p>
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Evolution of the Project</h1>
+
+						<p>
+
+							Evolution of project
+
+
+						</p>
+
+						<p>
+“The Principal Investigator, the data scientist, and the data engineer”
+Need to be able to share a hurricane dashboard with folks outside of data science
+Non-computer scientists researchers (e.g., Sue Anne)
+https://locallyoptimistic.com/post/building-more-effective-data-teams-using-the-jtbd-framework/?utm_source=substack&utm_medium=email
+Need to provide the same same of analytical data to
+Researchers
+Data engineers
+Data scientists
+Emailing jupyter notebooks is brittle and prone to error
+E.g., “not the latest spike calculation code”, etc
+
+						</p>
+
+						<p>
+
+Researchers
+Want to better understand geo-spatial data with a custom visual tool
+Analyst
+Want to be able to build out analytics in a fashion consistent with
+“In the spirit of bringing software engineering practices to the SQL-centric ELT data warehousing world, any modern approach would be incomplete without automating the testing and deployment process and integrating with a CI/CD process.”
+Data Engineers
+Want to provide features to the data scientist that are consistent with what is presented in the BI tool
+Data Scientists
+Want to build models and not fuss about where the data came from
+
+
+						</p>
+
+
+						<p>
+Talk about the themes from the AMS talk — cross-discipline collaboration
+Open sourcing research results — for others to collaborate with!
+
+
+						</p>
+
+						<p>
+Maps @ UM Research
+Not traditional EDA
+But we still need some custom visualization
+Possibly could have used ERSI for the geospatial or another traditional GIS tool
+But those tend to be locked down
+And we started from a data-centric perspective, operating with python, and then later on bringing in GIS components
+The open source world has added a lot of functionality that was traditionally in tools such as ERSI
+
+						</p>
+
+						<p>
+We started with a need to do traditional EDA
+But then realized we needed geospatial visualization combined with our python analysis
+To leverage cross-discipline research
+Disasters
+Computer science
+We also needed a way to let multiple people work on the system
+Data Analysts – SQL
+This started out as a jupyter notebook
+And then became a series of notebooks
+Soon the data processing pipeline was long and un-weldy
+And calculated the metrics for admission data and storm data slightly differently over time
+Making comparison of results more difficult too
+
+
+						</p>	
+						
+						<blockquote>JD: JD says he experiments with concepts in a notebook, and then once it gets to a certain point, he hands it off to an analyst</blockquote>	
+
+						<p>"Lab to Factory"-Pattern
+Concepts do not start as large pipelines
+Concepts start in the lab as a jupyter notebook
+Not all analysts can do python
+But most can do SQL
+We want to expand the surface area
+More analysts can become engaged
+Take data pipeline out of notebook once it gets to a certain size/complexity
+
+
+
+						</p>				
+
+						<h2>Challenges with Data Pipelines Inside Jupyter Notebooks</h2>
+
+
+
+<blockquote>[Josh Bottoms]: 
+“Jupyter notebook experimentation can be messy. In addition, ML models can rely on multiple data pipelines, and your pipeline artifacts might be produced by different developers using different machines with a variety of software dependencies. Even when using best practices, finding other people’s work can be challenging, especially when you are trying to unpack the cell execution sequence of an old, brittle notebook. When your slack channels start to chirp, it's nice to have a consistent build process with versioning and lineage for the artifacts in your Airflow pipelines. “
+</blockquote>						
+
+						<p>Notebook pipelines evolve from messy experimentation
+ML models and data engineering can rely on multiple data pipelines
+Requiring different dependencies
+Sometimes trying to understand someone else’s notebook is hard
+What if you have to run the cells in a different sequence than linear?
+One option:
+Airflow
+However
+In the world of cloud data warehouses, DBT is the best option to operate and manage data pipelines
+						</p>
+
+
+<blockquote>“Data exploration is also information. I didn't understand this until very recently but exploring data is for everyone. Sometimes you have to look at twenty charts broken down by all kinds of segment permutations before you see The Thing. “
+</blockquote>		
+https://roundup.getdbt.com/p/analytics-isnt-for-analysts
+
+
+						<h2>Roles on Our Team</h2>
+
+						<p>
+In many cases the analyst role and the data engineer role may be the same person
+In our case, when the data processing pipeline is embedded in a jupyter notebook
+It is less accessible to more jr analysts
+Creates more work for the data scientist to maintain
+If the pipeline was embedded in python code
+The GRA or analyst would need to know complex pandas operations
+
+						</p>
+
+						<p>
+Moving the pipeline to snowflake allows the analyst to use SQL
+But also treat the SQL code as 
+
+						</p>
+
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Raw Data Sources</h1>
+
+						<p>
+
+
+https://github.com/geanders/hurricaneexposure
+CSV Data extracted from GEAnders Hurricane Exposure
+
+
+						</p>
+
+						<p>
+
+							FEMA Hurricane damage data
+
+						</p>
+
+
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						
+						<h1>Using DBT to Build Data Pipelines</h1>
+
+						<p>
+dbt has the goal of allowing analysts to work more like software engineers
+But building data pipelines
+DBT lets you build out a data pipeline 
+Outside of the python code realm
+While embracing today's best data practices: 
+encapsulate business logic, 
+check it into git, 
+test your data, 
+connect it in a DAG
+
+
+
+
+
+						</p>
+
+						<p>
+Questions we hit during development
+What’s the definition of a “Spike”?
+Is our spike calculation consistent between notebooks?
+If someone goes and fiddles with the pandas transform logic in one notebook
+How do we keep that consistent across other notebooks?
+And how can we prevent issues when we compare results between notebooks when this happens?
+Our results should be auditable
+Our analytic code itself — not just analytics tools —should be open-source
+Operating the data pipeline shouldn’t involve finding a specific notebook
+And hope its current and still works
+
+						</p>
+
+						<h2>Seperating Out the Logic of Business Intelligence</h2>
+
+						<p>
+							"metric" layer
+
+Many of the datasets require complex joins inside a notebook
+Each analyst may try and re-calculate some of these “metrics”
+The results could easily be inconsistent
+We could use DBT to calculate the metrics for the map
+And save as csv
+To be used by pandas inside the app
+
+
+						</p>
+
+						<h2>Why DBT?</h2>
+
+						<p>
+good “metrics layer” metrics to offer in the UM map
+“Damage ratio”
+“Total Insured Value”
+DBT SQL is “limiting” for the experienced engineer
+BUT “empowering” for the newer analyst crowd (and this is a larger base)
+Blog article should contrast 
+using DBT vs 
+“using stock SQL w Snowflake directly”
+
+						</p>
+
+						<p>
+Need to understand and relate the concepts of:
+https://www.fivetran.com/blog/fivetran-dbt-github
+Automating quick transforms of raw data into metrics from known sources
+DBT allows you to not lock in the transform step into a tool 
+E.g., PowerBI let’s you do transforms too
+But using PowerBI for this becomes an Anti-Pattern
+
+
+						</p>
+
+						<h3>Using Software Engineering Patterns</h3>
+
+						<p>CI/CD with DBT: 
+
+Needs to re-run transforms
+When github is updated
+When the source data changes
+On a schedule
+
+						</p>
+
+						<h1>When to Use Python and When to use DBT?</h1>
+
+						<p>
+							[ todo ]
+
+							Can use the Snowpark Python API or SQL with DBT for data pipelines -- which makes sense, when?
+
+
+						</p>
+						<p>
+Should this not have been a tableau application?
+Why?
+Why not?
+Why streamlit over tableau – compare similar to notebooks
+DBT vs Airflow
+DBT adding python
+Declarative
+Airflow: Imperative
+
+						</p>
+
+						<h3>When to Use Snowpark Python API</h3>
+
+						<p>
+
+							[ using python ]
+
+I am
+ a data scientist
+I want to 
+Build features from raw data for ML model training
+When I want to extract raw features to build a model from in sci-kit learn
+While likely stay inside snowflake to train in python via Snowsight UI
+
+						</p>
+
+
+						<h3>When to Use DBT</h3>
+
+						<p>
+
+							[ using DBT ]
+
+I am
+An analyst
+I want to
+Build analytical results
+Specific use cases
+ i want to calculate intermediate results in SQL from multiple sources in a cloud data warehouse
+Aka “metrics” (?)
+I need data from the cloud data warehouse that is built or derived from other raw source tables
+And i need to do it consistently
+
+
+						</p>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+				<!-- End of Section -->
+			</div>
+		</div>
+		<!-- OUTER DIV: End of Section -->
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

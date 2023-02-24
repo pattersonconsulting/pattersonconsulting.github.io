@@ -156,11 +156,54 @@ Once we have the stage files imported to our session, they are available locally
 
 ### Install Dependencies on Remote Snowflake Instance Manually
 
-Once we have the depenency WHL files and the loader script imported into our UDF Python code, we can now install the dependencies with the loader script with the command:
+Once we have the depenency WHL files and the loader script imported into our UDF Python code, we can now install the dependencies with the loader script.
+
+The code listing below shows all of the lines of our install script `snowpark_whl_loader.py`:
+
+```
+class FileLock:
+   def __enter__(self):
+      self._lock = threading.Lock()
+      self._lock.acquire()
+      self._fd = open('/tmp/lockfile.LOCK', 'w+')
+      fcntl.lockf(self._fd, fcntl.LOCK_EX)
+
+   def __exit__(self, type, value, traceback):
+      self._fd.close()
+      self._lock.release()
+
+import sys,os,threading,fcntl,zipfile
+IMPORT_DIRECTORY_NAME = "snowflake_import_directory"
+import_dir = sys._xoptions[IMPORT_DIRECTORY_NAME]
+
+def load(file_name):
+    path=import_dir + file_name
+    extracted='/tmp/' + file_name
+    with FileLock():
+        if not os.path.isdir(extracted):
+            with zipfile.ZipFile(path, 'r') as myzip:
+                myzip.extractall(extracted)
+                myzip.printdir()
+    sys.path.append(extracted)
+
+
+
+def install_autogluon():
+
+    load( "autogluon-0.6.2-py3-none-any.whl" )
+    load( "autogluon.tabular-0.6.2-py3-none-any.whl" )
+    load( "autogluon.common-0.6.2-py3-none-any.whl" )
+    load( "autogluon.core-0.6.2-py3-none-any.whl" )
+    load( "autogluon.features-0.6.2-py3-none-any.whl" )
+```
+
+When our UDF code gets to the following line, the whl dependeny files will be installed:
 
 ```
 snowpark_whl_loader.install_autogluon()
 ```
+
+(Note: We have to upload the dependencies listed in the `install_autogluon()` method, but we'll do that a little later int his article.)
 
 Once the above line executes inside the body of the Python UDF code, you can then reference the code via imports from WHL files after that point in the UDF.
 

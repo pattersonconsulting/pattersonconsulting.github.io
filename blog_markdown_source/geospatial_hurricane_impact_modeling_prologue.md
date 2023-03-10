@@ -17,9 +17,11 @@ Other entries in this series:
 
 
 
-* Part 1: Building a Data Pipeline with DBT
-* Part 2: Building a Geospatial Hurricane Analytics Tool with Streamlit
-* Part 3: Data Engineering with the Snowpark Python API
+* open sourcing the geoEDA toolkit
+
+
+Working titles: The Red Queen and the Smarter City
+
 
 
 >	Who is the intended audience for this article?
@@ -30,10 +32,17 @@ Other entries in this series:
 >	Who is the secondary audience?
 
 
+## Outline of 2-Post Series:
+
+* Prologue
+   * Introduction
+   * The Smart City and the Red Queen
+   * The Smart City Operating System: Enabling a City to Rise to its Growth Potential
+   * Summary
 
 
 
-## Core thesis ("Why do I care?"):
+## Core thesis ("Why do I care?") of this Prologue:
 
 * Easy-to-use Building blocks drive higher-level application development
 * analytics are the foundation of building next-generation smart city applications
@@ -41,140 +50,66 @@ Other entries in this series:
 
 
 
-## What Tool Are We Releasing?
+## Resources to Mention
 
-* An open source set of dbt templates to transform raw census and hurricane data
-* A map-generation system based on streamlit and folium to do Geospatial EDA
-* A set of jupyter notebooks to perform tabular EDA on the unified dataset
+http://www.pattersonconsultingtn.com/use_case_repository/municipal_vertical.html
 
+Working with:
+* Major telecom on their Intelligent Transport Systems platform and portfolio
+* Working with a venture capital group to support over $100m in investment due dilligence on ITS Applications in machine learning
+* working with the CUIP Group on the smart corridor in Chattanooga, TN
+* Working with the University of Michigan on geoEDA and hurricane impact on 
 
-## How Are We Using The Tool?
+https://ams.confex.com/ams/35Hurricanes/meetingapp.cgi/Paper/402020
 
-* This tool has helped us analyze 20 years of Hurricane data
-* The insights gleamed from the tool impacted our EDA methods in the Jupyter notebooks
-* This has directly impacted our results in building models to predict hospital admissions post-hurricane
+## The Fate of the Largest Cities for Each Era
 
-
-## What Else Might it Be Used for?
-
-* Understanding geospatial relationships between weather events and other events in
-   * Transit
-   * Housing
-   * Water
-   * Power
-   * Air Quality
-   * Foot Traffic
-* Spatially exploring complex dataset
-* Informing the tabular EDA workflow
-
-We include an example where we analyze hurricanes' impact on FEMA inspected damage across 20 years.
-
-# Collaboration with University of Michigan
-
-sue anne bell
-
-AMS invited talk
-
-Started out with a few counties of data
-Couldnt find relationships
-Then moved to a lot more counties worth of data
-Found some of the spikes we were looking for
-But realized there was a larger story
-Then moved to looking at a 5-7 states worth of data
-For admissions
-Added per-county storm data in
-Found compelling results in the analysis
-
-Talked these results over with another data expert
-They pointed out: Storm (N=1)
-Difficult to draw any generalizations when N = 1
-Now we know we needed to look at 20 years worth of storm data
-And as much admission data as we could get our hands on
-Our geospatial system needed to be more robust
+Largest Cities over Time -- and what became of the cities
 
 
-[ Presented the storyline to AMS in 2022 ]
+## Notes from NSF Grant Proposal
 
-# Evolution of the Project
-
-Evolution of project
-
-“The Principal Investigator, the data scientist, and the data engineer”
-Need to be able to share a hurricane dashboard with folks outside of data science
-Non-computer scientists researchers (e.g., Sue Anne)
-https://locallyoptimistic.com/post/building-more-effective-data-teams-using-the-jtbd-framework/?utm_source=substack&utm_medium=email
-Need to provide the same same of analytical data to
-Researchers
-Data engineers
-Data scientists
-Emailing jupyter notebooks is brittle and prone to error
-E.g., “not the latest spike calculation code”, etc
-
-Researchers
-Want to better understand geo-spatial data with a custom visual tool
-Analyst
-Want to be able to build out analytics in a fashion consistent with
-> “In the spirit of bringing software engineering practices to the SQL-centric ELT data warehousing world, any modern approach would be incomplete without automating the testing and deployment process and integrating with a CI/CD process.”
-Data Engineers
-Want to provide features to the data scientist that are consistent with what is presented in the BI tool
-Data Scientists
-Want to build models and not fuss about where the data came from
-
-Talk about the themes from the AMS talk — cross-discipline collaboration
-Open sourcing research results — for others to collaborate with!
-
-Maps @ UM Research
-Not traditional EDA
-But we still need some custom visualization
-Possibly could have used ERSI for the geospatial or another traditional GIS tool
-But those tend to be locked down
-And we started from a data-centric perspective, operating with python, and then later on bringing in GIS components
-The open source world has added a lot of functionality that was traditionally in tools such as ERSI
-
-## We started with a need to do traditional EDA
-
-But then realized we needed geospatial visualization combined with our python analysis
-To leverage cross-discipline research
-Disasters
-Computer science
-We also needed a way to let multiple people work on the system
-Data Analysts – SQL
-This started out as a jupyter notebook
-And then became a series of notebooks
-Soon the data processing pipeline was long and un-weldy
-And calculated the metrics for admission data and storm data slightly differently over time
-Making comparison of results more difficult too
-
-
-> JD: JD says he experiments with concepts in a notebook, and then once it gets to a certain point, he hands it off to an analyst
-
-## "Lab to Factory"-Pattern
-
-Concepts do not start as large pipelines
-Concepts start in the lab as a jupyter notebook
-Not all analysts can do python
-But most can do SQL
-We want to expand the surface area
-More analysts can become engaged
-Take data pipeline out of notebook once it gets to a certain size/complexity
-
-## Leverage Open Source As Building Blocks
-
-https://github.com/geanders/hurricaneexposure
-
-CSV Data extracted from GEAnders Hurricane Exposure
-
-
-# Investment Thesis for the Smart City Space
 
 > The world is facing countless decision problems that often require balancing competing criteria: How to respond to new pandemic diseases while reducing their economic impact? How to react to a changing climate while sustaining economic growth? How to reduce community violence while preserving liberties? How to plan for city growth while considering effects to the environment and social inequality?
 
 The world is changing 
-Nations need GDP to compete
+```
+Gross Domestic Product (GDP) is a measure of the value of all goods and services produced within a country's borders in a given period of time. GDP growth is important for a country's economic competitiveness in the world because it reflects the country's ability to increase its productive capacity and generate more income, which can be used to improve the standard of living for its citizens and invest in infrastructure, education, healthcare, and other areas that contribute to economic growth.
+
+There are several reasons why GDP growth is important for a country's competitiveness:
+
+Trade: Countries with higher GDPs are generally more competitive in global trade because they have more resources and are better able to produce goods and services at a lower cost. This can lead to lower prices for consumers, higher profits for businesses, and greater economic growth.
+
+Investment: Higher GDP growth rates can attract more foreign investment, as investors seek opportunities in countries with strong economic growth potential. This can help boost job creation and technology transfer, as well as contribute to the overall economic development of the country.
+
+Innovation: Countries with higher GDP growth rates tend to invest more in research and development, which can lead to new technologies, products, and services. This can give them a competitive advantage in the global marketplace, as well as contribute to their overall economic growth.
+
+International Reputation: Countries with strong economic growth rates tend to have a positive international reputation, which can lead to increased diplomatic and political influence. This can help them negotiate more favorable trade agreements, as well as contribute to their overall geopolitical power and influence.
+
+In summary, GDP growth is important for a country's economic competitiveness because it reflects the country's ability to increase its productive capacity, generate more income, attract investment, stimulate innovation, and enhance its international reputation.
+```
 How does manufacturing play a role in this?
+
 How does the Red Queen drive productivity?
+
 Climate change is here
+```
+Climate change can have significant impacts on a country's GDP in several ways.
+
+Natural Disasters: Climate change can increase the frequency and severity of natural disasters such as floods, hurricanes, and wildfires, which can cause significant damage to infrastructure, property, and crops. This can lead to lower productivity and economic output, as well as higher costs for disaster response and recovery.
+
+Agriculture: Changes in temperature and precipitation patterns can also affect agricultural productivity, leading to lower yields, reduced crop quality, and increased risk of pests and diseases. This can result in higher food prices, lower farm incomes, and reduced GDP growth.
+
+Energy and Transport: Climate change can also affect the energy and transport sectors, which are key drivers of economic growth. Changes in temperature and precipitation patterns can impact energy demand and supply, as well as transportation infrastructure such as roads, airports, and ports. This can result in higher costs for energy and transport, as well as reduced economic activity.
+
+Health: Climate change can also affect human health, which can have significant economic impacts. Higher temperatures can increase the risk of heat-related illnesses, while changes in precipitation patterns can lead to increased incidence of waterborne diseases such as cholera. This can result in higher healthcare costs, lower productivity, and reduced economic growth.
+
+Tourism: Climate change can also affect the tourism industry, which is an important source of revenue for many countries. Changes in temperature and precipitation patterns can impact tourist behavior, leading to reduced demand for certain destinations and activities. This can result in lower revenues for businesses and governments, as well as reduced GDP growth.
+
+In summary, climate change can have significant impacts on a country's GDP through its effects on natural disasters, agriculture, energy and transport, health, and tourism. These impacts can lead to lower productivity, higher costs, reduced revenues, and lower economic growth.
+```
 How we use our resources is more important than ever
+
 Foundationally, managing cities are key to mitigating climate change
 
 
@@ -193,6 +128,24 @@ The core challenges faced by the managers and operators of urban centers today a
 * Building Codes, Infrastructure, and Compliance
 
 All of these challenges can be measured through data yet many today are not managed effectively. Population growth in urban centers is a key driver towards more managed solutions for other aspects of city management such as traffic.
+
+```
+City managers of major urban centers face a wide range of challenges in their efforts to ensure that their cities are livable, sustainable, and prosperous. Some of the core challenges that they face include:
+
+Infrastructure: Cities need modern and resilient infrastructure to function effectively and support economic growth. However, many urban centers are grappling with outdated infrastructure that is struggling to keep up with growing demand. This includes transportation systems, water and wastewater systems, and energy networks.
+
+Housing: Rapid urbanization is putting a strain on housing in many cities, with skyrocketing housing costs and shortages of affordable housing. This can lead to social and economic inequality, as low-income residents are priced out of desirable neighborhoods.
+
+Climate Change: Cities are on the front lines of climate change, facing the threat of extreme weather events, rising sea levels, and other environmental risks. City managers need to develop and implement effective strategies to mitigate and adapt to these risks, such as reducing greenhouse gas emissions and investing in green infrastructure.
+
+Economic Development: Cities need to be able to attract investment, create jobs, and provide opportunities for their residents. This requires careful planning and investment in key sectors such as technology, healthcare, and education.
+
+Public Safety: City managers need to ensure that their cities are safe and secure for residents, visitors, and businesses. This requires effective law enforcement, emergency preparedness, and community engagement.
+
+Social Services: Cities have a responsibility to provide essential social services such as education, healthcare, and social welfare. However, funding constraints and growing demand can make it difficult for city managers to provide these services at the level required.
+
+In summary, city managers of major urban centers face a wide range of challenges related to infrastructure, housing, climate change, economic development, public safety, and social services. Addressing these challenges requires careful planning, investment, and collaboration across different levels of government, as well as with private sector and community stakeholders.
+```
 
 In the following sub-sections we take a look at published research on each of these challenges.
 
@@ -214,6 +167,22 @@ The UN website goes on to state:
 
 > "Today, 55% of the world&rsquo;s population lives in urban areas, a proportion that is expected to increase to 68% by 2050. Projections show that urbanization, the gradual shift in residence of the human population from rural to urban areas, combined with the overall growth of the world&rsquo;s population could add another 2.5 billion people to urban areas by 2050, with close to 90% of this increase taking place in Asia and Africa, according to a new United Nations data set launched today.&ldquo;"
 
+```
+Population movement to major cities has undergone significant changes over the past 100 years. Here are some of the key trends:
+
+Urbanization: The world's population has become increasingly urbanized over the past century. In 1950, around 30% of the world's population lived in urban areas, while in 2020, it was over 55%. This trend is projected to continue, with the UN estimating that over 68% of the world's population will live in urban areas by 2050.
+
+Regional Shifts: There have been significant regional shifts in urbanization over the past century. In the early 1900s, Europe and North America were the most urbanized regions, but by the mid-20th century, Latin America and Asia had become more urbanized. Today, Africa has the highest rate of urbanization, with over 40% of its population living in cities.
+
+Megacities: The number of megacities (cities with over 10 million people) has grown rapidly over the past century. In 1950, there were only two megacities (New York and Tokyo), while in 2020, there were over 30. This trend is projected to continue, with the UN estimating that there will be over 40 megacities by 2030.
+
+Rural-Urban Migration: Rural-urban migration has been a major driver of urbanization over the past century. People have moved from rural areas to cities in search of better economic opportunities, education, healthcare, and other services. However, this has also led to urbanization and increased pressure on urban infrastructure and services.
+
+Suburbanization: In recent decades, there has been a trend towards suburbanization, with people moving to the outskirts of cities in search of lower housing costs and better quality of life. This has led to the growth of suburban areas and increased demand for transportation infrastructure.
+
+In summary, population movement to major cities has undergone significant changes over the past century, with increasing urbanization, regional shifts, the growth of megacities, rural-urban migration, and suburbanization. These trends have significant implications for urban planning, infrastructure, and services, as well as for social and economic development.
+```
+
 
 #### Growth Factors of cities
 
@@ -229,7 +198,23 @@ Some of the drivers of the growth of city population size include:
 
 https://twitter.com/DKThomp/status/1507006859818901506
 
+```
+The growth of major cities is driven by a combination of factors, including:
 
+Economic opportunities: Many people are attracted to cities because they offer greater economic opportunities than rural areas. Cities are often home to a wide range of industries and businesses, providing job opportunities across different sectors.
+
+Infrastructure and services: Cities offer a wide range of infrastructure and services, including public transportation, healthcare, education, and cultural amenities. This makes them attractive to people who want access to these resources.
+
+Social and cultural diversity: Cities are often more diverse than rural areas, with people from different backgrounds and cultures living and working together. This diversity can create a vibrant social and cultural scene, making cities attractive to people who value these experiences.
+
+Technology and innovation: Many cities are hubs for technology and innovation, attracting people who are interested in working in these fields. Cities offer access to research institutions, startup incubators, and other resources that support innovation and entrepreneurship.
+
+Political and social stability: Cities are often more politically and socially stable than rural areas, with well-established systems of governance and law enforcement. This can make them attractive to people who are seeking a sense of security and stability.
+
+Climate and geography: The climate and geography of a city can also influence its growth. For example, cities located in coastal areas or near major rivers or ports may have better access to trade and commerce, while cities with mild climates may be more attractive to people seeking a comfortable living environment.
+
+In summary, the growth of major cities is driven by a complex set of factors, including economic opportunities, infrastructure and services, social and cultural diversity, technology and innovation, political and social stability, and climate and geography. These factors combine to make cities attractive to a wide range of people, and they will likely continue to drive the growth of major cities in the future.
+```
 
 
 
@@ -403,15 +388,17 @@ https://www.artemis.bm/news/cat-models-dont-properly-reflect-climate-change-renr
 ### How Does This Help Cities?
 
 This empowers better
-Codes and compliance
-Municipal planning
-Operations
+* Codes and compliance
+* Municipal planning
+* Operations
+
 To do this, we need to measure and analyze
-Traffic
-People
-Air
-Water
-Buildings
+
+* Traffic
+* People
+* Air
+* Water
+* Buildings
 
 
 ### Creating New Types of Next-Gen Applications
@@ -469,21 +456,31 @@ Climate Change
 Pandemics and global coordinated resource management will be the challenge of smart city 2.0
 
 
+# Summary
 
-# Promoting Open Research and Applications with Building Blocks
+We have to run as hard as we can many times just to stay in the same place. Growth for major urban cities is a key challenge that will drive the other aspects of operating and designing cities for the next 25 years or more.
 
+Key areas we can enable growth specifically in the Intelligent Traffic Systems (ITS) space:
 
-[ relate to SciPy and Anaconda ]
+1. Traffic management
+2. City planning
+3. City operations
 
+While initially Telus will focus on applications that service these utilities, eventually cities will want more applications that can:
 
-[ what is the core challnege we address with this project? ]
+* Measure
+* Traffic
+* People
+* Air
+* Water
+* Buildings
+* Optimize
+* Plan
 
+To help mitigate issues with code compliance, traffic congestion, operations optimization, and urban planning. As we’ve seen from the historical examples, new technology, codes, and infrastructure policies were needed to get cities to larger “plateaus” over the past 3000 years.
 
-[ Geospatial EDA Tooling as core building blocks --- just as we built on GEAnders work ]
+If we can do the above, we can operate efficiently enough to (hopefully) manage our infrastructure in such a manner we can support the new population levels for our region.
 
+Now armed with better context around what are the growing “functional needs” in growth urban areas, we need to think about how to provide customer utility in the “right ways” at the right timing to grow into the ITS market. To better understand what to build to enter any new municipal segment, we take a look at the known success story of ---- in the next section.
 
-[ tie into the world of analytical data products ]
-
-
-[ foundational building block in building next-gen smart city applications ]
 

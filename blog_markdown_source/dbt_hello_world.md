@@ -152,9 +152,136 @@ The latest supported version targets dbt-core 1.1.x and duckdb 0.3.2.
 
 ### Load Some Synthetic Patient Data Into DuckDB
 
+
+* working with raw data with duckdb
+
+```
+select * from './march_2023_patient_data_load/patient_checkup_logs.csv';
+┌────────────┬────────────┐
+│    Date    │ Patient ID │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│ 2019-01-08 │ pid-003    │
+│ 2021-07-24 │ pid-003    │
+│ 2014-04-12 │ pid-004    │
+│ 2014-06-01 │ pid-004    │
+│ 2020-10-22 │ pid-004    │
+│ 2020-10-29 │ pid-004    │
+│ 2021-01-01 │ pid-004    │
+│ 2022-03-12 │ pid-004    │
+│ 2022-05-15 │ pid-004    │
+│ 2014-02-05 │ pid-005    │
+│ 2016-04-24 │ pid-005    │
+│ 2016-08-27 │ pid-005    │
+│ 2016-12-13 │ pid-005    │
+│ 2017-01-25 │ pid-005    │
+│ 2018-07-31 │ pid-005    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-19 │ pid-1336   │
+│ 2020-01-14 │ pid-1336   │
+│ 2020-09-23 │ pid-1336   │
+│ 2021-02-07 │ pid-1336   │
+│ 2022-09-12 │ pid-1336   │
+│ 2014-02-07 │ pid-1337   │
+│ 2018-01-04 │ pid-1337   │
+│ 2018-11-14 │ pid-1337   │
+│ 2019-05-22 │ pid-1337   │
+│ 2020-01-10 │ pid-1337   │
+│ 2020-04-13 │ pid-1337   │
+│ 2021-01-30 │ pid-1337   │
+│ 2021-11-17 │ pid-1337   │
+│ 2022-03-27 │ pid-1337   │
+│ 2022-07-22 │ pid-1337   │
+│ 2016-01-29 │ pid-1338   │
+│ 2019-05-24 │ pid-1338   │
+│ 2019-12-11 │ pid-1338   │
+│ 2020-02-26 │ pid-1338   │
+│ 2020-10-02 │ pid-1338   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘
+```
+
 * load the doctor visit csv file into DuckDB
+
+
+```
+CREATE TABLE t1 AS SELECT * FROM read_csv_auto ('./march_2023_patient_data_load/patient_checkup_logs.csv');
+D select * from t1;
+┌────────────┬────────────┐
+│    Date    │ Patient ID │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│ 2019-01-08 │ pid-003    │
+│ 2021-07-24 │ pid-003    │
+│ 2014-04-12 │ pid-004    │
+│ 2014-06-01 │ pid-004    │
+│ 2020-10-22 │ pid-004    │
+│ 2020-10-29 │ pid-004    │
+│ 2021-01-01 │ pid-004    │
+│ 2022-03-12 │ pid-004    │
+│ 2022-05-15 │ pid-004    │
+│ 2014-02-05 │ pid-005    │
+│ 2016-04-24 │ pid-005    │
+│ 2016-08-27 │ pid-005    │
+│ 2016-12-13 │ pid-005    │
+│ 2017-01-25 │ pid-005    │
+│ 2018-07-31 │ pid-005    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-19 │ pid-1336   │
+│ 2020-01-14 │ pid-1336   │
+│ 2020-09-23 │ pid-1336   │
+│ 2021-02-07 │ pid-1336   │
+│ 2022-09-12 │ pid-1336   │
+│ 2014-02-07 │ pid-1337   │
+│ 2018-01-04 │ pid-1337   │
+│ 2018-11-14 │ pid-1337   │
+│ 2019-05-22 │ pid-1337   │
+│ 2020-01-10 │ pid-1337   │
+│ 2020-04-13 │ pid-1337   │
+│ 2021-01-30 │ pid-1337   │
+│ 2021-11-17 │ pid-1337   │
+│ 2022-03-27 │ pid-1337   │
+│ 2022-07-22 │ pid-1337   │
+│ 2016-01-29 │ pid-1338   │
+│ 2019-05-24 │ pid-1338   │
+│ 2019-12-11 │ pid-1338   │
+│ 2020-02-26 │ pid-1338   │
+│ 2020-10-02 │ pid-1338   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘
+
+```
+
 * make note of the path
 
+
+```
+describe table t1;
+
+┌─────────────┬─────────────┬─────────┬─────────┬─────────┬─────────┐
+│ column_name │ column_type │  null   │   key   │ default │  extra  │
+│   varchar   │   varchar   │ varchar │ varchar │ varchar │ varchar │
+├─────────────┼─────────────┼─────────┼─────────┼─────────┼─────────┤
+│ Date        │ DATE        │ YES     │         │         │         │
+│ Patient ID  │ VARCHAR     │ YES     │         │         │         │
+└─────────────┴─────────────┴─────────┴─────────┴─────────┴─────────┘
+```
 
 
 ## Configure DBT Profile to Connect to DuckDB Database
@@ -292,6 +419,19 @@ Connection:
   Connection test: [OK connection ok]
 
 All checks passed!
+```
+
+### Write Our First Data Model
+
+What does our data model look like?
+
+```
+--- other dbt stuff ---
+
+select count(Date) as visits, "Patient ID" from t1 group by "Patient ID";
+
+--- other dbt stuff ---
+
 ```
 
 

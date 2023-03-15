@@ -79,6 +79,12 @@ By organizing a DBT project in this way, it becomes easier to manage and maintai
 * Data Model -- what is it?
 * [ TODO: Diagram HERE ]
 
+This is a nice article:
+
+https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/
+
+<img src="https://www.getdbt.com/ui/img/guides/analytics-engineering/intermediate_data_models.png" width="50%" height="50%" />
+
 A DBT data model is a SQL query that defines a specific view of data in a data warehouse. The data model can include joins, filters, aggregations, and other transformations that shape the data into a format that's easier to work with for downstream analysis and reporting.
 
 DBT models are defined using SQL syntax and can be composed of other models or database tables. Models are defined in separate SQL files, and DBT provides a mechanism for organizing models into a modular structure.
@@ -136,6 +142,16 @@ conda deactivate
 
 [ DuckDB and DBT for this one locally? ]
 
+https://github.com/jwills/dbt-duckdb
+
+Quote from the website:
+
+`DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics. It is crazy fast and allows you to read and write data stored in CSV and Parquet files directly, without requiring you to load them into the database first.`
+
+`dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a Modern Data Stack In A Box or a simple and powerful data lakehouse- no Java or Scala required.`
+
+Install duckdb, dbt, and the connector:
+
 ```
 https://duckdb.org/docs/installation/index
 
@@ -144,6 +160,39 @@ pip3 install dbt-duckdb
 ```
 
 The latest supported version targets dbt-core 1.1.x and duckdb 0.3.2.
+
+### DuckDB CLI
+
+We still need the CLI to load some data into DuckDB:
+
+
+The DuckDB CLI (Command Line Interface) is a single, dependency free executable.
+
+( todo: explain why the CLI is seperate )
+
+### Load our Synthetic Insurance Data into DuckDB
+
+
+`create table fips_test (fips_code VARCHAR, county VARCHAR, state VARCHAR);`
+
+Confirm we can get to the data:
+
+`select * from './data/test_fips_data.csv';`
+
+Now copy the raw data into our table:
+
+`copy fips_test from './data/test_fips_data.csv' (AUTO_DETECT TRUE);`
+
+and then:
+
+`show tables;`
+
+### Connecting to our local DuckDB Install with the `dbt-duckdb` Connector:
+
+https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup
+
+`DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics instead of OLTP. The only configuration parameter that is required in your profile (in addition to type: duckdb) is the path field, which should refer to a path on your local filesystem where you would like the DuckDB database file (and it's associated write-ahead log) to be written. You can also specify the schema parameter if you would like to use a schema besides the default (which is called main).`
+
 
 ### Using DBT Locally vs Using DBT in the Cloud
 

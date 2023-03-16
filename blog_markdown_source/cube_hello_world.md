@@ -17,6 +17,7 @@ Other entries in this series:
 ## What is Cube?
 
 [ todo ]
+Provides ability to access data models, business logic, and metrics trapped in systems such as Tableau
 
 Cube.js is an open-source framework for building analytical web applications. It provides a set of tools and APIs to create customizable dashboards, reports, and data visualizations, allowing developers to quickly build interactive applications that can access and query data from multiple sources.
 
@@ -26,10 +27,31 @@ With Cube.js, developers can create interactive dashboards and visualizations us
 
 Overall, Cube.js is a powerful tool for building analytical web applications and enables developers to quickly create interactive and data-driven applications with ease.
 
+via https://medium.com/revel-systems/how-we-use-cube-as-an-api-first-business-intelligence-platform-to-build-real-time-dashboards-6c3cf17899b4
+
+> Cube is an API‑first business intelligence platform, which helps data engineers and application developers access data from modern data stores, organize it into consistent definitions, and deliver it to every application via REST, GraphQL or SQL APIs, while maintaining security and performance.
+
+> Cube is a headless BI platform, which means that it is decoupled from frontend interfaces. As headless BI, Cube provides API-first, four-part semantic layer which consists of data modeling, access control and caching on top of streaming SQL to build custom analytics experiences with modern tools.
+
+> In other words, it acts as a data access layer (or middleware), which, based on the data model, translates incoming API requests into SQL query and executes it in your database, while fully managing query orchestration, database connections and as mentioned above — caching and access control. The result then is being sent back to the client. Cube accepts queries via REST, GraphQL or SQL interfaces.
+
+
 ## Role in Analytics
 
+via https://cloudacademy.com/blog/the-headless-bi-tool-cloud-academy-uses/
 
-* why would we use Cube?
+> A Headless BI tool is a set of components that acts as middleware between your data warehouse and your business intelligence applications. It provides us with four main data-related components without the need of designing and implementing custom solutions. It allows us to work with data without hitting the data warehouse directly but leveraging the abstraction layer represented by the tool.
+
+### What Does Cube Provide for Me?
+
+
+> The name Headless comes because the tool allows us to work with the data, but it deliberately delegates the task to show and visualize it. This is the responsibility of the BI tool.
+> A Headless BI tool offers the following four components:
+* Modeling – It allows us to leverage data on the data warehouse and model it by defining dimensions and measures, usable by the BI tool
+* Security – It allows us to declare who can access the data, and restrict shown data if needed
+* Caching – It provides us with a caching layer to store the results of recent queries and speed up the next ones
+* APIs – It provides us with one or multiple APIs (such as RESTful and SQL) to hit your data
+
 
 [ Todo ]
 

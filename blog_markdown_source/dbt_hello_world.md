@@ -2,109 +2,101 @@
 layout: post
 published-on: February 15th 2023
 author: Josh Patterson
-title: DBT Hello World
+title: DBT Hello World with DuckDB
 subtitle: Understanding the Basics of Building a Data Pipeline with DBT
 description: In this post we'll .....
-keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
+keywords: snowflake, duckdb, dbt, data engineering, cicd, sql
 meta_og_image: pct_autogluon_dep_og_card.jpg
 ---
 
-# Introduction to DBT
+# Introduction
 
-Other entries in this series:
+DBT is ...
 
+DuckDB is ...
 
-## What is DBT?
+Together, with the `dbt-duckdb` project, they form a "Modern Data Stack In A Box" --- or a simple and powerful data lakehouse (sans Java and Scala).
 
-DBT (Data Build Tool) is an open-source command-line tool that allows data analysts and engineers to transform and manipulate data in their data warehouse. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.
-
-DBT is designed to work with a variety of data warehouses, including Snowflake, BigQuery, Redshift, and others. It allows users to define data models and transformations in a modular way, and it supports version control and collaboration through Git.
-
-With DBT, analysts can define reusable SQL code and maintain a consistent data model across their organization. They can also build automated testing and validation into their data pipelines, ensuring data accuracy and consistency. Overall, DBT helps organizations build data pipelines that are maintainable, scalable, and easy to understand.
-
-## Role in Analytics
+> dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a Modern Data Stack In A Box or a simple and powerful data lakehouse- no Java or Scala required.
 
 
-* why would we use dbt?
+https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html
 
-DBT plays a critical role in an enterprise analytics pipeline by providing a scalable and maintainable way to transform and manipulate data in a data warehouse. Here are some specific ways that DBT can support an analytics pipeline:
+What will we do in this article:
 
-Transforming and modeling data: DBT allows data analysts and engineers to define data models and transformations in a modular way using SQL, making it easy to build complex data pipelines. DBT also supports incremental loads, allowing analysts to quickly update their data without having to reprocess the entire dataset.
-
-Data validation and testing: DBT has built-in support for automated testing and validation, allowing analysts to ensure data accuracy and consistency. DBT can automatically run tests on data models and transformations as part of a continuous integration and deployment (CI/CD) pipeline.
-
-Collaboration and version control: DBT integrates with Git, allowing analysts to collaborate on data models and transformations using a familiar version control system. This makes it easy to track changes to data pipelines over time and maintain a consistent codebase.
-
-Documentation and lineage tracking: DBT includes built-in documentation features that allow analysts to document data models, transformations, and pipelines, making it easier for other team members to understand the data and how it's transformed. DBT also supports lineage tracking, allowing analysts to track data from its source to its destination and ensure data quality.
-
-Overall, DBT provides a scalable and maintainable way to transform and manipulate data in a data warehouse, making it an essential tool for enterprise analytics pipelines.
-
-### what does DBT replace?
-
-DBT is not designed to replace any specific tool or technology, but rather to complement and enhance existing data warehousing and analytics tools. DBT can be used alongside ETL tools, such as Apache Airflow or Apache Nifi, and data visualization tools, such as Tableau or Looker, to provide a more complete data analytics solution.
-
-However, DBT does offer some unique features that can replace certain manual or ad-hoc data transformation processes. For example, DBT can replace custom SQL scripts that are used to transform data, as it provides a more modular and reusable way to define data transformations. DBT also provides a more scalable way to transform data compared to traditional ETL tools, which may require significant maintenance and updates as the data pipeline grows in complexity.
-
-Overall, DBT is a powerful tool that can enhance and streamline existing data analytics pipelines, but it's not designed to replace any specific tool or technology outright.
-
-## Anatomy of a DBT Project
-
-* core files
-* directory structure
-* configuring a dbt project
-* connecting to databases
-
-A DBT project is typically organized into several folders and files, each with a specific purpose. Here is a breakdown of the typical structure of a DBT project:
-
-1. Models: This folder contains the SQL code that defines data models and transformations. Each model is typically defined in a separate SQL file.
-
-2. Data: This folder contains any data files or SQL scripts needed to support data modeling and transformation.
-
-3. Macros: This folder contains reusable SQL code that can be called from data models or transformations.
-
-4. Analysis: This folder contains SQL scripts that perform data analysis or generate reports.
-
-5. Tests: This folder contains SQL scripts that test the validity of data models or transformations.
-
-6. dbt_project.yml: This file defines the configuration settings for the DBT project, such as the target database and credentials, and other project-specific settings.
-
-7. profiles.yml: This file contains the database connection information, such as the host, username, password, and database name.
-
-8. Documentation: This folder contains documentation generated by DBT about the data models, tests, and macros defined in the project.
-
-By organizing a DBT project in this way, it becomes easier to manage and maintain data pipelines, collaborate with other team members, and implement automated testing and validation.
-
-## Core Concepts in DBT Data Modeling
-
-* Data Model -- what is it?
-* [ TODO: Diagram HERE ]
-
-This is a nice article:
-
-https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/
-
-<img src="https://www.getdbt.com/ui/img/guides/analytics-engineering/intermediate_data_models.png" width="50%" height="50%" />
-
-A DBT data model is a SQL query that defines a specific view of data in a data warehouse. The data model can include joins, filters, aggregations, and other transformations that shape the data into a format that's easier to work with for downstream analysis and reporting.
-
-DBT models are defined using SQL syntax and can be composed of other models or database tables. Models are defined in separate SQL files, and DBT provides a mechanism for organizing models into a modular structure.
-
-DBT models are incremental, which means that DBT only processes the new or changed data since the last time the model was run. This makes DBT models more efficient than traditional ETL processes that require processing all of the data each time.
-
-DBT data models are part of a larger data pipeline that transforms raw data into a format that's more useful for data analysis and reporting. By using DBT to define data models, analysts can build complex data pipelines that are modular, maintainable, and easy to test and validate.
+* prepare some metrics from raw patient checkup visit data for use in a machine learning pipeline
+* we'll use DBT to produce the summary statistics, or metrics, from the raw data sitting in DuckDB
+* We use DuckDB here as a simple local option so as to not force the reader to set up any cloud infrastructure
 
 
-# Building Our DBT Hello World Project with Synthetic Patient Data
+What will I learn from this article?
 
-* conda env creation
-* install duckDB and connector
-* load raw data into DuckDB
-* dbt init [project]
-* configuring connection to snowflake
+* a gentle introduction to DBT and DuckDB
+* an understanding of how DBT fits into modern data pipelines
+* an understanding of how DuckDB and DBT together can create a simple data stack for local analysis
 
-## The Synthetic Patient Doctor Visit Data
 
-* [ describe the data here ]
+
+## Building Our DBT Hello World Project with Synthetic Patient Data
+
+In our "hello world" scenario, we want to build some metrics about how often a set of patients get their yearly physical checkup. The hypothetical company here is an insurance company evaluating a set of customers and building forecasts with machine learning to predict how much the customer will potentially cost in terms of healthcare while under an insurance policy.
+
+
+Patient Metrics
+
+> "The most granular form of data, Metrics describe the exact numbers that make up the data. Put more simply, they are the raw ingredients that make analytics possible. On their own, they may not actually be very helpful, but studied in the right context (foreshadow alert -- this is analysis), they can be used to give fact-based direction to your decision-making.""
+
+Examples of metrics in the Marketing Data world: 
+
+* Number of Users
+* Sessions
+* Pageviews
+* Event actions
+
+> "All of these units of measurement report activity or results of very specific user interactions in your marketing efforts"
+
+
+The data engineering team has requested that the analysts pull the data from the (cloud) data warehouse and provide the metrics per customer for use in their modeling experiments as a feature.
+
+In this exercise you'll take synthetic patient checkup history data (which insurance companies are able to access) and use DBT to build data models and produce the patient metrics. We'll use DuckDB for our database as its a quick and easy database to use locally and keeps us from having to provision cloud infrastructure for a simple Hello World example.
+
+
+# Building a Local Data Stack with DBT and DuckDB
+
+So let's get started by first describing our data.
+
+The Synthetic Patient Doctor Visit Data is shown below:
+
+
+```
+Date,PatientID
+2016-09-05,pid-001
+2015-08-17,pid-002
+2013-07-18,pid-003
+2015-09-22,pid-003
+2015-10-13,pid-003
+2019-01-08,pid-003
+2021-07-24,pid-003
+
+```
+
+
+Using DBT Locally vs Using DBT in the Cloud
+
+* need to reference [ exploratory vs enterprise data pipelines here ]
+* Josh Wills notes on why he used DBT with DuckDB
+
+
+Our tasks for this exercise are listed below:
+ 
+* Create a new conda environment
+* install DuckDB and connector dbt-duckdb
+* load raw synthetic patient checkup data into DuckDB
+* Create a new DBT project
+* Configure/Test the DBT project for access to DuckDB
+* Run our DBT pipeline
+
+Let's start off by building a new environemnt in Conda for our project.
 
 ## Create Environment in Conda
 
@@ -137,23 +129,56 @@ conda create --name my_env
 conda deactivate
 ```
 
+## Working with DuckDB
 
-## Install DBT and DuckDB Connector
+JD Long: 
+
+> "DuckDB on a single large machine doing transformations against parquet files with SQL"
+
+
+From MotherDuck Post: https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7037465343019147265/?origin=SHARED_BY_YOUR_NETWORK
+
+> Combining #duckdb with #dbt for a small side project that is purely SQL-based can be a game-changer.
+> DuckDB offers an excellent way to solve complex problems using SQL, while dbt provides an effective structure to the project. Using dbt with DuckDB allows you to add tests to ensure your solution works even after refactoring.
+> Plus, you can easily share the whole code project next to the data, could it be CSVs or standing on a public S3 bucket.
+
+### What is DuckDB Typically Used For?
+
+https://dlthub.com/docs/blog/duckdb-1M-downloads-users
+
+* Normie Use Cases -- this is compelling 
+* Local Data Workflows Are Going Mainstream, and DuckDB Is at the Center
+
+### Install DBT and DuckDB Connector
 
 [ DuckDB and DBT for this one locally? ]
 
 https://github.com/jwills/dbt-duckdb
 
+
+https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup
+
+> DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics instead of OLTP. The only configuration parameter that is required in your profile (in addition to type: duckdb) is the path field, which should refer to a path on your local filesystem where you would like the DuckDB database file (and it's associated write-ahead log) to be written. You can also specify the schema parameter if you would like to use a schema besides the default (which is called main).
+
+
+
 Quote from the website:
 
-`DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics. It is crazy fast and allows you to read and write data stored in CSV and Parquet files directly, without requiring you to load them into the database first.`
+> DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics. It is crazy fast and allows you to read and write data stored in CSV and Parquet files directly, without requiring you to load them into the database first.
 
-`dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a Modern Data Stack In A Box or a simple and powerful data lakehouse- no Java or Scala required.`
+> dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a Modern Data Stack In A Box or a simple and powerful data lakehouse- no Java or Scala required.
+
+
+https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html
+
+https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup
 
 Install duckdb, dbt, and the connector:
 
-```
 https://duckdb.org/docs/installation/index
+
+
+```
 
 pip3 install dbt-duckdb
 
@@ -170,42 +195,30 @@ The DuckDB CLI (Command Line Interface) is a single, dependency free executable.
 
 ( todo: explain why the CLI is seperate )
 
-### Load our Synthetic Insurance Data into DuckDB
 
 
-`create table fips_test (fips_code VARCHAR, county VARCHAR, state VARCHAR);`
-
-Confirm we can get to the data:
-
-`select * from './data/test_fips_data.csv';`
-
-Now copy the raw data into our table:
-
-`copy fips_test from './data/test_fips_data.csv' (AUTO_DETECT TRUE);`
-
-and then:
-
-`show tables;`
-
-### Connecting to our local DuckDB Install with the `dbt-duckdb` Connector:
-
-https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup
-
-`DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics instead of OLTP. The only configuration parameter that is required in your profile (in addition to type: duckdb) is the path field, which should refer to a path on your local filesystem where you would like the DuckDB database file (and it's associated write-ahead log) to be written. You can also specify the schema parameter if you would like to use a schema besides the default (which is called main).`
-
-
-### Using DBT Locally vs Using DBT in the Cloud
-
-* need to reference [ exploratory vs enterprise data pipelines here ]
-* Josh Wills notes on why he used DBT with DuckDB
 
 ### Load Some Synthetic Patient Data Into DuckDB
 
 
+crank up the local DuckDB instance with the command:
+
+```
+./duckdb my_db_name.duckdb
+```
+
+Note: if you don't give it a database name at start, for some ODD REASON, DuckDB will not let you save the in-memory db later.
+
 * working with raw data with duckdb
 
 ```
-select * from './march_2023_patient_data_load/patient_checkup_logs.csv';
+select * from './patient_checkup_logs.csv';
+```
+
+This should show:
+
+```console
+
 ┌────────────┬────────────┐
 │    Date    │ Patient ID │
 │    date    │  varchar   │
@@ -215,44 +228,12 @@ select * from './march_2023_patient_data_load/patient_checkup_logs.csv';
 │ 2013-07-18 │ pid-003    │
 │ 2015-09-22 │ pid-003    │
 │ 2015-10-13 │ pid-003    │
-│ 2019-01-08 │ pid-003    │
-│ 2021-07-24 │ pid-003    │
-│ 2014-04-12 │ pid-004    │
-│ 2014-06-01 │ pid-004    │
-│ 2020-10-22 │ pid-004    │
-│ 2020-10-29 │ pid-004    │
-│ 2021-01-01 │ pid-004    │
-│ 2022-03-12 │ pid-004    │
-│ 2022-05-15 │ pid-004    │
-│ 2014-02-05 │ pid-005    │
-│ 2016-04-24 │ pid-005    │
-│ 2016-08-27 │ pid-005    │
-│ 2016-12-13 │ pid-005    │
-│ 2017-01-25 │ pid-005    │
-│ 2018-07-31 │ pid-005    │
 │     ·      │    ·       │
 │     ·      │    ·       │
 │     ·      │    ·       │
 │ 2019-12-19 │ pid-1336   │
 │ 2020-01-14 │ pid-1336   │
 │ 2020-09-23 │ pid-1336   │
-│ 2021-02-07 │ pid-1336   │
-│ 2022-09-12 │ pid-1336   │
-│ 2014-02-07 │ pid-1337   │
-│ 2018-01-04 │ pid-1337   │
-│ 2018-11-14 │ pid-1337   │
-│ 2019-05-22 │ pid-1337   │
-│ 2020-01-10 │ pid-1337   │
-│ 2020-04-13 │ pid-1337   │
-│ 2021-01-30 │ pid-1337   │
-│ 2021-11-17 │ pid-1337   │
-│ 2022-03-27 │ pid-1337   │
-│ 2022-07-22 │ pid-1337   │
-│ 2016-01-29 │ pid-1338   │
-│ 2019-05-24 │ pid-1338   │
-│ 2019-12-11 │ pid-1338   │
-│ 2020-02-26 │ pid-1338   │
-│ 2020-10-02 │ pid-1338   │
 ├────────────┴────────────┤
 │  6808 rows (40 shown)   │
 └─────────────────────────┘
@@ -262,10 +243,10 @@ select * from './march_2023_patient_data_load/patient_checkup_logs.csv';
 
 
 ```
-CREATE TABLE t1 AS SELECT * FROM read_csv_auto ('./march_2023_patient_data_load/patient_checkup_logs.csv');
-D select * from t1;
+CREATE TABLE patient_visits AS SELECT * FROM read_csv_auto ('./patient_checkup_logs.csv');
+D select * from patient_visits;
 ┌────────────┬────────────┐
-│    Date    │ Patient ID │
+│    Date    │ PatientID  │
 │    date    │  varchar   │
 ├────────────┼────────────┤
 │ 2016-09-05 │ pid-001    │
@@ -273,41 +254,9 @@ D select * from t1;
 │ 2013-07-18 │ pid-003    │
 │ 2015-09-22 │ pid-003    │
 │ 2015-10-13 │ pid-003    │
-│ 2019-01-08 │ pid-003    │
-│ 2021-07-24 │ pid-003    │
-│ 2014-04-12 │ pid-004    │
-│ 2014-06-01 │ pid-004    │
-│ 2020-10-22 │ pid-004    │
-│ 2020-10-29 │ pid-004    │
-│ 2021-01-01 │ pid-004    │
-│ 2022-03-12 │ pid-004    │
-│ 2022-05-15 │ pid-004    │
-│ 2014-02-05 │ pid-005    │
-│ 2016-04-24 │ pid-005    │
-│ 2016-08-27 │ pid-005    │
-│ 2016-12-13 │ pid-005    │
-│ 2017-01-25 │ pid-005    │
-│ 2018-07-31 │ pid-005    │
 │     ·      │    ·       │
 │     ·      │    ·       │
 │     ·      │    ·       │
-│ 2019-12-19 │ pid-1336   │
-│ 2020-01-14 │ pid-1336   │
-│ 2020-09-23 │ pid-1336   │
-│ 2021-02-07 │ pid-1336   │
-│ 2022-09-12 │ pid-1336   │
-│ 2014-02-07 │ pid-1337   │
-│ 2018-01-04 │ pid-1337   │
-│ 2018-11-14 │ pid-1337   │
-│ 2019-05-22 │ pid-1337   │
-│ 2020-01-10 │ pid-1337   │
-│ 2020-04-13 │ pid-1337   │
-│ 2021-01-30 │ pid-1337   │
-│ 2021-11-17 │ pid-1337   │
-│ 2022-03-27 │ pid-1337   │
-│ 2022-07-22 │ pid-1337   │
-│ 2016-01-29 │ pid-1338   │
-│ 2019-05-24 │ pid-1338   │
 │ 2019-12-11 │ pid-1338   │
 │ 2020-02-26 │ pid-1338   │
 │ 2020-10-02 │ pid-1338   │
@@ -321,16 +270,30 @@ D select * from t1;
 
 
 ```
-describe table t1;
+describe table patient_visits;
 
 ┌─────────────┬─────────────┬─────────┬─────────┬─────────┬─────────┐
 │ column_name │ column_type │  null   │   key   │ default │  extra  │
 │   varchar   │   varchar   │ varchar │ varchar │ varchar │ varchar │
 ├─────────────┼─────────────┼─────────┼─────────┼─────────┼─────────┤
 │ Date        │ DATE        │ YES     │         │         │         │
-│ Patient ID  │ VARCHAR     │ YES     │         │         │         │
+│ PatientID   │ VARCHAR     │ YES     │         │         │         │
 └─────────────┴─────────────┴─────────┴─────────┴─────────┴─────────┘
 ```
+
+Now that we have our raw data loaded into DuckDB, we can start building our DBT pipeline.
+
+# Building Our First DBT Pipeline for Patient Metrics
+
+We need to do 3 things before we can run our DBT pipeline:
+
+1. Configure our DBT Profile so that the dbt-duckdb connector can talk to our duckdb database
+2. Create an initial DBT project to hold our DBT pipeline SQL code
+3. Write our specific SQL data modeling code in the DBT project
+
+Once we have these 3 things done, we can run our project and have it produce the materialized tables inside duckdb that hold the Patient checkup data metrics.
+
+Let's dig into how to configure our DBT profile next.
 
 
 ## Configure DBT Profile to Connect to DuckDB Database
@@ -436,8 +399,6 @@ drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 tests
 
 
 
-## Run DBT Pipeline
-
 ### Confirm DBT Profile Connection Works
 
 
@@ -445,14 +406,18 @@ Try the following command:
 
 ```
 dbt debug
+```
 
-20:04:52  Running with dbt=1.1.1
-dbt version: 1.1.1
-python version: 3.8.13
-python path: /Users/josh/opt/anaconda3/envs/hurricane_analytics/bin/python
+we'll see:
+
+```
+18:45:48  Running with dbt=1.4.5
+dbt version: 1.4.5
+python version: 3.9.2
+python path: /usr/local/opt/python@3.9/bin/python3.9
 os info: macOS-10.16-x86_64-i386-64bit
 Using profiles.yml file at /Users/josh/.dbt/profiles.yml
-Using dbt_project.yml file at /Users/josh/Documents/PattersonConsulting/workspaces/snowpark_demos/dbt/dbt_duckdb_test/dbt_project.yml
+Using dbt_project.yml file at /Users/josh/Documents/PattersonConsulting/workspaces/dbt_demos/dbt_hello_world/dbt_hello_world/dbt_project.yml
 
 Configuration:
   profiles.yml file [OK found and valid]
@@ -462,34 +427,227 @@ Required dependencies:
  - git [OK found]
 
 Connection:
-  database: main
+  database: dbt_patient_visits
   schema: main
-  path: /Users/josh/Documents/PattersonConsulting/workspaces/snowpark_demos/duckdb/fips_test_db
+  path: /tmp/dbt_patient_visits.duckdb
   Connection test: [OK connection ok]
 
 All checks passed!
 ```
 
-### Write Our First Data Model
+### DuckDB and Raw File Materializations
+
+from JWills github:
+
+```
+One of DuckDB's most powerful features is its ability to read and write CSV and Parquet files directly, without needing to import/export them from the database first. In dbt-duckdb, we support creating models that are backed by external files via the external materialization strategy:
+```
+
+
+## Write Our First DBT Data Model
 
 What does our data model look like?
 
 ```
---- other dbt stuff ---
+{{ config(materialized='table') }}
 
-select count(Date) as visits, "Patient ID" from t1 group by "Patient ID";
+with patient_data as (
 
---- other dbt stuff ---
+    select count(Date) as visits, PatientID from patient_visits group by PatientID
 
+)
+
+select *
+from patient_data
+
+```
+
+### Configuring the Models to Materialize in 'dbt_project.yml'
+
+
+```
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/ directory
+# as tables. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+models:
+  dbt_duckdb_test:
+    # Config indicated by + and applies to all files under models/example/
+    housing:
+      +materialized: view
+```
+
+where:
+
+* 'dbt_duckdb_test': this is the name of the project
+* 'housing': maps to a subdirectory named 'housing' under the 'models' subdirectory (e.g., "dbt_duckdb_test/models/housing/")
+
+and inside the 'housing/' subdirectory, there should be at least:
+
+* `schema.yml`: contains the names of the models represented by .sql files in the same subdirectory
+* 1 or more .sql files referenced in `schema.yml`
+
+
+#### Schema.yml
+
+
+
+```
+
+version: 2
+
+models:
+  - name: patient_visits_summed_model
+    description: "A starter duckdb dbt model"
+    columns:
+      - name: PatientID
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+      - name: visits
+        description: "the summed visits across time for this patient"
+  - name: patient_visits_summed_over_5
+    description: "Only Patients who made at least 5 visits"
+    columns:
+      - name: PatientID
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+      - name: visits
+        description: "the summed visits across time for this patient"
+
+```
+
+#### patient_visits_summed_model.sql
+
+```
+{{ config(materialized='table') }}
+
+with patient_data as (
+
+    select count(Date) as visits, PatientID from patient_visits group by PatientID
+
+)
+
+select *
+from patient_data
+```
+
+#### patient_visits_summed_over_5.sql
+
+```
+
+{{ config(materialized='table') }}
+
+with patient_data_summed as (
+
+    select * from {{ref('patient_visits_summed_model')}} where visits >= 5
+
+)
+
+select *
+from patient_data_summed
+```
+
+if you'll notice in the second model (patient_visits_summed_over_5.sql), we are referring to the first model (patient_visits_summed_model.sql). 
+
+
+As explained in the dbt docs:
+
+https://docs.getdbt.com/reference/dbt-jinja-functions/ref
+
+```
+The most important function in dbt is ref(); it's impossible to build even moderately complex models without it. ref() is how you reference one model within another. This is a very common behavior, as typically models are built to be "stacked" on top of one another.
 ```
 
 
 
-
-### Run DBT Pipeline Locally
+## Run DBT Pipeline Locally
 
 ```
 dbt run
+```
+
+and we should see:
+
+```
+20:39:59  Running with dbt=1.4.5
+20:39:59  Found 2 models, 4 tests, 0 snapshots, 0 analyses, 296 macros, 0 operations, 0 seed files, 0 sources, 0 exposures, 0 metrics
+20:39:59  
+20:39:59  Concurrency: 1 threads (target='dev')
+20:39:59  
+20:39:59  1 of 2 START sql table model main.patient_visits_summed_model .................. [RUN]
+20:39:59  1 of 2 OK created sql table model main.patient_visits_summed_model ............. [OK in 0.08s]
+20:39:59  2 of 2 START sql table model main.patient_visits_summed_over_5 ................. [RUN]
+20:39:59  2 of 2 OK created sql table model main.patient_visits_summed_over_5 ............ [OK in 0.03s]
+20:39:59  
+20:39:59  Finished running 2 table models in 0 hours 0 minutes and 0.19 seconds (0.19s).
+20:39:59  
+20:39:59  Completed successfully
+20:39:59  
+20:39:59  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+```
+
+### Check DuckDB Materialized Tables
+
+```
+select * from patient_visits_summed_over_5;
+┌────────┬───────────┐
+│ visits │ PatientID │
+│ int64  │  varchar  │
+├────────┼───────────┤
+│      5 │ pid-003   │
+│      7 │ pid-004   │
+│      7 │ pid-005   │
+│      8 │ pid-006   │
+│      8 │ pid-008   │
+│      5 │ pid-009   │
+│      5 │ pid-010   │
+│      7 │ pid-012   │
+│      6 │ pid-013   │
+│      5 │ pid-015   │
+│     10 │ pid-016   │
+│      8 │ pid-017   │
+│      6 │ pid-018   │
+│      6 │ pid-019   │
+│     10 │ pid-020   │
+│      5 │ pid-021   │
+│      5 │ pid-022   │
+│     10 │ pid-023   │
+│      8 │ pid-025   │
+│     10 │ pid-027   │
+│      · │    ·      │
+│      · │    ·      │
+│      · │    ·      │
+│      7 │ pid-1271  │
+│      7 │ pid-254   │
+│      8 │ pid-795   │
+│      7 │ pid-1126  │
+│      5 │ pid-940   │
+│      7 │ pid-986   │
+│      8 │ pid-1135  │
+│      6 │ pid-1141  │
+│     10 │ pid-1208  │
+│      7 │ pid-1235  │
+│     10 │ pid-1302  │
+│     10 │ pid-556   │
+│     10 │ pid-695   │
+│      9 │ pid-1123  │
+│      6 │ pid-1332  │
+│      9 │ pid-617   │
+│      6 │ pid-1112  │
+│     10 │ pid-1308  │
+│      8 │ pid-979   │
+│      6 │ pid-889   │
+├────────┴───────────┤
+│      758 rows      │
+│     (40 shown)     │
+└────────────────────┘
+
 ```
 
 

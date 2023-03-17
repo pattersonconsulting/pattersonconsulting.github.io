@@ -11,31 +11,31 @@ meta_og_image: pct_autogluon_dep_og_card.jpg
 
 # Introduction
 
-DBT is ...
+DBT (Data Build Tool) is an open-source command-line tool that allows data analysts and data engineers a way to manage a collection of data transformations written in SQL or Python for analytics and data science. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.
 
-DuckDB is ...
+More simply, DBT is focused on transforming data --- the 'T' in ELT.
 
-Together, with the `dbt-duckdb` project, they form a "Modern Data Stack In A Box" --- or a simple and powerful data lakehouse (sans Java and Scala).
+DuckDB is an embedded database (think "SQLite"), but designed for OLAP-style analytics instead of OLTP. DuckDB is exceptionally fast and lets you work directly with data stored in files such as CSV and Parquet files directly, without forcing you to do any load operations first.
 
-> dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a Modern Data Stack In A Box or a simple and powerful data lakehouse- no Java or Scala required.
+Together, with the `dbt-duckdb` project, they form a ["Modern Data Stack In A Box"](https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html) --- or a simple and powerful data lakehouse (sans Java and Scala).
 
-
-https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html
-
-What will we do in this article:
+In this tutorial you will:
 
 * prepare some metrics from raw patient checkup visit data for use in a machine learning pipeline
-* we'll use DBT to produce the summary statistics, or metrics, from the raw data sitting in DuckDB
-* We use DuckDB here as a simple local option so as to not force the reader to set up any cloud infrastructure
+* use DBT to produce the summary statistics, or metrics, from the raw data sitting in DuckDB
+* use DuckDB here as a simple local option so as to not force the reader to set up any cloud infrastructure
 
+```
+Editing Note: Metrics and Models are two distinctly different things in DBT --- need to clean up terminology here
+```
 
-What will I learn from this article?
+Further, you'll learn:
 
 * a gentle introduction to DBT and DuckDB
 * an understanding of how DBT fits into modern data pipelines
 * an understanding of how DuckDB and DBT together can create a simple data stack for local analysis
 
-
+We'll build our DBT "Hello World" project with synthetic patient data.
 
 ## Building Our DBT Hello World Project with Synthetic Patient Data
 
@@ -55,15 +55,11 @@ Examples of metrics in the Marketing Data world:
 
 > "All of these units of measurement report activity or results of very specific user interactions in your marketing efforts"
 
+## The Scenario
 
 The data engineering team has requested that the analysts pull the data from the (cloud) data warehouse and provide the metrics per customer for use in their modeling experiments as a feature.
 
 In this exercise you'll take synthetic patient checkup history data (which insurance companies are able to access) and use DBT to build data models and produce the patient metrics. We'll use DuckDB for our database as its a quick and easy database to use locally and keeps us from having to provision cloud infrastructure for a simple Hello World example.
-
-
-# Building a Local Data Stack with DBT and DuckDB
-
-So let's get started by first describing our data.
 
 The Synthetic Patient Doctor Visit Data is shown below:
 
@@ -80,12 +76,9 @@ Date,PatientID
 
 ```
 
+So let's dig into build a local data stack.
 
-Using DBT Locally vs Using DBT in the Cloud
-
-* need to reference [ exploratory vs enterprise data pipelines here ]
-* Josh Wills notes on why he used DBT with DuckDB
-
+# Building a Local Data Stack with DBT and DuckDB
 
 Our tasks for this exercise are listed below:
  
@@ -99,7 +92,6 @@ Our tasks for this exercise are listed below:
 Let's start off by building a new environemnt in Conda for our project.
 
 ## Create Environment in Conda
-
 
 To create an environment in Conda, you can follow these steps:
 
@@ -116,7 +108,7 @@ conda create --name my_env
 4. Once the environment is created, activate it by typing:
 
 ```
-
+conda activate my_env
 ```
 
 5. Your prompt should now show the name of the environment in parentheses, indicating that it's active.
@@ -131,6 +123,14 @@ conda deactivate
 
 ## Working with DuckDB
 
+DuckDB sits in an interesting spot as it offers an excellent way to solve complex problems using SQL while keeping things simple and allowing you to ....
+
+DuckDB is compelling because you only have to point it at the data file you'd like to work with, giving you a short-cut to running SQL against CSV, Parquet, and other data files. Ease of use and time to insight are two key properties of why DBT has become a key tool for experimenting in the data "lab".
+
+Why use DuckDB or MySQL or SQLLite?
+
+When should you use DuckDB?
+
 JD Long: 
 
 > "DuckDB on a single large machine doing transformations against parquet files with SQL"
@@ -138,7 +138,6 @@ JD Long:
 
 From MotherDuck Post: https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7037465343019147265/?origin=SHARED_BY_YOUR_NETWORK
 
-> Combining #duckdb with #dbt for a small side project that is purely SQL-based can be a game-changer.
 > DuckDB offers an excellent way to solve complex problems using SQL, while dbt provides an effective structure to the project. Using dbt with DuckDB allows you to add tests to ensure your solution works even after refactoring.
 > Plus, you can easily share the whole code project next to the data, could it be CSVs or standing on a public S3 bucket.
 
@@ -360,6 +359,12 @@ dbt_duckdb_test:
 
 ## Initialize DBT Project
 
+> The top level of a dbt workflow is the project. A project is a directory of a .yml file (the project configuration) and either .sql or .py files (the models). 
+
+> The project file tells dbt the project context, and the models let dbt know how to build a specific data set.
+
+> Your organization may need only a few models, but more likely you’ll need a complex structure of nested models to transform the required data. A model is a single file containing a final select statement, and a project can have multiple models, and models can even reference each other.
+
 From:
 https://docs.getdbt.com/docs/building-a-dbt-project/projects
 
@@ -445,6 +450,10 @@ One of DuckDB's most powerful features is its ability to read and write CSV and 
 
 
 ## Write Our First DBT Data Model
+
+https://docs.getdbt.com/docs/build/sql-models
+
+>  Models are primarily written as a select statement and saved as a .sql file.
 
 What does our data model look like?
 
@@ -567,6 +576,8 @@ The most important function in dbt is ref(); it's impossible to build even moder
 
 
 ## Run DBT Pipeline Locally
+
+> When you execute dbt run, you are running a model that will transform your data without that data ever leaving your warehouse.
 
 ```
 dbt run

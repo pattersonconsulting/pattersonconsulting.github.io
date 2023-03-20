@@ -3,10 +3,10 @@ layout: post
 published-on: February 15th 2023
 author: Josh Patterson
 title: DBT Hello World with DuckDB
-subtitle: Part 1 of 3 - Building Our First DBT Pipeline
-description: Part 1 of 3 - In this post we'll .....
+subtitle: Part 1 of 3 - Setting up a Local Data Stack with DBT and DuckDB
+description: Part 1 of 3 - In this post we'll set up a local data stack with DBT and DuckDB to prepare for building our first DBT workflow in Part 2 of this series.
 keywords: snowflake, duckdb, dbt, data engineering, cicd, sql
-meta_og_image: pct_autogluon_dep_og_card.jpg
+meta_og_image: pct_dbt_duckdb_og_card.jpg
 ---
 
 # Introduction

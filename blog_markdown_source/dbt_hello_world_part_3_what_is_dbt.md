@@ -6,7 +6,7 @@ title: DBT Hello World with DuckDB
 subtitle: Part 3 of 3 - What is DBT?
 description: In this post we'll .....
 keywords: snowflake, duckdb, dbt, data engineering, cicd, sql
-meta_og_image: pct_dbt_duckdb_og_card.jpg
+meta_og_image: pct_dbt_duckdb_part_3_og_card.jpg
 ---
 
 # What is DBT?

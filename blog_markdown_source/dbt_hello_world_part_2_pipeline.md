@@ -6,7 +6,7 @@ title: DBT Hello World with DuckDB
 subtitle: Part 2 of 3 - Building Our First DBT Pipeline for Patient History Data Summarization
 description: In this post we'll build our first DBT pipelineto summarize patient history data for downstream data engineers
 keywords: snowflake, duckdb, dbt, data engineering, cicd, sql
-meta_og_image: pct_dbt_duckdb_og_card.jpg
+meta_og_image: pct_dbt_duckdb_part_2_og_card.jpg
 ---
 
 # Introduction

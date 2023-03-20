@@ -11,6 +11,12 @@ meta_og_image: pct_dbt_duckdb_og_card.jpg
 
 # Introduction
 
+::::: {#special .sidebar}
+Here is a paragraph.
+
+And another.
+:::::
+
 [DBT](https://www.getdbt.com/) (Data Build Tool) is an open-source command-line tool that allows data analysts and data engineers a way to manage a collection of data transformations written in SQL or Python for analytics and data science. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.
 
 More simply, DBT is focused on transforming data --- the 'T' in ELT.

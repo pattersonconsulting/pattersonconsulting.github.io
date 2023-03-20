@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DBT Hello World with DuckDB - Part 1 of 3 - Building Our First DBT Pipeline</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="Part 1 of 3 - In this post we’ll ….." />
+	<meta name="keywords" content="snowflake, duckdb, dbt, data engineering, cicd, sql" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="DBT Hello World with DuckDB - Part 1 of 3 - Building Our First DBT Pipeline"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_1_setup.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="Part 1 of 3 - In this post we’ll ….."/>
+	
+
+	<meta name="twitter:title" content="DBT Hello World with DuckDB - Part 1 of 3 - Building Our First DBT Pipeline" />
+	<meta data-rh="true" property="twitter:description" content="Part 1 of 3 - In this post we’ll ….."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_1_setup.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>DBT Hello World with DuckDB</h1>
+						<p>
+							<h3>Part 1 of 3 - Building Our First DBT Pipeline</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: February 15th 2023</p>
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#building-our-dbt-hello-world-project-with-synthetic-patient-data">Building Our DBT Hello World Project with Synthetic Patient Data</a></li>
+<li><a href="#the-scenario">The Scenario</a></li>
+</ul></li>
+<li><a href="#building-a-local-data-stack-with-dbt-and-duckdb">Building a Local Data Stack with DBT and DuckDB</a><ul>
+<li><a href="#create-environment-in-conda">Create Environment in Conda</a></li>
+<li><a href="#working-with-duckdb">Working with DuckDB</a></li>
+<li><a href="#install-dbt-and-duckdb-connector">Install DBT and DuckDB Connector</a></li>
+<li><a href="#configure-dbt-profile-to-connect-to-duckdb-database">Configure DBT Profile to Connect to DuckDB Database</a></li>
+</ul></li>
+<li><a href="#summary-on-to-part-2">Summary / On to Part 2</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p><a href="https://www.getdbt.com/">DBT</a> (Data Build Tool) is an open-source command-line tool that allows data analysts and data engineers a way to manage a collection of data transformations written in SQL or Python for analytics and data science. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.</p>
+<p>More simply, DBT is focused on transforming data — the ‘T’ in ELT.</p>
+<p><a href="https://duckdb.org/">DuckDB</a> is an embedded database (think “SQLite”), but designed for OLAP-style analytics instead of OLTP. DuckDB is exceptionally fast and lets you work directly with data stored in files such as CSV and Parquet files directly, without forcing you to do any load operations first.</p>
+<p>Together, with the <a href="https://github.com/jwills/dbt-duckdb"><code>dbt-duckdb</code></a> project, they form a <a href="https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html">“Modern Data Stack In A Box”</a> — or a simple and powerful data lakehouse (sans Java and Scala).</p>
+<p>This is part 1 in a 3 part series on using DBT and DuckDB</p>
+<ul>
+<li>Part 1: <a href="./dbt_hello_world_part_1_setup.html">Setup Environment</a></li>
+<li>Part 2: <a href="./dbt_hello_world_part_2_pipeline.html">Build the Pipeline</a></li>
+<li>Part 3: Epilogue: What is DBT?</li>
+</ul>
+<p>In Part 1 of 3 of this tutorial you will:</p>
+<ul>
+<li>prepare an intermediate dbt data model from raw patient checkup visit data for use by data engineers downstream in a machine learning pipeline</li>
+<li>use DBT to produce the summary aggregation as a data model from the raw data sitting in DuckDB</li>
+<li>use DuckDB here as a simple local option so as to not force the reader to set up any cloud infrastructure</li>
+</ul>
+<p>Further, you’ll learn:</p>
+<ul>
+<li>a gentle introduction to DBT and DuckDB</li>
+<li>an understanding of how DBT fits into modern data pipelines</li>
+<li>an understanding of how DuckDB and DBT together can create a simple data stack for local analysis</li>
+</ul>
+<p>We’ll build our DBT “Hello World” project with synthetic patient data.</p>
+<h2 id="building-our-dbt-hello-world-project-with-synthetic-patient-data">Building Our DBT Hello World Project with Synthetic Patient Data</h2>
+<p>In our “hello world” scenario, we want to build a summarization of how often a set of patients get their yearly physical checkup. The hypothetical company here is an insurance company (“InsurCo”) evaluating a set of customers and building forecasts with machine learning to predict how much the customer will potentially cost in terms of healthcare while under an insurance policy.</p>
+<h2 id="the-scenario">The Scenario</h2>
+<p>The data engineering team has requested that the analysts pull the data from the (cloud) data warehouse and provide the a consistent calculation per customer for use in their modeling experiments as a feature.</p>
+<p>In this exercise you’ll take synthetic patient checkup history data (which insurance companies are able to access) and use DBT to build data models and produce the patient checkup summary data model (e.g., “cached table in the database”). We’ll use DuckDB for our database as its a quick and easy database to use locally and keeps us from having to provision cloud infrastructure for a simple Hello World example.</p>
+<p>The Synthetic Patient Doctor Visit Data is shown below:</p>
+<pre><code>Date,PatientID
+2016-09-05,pid-001
+2015-08-17,pid-002
+2013-07-18,pid-003
+2015-09-22,pid-003
+2015-10-13,pid-003
+2019-01-08,pid-003
+2021-07-24,pid-003
+</code></pre>
+<p>So let’s dig into building a local data stack.</p>
+<h1 id="building-a-local-data-stack-with-dbt-and-duckdb">Building a Local Data Stack with DBT and DuckDB</h1>
+<p>Our tasks for this exercise are listed below:</p>
+<ul>
+<li>Part 1: Setup
+<ul>
+<li>Create a new conda environment</li>
+<li>install DuckDB and connector dbt-duckdb</li>
+<li>load raw synthetic patient checkup data into DuckDB</li>
+</ul></li>
+<li>In Part 2: Build the Pipeline
+<ul>
+<li>Create a new DBT project</li>
+<li>Configure/Test the DBT project for access to DuckDB</li>
+<li>Run our DBT pipeline</li>
+</ul></li>
+</ul>
+<p>Let’s start off by building a new environemnt in Conda for our project.</p>
+<h2 id="create-environment-in-conda">Create Environment in Conda</h2>
+<p>To create an environment in Conda, you can follow these steps:</p>
+<ol type="1">
+<li><p>Open your terminal (or Anaconda Prompt on Windows).</p></li>
+<li><p>Type the following command to create a new environment named my_env (you can replace my_env with your preferred name):</p></li>
+</ol>
+<pre><code>conda create --name [my_env]</code></pre>
+<ol start="3" type="1">
+<li><p>Conda will ask you to confirm the installation of any additional packages that are required to create the environment. Type y and press Enter to proceed.</p></li>
+<li><p>Once the environment is created, activate it by typing:</p></li>
+</ol>
+<pre><code>conda activate [my_env]</code></pre>
+<ol start="5" type="1">
+<li><p>Your prompt should now show the name of the environment in parentheses, indicating that it’s active.</p></li>
+<li><p>You can now install any packages you need for your project using conda install or pip install.</p></li>
+<li><p>When you’re done working in the environment, you can deactivate it by typing:</p></li>
+</ol>
+<pre><code>conda deactivate</code></pre>
+<p>Now that we have an environment to work in, let’s get started with using DuckDB.</p>
+<h2 id="working-with-duckdb">Working with DuckDB</h2>
+<p>DuckDB sits in an interesting spot as it offers an excellent way to solve complex problems using SQL while keeping things simple. DuckDB is a columnar, in-memory SQL database designed for analytical workloads. It’s key features are:</p>
+<ul>
+<li>Fast query performance with low memory overhead for large datasets</li>
+<li>SQL interface making it easy to use for the broadest audience</li>
+<li>Lightweight database that can be easily installed and run on a local machine, without the need for a separate server or cluster</li>
+<li>Open-source project, which means that it is free to use and can be modified and extended by the community</li>
+</ul>
+<p>DuckDB is compelling because you only have to point it at the data file you’d like to work with, giving you a short-cut to running SQL against CSV, Parquet, and other data files. Ease of use and time to insight are two key properties of why DBT has become a key tool for experimenting in the data “lab”.</p>
+<p>In a conversation with me, JD Long commented that he prefers DuckDB “when the data fits on a single machine so that he doesn’t have to stand up a cluster for Spark”.</p>
+<p>As stated by the DuckDB Website:</p>
+<blockquote>
+<p>DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics. It is crazy fast and allows you to read and write data stored in CSV and Parquet files directly, without requiring you to load them into the database first.</p>
+</blockquote>
+<h3 id="what-is-duckdb-typically-used-for">What is DuckDB Typically Used For?</h3>
+<p>A recent article at dlthub.com, <a href="https://dlthub.com/docs/blog/duckdb-1M-downloads-users">“As DuckDB crosses 1M downloads / month, what do its users do?”</a>, had some interesting notes on how DuckDB is being used. Among the use cases, they were seeing DuckDB being used as a processing enging for local data workflows.</p>
+<p>They also called out how many users (“Normies”) enjoyed the simplicity of the DuckDB user experience . I found both of those usage trends worth of note.</p>
+<p>With those points noted, let’s move on and install DBT and the dbt-duckdb connector.</p>
+<h2 id="install-dbt-and-duckdb-connector">Install DBT and DuckDB Connector</h2>
+<p>As <a href="https://github.com/jwills/dbt-duckdb">described on the website</a>:</p>
+<blockquote>
+<p>dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a <a href="https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html">Modern Data Stack In A Box</a> or a simple and powerful data lakehouse- no Java or Scala required.</p>
+</blockquote>
+<p>You can also read further about the connector on dbt’s website as well:</p>
+<p>https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup</p>
+<p>This project is hosted on PyPI so we can use pip to install the connector and dependencies:</p>
+<pre><code>
+pip3 install dbt-duckdb
+</code></pre>
+<p>Once that is installed, we’ll need the DuckDB CLI to work directly with DuckDB from the local command line to load our dataset.</p>
+<h3 id="duckdb-cli">DuckDB CLI</h3>
+<p>The DuckDB CLI (Command Line Interface) is a single, dependency free executable.</p>
+<p>Download it from:</p>
+<p>https://duckdb.org/docs/api/cli.html</p>
+<p>Make sure and get the version of the CLI that matches the version of DuckDB you have installed locally via pip.</p>
+<p>Now let’s load some data for analysis.</p>
+<h3 id="load-some-synthetic-patient-data-into-duckdb">Load Some Synthetic Patient Data Into DuckDB</h3>
+<p>Let’s crank up the local DuckDB CLI with the command:</p>
+<pre><code>./duckdb dbt_patient_visits.duckdb</code></pre>
+<p>Note: if you don’t give it a database name at start, for some ODD REASON, DuckDB will not let you save the in-memory db later.</p>
+<p>Once we’re inside the CLI the first command you want to know about is how to quit:</p>
+<pre><code>.q [enter]</code></pre>
+<p>Typing .q or .quit will quit the CLI and get you back to your shell.</p>
+<p>Now, once we’re back inside the CLI, let’s see if we can access our local patient data in CSV form with the command:</p>
+<pre><code>select * from &#39;./patient_checkup_logs.csv&#39;;</code></pre>
+<p>This should show:</p>
+<pre class="console"><code>
+┌────────────┬────────────┐
+│    Date    │ Patient ID │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-19 │ pid-1336   │
+│ 2020-01-14 │ pid-1336   │
+│ 2020-09-23 │ pid-1336   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘</code></pre>
+<p>The interesting part about the command we just executed is that we used a SQL command to query a raw file as we would a table. DuckDB is quite flexible like that.</p>
+<p>Let’s quickly load the checkup visit csv file into DuckDB and let DuckDB automatically infer the schema with the <code>read_csv_auto()</code> command:</p>
+<pre><code>CREATE TABLE patient_visits AS SELECT * FROM read_csv_auto (&#39;./patient_checkup_logs.csv&#39;);
+
+select * from patient_visits;
+┌────────────┬────────────┐
+│    Date    │ PatientID  │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-11 │ pid-1338   │
+│ 2020-02-26 │ pid-1338   │
+│ 2020-10-02 │ pid-1338   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘
+</code></pre>
+<p>We now have a table loaded into our DuckDB database, as we can see when we type the following <code>describe</code> command:</p>
+<pre><code>describe table patient_visits;
+
+┌─────────────┬─────────────┬─────────┬─────────┬─────────┬─────────┐
+│ column_name │ column_type │  null   │   key   │ default │  extra  │
+│   varchar   │   varchar   │ varchar │ varchar │ varchar │ varchar │
+├─────────────┼─────────────┼─────────┼─────────┼─────────┼─────────┤
+│ Date        │ DATE        │ YES     │         │         │         │
+│ PatientID   │ VARCHAR     │ YES     │         │         │         │
+└─────────────┴─────────────┴─────────┴─────────┴─────────┴─────────┘</code></pre>
+<p>Lastly, let’s configure our DBT profile to see DuckDB as a database it can connect to for data processing.</p>
+<h2 id="configure-dbt-profile-to-connect-to-duckdb-database">Configure DBT Profile to Connect to DuckDB Database</h2>
+<p>To configure DBT to connect to a database, you need to create a configuration file called <code>profiles.yml</code>. This file should contain the necessary connection information for each database you want to connect to.</p>
+<p>On OSX for example, the DBT profile.yml file lives at:</p>
+<pre><code>~/.dbt/profiles.yml</code></pre>
+<p>Let’s now edit our <code>profiles.yml</code></p>
+<h3 id="configure-the-profile-for-duckdb">Configure the Profile for DuckDB</h3>
+<p>In the code listing below, we can see some sample contents of a type <code>profiles.yml</code> file:</p>
+<pre><code>
+...
+
+dbt_duckdb_patient_visits:
+  outputs:
+   dev:
+     type: duckdb
+     path: /Users/josh/Documents/PattersonConsulting/workspaces/dbt_demos/dbt_hello_world/patient_db.duckdb
+  target: dev
+
+...
+</code></pre>
+<p>The connection we’ll use for this demo is <code>dbt_duckdb_patient_visits</code> and we’ll reference that in our dbt project in a moment. Let’s now create a new DBT project.</p>
+<p>Now that we have our raw data loaded into DuckDB, we can start building our DBT pipeline in <a href="./dbt_hello_world_part_2_pipeline.html">part 2 of 3</a> in this blog series.</p>
+<h1 id="summary-on-to-part-2">Summary / On to Part 2</h1>
+<p>In this blog post we showed you have to setup a local data stack environment based on DBT and DuckDB. For more information on DBT, check out their documentation. For more information on cloud infrastructure, check out the rest of the articles in our blog.</p>
+<p>We also offer private workshops for companies on topics such as creating and running DBT pipelines (on multiple platforms such as Snowflake and Fivetran), please feel free to <a href="../contact.html">reach out</a> if you’d like to discuss attending one of our workshops.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

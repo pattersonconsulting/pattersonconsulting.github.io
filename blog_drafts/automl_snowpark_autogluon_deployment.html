@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Snowflake Python UDF AutoML Predictions with Amazon AutoGluon - Custom Python Dependencies on Snowflake with Python Snowpark</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll take a look at deploying an AutoGluon AutoML model on Snowflake as part of a Python UDF that requires custom Python dependencies" />
+	<meta name="keywords" content="snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Snowflake Python UDF AutoML Predictions with Amazon AutoGluon - Custom Python Dependencies on Snowflake with Python Snowpark"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/automl_snowpark_autogluon_deployment.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll take a look at deploying an AutoGluon AutoML model on Snowflake as part of a Python UDF that requires custom Python dependencies"/>
+	
+
+	<meta name="twitter:title" content="Snowflake Python UDF AutoML Predictions with Amazon AutoGluon - Custom Python Dependencies on Snowflake with Python Snowpark" />
+	<meta data-rh="true" property="twitter:description" content="In this post we’ll take a look at deploying an AutoGluon AutoML model on Snowflake as part of a Python UDF that requires custom Python dependencies"/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/automl_snowpark_autogluon_deployment.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Snowflake Python UDF AutoML Predictions with Amazon AutoGluon</h1>
+						<p>
+							<h3>Custom Python Dependencies on Snowflake with Python Snowpark</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: February 15th 2023</p>
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<h1 id="introduction-and-overview">Introduction and Overview</h1>
+<p><img align="right" src="./images/midjourney_forrest_snowpark_automl.png" alt="Forrest Image generated by Midjourney"></p>
+<p>In some of our previous posts we showed the reader how to deploy machine learning models in different ways:</p>
+<ul>
+<li><a href="http://www.pattersonconsultingtn.com/blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Saving the Model Local to the Application</a></li>
+<li><a href="http://www.pattersonconsultingtn.com/blog/predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Packaging the Model as Part of the Snowflake UDF Code</a></li>
+<li><a href="http://www.pattersonconsultingtn.com/blog/deploying_huggingface_with_kfserving.html">Building Custom Model Servers on Kubernetes with KFServing</a></li>
+</ul>
+<p>In this post we’ll take a look at deploying an <a href="https://auto.gluon.ai/">AutoGluon</a> AutoML model on Snowflake as part of a Python UDF that requires custom Python dependencies not available as part of the provided <a href="https://repo.anaconda.com/pkgs/snowflake/">Anaconda Snowflake repository</a>.</p>
+<p>We’ll explain how to import a “wheel” file that has been downloaded from PyPi and use it as a dependency in a Python UDF on Snowflake.</p>
+<h2 id="goals-of-exercise">Goals of Exercise</h2>
+<p>In this post we’ll show two main points:</p>
+<ol type="1">
+<li>how to load external python dependencies for Snowpark Python UDFs (pip packages, but are not part of Snowflake’s Anaconda channel)</li>
+<li>how to get AutoGluon working with Snowpark Python UDFs</li>
+</ol>
+<p>With that in mind, let’s dig into how to load external python dependenices and make them available to our Python UDF on Snowflake.</p>
+<hr />
+<h1 id="part-1-loading-external-python-dependencies-for-snowpark-python-udfs">Part 1: Loading External Python Dependencies for Snowpark Python UDFs</h1>
+<p>The general process for planning and deploying external python dependencies for Python UDFs on Snowflake is:</p>
+<ol type="1">
+<li>determine which dependencies you need for the Python UDF on Snowflake</li>
+<li>Check whether the required package is available in <a href="https://repo.anaconda.com/pkgs/snowflake/">anaconda repository</a> or not</li>
+<li>download the <a href="https://docs.fileformat.com/compression/whl/">.whl files</a> for the dependencies you need from <a href="https://pypi.org/">Pypi</a></li>
+</ol>
+<p>A WHL file is <a href="https://docs.fileformat.com/compression/whl/">defined</a> as:</p>
+<blockquote>
+<p>A WHL (Wheel) file is a distribution package file saved in Python’s wheel format. It is a standard format installation of Python distributions and contains all the files and metadata required for installation. The WHL file also contains information about the Python versions and platforms supported by this wheel file. Similar to an MSI setup file, WHL file format is a ready-to-install format that allows running the installation package without building the source distribution.</p>
+</blockquote>
+<p>Once we have the .whl files locally, we can import these into Snowflake with the following steps:</p>
+<ol type="1">
+<li>create a stage to hold the .whl files on Snowflake</li>
+<li>upload each .whl file to the stage you created (e.g., via a SQL PUT command, or using the Session object in the <a href="https://docs.snowflake.com/en/developer-guide/snowpark/python/index">Snowpark Python API</a>)</li>
+<li>upload a python script (<code>snowflake_whl_loader.py</code>) to unzip and add dependency .whl files to the Snowflake instance’s path variable</li>
+<li>write the Python UDF and reference the python script (<code>snowflake_whl_loader.py</code>) to allow your code to use the dependencies</li>
+</ol>
+<p>The caveat is that this should work under the following conditions:</p>
+<ol type="1">
+<li>the python package is platform-independant</li>
+<li>the python package doesn’t require OS-native libraries or specific CPU architectures</li>
+</ol>
+<p>Let’s look at some details on the steps below.</p>
+<h2 id="collect-dependency-whl-files">Collect Dependency WHL Files</h2>
+<p>After you’ve determined which dependencies you need for your UDF, check to see if Snowflake already has the dependency in the built-in Anaconda repo:</p>
+<p><a href="https://repo.anaconda.com/pkgs/snowflake/" class="uri">https://repo.anaconda.com/pkgs/snowflake/</a></p>
+<p>If you don’t see your dependency in that list, then head over to <a href="pypi.org">https://pypi.org/</a> to download the .whl files for each dependency you need.</p>
+<p>Note: you may end up having to track down several extra dependencies that aren’t obvious at first.</p>
+<h2 id="use-snowpark-python-api-session-to-upload-files">Use Snowpark Python API Session to Upload Files</h2>
+<p>Once you have the .whl files you need downloaded locally, now you need to upload the files to a stage (e.g., “<code>@AUTOGLUON_PACKAGES</code>”) on Snowflake. You can do this easily from a python jupyter notebook (with Snowpark python dependencies) with the <code>Session.File</code> class as seen in the example below:</p>
+<pre><code>session.file.put( &#39;./install/autogluon_whl_files/autogluon-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )</code></pre>
+<p>Once we have the external dependency .whl files in a Snowflake stage, we can start building our Python UDF.</p>
+<h2 id="upload-our-whl-file-loader">Upload Our WHL File Loader</h2>
+<p>We also need to upload our python script to install the WHL files from the Snowflake stage remotely. You can see an example of this below where we again use the <code>Session.File</code> class to upload the file to the stage.</p>
+<pre><code>session.file.put( &#39;./install/snowpark_whl_loader.py&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )</code></pre>
+<p>The <code>snowpark_whl_loader.py</code> script uses the approach <a href="https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-creating#unzipping-a-staged-file">described in Snowflake’s documentation</a>. In this design pattern the script extracts the contents of a zip file in a stage to the system path. Finally the directory that is extracted from the zip file is added to the system path. The code section below shows the core of our whl file loader:</p>
+<pre><code>class FileLock:
+   def __enter__(self):
+      self._lock = threading.Lock()
+      self._lock.acquire()
+      self._fd = open(&#39;/tmp/lockfile.LOCK&#39;, &#39;w+&#39;)
+      fcntl.lockf(self._fd, fcntl.LOCK_EX)
+
+   def __exit__(self, type, value, traceback):
+      self._fd.close()
+      self._lock.release()
+
+import sys,os,threading,fcntl,zipfile
+IMPORT_DIRECTORY_NAME = &quot;snowflake_import_directory&quot;
+import_dir = sys._xoptions[IMPORT_DIRECTORY_NAME]
+
+def load(file_name):
+    path=import_dir + file_name
+    extracted=&#39;/tmp/&#39; + file_name
+    with FileLock():
+        if not os.path.isdir(extracted):
+            with zipfile.ZipFile(path, &#39;r&#39;) as myzip:
+                myzip.extractall(extracted)
+                myzip.printdir()
+    sys.path.append(extracted)</code></pre>
+<p>Later in this blog post we’ll show a few extra helper methods in the loader file that are specific to our AutoGluon loading goals.</p>
+<p>Next, let’s install our UDF on Snowflake.</p>
+<h2 id="install-udf-with-external-dependencies">Install UDF with External Dependencies</h2>
+<p>Using the Snowpark Python API we can build and install a Python UDF from a Jupyter notebook.</p>
+<p>The things we need to do to create and install this Python UDF on Snowflake is to import any files in stages that we may need in our Python UDF Code. In this case we need:</p>
+<ol type="1">
+<li>any WHL files we need as dependencies</li>
+<li>any python scripts we need, such as the WHL file loading script</li>
+<li>the list of packages our UDF code needs to use that are already in the Anaconda repository available inside Snowflake</li>
+</ol>
+<p>Our UDF code might look like:</p>
+<pre><code>
+...
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon.features-0.6.2-py3-none-any.whl&#39; )
+
+session.add_import( &#39;@AUTOGLUON_PACKAGES/snowpark_whl_loader.py&#39;)
+
+pkgs_list = [&#39;xgboost&#39;, &#39;pandas&#39;, &#39;requests&#39;, &#39;tqdm&#39;, &#39;psutil&#39;, &#39;boto3&#39;, &#39;joblib&#39;,&#39;scikit-learn&#39;, &#39;networkx&#39;, &#39;setuptools&#39;]
+
+@udf(name=&#39;test_autogluon_fn&#39;,session=session,packages=pkgs_list,replace=True,is_permanent=True,stage_location=&#39;@autogluon_expense_forecast_udfs&#39;)
+def test_autogluon_fn(input_variable_list: list) -&gt; float:
+    import sys, os
+...
+</code></pre>
+<p>As we can see in the code snippet above, we are adding both some WHL files and then the <code>snowpark_whl_loader.py</code> script we created with the <code>session.add_import()</code> method.</p>
+<p>Once we have the stage files imported to our session, they are available locally to the snowflake instance python code. However, for the WHL files, we need to unpack them and add them to the system path.</p>
+<h3 id="install-dependencies-on-remote-snowflake-instance-manually">Install Dependencies on Remote Snowflake Instance Manually</h3>
+<p>Once we have the depenency WHL files and the loader script imported into our UDF Python code, we can now install the dependencies with the loader script.</p>
+<p>The code listing below shows all of the lines of our install script <code>snowpark_whl_loader.py</code>:</p>
+<pre><code>class FileLock:
+   def __enter__(self):
+      self._lock = threading.Lock()
+      self._lock.acquire()
+      self._fd = open(&#39;/tmp/lockfile.LOCK&#39;, &#39;w+&#39;)
+      fcntl.lockf(self._fd, fcntl.LOCK_EX)
+
+   def __exit__(self, type, value, traceback):
+      self._fd.close()
+      self._lock.release()
+
+import sys,os,threading,fcntl,zipfile
+IMPORT_DIRECTORY_NAME = &quot;snowflake_import_directory&quot;
+import_dir = sys._xoptions[IMPORT_DIRECTORY_NAME]
+
+def load(file_name):
+    path=import_dir + file_name
+    extracted=&#39;/tmp/&#39; + file_name
+    with FileLock():
+        if not os.path.isdir(extracted):
+            with zipfile.ZipFile(path, &#39;r&#39;) as myzip:
+                myzip.extractall(extracted)
+                myzip.printdir()
+    sys.path.append(extracted)
+
+
+
+def install_autogluon():
+
+    load( &quot;autogluon-0.6.2-py3-none-any.whl&quot; )
+    load( &quot;autogluon.tabular-0.6.2-py3-none-any.whl&quot; )
+    load( &quot;autogluon.common-0.6.2-py3-none-any.whl&quot; )
+    load( &quot;autogluon.core-0.6.2-py3-none-any.whl&quot; )
+    load( &quot;autogluon.features-0.6.2-py3-none-any.whl&quot; )</code></pre>
+<p>When our UDF code gets to the following line, the whl dependeny files will be installed:</p>
+<pre><code>snowpark_whl_loader.install_autogluon()</code></pre>
+<p>(Note: We have to upload the dependencies listed in the <code>install_autogluon()</code> method, but we’ll do that a little later int his article.)</p>
+<p>Once the above line executes inside the body of the Python UDF code, you can then reference the code via imports from WHL files after that point in the UDF.</p>
+<p>Now, let’s see all of this in action when we pull in AutoGluon into Snowflake to be used in a UDF with a model saved in a stage.</p>
+<hr />
+<h1 id="part-2-automl-predictions-in-snowpark-python-udfs-on-snowflake-with-autogluon">Part 2: AutoML Predictions in Snowpark Python UDFs on Snowflake with AutoGluon</h1>
+<p>With the above method in mind, we can now look at how to get AutoML and AutoGluon working with Snowpark UDFs</p>
+<p>Steps:</p>
+<ol type="1">
+<li>Train an AutoGluon model</li>
+<li>Save the model locally, zip up the contents of the model directory</li>
+<li>Save the zipped model to a Snowflake stage</li>
+<li>Install AutoGluon dependencies manually as whl files on Snowflake</li>
+<li>Reference AutoGluon dependencies from Snowpark Python UDF Code</li>
+</ol>
+<p>We’ll start out by showing how to train a basic AutoGluon AutoML model.</p>
+<h2 id="training-the-autogluon-model">Training the AutoGluon Model</h2>
+<p>In this example we’re going to only use the models in AutoGluon that are in Scikit-Learn so we don’t have to install extra dependencies beyond AutoGluon dependencies.</p>
+<p>To restrict the models included in an AutoGluon training run, we need to set the <code>hyperparameters</code> parameter for the <code>.fit()</code> method on the <code>TabularPredictor</code> class:</p>
+<p><code>predictor = TabularPredictor(label=label, path=&quot;autogluon_model_insurance_expense&quot;).fit(ag_td_X_train, hyperparameters={'RF':{}, 'XT':{}, 'KNN':{}})</code></p>
+<p>This will produce a local directory on your machine that will contain the serialized version of all of the sub-models that represent the results of the AutoML training process. We can use this directory to instantiate a copy of the model and produce inferences from the model on new data.</p>
+<p>For a quick reference on how to use AutoGluon, check out the <a href="https://auto.gluon.ai/stable/index.html">AutoGluon website</a> or <a href="https://raw.githubusercontent.com/Innixma/autogluon-doc-utils/main/docs/cheatsheets/stable/autogluon-cheat-sheet.jpeg">Cheatsheet</a>.</p>
+<p>For quick reference, this is the list of AutoGluon models it uses in the AutoML process and their implementation:</p>
+<ul>
+<li>‘NN’ (neural network)
+<ul>
+<li>FastAI (Python Based)</li>
+</ul></li>
+<li>‘GBM’ (lightGBM boosted trees)
+<ul>
+<li>Python-based</li>
+</ul></li>
+<li>‘CAT’ (CatBoost boosted trees)
+<ul>
+<li>C-Based</li>
+</ul></li>
+<li>‘RF’ (random forest)
+<ul>
+<li>scikit-learn</li>
+</ul></li>
+<li>‘XT’ (extremely randomized trees),
+<ul>
+<li>scikit-learn</li>
+</ul></li>
+<li>‘KNN’ (k-nearest neighbors),
+<ul>
+<li>scikit-learn</li>
+</ul></li>
+<li>‘LR’ (linear regression)
+<ul>
+<li>scikit-learn</li>
+</ul></li>
+</ul>
+<p>Let’s next take the model directory and zip it up to transport it over to a Snowflake stage for use in our Python UDF.</p>
+<h2 id="save-and-zip-the-model">Save and Zip the Model</h2>
+<p>You can use the helper function below to build a quick zip file from the local model directory produced by AutoGluon.</p>
+<pre><code>import zipfile
+    
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file), 
+                       os.path.relpath(os.path.join(root, file), 
+                                       os.path.join(path, &#39;..&#39;)))
+            print(os.path.join(root, file), 
+                       os.path.relpath(os.path.join(root, file), 
+                                       os.path.join(path, &#39;..&#39;)))</code></pre>
+<p>Once we have the model as a zip file, we can upload it to a Snowflake stage.</p>
+<h2 id="save-our-files-to-snowflake-stage">Save Our Files to Snowflake Stage</h2>
+<p>You can use SQL <code>PUT</code> commands or the Snowpark Python API, as seen below, to upload files to Snowflake stages.</p>
+<p>We save our model zip file to a stage with the Snowpark Python API as shown below.</p>
+<pre><code>session.file.put( &#39;autogluon_model_insurance_expense.zip&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )</code></pre>
+<p>Once we have the model zip file on the stage, we can use the same method to upload all of the WHL files we need to run AutoGluon on a Snowflake machine instance in python:</p>
+<pre><code>session.file.put( &#39;./install/autogluon_whl_files/autogluon-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )
+session.file.put( &#39;./install/autogluon_whl_files/autogluon.tabular-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )
+session.file.put( &#39;./install/autogluon_whl_files/autogluon.common-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )
+session.file.put( &#39;./install/autogluon_whl_files/autogluon.core-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )
+session.file.put( &#39;./install/autogluon_whl_files/autogluon.features-0.6.2-py3-none-any.whl&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )</code></pre>
+<p>Finally, we need to upload the dependency loader python script:</p>
+<pre><code>session.file.put( &#39;./install/snowpark_whl_loader.py&#39;, &quot;@AUTOGLUON_PACKAGES&quot;,overwrite=True, auto_compress=False )</code></pre>
+<p>Now we can build a Python UDF for AutoGluon predictions.</p>
+<h2 id="wire-up-the-snowpark-python-udf-code-to-autogluon">Wire up the Snowpark Python UDF Code to AutoGluon</h2>
+<p>The partial code listing below shows what a cell in your Snowpark Jupyter notebook might will look like:</p>
+<pre><code>session.clear_imports()
+session.clear_packages()
+
+# Add trained model as dependency
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon_model_insurance_expense.zip&#39;)
+
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon-0.6.2-py3-none-any.whl&#39; )
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon.tabular-0.6.2-py3-none-any.whl&#39; )
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon.common-0.6.2-py3-none-any.whl&#39; )
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon.core-0.6.2-py3-none-any.whl&#39; )
+session.add_import( &#39;@AUTOGLUON_PACKAGES/autogluon.features-0.6.2-py3-none-any.whl&#39; )
+                   
+session.add_import( &#39;@AUTOGLUON_PACKAGES/snowpark_whl_loader.py&#39;)
+
+pkgs_list = [&#39;xgboost&#39;, &#39;pandas&#39;, &#39;requests&#39;, &#39;tqdm&#39;, &#39;psutil&#39;, &#39;boto3&#39;, &#39;joblib&#39;,&#39;scikit-learn&#39;, &#39;networkx&#39;, &#39;setuptools&#39;]
+
+@udf(name=&#39;test_autogluon_fn&#39;,session=session,packages=pkgs_list,replace=True,is_permanent=True,stage_location=&#39;@autogluon_expense_forecast_udfs&#39;)
+def test_autogluon_fn(input_variable_list: list) -&gt; float:
+    import sys, os
+    import pandas as pd
+    from joblib import load
+    import requests
+    import tqdm
+    import psutil
+    import boto3
+    import networkx
+    import xgboost
+        
+    import snowpark_whl_loader
+
+    IMPORT_DIRECTORY_NAME = &quot;snowflake_import_directory&quot;
+    import_dir = sys._xoptions[IMPORT_DIRECTORY_NAME]
+
+    location_of_ag_install = snowpark_whl_loader.install_autogluon()
+    
+    ag_model_name = &quot;autogluon_model_insurance_expense&quot;
+    
+    model_unzip_path = &quot;/tmp/&quot;
+    
+    model_path_unzip = model_unzip_path + ag_model_name + &quot;.zip&quot;
+        
+    snowpark_whl_loader.load( &quot;autogluon_model_insurance_expense.zip&quot; )
+    
+    from autogluon.tabular import TabularDataset, TabularPredictor
+    
+    ag_tab_predictor = TabularPredictor.load( model_path_unzip + &quot;/autogluon_model_insurance_expense&quot; )
+
+    
+            
+    input_features = [&#39;AGE&#39;, &#39;BMI&#39;, &#39;CHILDREN&#39;, &#39;SMOKER_NUM&#39;, &#39;REGION&#39;, &#39;SEX&#39; ]
+    
+    df = pd.DataFrame([input_variable_list], columns=input_features)
+    AG_DemoDataset = TabularDataset( df )
+
+    predict_output = ag_tab_predictor.predict( AG_DemoDataset )
+    
+    
+    return predict_output
+
+</code></pre>
+<p>This code will load our dependencies from the stage and then reference the <code>TabularPredictor</code> class, loading the model that was unzipped in the local instance as well.</p>
+<p>The UDF will then take the incoming list of variables passed to the UDF function signature and create a Pandas dataframe, which is then wrapped as a <code>TabularDataset</code> for usage with AutoGluon.</p>
+<p>From there we can get the regression output from our model, and pass that float result back from the function to the calling code (SQL or Snowpark Python API).</p>
+<h2 id="testing-the-snowpark-python-udf">Testing the Snowpark Python UDF</h2>
+<p>To test this Python UDF once its installed on Snowflake we can use the Snowpark Python API and create a local dataframe to use as input to the remote Python UDF, as shown below:</p>
+<pre><code>input_features = [&#39;AGE&#39;, &#39;BMI&#39;, &#39;CHILDREN&#39;, &#39;SMOKER_NUM&#39;, &#39;REGION&#39;, &#39;SEX&#39; ]
+input_variable_list = [19, 27.9, 0, 1, &quot;southwest&quot;, &quot;female&quot; ]
+
+model_inference_input_df = session.create_dataframe([input_variable_list], 
+                                    schema=input_features)
+
+df_inference_snowpark = model_inference_input_df.select(
+    &#39;AGE&#39;, &#39;BMI&#39;, &#39;CHILDREN&#39;, &#39;SMOKER_NUM&#39;, &#39;REGION&#39;, &#39;SEX&#39; , 
+    call_udf(&quot;test_autogluon_fn&quot;, 
+    array_construct(col(&quot;AGE&quot;), col(&quot;BMI&quot;), col(&quot;CHILDREN&quot;), col(&quot;SMOKER_NUM&quot;), col(&quot;REGION&quot;), col(&quot;SEX&quot;))).as_(&quot;AUTO_GLUON_TEST&quot;))</code></pre>
+<p>The result of this operation should be a floating point number from the output of the UDF AutoGluon model inference.</p>
+<h2 id="is-data-engineering-data-science-and-python-on-snowflake-interesting-to-your-organization">Is Data Engineering, Data Science, and Python on Snowflake Interesting to Your Organization?</h2>
+<p>Would you like to have your team work through a series of learning units similar to this article with hands on jupyter notebooks?</p>
+<p><a href="../contact.html">Reach out and say hello</a> — we offer workshops for topics such as “how to get AutoML working on Snowflake” and other topics in Data Engineering and Data Science.</p>
+<h1 id="summary">Summary</h1>
+<p>In this blog post we explained the basics of using external Python dependencies with Python UDFs on Snowflake.</p>
+<p>We also further showed you how to integrate AutoML with AutoGluon on Snowflake via the Snowpark Python API.</p>
+<p>For more similar articles, check out our blog index in the toolbar at the top.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

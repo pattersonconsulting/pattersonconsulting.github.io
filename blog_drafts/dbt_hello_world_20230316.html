@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, duckdb, dbt, data engineering, cicd, sql" />
+  <title>DBT Hello World with DuckDB</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">DBT Hello World with DuckDB</h1>
+<p class="subtitle">Understanding the Basics of Building a Data Pipeline with DBT</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#building-our-dbt-hello-world-project-with-synthetic-patient-data">Building Our DBT Hello World Project with Synthetic Patient Data</a></li>
+<li><a href="#the-scenario">The Scenario</a></li>
+</ul></li>
+<li><a href="#building-a-local-data-stack-with-dbt-and-duckdb">Building a Local Data Stack with DBT and DuckDB</a><ul>
+<li><a href="#create-environment-in-conda">Create Environment in Conda</a></li>
+<li><a href="#working-with-duckdb">Working with DuckDB</a></li>
+<li><a href="#install-dbt-and-duckdb-connector">Install DBT and DuckDB Connector</a></li>
+</ul></li>
+<li><a href="#building-our-first-dbt-pipeline-for-patient-metrics">Building Our First DBT Pipeline for Patient Metrics</a><ul>
+<li><a href="#configure-dbt-profile-to-connect-to-duckdb-database">Configure DBT Profile to Connect to DuckDB Database</a></li>
+<li><a href="#initialize-dbt-project">Initialize DBT Project</a></li>
+<li><a href="#write-our-first-dbt-data-model">Write Our First DBT Data Model</a></li>
+<li><a href="#run-dbt-pipeline-locally">Run DBT Pipeline Locally</a></li>
+</ul></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>DBT (Data Build Tool) is an open-source command-line tool that allows data analysts and data engineers a way to manage a collection of data transformations written in SQL or Python for analytics and data science. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.</p>
+<p>More simply, DBT is focused on transforming data — the ‘T’ in ELT.</p>
+<p>DuckDB is an embedded database (think “SQLite”), but designed for OLAP-style analytics instead of OLTP. DuckDB is exceptionally fast and lets you work directly with data stored in files such as CSV and Parquet files directly, without forcing you to do any load operations first.</p>
+<p>Together, with the <code>dbt-duckdb</code> project, they form a <a href="https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html">“Modern Data Stack In A Box”</a> — or a simple and powerful data lakehouse (sans Java and Scala).</p>
+<p>In this tutorial you will:</p>
+<ul>
+<li>prepare some metrics from raw patient checkup visit data for use in a machine learning pipeline</li>
+<li>use DBT to produce the summary statistics, or metrics, from the raw data sitting in DuckDB</li>
+<li>use DuckDB here as a simple local option so as to not force the reader to set up any cloud infrastructure</li>
+</ul>
+<pre><code>Editing Note: Metrics and Models are two distinctly different things in DBT --- need to clean up terminology here</code></pre>
+<p>Further, you’ll learn:</p>
+<ul>
+<li>a gentle introduction to DBT and DuckDB</li>
+<li>an understanding of how DBT fits into modern data pipelines</li>
+<li>an understanding of how DuckDB and DBT together can create a simple data stack for local analysis</li>
+</ul>
+<p>We’ll build our DBT “Hello World” project with synthetic patient data.</p>
+<h2 id="building-our-dbt-hello-world-project-with-synthetic-patient-data">Building Our DBT Hello World Project with Synthetic Patient Data</h2>
+<p>In our “hello world” scenario, we want to build some metrics about how often a set of patients get their yearly physical checkup. The hypothetical company here is an insurance company evaluating a set of customers and building forecasts with machine learning to predict how much the customer will potentially cost in terms of healthcare while under an insurance policy.</p>
+<p>Patient Metrics</p>
+<blockquote>
+<p>“The most granular form of data, Metrics describe the exact numbers that make up the data. Put more simply, they are the raw ingredients that make analytics possible. On their own, they may not actually be very helpful, but studied in the right context (foreshadow alert – this is analysis), they can be used to give fact-based direction to your decision-making.”&quot;</p>
+</blockquote>
+<p>Examples of metrics in the Marketing Data world:</p>
+<ul>
+<li>Number of Users</li>
+<li>Sessions</li>
+<li>Pageviews</li>
+<li>Event actions</li>
+</ul>
+<blockquote>
+<p>“All of these units of measurement report activity or results of very specific user interactions in your marketing efforts”</p>
+</blockquote>
+<h2 id="the-scenario">The Scenario</h2>
+<p>The data engineering team has requested that the analysts pull the data from the (cloud) data warehouse and provide the metrics per customer for use in their modeling experiments as a feature.</p>
+<p>In this exercise you’ll take synthetic patient checkup history data (which insurance companies are able to access) and use DBT to build data models and produce the patient metrics. We’ll use DuckDB for our database as its a quick and easy database to use locally and keeps us from having to provision cloud infrastructure for a simple Hello World example.</p>
+<p>The Synthetic Patient Doctor Visit Data is shown below:</p>
+<pre><code>Date,PatientID
+2016-09-05,pid-001
+2015-08-17,pid-002
+2013-07-18,pid-003
+2015-09-22,pid-003
+2015-10-13,pid-003
+2019-01-08,pid-003
+2021-07-24,pid-003
+</code></pre>
+<p>So let’s dig into build a local data stack.</p>
+<h1 id="building-a-local-data-stack-with-dbt-and-duckdb">Building a Local Data Stack with DBT and DuckDB</h1>
+<p>Our tasks for this exercise are listed below:</p>
+<ul>
+<li>Create a new conda environment</li>
+<li>install DuckDB and connector dbt-duckdb</li>
+<li>load raw synthetic patient checkup data into DuckDB</li>
+<li>Create a new DBT project</li>
+<li>Configure/Test the DBT project for access to DuckDB</li>
+<li>Run our DBT pipeline</li>
+</ul>
+<p>Let’s start off by building a new environemnt in Conda for our project.</p>
+<h2 id="create-environment-in-conda">Create Environment in Conda</h2>
+<p>To create an environment in Conda, you can follow these steps:</p>
+<ol type="1">
+<li><p>Open your terminal (or Anaconda Prompt on Windows).</p></li>
+<li><p>Type the following command to create a new environment named my_env (you can replace my_env with your preferred name):</p></li>
+</ol>
+<pre><code>conda create --name my_env</code></pre>
+<ol start="3" type="1">
+<li><p>Conda will ask you to confirm the installation of any additional packages that are required to create the environment. Type y and press Enter to proceed.</p></li>
+<li><p>Once the environment is created, activate it by typing:</p></li>
+</ol>
+<pre><code>conda activate my_env</code></pre>
+<ol start="5" type="1">
+<li><p>Your prompt should now show the name of the environment in parentheses, indicating that it’s active.</p></li>
+<li><p>You can now install any packages you need for your project using conda install or pip install.</p></li>
+<li><p>When you’re done working in the environment, you can deactivate it by typing:</p></li>
+</ol>
+<pre><code>conda deactivate</code></pre>
+<p>Now that we have an environment to work in, let’s get started with using DuckDB.</p>
+<h2 id="working-with-duckdb">Working with DuckDB</h2>
+<p>DuckDB sits in an interesting spot as it offers an excellent way to solve complex problems using SQL while keeping things simple. DuckDB is a columnar, in-memory SQL database designed for analytical workloads. It’s key features are:</p>
+<ul>
+<li>Fast query performance with low memory overhead for large datasets</li>
+<li>SQL interface making it easy to use for the broadest audience</li>
+<li>Lightweight database that can be easily installed and run on a local machine, without the need for a separate server or cluster</li>
+<li>Open-source project, which means that it is free to use and can be modified and extended by the community</li>
+</ul>
+<p>DuckDB is compelling because you only have to point it at the data file you’d like to work with, giving you a short-cut to running SQL against CSV, Parquet, and other data files. Ease of use and time to insight are two key properties of why DBT has become a key tool for experimenting in the data “lab”.</p>
+<p>In a conversation with me, JD Long commented that he prefers DuckDB “when the data fits on a single machine so that he doesn’t have to stand up a cluster for Spark”.</p>
+<p>As stated by the DuckDB Website:</p>
+<blockquote>
+<p>DuckDB is an embedded database, similar to SQLite, but designed for OLAP-style analytics. It is crazy fast and allows you to read and write data stored in CSV and Parquet files directly, without requiring you to load them into the database first.</p>
+</blockquote>
+<h3 id="what-is-duckdb-typically-used-for">What is DuckDB Typically Used For?</h3>
+<p>A recent article at dlthub.com, <a href="https://dlthub.com/docs/blog/duckdb-1M-downloads-users">“As DuckDB crosses 1M downloads / month, what do its users do?”</a>, had some interesting notes on how DuckDB is being used. Among the use cases, they were seeing DuckDB being used as a processing enging for local data workflows.</p>
+<p>They also called out how many users (“Normies”) enjoyed the simplicity of the DuckDB user experience . I found both of those usage trends worth of note.</p>
+<p>With those points noted, let’s move on and install DBT and the dbt-duckdb connector.</p>
+<h2 id="install-dbt-and-duckdb-connector">Install DBT and DuckDB Connector</h2>
+<p>As <a href="https://github.com/jwills/dbt-duckdb">described on the website</a>:</p>
+<blockquote>
+<p>dbt is the best way to manage a collection of data transformations written in SQL or Python for analytics and data science. dbt-duckdb is the project that ties DuckDB and dbt together, allowing you to create a <a href="https://duckdb.org/2022/10/12/modern-data-stack-in-a-box.html">Modern Data Stack In A Box</a> or a simple and powerful data lakehouse- no Java or Scala required.</p>
+</blockquote>
+<p>You can also read further about the connector on dbt’s website as well:</p>
+<p>https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup</p>
+<p>This project is hosted on PyPI so we can use pip to install the connector and dependencies:</p>
+<pre><code>
+pip3 install dbt-duckdb
+</code></pre>
+<p>Once that is installed, we’ll need the DuckDB CLI to work directly with DuckDB from the local command line to load our dataset.</p>
+<h3 id="duckdb-cli">DuckDB CLI</h3>
+<p>The DuckDB CLI (Command Line Interface) is a single, dependency free executable.</p>
+<p>Download it from:</p>
+<p>https://duckdb.org/docs/api/cli.html</p>
+<p>Make sure and get the version of the CLI that matches the version of DuckDB you have installed locally via pip.</p>
+<p>Now let’s load some data for analysis.</p>
+<h3 id="load-some-synthetic-patient-data-into-duckdb">Load Some Synthetic Patient Data Into DuckDB</h3>
+<p>Let’s crank up the local DuckDB CLI with the command:</p>
+<pre><code>./duckdb dbt_patient_visits.duckdb</code></pre>
+<p>Note: if you don’t give it a database name at start, for some ODD REASON, DuckDB will not let you save the in-memory db later.</p>
+<p>Once we’re inside the CLI the first command you want to know about is how to quit:</p>
+<pre><code>.q [enter]</code></pre>
+<p>Typing .q or .quit will quit the CLI and get you back to your shell.</p>
+<p>Now, once we’re back inside the CLI, let’s see if we can access our local patient data in CSV form with the command:</p>
+<pre><code>select * from &#39;./patient_checkup_logs.csv&#39;;</code></pre>
+<p>This should show:</p>
+<pre class="console"><code>
+┌────────────┬────────────┐
+│    Date    │ Patient ID │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-19 │ pid-1336   │
+│ 2020-01-14 │ pid-1336   │
+│ 2020-09-23 │ pid-1336   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘</code></pre>
+<p>The interesting part about the command we just executed is that we used a SQL command to query a raw file as we would a table. DuckDB is quite flexible like that.</p>
+<p>Let’s quickly load the checkup visit csv file into DuckDB and let DuckDB automatically infer the schema with the <code>read_csv_auto()</code> command:</p>
+<pre><code>CREATE TABLE patient_visits AS SELECT * FROM read_csv_auto (&#39;./patient_checkup_logs.csv&#39;);
+
+select * from patient_visits;
+┌────────────┬────────────┐
+│    Date    │ PatientID  │
+│    date    │  varchar   │
+├────────────┼────────────┤
+│ 2016-09-05 │ pid-001    │
+│ 2015-08-17 │ pid-002    │
+│ 2013-07-18 │ pid-003    │
+│ 2015-09-22 │ pid-003    │
+│ 2015-10-13 │ pid-003    │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│     ·      │    ·       │
+│ 2019-12-11 │ pid-1338   │
+│ 2020-02-26 │ pid-1338   │
+│ 2020-10-02 │ pid-1338   │
+├────────────┴────────────┤
+│  6808 rows (40 shown)   │
+└─────────────────────────┘
+</code></pre>
+<p>We now have a table loaded into our DuckDB database, as we can see when we type the following <code>describe</code> command:</p>
+<pre><code>describe table patient_visits;
+
+┌─────────────┬─────────────┬─────────┬─────────┬─────────┬─────────┐
+│ column_name │ column_type │  null   │   key   │ default │  extra  │
+│   varchar   │   varchar   │ varchar │ varchar │ varchar │ varchar │
+├─────────────┼─────────────┼─────────┼─────────┼─────────┼─────────┤
+│ Date        │ DATE        │ YES     │         │         │         │
+│ PatientID   │ VARCHAR     │ YES     │         │         │         │
+└─────────────┴─────────────┴─────────┴─────────┴─────────┴─────────┘</code></pre>
+<p>Now that we have our raw data loaded into DuckDB, we can start building our DBT pipeline.</p>
+<h1 id="building-our-first-dbt-pipeline-for-patient-metrics">Building Our First DBT Pipeline for Patient Metrics</h1>
+<p>We need to do 3 things before we can run our DBT pipeline:</p>
+<ol type="1">
+<li>Configure our DBT Profile (<code>profiles.yml</code>) so that the dbt-duckdb connector can talk to our duckdb database</li>
+<li>Create an initial DBT project to hold our DBT pipeline SQL code</li>
+<li>Write our specific SQL data modeling code in the DBT project</li>
+</ol>
+<p>Once we have these 3 things done, we can run our project and have it produce the materialized tables inside duckdb that hold the Patient checkup data metrics.</p>
+<p>Let’s dig into how to configure our DBT profile next.</p>
+<h2 id="configure-dbt-profile-to-connect-to-duckdb-database">Configure DBT Profile to Connect to DuckDB Database</h2>
+<p>To configure DBT to connect to a database, you need to create a configuration file called <code>profiles.yml</code>. This file should contain the necessary connection information for each database you want to connect to.</p>
+<p>On OSX for example, the DBT profile.yml file lives at:</p>
+<pre><code>~/.dbt/profiles.yml</code></pre>
+<p>Let’s now edit our <code>profiles.yml</code></p>
+<h3 id="configure-the-profile-for-duckdb">Configure the Profile for DuckDB</h3>
+<p>In the code listing below, we can see some sample contents of a type <code>profiles.yml</code> file:</p>
+<pre><code>dbt_duckdb_test:
+  outputs:
+    dev:
+      path: /Users/josh/Documents/PattersonConsulting/workspaces/snowpark_demos/duckdb/test_db
+      type: duckdb
+  target: dev
+
+dbt_duckdb_patient_visits:
+  outputs:
+   dev:
+     type: duckdb
+     path: /Users/josh/Documents/PattersonConsulting/workspaces/dbt_demos/dbt_hello_world/patient_db.duckdb
+  target: dev
+</code></pre>
+<p>The connection we’ll use for this demo is <code>dbt_duckdb_patient_visits</code> and we’ll reference that in our dbt project in a moment. Let’s now create a new DBT project.</p>
+<h2 id="initialize-dbt-project">Initialize DBT Project</h2>
+<p>The top level of a dbt workflow is the <a href="https://docs.getdbt.com/docs/building-a-dbt-project/projects">project</a>. There is a dbt_project.yml file in the main project directory.</p>
+<p>The project file tells dbt the project context, and the defined models let dbt know how to build a specific data set.</p>
+<p>We can create a project with the <code>dbt init [name]</code> as shown below:</p>
+<pre><code>dbt init [project_name]</code></pre>
+<p>We’ll use a project name of <code>dbt_hello_world</code>, and in the directory listing below we can see what was generated inside the directory (<code>./dbt_hello_world</code>) created:</p>
+<pre><code>ls -la
+
+total 24
+drwxr-xr-x  12 josh  staff   384 Jul 28 16:04 .
+drwxr-xr-x   7 josh  staff   224 Jul 28 16:02 ..
+-rw-r--r--   1 josh  staff    29 Jul 27 15:00 .gitignore
+-rw-r--r--   1 josh  staff   571 Jul 27 15:00 README.md
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 analyses
+-rw-r--r--   1 josh  staff  1349 Jul 28 16:02 dbt_project.yml
+drwxr-xr-x   3 josh  staff    96 Jul 28 16:04 logs
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 macros
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 models
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 seeds
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 snapshots
+drwxr-xr-x   3 josh  staff    96 Jul 27 15:00 tests</code></pre>
+<p>As DBT themselves state:</p>
+<blockquote>
+<p>A dbt project, at its core, is just a folder structure for organizing your individual SQL models. Within the <code>/models/</code> folder of a project, any .sql files you publish will be materialized as tables or views to your data warehouse.</p>
+</blockquote>
+<p>In your DBT project, you can now reference the profile name (<code>dbt_duckdb_patient_visits</code>) in your <code>dbt_project.yml</code> file. In our example you can reference it like this:</p>
+<pre><code># dbt_project.yml
+
+...
+profile: dbt_duckdb_patient_visits
+...
+</code></pre>
+<p>Now let’s move on to testing our dbt-duckdb connection.</p>
+<h3 id="confirm-dbt-profile-connection-works">Confirm DBT Profile Connection Works</h3>
+<p>Try the following command:</p>
+<pre><code>dbt debug</code></pre>
+<p>we should see:</p>
+<pre><code>18:45:48  Running with dbt=1.4.5
+dbt version: 1.4.5
+python version: 3.9.2
+python path: /usr/local/opt/python@3.9/bin/python3.9
+os info: macOS-10.16-x86_64-i386-64bit
+Using profiles.yml file at /Users/josh/.dbt/profiles.yml
+Using dbt_project.yml file at /Users/josh/Documents/PattersonConsulting/workspaces/dbt_demos/dbt_hello_world/dbt_hello_world/dbt_project.yml
+
+Configuration:
+  profiles.yml file [OK found and valid]
+  dbt_project.yml file [OK found and valid]
+
+Required dependencies:
+ - git [OK found]
+
+Connection:
+  database: dbt_patient_visits
+  schema: main
+  path: /tmp/dbt_patient_visits.duckdb
+  Connection test: [OK connection ok]
+
+All checks passed!</code></pre>
+<p>If your output looks similar to above, then your <code>dbt-duckdb</code> connector was configured correctly and DBT can communicate with DuckDB. Now let’s work on writing our first DBT data model.</p>
+<h2 id="write-our-first-dbt-data-model">Write Our First DBT Data Model</h2>
+<p>In dbt (Data Build Tool), a data model is a logical representation of a specific type of data that you want to analyze or work with in your database. It describes the structure, relationships, and constraints of the data in a way that can be easily understood by both humans and computers.</p>
+<p>A data model in dbt is typically defined as a SQL query that defines the relationships between tables or other data sources. It specifies how data should be transformed and aggregated to create a particular view of the data. This view can then be used as a source for further analysis or reporting.</p>
+<p>In dbt, a data model is created using a “model” statement in a SQL file. This statement defines the columns of the model, any relationships with other models or tables, and any transformations that should be applied to the data. Once defined, a data model can be used as a building block for creating more complex data structures and analyses.</p>
+<p>Data modeling in DBT is meant to replace a large, monolithic SQL file with a DAG of smaller SQL operations that can be used by group of people and orchestrated properly.</p>
+<p>https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/</p>
+<p>Moving to this method over the monolithic SQL file style allows us to standardize on transforms for analytics between people or teams and bring consistency to the analytical data output. This allows producers or consumers of data models to start from the foundational data modeling work others have already done.</p>
+<h3 id="some-quick-notes-on-data-modeling-naming-conventions">Some Quick Notes on Data Modeling Naming Conventions</h3>
+<p>The data modeling naming conventions in DBT can take some work to figure out, especially depending on what part of the data universe you come from (In another converation with JD Long, he off-handed commented: “all of DBT would make more sene to me if they just used terms like <em>data flow with cached intermediate data</em> or something”). Yet, I digress.</p>
+<p>Data modeling conventions vary, but 3 common ideas are:</p>
+<ol type="1">
+<li><a href="https://docs.getdbt.com/docs/build/sources">Sources</a>: raw tables in the database</li>
+<li>Staging models: clean up and standardize the raw data coming from the warehouse</li>
+<li>Intermediate models: where we start applying more complex transformations</li>
+</ol>
+<p>In dbt, a staging model is typically used to extract and load data from source systems into a data warehouse or other target system. Staging models often involve basic data transformations, such as renaming columns, filtering rows, or casting data types, but they are primarily focused on moving data from the source to the target.</p>
+<p>On the other hand, an intermediate model in dbt is typically used for more complex data transformations that are necessary to create analytical models or other downstream data models. Intermediate models often involve complex SQL queries, joins, and other operations that combine data from multiple sources, perform calculations, or reshape data structures.</p>
+<p>In general, the flow of data through a dbt project might involve the following steps: extract data from source systems using staging models, transform the data into a format suitable for analysis using intermediate models, and finally, load the transformed data into analytical models that provide insights and value to end-users.</p>
+<p>We can also refer to the raw data as a “source” model, as well, that will feed into the a “staging” model.</p>
+<p>With all of that in mind, let’s take a quick look at the generated <code>dbt_project.yml</code> file for our dbt project.</p>
+<h3 id="configuring-the-models-to-materialize-in-dbt_project.yml">Configuring the Models to Materialize in ‘dbt_project.yml’</h3>
+<p>In dbt (Data Build Tool), the <code>dbt_project.yml</code> file is a configuration file that defines the settings and parameters for a dbt project. This file is typically located in the root directory of a dbt project, and it controls how dbt operates and interacts with your data sources.</p>
+<p>In the code listing below we see the <code>dbt_project.yml</code> file for our hello world project:</p>
+<pre><code>
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization&#39;s
+# name or the intended use of these models
+name: &#39;dbt_hello_world&#39;
+version: &#39;1.0.0&#39;
+config-version: 2
+
+# This setting configures which &quot;profile&quot; dbt uses for this project.
+profile: &#39;dbt_duckdb_patient_visits&#39;
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the &quot;models/&quot; directory. You probably won&#39;t need to change these!
+model-paths: [&quot;models&quot;]
+analysis-paths: [&quot;analyses&quot;]
+test-paths: [&quot;tests&quot;]
+seed-paths: [&quot;seeds&quot;]
+macro-paths: [&quot;macros&quot;]
+snapshot-paths: [&quot;snapshots&quot;]
+
+target-path: &quot;target&quot;  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - &quot;target&quot;
+  - &quot;dbt_packages&quot;
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
+models:
+  dbt_hello_world:
+    # Config indicated by + and applies to all files under models/example/
+    patient_visits_models:
+      +materialized: view</code></pre>
+<p>where:</p>
+<ul>
+<li><code>dbt_hello_world</code>: this is the name of the project</li>
+<li><code>patient_visits_models</code>: maps to a subdirectory named ‘patient_visits_models’ under the ‘models’ subdirectory (e.g., “dbt_hello_world/models/patient_visits_models/”)</li>
+</ul>
+<p>and inside the <code>patient_visits_models/</code> subdirectory, there should be at least:</p>
+<ul>
+<li><code>schema.yml</code>: contains the names of the models represented by .sql files in the same subdirectory</li>
+<li>1 or more .sql files referenced in <code>schema.yml</code></li>
+</ul>
+<p>Files with a .sql extension contain SQL code that defines tables, views, and other database objects. These files are used to define the data models that make up a dbt project.</p>
+<h4 id="schema.yml">Schema.yml</h4>
+<p>In dbt (Data Build Tool), the schema.yml file is used to define the structure and constraints of tables and columns in a database schema. This file is typically located in the same directory as the SQL file that defines a particular table or model, and it provides a way to document and validate the schema of your data.</p>
+<p>In the code listing below, we see the file <code>schema.yml</code>’s contents:</p>
+<pre><code>
+
+version: 2
+
+sources:
+  - name: patient_visits
+    schema: main
+    description: &quot;The main patient visits raw data table&quot;
+    tables:
+      - name: patient_visits
+        columns:
+          - name: PatientID
+          - name: Date
+
+models:
+  - name: patient_visits_summed_model
+    description: &quot;A starter duckdb dbt model&quot;
+    columns:
+      - name: PatientID
+        description: &quot;The primary key for this table&quot;
+        tests:
+          - unique
+          - not_null
+      - name: visits
+        description: &quot;the summed visits across time for this patient&quot;
+  - name: patient_visits_summed_over_5
+    description: &quot;Only Patients who made at least 5 visits&quot;
+    columns:
+      - name: PatientID
+        description: &quot;The primary key for this table&quot;
+        tests:
+          - unique
+          - not_null
+      - name: visits
+        description: &quot;the summed visits across time for this patient&quot;
+
+</code></pre>
+<p>We can see 2 models listed (“patient_visits_summed_model” and “patient_visits_summed_over_5”), along with a “source”; This source represents the raw tables in our database, DuckDB, and we are listing our table <code>patient_visits</code> as a source to work with in our DBT workflow. We’ll see that used in a DBT model in a moment.</p>
+<p>Overall, the schema.yml file provides a way to define and document the schema of your data in a structured and consistent way, making it easier to understand, maintain, and validate your data over time.</p>
+<p>Now let’s take a look at the first model, <code>patient_visits_summed_model</code>.</p>
+<h4 id="patient_visits_summed_model.sql">patient_visits_summed_model.sql</h4>
+<p>In the code listing below, we see the contents of the data model file <code>patient_visits_summed_model.sql</code>:</p>
+<pre><code>
+{{ config(materialized=&#39;table&#39;) }}
+
+with patient_data as (
+
+    select count(Date) as visits, PatientID from {{source(&#39;patient_visits&#39;, &#39;patient_visits&#39;)}} group by PatientID
+
+)
+
+select *
+from patient_data
+</code></pre>
+<p>We can see it is to be materialized as a table in target database (DuckDB), and we’re reading data <code>from {{source('patient_visits', 'patient_visits')}}</code>. Since this is a simple Hello World example, we’re going ahead and building the aggregation in this “intermediate” model with a <code>group by</code> and <code>count()</code> operation. The results of this data modeling operation in our DBT workflow give us a list of all patients with how many times total they got a checkup. This intermediate aggregation can be used by other data models in the rest of our DBT workflow, as we’ll see next.</p>
+<h4 id="patient_visits_summed_over_5.sql">patient_visits_summed_over_5.sql</h4>
+<p>Now that we have an aggregation of the total checkups for each patient as a data model, we’ll create another data model that references the previuos intermediate stage with a new data model that shows only Patients that had more than 5 visits, as seen in the code listing below:</p>
+<pre><code>
+{{ config(materialized=&#39;table&#39;) }}
+
+with patient_data_summed as (
+
+    select * from {{ref(&#39;patient_visits_summed_model&#39;)}} where visits &gt;= 5
+
+)
+
+select *
+from patient_data_summed</code></pre>
+<p>if you’ll notice in the second model (patient_visits_summed_over_5.sql), we are referring to the first model (patient_visits_summed_model.sql) not by file name — but by logical data model name, <code>{{ref('patient_visits_summed_model')}}</code>.</p>
+<p>You’ll notice the logical name of the data model is the filename without the .sql extension.</p>
+<p>We refer to other logical data models in DBT with the <code>ref</code> function, as explained in the dbt docs:</p>
+<p>https://docs.getdbt.com/reference/dbt-jinja-functions/ref</p>
+<blockquote>
+<p>The most important function in dbt is ref(); it’s impossible to build even moderately complex models without it. ref() is how you reference one model within another. This is a very common behavior, as typically models are built to be “stacked” on top of one another.</p>
+</blockquote>
+<p>These models are stacked on top of one another, linked with the ref() function, creating a DAG that can be executed on different type of backend data warehouse systems (e.g., cloud, MPP, embedded, etc).</p>
+<p>Now, let’s run our full DBT workflow DAG locally.</p>
+<h2 id="run-dbt-pipeline-locally">Run DBT Pipeline Locally</h2>
+<p>Let’s now crank up our DBT workflow.</p>
+<p>It’s worth noting that you are running a model that will transform your data without that data ever leaving your warehouse when you run a DBT workflow.</p>
+<p>We can run our current DBT Hello World project by running the command below inside the main directory of our project:</p>
+<pre><code>dbt run</code></pre>
+<p>and we should see:</p>
+<pre><code>19:44:11  Running with dbt=1.4.5
+19:44:11  Found 2 models, 4 tests, 0 snapshots, 0 analyses, 296 macros, 0 operations, 0 seed files, 1 source, 0 exposures, 0 metrics
+19:44:11  
+19:44:11  Concurrency: 1 threads (target=&#39;dev&#39;)
+19:44:11  
+19:44:11  1 of 2 START sql table model main.patient_visits_summed_model .................. [RUN]
+19:44:11  1 of 2 OK created sql table model main.patient_visits_summed_model ............. [OK in 0.09s]
+19:44:11  2 of 2 START sql table model main.patient_visits_summed_over_5 ................. [RUN]
+19:44:11  2 of 2 OK created sql table model main.patient_visits_summed_over_5 ............ [OK in 0.03s]
+19:44:11  
+19:44:11  Finished running 2 table models in 0 hours 0 minutes and 0.20 seconds (0.20s).
+19:44:11  
+19:44:11  Completed successfully
+19:44:11  
+19:44:11  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2</code></pre>
+<p>We can confirm that DBT read from 1 source and then created 2 models, as we expected. Now let’s confirm that is what happened inside the DuckDB database locally.</p>
+<h3 id="check-duckdb-materialized-tables">Check DuckDB Materialized Tables</h3>
+<p>If we open our previous DuckDB database up with the CLI command:</p>
+<pre><code>./duckdb dbt_patient_visits.duckdb</code></pre>
+<p>We can then check out the models materialed with the SQL:</p>
+<pre><code>select * from patient_visits_summed_over_5;
+┌────────┬───────────┐
+│ visits │ PatientID │
+│ int64  │  varchar  │
+├────────┼───────────┤
+│      5 │ pid-003   │
+│      7 │ pid-004   │
+│      7 │ pid-005   │
+│      8 │ pid-006   │
+│      8 │ pid-008   │
+│      5 │ pid-009   │
+│      5 │ pid-010   │
+│      7 │ pid-012   │
+│      6 │ pid-013   │
+│      5 │ pid-015   │
+│     10 │ pid-016   │
+│      8 │ pid-017   │
+│      6 │ pid-018   │
+│      6 │ pid-019   │
+│     10 │ pid-020   │
+│      5 │ pid-021   │
+│      5 │ pid-022   │
+│     10 │ pid-023   │
+│      8 │ pid-025   │
+│     10 │ pid-027   │
+│      · │    ·      │
+│      · │    ·      │
+│      · │    ·      │
+│      7 │ pid-1271  │
+│      7 │ pid-254   │
+│      8 │ pid-795   │
+│      7 │ pid-1126  │
+│      5 │ pid-940   │
+│      7 │ pid-986   │
+│      8 │ pid-1135  │
+│      6 │ pid-1141  │
+│     10 │ pid-1208  │
+│      7 │ pid-1235  │
+│     10 │ pid-1302  │
+│     10 │ pid-556   │
+│     10 │ pid-695   │
+│      9 │ pid-1123  │
+│      6 │ pid-1332  │
+│      9 │ pid-617   │
+│      6 │ pid-1112  │
+│     10 │ pid-1308  │
+│      8 │ pid-979   │
+│      6 │ pid-889   │
+├────────┴───────────┤
+│      758 rows      │
+│     (40 shown)     │
+└────────────────────┘
+</code></pre>
+<p>Confirming that DBT did run correctly.</p>
+<h1 id="summary">Summary</h1>
+<p>In this blog post we gave you an overview of DBT and then showed how to build a simple “Hello World”-style of application. For more information on DBT, check out their documentation. For more information on cloud infrastructure, check out the rest of the articles in our blog.</p>
+<p>We also offer private workshops for companies on topics such as creating and running DBT pipelines (on multiple platforms such as Snowflake and Fivetran), please feel free to reach out if you’d like to discuss attending one of our workshops.</p>
+</body>
+</html>

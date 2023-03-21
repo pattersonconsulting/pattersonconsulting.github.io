@@ -11,12 +11,6 @@ meta_og_image: pct_dbt_duckdb_og_card.jpg
 
 # Introduction
 
-::::: {#special .sidebar}
-Here is a paragraph.
-
-And another.
-:::::
-
 [DBT](https://www.getdbt.com/) (Data Build Tool) is an open-source command-line tool that allows data analysts and data engineers a way to manage a collection of data transformations written in SQL or Python for analytics and data science. It provides a framework for creating and executing complex SQL queries and transforms, and it helps manage the entire data transformation process.
 
 More simply, DBT is focused on transforming data --- the 'T' in ELT.
@@ -138,7 +132,7 @@ As stated by the DuckDB Website:
 
 ### What is DuckDB Typically Used For?
 
-A recent article at dlthub.com, ["As DuckDB crosses 1M downloads / month, what do its users do?"](https://dlthub.com/docs/blog/duckdb-1M-downloads-users), had some interesting notes on how DuckDB is being used. Among the use cases, they were seeing DuckDB being used as a processing enging for local data workflows.
+A recent article at dlthub.com, ["As DuckDB crosses 1M downloads / month, what do its users do?"](https://dlthub.com/docs/blog/duckdb-1M-downloads-users), had some interesting notes on how DuckDB is being used. Among the use cases, they were seeing DuckDB being used as a processing engine for local data workflows.
 
 They also called out how many users ("Normies") enjoyed the simplicity of the DuckDB user experience . I found both of those usage trends worth of note.
 
@@ -152,7 +146,7 @@ As [described on the website](https://github.com/jwills/dbt-duckdb):
 
 You can also read further about the connector on dbt's website as well:
 
-https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup
+<https://docs.getdbt.com/reference/warehouse-setups/duckdb-setup>
 
 
 This project is hosted on PyPI so we can use pip to install the connector and dependencies:
@@ -163,6 +157,8 @@ This project is hosted on PyPI so we can use pip to install the connector and de
 pip3 install dbt-duckdb
 
 ```
+
+Note: Ideally we'd use `conda` to install here, but currently only `pip`-based installs are supported.
 
 Once that is installed, we'll need the DuckDB CLI to work directly with DuckDB from the local command line to load our dataset.
 

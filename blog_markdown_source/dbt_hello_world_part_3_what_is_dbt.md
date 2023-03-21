@@ -3,13 +3,22 @@ layout: post
 published-on: February 15th 2023
 author: Josh Patterson
 title: DBT Hello World with DuckDB
-subtitle: Part 3 of 3 - What is DBT?
-description: In this post we'll .....
+subtitle: Part 3 of 3 - (Epilogue) What is DBT?
+description: In this post we'll take a look at what DBT is and what its meant to do.
 keywords: snowflake, duckdb, dbt, data engineering, cicd, sql
 meta_og_image: pct_dbt_duckdb_part_3_og_card.jpg
 ---
 
 # What is DBT?
+
+In this post we'll build our first DBT pipelineto summarize patient history data for downstream data engineers
+
+This is part 2 in a 3 part series on using DBT and DuckDB
+
+* Part 1: [Setup Environment](./dbt_hello_world_part_1_setup.html)
+* Part 2: [Build the Pipeline](./dbt_hello_world_part_2_pipeline.html)
+* Part 3: Epilogue: What is DBT?
+
 
 DBT is ...
 
@@ -53,7 +62,7 @@ Tristian Hardy Quote:
 * Documentation is accessible and easily updated
 * Use macros to write reusable SQL
 
-## Why is DBT Popular?
+# Why is DBT Popular?
 
 > “standardizing their SQL transformation layers on dbt as they moved their data warehousing to the cloud.”
 > dbt is the framework for modern cloud data warehouse development. It lets you build out a new kind of data pipeline that was never practical before. All while embracing today's best data practices: encapsulate business logic, check it into git, test your data, connect it in a DAG
@@ -64,7 +73,7 @@ Tristian Hardy Quote:
 > We just want the same tools we’ve always had—a database and some SQL—with some modern new magic quietly tucked behind them. 
 
 
-# Why Would I Use DBT?
+## Why Would I Use DBT?
 
 * A small company can’t afford those tools (e.g., Informatica, SQL Server Integration Services) -- And they dont want to use Microsoft
 

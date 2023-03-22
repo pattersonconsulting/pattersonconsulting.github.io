@@ -1,6 +1,6 @@
 ---
 layout: post
-published-on: February 15th 2023
+published-on: March 21st, 2023
 author: Josh Patterson
 title: DBT Hello World with DuckDB
 subtitle: Part 1 of 3 - Setting up a Local Data Stack with DBT and DuckDB
@@ -42,6 +42,10 @@ We'll build our DBT "Hello World" project with synthetic patient data.
 ## Building Our DBT Hello World Project with Synthetic Patient Data
 
 In our "hello world" scenario, we want to build a summarization of how often a set of patients get their yearly physical checkup. The hypothetical company here is an insurance company ("InsurCo") evaluating a set of customers and building forecasts with machine learning to predict how much the customer will potentially cost in terms of healthcare while under an insurance policy.
+
+The Github repository we'll use for this project is located at:
+
+<https://github.com/pattersonconsulting/dbt_hello_world_duckdb>
 
 ## The Scenario
 
@@ -168,7 +172,7 @@ The DuckDB CLI (Command Line Interface) is a single, dependency free executable.
 
 Download it from:
 
-https://duckdb.org/docs/api/cli.html
+<https://duckdb.org/docs/api/cli.html>
 
 Make sure and get the version of the CLI that matches the version of DuckDB you have installed locally via pip.
 
@@ -307,4 +311,8 @@ Now that we have our raw data loaded into DuckDB, we can start building our DBT 
 
 In this blog post we showed you have to setup a local data stack environment based on DBT and DuckDB. For more information on DBT, check out their documentation. For more information on cloud infrastructure, check out the rest of the articles in our blog.
 
+To continue on in this series, check out part 2 to start building our DBT pipeline in [part 2 of 3](./dbt_hello_world_part_2_pipeline.html) in this blog series.
+
 We also offer private workshops for companies on topics such as creating and running DBT pipelines (on multiple platforms such as Snowflake and Fivetran), please feel free to [reach out](../contact.html) if you'd like to discuss attending one of our workshops.
+
+<iframe width="873" height="491" src="https://www.youtube.com/embed/DM5cVdxpmYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

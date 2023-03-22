@@ -1,6 +1,6 @@
 ---
 layout: post
-published-on: February 15th 2023
+published-on: March 21st, 2023
 author: Josh Patterson
 title: DBT Hello World with DuckDB
 subtitle: Part 2 of 3 - Building Our First DBT Pipeline for Patient History Data Summarization
@@ -30,6 +30,10 @@ Once we have these 3 things done, we can run our project and have it produce the
 Let's dig into how to configure our DBT profile next.
 
 # Setting Up a DBT Project
+
+The Github repository we'll use for this project is located at:
+
+<https://github.com/pattersonconsulting/dbt_hello_world_duckdb>
 
 Before we can build our data models, we need to create a new DBT project to represent our DBT workflow. Let's start out by configuring 
 
@@ -398,3 +402,5 @@ Confirming that DBT did run correctly.
 In this blog post we showed you build your first DBT workflow to process CSV data in DuckDB. In our 3rd and final article in this series, we'll discuss "What is DBT?" more in-depth to better understand its role in the cloud data warehouse world.
 
 We also offer private workshops for companies on topics such as creating and running DBT pipelines (on multiple platforms such as Snowflake and Fivetran), please feel free to [reach out](../contact.html) if you'd like to discuss attending one of our workshops.
+
+<iframe width="873" height="491" src="https://www.youtube.com/embed/DM5cVdxpmYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

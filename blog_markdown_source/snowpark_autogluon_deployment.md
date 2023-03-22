@@ -403,6 +403,7 @@ Would you like to have your team work through a series of learning units similar
 
 [Reach out and say hello](../contact.html) --- we offer workshops for topics such as "how to get AutoML working on Snowflake" and other topics in Data Engineering and Data Science.
 
+<iframe width="873" height="491" src="https://www.youtube.com/embed/DM5cVdxpmYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 # Summary
 

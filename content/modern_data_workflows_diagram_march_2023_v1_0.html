@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+<head>
+<style>
+
+body {
+    font-family: 'PT Sans', sans-serif;
+    min-height: 740px;
+
+    background: rgb(215, 215, 215);
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
+    background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:     -ms-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+}
+
+
+.box {
+	display: block;
+	width: 800px;
+	height: 600px;
+	padding: 30px 50px;
+	background-color: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+	border: 1px solid rgba(0, 0, 0, .3);
+	border-radius: 20px;
+	text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+	font-family: Arial, sans-serif;
+	font-size: 40px;
+	color: rgb(102, 102, 102);
+}
+
+
+.rounded_box {
+	display: block;
+	width: 1000px;
+	height: 600px;
+	padding: 30px 50px;
+	background-color: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+	border: 25px solid rgba(0, 0, 0, .7);
+	border-radius: 170px;
+	text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+	font-family: Arial, sans-serif;
+	font-size: 40px;
+	color: rgb(102, 102, 102);
+}
+
+
+.slide_sub_details {
+	display: block;
+	width: 1000px;
+	height: 600px;
+	padding: 30px 50px;
+	background-color: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+	border: 15px solid rgba(0, 0, 0, .7);
+	border-radius: 170px;
+	text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+	font-family: Arial, sans-serif;
+	font-size: 40px;
+	color: rgb(102, 102, 102);
+
+	
+
+}
+
+
+
+
+
+.slide_container { 
+
+display: grid;
+  gap: 10px;
+  grid-template-columns: auto auto;
+
+  	width: 1200px;
+	height: 800px;
+	padding: 10px;
+	background-color: ;
+	
+	border: 0px solid rgba(0, 0, 0, .7);
+	border-radius: 0px;
+	
+	font-family: Arial, sans-serif;
+	font-size: 40px;
+	color: rgb(102, 102, 102);
+
+	opacity: 1.0;
+
+
+}
+.sub_slide_element {
+
+	width: 400px;
+	height: 200px;
+	padding: 10px;
+	margin: 10px;
+	background-color: white;
+	
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+	border: 10px solid rgba(0, 0, 0, .7);
+	
+	border-radius: 50px;
+	font-family: Arial, sans-serif;
+	font-size: 40px;
+	color: rgb(102, 102, 102);
+
+	opacity: 1.0;
+
+	 text-align: center;
+	vertical-align: middle;
+
+
+}
+
+
+
+
+.line_container {
+	display: block;
+	width: 300px;
+	height: 600px;
+	padding: 30px 50px;
+	
+
+	background-color: ;
+	
+	border: 1px solid rgba(0, 0, 0, .3);
+	border-radius: 20px;
+
+}
+
+div.graph_node_label { 
+
+	font-size: 120px;
+	font-family: arial;
+	border: 0px solid #000000; 
+	position: relative; 
+	top: 100px; 
+	left: 0px;
+}
+
+
+
+.impress-enabled .step.foreground{
+    margin: 0;
+    opacity: 0.7;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;
+}
+
+
+.impress-enabled .step.background{
+    margin: 0;
+    opacity: 0.2;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;
+}
+
+
+.impress-enabled .step.active { opacity: 1 }
+
+
+</style>
+
+</head>
+<body>
+
+<div id="impress" 
+    data-width="1920"
+    data-height="1080"
+    data-max-scale="5"
+    data-min-scale="0"
+    data-perspective="1000"
+    
+    data-autoplay="5" >
+<!--
+	<div id="background" class="" data-scale="16" data-z="-500">
+
+		<img src="../images/next-gen-art.jpg" style="opacity: 0.1;" />
+
+	</div>
+-->
+
+
+	<div id="slide_start_screen" class="step" data-x="4000" data-y="-1000" data-z="300" data-scale="5" style="border: 0px solid; opacity: 0.0;" >
+		
+		  <div style="font-size: 20px;">start</div>
+		
+	</div>
+
+
+
+
+	<div id="slide_title_label" class="step skip" data-x="1500"  data-y="-3000" data-z="150" data-scale="6"  style="border: 0px solid; width: 500px;">
+		
+		  <div style="font-size: 50px;"><pre>Modern Data Workflows</pre></div>
+		
+	</div>
+
+
+
+
+
+	<div id="slide_data_sources" class="foreground step rounded_box" data-x="0" data-y="0" data-z="0"  >
+
+			
+			<div style="border-top: 20px solid #000000; position: relative; top: 300px; left: 1080px; width: 1200px; height: 10px;"></div>
+
+
+
+			<div class="graph_node_label">
+				<pre>Data Sources</pre>
+			</div>
+		
+	</div>
+
+
+	<div id="slide_div_data_sources_detail" class="step slide_container background" data-x="0" data-y="0" data-z="-3000"  data-rotate-x="0" data-scale="1" style="grid-template-columns: auto auto; ">
+
+
+
+		<div class="sub_slide_element">
+			S3
+
+		</div>
+
+		<div class="sub_slide_element">
+			Salesforce
+
+		</div>
+
+		<div class="sub_slide_element">
+			Hubspot
+
+		</div>
+
+		<div class="sub_slide_element">
+			Stripe
+
+		</div>
+
+
+		<div class="sub_slide_element">
+			Zendesk
+
+		</div>
+
+		<div class="sub_slide_element">
+			Facebook Ads
+
+		</div>		
+			
+		
+	</div>	
+
+
+	<div class="step rounded_box foreground" data-x="2000" data-y="0" data-z="0"  >
+
+			
+			<div style="border-top: 20px solid #000000; position: relative; top: 300px; left: 1080px; width: 1200px; height: 10px;"></div>
+
+
+
+			<div class="graph_node_label">
+				<p>Data Replication</p>
+			</div>
+		
+	</div>
+
+
+	<div class="step rounded_box foreground" data-x="4000" data-y="0" data-z="0" data-scale="1" >
+
+			<div style="border-top: 20px solid #000000; position: relative; top: 300px; left: 1080px; width: 1200px; height: 10px;"></div>
+			<div style="border-left: 20px solid #000000; position: absolute; top: -830px; left: 540px; width: 20px; height: 830px;"></div>
+
+
+
+			<div class="graph_node_label">
+				<pre>Data Warehouse</pre>
+			</div>	
+	</div>
+
+
+
+
+	<div class="step slide_container background" data-x="4000" data-y="0" data-z="-3000"  data-scale="1">
+
+		<div class="sub_slide_element">
+			Snowflake
+
+		</div>
+
+		<div class="sub_slide_element">
+			AWS Redshift
+
+		</div>
+
+		<div class="sub_slide_element">
+			Google BigQuery
+
+		</div>
+
+		<div class="sub_slide_element">
+			Databricks
+
+		</div>
+
+
+	</div>
+
+
+
+	<div class="step rounded_box foreground" data-x="4000" data-y="-1500" data-z="0" >
+
+
+
+			<div class="graph_node_label">
+				<p>Data Transformations</p>
+			</div>	
+	</div>
+
+	<div class="step rounded_box foreground" data-x="6000" data-y="0" data-z="0" >
+
+			<div style="border-top: 20px solid #000000; position: relative; top: 300px; left: 1080px; width: 1200px; height: 10px;"></div>
+
+
+
+			<div class="graph_node_label">
+				<pre>Semantic Layer</pre>
+			</div>	
+	</div>	
+
+	<div class="step slide_container background" data-x="6000" data-y="0" data-z="-3000"  data-scale="1" style="padding-top: 200px;">
+
+
+		<img src="https://raw.githubusercontent.com/cube-js/cube.js/master/docs/content/cube-scheme-dark.png" width="1200" height="450" style="" />
+
+	</div>
+
+
+	<div class="step rounded_box foreground" data-x="8000" data-y="0" data-z="0" >
+
+
+
+			<div class="graph_node_label">
+				<pre>Data Consumers</pre>
+			</div>	
+	</div>	
+
+
+	<div class="step slide_container background" data-x="8000" data-y="0" data-z="-3000"  data-scale="1">
+
+		<div class="sub_slide_element">
+			Embedded Analytics
+
+		</div>
+
+		<div class="sub_slide_element">
+			End User Applications
+
+		</div>
+
+		<div class="sub_slide_element">
+			BI / Dashboards
+
+		</div>
+
+		<div class="sub_slide_element">
+			Machine Learning
+
+		</div>
+
+
+	</div>
+
+	<!--
+
+<div id="impress-toolbar"></div>
+
+-->
+<script src="../js/impress_2_0.js"></script>
+<script>
+
+
+function enter_slide(dom_object, id) {
+
+//	if (id == "slide_div_data_sources_detail") {
+//		dom_object.style.opacity = 1.0;
+//	}
+
+}	
+
+function leave_slide(dom_object, id) {
+
+	var currentStep = event.target;
+  	var nextStep = event.detail.next;
+  	console.log( "Left the Step Element '" + currentStep.id + "' and about to enter '" + nextStep.id );
+
+	if (id == "slide_div_data_sources_detail") {
+	//	dom_object.style.opacity = 0.0;
+	}
+}	
+
+function check_slide(dom_object, id) {
+	console.log( "click: " + dom_object );
+	if (id == "background") {
+		return false;
+	}
+}
+
+document.addEventListener("click", function (event) {
+    check_slide(event.target, event.target.id); });
+
+document.addEventListener("impress:stepenter", function (event) {
+    enter_slide(event.target, event.target.id); });
+
+document.addEventListener("impress:stepleave", function (event) {
+    leave_slide(event.target, event.target.id); });
+
+
+var rootElement = document.getElementById( "impress" );
+rootElement.addEventListener( "impress:init", function() {
+  console.log( "Impress init" );
+});
+
+// impress().init();
+
+var api = impress();
+api.init();
+api.goto("slide_start_screen");
+
+</script>
+</body>

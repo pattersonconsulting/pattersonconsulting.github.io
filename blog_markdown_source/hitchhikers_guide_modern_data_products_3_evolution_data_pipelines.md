@@ -36,6 +36,7 @@ Topics to reference
 Narrative and Ideas
 
 * Refer to the trend starting around 2008 to have "everything scale" -- hadoop, big data
+* story about Stonebraker telling Olson that "MapReduce wont work out"
 * in terms of graphs/charts --- need to talk about late 2000's where "big data" started to emerge with data growth
 * this data growth drives more BI tools, such as Tableau
 * setting the stage for a tool such as DBT to emerge, 7-8 years later (2016)

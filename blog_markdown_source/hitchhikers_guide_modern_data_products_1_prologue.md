@@ -65,6 +65,10 @@ Reference my interview on AI -- blog post
 
 # Definitions Revisted
 
+Some good definitions on reddit blog:
+
+https://dataengineering.wiki/FAQ/What+is+the+difference+between+a+Data+Engineer+and+X
+
 ## A Data Product
 
 ## Analytics

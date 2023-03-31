@@ -1,15 +1,15 @@
 ---
 layout: post
-published-on: February 15th 2023
+published-on: March 27th 2023
 author: Josh Patterson
-title: Exploratory Data Pipelines vs Enterprise Data Pipelines
-subtitle: The Lab and the Factory in 2023
+title: Revisting The Lab and the Factory
+subtitle: The Hitchhiker's Guide To Building Modern Data Products
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
 ---
 
-# Exploratory (Lab) Data Pipelines vs Enterprise (Factory) Data Pipelines
+# Introduction
 
 Purpose of this article:
 
@@ -17,8 +17,49 @@ Purpose of this article:
 * communicate what tools belong in the individual exploration 
 * use metaphor of "searching parameter space" for a good solution --- "explore vs exploit" 
 
+Series:
 
-## ChatGPT Thoughts
+* [Prologue (Don't Panic)](hitchhikers_guide_modern_data_products_1_prologue.html)
+* [Revisting The Lab and the Factory](hitchhikers_guide_modern_data_products_2_lab_and_factory_redux.html)
+* [The Evolution of Modern Data Pipelines](hitchhikers_guide_modern_data_products_3_evolution_data_pipelines.html)
+* [A Methodology for Building Data Products](hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html)
+
+
+the term "lab and factory" has caught on as an idea, but like many terms in the data space, its overused and its semantics have drifted over time. (see also: "data science" and "data engineering")
+
+Reference DBT's work in putting definitions on roles in data transformation
+
+## Outline / 3 key ideas
+
+1. Revisit original idea/source of the "Lab and the Factory" / Put framing around lab and factory, respectively
+2. Definitions: Data Engineering, Analytics, Roles, Data Modeling, Feature Engineering --- this is key
+3. Games of view materializations
+4. Establish key principles of both lab and factory, setting up the next "evolution" article
+
+
+### Problem Areas to Highlight
+
+* JD Long: "Big IT tends to say 'we only do factories'" ---- "factory by default"
+* call out Kubeflow's issue with early users --- hinders adoption
+   * heavy need for MLOps -- because its a MLOps heavy system for the factory
+   * https://becominghuman.ai/no-you-dont-need-mlops-5e1ce9fdaa4b
+   * https://mlops.community/mlops-is-mostly-data-engineering/
+
+### Quotes from HHGTTG
+
+> It reminds Bundell of how world leaders handle major issues, such as climate change, where they gather and say "we should definitely do something about climate change. But in practice, the years go by ... and we don't."
+
+> "The fact that life is just an adventure and the goal is to have fun. You're there to make the most of what's around you and be a good person while you do it," Oz says. "And I think that's grounding when your world is becoming an adventure."
+
+
+### More thoughts
+
+* JD
+   * small firms are sorta "everything is a lab" so they struggle building the factory stuff
+   * large firms say "we only do factories" --- hilarity ensues
+   * "factory by default" / "lab by default" / "factory bias"
+ 
+### ChatGPT Thoughts
 
 > *In the context of data pipelines, the terms "lab" and "factory" can refer to different stages or environments in the process of developing, testing, and deploying data pipelines.*
 
@@ -28,7 +69,7 @@ Purpose of this article:
 
 > *Overall, the main difference between a lab and a factory in data pipelines is that a lab is a more experimental and flexible environment for developing and testing new ideas, while a factory is a more rigorous and production-ready environment for executing data pipelines at scale.*
 
-## JD Long thoughts
+### JD Long thoughts
 
 Thoughts on individual vs enterprise:
 
@@ -55,12 +96,15 @@ and
 
 > *usually because an engineer hasn't spend enough time with the end consumer to really understand what's useful*
 
+# Revisting the Lab and the Factory
 
-## Lab and the Factory
+Original Artcile:
 
-intro...
+https://hbr.org/2013/04/two-departments-for-data-succe
 
-### Data Pipelines in the Lab
+
+
+# Criteria for When to Use a Lab Environment When Build Data Products
 
 * need to be quick and nimble
 * want to be able to try out new ideas and new tools quickly without a lot of effort --- thoughts are fleeting, sometimes
@@ -85,7 +129,9 @@ ChatGPT says:
 
 *Overall, while Kubeflow has many benefits, it can be challenging for new users to get started due to its reliance on Kubernetes and its multitude of components. However, with the right resources and support, it is possible to overcome these challenges and leverage the power of Kubeflow for ML workflows.*
 
-Scenario
+## Typcial Lab Scenario
+
+relate eexperience of developing medical models with the University of Michigan and running lots of small tests on raw data files
 
 * I have some files locally
 * single user of dataset
@@ -104,7 +150,7 @@ Examples of tools
 * jupyter notebooks (local or on GCP / AWS / cloud)
 
 
-Challenges Over Time with Lab Pipelines
+## Challenges Over Time with Lab Pipelines
 
 * having that notebook (version 15?) that has a ton of cells in it running a series of transform steps eventually becomes unweildy
 * once our data product goes beyond experiment and towards "business production value IP" we want to protect IP
@@ -124,23 +170,37 @@ Continuous Deployment/Delivery refers to the practice of deploying validated cod
 To implement CI/CD for data pipelines, organizations can use tools such as Git for version control, Jenkins or CircleCI for automated testing, and Kubernetes or Docker for containerization and deployment. Additionally, data pipeline frameworks such as Apache Airflow or Apache Beam can be used to create data pipelines that are easy to test and deploy.
 Overall, CI/CD for data pipelines helps organizations to ensure that data processing code and models are tested, validated, and deployed quickly and reliably, reducing the time to insights and enabling faster decision-making.*
 
-### Data Pipelines in the Factory
+# Criteria for When to Use a Factory Environment When Build Data Products
 
-Goals
+## An Overview of Data Infrastructure in the Factory
+
+* illustrating the connective area between the data warehouse and machine learning pipelines
+   * DBT vs Kubeflow Pipelines
+
+
+## Goals of the Factory
 
 * routinely produced processed data from many sources for downstream daily systems
 
-Constraints
+## Constraints
 
 * security -- can't just touch any data however we want
 * orchestration -- dont want this running on Larry's laptop
 * multiple users of the data
 
-Scenario
+## The Typical Factory Scenario
 
 * may have some files in s3 / cloud storage
 * my team all actively share this data (multi-tenancy)
 * system needs to run despite any single user being active / online
 * data needs to continuously run / pump through pipeline of transforms
 
+
+
+
+
+
+## Relationship with the "Modern Data Stack"
+
+* the concept of the "Lab" shouldn't involve standing up all that stuff --- this should only be a "factory" situation
 

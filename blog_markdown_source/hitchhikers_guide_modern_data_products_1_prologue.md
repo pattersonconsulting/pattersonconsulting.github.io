@@ -98,6 +98,12 @@ Attributes?
 
 * marketing
 
+## Modern Data Stack
+
+Notes here:
+
+https://mode.com/collection-build-a-modern-data-stack/
+
 # The Disconnect Between Analytics and Data Engineering
 
 * as defined above, both use different terms to mean the same thing

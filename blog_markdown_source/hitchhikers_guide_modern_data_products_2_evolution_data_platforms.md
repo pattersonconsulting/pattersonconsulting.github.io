@@ -148,6 +148,12 @@ story: i was a hadoop guy, a yarn guy --- parallelization was the way forward. u
    * JVM on the decline / Deeplearning4j as jvm system
 * use material from keybank slides
 
+### Python and Pandas and Machine Learning
+
+https://ponder.io/pandas-is-now-as-popular-as-python-was-in-2016/?utm_campaign=meetedgar&utm_medium=social&utm_source=meetedgar.com
+
+
+
 # The Good Ideas in the Data Lake House Concept
 
 * notes here about how they create a better multi-tenant factory design
@@ -250,6 +256,25 @@ JWills: https://twitter.com/josh_wills/status/1522622572743073800
 > This principle applies well beyond OSS- when we were choosing an initial BI tool for Slack, Mode beat Tableau because Tableau made us sit through a sales preso while Mode was just like "okay, here's the tool. Call us in 30 days if you want to keep it."
 > Second principle: all technical decisions are easy until someone's fingers touch a keyboard, and then the Sunk Cost Principle comes into full effect.
 By the time we had Tableau up and running, we had already built like 30+ dashboards in Mode. It was over.
+
+# A Few Predictions Going Forward
+
+## The Continued Dominance of SQL
+
+Spark in decline, just as MapReduce before it
+
+* analysts are sql-first
+* don't ask folks to change what works
+* everyone has a DW -- not everyone is doing "advanced analytics"
+
+## The Continued Growth of Snowflake
+
+$SNOW vs $DBX
+No enterprise won’t have a cloud data warehouse
+Some enterprises will not have an advanced analytic platform
+If you have a DW
+You have the data
+And you dont have to do ETL
 
 
 

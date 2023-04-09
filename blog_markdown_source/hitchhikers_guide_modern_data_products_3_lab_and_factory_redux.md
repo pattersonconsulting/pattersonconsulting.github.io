@@ -20,12 +20,20 @@ Purpose of this article:
 Series:
 
 * [Prologue (Don't Panic)](hitchhikers_guide_modern_data_products_1_prologue.html)
-* [Revisting The Lab and the Factory](hitchhikers_guide_modern_data_products_2_lab_and_factory_redux.html)
-* [The Evolution of Modern Data Pipelines](hitchhikers_guide_modern_data_products_3_evolution_data_pipelines.html)
+* [The Evolution of Modern Data Platforms](hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html)
+* [Revisting The Lab and the Factory](hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html)
 * [A Methodology for Building Data Products](hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html)
-
+* [Appendix A: Definitions](hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html)
 
 the term "lab and factory" has caught on as an idea, but like many terms in the data space, its overused and its semantics have drifted over time. (see also: "data science" and "data engineering")
+
+Original Article:
+
+https://hbr.org/2013/04/two-departments-for-data-succe
+
+Other people, like JWills, picked it up later:
+
+https://qconsf.com/sf2013/presentation/lab-factory-building-production-machine-learning-infrastructure.html
 
 Reference DBT's work in putting definitions on roles in data transformation
 
@@ -44,6 +52,15 @@ Reference DBT's work in putting definitions on roles in data transformation
    * heavy need for MLOps -- because its a MLOps heavy system for the factory
    * https://becominghuman.ai/no-you-dont-need-mlops-5e1ce9fdaa4b
    * https://mlops.community/mlops-is-mostly-data-engineering/
+
+
+* Benn making argument to just use dbt over duckdb (s3)
+   * https://benn.substack.com/p/what-happened-to-the-data-warehouse#footnote-1-106233151
+   * explain why this becomes problematic in this article
+
+"Just"
+
+https://cutlefish.substack.com/p/tbm-210-just?r=o29ix&utm_medium=ios&utm_campaign=post
 
 ### Quotes from HHGTTG
 
@@ -102,9 +119,27 @@ Original Artcile:
 
 https://hbr.org/2013/04/two-departments-for-data-succe
 
+# The 3 Key Roles to Consider
 
+link the DBT article for the roles
+
+## Data Engineer
+
+ML
+
+## Analytics Engineer
+
+analytics
+
+## Data Analyst
+
+SQL bro
 
 # Criteria for When to Use a Lab Environment When Build Data Products
+
+"Good data engineers are lazy"
+
+https://stkbailey.substack.com/p/good-data-engineers-are-lazy?utm_source=substack&utm_medium=email
 
 * need to be quick and nimble
 * want to be able to try out new ideas and new tools quickly without a lot of effort --- thoughts are fleeting, sometimes
@@ -169,6 +204,12 @@ Continuous Integration refers to the practice of integrating code changes into a
 Continuous Deployment/Delivery refers to the practice of deploying validated code changes into production environments frequently and automatically. In the context of data pipelines, this means that changes to data processing code and data models can be deployed quickly and reliably, ensuring that data is processed and analyzed as soon as possible.
 To implement CI/CD for data pipelines, organizations can use tools such as Git for version control, Jenkins or CircleCI for automated testing, and Kubernetes or Docker for containerization and deployment. Additionally, data pipeline frameworks such as Apache Airflow or Apache Beam can be used to create data pipelines that are easy to test and deploy.
 Overall, CI/CD for data pipelines helps organizations to ensure that data processing code and models are tested, validated, and deployed quickly and reliably, reducing the time to insights and enabling faster decision-making.*
+
+# The Data Lakehouse Architecture
+
+* what they got right wrt bridging the gap between ML and analytics
+* the overhead for standing up infrastructure is more in the "factory" camp
+* early lab work doesnt always port well (starts w simple python)
 
 # Criteria for When to Use a Factory Environment When Build Data Products
 

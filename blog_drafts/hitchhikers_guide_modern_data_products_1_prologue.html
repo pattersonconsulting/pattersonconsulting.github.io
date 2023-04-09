@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Prologue (Don’t Panic)</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Prologue (Don’t Panic)</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#how-to-read-the-series"
+id="toc-how-to-read-the-series">How to Read The Series</a></li>
+<li><a href="#purpose-of-this-series"
+id="toc-purpose-of-this-series">Purpose of This Series</a></li>
+<li><a href="#the-tectonic-plates-of-the-data-industry"
+id="toc-the-tectonic-plates-of-the-data-industry">The Tectonic Plates of
+the Data Industry</a></li>
+</ul></li>
+<li><a
+href="#fuzzy-definitions-marketing-teams-and-the-need-to-be-specific"
+id="toc-fuzzy-definitions-marketing-teams-and-the-need-to-be-specific">Fuzzy
+Definitions, Marketing Teams, and the Need to Be Specific</a>
+<ul>
+<li><a href="#revisting-the-framing-of-the-lab-and-the-factory"
+id="toc-revisting-the-framing-of-the-lab-and-the-factory">Revisting the
+Framing of The Lab and the Factory</a></li>
+</ul></li>
+<li><a
+href="#bridging-the-disconnect-between-analytics-and-data-engineering"
+id="toc-bridging-the-disconnect-between-analytics-and-data-engineering">Bridging
+The Disconnect Between Analytics and Data Engineering</a>
+<ul>
+<li><a href="#not-everyone-sees-it-from-the-same-viewpoint"
+id="toc-not-everyone-sees-it-from-the-same-viewpoint">Not Everyone Sees
+It From the Same Viewpoint</a></li>
+<li><a href="#where-does-etl-end-and-analytics-begin"
+id="toc-where-does-etl-end-and-analytics-begin">Where Does ETL End and
+Analytics Begin?</a></li>
+<li><a href="#focus-on-value-creating-tasks"
+id="toc-focus-on-value-creating-tasks">Focus on Value-Creating
+Tasks</a></li>
+<li><a href="#building-data-products"
+id="toc-building-data-products">Building Data Products</a></li>
+<li><a href="#modern-data-stack" id="toc-modern-data-stack">Modern Data
+Stack</a></li>
+<li><a href="#games-of-view-materialization"
+id="toc-games-of-view-materialization">Games of View
+Materialization</a></li>
+<li><a href="#data-engineer-role" id="toc-data-engineer-role">Data
+Engineer (Role)</a></li>
+<li><a href="#data-engineering" id="toc-data-engineering">Data
+Engineering</a></li>
+</ul></li>
+<li><a href="#reference-to-the-original-hitchhikers-guide-to-the-galaxy"
+id="toc-reference-to-the-original-hitchhikers-guide-to-the-galaxy">Reference
+to the Original Hitchhiker’s Guide to the Galaxy</a></li>
+<li><a href="#in-closing" id="toc-in-closing">In Closing</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this series:</p>
+<blockquote>
+<p>To develop a clear step-by-step process to design and operate data
+infrastructure for your data product.</p>
+</blockquote>
+<p>The intended audience for this series is:</p>
+<blockquote>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
+</blockquote>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The
+Evolution of Modern Data Platforms</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+</ul>
+<h2 id="how-to-read-the-series">How to Read The Series</h2>
+<p>If you don’t care about the history and evolution stuff, maybe just
+skip to part 3 <a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a> – otherwise, this Prologue and then the
+Evolution of Data Platforms should be fun background reading.</p>
+<p>We spend the first 3 posts of this series providing background and
+definitions to set the stage for our methodology and in part 4 we lay
+out our step by step process.</p>
+<h2 id="purpose-of-this-series">Purpose of This Series</h2>
+<p>I wrote this series for 3 reasons:</p>
+<ol type="1">
+<li>To better lay out my own thesis for building data products through
+long-form writing</li>
+<li>To give our customers a more complete guide on building data
+products that can be shown in a 20-minute slide deck</li>
+<li>To create a set of architectural guidelines for our team to use when
+working through customer design decisions</li>
+</ol>
+<p>The notes in this series comes from working with customers over the
+past 20 years in the data space, from working with Fortune 500 customers
+while at Cloudera, to helping build the Deeplearning4j open source
+library, to writing the Kubeflow Operations Guide, to working with our
+Fortune 500 customers today at Patterson Consulting.</p>
+<p>A key challenge for platform architects in the data industry is
+understanding which tools to use and what the tradeoffs are if those
+tools are used. There are so many vendors pushing their own “all-in-one”
+platform magic solution that it can be dizzying to cut through the
+noise.</p>
+<p>An advantage that I have in writing a series such as this is that I
+do not represent a software vendor and so I can play the (mostly)
+neutral analyst.</p>
+<p>Some of the content in this series is based on some of the
+presentations we’ve given on the topic over the past 3 years (We also
+offer consulting to venture capital groups and institutional investor
+groups).</p>
+<p>The most interesting underlying trends I highlight in this series
+occur not on the quarterly scale, but “tectonic plate” movements across
+the past decade.</p>
+<p>My goal is to condense the vapor of nuance across the past decade of
+data infrastructure into more solid concepts for building modern data
+products. Given that most of us are just wandering along the vast data
+super highways, I felt that the “Hitchhiker’s Guide to the Galaxy” was a
+good analogue for this series.</p>
+<p>While there is a lot to consider and ruminate on in trying to
+understand the data product/infrastructure space, the main thing to
+remember is, as always:</p>
+<p>Don’t Panic.</p>
+<h2 id="the-tectonic-plates-of-the-data-industry">The Tectonic Plates of
+the Data Industry</h2>
+<p>In 2022 Covid had blown over enough that the conference circuit
+started up again, and we headed out to a major cloud vendor
+conference.</p>
+<p>One thing that immediately struck me was how similar the conference
+floor looked to that of O’Reilly Strata back in 2012. If you replaced
+the cloud platform with Cloudera, the conference would look nearly
+identical. Even some of the same ETL vendors still existed a decade
+later (data ETL vendors? check. data load vendors? check. BI vendors
+trying to disrupt Tableau? check.).</p>
+<p>My immediate thought was that “nothing has changed”.</p>
+<p>My next thought was “wait a minute, how can that possibly be?”</p>
+<p>Some of the folks I saw there had the same reaction that I did. That
+feeling of “Strata Deja Vu” stuck to me, and on the plane ride home I
+started writing out notes on the market (which eventually became core
+themes in this series) to better understand the evolutionary trajectory
+from 2008 until 2022.</p>
+<p>What bothered me was that “tectonic plates” (e.g., “fundamental
+things”) in the industry had shifted, refactoring the data infratructure
+space, but I was struggling to put my finger on exactly “what those
+things were”.</p>
+<p>In this series I’ll take a look at key ideas in the data space:</p>
+<ol type="1">
+<li>The original ideas around the “Lab and the Factory”</li>
+<li>Key “tectonic plate” shifts of the past decade</li>
+<li>The evolution of modern data pipelines</li>
+</ol>
+<p>Looking back at these ideas directly informs how I craft out
+guidelines in part 4 of this series for building new data products. The
+background and context of these topics directly inform the what and why
+of making the design decisions needed to create new data products. To
+get there, however, we need to be intentional about the terminology we
+use and explicit in how these terms are defined.</p>
+<h1
+id="fuzzy-definitions-marketing-teams-and-the-need-to-be-specific">Fuzzy
+Definitions, Marketing Teams, and the Need to Be Specific</h1>
+<p>In this prologue, though, I want to establish some ground-truth
+context around terminology — because in many conversations I’ve had on
+this topic (accomplished, educated, experienced) folks make comments
+such as</p>
+<ul>
+<li>“I’m not really sure what data engineering is” (said by someone
+‘known’ in the ML space)</li>
+<li>“I couldn’t tell you where analytics starts and machine learning
+begins”</li>
+<li>“I’m not sure how long the term ‘feature engineering’ has been
+around”</li>
+</ul>
+<p>When working on our internal notes on this topic for customers and
+investors, I wasn’t entirely sure a series like this was needed.
+However, based on the above comments I could tell this topic was worth
+the writing effort.</p>
+<p>I’ll spend some time baselining the discussion with term definitions
+(“Feature”, “Data Modeling”, etc) as some folks in both the analytics
+world and the machine learning world have different definitions for the
+same concept, and it’s worth (attempting to build?) building a common
+vernacular.</p>
+<p>The challenge with this common vernacular is that it seems the
+combination of “marketing teams jumping on the latest hot term” and
+“twitter chatter” is a recipe for fuzzy definitions. Definitions and the
+framing of concepts are where we need to start.</p>
+<h2 id="revisting-the-framing-of-the-lab-and-the-factory">Revisting the
+Framing of The Lab and the Factory</h2>
+<p>Another theme I touch on in this series is revisting the idea of the
+“Lab and the Factory”. I do active research with the University of
+Michigan on modeling disaster data and its impact on healthcare. I help
+researchers build out different exploratory data pipelines, and it
+always was interesting in how, while we were still exploring data
+product ideas, the tools that best fit the situation were quite
+different than the tools that fit enterprise data analytics and machine
+learning projects. Projects such as working with Universtiy researchers
+is one of the core places that new ideas are born, implicitly embodying
+the idea of the “lab”.</p>
+<p>Many ideas, such as “The Lab and the Factory”, are used in talks and
+discussion in a breezy manner, but many times lack specifics. (An
+example of this is how I use the term “lab and the factory” in our
+Kubeflow Operations Guide book in chapter 1, but never defining it
+further in the book. I’m as guity as anyone here.)</p>
+<p>Another framing of the data industry was “Data is the new oil”. This
+framing didn’t work as well, as not all data was as useful to companies
+(or they were unable to make use of it).</p>
+<p>It’s worth grounding any data product analysis in the right framing,
+to understand what worked — and what did not work.</p>
+<h1
+id="bridging-the-disconnect-between-analytics-and-data-engineering">Bridging
+The Disconnect Between Analytics and Data Engineering</h1>
+<ul>
+<li>as defined above, both use different terms to mean the same
+thing</li>
+<li>look at the DBT notes here on the differences / differences in
+roles</li>
+</ul>
+<h2 id="not-everyone-sees-it-from-the-same-viewpoint">Not Everyone Sees
+It From the Same Viewpoint</h2>
+<ul>
+<li>statistics vs machine learning</li>
+<li>analytics vs data engineering</li>
+</ul>
+<p>layers are abstracted away over time; in 2010 we thought a lot about
+distributed parallel processing, network speeds, and disk speeds in
+context of how we might write a complex data transformation job in
+MapReduce.</p>
+<p>Storage has been progressively abstracted away (snowflake, etc)</p>
+<p>some concepts have different labels in different domains</p>
+<h2 id="where-does-etl-end-and-analytics-begin">Where Does ETL End and
+Analytics Begin?</h2>
+<p>https://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/?utm_source=substack&amp;utm_medium=email</p>
+<p>https://stkbailey.substack.com/p/nobody-should-write-etl?utm_source=substack&amp;utm_medium=email</p>
+<h2 id="focus-on-value-creating-tasks">Focus on Value-Creating
+Tasks</h2>
+<p>a general idea — does this work as an evolutionary theme?</p>
+<h2 id="building-data-products">Building Data Products</h2>
+<ul>
+<li>many systems have the same data flow, but different consumers at the
+end of the pipe</li>
+<li>the data processing pipeline tees off different data products for
+different purposes
+<ul>
+<li>analytics for BI tools</li>
+<li>operational data</li>
+<li>data for machine learning</li>
+<li>etc</li>
+</ul></li>
+</ul>
+<h2 id="modern-data-stack">Modern Data Stack</h2>
+<p>Notes here:</p>
+<p>https://mode.com/collection-build-a-modern-data-stack/</p>
+<h2 id="games-of-view-materialization">Games of View
+Materialization</h2>
+<p>— let’s see if we can bridge the ideas of analytics and data
+engineering with the commonality of “view materialization”</p>
+<p>In terms of computer science design decisions, it boils down to
+“Games of Materialized Views” (ref:
+https://mitpress.mit.edu/books/materialized-views ).</p>
+<h2 id="data-engineer-role">Data Engineer (Role)</h2>
+<p>https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603</p>
+<blockquote>
+<p>“I joined Facebook in 2011 as a business intelligence engineer. By
+the time I left in 2013, I was a data engineer.”</p>
+</blockquote>
+<blockquote>
+<p>“I wasn’t promoted or assigned to this new role. Instead, Facebook
+came to realize that the work we were doing transcended classic business
+intelligence. The role we’d created for ourselves was a new discipline
+entirely.”</p>
+</blockquote>
+<h2 id="data-engineering">Data Engineering</h2>
+<blockquote>
+<p>“Data engineering refers to the building of systems to enable the
+collection and usage of data. This data is usually used to enable
+subsequent analysis and data science; which often involves machine
+learning.[1][2] Making the data usable usually involves substantial
+compute and storage, as well as data processing and cleaning.”</p>
+</blockquote>
+<p>https://en.wikipedia.org/wiki/Data_engineering</p>
+<p>https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/1098108302/ref=pd_bxgy_img_sccl_2/143-2847560-0944436?pd_rd_w=BXhTE&amp;content-id=amzn1.sym.6ab4eb52-6252-4ca2-a1b9-ad120350253c&amp;pf_rd_p=6ab4eb52-6252-4ca2-a1b9-ad120350253c&amp;pf_rd_r=V2C07V6S9W4WZ52VK07T&amp;pd_rd_wg=36QXW&amp;pd_rd_r=b1b67f23-fc07-46ff-ba58-f30f071cd2e6&amp;pd_rd_i=1098108302&amp;psc=1&amp;asin=1098108302&amp;revisionId=&amp;format=4&amp;depth=1</p>
+<ul>
+<li>WTF is “Data Engineering”?
+<ul>
+<li>the term has shifted over time</li>
+<li>how we viewed it in the DL Book</li>
+</ul></li>
+</ul>
+<h1
+id="reference-to-the-original-hitchhikers-guide-to-the-galaxy">Reference
+to the Original Hitchhiker’s Guide to the Galaxy</h1>
+<p>Use ChatGPT here to genereate references to data content concepts</p>
+<blockquote>
+<p>The story is a satire on what happens around the world and what we’re
+doing to our planet and is still relevant today. In the story, Vogons
+are an alien race destroying planets to make way for construction of a
+new hyperspace bypass.</p>
+</blockquote>
+<ul>
+<li>this is great because many times data products are harmless. until
+they aren’t.</li>
+</ul>
+<p>Towels:</p>
+<blockquote>
+<p>A towel is just about the most massively useful thing an interstellar
+hitchhiker can carry. Partly because it has great practical value. You
+can wrap it around you for warmth as you bound across the cold moons of
+Jaglan Beta; you can lie on it on the brilliant marble-sanded beaches of
+Santraginus V, inhaling the heady sea vapours; you can sleep under it
+beneath the stars which shine so redly on the desert world of Kakrafoon;
+use it to sail a miniraft down the slow heavy River Moth; wet it for use
+in hand-to-hand combat; wrap it around your head to ward off noxious
+fumes or avoid the gaze of the Ravenous Bugblatter Beast of Traal (a
+mind-bogglingly stupid animal, it assumes that if you can’t see it, it
+can’t see you — daft as a brush, but very very ravenous); you can wave
+your towel in emergencies as a distress signal, and of course you can
+dry yourself off with it if it still seems to be clean enough. More
+importantly, a towel has immense psychological value. For some reason,
+if a strag discovers that a hitchhiker has his towel with him, he will
+automatically assume that he is also in possession of a toothbrush,
+washcloth, soap, tin of biscuits, flask, compass, map, ball of string,
+gnat spray, wet-weather gear, space suit etc., etc. Furthermore, the
+strag will then happily lend the hitchhiker any of these or a dozen
+other items that the hitchhiker might accidentally have “lost.” What the
+strag will think is that any man who can hitch the length and breadth of
+the Galaxy, rough it, slum it, struggle against terrible odds, win
+through and still knows where his towel is, is clearly a man to be
+reckoned with.</p>
+</blockquote>
+<p>Restaurant at the End of the Universe</p>
+<h1 id="in-closing">In Closing</h1>
+<p>( todo: bring together the purpose of this series )</p>
+<ul>
+<li>lab and the factory: based on who I am, and what my goal is – what
+do the tools look like that best suit my needs?</li>
+<li>evolution of data pipelines / tectonic plates: what trends are
+driving the design of “modern data stacks”?</li>
+</ul>
+<p>If we know those two things, then we can entertain ideas around
+designing new data projects</p>
+<p>No matter what you think about the data
+pipeline/infratructure/product space, my friend JD Long summed it up
+best when he said:</p>
+<blockquote>
+<p>“Data Products? Mostly Harmless (Until they Aren’t)”</p>
+</blockquote>
+<h1 id="references">References</h1>
+<ul>
+<li>AI Hierarchy of Needs
+<ul>
+<li>https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007</li>
+</ul></li>
+<li>The Rise of the Data Engineer
+<ul>
+<li>https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603</li>
+</ul></li>
+<li>The Lab and the Factory</li>
+<li>Towel as the most important item to carry
+<ul>
+<li>https://hitchhikers.fandom.com/wiki/Towel</li>
+</ul></li>
+</ul>
+</body>
+</html>

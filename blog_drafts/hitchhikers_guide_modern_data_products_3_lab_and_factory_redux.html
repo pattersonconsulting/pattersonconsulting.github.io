@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Revisting The Lab and the Factory</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Revisting The Lab and the Factory</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#outline-3-key-ideas" id="toc-outline-3-key-ideas">Outline
+/ 3 key ideas</a></li>
+</ul></li>
+<li><a href="#revisting-the-lab-and-the-factory"
+id="toc-revisting-the-lab-and-the-factory">Revisting the Lab and the
+Factory</a></li>
+<li><a href="#the-3-key-roles-to-consider"
+id="toc-the-3-key-roles-to-consider">The 3 Key Roles to Consider</a>
+<ul>
+<li><a href="#data-engineer" id="toc-data-engineer">Data
+Engineer</a></li>
+<li><a href="#analytics-engineer" id="toc-analytics-engineer">Analytics
+Engineer</a></li>
+<li><a href="#data-analyst" id="toc-data-analyst">Data Analyst</a></li>
+</ul></li>
+<li><a
+href="#criteria-for-when-to-use-a-lab-environment-when-build-data-products"
+id="toc-criteria-for-when-to-use-a-lab-environment-when-build-data-products">Criteria
+for When to Use a Lab Environment When Build Data Products</a>
+<ul>
+<li><a href="#typcial-lab-scenario"
+id="toc-typcial-lab-scenario">Typcial Lab Scenario</a></li>
+<li><a href="#challenges-over-time-with-lab-pipelines"
+id="toc-challenges-over-time-with-lab-pipelines">Challenges Over Time
+with Lab Pipelines</a></li>
+</ul></li>
+<li><a href="#the-data-lakehouse-architecture"
+id="toc-the-data-lakehouse-architecture">The Data Lakehouse
+Architecture</a></li>
+<li><a
+href="#criteria-for-when-to-use-a-factory-environment-when-build-data-products"
+id="toc-criteria-for-when-to-use-a-factory-environment-when-build-data-products">Criteria
+for When to Use a Factory Environment When Build Data Products</a>
+<ul>
+<li><a href="#an-overview-of-data-infrastructure-in-the-factory"
+id="toc-an-overview-of-data-infrastructure-in-the-factory">An Overview
+of Data Infrastructure in the Factory</a></li>
+<li><a href="#goals-of-the-factory" id="toc-goals-of-the-factory">Goals
+of the Factory</a></li>
+<li><a href="#constraints" id="toc-constraints">Constraints</a></li>
+<li><a href="#the-typical-factory-scenario"
+id="toc-the-typical-factory-scenario">The Typical Factory
+Scenario</a></li>
+<li><a href="#relationship-with-the-modern-data-stack"
+id="toc-relationship-with-the-modern-data-stack">Relationship with the
+“Modern Data Stack”</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this article:</p>
+<ul>
+<li>set up evolution of data pipelines article</li>
+<li>communicate what tools belong in the individual exploration</li>
+<li>use metaphor of “searching parameter space” for a good solution —
+“explore vs exploit”</li>
+</ul>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The
+Evolution of Modern Data Platforms</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+</ul>
+<p>the term “lab and factory” has caught on as an idea, but like many
+terms in the data space, its overused and its semantics have drifted
+over time. (see also: “data science” and “data engineering”)</p>
+<p>Original Article:</p>
+<p>https://hbr.org/2013/04/two-departments-for-data-succe</p>
+<p>Other people, like JWills, picked it up later:</p>
+<p>https://qconsf.com/sf2013/presentation/lab-factory-building-production-machine-learning-infrastructure.html</p>
+<p>Reference DBT’s work in putting definitions on roles in data
+transformation</p>
+<h2 id="outline-3-key-ideas">Outline / 3 key ideas</h2>
+<ol type="1">
+<li>Revisit original idea/source of the “Lab and the Factory” / Put
+framing around lab and factory, respectively</li>
+<li>Definitions: Data Engineering, Analytics, Roles, Data Modeling,
+Feature Engineering — this is key</li>
+<li>Games of view materializations</li>
+<li>Establish key principles of both lab and factory, setting up the
+next “evolution” article</li>
+</ol>
+<h3 id="problem-areas-to-highlight">Problem Areas to Highlight</h3>
+<ul>
+<li>JD Long: “Big IT tends to say ‘we only do factories’” —- “factory by
+default”</li>
+<li>call out Kubeflow’s issue with early users — hinders adoption
+<ul>
+<li>heavy need for MLOps – because its a MLOps heavy system for the
+factory</li>
+<li>https://becominghuman.ai/no-you-dont-need-mlops-5e1ce9fdaa4b</li>
+<li>https://mlops.community/mlops-is-mostly-data-engineering/</li>
+</ul></li>
+<li>Benn making argument to just use dbt over duckdb (s3)
+<ul>
+<li>https://benn.substack.com/p/what-happened-to-the-data-warehouse#footnote-1-106233151</li>
+<li>explain why this becomes problematic in this article</li>
+</ul></li>
+</ul>
+<p>“Just”</p>
+<p>https://cutlefish.substack.com/p/tbm-210-just?r=o29ix&amp;utm_medium=ios&amp;utm_campaign=post</p>
+<h3 id="quotes-from-hhgttg">Quotes from HHGTTG</h3>
+<blockquote>
+<p>It reminds Bundell of how world leaders handle major issues, such as
+climate change, where they gather and say “we should definitely do
+something about climate change. But in practice, the years go by … and
+we don’t.”</p>
+</blockquote>
+<blockquote>
+<p>“The fact that life is just an adventure and the goal is to have fun.
+You’re there to make the most of what’s around you and be a good person
+while you do it,” Oz says. “And I think that’s grounding when your world
+is becoming an adventure.”</p>
+</blockquote>
+<h3 id="more-thoughts">More thoughts</h3>
+<ul>
+<li>JD
+<ul>
+<li>small firms are sorta “everything is a lab” so they struggle
+building the factory stuff</li>
+<li>large firms say “we only do factories” — hilarity ensues</li>
+<li>“factory by default” / “lab by default” / “factory bias”</li>
+</ul></li>
+</ul>
+<h3 id="chatgpt-thoughts">ChatGPT Thoughts</h3>
+<blockquote>
+<p><em>In the context of data pipelines, the terms “lab” and “factory”
+can refer to different stages or environments in the process of
+developing, testing, and deploying data pipelines.</em></p>
+</blockquote>
+<blockquote>
+<p><em>A lab is typically a testing environment where data scientists
+and engineers experiment with different data processing techniques,
+algorithms, and models. In a lab, they might use small-scale datasets to
+test their ideas and refine their code. Labs are typically more flexible
+and allow for rapid iteration, as data scientists can quickly experiment
+with new ideas without worrying about the constraints of the production
+environment.</em></p>
+</blockquote>
+<blockquote>
+<p><em>On the other hand, a factory refers to the production environment
+where data pipelines are executed at scale to process large volumes of
+data in a reliable and efficient manner. Factories are typically more
+rigid and require more careful planning and optimization, as the stakes
+are higher and errors can have significant consequences. In a factory,
+data pipelines must be carefully tested and validated before being
+deployed to ensure that they can handle large volumes of data, run
+reliably and efficiently, and produce accurate results.</em></p>
+</blockquote>
+<blockquote>
+<p><em>Overall, the main difference between a lab and a factory in data
+pipelines is that a lab is a more experimental and flexible environment
+for developing and testing new ideas, while a factory is a more rigorous
+and production-ready environment for executing data pipelines at
+scale.</em></p>
+</blockquote>
+<h3 id="jd-long-thoughts">JD Long thoughts</h3>
+<p>Thoughts on individual vs enterprise:</p>
+<blockquote>
+<p><em>Individual workflow needs to be very very low friction for easy
+and fast exploration. There will be lots of dead ends so every step
+should be trivially easy to iterate. But.. when done with the individual
+EDA, there may be things that are useful for daily metrics or whatever.
+So those may be lifted and landed into a scheduled robust
+pipeline.</em></p>
+</blockquote>
+<blockquote>
+<p><em>So there should be low friction between exploratory &amp; prod…
+strong argument for same language, common environments etc</em></p>
+</blockquote>
+<blockquote>
+<p><em>Stupid shit adds huge friction. Stuff like credentials and
+environments being different between. Exploration &amp; prod. I’ve spent
+soooo many calories getting that friction out of our systems.</em></p>
+</blockquote>
+<blockquote>
+<p><em>IT devs will look at “exploratory” workflows and say “oh, that’s
+dev” and try to set up data scientists to work in dev with incomplete
+and stale data. Wrong. The explore environment must have production
+data.</em></p>
+</blockquote>
+<blockquote>
+<p><em>That’s an example of friction we’ve had to remove.</em></p>
+</blockquote>
+<blockquote>
+<p><em>Prod flows also have more logging and error checking,
+naturally</em></p>
+</blockquote>
+<p>and</p>
+<blockquote>
+<p><em>I feel like the “modern data pipeline” sort of assumes the
+builder of the pipeline knows exactly what they want to create and
+report. that sort of assumes that EDA and design and all that has
+already happened</em></p>
+</blockquote>
+<blockquote>
+<p><em>so the modern data pipeline either needs to prepare data to be
+explored prior to EDA/ metric POC or the pipeline is informed by the
+work done in EDA to create metrics that the business knows they
+want</em></p>
+</blockquote>
+<blockquote>
+<p><em>a common failure mode, in my experience, is to have pipelines
+that do a bunch of shit that’s not really the right thing, or not
+informed by what’s really useful downstream</em></p>
+</blockquote>
+<blockquote>
+<p><em>usually because an engineer hasn’t spend enough time with the end
+consumer to really understand what’s useful</em></p>
+</blockquote>
+<h1 id="revisting-the-lab-and-the-factory">Revisting the Lab and the
+Factory</h1>
+<p>Original Artcile:</p>
+<p>https://hbr.org/2013/04/two-departments-for-data-succe</p>
+<h1 id="the-3-key-roles-to-consider">The 3 Key Roles to Consider</h1>
+<p>link the DBT article for the roles</p>
+<h2 id="data-engineer">Data Engineer</h2>
+<p>ML</p>
+<h2 id="analytics-engineer">Analytics Engineer</h2>
+<p>analytics</p>
+<h2 id="data-analyst">Data Analyst</h2>
+<p>SQL bro</p>
+<h1
+id="criteria-for-when-to-use-a-lab-environment-when-build-data-products">Criteria
+for When to Use a Lab Environment When Build Data Products</h1>
+<p>“Good data engineers are lazy”</p>
+<p>https://stkbailey.substack.com/p/good-data-engineers-are-lazy?utm_source=substack&amp;utm_medium=email</p>
+<ul>
+<li>need to be quick and nimble</li>
+<li>want to be able to try out new ideas and new tools quickly without a
+lot of effort — thoughts are fleeting, sometimes</li>
+</ul>
+<p>Mention: some systems, such as Kubeflow, are execptional for
+Enterprise operations, but have a steep learning curve</p>
+<ul>
+<li>explain why this is bad, and why product makers should allow for
+early users to experiment quickly</li>
+</ul>
+<p>ChatGPT says:</p>
+<p><em>Kubeflow is a powerful open-source platform for deploying and
+managing machine learning workflows on Kubernetes. While Kubeflow has
+many benefits for ML practitioners, it also has a steep learning curve
+due to several reasons:</em></p>
+<p><em>Complexity of Kubernetes: Kubeflow is built on top of Kubernetes,
+which is a complex container orchestration platform. This means that
+users need to have a solid understanding of Kubernetes before they can
+start using Kubeflow.</em></p>
+<p><em>Multitude of components: Kubeflow is composed of several
+components such as JupyterHub, Tensorflow, and Istio. Understanding how
+each component works and how to use them effectively can take
+time.</em></p>
+<p><em>Command line interface: Kubeflow relies heavily on the
+command-line interface (CLI) for managing workflows and deployments.
+This can be intimidating for users who are not comfortable with the
+CLI.</em></p>
+<p><em>DevOps skills: Kubeflow requires users to have some DevOps skills
+such as Docker and Kubernetes knowledge, Git for version control, and
+Python for scripting.</em></p>
+<p><em>Steep learning curve for machine learning: Finally, machine
+learning itself has a steep learning curve, and Kubeflow adds an
+additional layer of complexity to this.</em></p>
+<p><em>Overall, while Kubeflow has many benefits, it can be challenging
+for new users to get started due to its reliance on Kubernetes and its
+multitude of components. However, with the right resources and support,
+it is possible to overcome these challenges and leverage the power of
+Kubeflow for ML workflows.</em></p>
+<h2 id="typcial-lab-scenario">Typcial Lab Scenario</h2>
+<p>relate eexperience of developing medical models with the University
+of Michigan and running lots of small tests on raw data files</p>
+<ul>
+<li>I have some files locally</li>
+<li>single user of dataset</li>
+<li>I want to do basic analysis</li>
+<li>dont want to install much / anything</li>
+<li>quick local python env
+<ul>
+<li>python3</li>
+<li>Numpy</li>
+<li>Pandas</li>
+<li>Sci-Kit Learn</li>
+</ul></li>
+</ul>
+<p>likely managed by anaconda</p>
+<p>Examples of tools</p>
+<ul>
+<li>jupyter notebooks (local or on GCP / AWS / cloud)</li>
+</ul>
+<h2 id="challenges-over-time-with-lab-pipelines">Challenges Over Time
+with Lab Pipelines</h2>
+<ul>
+<li>having that notebook (version 15?) that has a ton of cells in it
+running a series of transform steps eventually becomes unweildy</li>
+<li>once our data product goes beyond experiment and towards “business
+production value IP” we want to protect IP
+<ul>
+<li>consistency</li>
+<li>git tracked</li>
+</ul></li>
+<li>we’ll also want to let more people work on the pipeline, whihc is
+harder to do w a single notebook</li>
+<li>this is the point where we want to move to a CI/CD-based system
+<ul>
+<li>DBT</li>
+<li>Airflow</li>
+<li>Fivetran</li>
+</ul></li>
+<li>some tools are DAG-based, some tools are notebook-based — but they
+all tend to be github / CI/CD-style systems</li>
+</ul>
+<p>ChatGPT Says: <em>CI/CD stands for Continuous Integration and
+Continuous Deployment/Delivery, and it is a set of practices used in
+software development to ensure that code changes are tested, validated,
+and deployed frequently and reliably. In the context of data pipelines,
+CI/CD can be used to ensure that changes to data processing code and
+data models are tested and deployed automatically and seamlessly.
+Continuous Integration refers to the practice of integrating code
+changes into a shared repository and testing them automatically,
+preferably in a repeatable and automated way. This helps to identify
+integration issues and conflicts early, which reduces the risk of
+introducing bugs into the codebase. Continuous Deployment/Delivery
+refers to the practice of deploying validated code changes into
+production environments frequently and automatically. In the context of
+data pipelines, this means that changes to data processing code and data
+models can be deployed quickly and reliably, ensuring that data is
+processed and analyzed as soon as possible. To implement CI/CD for data
+pipelines, organizations can use tools such as Git for version control,
+Jenkins or CircleCI for automated testing, and Kubernetes or Docker for
+containerization and deployment. Additionally, data pipeline frameworks
+such as Apache Airflow or Apache Beam can be used to create data
+pipelines that are easy to test and deploy. Overall, CI/CD for data
+pipelines helps organizations to ensure that data processing code and
+models are tested, validated, and deployed quickly and reliably,
+reducing the time to insights and enabling faster
+decision-making.</em></p>
+<h1 id="the-data-lakehouse-architecture">The Data Lakehouse
+Architecture</h1>
+<ul>
+<li>what they got right wrt bridging the gap between ML and
+analytics</li>
+<li>the overhead for standing up infrastructure is more in the “factory”
+camp</li>
+<li>early lab work doesnt always port well (starts w simple python)</li>
+</ul>
+<h1
+id="criteria-for-when-to-use-a-factory-environment-when-build-data-products">Criteria
+for When to Use a Factory Environment When Build Data Products</h1>
+<h2 id="an-overview-of-data-infrastructure-in-the-factory">An Overview
+of Data Infrastructure in the Factory</h2>
+<ul>
+<li>illustrating the connective area between the data warehouse and
+machine learning pipelines
+<ul>
+<li>DBT vs Kubeflow Pipelines</li>
+</ul></li>
+</ul>
+<h2 id="goals-of-the-factory">Goals of the Factory</h2>
+<ul>
+<li>routinely produced processed data from many sources for downstream
+daily systems</li>
+</ul>
+<h2 id="constraints">Constraints</h2>
+<ul>
+<li>security – can’t just touch any data however we want</li>
+<li>orchestration – dont want this running on Larry’s laptop</li>
+<li>multiple users of the data</li>
+</ul>
+<h2 id="the-typical-factory-scenario">The Typical Factory Scenario</h2>
+<ul>
+<li>may have some files in s3 / cloud storage</li>
+<li>my team all actively share this data (multi-tenancy)</li>
+<li>system needs to run despite any single user being active /
+online</li>
+<li>data needs to continuously run / pump through pipeline of
+transforms</li>
+</ul>
+<h2 id="relationship-with-the-modern-data-stack">Relationship with the
+“Modern Data Stack”</h2>
+<ul>
+<li>the concept of the “Lab” shouldn’t involve standing up all that
+stuff — this should only be a “factory” situation</li>
+</ul>
+</body>
+</html>

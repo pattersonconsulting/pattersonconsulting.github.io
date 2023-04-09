@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>A Methodology for Building Data Products</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">A Methodology for Building Data Products</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#outline" id="toc-outline">Outline</a></li>
+</ul></li>
+<li><a href="#define-the-user" id="toc-define-the-user">Define the
+User</a>
+<ul>
+<li><a href="#multi-tenancy-requirements"
+id="toc-multi-tenancy-requirements">Multi-tenancy Requirements</a></li>
+</ul></li>
+<li><a href="#define-the-goals-of-the-project"
+id="toc-define-the-goals-of-the-project">Define the Goals of the
+Project</a></li>
+<li><a href="#define-the-security-requirements"
+id="toc-define-the-security-requirements">Define the Security
+Requirements</a></li>
+<li><a href="#integration-with-a-larger-system"
+id="toc-integration-with-a-larger-system">Integration with a Larger
+System</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this article:</p>
+<ul>
+<li>Provide a clear step-by-step process to design and operate data
+infrastructure for your data product</li>
+</ul>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The
+Evolution of Modern Data Platforms</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+</ul>
+<h2 id="outline">Outline</h2>
+<ul>
+<li>The Individual Researcher vs The Enterprise Team</li>
+<li>Machine Learning vs Analytics</li>
+<li>A visual workflow guide</li>
+</ul>
+<p>—- insert infographic here</p>
+<h1 id="define-the-user">Define the User</h1>
+<p>abc</p>
+<h2 id="multi-tenancy-requirements">Multi-tenancy Requirements</h2>
+<p>abc</p>
+<h1 id="define-the-goals-of-the-project">Define the Goals of the
+Project</h1>
+<p>abc</p>
+<h1 id="define-the-security-requirements">Define the Security
+Requirements</h1>
+<p>abc</p>
+<h1 id="integration-with-a-larger-system">Integration with a Larger
+System</h1>
+<p>abc</p>
+</body>
+</html>

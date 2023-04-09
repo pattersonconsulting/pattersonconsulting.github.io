@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Appendix A - Definitions</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Appendix A - Definitions</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#analytics-terms-definitions"
+id="toc-analytics-terms-definitions">Analytics Terms Definitions</a>
+<ul>
+<li><a href="#table" id="toc-table">Table</a></li>
+<li><a href="#view" id="toc-view">View</a></li>
+<li><a href="#analytics" id="toc-analytics">Analytics</a></li>
+<li><a href="#data-modeling" id="toc-data-modeling">Data
+Modeling</a></li>
+<li><a href="#a-data-product" id="toc-a-data-product">A Data
+Product</a></li>
+<li><a href="#dimensions" id="toc-dimensions">Dimensions</a></li>
+<li><a href="#cubes" id="toc-cubes">Cubes</a></li>
+<li><a href="#metrics" id="toc-metrics">Metrics</a></li>
+<li><a href="#the-kimball-data-warehouse-architecture"
+id="toc-the-kimball-data-warehouse-architecture">The Kimball Data
+Warehouse Architecture</a></li>
+</ul></li>
+<li><a href="#machine-learning-terms-definitions"
+id="toc-machine-learning-terms-definitions">Machine Learning Terms
+Definitions</a>
+<ul>
+<li><a href="#vectors-features-and-tensors-oh-my"
+id="toc-vectors-features-and-tensors-oh-my">Vectors, Features, and
+Tensors – Oh, My</a></li>
+<li><a href="#vector" id="toc-vector">Vector</a></li>
+<li><a href="#feature" id="toc-feature">Feature</a></li>
+<li><a href="#feature-vector" id="toc-feature-vector">Feature
+Vector</a></li>
+<li><a href="#feature-construction"
+id="toc-feature-construction">Feature Construction</a></li>
+<li><a href="#feature-engineering" id="toc-feature-engineering">Feature
+Engineering</a></li>
+<li><a href="#data-engineering" id="toc-data-engineering">Data
+Engineering</a></li>
+<li><a href="#machine-learning-modeling"
+id="toc-machine-learning-modeling">Machine Learning Modeling</a></li>
+<li><a href="#machine-learning-model-inference"
+id="toc-machine-learning-model-inference">Machine Learning Model
+Inference</a></li>
+<li><a href="#artificial-intelligence"
+id="toc-artificial-intelligence">Artificial Intelligence</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this series:</p>
+<blockquote>
+<p>To develop a clear step-by-step process to design and operate data
+infrastructure for your data product.</p>
+</blockquote>
+<p>The intended audience for this series is:</p>
+<blockquote>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
+</blockquote>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_evolution_data_pipelines.html">The
+Evolution of Modern Data Pipelines</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+</ul>
+<p>We spend the first 3 posts of this series providing background and
+definitions to set the stage for our methodology and in part 4 we lay
+out our step by step process.</p>
+<h1 id="analytics-terms-definitions">Analytics Terms Definitions</h1>
+<p>Some good definitions on reddit blog:</p>
+<p>https://dataengineering.wiki/FAQ/What+is+the+difference+between+a+Data+Engineer+and+X</p>
+<h2 id="table">Table</h2>
+<p>alpha</p>
+<h2 id="view">View</h2>
+<p>beta</p>
+<h2 id="analytics">Analytics</h2>
+<p>https://preset.io/blog/introducing-entity-centric-data-modeling-for-analytics/?</p>
+<h3 id="what-are-3-examples-of-analytics">What are 3 Examples of
+Analytics?</h3>
+<ol type="1">
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ol>
+<h2 id="data-modeling">Data Modeling</h2>
+<blockquote>
+<p>“This is the process of producing a data model, an abstract model to
+describe the data and relationships between different parts of the
+data.[27]”</p>
+</blockquote>
+<h3 id="what-are-3-examples-of-data-modeling">What are 3 Examples of
+Data Modeling?</h3>
+<ol type="1">
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ol>
+<h2 id="a-data-product">A Data Product</h2>
+<h3 id="what-are-3-examples-of-data-products">What are 3 Examples of
+Data Products?</h3>
+<ol type="1">
+<li>Data for a Business Intelligence Dashboard</li>
+<li>Aggregated dataset for downstream machine learning</li>
+<li>Operational Data (todo: differentiate this from BI data)</li>
+</ol>
+<h2 id="dimensions">Dimensions</h2>
+<h2 id="cubes">Cubes</h2>
+<h2 id="metrics">Metrics</h2>
+<h2 id="the-kimball-data-warehouse-architecture">The Kimball Data
+Warehouse Architecture</h2>
+<h1 id="machine-learning-terms-definitions">Machine Learning Terms
+Definitions</h1>
+<h2 id="vectors-features-and-tensors-oh-my">Vectors, Features, and
+Tensors – Oh, My</h2>
+<p>https://stats.stackexchange.com/questions/192873/difference-between-feature-feature-set-and-feature-vector</p>
+<p>https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1</p>
+<blockquote>
+<p>A feature vector is a vector that stores the features for a
+particular observation in a specific order.</p>
+</blockquote>
+<blockquote>
+<p>For example, Alice is 26 years old and she is 5’ 6” tall. Her feature
+vector could be [26, 5.5] or [5.5, 26] depending on your choice of how
+to order the elements. The order is only important insofar as it is
+consistent.</p>
+</blockquote>
+<blockquote>
+<p>A feature set is a set of all the attributes that you’re interested
+in, e.g. height and age.</p>
+</blockquote>
+<blockquote>
+<p>The implicit assumption when using this terminology is that your data
+is tabular – somehow, you have chosen to represent it as a “flat”,
+matrix-like format. But non-tabular data formats, like network graphs,
+video, audio, images, binary data sequences, … these all require some
+amount of engineering to represent as feature vectors.</p>
+</blockquote>
+<p>ISLR Book</p>
+<p>https://www.statlearning.com/</p>
+<h2 id="vector">Vector</h2>
+<p>asda</p>
+<h2 id="feature">Feature</h2>
+<blockquote>
+<p>“In machine learning and pattern recognition, a feature is an
+individual measurable property or characteristic of a phenomenon.[1]
+Choosing informative, discriminating and independent features is a
+crucial element of effective algorithms in pattern recognition,
+classification and regression. Features are usually numeric, but
+structural features such as strings and graphs are used in syntactic
+pattern recognition. The concept of”feature” is related to that of
+explanatory variable used in statistical techniques such as linear
+regression.”</p>
+</blockquote>
+<p>Bishop, Christopher (2006). Pattern recognition and machine learning.
+Berlin: Springer. ISBN 0-387-31073-8.</p>
+<h2 id="feature-vector">Feature Vector</h2>
+<blockquote>
+<p>“In pattern recognition and machine learning, a feature vector is an
+n-dimensional vector of numerical features that represent some object.
+Many algorithms in machine learning require a numerical representation
+of objects, since such representations facilitate processing and
+statistical analysis.”</p>
+</blockquote>
+<blockquote>
+<p>“The vector space associated with these vectors is often called the
+feature space. In order to reduce the dimensionality of the feature
+space, a number of dimensionality reduction techniques can be
+employed.”</p>
+</blockquote>
+<p>Many times in ML literature the term feature vector is used
+differently:</p>
+<p>https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1</p>
+<h2 id="feature-construction">Feature Construction</h2>
+<blockquote>
+<p>“Higher-level features can be obtained from already available
+features and added to the feature vector; for example, for the study of
+diseases the feature ‘Age’ is useful and is defined as Age = ‘Year of
+death’ minus ‘Year of birth’ . This process is referred to as feature
+construction.[2][3] Feature construction is the application of a set of
+constructive operators to a set of existing features resulting in
+construction of new features.”</p>
+</blockquote>
+<p>Attributes?</p>
+<h2 id="feature-engineering">Feature Engineering</h2>
+<blockquote>
+<p>“Feature engineering or feature extraction or feature discovery is
+the process of using domain knowledge to extract features
+(characteristics, properties, attributes) from raw data.[1] The
+motivation is to use these extra features to improve the quality of
+results from a machine learning process, compared with supplying only
+the raw data to the machine learning process.”</p>
+</blockquote>
+<p>https://en.wikipedia.org/wiki/Feature_engineering</p>
+<h2 id="data-engineering">Data Engineering</h2>
+<p>abc</p>
+<h3 id="what-are-3-examples-of-data-engineering">What are 3 Examples of
+Data Engineering?</h3>
+<p>abc</p>
+<h2 id="machine-learning-modeling">Machine Learning Modeling</h2>
+<h3 id="what-are-3-examples-of-machine-learning-modeling">What are 3
+Examples of Machine Learning Modeling?</h3>
+<ol type="1">
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ol>
+<h2 id="machine-learning-model-inference">Machine Learning Model
+Inference</h2>
+<h2 id="artificial-intelligence">Artificial Intelligence</h2>
+<ul>
+<li>marketing</li>
+</ul>
+</body>
+</html>

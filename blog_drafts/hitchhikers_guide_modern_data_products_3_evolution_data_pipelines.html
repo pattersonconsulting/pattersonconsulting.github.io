@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>The Evolution of Modern Data Pipelines</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">The Evolution of Modern Data Pipelines</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#the-evolution-of-data-infrastructure"
+id="toc-the-evolution-of-data-infrastructure">The Evolution of Data
+Infrastructure</a>
+<ul>
+<li><a href="#early-olap-databases" id="toc-early-olap-databases">Early
+OLAP Databases</a></li>
+<li><a href="#the-big-data-era-hadoop-and-cloudera"
+id="toc-the-big-data-era-hadoop-and-cloudera">The Big Data Era, Hadoop,
+and Cloudera</a></li>
+<li><a href="#the-cloud-came-along-slowly-and-then-all-at-once"
+id="toc-the-cloud-came-along-slowly-and-then-all-at-once">The Cloud Came
+Along, Slowly, and Then All at Once</a></li>
+<li><a href="#the-data-lakehouse-architecture"
+id="toc-the-data-lakehouse-architecture">The Data Lakehouse
+Architecture</a></li>
+</ul></li>
+<li><a href="#key-trends-of-the-past-15-years"
+id="toc-key-trends-of-the-past-15-years">Key Trends of the Past 15
+Years</a>
+<ul>
+<li><a href="#python-and-its-ecosystem"
+id="toc-python-and-its-ecosystem">Python and It’s Ecosystem</a></li>
+<li><a href="#deep-learning-and-gpus"
+id="toc-deep-learning-and-gpus">Deep Learning and GPUs</a></li>
+<li><a href="#emergence-of-the-cloud"
+id="toc-emergence-of-the-cloud">Emergence of the Cloud</a></li>
+</ul></li>
+<li><a href="#the-tectonic-plates-of-data-infrastructure"
+id="toc-the-tectonic-plates-of-data-infrastructure">The Tectonic Plates
+of Data Infrastructure</a>
+<ul>
+<li><a href="#re-emergence-of-sql"
+id="toc-re-emergence-of-sql">Re-emergence of SQL</a></li>
+<li><a href="#cloud-consumes-the-on-premise-market"
+id="toc-cloud-consumes-the-on-premise-market">Cloud Consumes the
+On-Premise Market</a></li>
+<li><a href="#emergence-of-python"
+id="toc-emergence-of-python">Emergence of Python</a></li>
+<li><a href="#the-rise-of-deep-learning"
+id="toc-the-rise-of-deep-learning">The rise of Deep Learning</a></li>
+</ul></li>
+<li><a href="#the-good-ideas-in-the-data-lake-house-concept"
+id="toc-the-good-ideas-in-the-data-lake-house-concept">The Good Ideas in
+the Data Lake House Concept</a></li>
+<li><a href="#what-snowflake-got-really-really-right"
+id="toc-what-snowflake-got-really-really-right">What Snowflake Got
+Really, Really, Right</a>
+<ul>
+<li><a href="#snowflake-vs-databricks"
+id="toc-snowflake-vs-databricks">Snowflake vs DataBricks</a></li>
+<li><a href="#platform-feature-convergence"
+id="toc-platform-feature-convergence">Platform Feature
+Convergence</a></li>
+</ul></li>
+<li><a href="#emergence-of-dbt" id="toc-emergence-of-dbt">Emergence of
+DBT</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of article</p>
+<ul>
+<li>set context for how things have changed (timeline: 2009-2023?)</li>
+</ul>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_evolution_data_pipelines.html">The
+Evolution of Modern Data Pipelines</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+</ul>
+<p>Story: Snowflake summit — all the logos are the same, just replace
+Cloudera with Snowflake</p>
+<p>Topics to reference</p>
+<ul>
+<li>unbundling of Airflow
+<ul>
+<li>rise of airflow, what it replaced, compared to Hadoop-infra</li>
+</ul></li>
+<li>rise of DBT
+<ul>
+<li>its hard to describe, a developer tool, and middleware — but its
+super hot. and its hard to understand why.</li>
+</ul></li>
+<li>explosion of information
+<ul>
+<li>TVA project, PMU data — half petabyte hadoop cluster</li>
+<li>we had to try non-MS-and-Oracle vendors because they didnt have the
+features we needed</li>
+</ul></li>
+</ul>
+<h1 id="the-evolution-of-data-infrastructure">The Evolution of Data
+Infrastructure</h1>
+<p>Narrative and Ideas</p>
+<ul>
+<li>Refer to the trend starting around 2008 to have “everything scale” –
+hadoop, big data</li>
+<li>story about Stonebraker telling Olson that “MapReduce wont work
+out”</li>
+<li>in terms of graphs/charts — need to talk about late 2000’s where
+“big data” started to emerge with data growth</li>
+<li>this data growth drives more BI tools, such as Tableau</li>
+<li>setting the stage for a tool such as DBT to emerge, 7-8 years later
+(2016)</li>
+</ul>
+<p>mention how you cannot “solve” a particular aspect of data
+infrastructure, as it all continues to evolve</p>
+<h2 id="early-olap-databases">Early OLAP Databases</h2>
+<ul>
+<li>Postgres, Oracle, MySQL, etc</li>
+</ul>
+<h2 id="the-big-data-era-hadoop-and-cloudera">The Big Data Era, Hadoop,
+and Cloudera</h2>
+<ul>
+<li>On-Prem and the JVM</li>
+<li>Parallel Databases (Vertica, Greenplum)</li>
+<li>Spark and Databricks</li>
+</ul>
+<p>Story: Watching Matei demo Spark as a Hadoop execution engine at a
+Hadoop User Group in 2010/2011</p>
+<h3 id="data-platform-consolidation">Data Platform Consolidation</h3>
+<p>When enterprises are exploring data platform consolidation, how are
+they evaluating between cloud providers’ native offerings and
+cloud-agnostic solutions or on-prem solutions?</p>
+<p>Used to be theories that customers wanted open source But they just
+wanted something that let them get rolling without a long sales pitch
+Easy wins Cloudera didnt make Hadoop easy enough Databricks came along,
+got cloud right Snowflake came along, made SQL even easier, focused on
+that Now databricks playing catch up</p>
+<h2 id="the-cloud-came-along-slowly-and-then-all-at-once">The Cloud Came
+Along, Slowly, and Then All at Once</h2>
+<p>The irony of Cloudera’s name…</p>
+<ul>
+<li>Cloud Rise: IT blocking “the lab”,
+<ul>
+<li>so they just run to the cloud with a credit card</li>
+<li>Story: when my hadoop hardware sat on the loading dock for weeks
+cause folks wouldnt unload it</li>
+</ul></li>
+</ul>
+<h2 id="the-data-lakehouse-architecture">The Data Lakehouse
+Architecture</h2>
+<ul>
+<li>what they got right</li>
+</ul>
+<h1 id="key-trends-of-the-past-15-years">Key Trends of the Past 15
+Years</h1>
+<h2 id="python-and-its-ecosystem">Python and It’s Ecosystem</h2>
+<p>story: i was a jvm guy from hadoop, and it had been good to me. this
+python thing was “just noise”, like Haskel or some other bs</p>
+<p>problem was, it was on a slow climb to beat out the other languages
+across the decade</p>
+<ul>
+<li>growth, chart</li>
+</ul>
+<h2 id="deep-learning-and-gpus">Deep Learning and GPUs</h2>
+<p>story: i was a hadoop guy, a yarn guy — parallelization was the way
+forward. until GPUs came along — and it wasn’t</p>
+<ul>
+<li>growth, chart</li>
+<li>co-evolution with Python ecosystem</li>
+<li>charts of models’ jump in performance
+<ul>
+<li>vision models</li>
+<li>voice reconition</li>
+<li>large language models (jump in late 2021) — and mention Watson
+having a similar moment a decade earlier</li>
+</ul></li>
+</ul>
+<h2 id="emergence-of-the-cloud">Emergence of the Cloud</h2>
+<ul>
+<li>growth, chart</li>
+<li>the factory is hard to manage on-premise and IT is territorial
+<ul>
+<li>eventually the data kids found a corporate credit card and cranked
+up cloud accounts as shadow IT</li>
+</ul></li>
+</ul>
+<h1 id="the-tectonic-plates-of-data-infrastructure">The Tectonic Plates
+of Data Infrastructure</h1>
+<ul>
+<li>explain the tectonic plate shifts
+<ul>
+<li>story of being at snowflake summit and thinking “this is strata —
+but its not”</li>
+</ul></li>
+</ul>
+<h2 id="re-emergence-of-sql">Re-emergence of SQL</h2>
+<ul>
+<li>and why that spells trouble for non-SQL folks</li>
+</ul>
+<h2 id="cloud-consumes-the-on-premise-market">Cloud Consumes the
+On-Premise Market</h2>
+<ul>
+<li>need graph</li>
+<li>old stories
+<ul>
+<li>hadoop, MapReduce, and ?</li>
+<li>banks only wanted Hive — SQL — should have known something was
+up</li>
+</ul></li>
+<li>Cloud Rise: IT blocking “the lab”,
+<ul>
+<li>so they just run to the cloud with a credit card</li>
+<li>Story: when my hadoop hardware sat on the loading dock for weeks
+cause folks wouldnt unload it</li>
+</ul></li>
+</ul>
+<h2 id="emergence-of-python">Emergence of Python</h2>
+<ul>
+<li>anaconda slide</li>
+</ul>
+<h2 id="the-rise-of-deep-learning">The rise of Deep Learning</h2>
+<ul>
+<li>rise of pandas</li>
+<li>JVM on the decline / Deeplearning4j as jvm system</li>
+<li>use material from keybank slides</li>
+</ul>
+<h1 id="the-good-ideas-in-the-data-lake-house-concept">The Good Ideas in
+the Data Lake House Concept</h1>
+<ul>
+<li>notes here about how they create a better multi-tenant factory
+design
+<ul>
+<li>one critical change is “moving from just a bunch of files” to “a
+logical data abstraction over the raw data”</li>
+</ul></li>
+<li>an understanding of the different data access patterns for analytics
+processing vs machine learning compute/training</li>
+</ul>
+<h1 id="what-snowflake-got-really-really-right">What Snowflake Got
+Really, Really, Right</h1>
+<ul>
+<li>free data ingest – barely think about it</li>
+<li>multi-tenancy</li>
+<li>ANSI-SQL compliance — just throw in your old code, and it will scale
+as much as you need – you dont have to chance a thing</li>
+<li>There are tons of SQL analysts, and a lot less programmers in the
+world</li>
+<li>caught the cloud wave at the right time</li>
+<li>Hadoop ops was really hard</li>
+</ul>
+<p>Security? Handled. Maintenance? Near to zero. Managing different
+environments (dev/qa/prod)? Piece of cake. Optimization and scaling?
+Handled.</p>
+<h2 id="snowflake-vs-databricks">Snowflake vs DataBricks</h2>
+<p>https://benn.substack.com/p/the-end-of-big-data/comments</p>
+<blockquote>
+<p>The thing that Snowflake did really well is they pitched a product
+that anyone could buy. You’re an enterprise with tons of wild data
+needs? Snowflake can help. You’re a mid sized business running SQL
+Server? Snowflake can help. You’ve got an MySQL database and are looking
+for your first analytical warehouse? Snowflake can help.</p>
+</blockquote>
+<h2 id="platform-feature-convergence">Platform Feature Convergence</h2>
+<p>Snowflake</p>
+<ul>
+<li>Snowflake introduced a python dataframe</li>
+<li>effectively the same as PySpark dataframe API for spark</li>
+<li>On purpose: to onboard spark users more easily</li>
+</ul>
+<p>Databricks</p>
+<ul>
+<li>Delta is basically OSS Snowflake, and since then, Databricks and
+Snowflake have been slowly converging.</li>
+<li>Finally in the last year or so Delta feels a lot like Snowflake
+(with a nice UI, simplified SQL clusters like Snowflake warehouses,
+etc.). So it really is a big, fast database that you can program with
+python, scala, SQL.</li>
+</ul>
+<p>DB came along to be a “better hadoop”; it was Scala-first and
+required programmers to think about parallelization</p>
+<h1 id="emergence-of-dbt">Emergence of DBT</h1>
+<ul>
+<li>on paper, this tool took me a long time to make sense of
+<ul>
+<li>its complicated to explain</li>
+<li>its middleware (confirm)</li>
+<li>it seemingly is a feature of other projects — how is it its own
+product?</li>
+<li>it feels sorta like Oozie on Hadoop in terms of being a DAG
+orchestrator</li>
+</ul></li>
+<li>what really dug at me was — how did DBT come to exist? what
+conditions allowed this to happen? (SQL coming back en vogue, w scale
+for free)</li>
+<li>The evolution of data platforms created market conditions that were
+just right for a product like DBT</li>
+</ul>
+<h1 id="references">References</h1>
+<p>https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603</p>
+<p>https://medium.com/validio/the-rise-and-future-of-data-engineering-whats-it-all-about-a235dbb4412e</p>
+<p>https://maximebeauchemin.medium.com/the-downfall-of-the-data-engineer-5bfb701e5d6b</p>
+</body>
+</html>

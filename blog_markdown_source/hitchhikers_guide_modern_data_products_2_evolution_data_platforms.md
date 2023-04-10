@@ -36,6 +36,12 @@ Topics to reference
    * TVA project, PMU data --- half petabyte hadoop cluster
    * we had to try non-MS-and-Oracle vendors because they didnt have the features we needed
 
+* as a platform gets bigger, moving data gets progressively harder, and compute jobs get pulled into its orbit
+   * data has gravity
+
+* moving fast and having flexibility is a key driver of going to the cloud even when cost is higher
+   * 
+
 # The Evolution of Data Infrastructure
 
 Narrative and Ideas
@@ -257,7 +263,55 @@ JWills: https://twitter.com/josh_wills/status/1522622572743073800
 > Second principle: all technical decisions are easy until someone's fingers touch a keyboard, and then the Sunk Cost Principle comes into full effect.
 By the time we had Tableau up and running, we had already built like 30+ dashboards in Mode. It was over.
 
+## Properties of Modern Data Platforms
+
+Tell story of ITS 
+
+http://www.pattersonconsultingtn.com/use_case_repository/municipal_vertical.html
+
+## What is Working in Open Source Commercialization
+
+* open source as marketing driver for closed source cloud applications
+* focus on "time to value" (less worried about cloud cost), want less Ops overhead to get started/
+* need a faster close rate, something "under 18 months"
+
+### Other Topics 
+
+Data Platform Consolidation:
+
+  *   To what extent are enterprises interested in consolidating around a single data platform vs. last year?
+     *   How are enterprises evaluating between cloud providers' native offerings and cloud-agnostic or on-prem solutions as they explore data platform consolidation?
+  *   How is the current macro environment impacting enterprises’ decisions around data platforms, including migrations?
+  *   How is interest in generative AI impacting data platform decisions, including interest in platform consolidation?
+     *   How is Databricks positioned relative to other cloud data platforms, including hyperscalers, to benefit from growth in generative AI workloads?
+
+Snowflake and/or Databricks:
+
+  *   How is the competitive landscape between Databricks and Snowflake evolving?
+  *   To what extent are customers choosing just Snowflake or Databricks vs. using both?
+     *   How has this changed over the past year?
+  *   How compelling are the competitive products released by Databricks and Snowflake that target the others’ core capabilities?
+     *   For what types of workloads do they compete? How well do they compete?
+  *   How have customer conversations around consolidating workloads on Snowflake or Databricks changed over the past year?
+  *   How mission-critical are the workloads moving to Databricks and Snowflake?
+  *   To what extent, and for what reasons, are workload migrations from Teradata slowing?
+     *   Is the current macro environment impacting this dynamic?
+
 # A Few Predictions Going Forward
+
+## How Predictions Go Very, Very, Wrong
+
+you cant see the full distribution of the market
+
+often we make inaccurate forecasts based on samples of data that do not represent the full distribution of the market
+
+## The Red Queen Always Has it Right
+
+Banks in the 60s and computers, the 4-day week
+
+We just do more
+
+We are programmed to compete, to see over that horizon, and explore new lands
 
 ## The Continued Dominance of SQL
 

@@ -41,6 +41,8 @@ I wrote this series for 3 reasons:
 2. To give our customers a more complete guide on building data products that can be shown in a 20-minute slide deck
 3. To create a set of architectural guidelines for our team to use when working through customer design decisions
 
+Building a market thesis is hard, and often, wrong. However, long-form writing (10 pages+, in my definition) is a great way to develop ideas, and is a necesary exercise for running a boutique solution integration shop. This form of writing helps me create a rough market hypothesis that helps guide our investments in the data product space.
+
 The notes in this series comes from working with customers over the past 20 years in the data space, from working with Fortune 500 customers while at Cloudera, to helping build the Deeplearning4j open source library, to writing the Kubeflow Operations Guide, to working with our Fortune 500 customers today at Patterson Consulting. 
 
 A key challenge for platform architects in the data industry is understanding which tools to use and what the tradeoffs are if those tools are used. There are so many vendors pushing their own "all-in-one" platform magic solution that it can be dizzying to cut through the noise.
@@ -169,6 +171,10 @@ https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/109810830
 * WTF is "Data Engineering"?
    * the term has shifted over time
    * how we viewed it in the DL Book
+
+# It's Hard to Know Where to Start
+
+UM issues with which tools to use --- and identifying the correct audience
 
 
 # Reference to the Original Hitchhiker's Guide to the Galaxy

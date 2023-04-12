@@ -24,6 +24,7 @@ Series:
 * [Revisting The Lab and the Factory](hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html)
 * [A Methodology for Building Data Products](hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html)
 * [Appendix A: Definitions](hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html)
+* [Appendix B: Roles](hitchhikers_guide_modern_data_products_6_appendix_B_roles.html)
 
 the term "lab and factory" has caught on as an idea, but like many terms in the data space, its overused and its semantics have drifted over time. (see also: "data science" and "data engineering")
 

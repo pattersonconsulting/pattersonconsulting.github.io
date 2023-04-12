@@ -26,78 +26,13 @@ Series:
 * [Revisting The Lab and the Factory](hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html)
 * [A Methodology for Building Data Products](hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html)
 * [Appendix A: Definitions](hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html)
+* [Appendix B: Roles](hitchhikers_guide_modern_data_products_6_appendix_B_roles.html)
 
 We spend the first 3 posts of this series providing background and definitions to set the stage for our methodology and in part 4 we lay out our step by step process.
 
 TODO:
 * create a key visualization to represent the core ideas of the page
 * this will also serve as the meta og card image
-
-# Roles
-
-## Data Scientist
-
-Reddit:
-
-> Data Scientist: Uses data for more in-depth analysis and visualizations. Typically the work is more research based and sometimes one will work on a product like a machine learning model.
-
-## Data Engineer
-
-DBT definitions of role:
-
-* build custom data integrations
-* manage overall pipeline orchestration
-* develop and deploy machine learning endpoints
-* build and maintain the data platform
-* data warehouse performance optimizations
-
-## Analytics Engineer
-
-DBT definitions of role:
-
-* Provide clean, transformed data ready for analysis
-* apply software engineering best practices to analytics code (eg., version control, testing, continuous integration)
-* maintain data documentation and definitions
-* train business users on how to use data visualization tools
-
-Reddit:
-
-> BI Engineer/BI Developer: Uses primarily GUI tools like SSIS to build ETL pipelines, build data models for reports, and even may build the reports themselves. This role is similar in many ways to a Data Engineer but differs in tooling and skillsets required. It is sometimes seen as a pathway to becoming a Data Engineer.
-
-## Data Analyst
-
-DBT definitions of role:
-
-* Deep insights work (e.g., "why did churn spike last month? what are the best acquisition channels?")
-* work with business users to understand data requirements
-* build critical dashboards
-* forecasting
-
-DBT:
-
-https://www.getdbt.com/what-is-analytics-engineering/
-
-> Analytics engineers provide clean data sets to end users, modeling data in a way that empowers end users to answer their own questions. 
-> While a data analyst spends their time analyzing data, an analytics engineer spends their time transforming, testing, deploying, and documenting data. 
-
-Analytics engineers apply software engineering best practices like:
-
-* version control
-* continuous integration 
-
-to the analytics code base.
-
-
-Reddit:
-
-> Uses data for basic to medium complexity analysis and builds reports and dashboards. This role will typically require a good grasp of SQL and reporting tools but relies on an engineer for the data.
-
-## Database Administrator
-
-Reddit: 
-
-> Database Administrator: Focuses on making sure the database and infrastructure is available and secure (i.e. backing up data, user management, server usage). They do not typically build within the database itself.
-
 
 
 # Analytics Terms Definitions
@@ -226,9 +161,27 @@ while Analytics provides the tools and techniques necessary for analysis and int
 
 ## Dimensions
 
+In data warehousing, a dimension is a categorical variable or attribute that provides context for the measures or numerical values in a dataset. Dimensions are used to categorize or group the data, and are often used to filter, aggregate, and analyze the data in various ways.
+
+Examples of dimensions in a data warehouse might include time, geography, product, customer, or sales channel. These dimensions can be used to group and categorize the measures, such as sales revenue, profit margin, or units sold.
+
+Dimensions are typically hierarchical, meaning that they have levels or layers of granularity. For example, a time dimension might have levels such as year, quarter, month, week, and day, which can be used to aggregate or drill down into the data as needed.
+
+Dimensions can also have attributes, which provide additional information about the dimension. For example, a product dimension might have attributes such as product name, product category, manufacturer, and price.
+
+Overall, dimensions are an important concept in data warehousing, and are used to provide context and structure to the data, making it easier to analyze and understand.
+
 ## Cubes
 
+In data warehousing, a cube is a multi-dimensional data structure that allows for efficient and flexible querying and analysis of large datasets. A cube is sometimes also referred to as a data cube or OLAP (Online Analytical Processing) cube.
 
+A cube consists of dimensions and measures. Dimensions are the categorical variables or attributes that define the data, such as time, location, or product category. Measures are the numerical values that are being analyzed, such as sales revenue, units sold, or profit margin.
+
+The cube organizes the data along these dimensions, creating a multi-dimensional view of the data. This allows for fast and flexible querying of the data along multiple dimensions, as well as the ability to perform complex analysis and calculations.
+
+For example, consider a retail company that wants to analyze their sales data. They could create a cube with dimensions such as time, location, and product category, and measures such as sales revenue and units sold. The cube would allow them to easily query and analyze the sales data by different dimensions, such as sales by location and product category, or sales over time.
+
+Overall, cubes are an important data structure in data warehousing, and allow for efficient querying and analysis of large, complex datasets.
 
 ## The Kimball Data Warehouse Architecture
 
@@ -256,13 +209,39 @@ https://www.statlearning.com/
 
 asda
 
+In machine learning, a vector is a one-dimensional array or list of numbers. Vectors are commonly used to represent data points or features in a dataset. For example, in image recognition, each image can be represented as a vector of pixel values, where each element of the vector represents the intensity of a specific pixel.
+
+Vectors can be used to perform various mathematical operations in machine learning, such as dot products, element-wise multiplication, and addition. These operations can be used to compute similarities between vectors, transform data, and build models.
+
+In addition, vectors can be represented in different spaces, such as Euclidean space, where the length and direction of the vector are important, or in feature space, where each element of the vector represents a feature of the data.
+
 ## Matrix
 
 asdf
 
+In machine learning, vectors and matrices are both fundamental data structures used to represent and manipulate data.
+
+A vector is a one-dimensional array or list of numbers, while a matrix is a two-dimensional array of numbers. A matrix can be thought of as a collection of vectors arranged in rows and columns.
+
+In machine learning, matrices are commonly used to represent datasets, where each row represents a data point or sample, and each column represents a feature or attribute of the data. For example, in a dataset of housing prices, a matrix could be used to represent the prices of different houses, where each row represents a house, and each column represents a feature such as the number of bedrooms, square footage, or location.
+
+Matrices can be used to perform various operations in machine learning, such as matrix multiplication, which is used in linear regression and neural networks to transform and combine data.
+
+In summary, while vectors and matrices are different data structures, they are related in that a matrix is a collection of vectors, and both are commonly used to represent and manipulate data in machine learning.
+
 ## Tensor
 
 asdf
+
+In machine learning, tensors are multi-dimensional arrays or matrices that can have any number of dimensions. They are used to represent and manipulate large amounts of data, especially in deep learning.
+
+Tensors are used to represent a wide variety of data, such as images, audio, video, text, and time-series data. For example, in image recognition, an image can be represented as a tensor of pixel values, where each dimension represents a different aspect of the image, such as its width, height, and color channels.
+
+Tensors can be manipulated using tensor operations, which are similar to matrix operations, but are extended to handle multi-dimensional arrays. Some common tensor operations used in machine learning include tensor addition, multiplication, and convolution.
+
+Tensors are used extensively in deep learning frameworks like TensorFlow and PyTorch, where they form the backbone of neural network models. Neural networks consist of layers of interconnected nodes, or neurons, that perform tensor operations on input data to produce output predictions.
+
+Overall, tensors are an important data structure in machine learning, and are used to represent and manipulate large, complex datasets in a wide variety of applications.
 
 ## Feature
 
@@ -338,6 +317,14 @@ From our book:
 
 > “take each data type and represent it as a numerical vector (or in some cases, a multidimensional array of numbers)”
 
+GPT
+
+Vectorization in machine learning refers to the process of converting a set of data points or features into a mathematical vector or matrix format, which can be easily understood and processed by a computer.
+
+In other words, it is a way to represent data in a structured format that is suitable for machine learning algorithms to process efficiently. This is usually done by converting the raw data into a numerical format, such as through one-hot encoding, normalization, or other methods.
+
+Vectorization is a crucial step in many machine learning tasks, such as image recognition, natural language processing, and recommender systems, where large amounts of data need to be processed quickly and accurately. By using vectorization techniques, we can reduce the complexity of the data and make it more manageable for machine learning algorithms to work with.
+
 From Geron:
 
 > “We already discussed two of these layers: the keras.layers.Normalization layer that will perform feature standardization (it will be equivalent to the Standardization layer we defined earlier), and the TextVectorization layer that will be capable of encoding each word in the inputs into its index in the vocabulary. In both cases, you create the layer, you call its adapt() method with a data sample, and then you use the layer normally in your model. The other preprocessing layers will follow the same pattern.”
@@ -345,6 +332,27 @@ From Geron:
 ## Data Engineer
 
 > (redit) "Uses a combination of software engineering best practices and database design to build scalable data pipelines, data integrations, and data models for use in applications and reports"
+
+### Data Engineers vs Cloud DevOps
+
+Data Engineer Role and Cloud DevOps Role are both critical roles in modern businesses that rely heavily on technology. Here are the key differences and similarities between these two roles:
+
+Job Responsibilities:
+Data Engineers are responsible for building and maintaining data pipelines that collect, process, and store large amounts of data. They are skilled in designing, building, and managing data storage systems and data processing infrastructure. They ensure that data is secure, easily accessible, and of high quality.
+
+Cloud DevOps, on the other hand, is responsible for managing the cloud infrastructure that runs an organization's applications. They work on automating the deployment, scaling, and management of applications on the cloud infrastructure. They ensure the cloud infrastructure is secure, cost-efficient, and always available.
+
+Skills Required:
+Data Engineers need to have a strong foundation in computer science, database systems, and data modeling. They should be skilled in programming languages such as Python, SQL, and Java. Additionally, they need to have expertise in ETL (extract, transform, load) processes, data warehousing, and big data technologies like Hadoop and Spark.
+
+Cloud DevOps require skills in cloud computing, containerization technologies like Docker and Kubernetes, and Infrastructure as Code (IaC) tools like Terraform and Ansible. They should be proficient in scripting languages like Bash, Python, and PowerShell. Additionally, they need to have strong skills in CI/CD (continuous integration and continuous deployment), monitoring, and logging tools.
+
+Tools and Technologies:
+Data Engineers work with data storage technologies like Hadoop, Spark, and NoSQL databases like Cassandra, MongoDB, and DynamoDB. They also use data processing frameworks like Apache Beam and Apache Kafka. Additionally, they use data modeling tools like ERwin and ER/Studio.
+
+Cloud DevOps use cloud computing platforms like AWS, Azure, and Google Cloud Platform. They use containerization technologies like Docker and Kubernetes to deploy applications. They also use Infrastructure as Code (IaC) tools like Terraform and Ansible. Additionally, they use CI/CD tools like Jenkins, Travis CI, and CircleCI.
+
+In summary, Data Engineers and Cloud DevOps are both critical roles in modern businesses that rely heavily on technology. The key differences between these two roles are in their job responsibilities, required skills, and the tools and technologies they use. However, they share some similarities in their roles, such as working to ensure security and availability of the organization's technology infrastructure.
 
 ## Data Engineering
 

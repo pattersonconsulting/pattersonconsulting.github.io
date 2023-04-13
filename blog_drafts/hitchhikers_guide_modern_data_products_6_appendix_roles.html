@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Appendix B - Data Roles</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Appendix B - Data Roles</h1>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#data-scientist" id="toc-data-scientist">Data
+Scientist</a></li>
+<li><a href="#data-engineer" id="toc-data-engineer">Data
+Engineer</a></li>
+<li><a href="#machine-learning-engineer"
+id="toc-machine-learning-engineer">Machine Learning Engineer</a></li>
+<li><a href="#analytics-engineer" id="toc-analytics-engineer">Analytics
+Engineer</a></li>
+<li><a href="#data-analyst" id="toc-data-analyst">Data Analyst</a></li>
+<li><a href="#database-administrator-dba"
+id="toc-database-administrator-dba">Database Administrator
+(DBA)</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this series:</p>
+<blockquote>
+<p>To develop a clear step-by-step process to design and operate data
+infrastructure for your data product.</p>
+</blockquote>
+<p>The intended audience for this series is:</p>
+<blockquote>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
+</blockquote>
+<p>Series:</p>
+<ul>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The
+Evolution of Modern Data Platforms</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_6_appendix_B_roles.html">Appendix
+B: Roles</a></li>
+</ul>
+<p>We spend the first 3 posts of this series providing background and
+definitions to set the stage for our methodology and in part 4 we lay
+out our step by step process.</p>
+<p>TODO: * create a key visualization to represent the core ideas of the
+page * this will also serve as the meta og card image</p>
+<h1 id="data-scientist">Data Scientist</h1>
+<p>Reddit:</p>
+<blockquote>
+<p>Data Scientist: Uses data for more in-depth analysis and
+visualizations. Typically the work is more research based and sometimes
+one will work on a product like a machine learning model.</p>
+</blockquote>
+<h1 id="data-engineer">Data Engineer</h1>
+<p>DBT definitions of role:</p>
+<ul>
+<li>build custom data integrations</li>
+<li>manage overall pipeline orchestration</li>
+<li>develop and deploy machine learning endpoints</li>
+<li>build and maintain the data platform</li>
+<li>data warehouse performance optimizations</li>
+</ul>
+<h1 id="machine-learning-engineer">Machine Learning Engineer</h1>
+<ul>
+<li>MLOps</li>
+<li>Model Building</li>
+<li>Model Deployment</li>
+<li>Inference</li>
+</ul>
+<h1 id="analytics-engineer">Analytics Engineer</h1>
+<p>DBT definitions of role:</p>
+<ul>
+<li>Provide clean, transformed data ready for analysis</li>
+<li>apply software engineering best practices to analytics code (eg.,
+version control, testing, continuous integration)</li>
+<li>maintain data documentation and definitions</li>
+<li>train business users on how to use data visualization tools</li>
+</ul>
+<p>Reddit:</p>
+<blockquote>
+<p>BI Engineer/BI Developer: Uses primarily GUI tools like SSIS to build
+ETL pipelines, build data models for reports, and even may build the
+reports themselves. This role is similar in many ways to a Data Engineer
+but differs in tooling and skillsets required. It is sometimes seen as a
+pathway to becoming a Data Engineer.</p>
+</blockquote>
+<h1 id="data-analyst">Data Analyst</h1>
+<p>DBT definitions of role:</p>
+<ul>
+<li>Deep insights work (e.g., “why did churn spike last month? what are
+the best acquisition channels?”)</li>
+<li>work with business users to understand data requirements</li>
+<li>build critical dashboards</li>
+<li>forecasting</li>
+</ul>
+<p>DBT:</p>
+<p>https://www.getdbt.com/what-is-analytics-engineering/</p>
+<blockquote>
+<p>Analytics engineers provide clean data sets to end users, modeling
+data in a way that empowers end users to answer their own questions.
+While a data analyst spends their time analyzing data, an analytics
+engineer spends their time transforming, testing, deploying, and
+documenting data.</p>
+</blockquote>
+<p>Analytics engineers apply software engineering best practices
+like:</p>
+<ul>
+<li>version control</li>
+<li>continuous integration</li>
+</ul>
+<p>to the analytics code base.</p>
+<p>Reddit:</p>
+<blockquote>
+<p>Uses data for basic to medium complexity analysis and builds reports
+and dashboards. This role will typically require a good grasp of SQL and
+reporting tools but relies on an engineer for the data.</p>
+</blockquote>
+<h1 id="database-administrator-dba">Database Administrator (DBA)</h1>
+<p>Reddit:</p>
+<blockquote>
+<p>Database Administrator: Focuses on making sure the database and
+infrastructure is available and secure (i.e. backing up data, user
+management, server usage). They do not typically build within the
+database itself.</p>
+</blockquote>
+</body>
+</html>

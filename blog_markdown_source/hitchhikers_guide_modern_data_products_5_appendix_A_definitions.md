@@ -28,12 +28,12 @@ Series:
 * [Appendix A: Definitions](hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html)
 * [Appendix B: Roles](hitchhikers_guide_modern_data_products_6_appendix_B_roles.html)
 
-We spend the first 3 posts of this series providing background and definitions to set the stage for our methodology and in part 4 we lay out our step by step process.
 
-TODO:
-* create a key visualization to represent the core ideas of the page
-* this will also serve as the meta og card image
+# Overview
 
+In this appendix we define key terms used throughout the series on data platforms. Many of these terms are commonly known by a subset of data practitioners, but its good to have them all in once place and then be able to compare and relate the terms. In the diagram below we kick off the appendix with a diagram relating how the worlds of SQL and Python are linked together through the dataframe concept.
+
+![Intersection of SQL and Python](./images/sql_df_python.png "Intersection of SQL and Python")
 
 # Analytics Terms Definitions
 

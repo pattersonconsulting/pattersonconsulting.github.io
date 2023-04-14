@@ -155,23 +155,8 @@ In terms of computer science design decisions, it boils down to “Games of Mate
 
 ## Data Engineer (Role)
 
-https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603
-
-> "I joined Facebook in 2011 as a business intelligence engineer. By the time I left in 2013, I was a data engineer."
-
-> "I wasn’t promoted or assigned to this new role. Instead, Facebook came to realize that the work we were doing transcended classic business intelligence. The role we’d created for ourselves was a new discipline entirely."
-
 ## Data Engineering
 
-> "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning.[1][2] Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
-
-https://en.wikipedia.org/wiki/Data_engineering
-
-https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/1098108302/ref=pd_bxgy_img_sccl_2/143-2847560-0944436?pd_rd_w=BXhTE&content-id=amzn1.sym.6ab4eb52-6252-4ca2-a1b9-ad120350253c&pf_rd_p=6ab4eb52-6252-4ca2-a1b9-ad120350253c&pf_rd_r=V2C07V6S9W4WZ52VK07T&pd_rd_wg=36QXW&pd_rd_r=b1b67f23-fc07-46ff-ba58-f30f071cd2e6&pd_rd_i=1098108302&psc=1&asin=1098108302&revisionId=&format=4&depth=1
-
-* WTF is "Data Engineering"?
-   * the term has shifted over time
-   * how we viewed it in the DL Book
 
 # It's Hard to Know Where to Start
 

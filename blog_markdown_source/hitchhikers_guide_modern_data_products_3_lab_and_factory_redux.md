@@ -72,13 +72,19 @@ https://cutlefish.substack.com/p/tbm-210-just?r=o29ix&utm_medium=ios&utm_campaig
 > "The fact that life is just an adventure and the goal is to have fun. You're there to make the most of what's around you and be a good person while you do it," Oz says. "And I think that's grounding when your world is becoming an adventure."
 
 
-### More thoughts
+### More JD thoughts
 
 * JD
    * small firms are sorta "everything is a lab" so they struggle building the factory stuff
    * large firms say "we only do factories" --- hilarity ensues
    * "factory by default" / "lab by default" / "factory bias"
  
+### JD on Analytics vs Lab and Factory
+
+much analytical work can be build with simply a PowerBI or Tableau instance loaded with production data. Analysts can dig around and slice the data a number of ways and experiment with different ways of aggregating or looking at trends. So for those use cases a "lab" isn't really needed. Just a production environment accessible to analysts. 
+
+when a lab becomes necessary is when analysts want to start building, testing or exploring ideas that either don't fit on typical production analytics platforms because of size, volume, or demands on the system. One example would be quant analysts in a financial services firm wanting to build large Monte Carlo simulations that produce voluminous output. A normal production environment might not have the compute nor the storage to handle large simulations. And if those analysts want to engage in optimizations of large portfolios, they may need resources that far exceed a typical analytical workbench. These analytical loads are far beyond typical BI workloads that are focused on filter, slice, and pivot operations.
+
 ### ChatGPT Thoughts
 
 > *In the context of data pipelines, the terms "lab" and "factory" can refer to different stages or environments in the process of developing, testing, and deploying data pipelines.*

@@ -35,6 +35,9 @@ In this appendix we define key terms used throughout the series on data platform
 
 ![Intersection of SQL and Python](./images/sql_df_python.png "Intersection of SQL and Python")
 
+* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
+* Wes McKinney ported the R dataframe to python to create the pandas implementation
+
 # Analytics Terms Definitions
 
 Some good definitions on reddit blog:

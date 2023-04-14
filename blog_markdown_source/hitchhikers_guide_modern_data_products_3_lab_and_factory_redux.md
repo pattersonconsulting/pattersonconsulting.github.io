@@ -28,6 +28,8 @@ Series:
 
 the term "lab and factory" has caught on as an idea, but like many terms in the data space, its overused and its semantics have drifted over time. (see also: "data science" and "data engineering")
 
+![Lab and the Factory vs Analytics and ML](./images/lab_factory_analytics_ml.png "Lab and the Factory vs Analytics and ML")
+
 Original Article:
 
 https://hbr.org/2013/04/two-departments-for-data-succe

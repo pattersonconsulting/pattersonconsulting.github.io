@@ -114,3 +114,26 @@ to the analytics code base.
 
 * TODO: more writing on how this role deploys infrastructure as contrasted to roles who "use the infrastructure"
 
+<!-- 
+
+### Data Engineers vs Cloud DevOps
+
+Data Engineer Role and Cloud DevOps Role are both critical roles in modern businesses that rely heavily on technology. Here are the key differences and similarities between these two roles:
+
+Job Responsibilities:
+Data Engineers are responsible for building and maintaining data pipelines that collect, process, and store large amounts of data. They are skilled in designing, building, and managing data storage systems and data processing infrastructure. They ensure that data is secure, easily accessible, and of high quality.
+
+Cloud DevOps, on the other hand, is responsible for managing the cloud infrastructure that runs an organization's applications. They work on automating the deployment, scaling, and management of applications on the cloud infrastructure. They ensure the cloud infrastructure is secure, cost-efficient, and always available.
+
+Skills Required:
+Data Engineers need to have a strong foundation in computer science, database systems, and data modeling. They should be skilled in programming languages such as Python, SQL, and Java. Additionally, they need to have expertise in ETL (extract, transform, load) processes, data warehousing, and big data technologies like Hadoop and Spark.
+
+Cloud DevOps require skills in cloud computing, containerization technologies like Docker and Kubernetes, and Infrastructure as Code (IaC) tools like Terraform and Ansible. They should be proficient in scripting languages like Bash, Python, and PowerShell. Additionally, they need to have strong skills in CI/CD (continuous integration and continuous deployment), monitoring, and logging tools.
+
+Tools and Technologies:
+Data Engineers work with data storage technologies like Hadoop, Spark, and NoSQL databases like Cassandra, MongoDB, and DynamoDB. They also use data processing frameworks like Apache Beam and Apache Kafka. Additionally, they use data modeling tools like ERwin and ER/Studio.
+
+Cloud DevOps use cloud computing platforms like AWS, Azure, and Google Cloud Platform. They use containerization technologies like Docker and Kubernetes to deploy applications. They also use Infrastructure as Code (IaC) tools like Terraform and Ansible. Additionally, they use CI/CD tools like Jenkins, Travis CI, and CircleCI.
+
+In summary, Data Engineers and Cloud DevOps are both critical roles in modern businesses that rely heavily on technology. The key differences between these two roles are in their job responsibilities, required skills, and the tools and technologies they use. However, they share some similarities in their roles, such as working to ensure security and availability of the organization's technology infrastructure.
+-->

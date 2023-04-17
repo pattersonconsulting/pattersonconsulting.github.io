@@ -358,45 +358,59 @@ https://stats.stackexchange.com/questions/192873/difference-between-feature-feat
 https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1
 
 
+## Vectorization
 
+The term "vectorization" in the context of machine learning is defined as:
 
-### Numeric Feature
+> “take each data type and represent it as a numerical vector (or in some cases, a multidimensional array of numbers)”
 
-A numeric feature can be conveniently described by a feature vector.
+Vectorization in machine learning refers to the process of converting a set of data points or features into a mathematical vector or matrix format, which can be easily understood and processed by a computer.
 
+Vectorization is required in the case that a "feature" is not numeric; there is a final process between data engineering and machine learning modeling where the practitioner needs to convert any non-numeric data into numeric data. (Note that some modern machine learning libraries provide APIs to model raw non-numeric data in certain cases)
+
+There are multiple methods used in vectorization such as:
+
+* one-hot encoding
+* normalization
+* standardization
+
+Vectorization is a crucial step in many machine learning tasks, such as image recognition, natural language processing, and recommender systems, where large amounts of data need to be processed quickly and accurately. By using vectorization techniques, we can reduce the complexity of the data and make it more manageable for machine learning algorithms to work with.
+
+Many core machine learning libraries have vectorization classes. These libraries include:
+
+* keras
+* weka
+* scikit-learn
 
 ## Feature Vector
 
+**A feature vector is a vector that stores the features for a particular observation in a certain order.**
 
-> A feature vector is a vector that stores the features for a particular observation in a specific order.
+A feature vector holds all of the features (e.g., "attributes") that we're interested in using as independent variables in our model.
 
-> For example, Alice is 26 years old and she is 5' 6" tall. Her feature vector could be [26, 5.5] or [5.5, 26] depending on your choice of how to order the elements. The order is only important insofar as it is consistent.
+The order of the elements in the vector is only important as long as they are consistent.
 
-> A feature set is a set of all the attributes that you're interested in, e.g. height and age.
+We are assuming the data is tabular implicitly when we use the terminology "feature vector", as the rows in the tabular data represent observations we wish to model with methods such as "linear regression". Other non-tabular data takes more engineering work to represent as features in most types of machine learning modeling algorithms.
 
-> The implicit assumption when using this terminology is that your data is tabular -- somehow, you have chosen to represent it as a "flat", matrix-like format. But non-tabular data formats, like network graphs, video, audio, images, binary data sequences, ... these all require some amount of engineering to represent as feature vectors.
+Most algorithms in machine learning require a tabular, numerical representation of objects, since such representations are the the API contract for the mathematical processing and statistical analysis.
 
-
-> "In pattern recognition and machine learning, a feature vector is an n-dimensional vector of numerical features that represent some object. Many algorithms in machine learning require a numerical representation of objects, since such representations facilitate processing and statistical analysis."
-
-> "The vector space associated with these vectors is often called the feature space. In order to reduce the dimensionality of the feature space, a number of dimensionality reduction techniques can be employed."
-
-Many times in ML literature the term feature vector is used differently:
-
-https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1
-
-## Feature Construction
-
-> "Higher-level features can be obtained from already available features and added to the feature vector; for example, for the study of diseases the feature 'Age' is useful and is defined as Age = 'Year of death' minus 'Year of birth' . This process is referred to as feature construction.[2][3] Feature construction is the application of a set of constructive operators to a set of existing features resulting in construction of new features."
-
-Attributes?
+Many times in machine learning literature the [term "feature vector" is used in different ways](https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1).
 
 ## Feature Engineering
 
+Feature engineering is [defined on wikipedia](https://en.wikipedia.org/wiki/Feature_engineering) as:
+
 > "Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. The motivation is to use these extra features to improve the quality of results from a machine learning process, compared with supplying only the raw data to the machine learning process."
 
-https://en.wikipedia.org/wiki/Feature_engineering
+It's worth noting that the term "feature engineering" doesn't seem to gain popularity until around 2015 based on google trends:
 
+![Feature Engineering on Google Trends](./images/google_trends_feature_engineering.png )
+
+The term "feature construction" is another term that is sometimes used interchangably with the term "Feature engineering".
+
+In some cases in literature you will see the term "vectorization" used to mean "feature construction" as well; It's worth noting that some folks believe "vectoriation" to be the final step in a feature engineering pipeline --- the step where you convert any non-numeric features to numeric representation. 
+
+<!--
 ### Discussion on Feature Engineering
 
  The definition for "Feature Engineering" is always some form of:
@@ -428,90 +442,36 @@ TODO:
 * reference weka book (as early practitioner guide)
 * check terminology in Bishop book
 
-## Vectorization
-
-From our book:
-
-> “take each data type and represent it as a numerical vector (or in some cases, a multidimensional array of numbers)”
-
-GPT
-
-Vectorization in machine learning refers to the process of converting a set of data points or features into a mathematical vector or matrix format, which can be easily understood and processed by a computer.
-
-In other words, it is a way to represent data in a structured format that is suitable for machine learning algorithms to process efficiently. This is usually done by converting the raw data into a numerical format, such as through one-hot encoding, normalization, or other methods.
-
-Vectorization is a crucial step in many machine learning tasks, such as image recognition, natural language processing, and recommender systems, where large amounts of data need to be processed quickly and accurately. By using vectorization techniques, we can reduce the complexity of the data and make it more manageable for machine learning algorithms to work with.
-
-From Geron:
-
-> “We already discussed two of these layers: the keras.layers.Normalization layer that will perform feature standardization (it will be equivalent to the Standardization layer we defined earlier), and the TextVectorization layer that will be capable of encoding each word in the inputs into its index in the vocabulary. In both cases, you create the layer, you call its adapt() method with a data sample, and then you use the layer normally in your model. The other preprocessing layers will follow the same pattern.”
-
-
+-->
 
 ## Dataframe
 
-what is it
+A DataFrame is a tabular data structure that organizes data into a 2-dimensional table of rows and columns. The most well-known implementation is the [Pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+) which is based directly on the R dataframe concept.
 
-https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+The dataframe construct directly mimics a relational database table or a spreadsheet and is one of the most common data structures in more recent data analytics.
 
+Dataframes are popular because they allow data engineers and data scientists to work with tabular data from raw files and from relational database tables in an intuitive way with an API focused on tasks (e.g., column operations, joins, etc) that are relevant to those roles.
 
-* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
-* Wes McKinney ported the R dataframe to python to create the pandas implementation
+Dataframes are generally used in Python or R and popular with Data Engineers and Data Scientists as a great way to work with tabular datasets. Data Engineers can quickly join and filter datasets from the data warehouse or process raw file-based datasets for consumption by data scientists. Data scientists can quickly perform feature engineering operations with libraries such as Pandas and efficiently prepare data for machine learning modeling operations.
 
+The dataframe is widely considered key abstraction between the worlds of analytics and machine learning. The graph below shows the popularity of the dataframe, which quickly began rising in 2014.
 
-how is it used in ml?
-
-the dataframe is a key abstraction between the worlds of the database and machine learning
-
-In the world of machine learning before the dataframe API we'd use abstractions such as a DataSet and JDBC to pull data from a database.
-
-* just jdbc / odbc to query database for some data via sql
-* iterate through the records, converting them into Rows in a dataset
-* turn rows into vectors that could be used in machine learning -- typically a vector format that was proprietary to the machine learning lib
-
-> Why do we use Dataframe instead of DataSet?
-> Use Datasets in situations where:
-> Data requires a structure. DataFrames infer a schema on structured and semi-structured data.
-> Transformations are high-level. If your data requires high-level processing, columnar functions, and SQL queries, use Datasets and DataFrames.
-> A high degree of type safety is necessary.
-
-### The Dataframe Construct as a Bridge Between Analyitcs and Machine Learning
-
-how is it a bridge between analytics and 
-
-
-
-## Data Engineer
-
-> (redit) "Uses a combination of software engineering best practices and database design to build scalable data pipelines, data integrations, and data models for use in applications and reports"
-
-### Data Engineers vs Cloud DevOps
-
-Data Engineer Role and Cloud DevOps Role are both critical roles in modern businesses that rely heavily on technology. Here are the key differences and similarities between these two roles:
-
-Job Responsibilities:
-Data Engineers are responsible for building and maintaining data pipelines that collect, process, and store large amounts of data. They are skilled in designing, building, and managing data storage systems and data processing infrastructure. They ensure that data is secure, easily accessible, and of high quality.
-
-Cloud DevOps, on the other hand, is responsible for managing the cloud infrastructure that runs an organization's applications. They work on automating the deployment, scaling, and management of applications on the cloud infrastructure. They ensure the cloud infrastructure is secure, cost-efficient, and always available.
-
-Skills Required:
-Data Engineers need to have a strong foundation in computer science, database systems, and data modeling. They should be skilled in programming languages such as Python, SQL, and Java. Additionally, they need to have expertise in ETL (extract, transform, load) processes, data warehousing, and big data technologies like Hadoop and Spark.
-
-Cloud DevOps require skills in cloud computing, containerization technologies like Docker and Kubernetes, and Infrastructure as Code (IaC) tools like Terraform and Ansible. They should be proficient in scripting languages like Bash, Python, and PowerShell. Additionally, they need to have strong skills in CI/CD (continuous integration and continuous deployment), monitoring, and logging tools.
-
-Tools and Technologies:
-Data Engineers work with data storage technologies like Hadoop, Spark, and NoSQL databases like Cassandra, MongoDB, and DynamoDB. They also use data processing frameworks like Apache Beam and Apache Kafka. Additionally, they use data modeling tools like ERwin and ER/Studio.
-
-Cloud DevOps use cloud computing platforms like AWS, Azure, and Google Cloud Platform. They use containerization technologies like Docker and Kubernetes to deploy applications. They also use Infrastructure as Code (IaC) tools like Terraform and Ansible. Additionally, they use CI/CD tools like Jenkins, Travis CI, and CircleCI.
-
-In summary, Data Engineers and Cloud DevOps are both critical roles in modern businesses that rely heavily on technology. The key differences between these two roles are in their job responsibilities, required skills, and the tools and technologies they use. However, they share some similarities in their roles, such as working to ensure security and availability of the organization's technology infrastructure.
+!["Dataframe" on Google Trends](./images/google_trends_dataframe.png )
 
 ## Data Engineering
+
+(this section needs work, I'm trying out different quotes and versions of the idea)
+
+From wikipedia:
+
+>  Due to the new scale of the data, major firms like Google, Facebook, Amazon, Apple, Microsoft, and Netflix started to move away from traditional ETL and storage techniques. They started creating data engineering, a type of software engineering focused on data, and in particular infrastructure, warehousing, data protection, cybersecurity, mining, modelling, processing, and metadata management.[3][8] This change in approach was particularly focused on cloud computing.[8] Data started to be handled and used by many parts of the business, such as sales and marketing, and not just IT.[8]
 
 Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.
 
 
 > "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning. Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
+<!--
 
 https://en.wikipedia.org/wiki/Data_engineering
 
@@ -521,7 +481,7 @@ https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/109810830
    * the term has shifted over time
    * how we viewed it in the DL Book
 
-
+-->
 Data engineering involves a range of activities, including:
 
 1. Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into a data warehouse or other storage system.
@@ -538,6 +498,12 @@ Data engineering involves a range of activities, including:
 
 Data engineering requires a range of technical skills, including programming, database management, data modeling, and distributed systems. Data engineers must also have a strong understanding of the business needs and goals of the organization, and must be able to collaborate effectively with other stakeholders, such as data analysts, data scientists, and business leaders.
 
+### Data Engineering vs Cloud Dev Ops
+
+![Data Engineering vs Cloud Dev Ops](./images/radar_plot_data_eng_vs_cloud_devops.png )
+
+
+
 
 ## Machine Learning Modeling
 
@@ -545,44 +511,30 @@ Machine learning modeling is the process of using machine learning algorithms to
 
 The process of building a machine learning model typically involves the following steps:
 
-1. Data preparation: This involves selecting and cleaning the data that will be used to train the model, and transforming it into a format that can be used by the machine learning algorithm.
+1. Data preparation
+2. Feature engineering
+3. Model training
+4. Model evaluation
+6. Model deployment
 
-2. Feature engineering: This involves selecting and creating the features or attributes that will be used by the model to make predictions or decisions. This step often involves domain knowledge and creativity, as the features must be relevant and informative for the problem being solved.
-
-3. Model selection: This involves selecting the type of machine learning algorithm that will be used to train the model, based on the problem being solved and the characteristics of the data.
-
-4. Model training: This involves feeding the prepared data into the machine learning algorithm and adjusting the model parameters to optimize its performance on the training data.
-
-5. Model evaluation: This involves testing the performance of the trained model on a separate set of data that was not used for training, to ensure that it is able to generalize to new data and make accurate predictions or decisions.
-
-6. Model deployment: This involves integrating the trained model into a production system or application, where it can be used to make predictions or decisions in real-time.
-
-Machine learning modeling is used in a wide range of applications, such as image recognition, natural language processing, fraud detection, and recommendation systems. It requires a combination of technical skills, such as programming, statistics, and mathematics, as well as domain knowledge and creativity to select and engineer the right features for the problem being solved.
-
+Machine learning modeling is used in a wide range of applications, such as image recognition, natural language processing, fraud detection, and recommendation systems. 
+<!--
 A further great guide on the specific process of machine learning:
 
 https://arxiv.org/pdf/2108.02497.pdf
-
+-->
 ### What are 3 Examples of Machine Learning Modeling?
 
 1. Training a linear regression model on a tabular dataset to predict the price of a house
 2. Training a neural network model to predict when a specific manufacturing machine will fail
-3. Training a logist
-
-
-## Machine Learning Model Inference
-
-Machine learning model inference is the process of using a trained machine learning model to make predictions or decisions on new, unseen data. Once a machine learning model has been trained, it can be deployed and used to make predictions or decisions on new data in real-time.
-
-## Artificial Intelligence
-
-* marketing
+3. Using K-means clustering to discover relationships in a dataset
 
 # References
 
-[1]: "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, (1999), Witten and Frank, <https://www.cs.waikato.ac.nz/ml/weka/book.html>
-[2]: "The Elements of Statistical Learning: Data Mining, Inference, and Prediction", (2001), Hastie, Tibshirani, and Friedman
-[3]: "Pattern recognition and machine learning", (2006), Bishop, Christopher
-[4]: ISLR Book, https://www.statlearning.com/
+* [1]: "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, (1999), Witten and Frank, <https://www.cs.waikato.ac.nz/ml/weka/book.html>
+* [2]: "The Elements of Statistical Learning: Data Mining, Inference, and Prediction", (2001), Hastie, Tibshirani, and Friedman
+* [3]: "Pattern recognition and machine learning", (2006), Bishop, Christopher
+* [4]: "An Introduction to Statistical Learning", https://www.statlearning.com/
+
 
 

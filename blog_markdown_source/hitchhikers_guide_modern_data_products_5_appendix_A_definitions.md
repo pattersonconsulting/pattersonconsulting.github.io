@@ -35,50 +35,80 @@ In this appendix we define key terms used throughout the series on data platform
 
 ![Intersection of SQL and Python](./images/sql_df_python.png "Intersection of SQL and Python")
 
-* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
-* Wes McKinney ported the R dataframe to python to create the pandas implementation
-
 # Analytics Terms Definitions
 
-Some good definitions on reddit blog:
-
-https://dataengineering.wiki/FAQ/What+is+the+difference+between+a+Data+Engineer+and+X
+In the section below I give some quick definitions on common terms in the analytics space.
 
 ## Table
 
-In a data warehouse, a table is a collection of related data organized into rows and columns. Tables are used to store and manage structured data, which is data that is organized into a specific format, such as a spreadsheet or database.
+**In a database, a table is a collection of related data organized into rows and columns.**
+
+Tables are used to store and manage structured data, which is data that is organized into a specific format, such as a spreadsheet or database.
 
 
 ## View
 
-In a database, a view is a virtual table that presents data from one or more underlying tables in a specific way. A view does not actually contain any data itself; it simply provides a way to access and display data that is already stored in the database.
+**In a database, a view is a virtual table that presents data from one or more underlying tables in a specific way.**
+
+A view does not actually contain any data itself; it simply provides a way to access and display data that is already stored in the database.
 
 Views are used to simplify complex queries by presenting the data in a more easily understandable format, or to provide a subset of the data that is relevant to a particular application or user. For example, a view could be created to display only the names and phone numbers of customers who have made a purchase in the last 30 days.
 
 
+## Data Modeling
+
+**Data modeling in the context of a data warehouse is the process of creating a conceptual, logical, and physical representation of the data that will be stored in the warehouse.**
+
+Data modeling involves identifying the key entities and relationships that exist within the data, and creating a structure that can be used to efficiently store and retrieve the data.
+
+The data modeling process typically involves several steps:
+
+1. Conceptual modeling: This involves identifying the key business entities and their relationships, as well as the high-level data requirements of the business. The result of this step is a conceptual data model that represents the business requirements in a simplified and abstracted form.
+
+2. Logical modeling: This involves refining the conceptual model to create a logical data model that can be implemented in a database management system. The logical model includes the definition of tables, columns, relationships, constraints, and other attributes.
+
+3. Physical modeling: This involves creating a physical data model that maps the logical model to the physical storage structures of the database management system. This includes decisions around storage formats, indexing, partitioning, and other database-specific attributes.
+
+The goal of data modeling in a data warehouse is to create a structure that can efficiently store and retrieve large volumes of data, while also supporting the analytical and reporting requirements of the business. Data modeling is critical to the success of a data warehouse initiative, as it provides the foundation for all subsequent activities, such as ETL (Extract, Transform, Load), data integration, and reporting.
+
+In our other [blog article on data modeling with dbt](http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_2_pipeline.html) we describe data modeling as:
+
+> In dbt (Data Build Tool), a data model is a logical representation of a specific type of data that you want to analyze or work with in your database. It describes the structure, relationships, and constraints of the data in a way that can be easily understood by both humans and computers. A DBT workflow is a directed acyclic graph (DAG) of DBT data models.
+
+> A data model in dbt is typically defined as a SQL query that defines the relationships between tables or other data sources. It specifies how data should be transformed and aggregated to create a particular view of the data. This view can then be used as a source for further analysis or reporting.
+
+> In dbt, a data model is created using a “model” statement in a SQL file. This statement defines the columns of the model, any relationships with other models or tables, and any transformations that should be applied to the data. Once defined, a data model can be used as a building block for creating more complex data structures and analyses.
+
+
 ## Metrics
 
-In data modeling, a metric is a quantifiable measure of a specific aspect of a business or application. Metrics are used to evaluate performance, track progress towards goals, and make data-driven decisions.
+**In data modeling, a metric is a quantifiable measure of a specific aspect of a business or application.**
 
-Metrics can take many forms, depending on the context and purpose of the data modeling exercise. For example, in an e-commerce application, metrics might include the number of orders processed, the average order value, and the conversion rate from site visits to purchases. In a marketing campaign, metrics might include the number of leads generated, the click-through rate of an advertisement, or the cost per acquisition.
+Metrics are used to evaluate performance, track progress towards goals, and make data-driven decisions. Metrics can take many forms, depending on the context and purpose of the data modeling exercise. 
 
-Metrics are typically defined in terms of a specific unit of measurement, such as dollars, hours, or clicks. They are often accompanied by targets or benchmarks that represent the desired level of performance, as well as historical data that can be used to identify trends and patterns over time.
+For example, in an e-commerce application, metrics might include 
 
-In data modeling, metrics are often used as the basis for developing dashboards, reports, and other data visualizations that allow stakeholders to monitor performance and make informed decisions. Effective metric selection and tracking is critical to the success of any data-driven initiative, as it provides a common language for evaluating progress and identifying areas for improvement.
+* the number of orders processed
+* the average order value
+* and the conversion rate from site visits to purchases. 
 
-For this marketing activity, relevant metrics may be: 
+In a marketing campaign, metrics might include 
 
-1. Total visitors to the landing page
-2. Total visitors broken down by acquisition channel (organic search, referral, cpc, etc.)
-3. Total time spent on the page
-4. Total form submissions
+* the number of leads generated
+* the click-through rate of an advertisement
+* or the cost per acquisition.
 
-Again, these are just the data building blocks.
+**Metrics are typically defined in terms of a specific unit of measurement, such as dollars, hours, or clicks.** They are often accompanied by targets or benchmarks that represent the desired level of performance, as well as historical data that can be used to identify trends and patterns over time.
 
+Metrics should be considered the data building blocks. In data modeling, metrics are often used as the basis for developing dashboards, reports, and other data visualizations that allow stakeholders to monitor performance and make informed decisions. Effective metric selection and tracking is critical to the success of any data-driven initiative, as it provides a common language for evaluating progress and identifying areas for improvement.
 
 ## KPIs
 
-A Key Performance Indicator (KPI) is a measurable value that is used to assess the performance of an organization, a business unit, a project, or an individual in achieving specific objectives or goals. KPIs are used to evaluate progress and make data-driven decisions, and are typically tied to strategic or operational objectives.
+**A Key Performance Indicator (KPI) is a measurable value that is used to assess the performance of an organization, a business unit, a project, or an individual in achieving specific objectives or goals.**
+
+You -- as the marketer or analyst -- need to select those indicators of success.
+
+KPIs are used to evaluate progress and make data-driven decisions, and are typically tied to strategic or operational objectives.
 
 KPIs can take many forms, depending on the nature of the organization and the goals being pursued. Examples of KPIs might include:
 
@@ -92,28 +122,20 @@ KPIs can take many forms, depending on the nature of the organization and the go
 
 KPIs are typically chosen based on their relevance to the objectives being pursued, as well as their measurability and their ability to drive behavior and decision-making. KPIs should be clearly defined, and should be tracked and reported on a regular basis to ensure that progress is being made towards the desired outcomes.
 
-Key Performance Indicators
+Comparing metrics to KPIs:
 
-> Of the metrics, you -- as the marketer or analyst -- need to select those indicators of success. You may not actually care about the total visitors to the landing page, but rather, focus solely on the number of total form submissions (As as all know, more traffic is not always a positive thing, if your visitors aren't taking the action you want them to take). So, your KPIs may break down as follows: 
-
-1. Total form submissions
-2. Form conversion rate (submissions/total visits)
-3. Form conversion rate broken down by acquisition source
-
-These three metrics are examples of numbers that can be *directly* bound to definitions of success or failure from a business perspective.
-
-
-### Metrics vs KPIs
-
-> We take these terms seriously because there is real business value tied to each term in different ways. 
-> For example, your intern may be qualified to pull metrics from your Google Analytics account, but until those metrics are studied and summarized into business insights, they are nothing more than numbers in a spreadsheet. 
-> Similarly, the same intern might be able to pull hundreds of different metrics to report to your senior leadership, but if they aren't aligned behind a set of KPIs, the usefulness of the data will fall short.
-
-
+* Util metrics are studied and summarized into business insights, they are nothing more than numbers in a spreadsheet
+* If metrics aren't aligned behind a set of KPIs, the usefulness of the data will fall short
 
 ## Analytics
 
-Analytics is the process of analyzing and interpreting data in order to gain insights, inform decision-making, and improve performance. Analytics involves a range of techniques and tools, including statistical analysis, data mining, machine learning, and predictive modeling, among others.
+**Analytics is the process of analyzing and interpreting data in order to gain insights, inform decision-making, and improve performance.**
+
+Analytics refers to the systematic study and analysis of data (i.e. Metrics and KPIs). In analytics we want to study metics and work to extract insights and/or conclusions about what they mean for a business. 
+
+We can answer specific questions with analytics or solve particular problems by analyzing data sets and identifying trends, patterns, and correlations that might not be immediately apparent.
+
+Analytics are the interpretations of data that transform numbers and metrics into actionable ideas and insights --- and not data points that can be pulled directly from an analytics system.
 
 Analytics can be used to answer a variety of questions, such as:
 
@@ -125,34 +147,16 @@ Analytics can be used to answer a variety of questions, such as:
 
 Analytics can be applied in a variety of domains, including business, finance, healthcare, education, and many others. Analytics is often used to inform decision-making at various levels of an organization, from operational decisions to strategic planning.
 
-https://www.foxgr.com/insights/blog-analytics-vs-metrics-vs-kpis-data-terminology-defined
+We start by outlining the metrics and KPIs as first step in the analysis process to understand what we're measuring and why.
 
-> Arguably the most misused term of them all, Analytics refers to the systematic study and analysis of data (i.e. Metrics and KPIs). That is, the output of information by a person or system who studied the Metics and worked to extract insights and/or conclusions about what they mean for a business. 
-
-> "Analytics" in their truest form, are not data points that can be pulled directly from an analytics system. 
-Rather, they are the interpretations of data that transform numbers and metrics into actionable ideas and insights.
-
-(Refactor)
-* Analytics, on the other hand, involves the use of statistical and quantitative methods to identify and interpret patterns and relationships in data. 
-* Analytics can be used to answer specific questions or solve particular problems by analyzing data sets and identifying trends, patterns, and correlations that might not be immediately apparent. 
-* Analytics can be used to gain insights into customer behavior, improve operational efficiency, and drive business growth.
-
-
-> Outlining the metrics and KPIs was actually the first step in proper analysis -- it's understanding what you're measuring and why. Next, it's your job as the marketer or analyst to provide context and ultimately draw insights out of the data you see. 
-
-For example:
-
-1. You know that previous landing pages have achieved an average form conversion rate of 6%. How far above or below this benchmark does your current landing page perform?
-2. What's your hypothesis for why it is under performing or over performing? What's different about this landing page when compared to your past efforts? Can you narrow down the success/failure to specific content attributes?
-3. Based on your study, what do you recommend to change about the current tactic, or what attributes should you include in future tactics to build upon your positive outcomes?
-
-
-https://preset.io/blog/introducing-entity-centric-data-modeling-for-analytics/?
+Then we need to provide context and generate analytic results out of the data we are examining.
 
 
 ## Business Intelligence (BI)
 
-Business Intelligence (BI) is a process of transforming raw data into actionable insights that can inform decision-making and improve business performance. BI involves a range of activities, including data mining, analytics, reporting, and visualization, among others.
+**Business Intelligence (BI) is a process of transforming raw data into actionable insights that can inform decision-making and improve business performance.**
+
+BI involves a range of activities, including data mining, analytics, reporting, and visualization, among others.
 
 The goal of BI is to help organizations make data-driven decisions by providing insights into key business metrics, such as sales, customer behavior, market trends, and operational efficiency. BI tools and technologies enable users to explore data from multiple sources, create reports and dashboards, and share insights with stakeholders across the organization.
 
@@ -167,96 +171,44 @@ BI can be used for a variety of purposes, such as:
 
 BI tools and technologies include data warehouses, data marts, online analytical processing (OLAP), dashboards, and data visualization tools. These tools enable users to access and analyze data from multiple sources, such as databases, spreadsheets, and external data sources.
 
-
-> Business Intelligence (BI) involves the collection, integration, analysis, and presentation of business data in order to inform decision-making. 
-> BI tools allow organizations to gather and store data from various sources, clean and transform it into a usable format, and then analyze it to identify patterns and insights. 
-> The goal of BI is to provide business leaders with the information they need to make data-driven decisions that improve organizational performance.
-
 ### BI vs Analytics
 
-While BI focuses on collecting and presenting data in a way that is easy to understand and use, 
-Analytics focuses on using statistical and quantitative techniques to uncover insights and make predictions. 
-
-In short, 
-BI provides the information necessary for decision-making, 
-while Analytics provides the tools and techniques necessary for analysis and interpretation of that information.
-
-
-## Data Modeling
-
-Data modeling in the context of a data warehouse is the process of creating a conceptual, logical, and physical representation of the data that will be stored in the warehouse. Data modeling involves identifying the key entities and relationships that exist within the data, and creating a structure that can be used to efficiently store and retrieve the data.
-
-The data modeling process typically involves several steps:
-
-1. Conceptual modeling: This involves identifying the key business entities and their relationships, as well as the high-level data requirements of the business. The result of this step is a conceptual data model that represents the business requirements in a simplified and abstracted form.
-
-2. Logical modeling: This involves refining the conceptual model to create a logical data model that can be implemented in a database management system. The logical model includes the definition of tables, columns, relationships, constraints, and other attributes.
-
-3. Physical modeling: This involves creating a physical data model that maps the logical model to the physical storage structures of the database management system. This includes decisions around storage formats, indexing, partitioning, and other database-specific attributes.
-
-The goal of data modeling in a data warehouse is to create a structure that can efficiently store and retrieve large volumes of data, while also supporting the analytical and reporting requirements of the business. Data modeling is critical to the success of a data warehouse initiative, as it provides the foundation for all subsequent activities, such as ETL (Extract, Transform, Load), data integration, and reporting.
-
-> "This is the process of producing a data model, an abstract model to describe the data and relationships between different parts of the data.[27]"
-
-### What are 3 Examples of Data Modeling?
-
-1. a
-2. b
-3. c
+* BI focuses on collecting and presenting data in a way that is easy to understand and use (providing the information for decision making)
+* Analytics focuses on using statistical and quantitative techniques to uncover insights and make predictions
 
 ## Data Warehouse
 
-A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining. The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.
+**A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining.**
+
+The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.
 
 Data Warehouses are designed to support the efficient storage, retrieval, and analysis of large volumes of data, typically over a period of several years. They are optimized for read-intensive workloads and support complex queries, reporting, and analytics. Data Warehouses are typically organized around subject areas, such as sales, inventory, or customer data, and may include multiple data marts or data cubes that provide a multidimensional view of the data.
 
-Data Warehouses typically include the following components:
-
-1. Data sources: This includes the systems and applications from which data is extracted and transformed.
-
-2. ETL (Extract, Transform, Load) tools: These tools are used to extract data from source systems, transform it to conform to a common schema, and load it into the Data Warehouse.
-
-3. Data storage: This includes the physical storage infrastructure used to store the data, such as disk arrays or solid-state drives.
-
-4. Data access and analysis tools: These tools are used to query and analyze the data in the Data Warehouse, such as SQL (Structured Query Language) or OLAP (Online Analytical Processing) tools.
-
-Data Warehouses are used in a variety of industries and domains, including finance, healthcare, retail, and manufacturing. They are used to support a range of BI activities, such as performance monitoring, trend analysis, predictive modeling, and decision support.
-
-## Data Products
-
-* downstream from the core data models of the data warehouse
-
-A data product is a software application or service that is designed to deliver insights and value from data. Data products are created by leveraging data analytics, machine learning, and other techniques to derive insights from data, and then delivering those insights to users through a user-friendly interface or API.
-
-Data products can take many forms, including dashboards, reports, APIs, and data visualizations. They can be used by businesses to monitor key metrics, identify trends and patterns, and make data-driven decisions. They can also be used by consumers to access information, such as weather forecasts, stock prices, or traffic updates.
-
-Data products are typically designed to be scalable, reliable, and secure, and may include features such as real-time data processing, automated data quality checks, and machine learning algorithms that learn and improve over time. They may also include features such as data privacy controls, access controls, and audit trails to ensure that data is used in a responsible and ethical manner.
-
-### What are Some Examples of Data Products?
-
-1. Data for a Business Intelligence Dashboard
-2. Aggregated dataset for downstream machine learning
-3. Operational Data (todo: differentiate this from BI data)
-4. Monitoring Data
-5. Data for Exploratory Discovery
-6. Analytical Dataset
-
-
 ## Dimensions
 
-In data warehousing, a dimension is a categorical variable or attribute that provides context for the measures or numerical values in a dataset. Dimensions are used to categorize or group the data, and are often used to filter, aggregate, and analyze the data in various ways.
+**A dimension is a categorical variable or attribute that provides context for the measures or numerical values in a dataset.**
 
-Examples of dimensions in a data warehouse might include time, geography, product, customer, or sales channel. These dimensions can be used to group and categorize the measures, such as sales revenue, profit margin, or units sold.
+Dimensions are used to categorize or group the data, and are often used to filter, aggregate, and analyze the data in various ways.
+
+Examples of dimensions might include 
+
+* time
+* geography
+* product
+* customer
+* sales channel
+
+These dimensions can be used to group and categorize the measures, such as sales revenue, profit margin, or units sold.
 
 Dimensions are typically hierarchical, meaning that they have levels or layers of granularity. For example, a time dimension might have levels such as year, quarter, month, week, and day, which can be used to aggregate or drill down into the data as needed.
 
 Dimensions can also have attributes, which provide additional information about the dimension. For example, a product dimension might have attributes such as product name, product category, manufacturer, and price.
 
-Overall, dimensions are an important concept in data warehousing, and are used to provide context and structure to the data, making it easier to analyze and understand.
-
 ## Cubes
 
-In data warehousing, a cube is a multi-dimensional data structure that allows for efficient and flexible querying and analysis of large datasets. A cube is sometimes also referred to as a data cube or OLAP (Online Analytical Processing) cube.
+**In data warehousing, a cube is a multi-dimensional data structure that allows for efficient and flexible querying and analysis of large datasets.**
+
+A cube is sometimes also referred to as a data cube or OLAP (Online Analytical Processing) cube.
 
 A cube consists of dimensions and measures. Dimensions are the categorical variables or attributes that define the data, such as time, location, or product category. Measures are the numerical values that are being analyzed, such as sales revenue, units sold, or profit margin.
 
@@ -264,11 +216,11 @@ The cube organizes the data along these dimensions, creating a multi-dimensional
 
 For example, consider a retail company that wants to analyze their sales data. They could create a cube with dimensions such as time, location, and product category, and measures such as sales revenue and units sold. The cube would allow them to easily query and analyze the sales data by different dimensions, such as sales by location and product category, or sales over time.
 
-Overall, cubes are an important data structure in data warehousing, and allow for efficient querying and analysis of large, complex datasets.
-
 ## The Kimball Data Warehouse Architecture
 
-The Kimball Data Warehouse Architecture, also known as the Dimensional Data Warehouse Architecture, is a popular approach to building data warehouses that was pioneered by Ralph Kimball in the 1990s. It is based on the principles of dimensional modeling and is designed to support the efficient retrieval and analysis of large volumes of data.
+The [Kimball Data Warehouse Architecture](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/), also known as the Dimensional Data Warehouse Architecture, is a popular approach to building data warehouses that was pioneered by Ralph Kimball in the 1990s. 
+
+It is based on the principles of dimensional modeling and is designed to support the efficient retrieval and analysis of large volumes of data.
 
 The Kimball Data Warehouse Architecture is characterized by the following features:
 
@@ -283,6 +235,23 @@ The Kimball Data Warehouse Architecture is characterized by the following featur
 5. Business intelligence tools: These are tools used to analyze and report on the data in the data warehouse, such as OLAP (Online Analytical Processing) tools, reporting tools, and dashboards.
 
 The Kimball Data Warehouse Architecture is designed to support the efficient retrieval and analysis of large volumes of data, and to enable business users to easily explore and analyze the data using a variety of tools and techniques. It has become a widely adopted approach to building data warehouses and is used in a variety of industries and domains.
+
+
+## Data Products
+
+**A data product is a software application or service that is designed to deliver insights and value from data.**
+
+Data products are created by leveraging data analytics, machine learning, and other techniques to derive insights from data, and then delivering those insights to users through a user-friendly interface or API.
+
+While there are other datasets generated during the data modeling phase of a data warehouse, data products are generally downstream from the core data models of the data warehouse. Examples include:
+
+1. Data for a Business Intelligence Dashboard
+2. Aggregated dataset for downstream machine learning
+3. Operational Data (todo: differentiate this from BI data)
+4. Monitoring Data
+5. Data for Exploratory Discovery
+6. Analytical Dataset
+
 
 # Machine Learning Terms Definitions
 
@@ -304,17 +273,34 @@ ISLR Book
 
 https://www.statlearning.com/
 
+
+
 ## Dataframe
 
 what is it
 
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+
+
+* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
+* Wes McKinney ported the R dataframe to python to create the pandas implementation
+
+
 how is it used in ml?
 
-need to mention how we worked with data in a database pre-Dataframe
+the dataframe is a key abstraction between the worlds of the database and machine learning
+
+In the world of machine learning before the dataframe API we'd use abstractions such as a DataSet and JDBC to pull data from a database.
 
 * just jdbc / odbc to query database for some data via sql
 * iterate through the records, converting them into Rows in a dataset
 * turn rows into vectors that could be used in machine learning -- typically a vector format that was proprietary to the machine learning lib
+
+> Why do we use Dataframe instead of DataSet?
+> Use Datasets in situations where:
+> Data requires a structure. DataFrames infer a schema on structured and semi-structured data.
+> Transformations are high-level. If your data requires high-level processing, columnar functions, and SQL queries, use Datasets and DataFrames.
+> A high degree of type safety is necessary.
 
 ### The Dataframe Construct as a Bridge Between Analyitcs and Machine Learning
 
@@ -330,6 +316,12 @@ In machine learning, a vector is a one-dimensional array or list of numbers. Vec
 Vectors can be used to perform various mathematical operations in machine learning, such as dot products, element-wise multiplication, and addition. These operations can be used to compute similarities between vectors, transform data, and build models.
 
 In addition, vectors can be represented in different spaces, such as Euclidean space, where the length and direction of the vector are important, or in feature space, where each element of the vector represents a feature of the data.
+
+Books where this term was introduced or used commonly:
+
+* "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, 1999, Witten and Frank
+
+https://www.cs.waikato.ac.nz/ml/weka/book.html
 
 ## Matrix
 
@@ -367,12 +359,34 @@ Overall, tensors are an important data structure in machine learning, and are us
 
 TODO: This book was published in 2006, but when did this term become widely used?
 
+> A feature is an attribute associated with an input or sample. For example, a feature of an image could be a pixel. The feature of a state could be the Euclidean distance to the goal state. 
+
 > Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression.
+
+> A feature is a measurable property of the object you’re trying to analyze. In datasets, features appear as columns.
+
+> Features are the basic building blocks of datasets. The quality of the features in your dataset has a major impact on the quality of the insights you will gain when you use that dataset for machine learning. Additionally, different business problems within the same industry do not necessarily require the same features, which is why it is important to have a strong understanding of the business goals of your data science project.
+
+> You can improve the quality of your dataset’s features with processes like feature selection and feature engineering, which are notoriously difficult and tedious. If these techniques are done well, the resulting optimal dataset will contain all of the essential features that might have bearing on your specific business problem, leading to the best possible model outcomes and the most beneficial insights.
 
 ### Numeric Feature
 
 A numeric feature can be conveniently described by a feature vector.
 
+## Attribute
+
+> Attribute/Feature: An attribute is an aspect of an instance (e.g. temperature, humidity). Attributes are often called features in Machine Learning. A special attribute is the class label that defines the class this instance belongs to (required for supervised learning).
+
+https://ai.stanford.edu/~ronnyk/glossary.html
+
+> A quantity describing an instance. An attribute has a domain defined by the attribute type, which denotes the values that can be taken by an attribute.
+
+Attribute aka: 
+* field
+* variable
+* feature
+
+Some authors use feature as a synonym for attribute
 
 ## Feature Vector
 

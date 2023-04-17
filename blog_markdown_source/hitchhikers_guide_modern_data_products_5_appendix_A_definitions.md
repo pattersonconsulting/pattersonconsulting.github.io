@@ -461,27 +461,15 @@ The dataframe is widely considered key abstraction between the worlds of analyti
 
 ## Data Engineering
 
-(this section needs work, I'm trying out different quotes and versions of the idea)
+**editors: which of the 3 version of Data Engineering below work best? does a data engineer do cloud dev ops work?**
 
-From wikipedia:
+>  (wikipedia) Due to the new scale of the data, major firms like Google, Facebook, Amazon, Apple, Microsoft, and Netflix started to move away from traditional ETL and storage techniques. They started creating data engineering, a type of software engineering focused on data, and in particular infrastructure, warehousing, data protection, cybersecurity, mining, modelling, processing, and metadata management.[3][8] This change in approach was particularly focused on cloud computing.[8] Data started to be handled and used by many parts of the business, such as sales and marketing, and not just IT.[8]
 
->  Due to the new scale of the data, major firms like Google, Facebook, Amazon, Apple, Microsoft, and Netflix started to move away from traditional ETL and storage techniques. They started creating data engineering, a type of software engineering focused on data, and in particular infrastructure, warehousing, data protection, cybersecurity, mining, modelling, processing, and metadata management.[3][8] This change in approach was particularly focused on cloud computing.[8] Data started to be handled and used by many parts of the business, such as sales and marketing, and not just IT.[8]
-
-Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.
+> Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.
 
 
 > "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning. Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
-<!--
 
-https://en.wikipedia.org/wiki/Data_engineering
-
-https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/1098108302/ref=pd_bxgy_img_sccl_2/143-2847560-0944436?pd_rd_w=BXhTE&content-id=amzn1.sym.6ab4eb52-6252-4ca2-a1b9-ad120350253c&pf_rd_p=6ab4eb52-6252-4ca2-a1b9-ad120350253c&pf_rd_r=V2C07V6S9W4WZ52VK07T&pd_rd_wg=36QXW&pd_rd_r=b1b67f23-fc07-46ff-ba58-f30f071cd2e6&pd_rd_i=1098108302&psc=1&asin=1098108302&revisionId=&format=4&depth=1
-
-* WTF is "Data Engineering"?
-   * the term has shifted over time
-   * how we viewed it in the DL Book
-
--->
 Data engineering involves a range of activities, including:
 
 1. Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into a data warehouse or other storage system.
@@ -500,10 +488,9 @@ Data engineering requires a range of technical skills, including programming, da
 
 ### Data Engineering vs Cloud Dev Ops
 
+Comparing the specific skills of the 2 roles in context of "The Modern Data Stack":
+
 ![Data Engineering vs Cloud Dev Ops](./images/radar_plot_data_eng_vs_cloud_devops.png )
-
-
-
 
 ## Machine Learning Modeling
 
@@ -518,11 +505,7 @@ The process of building a machine learning model typically involves the followin
 6. Model deployment
 
 Machine learning modeling is used in a wide range of applications, such as image recognition, natural language processing, fraud detection, and recommendation systems. 
-<!--
-A further great guide on the specific process of machine learning:
 
-https://arxiv.org/pdf/2108.02497.pdf
--->
 ### What are 3 Examples of Machine Learning Modeling?
 
 1. Training a linear regression model on a tabular dataset to predict the price of a house

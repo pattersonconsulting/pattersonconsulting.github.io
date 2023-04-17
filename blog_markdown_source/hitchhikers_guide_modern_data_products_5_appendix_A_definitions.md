@@ -35,6 +35,56 @@ In this appendix we define key terms used throughout the series on data platform
 
 ![Intersection of SQL and Python](./images/sql_df_python.png "Intersection of SQL and Python")
 
+# Data Platform Definitions
+
+
+## Data Warehouse
+
+**A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining.**
+
+The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.
+
+Data Warehouses are designed to support the efficient storage, retrieval, and analysis of large volumes of data, typically over a period of several years. They are optimized for read-intensive workloads and support complex queries, reporting, and analytics. Data Warehouses are typically organized around subject areas, such as sales, inventory, or customer data, and may include multiple data marts or data cubes that provide a multidimensional view of the data.
+
+
+### The Kimball Data Warehouse Architecture
+
+The [Kimball Data Warehouse Architecture](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/), also known as the Dimensional Data Warehouse Architecture, is a popular approach to building data warehouses that was pioneered by Ralph Kimball in the 1990s. 
+
+It is based on the principles of dimensional modeling and is designed to support the efficient retrieval and analysis of large volumes of data.
+
+The Kimball Data Warehouse Architecture is characterized by the following features:
+
+1. Dimensional modeling: This involves organizing data into dimensions and facts, where dimensions are descriptive attributes of the data, such as time, geography, and product, and facts are the numeric measurements that are being analyzed, such as sales, revenue, and profit.
+
+2. Star schema: This is a type of dimensional modeling that uses a central fact table surrounded by dimension tables, where each dimension table is linked to the fact table through a foreign key relationship.
+
+3. Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into the data warehouse.
+
+4. Data aggregation: This involves the process of summarizing data at different levels of granularity, such as by day, week, or month, to support different types of analysis.
+
+5. Business intelligence tools: These are tools used to analyze and report on the data in the data warehouse, such as OLAP (Online Analytical Processing) tools, reporting tools, and dashboards.
+
+The Kimball Data Warehouse Architecture is designed to support the efficient retrieval and analysis of large volumes of data, and to enable business users to easily explore and analyze the data using a variety of tools and techniques. It has become a widely adopted approach to building data warehouses and is used in a variety of industries and domains.
+
+## Data Lake
+
+A data lake is a large centralized repository that stores a vast amount of structured and unstructured data in its native format, without requiring pre-defined schema or organization. Unlike a traditional data warehouse, a data lake allows data to be ingested and stored as-is, making it easier to store and analyze large amounts of data, as well as allowing users to ask new questions and perform ad-hoc analyses without worrying about data modeling. Data lakes are used for big data analytics, machine learning, and other advanced analytics applications, but can also pose challenges such as data governance, data quality, and data security.
+
+Apache Hadoop was an early version of the Data Lake. Hadoop was popular in the first half of the 2010s before data lakes began moving to the cloud.
+
+## Data Lakehouse
+
+A data lakehouse combines the advantages of a data warehouse and a data lake, allowing for the storage of raw, unstructured data in its native format, while also including organizational structure and performance optimization capabilities. It enables organizations to efficiently store and manage large amounts of data while maintaining data quality and governance, and allows for the use of various data analytics tools and techniques to gain insights and drive business value.
+
+Key architecture components of the data lakehouse:
+
+1. Metadata Layers for Data Management
+2. SQL Performance
+3. Efficient support for machine learning
+
+**The data lakehouse architecture seeks to give the best of both worlds for the data warehouse user and the machine learning practictioner.**
+
 # Analytics Terms Definitions
 
 In the section below I give some quick definitions on common terms in the analytics space.
@@ -176,14 +226,6 @@ BI tools and technologies include data warehouses, data marts, online analytical
 * BI focuses on collecting and presenting data in a way that is easy to understand and use (providing the information for decision making)
 * Analytics focuses on using statistical and quantitative techniques to uncover insights and make predictions
 
-## Data Warehouse
-
-**A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining.**
-
-The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.
-
-Data Warehouses are designed to support the efficient storage, retrieval, and analysis of large volumes of data, typically over a period of several years. They are optimized for read-intensive workloads and support complex queries, reporting, and analytics. Data Warehouses are typically organized around subject areas, such as sales, inventory, or customer data, and may include multiple data marts or data cubes that provide a multidimensional view of the data.
-
 ## Dimensions
 
 **A dimension is a categorical variable or attribute that provides context for the measures or numerical values in a dataset.**
@@ -216,26 +258,6 @@ The cube organizes the data along these dimensions, creating a multi-dimensional
 
 For example, consider a retail company that wants to analyze their sales data. They could create a cube with dimensions such as time, location, and product category, and measures such as sales revenue and units sold. The cube would allow them to easily query and analyze the sales data by different dimensions, such as sales by location and product category, or sales over time.
 
-## The Kimball Data Warehouse Architecture
-
-The [Kimball Data Warehouse Architecture](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/), also known as the Dimensional Data Warehouse Architecture, is a popular approach to building data warehouses that was pioneered by Ralph Kimball in the 1990s. 
-
-It is based on the principles of dimensional modeling and is designed to support the efficient retrieval and analysis of large volumes of data.
-
-The Kimball Data Warehouse Architecture is characterized by the following features:
-
-1. Dimensional modeling: This involves organizing data into dimensions and facts, where dimensions are descriptive attributes of the data, such as time, geography, and product, and facts are the numeric measurements that are being analyzed, such as sales, revenue, and profit.
-
-2. Star schema: This is a type of dimensional modeling that uses a central fact table surrounded by dimension tables, where each dimension table is linked to the fact table through a foreign key relationship.
-
-3. Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into the data warehouse.
-
-4. Data aggregation: This involves the process of summarizing data at different levels of granularity, such as by day, week, or month, to support different types of analysis.
-
-5. Business intelligence tools: These are tools used to analyze and report on the data in the data warehouse, such as OLAP (Online Analytical Processing) tools, reporting tools, and dashboards.
-
-The Kimball Data Warehouse Architecture is designed to support the efficient retrieval and analysis of large volumes of data, and to enable business users to easily explore and analyze the data using a variety of tools and techniques. It has become a widely adopted approach to building data warehouses and is used in a variety of industries and domains.
-
 
 ## Data Products
 
@@ -255,93 +277,31 @@ While there are other datasets generated during the data modeling phase of a dat
 
 # Machine Learning Terms Definitions
 
-## Vectors, Features, and Tensors -- Oh, My
+![From Scalars to Tensors](./images/scalar_to_tensor.jpg )
 
-https://stats.stackexchange.com/questions/192873/difference-between-feature-feature-set-and-feature-vector
+In this section I cover key terms in machine learning and explain how they are different.
 
-https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1
+## Scalar
 
-> A feature vector is a vector that stores the features for a particular observation in a specific order.
-
-> For example, Alice is 26 years old and she is 5' 6" tall. Her feature vector could be [26, 5.5] or [5.5, 26] depending on your choice of how to order the elements. The order is only important insofar as it is consistent.
-
-> A feature set is a set of all the attributes that you're interested in, e.g. height and age.
-
-> The implicit assumption when using this terminology is that your data is tabular -- somehow, you have chosen to represent it as a "flat", matrix-like format. But non-tabular data formats, like network graphs, video, audio, images, binary data sequences, ... these all require some amount of engineering to represent as feature vectors.
-
-ISLR Book
-
-https://www.statlearning.com/
-
-
-
-## Dataframe
-
-what is it
-
-https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
-
-
-* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
-* Wes McKinney ported the R dataframe to python to create the pandas implementation
-
-
-how is it used in ml?
-
-the dataframe is a key abstraction between the worlds of the database and machine learning
-
-In the world of machine learning before the dataframe API we'd use abstractions such as a DataSet and JDBC to pull data from a database.
-
-* just jdbc / odbc to query database for some data via sql
-* iterate through the records, converting them into Rows in a dataset
-* turn rows into vectors that could be used in machine learning -- typically a vector format that was proprietary to the machine learning lib
-
-> Why do we use Dataframe instead of DataSet?
-> Use Datasets in situations where:
-> Data requires a structure. DataFrames infer a schema on structured and semi-structured data.
-> Transformations are high-level. If your data requires high-level processing, columnar functions, and SQL queries, use Datasets and DataFrames.
-> A high degree of type safety is necessary.
-
-### The Dataframe Construct as a Bridge Between Analyitcs and Machine Learning
-
-how is it a bridge between analytics and 
-
+In mathematics and computer science, a scalar is a single, real-valued number that is used to measure the magnitude or size of a quantity, such as distance, temperature, or speed.
 
 ## Vector
 
-asda
-
-In machine learning, a vector is a one-dimensional array or list of numbers. Vectors are commonly used to represent data points or features in a dataset. For example, in image recognition, each image can be represented as a vector of pixel values, where each element of the vector represents the intensity of a specific pixel.
+In machine learning, a vector is a one-dimensional array or list of numbers<sup>1</sup>. Vectors are commonly used to represent data points or features in a dataset. For example, in image recognition, each image can be represented as a vector of pixel values, where each element of the vector represents the intensity of a specific pixel.
 
 Vectors can be used to perform various mathematical operations in machine learning, such as dot products, element-wise multiplication, and addition. These operations can be used to compute similarities between vectors, transform data, and build models.
 
-In addition, vectors can be represented in different spaces, such as Euclidean space, where the length and direction of the vector are important, or in feature space, where each element of the vector represents a feature of the data.
-
-Books where this term was introduced or used commonly:
-
-* "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, 1999, Witten and Frank
-
-https://www.cs.waikato.ac.nz/ml/weka/book.html
-
 ## Matrix
-
-asdf
 
 In machine learning, vectors and matrices are both fundamental data structures used to represent and manipulate data.
 
-A vector is a one-dimensional array or list of numbers, while a matrix is a two-dimensional array of numbers. A matrix can be thought of as a collection of vectors arranged in rows and columns.
+A vector is a one-dimensional array or list of numbers, **while a matrix is a two-dimensional array of numbers. A matrix can be thought of as a collection of vectors arranged in rows and columns.**
 
 In machine learning, matrices are commonly used to represent datasets, where each row represents a data point or sample, and each column represents a feature or attribute of the data. For example, in a dataset of housing prices, a matrix could be used to represent the prices of different houses, where each row represents a house, and each column represents a feature such as the number of bedrooms, square footage, or location.
 
-Matrices can be used to perform various operations in machine learning, such as matrix multiplication, which is used in linear regression and neural networks to transform and combine data.
-
-In summary, while vectors and matrices are different data structures, they are related in that a matrix is a collection of vectors, and both are commonly used to represent and manipulate data in machine learning.
-
 ## Tensor
 
-asdf
-
-In machine learning, tensors are multi-dimensional arrays or matrices that can have any number of dimensions. They are used to represent and manipulate large amounts of data, especially in deep learning.
+In machine learning, **tensors are multi-dimensional arrays or matrices that can have any number of dimensions. They are used to represent and manipulate large amounts of data, especially in deep learning.**
 
 Tensors are used to represent a wide variety of data, such as images, audio, video, text, and time-series data. For example, in image recognition, an image can be represented as a tensor of pixel values, where each dimension represents a different aspect of the image, such as its width, height, and color channels.
 
@@ -349,13 +309,10 @@ Tensors can be manipulated using tensor operations, which are similar to matrix 
 
 Tensors are used extensively in deep learning frameworks like TensorFlow and PyTorch, where they form the backbone of neural network models. Neural networks consist of layers of interconnected nodes, or neurons, that perform tensor operations on input data to produce output predictions.
 
-Overall, tensors are an important data structure in machine learning, and are used to represent and manipulate large, complex datasets in a wide variety of applications.
-
 ## Feature
 
-> "In machine learning and pattern recognition, a feature is an individual measurable property or characteristic of a phenomenon.[1] Choosing informative, discriminating and independent features is a crucial element of effective algorithms in pattern recognition, classification and regression. Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression."
+> "In machine learning and pattern recognition, a feature is an individual measurable property or characteristic of a phenomenon.[1] Choosing informative, discriminating and independent features is a crucial element of effective algorithms in pattern recognition, classification and regression. Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression." [1]
 
- Bishop, Christopher (2006). Pattern recognition and machine learning. Berlin: Springer. ISBN 0-387-31073-8.
 
 TODO: This book was published in 2006, but when did this term become widely used?
 
@@ -368,6 +325,17 @@ TODO: This book was published in 2006, but when did this term become widely used
 > Features are the basic building blocks of datasets. The quality of the features in your dataset has a major impact on the quality of the insights you will gain when you use that dataset for machine learning. Additionally, different business problems within the same industry do not necessarily require the same features, which is why it is important to have a strong understanding of the business goals of your data science project.
 
 > You can improve the quality of your dataset’s features with processes like feature selection and feature engineering, which are notoriously difficult and tedious. If these techniques are done well, the resulting optimal dataset will contain all of the essential features that might have bearing on your specific business problem, leading to the best possible model outcomes and the most beneficial insights.
+
+
+https://stats.stackexchange.com/questions/192873/difference-between-feature-feature-set-and-feature-vector
+
+https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1
+
+
+ISLR Book
+
+https://www.statlearning.com/
+
 
 ### Numeric Feature
 
@@ -390,6 +358,16 @@ Some authors use feature as a synonym for attribute
 
 ## Feature Vector
 
+
+> A feature vector is a vector that stores the features for a particular observation in a specific order.
+
+> For example, Alice is 26 years old and she is 5' 6" tall. Her feature vector could be [26, 5.5] or [5.5, 26] depending on your choice of how to order the elements. The order is only important insofar as it is consistent.
+
+> A feature set is a set of all the attributes that you're interested in, e.g. height and age.
+
+> The implicit assumption when using this terminology is that your data is tabular -- somehow, you have chosen to represent it as a "flat", matrix-like format. But non-tabular data formats, like network graphs, video, audio, images, binary data sequences, ... these all require some amount of engineering to represent as feature vectors.
+
+
 > "In pattern recognition and machine learning, a feature vector is an n-dimensional vector of numerical features that represent some object. Many algorithms in machine learning require a numerical representation of objects, since such representations facilitate processing and statistical analysis."
 
 > "The vector space associated with these vectors is often called the feature space. In order to reduce the dimensionality of the feature space, a number of dimensionality reduction techniques can be employed."
@@ -406,7 +384,7 @@ Attributes?
 
 ## Feature Engineering
 
-> "Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data.[1] The motivation is to use these extra features to improve the quality of results from a machine learning process, compared with supplying only the raw data to the machine learning process."
+> "Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. The motivation is to use these extra features to improve the quality of results from a machine learning process, compared with supplying only the raw data to the machine learning process."
 
 https://en.wikipedia.org/wiki/Feature_engineering
 
@@ -415,7 +393,7 @@ https://en.wikipedia.org/wiki/Feature_engineering
  The definition for "Feature Engineering" is always some form of:
 
 
-"Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data.[1]"
+"Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data."
 
 
 https://en.wikipedia.org/wiki/Feature_engineering
@@ -459,6 +437,41 @@ From Geron:
 
 > “We already discussed two of these layers: the keras.layers.Normalization layer that will perform feature standardization (it will be equivalent to the Standardization layer we defined earlier), and the TextVectorization layer that will be capable of encoding each word in the inputs into its index in the vocabulary. In both cases, you create the layer, you call its adapt() method with a data sample, and then you use the layer normally in your model. The other preprocessing layers will follow the same pattern.”
 
+
+
+## Dataframe
+
+what is it
+
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+
+
+* If the pandas dataframe is the key api here --- need to note how the work done under pandas with Arrow and Parquet are key areas of development
+* Wes McKinney ported the R dataframe to python to create the pandas implementation
+
+
+how is it used in ml?
+
+the dataframe is a key abstraction between the worlds of the database and machine learning
+
+In the world of machine learning before the dataframe API we'd use abstractions such as a DataSet and JDBC to pull data from a database.
+
+* just jdbc / odbc to query database for some data via sql
+* iterate through the records, converting them into Rows in a dataset
+* turn rows into vectors that could be used in machine learning -- typically a vector format that was proprietary to the machine learning lib
+
+> Why do we use Dataframe instead of DataSet?
+> Use Datasets in situations where:
+> Data requires a structure. DataFrames infer a schema on structured and semi-structured data.
+> Transformations are high-level. If your data requires high-level processing, columnar functions, and SQL queries, use Datasets and DataFrames.
+> A high degree of type safety is necessary.
+
+### The Dataframe Construct as a Bridge Between Analyitcs and Machine Learning
+
+how is it a bridge between analytics and 
+
+
+
 ## Data Engineer
 
 > (redit) "Uses a combination of software engineering best practices and database design to build scalable data pipelines, data integrations, and data models for use in applications and reports"
@@ -489,7 +502,7 @@ In summary, Data Engineers and Cloud DevOps are both critical roles in modern bu
 Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.
 
 
-> "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning.[1][2] Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
+> "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning. Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
 
 https://en.wikipedia.org/wiki/Data_engineering
 
@@ -555,5 +568,10 @@ Machine learning model inference is the process of using a trained machine learn
 ## Artificial Intelligence
 
 * marketing
+
+# References
+
+[1]: "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, (1999), Witten and Frank, https://www.cs.waikato.ac.nz/ml/weka/book.html
+[2]: Bishop, Christopher (2006). Pattern recognition and machine learning. Berlin: Springer. ISBN 0-387-31073-8.
 
 

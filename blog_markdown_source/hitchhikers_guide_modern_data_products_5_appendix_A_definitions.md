@@ -309,16 +309,42 @@ Tensors can be manipulated using tensor operations, which are similar to matrix 
 
 Tensors are used extensively in deep learning frameworks like TensorFlow and PyTorch, where they form the backbone of neural network models. Neural networks consist of layers of interconnected nodes, or neurons, that perform tensor operations on input data to produce output predictions.
 
+
+## Attribute
+
+**An attribute is an aspect of an instance (e.g. temperature, humidity).**
+
+Attributes are often called features in Machine Learning. We note this difference because of the order of key machine learning books published around the year 2000:
+
+1. The Weka book (1999)<sup>1</sup>
+2. The ESL book (2001)<sup>2</sup>
+
+In the late 1990's in machine learning terminology it was [common to see the term "attribute" used](https://ai.stanford.edu/~ronnyk/glossary.html). Towards the later 2000's the term "feature" became more common. 
+
+Other commons terms that have been used interchangably for attribute are:
+
+* field
+* variable
+* feature
+
+Based on the context and usage, the terms "attribute" and "feature" have been used at times as synonyms and other times having different meanings.
+
 ## Feature
 
-> "In machine learning and pattern recognition, a feature is an individual measurable property or characteristic of a phenomenon.[1] Choosing informative, discriminating and independent features is a crucial element of effective algorithms in pattern recognition, classification and regression. Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression." [1]
+The book "Pattern recognition and machine learning" (2006, Bishop) defines feature<sup>3</sup> as:
 
+> "In machine learning and pattern recognition, a feature is an individual measurable property or characteristic of a phenomenon.
 
-TODO: This book was published in 2006, but when did this term become widely used?
+The idea of a "feature" is related to statistical techniques and explanatory variables in methods such as linear regression. Features are part of an input, record, or sample.
 
-> A feature is an attribute associated with an input or sample. For example, a feature of an image could be a pixel. The feature of a state could be the Euclidean distance to the goal state. 
+Examples of features include:
 
-> Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression.
+* a pixel in an image
+* the euclidean distance to a place in a geographical location
+* a bank account balance
+* a person's height
+
+Features are usually numeric, but certain features (e.g., strings, graphs) are used in syntactic pattern recognition. The concept of "feature" is related to that of explanatory variable used in statistical techniques such as linear regression.
 
 > A feature is a measurable property of the object you’re trying to analyze. In datasets, features appear as columns.
 
@@ -332,29 +358,12 @@ https://stats.stackexchange.com/questions/192873/difference-between-feature-feat
 https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1
 
 
-ISLR Book
-
-https://www.statlearning.com/
 
 
 ### Numeric Feature
 
 A numeric feature can be conveniently described by a feature vector.
 
-## Attribute
-
-> Attribute/Feature: An attribute is an aspect of an instance (e.g. temperature, humidity). Attributes are often called features in Machine Learning. A special attribute is the class label that defines the class this instance belongs to (required for supervised learning).
-
-https://ai.stanford.edu/~ronnyk/glossary.html
-
-> A quantity describing an instance. An attribute has a domain defined by the attribute type, which denotes the values that can be taken by an attribute.
-
-Attribute aka: 
-* field
-* variable
-* feature
-
-Some authors use feature as a synonym for attribute
 
 ## Feature Vector
 
@@ -571,7 +580,9 @@ Machine learning model inference is the process of using a trained machine learn
 
 # References
 
-[1]: "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, (1999), Witten and Frank, https://www.cs.waikato.ac.nz/ml/weka/book.html
-[2]: Bishop, Christopher (2006). Pattern recognition and machine learning. Berlin: Springer. ISBN 0-387-31073-8.
+[1]: "Data Mining: Practical Machine Learning Tools and Techniques", 1st Edition, (1999), Witten and Frank, <https://www.cs.waikato.ac.nz/ml/weka/book.html>
+[2]: "The Elements of Statistical Learning: Data Mining, Inference, and Prediction", (2001), Hastie, Tibshirani, and Friedman
+[3]: "Pattern recognition and machine learning", (2006), Bishop, Christopher
+[4]: ISLR Book, https://www.statlearning.com/
 
 

@@ -5,150 +5,454 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Josh Patterson" />
-  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
   <title>Appendix A - Definitions</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">Appendix A - Definitions</h1>
-<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data Products</p>
+<p class="subtitle">The Hitchhiker’s Guide To Building Modern Data
+Products</p>
 <p class="author">Josh Patterson</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#data-platform-definitions">Data Platform Definitions</a><ul>
-<li><a href="#data-warehouse">Data Warehouse</a></li>
-<li><a href="#data-lake">Data Lake</a></li>
-<li><a href="#data-lakehouse">Data Lakehouse</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#data-platform-definitions"
+id="toc-data-platform-definitions">Data Platform Definitions</a>
+<ul>
+<li><a href="#data-warehouse" id="toc-data-warehouse">Data
+Warehouse</a></li>
+<li><a href="#data-lake" id="toc-data-lake">Data Lake</a></li>
+<li><a href="#data-lakehouse" id="toc-data-lakehouse">Data
+Lakehouse</a></li>
 </ul></li>
-<li><a href="#analytics-terms-definitions">Analytics Terms Definitions</a><ul>
-<li><a href="#table">Table</a></li>
-<li><a href="#view">View</a></li>
-<li><a href="#data-modeling">Data Modeling</a></li>
-<li><a href="#metrics">Metrics</a></li>
-<li><a href="#kpis">KPIs</a></li>
-<li><a href="#analytics">Analytics</a></li>
-<li><a href="#business-intelligence-bi">Business Intelligence (BI)</a></li>
-<li><a href="#dimensions">Dimensions</a></li>
-<li><a href="#cubes">Cubes</a></li>
-<li><a href="#data-products">Data Products</a></li>
+<li><a href="#analytics-terms-definitions"
+id="toc-analytics-terms-definitions">Analytics Terms Definitions</a>
+<ul>
+<li><a href="#table" id="toc-table">Table</a></li>
+<li><a href="#view" id="toc-view">View</a></li>
+<li><a href="#data-modeling" id="toc-data-modeling">Data
+Modeling</a></li>
+<li><a href="#metrics" id="toc-metrics">Metrics</a></li>
+<li><a href="#kpis" id="toc-kpis">KPIs</a></li>
+<li><a href="#analytics" id="toc-analytics">Analytics</a></li>
+<li><a href="#business-intelligence-bi"
+id="toc-business-intelligence-bi">Business Intelligence (BI)</a></li>
+<li><a href="#dimensions" id="toc-dimensions">Dimensions</a></li>
+<li><a href="#cubes" id="toc-cubes">Cubes</a></li>
+<li><a href="#data-products" id="toc-data-products">Data
+Products</a></li>
 </ul></li>
-<li><a href="#machine-learning-terms-definitions">Machine Learning Terms Definitions</a><ul>
-<li><a href="#scalar">Scalar</a></li>
-<li><a href="#vector">Vector</a></li>
-<li><a href="#matrix">Matrix</a></li>
-<li><a href="#tensor">Tensor</a></li>
-<li><a href="#feature">Feature</a></li>
-<li><a href="#attribute">Attribute</a></li>
-<li><a href="#feature-vector">Feature Vector</a></li>
-<li><a href="#feature-construction">Feature Construction</a></li>
-<li><a href="#feature-engineering">Feature Engineering</a></li>
-<li><a href="#vectorization">Vectorization</a></li>
-<li><a href="#dataframe">Dataframe</a></li>
-<li><a href="#data-engineer">Data Engineer</a></li>
-<li><a href="#data-engineering">Data Engineering</a></li>
-<li><a href="#machine-learning-modeling">Machine Learning Modeling</a></li>
-<li><a href="#machine-learning-model-inference">Machine Learning Model Inference</a></li>
-<li><a href="#artificial-intelligence">Artificial Intelligence</a></li>
+<li><a href="#machine-learning-terms-definitions"
+id="toc-machine-learning-terms-definitions">Machine Learning Terms
+Definitions</a>
+<ul>
+<li><a href="#scalar" id="toc-scalar">Scalar</a></li>
+<li><a href="#vector" id="toc-vector">Vector</a></li>
+<li><a href="#matrix" id="toc-matrix">Matrix</a></li>
+<li><a href="#tensor" id="toc-tensor">Tensor</a></li>
+<li><a href="#feature" id="toc-feature">Feature</a></li>
+<li><a href="#attribute" id="toc-attribute">Attribute</a></li>
+<li><a href="#feature-vector" id="toc-feature-vector">Feature
+Vector</a></li>
+<li><a href="#feature-construction"
+id="toc-feature-construction">Feature Construction</a></li>
+<li><a href="#feature-engineering" id="toc-feature-engineering">Feature
+Engineering</a></li>
+<li><a href="#vectorization"
+id="toc-vectorization">Vectorization</a></li>
+<li><a href="#dataframe" id="toc-dataframe">Dataframe</a></li>
+<li><a href="#data-engineer" id="toc-data-engineer">Data
+Engineer</a></li>
+<li><a href="#data-engineering" id="toc-data-engineering">Data
+Engineering</a></li>
+<li><a href="#machine-learning-modeling"
+id="toc-machine-learning-modeling">Machine Learning Modeling</a></li>
+<li><a href="#machine-learning-model-inference"
+id="toc-machine-learning-model-inference">Machine Learning Model
+Inference</a></li>
+<li><a href="#artificial-intelligence"
+id="toc-artificial-intelligence">Artificial Intelligence</a></li>
 </ul></li>
-<li><a href="#references">References</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </nav>
 <h1 id="introduction">Introduction</h1>
 <p>Purpose of this series:</p>
 <blockquote>
-<p>To develop a clear step-by-step process to design and operate data infrastructure for your data product.</p>
+<p>To develop a clear step-by-step process to design and operate data
+infrastructure for your data product.</p>
 </blockquote>
 <p>The intended audience for this series is:</p>
 <blockquote>
-<p>Individual researchers, data scientists, and then also enterprise data teams as well</p>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
 </blockquote>
 <p>Series:</p>
 <ul>
-<li><a href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue (Don’t Panic)</a></li>
-<li><a href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The Evolution of Modern Data Platforms</a></li>
-<li><a href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting The Lab and the Factory</a></li>
-<li><a href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A Methodology for Building Data Products</a></li>
-<li><a href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix A: Definitions</a></li>
-<li><a href="hitchhikers_guide_modern_data_products_6_appendix_B_roles.html">Appendix B: Roles</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_1_prologue.html">Prologue
+(Don’t Panic)</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_2_evolution_data_platforms.html">The
+Evolution of Modern Data Platforms</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_3_lab_and_factory_redux.html">Revisting
+The Lab and the Factory</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_4_methodology_for_data_products.html">A
+Methodology for Building Data Products</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_5_appendix_A_definitions.html">Appendix
+A: Definitions</a></li>
+<li><a
+href="hitchhikers_guide_modern_data_products_6_appendix_B_roles.html">Appendix
+B: Roles</a></li>
 </ul>
 <h1 id="overview">Overview</h1>
-<p>In this appendix we define key terms used throughout the series on data platforms. Many of these terms are commonly known by a subset of data practitioners, but its good to have them all in once place and then be able to compare and relate the terms. In the diagram below we kick off the appendix with a diagram relating how the worlds of SQL and Python are linked together through the dataframe concept.</p>
+<p>In this appendix we define key terms used throughout the series on
+data platforms. Many of these terms are commonly known by a subset of
+data practitioners, but its good to have them all in once place and then
+be able to compare and relate the terms. In the diagram below we kick
+off the appendix with a diagram relating how the worlds of SQL and
+Python are linked together through the dataframe concept.</p>
 <figure>
-<img src="./images/sql_df_python.png" title="Intersection of SQL and Python" alt="Intersection of SQL and Python" /><figcaption>Intersection of SQL and Python</figcaption>
+<img src="./images/sql_df_python.png"
+title="Intersection of SQL and Python"
+alt="Intersection of SQL and Python" />
+<figcaption aria-hidden="true">Intersection of SQL and
+Python</figcaption>
 </figure>
 <h1 id="data-platform-definitions">Data Platform Definitions</h1>
 <h2 id="data-warehouse">Data Warehouse</h2>
-<p><strong>A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining.</strong></p>
-<p>The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.</p>
-<p>Data Warehouses are designed to support the efficient storage, retrieval, and analysis of large volumes of data, typically over a period of several years. They are optimized for read-intensive workloads and support complex queries, reporting, and analytics. Data Warehouses are typically organized around subject areas, such as sales, inventory, or customer data, and may include multiple data marts or data cubes that provide a multidimensional view of the data.</p>
-<h3 id="the-kimball-data-warehouse-architecture">The Kimball Data Warehouse Architecture</h3>
-<p>The <a href="https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/">Kimball Data Warehouse Architecture</a>, also known as the Dimensional Data Warehouse Architecture, is a popular approach to building data warehouses that was pioneered by Ralph Kimball in the 1990s.</p>
-<p>It is based on the principles of dimensional modeling and is designed to support the efficient retrieval and analysis of large volumes of data.</p>
-<p>The Kimball Data Warehouse Architecture is characterized by the following features:</p>
+<p><strong>A Data Warehouse is a large and centralized repository of
+data that is designed to support business intelligence (BI) activities,
+such as reporting, analytics, and data mining.</strong></p>
+<p>The data in a Data Warehouse is typically extracted from multiple,
+heterogeneous sources, transformed to conform to a common schema, and
+loaded into the warehouse for analysis.</p>
+<p>Data Warehouses are designed to support the efficient storage,
+retrieval, and analysis of large volumes of data, typically over a
+period of several years. They are optimized for read-intensive workloads
+and support complex queries, reporting, and analytics. Data Warehouses
+are typically organized around subject areas, such as sales, inventory,
+or customer data, and may include multiple data marts or data cubes that
+provide a multidimensional view of the data.</p>
+<h3 id="the-kimball-data-warehouse-architecture">The Kimball Data
+Warehouse Architecture</h3>
+<p>The <a
+href="https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/">Kimball
+Data Warehouse Architecture</a>, also known as the Dimensional Data
+Warehouse Architecture, is a popular approach to building data
+warehouses that was pioneered by Ralph Kimball in the 1990s.</p>
+<p>It is based on the principles of dimensional modeling and is designed
+to support the efficient retrieval and analysis of large volumes of
+data.</p>
+<p>The Kimball Data Warehouse Architecture is characterized by the
+following features:</p>
 <ol type="1">
-<li><p>Dimensional modeling: This involves organizing data into dimensions and facts, where dimensions are descriptive attributes of the data, such as time, geography, and product, and facts are the numeric measurements that are being analyzed, such as sales, revenue, and profit.</p></li>
-<li><p>Star schema: This is a type of dimensional modeling that uses a central fact table surrounded by dimension tables, where each dimension table is linked to the fact table through a foreign key relationship.</p></li>
-<li><p>Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into the data warehouse.</p></li>
-<li><p>Data aggregation: This involves the process of summarizing data at different levels of granularity, such as by day, week, or month, to support different types of analysis.</p></li>
-<li><p>Business intelligence tools: These are tools used to analyze and report on the data in the data warehouse, such as OLAP (Online Analytical Processing) tools, reporting tools, and dashboards.</p></li>
+<li><p>Dimensional modeling: This involves organizing data into
+dimensions and facts, where dimensions are descriptive attributes of the
+data, such as time, geography, and product, and facts are the numeric
+measurements that are being analyzed, such as sales, revenue, and
+profit.</p></li>
+<li><p>Star schema: This is a type of dimensional modeling that uses a
+central fact table surrounded by dimension tables, where each dimension
+table is linked to the fact table through a foreign key
+relationship.</p></li>
+<li><p>Data integration: This involves the process of extracting data
+from multiple source systems, transforming it to conform to a common
+data model, and loading it into the data warehouse.</p></li>
+<li><p>Data aggregation: This involves the process of summarizing data
+at different levels of granularity, such as by day, week, or month, to
+support different types of analysis.</p></li>
+<li><p>Business intelligence tools: These are tools used to analyze and
+report on the data in the data warehouse, such as OLAP (Online
+Analytical Processing) tools, reporting tools, and dashboards.</p></li>
 </ol>
-<p>The Kimball Data Warehouse Architecture is designed to support the efficient retrieval and analysis of large volumes of data, and to enable business users to easily explore and analyze the data using a variety of tools and techniques. It has become a widely adopted approach to building data warehouses and is used in a variety of industries and domains.</p>
+<p>The Kimball Data Warehouse Architecture is designed to support the
+efficient retrieval and analysis of large volumes of data, and to enable
+business users to easily explore and analyze the data using a variety of
+tools and techniques. It has become a widely adopted approach to
+building data warehouses and is used in a variety of industries and
+domains.</p>
 <h2 id="data-lake">Data Lake</h2>
-<p>A data lake is a large centralized repository that stores a vast amount of structured and unstructured data in its native format, without requiring pre-defined schema or organization. Unlike a traditional data warehouse, a data lake allows data to be ingested and stored as-is, making it easier to store and analyze large amounts of data, as well as allowing users to ask new questions and perform ad-hoc analyses without worrying about data modeling. Data lakes are used for big data analytics, machine learning, and other advanced analytics applications, but can also pose challenges such as data governance, data quality, and data security.</p>
-<p>Apache Hadoop was an early version of the Data Lake. Hadoop was popular in the first half of the 2010s before data lakes began moving to the cloud.</p>
+<p>A data lake is a large centralized repository that stores a vast
+amount of structured and unstructured data in its native format, without
+requiring pre-defined schema or organization. Unlike a traditional data
+warehouse, a data lake allows data to be ingested and stored as-is,
+making it easier to store and analyze large amounts of data, as well as
+allowing users to ask new questions and perform ad-hoc analyses without
+worrying about data modeling. Data lakes are used for big data
+analytics, machine learning, and other advanced analytics applications,
+but can also pose challenges such as data governance, data quality, and
+data security.</p>
+<p>Apache Hadoop was an early version of the Data Lake. Hadoop was
+popular in the first half of the 2010s before data lakes began moving to
+the cloud.</p>
 <h2 id="data-lakehouse">Data Lakehouse</h2>
-<p>A data lakehouse combines the advantages of a data warehouse and a data lake, allowing for the storage of raw, unstructured data in its native format, while also including organizational structure and performance optimization capabilities. It enables organizations to efficiently store and manage large amounts of data while maintaining data quality and governance, and allows for the use of various data analytics tools and techniques to gain insights and drive business value.</p>
+<p>A data lakehouse combines the advantages of a data warehouse and a
+data lake, allowing for the storage of raw, unstructured data in its
+native format, while also including organizational structure and
+performance optimization capabilities. It enables organizations to
+efficiently store and manage large amounts of data while maintaining
+data quality and governance, and allows for the use of various data
+analytics tools and techniques to gain insights and drive business
+value.</p>
 <p>Key architecture components of the data lakehouse:</p>
 <ol type="1">
 <li>Metadata Layers for Data Management</li>
 <li>SQL Performance</li>
 <li>Efficient support for machine learning</li>
 </ol>
-<p><strong>The data lakehouse architecture seeks to give the best of both worlds for the data warehouse user and the machine learning practictioner.</strong></p>
+<p><strong>The data lakehouse architecture seeks to give the best of
+both worlds for the data warehouse user and the machine learning
+practictioner.</strong></p>
 <h1 id="analytics-terms-definitions">Analytics Terms Definitions</h1>
-<p>In the section below I give some quick definitions on common terms in the analytics space.</p>
+<p>In the section below I give some quick definitions on common terms in
+the analytics space.</p>
 <h2 id="table">Table</h2>
-<p><strong>In a database, a table is a collection of related data organized into rows and columns.</strong></p>
-<p>Tables are used to store and manage structured data, which is data that is organized into a specific format, such as a spreadsheet or database.</p>
+<p><strong>In a database, a table is a collection of related data
+organized into rows and columns.</strong></p>
+<p>Tables are used to store and manage structured data, which is data
+that is organized into a specific format, such as a spreadsheet or
+database.</p>
 <h2 id="view">View</h2>
-<p><strong>In a database, a view is a virtual table that presents data from one or more underlying tables in a specific way.</strong></p>
-<p>A view does not actually contain any data itself; it simply provides a way to access and display data that is already stored in the database.</p>
-<p>Views are used to simplify complex queries by presenting the data in a more easily understandable format, or to provide a subset of the data that is relevant to a particular application or user. For example, a view could be created to display only the names and phone numbers of customers who have made a purchase in the last 30 days.</p>
+<p><strong>In a database, a view is a virtual table that presents data
+from one or more underlying tables in a specific way.</strong></p>
+<p>A view does not actually contain any data itself; it simply provides
+a way to access and display data that is already stored in the
+database.</p>
+<p>Views are used to simplify complex queries by presenting the data in
+a more easily understandable format, or to provide a subset of the data
+that is relevant to a particular application or user. For example, a
+view could be created to display only the names and phone numbers of
+customers who have made a purchase in the last 30 days.</p>
 <h2 id="data-modeling">Data Modeling</h2>
-<p><strong>Data modeling in the context of a data warehouse is the process of creating a conceptual, logical, and physical representation of the data that will be stored in the warehouse.</strong></p>
-<p>Data modeling involves identifying the key entities and relationships that exist within the data, and creating a structure that can be used to efficiently store and retrieve the data.</p>
+<p><strong>Data modeling in the context of a data warehouse is the
+process of creating a conceptual, logical, and physical representation
+of the data that will be stored in the warehouse.</strong></p>
+<p>Data modeling involves identifying the key entities and relationships
+that exist within the data, and creating a structure that can be used to
+efficiently store and retrieve the data.</p>
 <p>The data modeling process typically involves several steps:</p>
 <ol type="1">
-<li><p>Conceptual modeling: This involves identifying the key business entities and their relationships, as well as the high-level data requirements of the business. The result of this step is a conceptual data model that represents the business requirements in a simplified and abstracted form.</p></li>
-<li><p>Logical modeling: This involves refining the conceptual model to create a logical data model that can be implemented in a database management system. The logical model includes the definition of tables, columns, relationships, constraints, and other attributes.</p></li>
-<li><p>Physical modeling: This involves creating a physical data model that maps the logical model to the physical storage structures of the database management system. This includes decisions around storage formats, indexing, partitioning, and other database-specific attributes.</p></li>
+<li><p>Conceptual modeling: This involves identifying the key business
+entities and their relationships, as well as the high-level data
+requirements of the business. The result of this step is a conceptual
+data model that represents the business requirements in a simplified and
+abstracted form.</p></li>
+<li><p>Logical modeling: This involves refining the conceptual model to
+create a logical data model that can be implemented in a database
+management system. The logical model includes the definition of tables,
+columns, relationships, constraints, and other attributes.</p></li>
+<li><p>Physical modeling: This involves creating a physical data model
+that maps the logical model to the physical storage structures of the
+database management system. This includes decisions around storage
+formats, indexing, partitioning, and other database-specific
+attributes.</p></li>
 </ol>
-<p>The goal of data modeling in a data warehouse is to create a structure that can efficiently store and retrieve large volumes of data, while also supporting the analytical and reporting requirements of the business. Data modeling is critical to the success of a data warehouse initiative, as it provides the foundation for all subsequent activities, such as ETL (Extract, Transform, Load), data integration, and reporting.</p>
-<p>In our other <a href="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_2_pipeline.html">blog article on data modeling with dbt</a> we describe data modeling as:</p>
+<p>The goal of data modeling in a data warehouse is to create a
+structure that can efficiently store and retrieve large volumes of data,
+while also supporting the analytical and reporting requirements of the
+business. Data modeling is critical to the success of a data warehouse
+initiative, as it provides the foundation for all subsequent activities,
+such as ETL (Extract, Transform, Load), data integration, and
+reporting.</p>
+<p>In our other <a
+href="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_2_pipeline.html">blog
+article on data modeling with dbt</a> we describe data modeling as:</p>
 <blockquote>
-<p>In dbt (Data Build Tool), a data model is a logical representation of a specific type of data that you want to analyze or work with in your database. It describes the structure, relationships, and constraints of the data in a way that can be easily understood by both humans and computers. A DBT workflow is a directed acyclic graph (DAG) of DBT data models.</p>
+<p>In dbt (Data Build Tool), a data model is a logical representation of
+a specific type of data that you want to analyze or work with in your
+database. It describes the structure, relationships, and constraints of
+the data in a way that can be easily understood by both humans and
+computers. A DBT workflow is a directed acyclic graph (DAG) of DBT data
+models.</p>
 </blockquote>
 <blockquote>
-<p>A data model in dbt is typically defined as a SQL query that defines the relationships between tables or other data sources. It specifies how data should be transformed and aggregated to create a particular view of the data. This view can then be used as a source for further analysis or reporting.</p>
+<p>A data model in dbt is typically defined as a SQL query that defines
+the relationships between tables or other data sources. It specifies how
+data should be transformed and aggregated to create a particular view of
+the data. This view can then be used as a source for further analysis or
+reporting.</p>
 </blockquote>
 <blockquote>
-<p>In dbt, a data model is created using a “model” statement in a SQL file. This statement defines the columns of the model, any relationships with other models or tables, and any transformations that should be applied to the data. Once defined, a data model can be used as a building block for creating more complex data structures and analyses.</p>
+<p>In dbt, a data model is created using a “model” statement in a SQL
+file. This statement defines the columns of the model, any relationships
+with other models or tables, and any transformations that should be
+applied to the data. Once defined, a data model can be used as a
+building block for creating more complex data structures and
+analyses.</p>
 </blockquote>
 <h2 id="metrics">Metrics</h2>
-<p><strong>In data modeling, a metric is a quantifiable measure of a specific aspect of a business or application.</strong></p>
-<p>Metrics are used to evaluate performance, track progress towards goals, and make data-driven decisions. Metrics can take many forms, depending on the context and purpose of the data modeling exercise.</p>
+<p><strong>In data modeling, a metric is a quantifiable measure of a
+specific aspect of a business or application.</strong></p>
+<p>Metrics are used to evaluate performance, track progress towards
+goals, and make data-driven decisions. Metrics can take many forms,
+depending on the context and purpose of the data modeling exercise.</p>
 <p>For example, in an e-commerce application, metrics might include</p>
 <ul>
 <li>the number of orders processed</li>
@@ -161,13 +465,29 @@
 <li>the click-through rate of an advertisement</li>
 <li>or the cost per acquisition.</li>
 </ul>
-<p><strong>Metrics are typically defined in terms of a specific unit of measurement, such as dollars, hours, or clicks.</strong> They are often accompanied by targets or benchmarks that represent the desired level of performance, as well as historical data that can be used to identify trends and patterns over time.</p>
-<p>Metrics should be considered the data building blocks. In data modeling, metrics are often used as the basis for developing dashboards, reports, and other data visualizations that allow stakeholders to monitor performance and make informed decisions. Effective metric selection and tracking is critical to the success of any data-driven initiative, as it provides a common language for evaluating progress and identifying areas for improvement.</p>
+<p><strong>Metrics are typically defined in terms of a specific unit of
+measurement, such as dollars, hours, or clicks.</strong> They are often
+accompanied by targets or benchmarks that represent the desired level of
+performance, as well as historical data that can be used to identify
+trends and patterns over time.</p>
+<p>Metrics should be considered the data building blocks. In data
+modeling, metrics are often used as the basis for developing dashboards,
+reports, and other data visualizations that allow stakeholders to
+monitor performance and make informed decisions. Effective metric
+selection and tracking is critical to the success of any data-driven
+initiative, as it provides a common language for evaluating progress and
+identifying areas for improvement.</p>
 <h2 id="kpis">KPIs</h2>
-<p><strong>A Key Performance Indicator (KPI) is a measurable value that is used to assess the performance of an organization, a business unit, a project, or an individual in achieving specific objectives or goals.</strong></p>
-<p>You – as the marketer or analyst – need to select those indicators of success.</p>
-<p>KPIs are used to evaluate progress and make data-driven decisions, and are typically tied to strategic or operational objectives.</p>
-<p>KPIs can take many forms, depending on the nature of the organization and the goals being pursued. Examples of KPIs might include:</p>
+<p><strong>A Key Performance Indicator (KPI) is a measurable value that
+is used to assess the performance of an organization, a business unit, a
+project, or an individual in achieving specific objectives or
+goals.</strong></p>
+<p>You – as the marketer or analyst – need to select those indicators of
+success.</p>
+<p>KPIs are used to evaluate progress and make data-driven decisions,
+and are typically tied to strategic or operational objectives.</p>
+<p>KPIs can take many forms, depending on the nature of the organization
+and the goals being pursued. Examples of KPIs might include:</p>
 <ul>
 <li>Revenue growth rate</li>
 <li>Customer retention rate</li>
@@ -177,32 +497,62 @@
 <li>Website traffic and conversion rates</li>
 <li>On-time delivery rate</li>
 </ul>
-<p>KPIs are typically chosen based on their relevance to the objectives being pursued, as well as their measurability and their ability to drive behavior and decision-making. KPIs should be clearly defined, and should be tracked and reported on a regular basis to ensure that progress is being made towards the desired outcomes.</p>
+<p>KPIs are typically chosen based on their relevance to the objectives
+being pursued, as well as their measurability and their ability to drive
+behavior and decision-making. KPIs should be clearly defined, and should
+be tracked and reported on a regular basis to ensure that progress is
+being made towards the desired outcomes.</p>
 <p>Comparing metrics to KPIs:</p>
 <ul>
-<li>Util metrics are studied and summarized into business insights, they are nothing more than numbers in a spreadsheet</li>
-<li>If metrics aren’t aligned behind a set of KPIs, the usefulness of the data will fall short</li>
+<li>Util metrics are studied and summarized into business insights, they
+are nothing more than numbers in a spreadsheet</li>
+<li>If metrics aren’t aligned behind a set of KPIs, the usefulness of
+the data will fall short</li>
 </ul>
 <h2 id="analytics">Analytics</h2>
-<p><strong>Analytics is the process of analyzing and interpreting data in order to gain insights, inform decision-making, and improve performance.</strong></p>
-<p>Analytics refers to the systematic study and analysis of data (i.e. Metrics and KPIs). In analytics we want to study metics and work to extract insights and/or conclusions about what they mean for a business.</p>
-<p>We can answer specific questions with analytics or solve particular problems by analyzing data sets and identifying trends, patterns, and correlations that might not be immediately apparent.</p>
-<p>Analytics are the interpretations of data that transform numbers and metrics into actionable ideas and insights — and not data points that can be pulled directly from an analytics system.</p>
+<p><strong>Analytics is the process of analyzing and interpreting data
+in order to gain insights, inform decision-making, and improve
+performance.</strong></p>
+<p>Analytics refers to the systematic study and analysis of data
+(i.e. Metrics and KPIs). In analytics we want to study metics and work
+to extract insights and/or conclusions about what they mean for a
+business.</p>
+<p>We can answer specific questions with analytics or solve particular
+problems by analyzing data sets and identifying trends, patterns, and
+correlations that might not be immediately apparent.</p>
+<p>Analytics are the interpretations of data that transform numbers and
+metrics into actionable ideas and insights — and not data points that
+can be pulled directly from an analytics system.</p>
 <p>Analytics can be used to answer a variety of questions, such as:</p>
 <ul>
 <li>What are the patterns and trends in our data?</li>
 <li>What factors are driving changes in our business?</li>
 <li>What are the key drivers of customer behavior?</li>
-<li>What are the best ways to allocate resources to achieve our goals?</li>
-<li>What is the likelihood of a specific outcome, such as a purchase or a churn event?</li>
+<li>What are the best ways to allocate resources to achieve our
+goals?</li>
+<li>What is the likelihood of a specific outcome, such as a purchase or
+a churn event?</li>
 </ul>
-<p>Analytics can be applied in a variety of domains, including business, finance, healthcare, education, and many others. Analytics is often used to inform decision-making at various levels of an organization, from operational decisions to strategic planning.</p>
-<p>We start by outlining the metrics and KPIs as first step in the analysis process to understand what we’re measuring and why.</p>
-<p>Then we need to provide context and generate analytic results out of the data we are examining.</p>
+<p>Analytics can be applied in a variety of domains, including business,
+finance, healthcare, education, and many others. Analytics is often used
+to inform decision-making at various levels of an organization, from
+operational decisions to strategic planning.</p>
+<p>We start by outlining the metrics and KPIs as first step in the
+analysis process to understand what we’re measuring and why.</p>
+<p>Then we need to provide context and generate analytic results out of
+the data we are examining.</p>
 <h2 id="business-intelligence-bi">Business Intelligence (BI)</h2>
-<p><strong>Business Intelligence (BI) is a process of transforming raw data into actionable insights that can inform decision-making and improve business performance.</strong></p>
-<p>BI involves a range of activities, including data mining, analytics, reporting, and visualization, among others.</p>
-<p>The goal of BI is to help organizations make data-driven decisions by providing insights into key business metrics, such as sales, customer behavior, market trends, and operational efficiency. BI tools and technologies enable users to explore data from multiple sources, create reports and dashboards, and share insights with stakeholders across the organization.</p>
+<p><strong>Business Intelligence (BI) is a process of transforming raw
+data into actionable insights that can inform decision-making and
+improve business performance.</strong></p>
+<p>BI involves a range of activities, including data mining, analytics,
+reporting, and visualization, among others.</p>
+<p>The goal of BI is to help organizations make data-driven decisions by
+providing insights into key business metrics, such as sales, customer
+behavior, market trends, and operational efficiency. BI tools and
+technologies enable users to explore data from multiple sources, create
+reports and dashboards, and share insights with stakeholders across the
+organization.</p>
 <p>BI can be used for a variety of purposes, such as:</p>
 <ul>
 <li>Monitoring and analyzing key performance indicators (KPIs)</li>
@@ -212,15 +562,24 @@
 <li>Optimizing marketing and sales strategies</li>
 <li>Enhancing customer experiences</li>
 </ul>
-<p>BI tools and technologies include data warehouses, data marts, online analytical processing (OLAP), dashboards, and data visualization tools. These tools enable users to access and analyze data from multiple sources, such as databases, spreadsheets, and external data sources.</p>
+<p>BI tools and technologies include data warehouses, data marts, online
+analytical processing (OLAP), dashboards, and data visualization tools.
+These tools enable users to access and analyze data from multiple
+sources, such as databases, spreadsheets, and external data sources.</p>
 <h3 id="bi-vs-analytics">BI vs Analytics</h3>
 <ul>
-<li>BI focuses on collecting and presenting data in a way that is easy to understand and use (providing the information for decision making)</li>
-<li>Analytics focuses on using statistical and quantitative techniques to uncover insights and make predictions</li>
+<li>BI focuses on collecting and presenting data in a way that is easy
+to understand and use (providing the information for decision
+making)</li>
+<li>Analytics focuses on using statistical and quantitative techniques
+to uncover insights and make predictions</li>
 </ul>
 <h2 id="dimensions">Dimensions</h2>
-<p><strong>A dimension is a categorical variable or attribute that provides context for the measures or numerical values in a dataset.</strong></p>
-<p>Dimensions are used to categorize or group the data, and are often used to filter, aggregate, and analyze the data in various ways.</p>
+<p><strong>A dimension is a categorical variable or attribute that
+provides context for the measures or numerical values in a
+dataset.</strong></p>
+<p>Dimensions are used to categorize or group the data, and are often
+used to filter, aggregate, and analyze the data in various ways.</p>
 <p>Examples of dimensions might include</p>
 <ul>
 <li>time</li>
@@ -229,19 +588,47 @@
 <li>customer</li>
 <li>sales channel</li>
 </ul>
-<p>These dimensions can be used to group and categorize the measures, such as sales revenue, profit margin, or units sold.</p>
-<p>Dimensions are typically hierarchical, meaning that they have levels or layers of granularity. For example, a time dimension might have levels such as year, quarter, month, week, and day, which can be used to aggregate or drill down into the data as needed.</p>
-<p>Dimensions can also have attributes, which provide additional information about the dimension. For example, a product dimension might have attributes such as product name, product category, manufacturer, and price.</p>
+<p>These dimensions can be used to group and categorize the measures,
+such as sales revenue, profit margin, or units sold.</p>
+<p>Dimensions are typically hierarchical, meaning that they have levels
+or layers of granularity. For example, a time dimension might have
+levels such as year, quarter, month, week, and day, which can be used to
+aggregate or drill down into the data as needed.</p>
+<p>Dimensions can also have attributes, which provide additional
+information about the dimension. For example, a product dimension might
+have attributes such as product name, product category, manufacturer,
+and price.</p>
 <h2 id="cubes">Cubes</h2>
-<p><strong>In data warehousing, a cube is a multi-dimensional data structure that allows for efficient and flexible querying and analysis of large datasets.</strong></p>
-<p>A cube is sometimes also referred to as a data cube or OLAP (Online Analytical Processing) cube.</p>
-<p>A cube consists of dimensions and measures. Dimensions are the categorical variables or attributes that define the data, such as time, location, or product category. Measures are the numerical values that are being analyzed, such as sales revenue, units sold, or profit margin.</p>
-<p>The cube organizes the data along these dimensions, creating a multi-dimensional view of the data. This allows for fast and flexible querying of the data along multiple dimensions, as well as the ability to perform complex analysis and calculations.</p>
-<p>For example, consider a retail company that wants to analyze their sales data. They could create a cube with dimensions such as time, location, and product category, and measures such as sales revenue and units sold. The cube would allow them to easily query and analyze the sales data by different dimensions, such as sales by location and product category, or sales over time.</p>
+<p><strong>In data warehousing, a cube is a multi-dimensional data
+structure that allows for efficient and flexible querying and analysis
+of large datasets.</strong></p>
+<p>A cube is sometimes also referred to as a data cube or OLAP (Online
+Analytical Processing) cube.</p>
+<p>A cube consists of dimensions and measures. Dimensions are the
+categorical variables or attributes that define the data, such as time,
+location, or product category. Measures are the numerical values that
+are being analyzed, such as sales revenue, units sold, or profit
+margin.</p>
+<p>The cube organizes the data along these dimensions, creating a
+multi-dimensional view of the data. This allows for fast and flexible
+querying of the data along multiple dimensions, as well as the ability
+to perform complex analysis and calculations.</p>
+<p>For example, consider a retail company that wants to analyze their
+sales data. They could create a cube with dimensions such as time,
+location, and product category, and measures such as sales revenue and
+units sold. The cube would allow them to easily query and analyze the
+sales data by different dimensions, such as sales by location and
+product category, or sales over time.</p>
 <h2 id="data-products">Data Products</h2>
-<p><strong>A data product is a software application or service that is designed to deliver insights and value from data.</strong></p>
-<p>Data products are created by leveraging data analytics, machine learning, and other techniques to derive insights from data, and then delivering those insights to users through a user-friendly interface or API.</p>
-<p>While there are other datasets generated during the data modeling phase of a data warehouse, data products are generally downstream from the core data models of the data warehouse. Examples include:</p>
+<p><strong>A data product is a software application or service that is
+designed to deliver insights and value from data.</strong></p>
+<p>Data products are created by leveraging data analytics, machine
+learning, and other techniques to derive insights from data, and then
+delivering those insights to users through a user-friendly interface or
+API.</p>
+<p>While there are other datasets generated during the data modeling
+phase of a data warehouse, data products are generally downstream from
+the core data models of the data warehouse. Examples include:</p>
 <ol type="1">
 <li>Data for a Business Intelligence Dashboard</li>
 <li>Aggregated dataset for downstream machine learning</li>
@@ -250,103 +637,219 @@
 <li>Data for Exploratory Discovery</li>
 <li>Analytical Dataset</li>
 </ol>
-<h1 id="machine-learning-terms-definitions">Machine Learning Terms Definitions</h1>
+<h1 id="machine-learning-terms-definitions">Machine Learning Terms
+Definitions</h1>
 <figure>
-<img src="./images/scalar_to_tensor.jpg" alt="From Scalars to Tensors" /><figcaption>From Scalars to Tensors</figcaption>
+<img src="./images/scalar_to_tensor.jpg"
+alt="From Scalars to Tensors" />
+<figcaption aria-hidden="true">From Scalars to Tensors</figcaption>
 </figure>
-<p>In this section I cover key terms in machine learning and explain how they are different.</p>
+<p>In this section I cover key terms in machine learning and explain how
+they are different.</p>
 <h2 id="scalar">Scalar</h2>
-<p>In mathematics and computer science, a scalar is a single, real-valued number that is used to measure the magnitude or size of a quantity, such as distance, temperature, or speed.</p>
+<p>In mathematics and computer science, a scalar is a single,
+real-valued number that is used to measure the magnitude or size of a
+quantity, such as distance, temperature, or speed.</p>
 <h2 id="vector">Vector</h2>
-<p>In machine learning, a vector is a one-dimensional array or list of numbers<sup>1</sup>. Vectors are commonly used to represent data points or features in a dataset. For example, in image recognition, each image can be represented as a vector of pixel values, where each element of the vector represents the intensity of a specific pixel.</p>
-<p>Vectors can be used to perform various mathematical operations in machine learning, such as dot products, element-wise multiplication, and addition. These operations can be used to compute similarities between vectors, transform data, and build models.</p>
+<p>In machine learning, a vector is a one-dimensional array or list of
+numbers<sup>1</sup>. Vectors are commonly used to represent data points
+or features in a dataset. For example, in image recognition, each image
+can be represented as a vector of pixel values, where each element of
+the vector represents the intensity of a specific pixel.</p>
+<p>Vectors can be used to perform various mathematical operations in
+machine learning, such as dot products, element-wise multiplication, and
+addition. These operations can be used to compute similarities between
+vectors, transform data, and build models.</p>
 <h2 id="matrix">Matrix</h2>
-<p>In machine learning, vectors and matrices are both fundamental data structures used to represent and manipulate data.</p>
-<p>A vector is a one-dimensional array or list of numbers, <strong>while a matrix is a two-dimensional array of numbers. A matrix can be thought of as a collection of vectors arranged in rows and columns.</strong></p>
-<p>In machine learning, matrices are commonly used to represent datasets, where each row represents a data point or sample, and each column represents a feature or attribute of the data. For example, in a dataset of housing prices, a matrix could be used to represent the prices of different houses, where each row represents a house, and each column represents a feature such as the number of bedrooms, square footage, or location.</p>
+<p>In machine learning, vectors and matrices are both fundamental data
+structures used to represent and manipulate data.</p>
+<p>A vector is a one-dimensional array or list of numbers, <strong>while
+a matrix is a two-dimensional array of numbers. A matrix can be thought
+of as a collection of vectors arranged in rows and columns.</strong></p>
+<p>In machine learning, matrices are commonly used to represent
+datasets, where each row represents a data point or sample, and each
+column represents a feature or attribute of the data. For example, in a
+dataset of housing prices, a matrix could be used to represent the
+prices of different houses, where each row represents a house, and each
+column represents a feature such as the number of bedrooms, square
+footage, or location.</p>
 <h2 id="tensor">Tensor</h2>
-<p>In machine learning, <strong>tensors are multi-dimensional arrays or matrices that can have any number of dimensions. They are used to represent and manipulate large amounts of data, especially in deep learning.</strong></p>
-<p>Tensors are used to represent a wide variety of data, such as images, audio, video, text, and time-series data. For example, in image recognition, an image can be represented as a tensor of pixel values, where each dimension represents a different aspect of the image, such as its width, height, and color channels.</p>
-<p>Tensors can be manipulated using tensor operations, which are similar to matrix operations, but are extended to handle multi-dimensional arrays. Some common tensor operations used in machine learning include tensor addition, multiplication, and convolution.</p>
-<p>Tensors are used extensively in deep learning frameworks like TensorFlow and PyTorch, where they form the backbone of neural network models. Neural networks consist of layers of interconnected nodes, or neurons, that perform tensor operations on input data to produce output predictions.</p>
+<p>In machine learning, <strong>tensors are multi-dimensional arrays or
+matrices that can have any number of dimensions. They are used to
+represent and manipulate large amounts of data, especially in deep
+learning.</strong></p>
+<p>Tensors are used to represent a wide variety of data, such as images,
+audio, video, text, and time-series data. For example, in image
+recognition, an image can be represented as a tensor of pixel values,
+where each dimension represents a different aspect of the image, such as
+its width, height, and color channels.</p>
+<p>Tensors can be manipulated using tensor operations, which are similar
+to matrix operations, but are extended to handle multi-dimensional
+arrays. Some common tensor operations used in machine learning include
+tensor addition, multiplication, and convolution.</p>
+<p>Tensors are used extensively in deep learning frameworks like
+TensorFlow and PyTorch, where they form the backbone of neural network
+models. Neural networks consist of layers of interconnected nodes, or
+neurons, that perform tensor operations on input data to produce output
+predictions.</p>
 <h2 id="feature">Feature</h2>
 <blockquote>
-<p>“In machine learning and pattern recognition, a feature is an individual measurable property or characteristic of a phenomenon.[1] Choosing informative, discriminating and independent features is a crucial element of effective algorithms in pattern recognition, classification and regression. Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of”feature&quot; is related to that of explanatory variable used in statistical techniques such as linear regression.&quot; [1]</p>
+<p>“In machine learning and pattern recognition, a feature is an
+individual measurable property or characteristic of a phenomenon.[1]
+Choosing informative, discriminating and independent features is a
+crucial element of effective algorithms in pattern recognition,
+classification and regression. Features are usually numeric, but
+structural features such as strings and graphs are used in syntactic
+pattern recognition. The concept of”feature” is related to that of
+explanatory variable used in statistical techniques such as linear
+regression.” [1]</p>
 </blockquote>
-<p>TODO: This book was published in 2006, but when did this term become widely used?</p>
+<p>TODO: This book was published in 2006, but when did this term become
+widely used?</p>
 <blockquote>
-<p>A feature is an attribute associated with an input or sample. For example, a feature of an image could be a pixel. The feature of a state could be the Euclidean distance to the goal state.</p>
+<p>A feature is an attribute associated with an input or sample. For
+example, a feature of an image could be a pixel. The feature of a state
+could be the Euclidean distance to the goal state.</p>
 </blockquote>
 <blockquote>
-<p>Features are usually numeric, but structural features such as strings and graphs are used in syntactic pattern recognition. The concept of “feature” is related to that of explanatory variable used in statistical techniques such as linear regression.</p>
+<p>Features are usually numeric, but structural features such as strings
+and graphs are used in syntactic pattern recognition. The concept of
+“feature” is related to that of explanatory variable used in statistical
+techniques such as linear regression.</p>
 </blockquote>
 <blockquote>
-<p>A feature is a measurable property of the object you’re trying to analyze. In datasets, features appear as columns.</p>
+<p>A feature is a measurable property of the object you’re trying to
+analyze. In datasets, features appear as columns.</p>
 </blockquote>
 <blockquote>
-<p>Features are the basic building blocks of datasets. The quality of the features in your dataset has a major impact on the quality of the insights you will gain when you use that dataset for machine learning. Additionally, different business problems within the same industry do not necessarily require the same features, which is why it is important to have a strong understanding of the business goals of your data science project.</p>
+<p>Features are the basic building blocks of datasets. The quality of
+the features in your dataset has a major impact on the quality of the
+insights you will gain when you use that dataset for machine learning.
+Additionally, different business problems within the same industry do
+not necessarily require the same features, which is why it is important
+to have a strong understanding of the business goals of your data
+science project.</p>
 </blockquote>
 <blockquote>
-<p>You can improve the quality of your dataset’s features with processes like feature selection and feature engineering, which are notoriously difficult and tedious. If these techniques are done well, the resulting optimal dataset will contain all of the essential features that might have bearing on your specific business problem, leading to the best possible model outcomes and the most beneficial insights.</p>
+<p>You can improve the quality of your dataset’s features with processes
+like feature selection and feature engineering, which are notoriously
+difficult and tedious. If these techniques are done well, the resulting
+optimal dataset will contain all of the essential features that might
+have bearing on your specific business problem, leading to the best
+possible model outcomes and the most beneficial insights.</p>
 </blockquote>
 <p>https://stats.stackexchange.com/questions/192873/difference-between-feature-feature-set-and-feature-vector</p>
 <p>https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1</p>
 <p>ISLR Book</p>
 <p>https://www.statlearning.com/</p>
 <h3 id="numeric-feature">Numeric Feature</h3>
-<p>A numeric feature can be conveniently described by a feature vector.</p>
+<p>A numeric feature can be conveniently described by a feature
+vector.</p>
 <h2 id="attribute">Attribute</h2>
 <blockquote>
-<p>Attribute/Feature: An attribute is an aspect of an instance (e.g. temperature, humidity). Attributes are often called features in Machine Learning. A special attribute is the class label that defines the class this instance belongs to (required for supervised learning).</p>
+<p>Attribute/Feature: An attribute is an aspect of an instance
+(e.g. temperature, humidity). Attributes are often called features in
+Machine Learning. A special attribute is the class label that defines
+the class this instance belongs to (required for supervised
+learning).</p>
 </blockquote>
 <p>https://ai.stanford.edu/~ronnyk/glossary.html</p>
 <blockquote>
-<p>A quantity describing an instance. An attribute has a domain defined by the attribute type, which denotes the values that can be taken by an attribute.</p>
+<p>A quantity describing an instance. An attribute has a domain defined
+by the attribute type, which denotes the values that can be taken by an
+attribute.</p>
 </blockquote>
 <p>Attribute aka: * field * variable * feature</p>
 <p>Some authors use feature as a synonym for attribute</p>
 <h2 id="feature-vector">Feature Vector</h2>
 <blockquote>
-<p>A feature vector is a vector that stores the features for a particular observation in a specific order.</p>
+<p>A feature vector is a vector that stores the features for a
+particular observation in a specific order.</p>
 </blockquote>
 <blockquote>
-<p>For example, Alice is 26 years old and she is 5’ 6&quot; tall. Her feature vector could be [26, 5.5] or [5.5, 26] depending on your choice of how to order the elements. The order is only important insofar as it is consistent.</p>
+<p>For example, Alice is 26 years old and she is 5’ 6” tall. Her feature
+vector could be [26, 5.5] or [5.5, 26] depending on your choice of how
+to order the elements. The order is only important insofar as it is
+consistent.</p>
 </blockquote>
 <blockquote>
-<p>A feature set is a set of all the attributes that you’re interested in, e.g. height and age.</p>
+<p>A feature set is a set of all the attributes that you’re interested
+in, e.g. height and age.</p>
 </blockquote>
 <blockquote>
-<p>The implicit assumption when using this terminology is that your data is tabular – somehow, you have chosen to represent it as a “flat”, matrix-like format. But non-tabular data formats, like network graphs, video, audio, images, binary data sequences, … these all require some amount of engineering to represent as feature vectors.</p>
+<p>The implicit assumption when using this terminology is that your data
+is tabular – somehow, you have chosen to represent it as a “flat”,
+matrix-like format. But non-tabular data formats, like network graphs,
+video, audio, images, binary data sequences, … these all require some
+amount of engineering to represent as feature vectors.</p>
 </blockquote>
 <blockquote>
-<p>“In pattern recognition and machine learning, a feature vector is an n-dimensional vector of numerical features that represent some object. Many algorithms in machine learning require a numerical representation of objects, since such representations facilitate processing and statistical analysis.”</p>
+<p>“In pattern recognition and machine learning, a feature vector is an
+n-dimensional vector of numerical features that represent some object.
+Many algorithms in machine learning require a numerical representation
+of objects, since such representations facilitate processing and
+statistical analysis.”</p>
 </blockquote>
 <blockquote>
-<p>“The vector space associated with these vectors is often called the feature space. In order to reduce the dimensionality of the feature space, a number of dimensionality reduction techniques can be employed.”</p>
+<p>“The vector space associated with these vectors is often called the
+feature space. In order to reduce the dimensionality of the feature
+space, a number of dimensionality reduction techniques can be
+employed.”</p>
 </blockquote>
-<p>Many times in ML literature the term feature vector is used differently:</p>
+<p>Many times in ML literature the term feature vector is used
+differently:</p>
 <p>https://stats.stackexchange.com/questions/351514/usage-of-the-term-feature-vector-in-lindsay-i-smiths-pca-tutorial?rq=1</p>
 <h2 id="feature-construction">Feature Construction</h2>
 <blockquote>
-<p>“Higher-level features can be obtained from already available features and added to the feature vector; for example, for the study of diseases the feature ‘Age’ is useful and is defined as Age = ‘Year of death’ minus ‘Year of birth’ . This process is referred to as feature construction.[2][3] Feature construction is the application of a set of constructive operators to a set of existing features resulting in construction of new features.”</p>
+<p>“Higher-level features can be obtained from already available
+features and added to the feature vector; for example, for the study of
+diseases the feature ‘Age’ is useful and is defined as Age = ‘Year of
+death’ minus ‘Year of birth’ . This process is referred to as feature
+construction.[2][3] Feature construction is the application of a set of
+constructive operators to a set of existing features resulting in
+construction of new features.”</p>
 </blockquote>
 <p>Attributes?</p>
 <h2 id="feature-engineering">Feature Engineering</h2>
 <blockquote>
-<p>“Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. The motivation is to use these extra features to improve the quality of results from a machine learning process, compared with supplying only the raw data to the machine learning process.”</p>
+<p>“Feature engineering or feature extraction or feature discovery is
+the process of using domain knowledge to extract features
+(characteristics, properties, attributes) from raw data. The motivation
+is to use these extra features to improve the quality of results from a
+machine learning process, compared with supplying only the raw data to
+the machine learning process.”</p>
 </blockquote>
 <p>https://en.wikipedia.org/wiki/Feature_engineering</p>
-<h3 id="discussion-on-feature-engineering">Discussion on Feature Engineering</h3>
+<h3 id="discussion-on-feature-engineering">Discussion on Feature
+Engineering</h3>
 <p>The definition for “Feature Engineering” is always some form of:</p>
-<p>“Feature engineering or feature extraction or feature discovery is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data.”</p>
+<p>“Feature engineering or feature extraction or feature discovery is
+the process of using domain knowledge to extract features
+(characteristics, properties, attributes) from raw data.”</p>
 <p>https://en.wikipedia.org/wiki/Feature_engineering</p>
-<p>However, it feels like many people in the analytics / ML world bleed this into “data extraction” or “data munging” type activities. They arent doing the “last step” and converting the tabular-dataset into an n-dimensional array of numeric features (imho)</p>
-<p>SIDE NOTE: in my DL book we wrote, we call the chapter on this topic “Vectorization”, and we used that a lot of places, and it seemed to pass muster (in 2016-ish, at least. times change?). I FEEL as if we were more referring to the stage of the transforms where we convert data into its final pre-modeling form of numeric features, and less of the “lets go do transforms and junk and create new features”…</p>
+<p>However, it feels like many people in the analytics / ML world bleed
+this into “data extraction” or “data munging” type activities. They
+arent doing the “last step” and converting the tabular-dataset into an
+n-dimensional array of numeric features (imho)</p>
+<p>SIDE NOTE: in my DL book we wrote, we call the chapter on this topic
+“Vectorization”, and we used that a lot of places, and it seemed to pass
+muster (in 2016-ish, at least. times change?). I FEEL as if we were more
+referring to the stage of the transforms where we convert data into its
+final pre-modeling form of numeric features, and less of the “lets go do
+transforms and junk and create new features”…</p>
 <p>So</p>
-<p>My question: “should we consider the final step of feature engineering to be ‘vectorization’ or ‘feature encoding’ ?”</p>
+<p>My question: “should we consider the final step of feature
+engineering to be ‘vectorization’ or ‘feature encoding’ ?”</p>
 <p>Susan Says:</p>
 <blockquote>
-<p>I feel like vectorization or feature encoding are both fine terms to describe the process of going from something that is not numeric to numeric. I definitely think about it as separate from feature engineering. Feature encoding/vectorization has to happen always (ie everything has to have a numeric representation). But feature engineering is something that might be useful but not always necessary (maybe a neural net will learn all these relationships..aka automatic feature extraction).</p>
+<p>I feel like vectorization or feature encoding are both fine terms to
+describe the process of going from something that is not numeric to
+numeric. I definitely think about it as separate from feature
+engineering. Feature encoding/vectorization has to happen always (ie
+everything has to have a numeric representation). But feature
+engineering is something that might be useful but not always necessary
+(maybe a neural net will learn all these relationships..aka automatic
+feature extraction).</p>
 </blockquote>
 <p>TODO:</p>
 <ul>
@@ -356,53 +859,136 @@
 <h2 id="vectorization">Vectorization</h2>
 <p>From our book:</p>
 <blockquote>
-<p>“take each data type and represent it as a numerical vector (or in some cases, a multidimensional array of numbers)”</p>
+<p>“take each data type and represent it as a numerical vector (or in
+some cases, a multidimensional array of numbers)”</p>
 </blockquote>
 <p>GPT</p>
-<p>Vectorization in machine learning refers to the process of converting a set of data points or features into a mathematical vector or matrix format, which can be easily understood and processed by a computer.</p>
-<p>In other words, it is a way to represent data in a structured format that is suitable for machine learning algorithms to process efficiently. This is usually done by converting the raw data into a numerical format, such as through one-hot encoding, normalization, or other methods.</p>
-<p>Vectorization is a crucial step in many machine learning tasks, such as image recognition, natural language processing, and recommender systems, where large amounts of data need to be processed quickly and accurately. By using vectorization techniques, we can reduce the complexity of the data and make it more manageable for machine learning algorithms to work with.</p>
+<p>Vectorization in machine learning refers to the process of converting
+a set of data points or features into a mathematical vector or matrix
+format, which can be easily understood and processed by a computer.</p>
+<p>In other words, it is a way to represent data in a structured format
+that is suitable for machine learning algorithms to process efficiently.
+This is usually done by converting the raw data into a numerical format,
+such as through one-hot encoding, normalization, or other methods.</p>
+<p>Vectorization is a crucial step in many machine learning tasks, such
+as image recognition, natural language processing, and recommender
+systems, where large amounts of data need to be processed quickly and
+accurately. By using vectorization techniques, we can reduce the
+complexity of the data and make it more manageable for machine learning
+algorithms to work with.</p>
 <p>From Geron:</p>
 <blockquote>
-<p>“We already discussed two of these layers: the keras.layers.Normalization layer that will perform feature standardization (it will be equivalent to the Standardization layer we defined earlier), and the TextVectorization layer that will be capable of encoding each word in the inputs into its index in the vocabulary. In both cases, you create the layer, you call its adapt() method with a data sample, and then you use the layer normally in your model. The other preprocessing layers will follow the same pattern.”</p>
+<p>“We already discussed two of these layers: the
+keras.layers.Normalization layer that will perform feature
+standardization (it will be equivalent to the Standardization layer we
+defined earlier), and the TextVectorization layer that will be capable
+of encoding each word in the inputs into its index in the vocabulary. In
+both cases, you create the layer, you call its adapt() method with a
+data sample, and then you use the layer normally in your model. The
+other preprocessing layers will follow the same pattern.”</p>
 </blockquote>
 <h2 id="dataframe">Dataframe</h2>
 <p>what is it</p>
 <p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html</p>
 <ul>
-<li>If the pandas dataframe is the key api here — need to note how the work done under pandas with Arrow and Parquet are key areas of development</li>
-<li>Wes McKinney ported the R dataframe to python to create the pandas implementation</li>
+<li>If the pandas dataframe is the key api here — need to note how the
+work done under pandas with Arrow and Parquet are key areas of
+development</li>
+<li>Wes McKinney ported the R dataframe to python to create the pandas
+implementation</li>
 </ul>
 <p>how is it used in ml?</p>
-<p>the dataframe is a key abstraction between the worlds of the database and machine learning</p>
-<p>In the world of machine learning before the dataframe API we’d use abstractions such as a DataSet and JDBC to pull data from a database.</p>
+<p>the dataframe is a key abstraction between the worlds of the database
+and machine learning</p>
+<p>In the world of machine learning before the dataframe API we’d use
+abstractions such as a DataSet and JDBC to pull data from a
+database.</p>
 <ul>
 <li>just jdbc / odbc to query database for some data via sql</li>
-<li>iterate through the records, converting them into Rows in a dataset</li>
-<li>turn rows into vectors that could be used in machine learning – typically a vector format that was proprietary to the machine learning lib</li>
+<li>iterate through the records, converting them into Rows in a
+dataset</li>
+<li>turn rows into vectors that could be used in machine learning –
+typically a vector format that was proprietary to the machine learning
+lib</li>
 </ul>
 <blockquote>
-<p>Why do we use Dataframe instead of DataSet? Use Datasets in situations where: Data requires a structure. DataFrames infer a schema on structured and semi-structured data. Transformations are high-level. If your data requires high-level processing, columnar functions, and SQL queries, use Datasets and DataFrames. A high degree of type safety is necessary.</p>
+<p>Why do we use Dataframe instead of DataSet? Use Datasets in
+situations where: Data requires a structure. DataFrames infer a schema
+on structured and semi-structured data. Transformations are high-level.
+If your data requires high-level processing, columnar functions, and SQL
+queries, use Datasets and DataFrames. A high degree of type safety is
+necessary.</p>
 </blockquote>
-<h3 id="the-dataframe-construct-as-a-bridge-between-analyitcs-and-machine-learning">The Dataframe Construct as a Bridge Between Analyitcs and Machine Learning</h3>
+<h3
+id="the-dataframe-construct-as-a-bridge-between-analyitcs-and-machine-learning">The
+Dataframe Construct as a Bridge Between Analyitcs and Machine
+Learning</h3>
 <p>how is it a bridge between analytics and</p>
 <h2 id="data-engineer">Data Engineer</h2>
 <blockquote>
-<p>(redit) “Uses a combination of software engineering best practices and database design to build scalable data pipelines, data integrations, and data models for use in applications and reports”</p>
+<p>(redit) “Uses a combination of software engineering best practices
+and database design to build scalable data pipelines, data integrations,
+and data models for use in applications and reports”</p>
 </blockquote>
-<h3 id="data-engineers-vs-cloud-devops">Data Engineers vs Cloud DevOps</h3>
-<p>Data Engineer Role and Cloud DevOps Role are both critical roles in modern businesses that rely heavily on technology. Here are the key differences and similarities between these two roles:</p>
-<p>Job Responsibilities: Data Engineers are responsible for building and maintaining data pipelines that collect, process, and store large amounts of data. They are skilled in designing, building, and managing data storage systems and data processing infrastructure. They ensure that data is secure, easily accessible, and of high quality.</p>
-<p>Cloud DevOps, on the other hand, is responsible for managing the cloud infrastructure that runs an organization’s applications. They work on automating the deployment, scaling, and management of applications on the cloud infrastructure. They ensure the cloud infrastructure is secure, cost-efficient, and always available.</p>
-<p>Skills Required: Data Engineers need to have a strong foundation in computer science, database systems, and data modeling. They should be skilled in programming languages such as Python, SQL, and Java. Additionally, they need to have expertise in ETL (extract, transform, load) processes, data warehousing, and big data technologies like Hadoop and Spark.</p>
-<p>Cloud DevOps require skills in cloud computing, containerization technologies like Docker and Kubernetes, and Infrastructure as Code (IaC) tools like Terraform and Ansible. They should be proficient in scripting languages like Bash, Python, and PowerShell. Additionally, they need to have strong skills in CI/CD (continuous integration and continuous deployment), monitoring, and logging tools.</p>
-<p>Tools and Technologies: Data Engineers work with data storage technologies like Hadoop, Spark, and NoSQL databases like Cassandra, MongoDB, and DynamoDB. They also use data processing frameworks like Apache Beam and Apache Kafka. Additionally, they use data modeling tools like ERwin and ER/Studio.</p>
-<p>Cloud DevOps use cloud computing platforms like AWS, Azure, and Google Cloud Platform. They use containerization technologies like Docker and Kubernetes to deploy applications. They also use Infrastructure as Code (IaC) tools like Terraform and Ansible. Additionally, they use CI/CD tools like Jenkins, Travis CI, and CircleCI.</p>
-<p>In summary, Data Engineers and Cloud DevOps are both critical roles in modern businesses that rely heavily on technology. The key differences between these two roles are in their job responsibilities, required skills, and the tools and technologies they use. However, they share some similarities in their roles, such as working to ensure security and availability of the organization’s technology infrastructure.</p>
+<h3 id="data-engineers-vs-cloud-devops">Data Engineers vs Cloud
+DevOps</h3>
+<p>Data Engineer Role and Cloud DevOps Role are both critical roles in
+modern businesses that rely heavily on technology. Here are the key
+differences and similarities between these two roles:</p>
+<p>Job Responsibilities: Data Engineers are responsible for building and
+maintaining data pipelines that collect, process, and store large
+amounts of data. They are skilled in designing, building, and managing
+data storage systems and data processing infrastructure. They ensure
+that data is secure, easily accessible, and of high quality.</p>
+<p>Cloud DevOps, on the other hand, is responsible for managing the
+cloud infrastructure that runs an organization’s applications. They work
+on automating the deployment, scaling, and management of applications on
+the cloud infrastructure. They ensure the cloud infrastructure is
+secure, cost-efficient, and always available.</p>
+<p>Skills Required: Data Engineers need to have a strong foundation in
+computer science, database systems, and data modeling. They should be
+skilled in programming languages such as Python, SQL, and Java.
+Additionally, they need to have expertise in ETL (extract, transform,
+load) processes, data warehousing, and big data technologies like Hadoop
+and Spark.</p>
+<p>Cloud DevOps require skills in cloud computing, containerization
+technologies like Docker and Kubernetes, and Infrastructure as Code
+(IaC) tools like Terraform and Ansible. They should be proficient in
+scripting languages like Bash, Python, and PowerShell. Additionally,
+they need to have strong skills in CI/CD (continuous integration and
+continuous deployment), monitoring, and logging tools.</p>
+<p>Tools and Technologies: Data Engineers work with data storage
+technologies like Hadoop, Spark, and NoSQL databases like Cassandra,
+MongoDB, and DynamoDB. They also use data processing frameworks like
+Apache Beam and Apache Kafka. Additionally, they use data modeling tools
+like ERwin and ER/Studio.</p>
+<p>Cloud DevOps use cloud computing platforms like AWS, Azure, and
+Google Cloud Platform. They use containerization technologies like
+Docker and Kubernetes to deploy applications. They also use
+Infrastructure as Code (IaC) tools like Terraform and Ansible.
+Additionally, they use CI/CD tools like Jenkins, Travis CI, and
+CircleCI.</p>
+<p>In summary, Data Engineers and Cloud DevOps are both critical roles
+in modern businesses that rely heavily on technology. The key
+differences between these two roles are in their job responsibilities,
+required skills, and the tools and technologies they use. However, they
+share some similarities in their roles, such as working to ensure
+security and availability of the organization’s technology
+infrastructure.</p>
 <h2 id="data-engineering">Data Engineering</h2>
-<p>Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.</p>
+<p>Data engineering is the process of designing, building, and
+maintaining the infrastructure and systems that enable organizations to
+process, store, and analyze large volumes of data. Data engineering is a
+critical component of any data-driven organization, as it is responsible
+for ensuring that data is available, accessible, and usable for a
+variety of purposes, such as business intelligence, analytics, and
+machine learning.</p>
 <blockquote>
-<p>“Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning. Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning.”</p>
+<p>“Data engineering refers to the building of systems to enable the
+collection and usage of data. This data is usually used to enable
+subsequent analysis and data science; which often involves machine
+learning. Making the data usable usually involves substantial compute
+and storage, as well as data processing and cleaning.”</p>
 </blockquote>
 <p>https://en.wikipedia.org/wiki/Data_engineering</p>
 <p>https://www.amazon.com/Fundamentals-Data-Engineering-Robust-Systems/dp/1098108302/ref=pd_bxgy_img_sccl_2/143-2847560-0944436?pd_rd_w=BXhTE&amp;content-id=amzn1.sym.6ab4eb52-6252-4ca2-a1b9-ad120350253c&amp;pf_rd_p=6ab4eb52-6252-4ca2-a1b9-ad120350253c&amp;pf_rd_r=V2C07V6S9W4WZ52VK07T&amp;pd_rd_wg=36QXW&amp;pd_rd_r=b1b67f23-fc07-46ff-ba58-f30f071cd2e6&amp;pd_rd_i=1098108302&amp;psc=1&amp;asin=1098108302&amp;revisionId=&amp;format=4&amp;depth=1</p>
@@ -415,41 +1001,97 @@
 </ul>
 <p>Data engineering involves a range of activities, including:</p>
 <ol type="1">
-<li><p>Data integration: This involves the process of extracting data from multiple source systems, transforming it to conform to a common data model, and loading it into a data warehouse or other storage system.</p></li>
-<li><p>Data modeling: This involves designing and creating data models that represent the structure and relationships of data, such as entity-relationship models or dimensional models.</p></li>
-<li><p>Data pipeline development: This involves building and maintaining the data pipelines that move data from source systems to storage systems, and from storage systems to analytics or machine learning systems.</p></li>
-<li><p>Data quality management: This involves ensuring that data is accurate, complete, and consistent, and that it meets the needs of the organization.</p></li>
-<li><p>Infrastructure management: This involves designing, building, and maintaining the hardware and software infrastructure needed to support data processing, storage, and analysis.</p></li>
-<li><p>Performance optimization: This involves tuning and optimizing data processing and storage systems to ensure that they can handle large volumes of data and support the needs of the organization.</p></li>
+<li><p>Data integration: This involves the process of extracting data
+from multiple source systems, transforming it to conform to a common
+data model, and loading it into a data warehouse or other storage
+system.</p></li>
+<li><p>Data modeling: This involves designing and creating data models
+that represent the structure and relationships of data, such as
+entity-relationship models or dimensional models.</p></li>
+<li><p>Data pipeline development: This involves building and maintaining
+the data pipelines that move data from source systems to storage
+systems, and from storage systems to analytics or machine learning
+systems.</p></li>
+<li><p>Data quality management: This involves ensuring that data is
+accurate, complete, and consistent, and that it meets the needs of the
+organization.</p></li>
+<li><p>Infrastructure management: This involves designing, building, and
+maintaining the hardware and software infrastructure needed to support
+data processing, storage, and analysis.</p></li>
+<li><p>Performance optimization: This involves tuning and optimizing
+data processing and storage systems to ensure that they can handle large
+volumes of data and support the needs of the organization.</p></li>
 </ol>
-<p>Data engineering requires a range of technical skills, including programming, database management, data modeling, and distributed systems. Data engineers must also have a strong understanding of the business needs and goals of the organization, and must be able to collaborate effectively with other stakeholders, such as data analysts, data scientists, and business leaders.</p>
+<p>Data engineering requires a range of technical skills, including
+programming, database management, data modeling, and distributed
+systems. Data engineers must also have a strong understanding of the
+business needs and goals of the organization, and must be able to
+collaborate effectively with other stakeholders, such as data analysts,
+data scientists, and business leaders.</p>
 <h2 id="machine-learning-modeling">Machine Learning Modeling</h2>
-<p>Machine learning modeling is the process of using machine learning algorithms to build a model based on training data. A machine learning model is a mathematical representation of the patterns and relationships in the data that the algorithm has learned, and it can be used to make predictions or decisions on new data.</p>
-<p>The process of building a machine learning model typically involves the following steps:</p>
+<p>Machine learning modeling is the process of using machine learning
+algorithms to build a model based on training data. A machine learning
+model is a mathematical representation of the patterns and relationships
+in the data that the algorithm has learned, and it can be used to make
+predictions or decisions on new data.</p>
+<p>The process of building a machine learning model typically involves
+the following steps:</p>
 <ol type="1">
-<li><p>Data preparation: This involves selecting and cleaning the data that will be used to train the model, and transforming it into a format that can be used by the machine learning algorithm.</p></li>
-<li><p>Feature engineering: This involves selecting and creating the features or attributes that will be used by the model to make predictions or decisions. This step often involves domain knowledge and creativity, as the features must be relevant and informative for the problem being solved.</p></li>
-<li><p>Model selection: This involves selecting the type of machine learning algorithm that will be used to train the model, based on the problem being solved and the characteristics of the data.</p></li>
-<li><p>Model training: This involves feeding the prepared data into the machine learning algorithm and adjusting the model parameters to optimize its performance on the training data.</p></li>
-<li><p>Model evaluation: This involves testing the performance of the trained model on a separate set of data that was not used for training, to ensure that it is able to generalize to new data and make accurate predictions or decisions.</p></li>
-<li><p>Model deployment: This involves integrating the trained model into a production system or application, where it can be used to make predictions or decisions in real-time.</p></li>
+<li><p>Data preparation: This involves selecting and cleaning the data
+that will be used to train the model, and transforming it into a format
+that can be used by the machine learning algorithm.</p></li>
+<li><p>Feature engineering: This involves selecting and creating the
+features or attributes that will be used by the model to make
+predictions or decisions. This step often involves domain knowledge and
+creativity, as the features must be relevant and informative for the
+problem being solved.</p></li>
+<li><p>Model selection: This involves selecting the type of machine
+learning algorithm that will be used to train the model, based on the
+problem being solved and the characteristics of the data.</p></li>
+<li><p>Model training: This involves feeding the prepared data into the
+machine learning algorithm and adjusting the model parameters to
+optimize its performance on the training data.</p></li>
+<li><p>Model evaluation: This involves testing the performance of the
+trained model on a separate set of data that was not used for training,
+to ensure that it is able to generalize to new data and make accurate
+predictions or decisions.</p></li>
+<li><p>Model deployment: This involves integrating the trained model
+into a production system or application, where it can be used to make
+predictions or decisions in real-time.</p></li>
 </ol>
-<p>Machine learning modeling is used in a wide range of applications, such as image recognition, natural language processing, fraud detection, and recommendation systems. It requires a combination of technical skills, such as programming, statistics, and mathematics, as well as domain knowledge and creativity to select and engineer the right features for the problem being solved.</p>
-<p>A further great guide on the specific process of machine learning:</p>
+<p>Machine learning modeling is used in a wide range of applications,
+such as image recognition, natural language processing, fraud detection,
+and recommendation systems. It requires a combination of technical
+skills, such as programming, statistics, and mathematics, as well as
+domain knowledge and creativity to select and engineer the right
+features for the problem being solved.</p>
+<p>A further great guide on the specific process of machine
+learning:</p>
 <p>https://arxiv.org/pdf/2108.02497.pdf</p>
-<h3 id="what-are-3-examples-of-machine-learning-modeling">What are 3 Examples of Machine Learning Modeling?</h3>
+<h3 id="what-are-3-examples-of-machine-learning-modeling">What are 3
+Examples of Machine Learning Modeling?</h3>
 <ol type="1">
-<li>Training a linear regression model on a tabular dataset to predict the price of a house</li>
-<li>Training a neural network model to predict when a specific manufacturing machine will fail</li>
+<li>Training a linear regression model on a tabular dataset to predict
+the price of a house</li>
+<li>Training a neural network model to predict when a specific
+manufacturing machine will fail</li>
 <li>Training a logist</li>
 </ol>
-<h2 id="machine-learning-model-inference">Machine Learning Model Inference</h2>
-<p>Machine learning model inference is the process of using a trained machine learning model to make predictions or decisions on new, unseen data. Once a machine learning model has been trained, it can be deployed and used to make predictions or decisions on new data in real-time.</p>
+<h2 id="machine-learning-model-inference">Machine Learning Model
+Inference</h2>
+<p>Machine learning model inference is the process of using a trained
+machine learning model to make predictions or decisions on new, unseen
+data. Once a machine learning model has been trained, it can be deployed
+and used to make predictions or decisions on new data in real-time.</p>
 <h2 id="artificial-intelligence">Artificial Intelligence</h2>
 <ul>
 <li>marketing</li>
 </ul>
 <h1 id="references">References</h1>
-<p>[1]: “Data Mining: Practical Machine Learning Tools and Techniques”, 1st Edition, (1999), Witten and Frank, https://www.cs.waikato.ac.nz/ml/weka/book.html [2]: Bishop, Christopher (2006). Pattern recognition and machine learning. Berlin: Springer. ISBN 0-387-31073-8.</p>
+<p>[1]: “Data Mining: Practical Machine Learning Tools and Techniques”,
+1st Edition, (1999), Witten and Frank,
+https://www.cs.waikato.ac.nz/ml/weka/book.html [2]: Bishop, Christopher
+(2006). Pattern recognition and machine learning. Berlin: Springer. ISBN
+0-387-31073-8.</p>
 </body>
 </html>

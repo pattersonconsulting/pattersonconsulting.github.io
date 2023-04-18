@@ -57,16 +57,24 @@ A data engineer is a professional who designs and builds the infrastructure to s
 
 Data engineers are skilled in data architecture, database design, and distributed systems. They are responsible for developing and implementing data pipelines, transforming data into a usable format, and loading it into a data warehouse. They also optimize data processing systems to ensure efficiency and scalability. 
 
+We list key tasks and the required skills for a data engineer below based on the article [The Rise of the Data Engineer](https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603/).
 
-https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603
+## Key Tasks
 
-> "I joined Facebook in 2011 as a business intelligence engineer. By the time I left in 2013, I was a data engineer."
+* data ingestion
+* metric computation
+* anomaly detection
+* metadata management
+* experimentation
+* instrumentation
+* sessionization
 
-> "I wasn’t promoted or assigned to this new role. Instead, Facebook came to realize that the work we were doing transcended classic business intelligence. The role we’d created for ourselves was a new discipline entirely."
+## Required Skills
 
-
-
-Overall, data engineers are highly technical professionals responsible for building and maintaining the infrastructure that supports the analysis and interpretation of large and complex data sets.
+* SQL
+* Data modeling techniques
+* ETL design
+* System architecture
 
 # Machine Learning Engineer
 
@@ -81,18 +89,19 @@ Overall, machine learning engineers are highly technical professionals who are c
 Analytics engineer is a role [defined by DBT Labs](https://www.getdbt.com/what-is-analytics-engineering/):
 
 > Analytics engineers provide clean data sets to end users, modeling data in a way that empowers end users to answer their own questions. While a data analyst spends their time analyzing data, an analytics engineer spends their time transforming, testing, deploying, and documenting data. Analytics engineers apply software engineering best practices like version control and continuous integration to the analytics code base.
-<!--
-Specific tasks include:
 
-* Provide clean, transformed data ready for analysis
-* apply software engineering best practices to analytics code (eg., version control, testing, continuous integration)
-* maintain data documentation and definitions
-* train business users on how to use data visualization tools
+## Key Tasks
 
-## Common Tools used by an Analytics Engineer
+We list the key tasks for an analytics engineer from [Preset's blog](https://preset.io/blog/reshaping-data-engineering/):
 
-* GUI tools like SSIS to build ETL pipelines
--->
+* owning core datasets: as analytics engineers cover more specific subject areas, data engineers may cover the mission-critical datasets that are heavily shared across teams
+* data modeling: define and refine best practices around modeling data
+* coding standards: define and defend naming conventions, coding conventions, and testing standards.
+* abstractions: create and manage reusable components in the form of jinja macros libraries and computation frameworks
+* metadata management: data assets documentation, discoverability, metadata integration, etc
+* data operations: SLAs, data warehouse cost management, data quality monitoring, anomaly detection, and garbage collecting unused resources
+
+
 # Data Analyst
 
 A data analyst is a professional who examines large and complex sets of data to identify patterns, trends, and insights that can be used to inform business decisions. They use statistical and analytical techniques such as regression analysis, hypothesis testing, and data visualization to extract insights from data. They are skilled in programming languages such as SQL, Python, or R, and data manipulation tools such as Excel or Tableau.

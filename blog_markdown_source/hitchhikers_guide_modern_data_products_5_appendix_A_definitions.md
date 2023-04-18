@@ -40,6 +40,14 @@ In this appendix we define key terms used throughout the series on data platform
 
 ## Data Warehouse
 
+Ralph Kimball describes a data warehouse as:
+
+> "A data warehouse is a copy of transaction data specifically structured for query and analysis."
+
+Bill Inmon describes a data warehouse as:
+
+> "A data warehouse is a subject-oriented, integrated, time-variant and non-volatile collection of data in support of management’s decision making process."
+
 **A Data Warehouse is a large and centralized repository of data that is designed to support business intelligence (BI) activities, such as reporting, analytics, and data mining.**
 
 The data in a Data Warehouse is typically extracted from multiple, heterogeneous sources, transformed to conform to a common schema, and loaded into the warehouse for analysis.
@@ -463,14 +471,53 @@ The dataframe is widely considered key abstraction between the worlds of analyti
    
 ## Data Engineering
 
-**editors: which of the 3 version of Data Engineering below work best? does a data engineer do cloud dev ops work?**
+Data engineering is a practice focused on defining ETL for data coming from a variety of sources and may be expressed in different workflow or orchestration systems (e.g., Airflow, DBT).
 
->  (wikipedia) Due to the new scale of the data, major firms like Google, Facebook, Amazon, Apple, Microsoft, and Netflix started to move away from traditional ETL and storage techniques. They started creating data engineering, a type of software engineering focused on data, and in particular infrastructure, warehousing, data protection, cybersecurity, mining, modelling, processing, and metadata management.[3][8] This change in approach was particularly focused on cloud computing.[8] Data started to be handled and used by many parts of the business, such as sales and marketing, and not just IT.[8]
+Data engineering is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning. Maxime Beauchemin wrote a key article on the role of the data engineering in 2017 called [The Rise of the Data Engineer](https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603/). In this article Max defines Data Engineering as:
 
-> Data engineering is the process of designing, building, and maintaining the infrastructure and systems that enable organizations to process, store, and analyze large volumes of data. Data engineering is a critical component of any data-driven organization, as it is responsible for ensuring that data is available, accessible, and usable for a variety of purposes, such as business intelligence, analytics, and machine learning.
+> "data engineers build tools, infrastructure, frameworks, and services. In fact, it’s arguable that data engineering is much closer to software engineering than it is to a data science"
 
+Max attributes the evolution (2010-2015) of the data engineering role to the growth of:
 
-> "Data engineering refers to the building of systems to enable the collection and usage of data. This data is usually used to enable subsequent analysis and data science; which often involves machine learning. Making the data usable usually involves substantial compute and storage, as well as data processing and cleaning."
+> “big data” distributed systems, along with concepts around the extended Hadoop ecosystem, stream processing, and in computation at scale.
+
+He further adds that in smaller companies that DevOps may be a part of the data engineering role:
+
+> "the data engineering role may also cover the workload around setting up and operating the organization’s data infrastructure. This includes tasks like setting up and operating platforms like Hadoop/Hive/HBase, Spark, and the like."
+
+* note/thought: in the age of the cloud data platforms, how much devops does the data engineer really have to do? Most of the infra are cloud-offered managed systems, so there is really only self-serve operations to be done
+
+Foundationally data engineering is based in ETL techniques that have evolved and split into new sub-categories over time. Much of computer science is based in "games of view materialization" and ETL is exactly that --- view materialization.
+
+In the age of Hadoop, Apache Oozie was the workflow orchestrator of the time. In the year 2023, data product workflow orchestration has moved to tools such as DBT, Airflow, and others.
+
+### Key Tasks
+
+Services and infrastructure a data engineering may operate and build include:
+
+* data ingestion
+* metric computation
+* anomaly detection
+* metadata management
+* experimentation
+* instrumentation
+* sessionization
+
+Data engineering is also focused on ways to automate the above tasks.
+
+### Required Skills
+
+* SQL
+* Data modeling techniques
+* ETL design
+* System architecture
+
+### Other Selected Articles on Data Engineering
+
+* [The Downfall of the Data Engineer](https://maximebeauchemin.medium.com/the-downfall-of-the-data-engineer-5bfb701e5d6b)
+* [Reshaping Data Engineering](https://preset.io/blog/reshaping-data-engineering/)
+<!--
+### Other Definitions
 
 Data engineering involves a range of activities, including:
 
@@ -487,6 +534,7 @@ Data engineering involves a range of activities, including:
 6. Performance optimization: This involves tuning and optimizing data processing and storage systems to ensure that they can handle large volumes of data and support the needs of the organization.
 
 Data engineering requires a range of technical skills, including programming, database management, data modeling, and distributed systems. Data engineers must also have a strong understanding of the business needs and goals of the organization, and must be able to collaborate effectively with other stakeholders, such as data analysts, data scientists, and business leaders.
+-->
 
 ### Data Engineering vs Cloud Dev Ops
 

@@ -453,12 +453,14 @@ The dataframe construct directly mimics a relational database table or a spreads
 
 Dataframes are popular because they allow data engineers and data scientists to work with tabular data from raw files and from relational database tables in an intuitive way with an API focused on tasks (e.g., column operations, joins, etc) that are relevant to those roles.
 
-Dataframes are generally used in Python or R and popular with Data Engineers and Data Scientists as a great way to work with tabular datasets. Data Engineers can quickly join and filter datasets from the data warehouse or process raw file-based datasets for consumption by data scientists. Data scientists can quickly perform feature engineering operations with libraries such as Pandas and efficiently prepare data for machine learning modeling operations.
+Dataframes are generally used in Python or R and allow Data Engineers to quickly join and filter datasets from the data warehouse. Data frames can also process raw file-based datasets for consumption by data scientists. Data scientists can quickly perform feature engineering operations with libraries such as Pandas and efficiently prepare data for machine learning modeling operations.
 
 The dataframe is widely considered key abstraction between the worlds of analytics and machine learning. The graph below shows the popularity of the dataframe, which quickly began rising in 2014.
 
 !["Dataframe" on Google Trends](./images/google_trends_dataframe.png )
 
+<https://ponder.io/pandas-is-now-as-popular-as-python-was-in-2016/?utm_campaign=meetedgar&utm_medium=social&utm_source=meetedgar.com>
+   
 ## Data Engineering
 
 **editors: which of the 3 version of Data Engineering below work best? does a data engineer do cloud dev ops work?**

@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DBT Hello World with DuckDB - Part 3 of 3 - (Epilogue) What is
+DBT?</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll take a look at what
+DBT is and what its meant to do." />
+	<meta name="keywords" content="snowflake, duckdb, dbt, data engineering,
+cicd, sql" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="DBT Hello World with DuckDB - Part 3
+of 3 - (Epilogue) What is DBT?"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_dbt_duckdb_part_3_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_3_what_is_dbt.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll take a look
+at what DBT is and what its meant to do."/>
+	
+
+	<meta name="twitter:title" content="DBT Hello World with DuckDB - Part 3
+of 3 - (Epilogue) What is DBT?" />
+	<meta data-rh="true" property="twitter:description" content="In this
+post we’ll take a look at what DBT is and what its meant to do."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_dbt_duckdb_part_3_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_3_what_is_dbt.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>DBT Hello World with DuckDB</h1>
+						<p>
+							<h3>Part 3 of 3 - (Epilogue) What is DBT?</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: February 15th 2023</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a href="#what-is-dbt" id="toc-what-is-dbt">What is DBT?</a>
+<ul>
+<li><a href="#what-does-dbt-do" id="toc-what-does-dbt-do">What Does DBT
+Do?</a></li>
+<li><a href="#dbt-core-concepts" id="toc-dbt-core-concepts">DBT Core
+Concepts</a></li>
+</ul></li>
+<li><a href="#why-is-dbt-popular" id="toc-why-is-dbt-popular">Why is DBT
+Popular?</a>
+<ul>
+<li><a href="#why-would-i-use-dbt" id="toc-why-would-i-use-dbt">Why
+Would I Use DBT?</a></li>
+<li><a href="#role-in-analytics" id="toc-role-in-analytics">Role in
+Analytics</a></li>
+</ul></li>
+<li><a href="#how-do-you-get-started-with-dbt"
+id="toc-how-do-you-get-started-with-dbt">How Do You Get Started with
+DBT?</a>
+<ul>
+<li><a href="#anatomy-of-a-dbt-project"
+id="toc-anatomy-of-a-dbt-project">Anatomy of a DBT Project</a></li>
+<li><a href="#core-concepts-in-dbt-data-modeling"
+id="toc-core-concepts-in-dbt-data-modeling">Core Concepts in DBT Data
+Modeling</a></li>
+</ul></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
+</ul>
+</nav>
+<h1 id="what-is-dbt">What is DBT?</h1>
+<p>In this post we’ll build our first DBT pipelineto summarize patient
+history data for downstream data engineers</p>
+<p>This is part 2 in a 3 part series on using DBT and DuckDB</p>
+<ul>
+<li>Part 1: <a href="./dbt_hello_world_part_1_setup.html">Setup
+Environment</a></li>
+<li>Part 2: <a href="./dbt_hello_world_part_2_pipeline.html">Build the
+Pipeline</a></li>
+<li>Part 3: Epilogue: What is DBT?</li>
+</ul>
+<p>DBT is …</p>
+<blockquote>
+<p>dbt is the best way to manage a collection of data transformations
+written in SQL or Python for analytics and data science. a required.</p>
+</blockquote>
+<p>DBT (Data Build Tool) is an open-source command-line tool that allows
+data analysts and engineers to transform and manipulate data in their
+data warehouse. It provides a framework for creating and executing
+complex SQL queries and transforms, and it helps manage the entire data
+transformation process.</p>
+<p>DBT is designed to work with a variety of data warehouses, including
+Snowflake, BigQuery, Redshift, and others. It allows users to define
+data models and transformations in a modular way, and it supports
+version control and collaboration through Git.</p>
+<p>With DBT, analysts can define reusable SQL code and maintain a
+consistent data model across their organization. They can also build
+automated testing and validation into their data pipelines, ensuring
+data accuracy and consistency. Overall, DBT helps organizations build
+data pipelines that are maintainable, scalable, and easy to
+understand.</p>
+<h2 id="what-does-dbt-do">What Does DBT Do?</h2>
+<p>Can dbt be used to load data? No, dbt does not extract or load
+data.</p>
+<p>It focuses on the transformation step only.</p>
+<blockquote>
+<p>dbt is a workflow orchestrator for SQL. In other words, it’s a fancy
+Make for data analytics. What makes dbt special is that it is the first
+workflow orchestrator that is dedicated to the SQL language. It said out
+loud what many data teams were thinking: you can get a lot done with
+SQL.</p>
+</blockquote>
+<p>dbt encourages you to massage your data in SQL rather than in, say,
+Python.</p>
+<p>Tristian Hardy Quote:</p>
+<blockquote>
+<p>“My primary MO as a data product thinker is stealing best practices
+from the world of software engineering and porting them to the world of
+data”</p>
+</blockquote>
+<blockquote>
+<p>Dbt brings the software engineering world to the SQL-savvy ELT
+developer. It treats SQL queries as models — aka a SELECT script within
+a package. All models — in dbt— represent tables and views within the
+data warehouse. These models can be versioned, and their schema and data
+can be tested — much as one would write unit tests for a piece of
+software code.</p>
+</blockquote>
+<h2 id="dbt-core-concepts">DBT Core Concepts</h2>
+<ul>
+<li>Expressing transforms with SQL select</li>
+<li>Automatically build the DAG with ref(s)</li>
+<li>Tests ensure model accuracy</li>
+<li>Documentation is accessible and easily updated</li>
+<li>Use macros to write reusable SQL</li>
+</ul>
+<h1 id="why-is-dbt-popular">Why is DBT Popular?</h1>
+<blockquote>
+<p>“standardizing their SQL transformation layers on dbt as they moved
+their data warehousing to the cloud.” dbt is the framework for modern
+cloud data warehouse development. It lets you build out a new kind of
+data pipeline that was never practical before. All while embracing
+today’s best data practices: encapsulate business logic, check it into
+git, test your data, connect it in a DAG But dbt exists today for a
+reason. Cloud data warehouses demanded a new way of working. dbt met
+that need by doing all-in on SQL. The result is pretty cool.</p>
+</blockquote>
+<blockquote>
+<p>These talks reflect the implicit ethos behind Snowflake and dbt: Our
+problems aren’t new, we don’t want to reimagine, reinvent, or
+revolutionize how we work to solve them, and we don’t want to be hit in
+the face with new innovations. We just want the same tools we’ve always
+had—a database and some SQL—with some modern new magic quietly tucked
+behind them.</p>
+</blockquote>
+<h2 id="why-would-i-use-dbt">Why Would I Use DBT?</h2>
+<ul>
+<li><p>A small company can’t afford those tools (e.g., Informatica, SQL
+Server Integration Services) – And they dont want to use
+Microsoft</p></li>
+<li><p>Want to allow analysts who know only SQL to build transform
+pipelines – analysts can build their own data pipelines, allowing them
+to work like software engineers</p></li>
+<li><p>Want version control, unit testing, environment handling</p></li>
+<li><p>Don’t want to use more expensive tools, or GUI tools</p></li>
+<li><p>can use SQL to scale out complex data modeling operations on
+modern cloud parallel SQL engines</p></li>
+</ul>
+<h2 id="role-in-analytics">Role in Analytics</h2>
+<ul>
+<li>why would we use dbt?</li>
+</ul>
+<p>DBT plays a critical role in an enterprise analytics pipeline by
+providing a scalable and maintainable way to transform and manipulate
+data in a data warehouse. Here are some specific ways that DBT can
+support an analytics pipeline:</p>
+<p>Transforming and modeling data: DBT allows data analysts and
+engineers to define data models and transformations in a modular way
+using SQL, making it easy to build complex data pipelines. DBT also
+supports incremental loads, allowing analysts to quickly update their
+data without having to reprocess the entire dataset.</p>
+<p>Data validation and testing: DBT has built-in support for automated
+testing and validation, allowing analysts to ensure data accuracy and
+consistency. DBT can automatically run tests on data models and
+transformations as part of a continuous integration and deployment
+(CI/CD) pipeline.</p>
+<p>Collaboration and version control: DBT integrates with Git, allowing
+analysts to collaborate on data models and transformations using a
+familiar version control system. This makes it easy to track changes to
+data pipelines over time and maintain a consistent codebase.</p>
+<p>Documentation and lineage tracking: DBT includes built-in
+documentation features that allow analysts to document data models,
+transformations, and pipelines, making it easier for other team members
+to understand the data and how it’s transformed. DBT also supports
+lineage tracking, allowing analysts to track data from its source to its
+destination and ensure data quality.</p>
+<p>Overall, DBT provides a scalable and maintainable way to transform
+and manipulate data in a data warehouse, making it an essential tool for
+enterprise analytics pipelines.</p>
+<h3 id="what-does-dbt-replace">what does DBT replace?</h3>
+<p>DBT is not designed to replace any specific tool or technology, but
+rather to complement and enhance existing data warehousing and analytics
+tools. DBT can be used alongside ETL tools, such as Apache Airflow or
+Apache Nifi, and data visualization tools, such as Tableau or Looker, to
+provide a more complete data analytics solution.</p>
+<p>However, DBT does offer some unique features that can replace certain
+manual or ad-hoc data transformation processes. For example, DBT can
+replace custom SQL scripts that are used to transform data, as it
+provides a more modular and reusable way to define data transformations.
+DBT also provides a more scalable way to transform data compared to
+traditional ETL tools, which may require significant maintenance and
+updates as the data pipeline grows in complexity.</p>
+<p>Overall, DBT is a powerful tool that can enhance and streamline
+existing data analytics pipelines, but it’s not designed to replace any
+specific tool or technology outright.</p>
+<h3
+id="we-want-to-transform-the-raw-data-into-a-shape-thats-ready-for-analytics">We
+want to transform the raw data into a shape that’s ready for
+analytics</h3>
+<p>The solution: transform the raw data into a shape that’s ready for
+analytics. At the time, there were only two widely-used options: 1.
+Looker’s Persistent Derived Tables 2. Get a data engineer involved</p>
+<p>However: DBT may replace a system that has a lot of transforms in
+Looker (As PDTs)</p>
+<h1 id="how-do-you-get-started-with-dbt">How Do You Get Started with
+DBT?</h1>
+<h2 id="anatomy-of-a-dbt-project">Anatomy of a DBT Project</h2>
+<ul>
+<li>core files</li>
+<li>directory structure</li>
+<li>configuring a dbt project</li>
+<li>connecting to databases</li>
+</ul>
+<p>A DBT project is typically organized into several folders and files,
+each with a specific purpose. Here is a breakdown of the typical
+structure of a DBT project:</p>
+<ol type="1">
+<li><p>Models: This folder contains the SQL code that defines data
+models and transformations. Each model is typically defined in a
+separate SQL file.</p></li>
+<li><p>Data: This folder contains any data files or SQL scripts needed
+to support data modeling and transformation.</p></li>
+<li><p>Macros: This folder contains reusable SQL code that can be called
+from data models or transformations.</p></li>
+<li><p>Analysis: This folder contains SQL scripts that perform data
+analysis or generate reports.</p></li>
+<li><p>Tests: This folder contains SQL scripts that test the validity of
+data models or transformations.</p></li>
+<li><p>dbt_project.yml: This file defines the configuration settings for
+the DBT project, such as the target database and credentials, and other
+project-specific settings.</p></li>
+<li><p>profiles.yml: This file contains the database connection
+information, such as the host, username, password, and database
+name.</p></li>
+<li><p>Documentation: This folder contains documentation generated by
+DBT about the data models, tests, and macros defined in the
+project.</p></li>
+</ol>
+<p>By organizing a DBT project in this way, it becomes easier to manage
+and maintain data pipelines, collaborate with other team members, and
+implement automated testing and validation.</p>
+<h2 id="core-concepts-in-dbt-data-modeling">Core Concepts in DBT Data
+Modeling</h2>
+<ul>
+<li>Data Model – what is it?</li>
+<li>[ TODO: Diagram HERE ]</li>
+</ul>
+<p>This is a nice article:</p>
+<p>https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/</p>
+<p><img src="https://www.getdbt.com/ui/img/guides/analytics-engineering/intermediate_data_models.png" width="50%" height="50%" /></p>
+<p>A DBT data model is a SQL query that defines a specific view of data
+in a data warehouse. The data model can include joins, filters,
+aggregations, and other transformations that shape the data into a
+format that’s easier to work with for downstream analysis and
+reporting.</p>
+<p>DBT models are defined using SQL syntax and can be composed of other
+models or database tables. Models are defined in separate SQL files, and
+DBT provides a mechanism for organizing models into a modular
+structure.</p>
+<p>DBT models are incremental, which means that DBT only processes the
+new or changed data since the last time the model was run. This makes
+DBT models more efficient than traditional ETL processes that require
+processing all of the data each time.</p>
+<p>DBT data models are part of a larger data pipeline that transforms
+raw data into a format that’s more useful for data analysis and
+reporting. By using DBT to define data models, analysts can build
+complex data pipelines that are modular, maintainable, and easy to test
+and validate.</p>
+<h1 id="summary">Summary</h1>
+<p>In this blog post we gave you an overview of DBT and then showed how
+to build a simple “Hello World”-style of application. For more
+information on DBT, check out their documentation. For more information
+on cloud infrastructure, check out the rest of the articles in our
+blog.</p>
+<p>We also offer private workshops for companies on topics such as
+creating and running DBT pipelines, please feel free to reach out if
+you’d like to discuss attending one of our workshops.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

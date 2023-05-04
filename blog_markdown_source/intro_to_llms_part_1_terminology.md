@@ -23,7 +23,7 @@ Series:
 
 * [Core Concepts and Terminology in LLMs](intro_to_llms_part_1_terminology.html)
 * [LLMs and Enterprise Applications](intro_to_llms_part_2_applications.html)
-* [Model Training and Management in LLMs](intro_to_llms_part_1_model_management.html)
+* [Model Training and Management in LLMs](intro_to_llms_part_3_model_management.html)
 
 # What are Large Language Models (LLMs)?
 

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>An Introduction to Large Language Models (LLMs)</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">An Introduction to Large Language Models (LLMs)</h1>
+<p class="subtitle">Core Concepts and Terminology</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#early-target-use-cases-for-llms"
+id="toc-early-target-use-cases-for-llms">Early Target Use Cases for
+LLMs</a>
+<ul>
+<li><a href="#example-claims-processing"
+id="toc-example-claims-processing">Example: Claims Processing</a></li>
+</ul></li>
+<li><a href="#implementing-llms-in-applications"
+id="toc-implementing-llms-in-applications">Implementing LLMs in
+Applications</a>
+<ul>
+<li><a href="#options-for-building-llm-applications"
+id="toc-options-for-building-llm-applications">Options for Building LLM
+Applications</a></li>
+<li><a href="#model-variations-in-llms"
+id="toc-model-variations-in-llms">Model Variations in LLMs</a></li>
+<li><a href="#building-a-question-answer-system-with-langchain"
+id="toc-building-a-question-answer-system-with-langchain">Building a
+Question / Answer System with LangChain</a></li>
+<li><a href="#natural-language-dataset-query-with-llms"
+id="toc-natural-language-dataset-query-with-llms">Natural Language
+Dataset Query with LLMs</a></li>
+<li><a href="#llms-agents-and-tools"
+id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this series:</p>
+<blockquote>
+<p>To understand what LLMs are</p>
+</blockquote>
+<p>The intended audience for this series is:</p>
+<blockquote>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
+</blockquote>
+<p>Series:</p>
+<ul>
+<li><a href="intro_to_llms_part_1_terminology.html">Core Concepts and
+Terminology in LLMs</a></li>
+<li><a href="intro_to_llms_part_2_applications.html">LLMs and Enterprise
+Applications</a></li>
+<li><a href="intro_to_llms_part_3_model_management.html">Model Training
+and Management in LLMs</a></li>
+</ul>
+<h1 id="early-target-use-cases-for-llms">Early Target Use Cases for
+LLMs</h1>
+<p>Overall, labor-intensive tasks in an insurance company tend to be
+those that</p>
+<p>require significant amounts of manual effort, analysis, and
+communication.</p>
+<p>As such, many companies are investing in automation and other
+technologies to streamline these processes and reduce the workload on
+human staff.</p>
+<p>The insurance industry is a great example of an industry that has
+many labor intensive tasks.</p>
+<p>Here are a few examples:</p>
+<ul>
+<li>Claims processing</li>
+<li>Underwriting</li>
+<li>Customer service</li>
+<li>Compliance</li>
+</ul>
+<h2 id="example-claims-processing">Example: Claims Processing</h2>
+<ul>
+<li>todo: link QA demo notebook</li>
+</ul>
+<p>This involves verifying the accuracy of submitted claims, reviewing
+policy coverage and terms, (QA) and determining the appropriate payout
+amount. (QA) Claims processing often requires a significant amount of
+manual data entry, (Data Entry) analysis, and communication with
+(Document Generation) policyholders, medical professionals, and other
+stakeholders.</p>
+<p>QA Question answer Data Entry “enter the data from this person’s file
+into this template” Document Generation Similar to office 365 demo video
+examples “write a letter to the policyholder about their claim that
+approves/denies the claim” “create a CSV file with the medical history
+of the patient to send to the medical professional”</p>
+<h1 id="implementing-llms-in-applications">Implementing LLMs in
+Applications</h1>
+<h2 id="options-for-building-llm-applications">Options for Building LLM
+Applications</h2>
+<p>LangChain Open Source Python Library Can Use multiple Models (OpenAI,
+or Local) Google Generative AI Studio closed source Built into GCP
+Prompt Engineering Workbench Tons of emerging libraries, really…</p>
+<h2 id="model-variations-in-llms">Model Variations in LLMs</h2>
+<p>Models</p>
+<ol type="1">
+<li>Use a Pre-Trained LLM</li>
+<li>In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing
+LLM</li>
+<li>Use Ray/DGX to Finetune models</li>
+</ol>
+<h2 id="building-a-question-answer-system-with-langchain">Building a
+Question / Answer System with LangChain</h2>
+<ul>
+<li>discuss, link notebook</li>
+</ul>
+<p>Required Tooling LangChain VectorStore Custom Corpus Something to ask
+questions about LLM OpenAI Other local model</p>
+<p>https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb</p>
+<h3 id="what-is-langchain">What is LangChain?</h3>
+<p>what what?</p>
+<p>Use Cases Personal Assistants (Agents) Autonomous Agents Agent
+Simulations Question Answering over Docs Chatbots Querying Tabular Data
+Code Understanding Interacting with APIs Summarization Extraction
+Evaluation</p>
+<p>Models supported:</p>
+<p>AI21 Aleph Alpha Azure OpenAI Banana CerebriumAI Cohere DeepInfra
+ForefrontAI GooseAI GPT4All Hugging Face Hub Hugging Face Local
+Pipelines Llama-cpp Manifest Modal NLP Cloud OpenAI Petals
+PredictionGuard PromptLayer OpenAI Replicate Runhouse SageMakerEndpoint
+StochasticAI Writer</p>
+<h2 id="natural-language-dataset-query-with-llms">Natural Language
+Dataset Query with LLMs</h2>
+<p>Natural Language Dataset Query with LLMs</p>
+<p>Querying Tabular Stores with NL:
+https://python.langchain.com/en/latest/use_cases/tabular.html Using
+Chains to Query APIs
+https://python.langchain.com/en/latest/use_cases/apis.html Using NL to
+Query SQL Databases
+https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
+https://github.com/hodgesmr/LangChain-Data-Demo</p>
+<h3 id="task-composability">Task Composability</h3>
+<p>Consider the “talk-to-your-data” use case where we want to connect to
+a database and query this database in natural language. Imagine a credit
+card transaction table. You want to ask things like: “How many unique
+merchants are there in Phoenix and what are their names?” and your
+database will return: “There are 9 unique merchants in Phoenix and they
+are …”.</p>
+<p>One way to do this is to write a program that performs the following
+sequence of tasks: Task 1: convert natural language input from user to
+SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL
+executor] Task 3: convert the SQL result into a natural language
+response to show user [LLM]</p>
+<h3
+id="querying-pandas-dataframes-with-natural-language-example-sketch">Querying
+Pandas Dataframes with Natural Language Example: Sketch</h3>
+<p>Sketch is an AI code-writing assistant for pandas users that
+understands the context of your data, greatly improving the relevance of
+suggestions. Sketch is usable in seconds and doesn’t require adding a
+plugin to your IDE.</p>
+<p>Data Catalogging: General tagging (eg. PII identification) Metadata
+generation (names and descriptions) Data Engineering: Data cleaning and
+masking (compliance) Derived feature creation and extraction Data
+Analysis: Data questions Data visualization</p>
+<h2 id="llms-agents-and-tools">LLMs, Agents, and Tools</h2>
+<p>Re-write:</p>
+<pre><code>Why do LLMs need to use Tools?
+One of the most common challenges with LLMs is overcoming the lack of recency and specificity in their training data - answers can be out of date, and they are prone to hallucinations given the huge variety in their knowledge base. Tools are a great method of allowing an LLM to answer within a controlled context that draws on your existing knowledge bases and internal APIs - instead of trying to prompt engineer the LLM all the way to your intended answer, you allow it access to tools that it calls on dynamically for info, parses, and serves to customer.
+Providing LLMs access to tools can enable them to answer questions with context directly from search engines, APIs or your own databases. Instead of answering directly, an LLM with access to tools can perform intermediate steps to gather relevant information. </code></pre>
+<p>GPT-Plugins —- link page</p>
+</body>
+</html>

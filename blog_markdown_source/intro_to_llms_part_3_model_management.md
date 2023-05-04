@@ -3,7 +3,7 @@ layout: post
 published-on: March 27th 2023
 author: Josh Patterson
 title: An Introduction to Large Language Models (LLMs)
-subtitle: Core Concepts and Terminology
+subtitle: Part 3 - Model Training and Management in LLMs
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg

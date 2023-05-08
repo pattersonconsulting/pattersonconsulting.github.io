@@ -112,9 +112,56 @@ There is reason to believe this will all be very accessible on consumer grade ha
 1GB == 1B paramters
 
 
-# General Architecture of LLM Applications
 
 
-diagram here
 
+
+# Early Developments in the Evolution of Large Language Models
+
+todo
+
+## Closed Source vs Open Source Models
+
+* todo
+
+## Trends in Model Parameter Sizes
+
+* todo
+
+
+## Specializing Smaller Models for Specific Performance
+
+[ICML 2023] Specializing Smaller Language Models towards Multi-Step Reasoning.
+
+https://arxiv.org/abs/2301.12726
+
+```
+We show that such abilities can, in fact, be distilled down from GPT3.5 (≥ 175B) to T5 variants (≤ 11B)
+
+. We propose
+model specialization, to specialize the model’s
+ability towards a target task. The hypothesis is
+that large models (commonly viewed as larger
+than 100B) have strong modeling power, but are
+spread on a large spectrum of tasks. Small models (commonly viewed as smaller than 10B) have
+limited model capacity, but if we concentrate their
+capacity on a specific target task, the model can
+achieve a decent improved performance
+```
+
+https://github.com/FranxYao/FlanT5-CoT-Specialization
+
+
+Smaller models performing
+
+https://albertoromgar.medium.com/the-era-of-large-ai-models-is-over-a5c9d7d804d4
+
+```
+Don’t conflate the reduced size of these models with them being inferior performance-wise: LLaMA 13B benchmark results are comparable to GPT-3 175B despite the latter being 13x larger. Three years have sufficed to improve the state-of-the-art on variables other than size (e.g., finetuning techniques, data quality, or hardware-software optimizations) so that the largest models of 2020 will be eventually dwarfed by the efficiency of much smaller new ones.
+
+https://twitter.com/GuillaumeLample/status/1629151231800115202
+```
+
+
+# Summary
 

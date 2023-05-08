@@ -171,23 +171,30 @@ pandas, dataframe, whl, pip, anaconda, dependency" />
 <body>
 <header id="title-block-header">
 <h1 class="title">An Introduction to Large Language Models (LLMs)</h1>
-<p class="subtitle">Core Concepts and Terminology</p>
+<p class="subtitle">Part 2 - LLMs and Enterprise Applications</p>
 <p class="author">Josh Patterson</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#early-target-use-cases-for-llms"
-id="toc-early-target-use-cases-for-llms">Early Target Use Cases for
-LLMs</a>
+<li><a href="#profiling-use-cases-for-llms"
+id="toc-profiling-use-cases-for-llms">Profiling Use Cases for LLMs</a>
 <ul>
 <li><a href="#example-claims-processing"
 id="toc-example-claims-processing">Example: Claims Processing</a></li>
+</ul></li>
+<li><a href="#langchain" id="toc-langchain">LangChain</a>
+<ul>
+<li><a href="#langchain-thoughts" id="toc-langchain-thoughts">LangChain
+Thoughts</a></li>
 </ul></li>
 <li><a href="#implementing-llms-in-applications"
 id="toc-implementing-llms-in-applications">Implementing LLMs in
 Applications</a>
 <ul>
+<li><a href="#general-architecture-of-llm-applications"
+id="toc-general-architecture-of-llm-applications">General Architecture
+of LLM Applications</a></li>
 <li><a href="#options-for-building-llm-applications"
 id="toc-options-for-building-llm-applications">Options for Building LLM
 Applications</a></li>
@@ -223,8 +230,7 @@ Applications</a></li>
 <li><a href="intro_to_llms_part_3_model_management.html">Model Training
 and Management in LLMs</a></li>
 </ul>
-<h1 id="early-target-use-cases-for-llms">Early Target Use Cases for
-LLMs</h1>
+<h1 id="profiling-use-cases-for-llms">Profiling Use Cases for LLMs</h1>
 <p>Overall, labor-intensive tasks in an insurance company tend to be
 those that</p>
 <p>require significant amounts of manual effort, analysis, and
@@ -256,8 +262,33 @@ into this template” Document Generation Similar to office 365 demo video
 examples “write a letter to the policyholder about their claim that
 approves/denies the claim” “create a CSV file with the medical history
 of the patient to send to the medical professional”</p>
+<h1 id="langchain">LangChain</h1>
+<p>https://blog.langchain.dev/structured-tools/</p>
+<p>https://github.com/kyrolabs/awesome-langchain</p>
+<p>https://www.pinecone.io/learn/langchain-intro/</p>
+<p>https://www.pinecone.io/learn/langchain-agents/</p>
+<p>https://blog.langchain.dev/announcing-our-10m-seed-round-led-by-benchmark/</p>
+<h2 id="langchain-thoughts">LangChain Thoughts</h2>
+<p>https://medium.com/<span class="citation"
+data-cites="gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581">@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581</span></p>
+<pre><code>Langchain is on a productive and crucially important path, but things are still quite raw. This is to be expected. The github repo for Langchain began in October ‘22.
+
+New models will inevitably interact with these chains and their ‘agents’ in new ways such that the chain infrastructure will need to evolve with the models over time.
+
+The use of natural language to interact with Python function return values is intriguing. The benefit of this is not having to tightly couple APIs, the downside is the llm is in a trial-and-error mode with the tools.
+
+It seems clear that agent instructions (the prompts) need to be specialized to the type of automation needed. This is natural, if we hired a human to perform the task of scheduling they would need instructions.
+Overall…
+A fusion of functional code and LLMs is inevitable. Both must work together to create automation pathways.
+
+The use of natural language in managing programmatic functions (‘tools’) seems promising however once the llm has found the correct calling format it should remember it rather than repeating the trial&amp;error each time.
+
+A chat model is fine so long as it considers at least 3-parties in the conversation: a) the customer/user, b) the chatbot, and c) the business representative</code></pre>
 <h1 id="implementing-llms-in-applications">Implementing LLMs in
 Applications</h1>
+<h2 id="general-architecture-of-llm-applications">General Architecture
+of LLM Applications</h2>
+<p>diagram here</p>
 <h2 id="options-for-building-llm-applications">Options for Building LLM
 Applications</h2>
 <p>LangChain Open Source Python Library Can Use multiple Models (OpenAI,

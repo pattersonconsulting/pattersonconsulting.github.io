@@ -25,7 +25,7 @@ Series:
 * [LLMs and Enterprise Applications](intro_to_llms_part_2_applications.html)
 * [Model Training and Management in LLMs](intro_to_llms_part_3_model_management.html)
 
-# Early Target Use Cases for LLMs
+# Profiling Use Cases for LLMs
 
 Overall, labor-intensive tasks in an insurance company tend to be those that 
 
@@ -71,7 +71,48 @@ examples
 “create a CSV file with the medical history of the patient to send to the medical professional”
 
 
+
+# LangChain
+
+https://blog.langchain.dev/structured-tools/
+
+https://github.com/kyrolabs/awesome-langchain
+
+https://www.pinecone.io/learn/langchain-intro/
+
+https://www.pinecone.io/learn/langchain-agents/
+
+
+https://blog.langchain.dev/announcing-our-10m-seed-round-led-by-benchmark/
+
+## LangChain Thoughts
+
+https://medium.com/@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581
+```
+Langchain is on a productive and crucially important path, but things are still quite raw. This is to be expected. The github repo for Langchain began in October ‘22.
+
+New models will inevitably interact with these chains and their ‘agents’ in new ways such that the chain infrastructure will need to evolve with the models over time.
+
+The use of natural language to interact with Python function return values is intriguing. The benefit of this is not having to tightly couple APIs, the downside is the llm is in a trial-and-error mode with the tools.
+
+It seems clear that agent instructions (the prompts) need to be specialized to the type of automation needed. This is natural, if we hired a human to perform the task of scheduling they would need instructions.
+Overall…
+A fusion of functional code and LLMs is inevitable. Both must work together to create automation pathways.
+
+The use of natural language in managing programmatic functions (‘tools’) seems promising however once the llm has found the correct calling format it should remember it rather than repeating the trial&error each time.
+
+A chat model is fine so long as it considers at least 3-parties in the conversation: a) the customer/user, b) the chatbot, and c) the business representative
+```
+
+
 # Implementing LLMs in Applications
+
+
+
+## General Architecture of LLM Applications
+
+
+diagram here
 
 
 ## Options for Building LLM Applications

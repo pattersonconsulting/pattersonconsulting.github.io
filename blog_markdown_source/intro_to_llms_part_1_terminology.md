@@ -37,6 +37,10 @@ todo
 
 https://www.theatlantic.com/technology/archive/2023/01/artificial-intelligence-ai-chatgpt-dall-e-2-learning/672754/
 
+emergent abilities
+
+https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/
+
 LLMs having their "stable diffusion"-moment
 
 https://simonwillison.net/2023/Mar/11/llama/

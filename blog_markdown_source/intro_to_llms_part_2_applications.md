@@ -27,6 +27,11 @@ Series:
 
 # Profiling Use Cases for LLMs
 
+## Issues in Integrating LLMs into Applications
+https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications
+
+
+
 Overall, labor-intensive tasks in an insurance company tend to be those that 
 
 require significant amounts of manual effort, analysis, and communication. 

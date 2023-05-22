@@ -1,356 +1,708 @@
-<section data-type="appendix" id="appendix_ai" xmlns="http://www.w3.org/1999/xhtml">
-<h1>What Is Artificial Intelligence?</h1>
-
-<blockquote data-type="epigraph">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Appendix A - What is Artificial Intelligence</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Appendix A - What is Artificial Intelligence</h1>
+<p class="subtitle">O’Reilly - Deep Learning - A Practitioner’s
+Approach</p>
+<p class="author">Josh Patterson</p>
+</header>
+<section id="appendix_ai" data-type="appendix"
+data-xmlns="http://www.w3.org/1999/xhtml">
+<h1 id="what-is-artificial-intelligence">What Is Artificial
+Intelligence?</h1>
+<blockquote>
 <p>Cooper: Hey TARS, what's your honesty parameter?</p>
-
 <p>TARS: 90 percent.</p>
-
 <p>Cooper: 90 percent?</p>
-
-<p>TARS: Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.</p>
-
+<p>TARS: Absolute honesty isn't always the most diplomatic nor the
+safest form of communication with emotional beings.</p>
 <p>Cooper: Okay, 90 percent it is.</p>
-
-<p data-type="attribution">Scene from the movie <em>Interstellar</em></p>
+<p>Scene from the movie <em>Interstellar</em></p>
 </blockquote>
-
-<p>Artificial <a contenteditable="false" data-primary="artificial intelligence (AI)" data-type="indexterm" id="artint10">&nbsp;</a><a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="history of" data-type="indexterm">&nbsp;</a>Intelligence (AI) is a discipline as old as the study of philosophy itself. It has evolved over time, yet we still struggle to find its place in society, let alone the existential implications for the human race itself. One of the most salient written lines about the beginnings of AI was by author Pamela McCorduck when she wrote that AI began with “an ancient wish to forge the gods.”<span contenteditable="false" data-type="footnote">McCorduck. 2004. <em>Machines Who Think</em> (2nd ed.).</span></p>
-
-<p>While McCorduck had high-minded prose for the topic, much of marketing today plays on such aspirational themes yet is actually promoting far simpler functions in terms of business results. Deep learning comes up in the context of discussion of AI regularly, and it becomes difficult to have a directed conversation on the topic.</p>
-
-<p>We added this appendix because the practitioner commonly needs to have a grounded conversation with customers, executives, and managers about what deep learning can do for them and how it fits into the AI landscape. The themes in this appendix are a mixture of a history of the discipline of AI (for context) and discussions we have had with customers and industry peers. We seek to provide you, the practitioner, with the tools to reset the narrative around deep learning, communicate realistic expectations with stakeholders in projects, and to put them on ground that will better support their deep learning efforts going forward. Simply put, the narrative around AI has become overhyped and eventually the market will correct.</p>
-
-<p>This appendix is also meant to be fun and thought provoking in a way that stokes the imagination of the researcher or practitioner such that we can still dream but with our feet on the ground. We'll work through some basic definitions, provides a short history of the topic of AI, and then look forward to where this all could go. Hopefully we'll help folks avoid the pitfalls of previous cycles of AI interest and better support their deep learning projects to be more successful through responsibly setting goals and expectations.​</p>
-
-<section data-type="sect1">
+<p>Artificial <span id="artint10"> </span> Intelligence (AI) is a
+discipline as old as the study of philosophy itself. It has evolved over
+time, yet we still struggle to find its place in society, let alone the
+existential implications for the human race itself. One of the most
+salient written lines about the beginnings of AI was by author Pamela
+McCorduck when she wrote that AI began with “an ancient wish to forge
+the gods.”<span contenteditable="false" data-type="footnote">McCorduck.
+2004. <em>Machines Who Think</em> (2nd ed.).</span></p>
+<p>While McCorduck had high-minded prose for the topic, much of
+marketing today plays on such aspirational themes yet is actually
+promoting far simpler functions in terms of business results. Deep
+learning comes up in the context of discussion of AI regularly, and it
+becomes difficult to have a directed conversation on the topic.</p>
+<p>We added this appendix because the practitioner commonly needs to
+have a grounded conversation with customers, executives, and managers
+about what deep learning can do for them and how it fits into the AI
+landscape. The themes in this appendix are a mixture of a history of the
+discipline of AI (for context) and discussions we have had with
+customers and industry peers. We seek to provide you, the practitioner,
+with the tools to reset the narrative around deep learning, communicate
+realistic expectations with stakeholders in projects, and to put them on
+ground that will better support their deep learning efforts going
+forward. Simply put, the narrative around AI has become overhyped and
+eventually the market will correct.</p>
+<p>This appendix is also meant to be fun and thought provoking in a way
+that stokes the imagination of the researcher or practitioner such that
+we can still dream but with our feet on the ground. We'll work through
+some basic definitions, provides a short history of the topic of AI, and
+then look forward to where this all could go. Hopefully we'll help folks
+avoid the pitfalls of previous cycles of AI interest and better support
+their deep learning projects to be more successful through responsibly
+setting goals and expectations.​</p>
+<section id="the-story-so-far" data-type="sect1">
 <h1>The Story So Far</h1>
-
-<p>The main topic of this book, deep learning, is constantly attached to the term “Artificial Intelligence” in media and marketing. Definitions are fluid at best and make it difficult to have a discussion on the topic with other practitioners or stakeholders. Marketing departments run with the theme of the current hype cycle. Here are some themes from the not-too-distant past:</p>
-
+<p>The main topic of this book, deep learning, is constantly attached to
+the term “Artificial Intelligence” in media and marketing. Definitions
+are fluid at best and make it difficult to have a discussion on the
+topic with other practitioners or stakeholders. Marketing departments
+run with the theme of the current hype cycle. Here are some themes from
+the not-too-distant past:</p>
 <ul>
-	<li>Smart grid</li>
-	<li>The cloud</li>
-	<li>Big data</li>
+<li>Smart grid</li>
+<li>The cloud</li>
+<li>Big data</li>
 </ul>
-
-<p>When we work in domains like these or in deep learning, as practitioners we need to&nbsp;​delineate what is real from what is marketing hype. That begins with understanding the history of a subject and having solid definitions from which to build. Let's begin by reviewing what we consider to be deep learning, and then we'll dive into the topic of defining AI.</p>
-
-<section data-type="sect2">
+<p>When we work in domains like these or in deep learning, as
+practitioners we need to ​delineate what is real from what is marketing
+hype. That begins with understanding the history of a subject and having
+solid definitions from which to build. Let's begin by reviewing what we
+consider to be deep learning, and then we'll dive into the topic of
+defining AI.</p>
+<section id="defining-deep-learning" data-type="sect2">
 <h2>Defining Deep Learning</h2>
-
-<p>In <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="vs. deep learning" data-secondary-sortas="deep learning" data-type="indexterm">&nbsp;</a><a contenteditable="false" data-primary="deep learning" data-secondary="vs. artificial intelligence" data-secondary-sortas="artificial intelligence" data-type="indexterm">&nbsp;</a>Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="#review_of_ml">#review_of_ml</a> and <a data-type="xref" data-xrefstyle="select:labelnumber" href="#fundamentalls_of_deep_networks">#fundamentalls_of_deep_networks</a>, we laid out a working definition for deep learning that is described as neural networks with the following properties:</p>
-
+<p>In   Chapters <a href="#review_of_ml">#review_of_ml</a> and <a
+href="#fundamentalls_of_deep_networks">#fundamentalls_of_deep_networks</a>,
+we laid out a working definition for deep learning that is described as
+neural networks with the following properties:</p>
 <ul>
-	<li>More neurons than previous neural networks</li>
-	<li>More complex ways of connecting layers</li>
-	<li>“Cambrian-like” explosion of computing power to train</li>
-	<li>Automatic feature learning</li>
+<li>More neurons than previous neural networks</li>
+<li>More complex ways of connecting layers</li>
+<li>“Cambrian-like” explosion of computing power to train</li>
+<li>Automatic feature learning</li>
 </ul>
-
-<p>These networks perform the same modeling functions as other machine learning models (regression, classification) but have also been shown to be good at tasks such as the following:</p>
-
-<ul class="pagebreak-before">
-	<li>Generative modeling (e.g., generating art and text)</li>
-	<li>Speech-recognition technology</li>
-	<li>Image-recognition technology</li>
+<p>These networks perform the same modeling functions as other machine
+learning models (regression, classification) but have also been shown to
+be good at tasks such as the following:</p>
+<ul>
+<li>Generative modeling (e.g., generating art and text)</li>
+<li>Speech-recognition technology</li>
+<li>Image-recognition technology</li>
 </ul>
-
-<p>Another key driving feature of deep learning is that it is able to automatically learn features (as opposed to hand-engineering features) from data in a domain-agnostic fashion. These capabilities of deep learning are driving many of the new technology applications and have stimulated the imagination of many folks beyond technology circles. By itself, however, deep learning does not have higher-level functions such as "automatically understanding the most interesting question to ask a dataset," let alone any type of sentient operation.</p>
+<p>Another key driving feature of deep learning is that it is able to
+automatically learn features (as opposed to hand-engineering features)
+from data in a domain-agnostic fashion. These capabilities of deep
+learning are driving many of the new technology applications and have
+stimulated the imagination of many folks beyond technology circles. By
+itself, however, deep learning does not have higher-level functions such
+as "automatically understanding the most interesting question to ask a
+dataset," let alone any type of sentient operation.</p>
 </section>
-
-<section data-type="sect2">
+<section id="defining-artificial-intelligence" data-type="sect2">
 <h2>Defining Artificial Intelligence</h2>
-
-<p>The <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="definition of term" data-type="indexterm">&nbsp;</a><a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="history of" data-type="indexterm">&nbsp;</a>history of AI is fraught with myths, stories, and overzealous marketing departments trying to tap into the latest technology narrative. To define AI, we need some context around the history of the study of intelligence, modern arguments, and how the discipline has evolved over time.</p>
-
-<p>Using that line as our embarkation point, let's explore how the discipline got its start and then evolved as an industry over the past 60 years.</p>
-
+<p>The   history of AI is fraught with myths, stories, and overzealous
+marketing departments trying to tap into the latest technology
+narrative. To define AI, we need some context around the history of the
+study of intelligence, modern arguments, and how the discipline has
+evolved over time.</p>
+<p>Using that line as our embarkation point, let's explore how the
+discipline got its start and then evolved as an industry over the past
+60 years.</p>
 <section data-type="sect3">
-<h3>The study of intelligence</h3>
-
-<p>The <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="study of intelligence" data-type="indexterm">&nbsp;</a>study of intelligence was formally initiated in 1956 at Dartmouth yet is at least 2,000 years old. The field is based on understanding intelligent entities and studying topics such as these:</p>
-
+<h3 id="the-study-of-intelligence">The study of intelligence</h3>
+<p>The  study of intelligence was formally initiated in 1956 at
+Dartmouth yet is at least 2,000 years old. The field is based on
+understanding intelligent entities and studying topics such as
+these:</p>
 <ul>
-	<li>Seeing</li>
-	<li>Learning</li>
-	<li>Remembering</li>
-	<li>Reasoning</li>
+<li>Seeing</li>
+<li>Learning</li>
+<li>Remembering</li>
+<li>Reasoning</li>
 </ul>
-
-<p>These topics are components of what we'd consider intelligent function to the capacity we have to understand intelligence (and this is a relative perspective). We can find the study of intelligence throughout history if we look for it. The list that follows presents a few of the building blocks of intelligent study over time:</p>
-
+<p>These topics are components of what we'd consider intelligent
+function to the capacity we have to understand intelligence (and this is
+a relative perspective). We can find the study of intelligence
+throughout history if we look for it. The list that follows presents a
+few of the building blocks of intelligent study over time:</p>
 <dl>
-	<dt>Philosophy (400 BC)</dt>
-	<dd>
-	<p>Philosophers began to suggest the mind as a mechanical machine that encodes knowledge in some form inside the brain.</p>
-	</dd>
-	<dt>Mathematics</dt>
-	<dd>
-	<p>Mathematicians developed the core ideas of working with statements of logic along with the groundwork for reasoning about algorithms.</p>
-	</dd>
-	<dt>Psychology</dt>
-	<dd>
-	<p>This field of study is built on the ideas that animals and humans have a brain that can process information.</p>
-	</dd>
-	<dt>Computer science</dt>
-	<dd>
-	<p>Practitioners came up with hardware, data structures, and algorithms to support reverse engineering basic components of the brain.</p>
-	</dd>
+<dt>Philosophy (400 BC)</dt>
+<dd>
+<p>Philosophers began to suggest the mind as a mechanical machine that
+encodes knowledge in some form inside the brain.</p>
+</dd>
+<dt>Mathematics</dt>
+<dd>
+<p>Mathematicians developed the core ideas of working with statements of
+logic along with the groundwork for reasoning about algorithms.</p>
+</dd>
+<dt>Psychology</dt>
+<dd>
+<p>This field of study is built on the ideas that animals and humans
+have a brain that can process information.</p>
+</dd>
+<dt>Computer science</dt>
+<dd>
+<p>Practitioners came up with hardware, data structures, and algorithms
+to support reverse engineering basic components of the brain.</p>
+</dd>
 </dl>
-
-<p>The study and application of AI techniques we see today are based on these fundamentals. We typically see the study of AI broken into a focus on either behaving or thinking in simulated intelligent systems. We see these applied in areas such as machine learning applications, basic knowledge systems, and game playing (e.g., Chess and Go).</p>
-
-<p>However, there are limitations to our implementations of intelligent study. There are still no good models of higher-order brain functions such as consciousness. Science has also yet to determine where in the brain consciousness resides. This leads some to question if consciousness is even a real function of the brain, but we'll leave that to the philosophers and computer scientists to debate.</p>
-
-<div data-type="note">
+<p>The study and application of AI techniques we see today are based on
+these fundamentals. We typically see the study of AI broken into a focus
+on either behaving or thinking in simulated intelligent systems. We see
+these applied in areas such as machine learning applications, basic
+knowledge systems, and game playing (e.g., Chess and Go).</p>
+<p>However, there are limitations to our implementations of intelligent
+study. There are still no good models of higher-order brain functions
+such as consciousness. Science has also yet to determine where in the
+brain consciousness resides. This leads some to question if
+consciousness is even a real function of the brain, but we'll leave that
+to the philosophers and computer scientists to debate.</p>
+<section id="for-further-study" data-type="note">
 <h1>For Further Study</h1>
-
-<p>One of the best books written on the subject of AI (if not the best) is Stuart Russell and Peter Norvig's <a href="http://aima.cs.berkeley.edu/"><em>Artificial Intelligence: A Modern Approach</em></a>. We can't recommend this book enough for you to get a more complete idea of the depth and history of AI.</p>
-</div>
+<p>One of the best books written on the subject of AI (if not the best)
+is Stuart Russell and Peter Norvig's <a
+href="http://aima.cs.berkeley.edu/"><em>Artificial Intelligence: A
+Modern Approach</em></a>. We can't recommend this book enough for you to
+get a more complete idea of the depth and history of AI.</p>
 </section>
-
-<section data-type="sect3">
+</section>
+<section id="cognitive-dissonance-and-modern-definitions"
+data-type="sect3">
 <h3>Cognitive dissonance and modern definitions</h3>
-
-<p>When <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="modern definitions of" data-type="indexterm" id="AImodern10">&nbsp;</a>we're dealing with a topic such as AI that ties into so many core definitions society depends on, we naturally find dissonance around setting ground truth to work from. <a href="http://oreil.ly/2sODKk2">Beau Cronin writes</a>:</p>
-
+<p>When <span id="AImodern10"> </span>we're dealing with a topic such as
+AI that ties into so many core definitions society depends on, we
+naturally find dissonance around setting ground truth to work from. <a
+href="http://oreil.ly/2sODKk2">Beau Cronin writes</a>:</p>
 <blockquote>
-<p>Like the Internet of Things, Web 2.0, and big data, AI is discussed and debated in many different contexts by people with all sorts of motives and backgrounds: academics, business types, journalists, and technologists. As with these other nebulous technologies, it’s no wonder the meaning of AI can be hard to pin down; everyone sees what they want to see.</p>
+<p>Like the Internet of Things, Web 2.0, and big data, AI is discussed
+and debated in many different contexts by people with all sorts of
+motives and backgrounds: academics, business types, journalists, and
+technologists. As with these other nebulous technologies, it’s no wonder
+the meaning of AI can be hard to pin down; everyone sees what they want
+to see.</p>
 </blockquote>
-
-<p>Part of the problem with viewpoints and defining intelligence is that we weave liberally into defining consciousness and then by extension more philosophical (e.g., "what is consciousness") and religious topics (e.g., "what is a soul?"). We're touching on some complex territory at this point and any discussion about the definition of the soul is fraught with complications. Our best maps today for the definition of intelligence are covered in regions of “Here Be Dragons.” Given that we don't understand natural intelligence, it is even more difficult to define the artificial variant.</p>
-
-<p><a href="http://bit.ly/2tUwIt5">Dr. Jason Baldridge wrote</a> on the topic of AI and machine learning and talked about how there are conflicting meanings in play around the topic:</p>
-
+<p>Part of the problem with viewpoints and defining intelligence is that
+we weave liberally into defining consciousness and then by extension
+more philosophical (e.g., "what is consciousness") and religious topics
+(e.g., "what is a soul?"). We're touching on some complex territory at
+this point and any discussion about the definition of the soul is
+fraught with complications. Our best maps today for the definition of
+intelligence are covered in regions of “Here Be Dragons.” Given that we
+don't understand natural intelligence, it is even more difficult to
+define the artificial variant.</p>
+<p><a href="http://bit.ly/2tUwIt5">Dr. Jason Baldridge wrote</a> on the
+topic of AI and machine learning and talked about how there are
+conflicting meanings in play around the topic:</p>
 <blockquote>
-<p>Regardless of any nuanced technical definition of AI, I'm pretty sure that when the public hears "artificial intelligence," they think of conscious nonbiological entities that interact with humans much as we interact with each other.</p>
-
-<p>They don't think of an expert system that can analyze a complex domain-specific problem and provide interesting courses of action, or machine learning algorithms that find fascinating patterns in heaps of data.</p>
-
-<p>Despite this, the general public seems to find it all to easy to mentally close the gap between these two very different levels of technological and scientific accomplishment on the spectrum of AI-related work.</p>
+<p>Regardless of any nuanced technical definition of AI, I'm pretty sure
+that when the public hears "artificial intelligence," they think of
+conscious nonbiological entities that interact with humans much as we
+interact with each other.</p>
+<p>They don't think of an expert system that can analyze a complex
+domain-specific problem and provide interesting courses of action, or
+machine learning algorithms that find fascinating patterns in heaps of
+data.</p>
+<p>Despite this, the general public seems to find it all to easy to
+mentally close the gap between these two very different levels of
+technological and scientific accomplishment on the spectrum of
+AI-related work.</p>
 </blockquote>
-
-<p>Dr. Baldridge goes on to define the difference between deep learning and a full artificial model of the biological brain:</p>
-
+<p>Dr. Baldridge goes on to define the difference between deep learning
+and a full artificial model of the biological brain:</p>
 <blockquote>
-<p>Despite all this progress, and for better or for worse, these are still far from sentient machines. Deep learning is inspired by the functioning of human neurons, but as far as I'm aware, artificial neural networks as yet have nothing like the architecture of meat-based intelligence</p>
+<p>Despite all this progress, and for better or for worse, these are
+still far from sentient machines. Deep learning is inspired by the
+functioning of human neurons, but as far as I'm aware, artificial neural
+networks as yet have nothing like the architecture of meat-based
+intelligence</p>
 </blockquote>
-
-<p>So, we struggle with these definitions because they are complicated and touch on many topics from many viewpoints. Let's take a step toward a better definition by segmenting the topic and breaking these segments down into simpler topics.</p>
-
-<p>Francois Chollet recently made the following <a href="http://bit.ly/2tUsJNl">salient comment on Twitter</a>:</p>
-
+<p>So, we struggle with these definitions because they are complicated
+and touch on many topics from many viewpoints. Let's take a step toward
+a better definition by segmenting the topic and breaking these segments
+down into simpler topics.</p>
+<p>Francois Chollet recently made the following <a
+href="http://bit.ly/2tUsJNl">salient comment on Twitter</a>:</p>
 <blockquote>
-<p>[A]rtificial intelligence is a poorly defined thing, to which many people attribute wildly unrealistic abilities. It's a recipe for trouble.</p>
+<p>[A]rtificial intelligence is a poorly defined thing, to which many
+people attribute wildly unrealistic abilities. It's a recipe for
+trouble.</p>
 </blockquote>
-
 <p>And then a further <a href="http://bit.ly/2uz6vhF">tweet</a>:</p>
-
 <blockquote>
-<p>Part of the problem is that some companies and journalists are hyping it up, blurring the line between sci-fi and reality. Because it sells.</p>
+<p>Part of the problem is that some companies and journalists are hyping
+it up, blurring the line between sci-fi and reality. Because it
+sells.</p>
 </blockquote>
-
-<p>Chollet goes on to say that <a href="http://bit.ly/2u05jXA">we should "define" what we're talking</a> about:</p>
-
+<p>Chollet goes on to say that <a href="http://bit.ly/2u05jXA">we should
+"define" what we're talking</a> about:</p>
 <blockquote>
-<p>When you talk about "AI", *define* what you are talking about. Make explicit what it can do, and what it can't do. Avoid brain analogies.</p>
+<p>When you talk about "AI", *define* what you are talking about. Make
+explicit what it can do, and what it can't do. Avoid brain
+analogies.</p>
 </blockquote>
-
-<p>This is sound advice and the industry needs to do a far better job of locking down these definitions.</p>
-
-<section data-type="sect4">
+<p>This is sound advice and the industry needs to do a far better job of
+locking down these definitions.</p>
+<section id="what-ai-is-not" data-type="sect4">
 <h4>What AI is not</h4>
-
-<p>Folks <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="vs. machine learning" data-secondary-sortas="machine learning" data-type="indexterm">&nbsp;</a><a contenteditable="false" data-primary="machine learning" data-secondary="vs, artificial intelligence" data-secondary-sortas="artificial intelligence" data-type="indexterm">&nbsp;</a>who claim machine learning to be AI do the entire computer science industry a disservice. Machine learning is classification and regression and in no way matches up to ephemeral aspirations of an all-knowing, self-aware system that can help the reader with their marketing problem. As Francois Chollet mentioned earlier, it's just best (for now) to avoid brain analogies.</p>
-
-<p>Many times AI is marketed as an application with all of the answers. It will not, at least not anytime soon.</p>
+<p>Folks   who claim machine learning to be AI do the entire computer
+science industry a disservice. Machine learning is classification and
+regression and in no way matches up to ephemeral aspirations of an
+all-knowing, self-aware system that can help the reader with their
+marketing problem. As Francois Chollet mentioned earlier, it's just best
+(for now) to avoid brain analogies.</p>
+<p>Many times AI is marketed as an application with all of the answers.
+It will not, at least not anytime soon.</p>
 </section>
-
-<section data-type="sect4">
+<section id="moving-the-goal-posts" data-type="sect4">
 <h4>Moving the goal posts</h4>
-
-<p>Psychologists habitually have had disdain for the metaphor of the human brain as a computer. <a href="http://bit.ly/2tABWqX">In a 2016 article</a>, Robert Epstein states:</p>
-
-<blockquote class="blockfix">
-<p>No matter how hard they try, brain scientists and cognitive psychologists will never find a copy of Beethoven’s 5th Symphony in the brain—or copies of words, pictures, grammatical rules or any other kinds of environmental stimuli.</p>
-</blockquote>
-
-<p>Unfortunately Dr. Epstein has not seen the renders in <a data-type="xref" href="#major_architectures_of_deep_networks">#major_architectures_of_deep_networks</a> of Convolutional Neural Network (CNN) filter renders. His central argument in the article is stated as:</p>
-
+<p>Psychologists habitually have had disdain for the metaphor of the
+human brain as a computer. <a href="http://bit.ly/2tABWqX">In a 2016
+article</a>, Robert Epstein states:</p>
 <blockquote>
-<p>Your brain does not process information, retrieve knowledge, or store memories. In short: your brain is not a computer.</p>
+<p>No matter how hard they try, brain scientists and cognitive
+psychologists will never find a copy of Beethoven’s 5th Symphony in the
+brain—or copies of words, pictures, grammatical rules or any other kinds
+of environmental stimuli.</p>
 </blockquote>
-
-<p>This isn't a new sentiment and has been echoed, by and large, by the disciplines outside computer science for the past 60 years. As stated in Russell and Norvig's book on AI:</p>
-
+<p>Unfortunately Dr. Epstein has not seen the renders in <a
+href="#major_architectures_of_deep_networks">#major_architectures_of_deep_networks</a>
+of Convolutional Neural Network (CNN) filter renders. His central
+argument in the article is stated as:</p>
 <blockquote>
-<p>The intellectual establishment, by and large, preferred to believe that a “machine can never do X.”</p>
+<p>Your brain does not process information, retrieve knowledge, or store
+memories. In short: your brain is not a computer.</p>
 </blockquote>
-
-<p>They go on to demonstrate examples in which AI researchers have systematically responded by demonstrating one X after another. Thus, the study of AI and definitions for the discipline have long suffered from the industry "moving the goal posts" with respect to what they really mean by "Artificial Intelligence."</p>
+<p>This isn't a new sentiment and has been echoed, by and large, by the
+disciplines outside computer science for the past 60 years. As stated in
+Russell and Norvig's book on AI:</p>
+<blockquote>
+<p>The intellectual establishment, by and large, preferred to believe
+that a “machine can never do X.”</p>
+</blockquote>
+<p>They go on to demonstrate examples in which AI researchers have
+systematically responded by demonstrating one X after another. Thus, the
+study of AI and definitions for the discipline have long suffered from
+the industry "moving the goal posts" with respect to what they really
+mean by "Artificial Intelligence."</p>
 </section>
-
-<section data-type="sect4">
+<section id="segmenting-the-definitions-of-ai" data-type="sect4">
 <h4>Segmenting the definitions of AI</h4>
-
-<p>It's useful to break down the different viewpoints of how folks talk about AI today and list them. <a href="http://oreil.ly/2sODKk2">A good writeup</a> by Beau Cronin uses the following four major segmented definitions of AI:</p>
-
+<p>It's useful to break down the different viewpoints of how folks talk
+about AI today and list them. <a href="http://oreil.ly/2sODKk2">A good
+writeup</a> by Beau Cronin uses the following four major segmented
+definitions of AI:</p>
 <ul>
-	<li>AI as interlocutor
-	<ul>
-		<li>HAL, Siri, Cortana, Watson</li>
-		<li>Conversational intelligence</li>
-		<li>Limited reasoning</li>
-	</ul>
-	</li>
-	<li>AI as android
-	<ul>
-		<li>Machine in the form of a humanoid</li>
-		<li>AI as mechanically embodied</li>
-		<li>Examples would be The Terminator or C3PO</li>
-		<li>Similar to the interlocutor but in a humanoid body</li>
-	</ul>
-	</li>
-	<li>AI as the reasoner
-	<ul>
-		<li>Early AI pioneers were drawn to more refined and high-minded tasks—playing chess, solving logical proofs, and planning complex tasks</li>
-		<li>Still struggle with tasks simple for children</li>
-	</ul>
-	</li>
-	<li>AI as the big data learner
-	<ul>
-		<li>More recent definition</li>
-		<li>Seeing many people talk about building "AI models"</li>
-	</ul>
-	</li>
+<li>AI as interlocutor
+<ul>
+<li>HAL, Siri, Cortana, Watson</li>
+<li>Conversational intelligence</li>
+<li>Limited reasoning</li>
+</ul></li>
+<li>AI as android
+<ul>
+<li>Machine in the form of a humanoid</li>
+<li>AI as mechanically embodied</li>
+<li>Examples would be The Terminator or C3PO</li>
+<li>Similar to the interlocutor but in a humanoid body</li>
+</ul></li>
+<li>AI as the reasoner
+<ul>
+<li>Early AI pioneers were drawn to more refined and high-minded
+tasks—playing chess, solving logical proofs, and planning complex
+tasks</li>
+<li>Still struggle with tasks simple for children</li>
+</ul></li>
+<li>AI as the big data learner
+<ul>
+<li>More recent definition</li>
+<li>Seeing many people talk about building "AI models"</li>
+</ul></li>
 </ul>
-
-<p>Let's now look at these segmented definitions with a critical eye.</p>
+<p>Let's now look at these segmented definitions with a critical
+eye.</p>
 </section>
-
 <section data-type="sect4">
-<h4>Critical commentary on segments</h4>
-
-<p>AI as the interlocutor and AI as the big data learner are both recent definitions due to the incorporation of many machine learning techniques into engineered commercial products. AI as the interlocutor can perform basic functions based on voice recognition. It's the combination of voice-to-text machine learning (or deep learning) and Natural Language Processing (NLP) technology to determine what the user wants to accomplish. AI as the interlocutor has limited reasoning capabilities because it typically relies on a separate system to send the voice-to-text and NLP-processed results as input. This separate system is many times as basic as a classic rule-base system or "expert system."</p>
-
-<p>Even though users might be initially entertained with conversation by the system and even fooled by its "intelligence,” they quickly realize the limitations of the interactions. Ultimately, AI as the interlocutor is a well-engineered combination of machine learning techniques that over time became just good enough to progressively be wired further into useful consumer products.</p>
-
-<p>AI as the android is an interesting embodiment of the concept yet is ultimately dependent on a network of machine learning subsystems just as the interlocutor is. AI as the reasoner is a classical implementation of AI yet has plateaued in recent years with respect to levels of industry product integration interest. It continues to be a core component in intelligent systems that wire together multiple components to produce value, as in the interlocutor example.</p>
-
-<p>"AI as the big data learner" is a troublesome use of the term that has gained popularity in the past few years (2010–2015). Many times, a marketing department will rebrand a product's use of a basic machine learning technique over customer data as "Artificial Intelligence." Worse, other times the product is doing basic business intelligence functions and is also lumped into this category. The practice of machine learning (or deep learning) alone should not be considered a type of AI. It is, however, a useful subsystem of an intelligent system.</p>
-
-<div data-type="note">
+<h4 id="critical-commentary-on-segments">Critical commentary on
+segments</h4>
+<p>AI as the interlocutor and AI as the big data learner are both recent
+definitions due to the incorporation of many machine learning techniques
+into engineered commercial products. AI as the interlocutor can perform
+basic functions based on voice recognition. It's the combination of
+voice-to-text machine learning (or deep learning) and Natural Language
+Processing (NLP) technology to determine what the user wants to
+accomplish. AI as the interlocutor has limited reasoning capabilities
+because it typically relies on a separate system to send the
+voice-to-text and NLP-processed results as input. This separate system
+is many times as basic as a classic rule-base system or "expert
+system."</p>
+<p>Even though users might be initially entertained with conversation by
+the system and even fooled by its "intelligence,” they quickly realize
+the limitations of the interactions. Ultimately, AI as the interlocutor
+is a well-engineered combination of machine learning techniques that
+over time became just good enough to progressively be wired further into
+useful consumer products.</p>
+<p>AI as the android is an interesting embodiment of the concept yet is
+ultimately dependent on a network of machine learning subsystems just as
+the interlocutor is. AI as the reasoner is a classical implementation of
+AI yet has plateaued in recent years with respect to levels of industry
+product integration interest. It continues to be a core component in
+intelligent systems that wire together multiple components to produce
+value, as in the interlocutor example.</p>
+<p>"AI as the big data learner" is a troublesome use of the term that
+has gained popularity in the past few years (2010–2015). Many times, a
+marketing department will rebrand a product's use of a basic machine
+learning technique over customer data as "Artificial Intelligence."
+Worse, other times the product is doing basic business intelligence
+functions and is also lumped into this category. The practice of machine
+learning (or deep learning) alone should not be considered a type of AI.
+It is, however, a useful subsystem of an intelligent system.</p>
+<section id="showing-restraint-when-marketing-deep-learning"
+data-type="note">
 <h1>Showing Restraint When Marketing Deep Learning</h1>
-
-<p>You should show restraint in labeling a machine learning model—deep learning model or not—as "Artificial Intelligence." Overselling capabilities early might attract funding but will hamper your project in the longer term.</p>
-</div>
+<p>You should show restraint in labeling a machine learning model—deep
+learning model or not—as "Artificial Intelligence." Overselling
+capabilities early might attract funding but will hamper your project in
+the longer term.</p>
 </section>
-
-<section data-type="sect4">
+</section>
+<section id="a-fifth-aspirational-definition-of-ai" data-type="sect4">
 <h4>A fifth aspirational definition of AI</h4>
-
-<p>Another way to frame the question of "What is Artificial Intelligence?" is to ask another question. If we look at this question from the viewpoint of "what would definitively end the debate of 'What is AI'?"</p>
-
-<p>If we were presented with a transcendent, conscious, self-aware intelligence that understood our world (and data) far better than any human, we'd probably call it "true Artificial Intelligence." Or, an alien.</p>
-
-<p>Unfortunately chasing the mirage of AI is what brings on the unrealistic expectations that always crash down on the industry no matter how much tangible progress was made.<a contenteditable="false" data-primary="" data-startref="AImodern10" data-type="indexterm">&nbsp;</a></p>
+<p>Another way to frame the question of "What is Artificial
+Intelligence?" is to ask another question. If we look at this question
+from the viewpoint of "what would definitively end the debate of 'What
+is AI'?"</p>
+<p>If we were presented with a transcendent, conscious, self-aware
+intelligence that understood our world (and data) far better than any
+human, we'd probably call it "true Artificial Intelligence." Or, an
+alien.</p>
+<p>Unfortunately chasing the mirage of AI is what brings on the
+unrealistic expectations that always crash down on the industry no
+matter how much tangible progress was made. </p>
 </section>
 </section>
-
-<section data-type="sect3">
+<section id="the-ai-winters" data-type="sect3">
 <h3>The AI winters</h3>
-
-<p>The <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="Artificial Winters of" data-type="indexterm">&nbsp;</a>AI industry has experienced multiple periods of up and down interest and funding. These down periods of interest have been the result of the sector being unrealistically overhyped followed by a cycle of predictably underwhelming results. This down period is referred to as an "AI winter" and involves cuts in academic research funding, reduced venture capital interest, and stigma in the marketing realm around anything connected to the term "artificial intelligence."</p>
-
-<p>The result of these cycles is that the good technical advances (e.g., voice recognition or optical character recognition) is rebranded and is integrated into other products.</p>
-
-<section data-type="sect4">
+<p>The  AI industry has experienced multiple periods of up and down
+interest and funding. These down periods of interest have been the
+result of the sector being unrealistically overhyped followed by a cycle
+of predictably underwhelming results. This down period is referred to as
+an "AI winter" and involves cuts in academic research funding, reduced
+venture capital interest, and stigma in the marketing realm around
+anything connected to the term "artificial intelligence."</p>
+<p>The result of these cycles is that the good technical advances (e.g.,
+voice recognition or optical character recognition) is rebranded and is
+integrated into other products.</p>
+<section id="ai-winter-i-19741980" data-type="sect4">
 <h4>AI Winter I: (1974–1980)</h4>
-
-<p>The lead-up to the first <a href="https://en.wikipedia.org/wiki/AI_winter">AI winter</a> saw machine translation fail to live up to the hype. Connectionism (neural networks) interest waned in the 1970s, and speech understanding research overpromised and underdelivered.</p>
-
-<p>In 1973, DARPA cut academic research in the AI domain. The Lighthill report in the United Kingdom harshly criticized the field and research funding was further curtailed.</p>
+<p>The lead-up to the first <a
+href="https://en.wikipedia.org/wiki/AI_winter">AI winter</a> saw machine
+translation fail to live up to the hype. Connectionism (neural networks)
+interest waned in the 1970s, and speech understanding research
+overpromised and underdelivered.</p>
+<p>In 1973, DARPA cut academic research in the AI domain. The Lighthill
+report in the United Kingdom harshly criticized the field and research
+funding was further curtailed.</p>
 </section>
-
-<section data-type="sect4">
+<section id="ai-winter-ii-late-1980s" data-type="sect4">
 <h4>AI Winter II: Late 1980s</h4>
-
-<p>In the late 1980s and early 1990s, there was overpromotion of technologies such as expert systems and LISP machines, both of which failed to live up to expectations. The Strategic Computing Initiative canceled new spending at the end of this cycle. The fifth-generation computer also failed to meet its goals.</p>
+<p>In the late 1980s and early 1990s, there was overpromotion of
+technologies such as expert systems and LISP machines, both of which
+failed to live up to expectations. The Strategic Computing Initiative
+canceled new spending at the end of this cycle. The fifth-generation
+computer also failed to meet its goals.</p>
 </section>
 </section>
-
-<section data-type="sect3">
+<section id="the-common-patterns-of-ai-winters" data-type="sect3">
 <h3>The common patterns of AI Winters</h3>
-
-<p>The common patterns of these winters see the industry being overhyped by a series of promising successes. After conditions percolate enough we see the hype reach a nadir and the money for academic and industrial research pour into the AI domain. A few real projects based on solid technology reach at least part of their goals and solve real problems. Most of the marketed promises go unfulfilled, however, and the Trough of Disillusionment looms.</p>
-
+<p>The common patterns of these winters see the industry being overhyped
+by a series of promising successes. After conditions percolate enough we
+see the hype reach a nadir and the money for academic and industrial
+research pour into the AI domain. A few real projects based on solid
+technology reach at least part of their goals and solve real problems.
+Most of the marketed promises go unfulfilled, however, and the Trough of
+Disillusionment looms.</p>
 <p>Winter kills the weak.</p>
-
-<p>A few interesting applications slowly emerge from the trough, are rebranded ("voice recognition"), and are integrated into other projects as features, generally under the "latent intelligence" class of improvements. We've seen this with the following:</p>
-
+<p>A few interesting applications slowly emerge from the trough, are
+rebranded ("voice recognition"), and are integrated into other projects
+as features, generally under the "latent intelligence" class of
+improvements. We've seen this with the following:</p>
 <ul>
-	<li>Informatics</li>
-	<li>Machine learning</li>
-	<li>Knowledge-based systems</li>
-	<li>Business rules management</li>
-	<li>Cognitive systems</li>
-	<li>Intelligent systems</li>
-	<li>Computational intelligence</li>
+<li>Informatics</li>
+<li>Machine learning</li>
+<li>Knowledge-based systems</li>
+<li>Business rules management</li>
+<li>Cognitive systems</li>
+<li>Intelligent systems</li>
+<li>Computational intelligence</li>
 </ul>
-
-<p>The name change might be partly because they consider their field to be fundamentally different from AI. It is also true that the new names help to procure funding by avoiding the stigma of the false promises attached to the name "Artificial Intelligence."</p>
-
+<p>The name change might be partly because they consider their field to
+be fundamentally different from AI. It is also true that the new names
+help to procure funding by avoiding the stigma of the false promises
+attached to the name "Artificial Intelligence."</p>
 <p>Here's an interesting note from an AI meeting in the 1980s:</p>
-
 <blockquote>
-<p>At the meeting, Roger Schank and Marvin Minsky—two leading AI researchers who had survived the "winter" of the 1970s—warned the business community that enthusiasm for AI had spiraled out of control in the '80s and that disappointment would certainly follow. Three years later, the billion-dollar AI industry began to collapse.</p>
+<p>At the meeting, Roger Schank and Marvin Minsky—two leading AI
+researchers who had survived the "winter" of the 1970s—warned the
+business community that enthusiasm for AI had spiraled out of control in
+the '80s and that disappointment would certainly follow. Three years
+later, the billion-dollar AI industry began to collapse.</p>
 </blockquote>
 </section>
 </section>
 </section>
-
-<section data-type="sect1">
+<section id="what-is-driving-interest-today-in-ai-today"
+data-type="sect1">
 <h1>What Is Driving Interest Today in AI Today?</h1>
-
-<p>Three <a contenteditable="false" data-primary="artificial intelligence (AI)" data-secondary="renewed interest in" data-type="indexterm">&nbsp;</a>major contributors are driving interest in AI today:</p>
-
-<ol>
-	<li>The big jump in computer-vision technology in the late 2000s</li>
-	<li>The big data wave of the early 2010s</li>
-	<li>Advancements in applications of deep learning by top technology firms</li>
+<p>Three  major contributors are driving interest in AI today:</p>
+<ol type="1">
+<li>The big jump in computer-vision technology in the late 2000s</li>
+<li>The big data wave of the early 2010s</li>
+<li>Advancements in applications of deep learning by top technology
+firms</li>
 </ol>
-
-<p>In 2006, Geoff Hinton and his team at the University of Toronto published a key paper on Deep Belief Networks (DBNs).<span data-type="footnote">Hinton, Osindero, and Teh. 2006. <a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf">“A fast learning algorithm for deep belief nets.”</a></span> This provided the industry with a spark of creativity on what could possibly improve the state of the art. We've seen a tsunami of deep learning publications at top journals over the succeeding decade. These publications began improving top scores for accuracy in many areas beyond just computer vision, and deep learning took over the applied machine learning landscape in short order.</p>
-
-<p>Large web firms such as Google, Facebook, and Amazon all watch top journals for the best ideas. These firms saw the developments by Yann LeCun, Hinton, and others and began implementing these ideas in their own pipelines. These new applications (e.g., better face detection, or Alexa at Amazon) were widely recognized in the technology media.</p>
-
-<p>In the mid-2000s much of the storage and ETL technology developed on the West Coast by the large web firms began to be open source as projects such as Hadoop and MongoDB.</p>
-
-<p>Just as these web firms (Google, Yahoo!, etc.) had ramped up their storage and ETL systems, they were then building out new machine learning and deep learning techniques to better take advantage these new and larger datasets.</p>
-
-<p>Traditional <em>Fortune 500</em> enterprise companies were bringing online large distributed systems in the early 2010s to hold their growing transactional datasets. These enterprise companies tend to follow what the West Coast web firms do by about 5 to 10 years. This has given rise to an interest in deep learning in the <em>Fortune 500</em> and in systems that allow the traditional enterprise to better exploit their investments in big data.</p>
-
-<p>If we combine the aforementioned three factors and then mix in the very public successes of projects such as Watson (winning <em>Jeopardy</em>), AlphaGo (winning Go), and Google's self-driving cars, we create an environment in which enthusiasm outstrips the reality of the road ahead.</p>
-
-<p>It's high tide in coverage and enthusiasm around AI. Unfortunately, in these types of cycles, we also see the tide go back out eventually. There are real applications using complex datasets for deep learning. Here are just some of these applications:</p>
-
+<p>In 2006, Geoff Hinton and his team at the University of Toronto
+published a key paper on Deep Belief Networks (DBNs).<span
+data-type="footnote">Hinton, Osindero, and Teh. 2006. <a
+href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf">“A fast
+learning algorithm for deep belief nets.”</a></span> This provided the
+industry with a spark of creativity on what could possibly improve the
+state of the art. We've seen a tsunami of deep learning publications at
+top journals over the succeeding decade. These publications began
+improving top scores for accuracy in many areas beyond just computer
+vision, and deep learning took over the applied machine learning
+landscape in short order.</p>
+<p>Large web firms such as Google, Facebook, and Amazon all watch top
+journals for the best ideas. These firms saw the developments by Yann
+LeCun, Hinton, and others and began implementing these ideas in their
+own pipelines. These new applications (e.g., better face detection, or
+Alexa at Amazon) were widely recognized in the technology media.</p>
+<p>In the mid-2000s much of the storage and ETL technology developed on
+the West Coast by the large web firms began to be open source as
+projects such as Hadoop and MongoDB.</p>
+<p>Just as these web firms (Google, Yahoo!, etc.) had ramped up their
+storage and ETL systems, they were then building out new machine
+learning and deep learning techniques to better take advantage these new
+and larger datasets.</p>
+<p>Traditional <em>Fortune 500</em> enterprise companies were bringing
+online large distributed systems in the early 2010s to hold their
+growing transactional datasets. These enterprise companies tend to
+follow what the West Coast web firms do by about 5 to 10 years. This has
+given rise to an interest in deep learning in the <em>Fortune 500</em>
+and in systems that allow the traditional enterprise to better exploit
+their investments in big data.</p>
+<p>If we combine the aforementioned three factors and then mix in the
+very public successes of projects such as Watson (winning
+<em>Jeopardy</em>), AlphaGo (winning Go), and Google's self-driving
+cars, we create an environment in which enthusiasm outstrips the reality
+of the road ahead.</p>
+<p>It's high tide in coverage and enthusiasm around AI. Unfortunately,
+in these types of cycles, we also see the tide go back out eventually.
+There are real applications using complex datasets for deep learning.
+Here are just some of these applications:</p>
 <ul>
-	<li>Healthcare (e.g., predicting patient length of stay)</li>
-	<li>Retail (e.g., analyzing the shopping experience)</li>
-	<li>Telecom/Financial Services (e.g., analyzing transactions for fraudulent patterns)</li>
+<li>Healthcare (e.g., predicting patient length of stay)</li>
+<li>Retail (e.g., analyzing the shopping experience)</li>
+<li>Telecom/Financial Services (e.g., analyzing transactions for
+fraudulent patterns)</li>
 </ul>
-
-<p>We've touched on some of the aforementioned use cases (and more) in this book. When you, as practitioner, promote deep learning and AI we recommend finding real use cases such as these and standing on "solid ground.” We mention solid ground here metaphorically because eventually the tide will go out and we hope our fellow practitioners will have something to stand on when it does.</p>
+<p>We've touched on some of the aforementioned use cases (and more) in
+this book. When you, as practitioner, promote deep learning and AI we
+recommend finding real use cases such as these and standing on "solid
+ground.” We mention solid ground here metaphorically because eventually
+the tide will go out and we hope our fellow practitioners will have
+something to stand on when it does.</p>
 </section>
-
-<section data-type="sect1">
+<section id="winter-is-coming" data-type="sect1">
 <h1>Winter Is Coming</h1>
-
-<p>Deep learning in and of itself has been grounded in reality over the course of this book. It is a framework for performing industry-leading neural network modeling on complex data types. Deep learning, by itself, would not fulfill our aforementioned fifth aspirational definition of AI, so we don't have much to worry about on that front.</p>
-
-<p>We are seeing systems marketed in 2016 as "Artificial Intelligence for X," which are plainly using basic machine learning. AlphaGo was a tremendous advancement in game playing, but as we saw with DeepBlue and Chess, game-playing advances do not always translate easily to business use cases.<span contenteditable="false" data-type="footnote"><em>Jeopardy</em> does seem to be a "solved problem," however.</span></p>
-
-<p>Marketing departments are setting up similar scenarios as occurred in the previous two AI winters, unfortunately. The coals of the real advances in the domain, as in previous winters, will keep the true enthusiasts and hardcore researchers warm during the cold of the coming third AI winter.<a contenteditable="false" data-primary="" data-startref="artint10" data-type="indexterm">&nbsp;</a></p>
+<p>Deep learning in and of itself has been grounded in reality over the
+course of this book. It is a framework for performing industry-leading
+neural network modeling on complex data types. Deep learning, by itself,
+would not fulfill our aforementioned fifth aspirational definition of
+AI, so we don't have much to worry about on that front.</p>
+<p>We are seeing systems marketed in 2016 as "Artificial Intelligence
+for X," which are plainly using basic machine learning. AlphaGo was a
+tremendous advancement in game playing, but as we saw with DeepBlue and
+Chess, game-playing advances do not always translate easily to business
+use cases.<span contenteditable="false"
+data-type="footnote"><em>Jeopardy</em> does seem to be a "solved
+problem," however.</span></p>
+<p>Marketing departments are setting up similar scenarios as occurred in
+the previous two AI winters, unfortunately. The coals of the real
+advances in the domain, as in previous winters, will keep the true
+enthusiasts and hardcore researchers warm during the cold of the coming
+third AI winter. </p>
 </section>
 </section>
+</body>
+</html>

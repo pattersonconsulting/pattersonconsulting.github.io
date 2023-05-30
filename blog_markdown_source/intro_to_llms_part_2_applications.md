@@ -28,6 +28,37 @@ Series:
 
 # Profiling Use Cases for LLMs
 
+
+## Raw Source Notes
+
+`
+What are common LLM use cases? If I had to roughly categorize the use cases I'm hearing people ask about in the enterprise, in 2023, after the rise of ChatGPT, it's something like:
+
+- 40% question-answering: query a corpus of text in natural language
+- 10% chat: same, but interactive
+- 20% extraction / summarization: what are the top N issues in these 10,000 reviews? 
+- 20% (semi-)structured natural language querying: answer from SQL query results
+- 10% other sci-fi use cases: write my business strategy
+
+Of course, there are a number of use cases too that I'd describe as simply not LLM problems. I've heard forecasting a few times. Even regression! Why?
+
+Some are too sci-fi, like, migrate my whole legacy data warehouse. I think that's interesting. You show people a bit of magic, and it's not at all clear how deep the magic goes. LLMs are a little magic, not the Starship Enterprise. Language models, not actually sentient. But you'd be forgiven for assuming otherwise.
+
+Conspicuously missing from the conversations I've seen are:
+
+- Translation, classification: these are real use cases, just, those that want to do this have already been doing this
+- Content generation: write a response to this customer. I suppose individuals are doing this with ChatGPT?
+- Code generation: already well in hand with Copilot et al
+
+It's not surprising that natural-language querying over, well, natural language is a leading use case. It's a natural fit for LLMs, and is quite easy already. I think these will rapidly get implemented and productized. More targeted extractive queries are a little harder at the margins but seem well within the capability of LLMs.
+
+The interesting frontier for the rest of the year is IMHO SQL generation. Everybody has a database, it's an obvious use case, and it's at least not-infeasible now. It's just hard to do well enough, reliably enough to consider turning loose at scale, I think. It works OK now if you assume this is fundamentally a code assistant for SQL analysts, something to create a first draft that they'll correct. It does not work if you assume the audience are users who would not know the correct answer, let alone SQL, when they saw it.
+
+This is a problem that will probably get solved well enough in the next year, such that there are services and OSS models that are close enough, to make this a next big focus.
+
+That's an interesting topic for another day!
+`
+
 ## Issues in Integrating LLMs into Applications
 https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications
 
@@ -78,7 +109,11 @@ examples
 
 
 
-# LangChain
+# Application Frameworks and Components
+
+asdasd
+
+## LangChain
 
 https://blog.langchain.dev/structured-tools/
 
@@ -91,7 +126,6 @@ https://www.pinecone.io/learn/langchain-agents/
 
 https://blog.langchain.dev/announcing-our-10m-seed-round-led-by-benchmark/
 
-## LangChain Thoughts
 
 https://medium.com/@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581
 ```
@@ -109,6 +143,18 @@ The use of natural language in managing programmatic functions (‘tools’) see
 
 A chat model is fine so long as it considers at least 3-parties in the conversation: a) the customer/user, b) the chatbot, and c) the business representative
 ```
+
+## Vector Databases
+
+* ChromaDB
+* Pinecone
+* Vectera
+* [ todo: more ]
+
+## Model Servers
+
+* [ todo: source ]
+
 
 
 # Implementing LLMs in Applications

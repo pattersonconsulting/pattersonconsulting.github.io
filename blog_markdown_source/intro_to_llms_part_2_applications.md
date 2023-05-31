@@ -144,6 +144,14 @@ The use of natural language in managing programmatic functions (‘tools’) see
 A chat model is fine so long as it considers at least 3-parties in the conversation: a) the customer/user, b) the chatbot, and c) the business representative
 ```
 
+* adoption of langchain has been rapid
+* list attributes of langchain
+   * open source 
+   * simple quick install via pip or anaconda
+   * no server dependencies, docker images, or extra infra required
+   * great documentation and easy to replicate examples
+   * lots of out of the box plugins (sql, pandas, more)
+
 ## Vector Databases
 
 * ChromaDB

@@ -3,7 +3,7 @@ layout: post
 published-on: March 27th 2023
 author: Josh Patterson
 title: An Introduction to Large Language Models (LLMs)
-subtitle: Part 3 - Model Training and Management in LLMs
+subtitle: Part 3 - Putting LLM Applications into Production
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
@@ -22,8 +22,9 @@ The intended audience for this series is:
 Series:
 
 * [Core Concepts and Terminology in LLMs](intro_to_llms_part_1_terminology.html)
-* [LLMs and Enterprise Applications](intro_to_llms_part_2_applications.html)
-* [Model Training and Management in LLMs](intro_to_llms_part_3_model_management.html)
+* [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
+* [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
+* [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 # Which Model Should I Use for My LLM Application?
 
@@ -116,7 +117,7 @@ There is reason to believe this will all be very accessible on consumer grade ha
 
 
 
-# Early Developments in the Evolution of Large Language Models
+# Other Considerations for Deploying Large Language Model Applications
 
 todo
 

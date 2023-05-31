@@ -5,227 +5,45 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Josh Patterson" />
-  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
-pandas, dataframe, whl, pip, anaconda, dependency" />
-  <meta name="description" content="In this post we’ll ….." />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency" />
   <title>An Introduction to Large Language Models (LLMs)</title>
-  <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
+<header>
 <h1 class="title">An Introduction to Large Language Models (LLMs)</h1>
 <p class="subtitle">Part 1 - Core Concepts and Terminology in LLMs</p>
 <p class="author">Josh Patterson</p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#what-are-large-language-models-llms"
-id="toc-what-are-large-language-models-llms">What are Large Language
-Models (LLMs)?</a>
-<ul>
-<li><a href="#terminology-in-large-language-models-llms"
-id="toc-terminology-in-large-language-models-llms">Terminology in Large
-Language Models (LLMs)</a></li>
-<li><a href="#deep-learning-transformers-and-generative-language-models"
-id="toc-deep-learning-transformers-and-generative-language-models">Deep
-Learning, Transformers, and Generative Language Models</a></li>
-<li><a href="#the-gpt-architecture" id="toc-the-gpt-architecture">The
-GPT Architecture</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-are-large-language-models-llms">What are Large Language Models (LLMs)?</a><ul>
+<li><a href="#terminology-in-large-language-models-llms">Terminology in Large Language Models (LLMs)</a></li>
+<li><a href="#deep-learning-transformers-and-generative-language-models">Deep Learning, Transformers, and Generative Language Models</a></li>
+<li><a href="#the-gpt-architecture">The GPT Architecture</a></li>
 </ul></li>
-<li><a href="#llm-abilities" id="toc-llm-abilities">LLM Abilities</a>
-<ul>
-<li><a href="#gpt-3-abilities-and-evolution"
-id="toc-gpt-3-abilities-and-evolution">GPT-3 Abilities and
-Evolution</a></li>
-<li><a href="#llms-and-knowledge-lookup"
-id="toc-llms-and-knowledge-lookup">LLMs and Knowledge Lookup</a></li>
-<li><a href="#llms-and-reasoning-abilities"
-id="toc-llms-and-reasoning-abilities">LLMs and Reasoning
-Abilities</a></li>
-<li><a href="#in-context-learning-1"
-id="toc-in-context-learning-1">In-Context Learning</a></li>
-<li><a href="#emergent-abilities-of-language-models"
-id="toc-emergent-abilities-of-language-models">Emergent Abilities of
-Language Models</a></li>
-<li><a href="#chain-of-thought" id="toc-chain-of-thought">Chain of
-Thought</a></li>
-<li><a href="#decomposed-prompting"
-id="toc-decomposed-prompting">Decomposed Prompting</a></li>
+<li><a href="#llm-abilities-and-limitations">LLM Abilities and Limitations</a><ul>
+<li><a href="#initial-gpt-3-abilities-and-evolution">Initial GPT-3 Abilities and Evolution</a></li>
+<li><a href="#more-abilities-and-the-evolution-of-gpt-3.5">More Abilities and the Evolution of GPT-3.5</a></li>
+<li><a href="#currrent-limitations-of-gpt-3.5">Currrent Limitations of GPT-3.5</a></li>
+<li><a href="#summary">Summary</a></li>
 </ul></li>
-<li><a href="#why-are-large-language-models-compelling"
-id="toc-why-are-large-language-models-compelling">Why Are Large Language
-Models Compelling?</a>
-<ul>
-<li><a href="#tectonic-plate-shifts-in-technology"
-id="toc-tectonic-plate-shifts-in-technology">Tectonic Plate Shifts in
-Technology</a></li>
-<li><a href="#natural-language-as-a-driver-for-any-application"
-id="toc-natural-language-as-a-driver-for-any-application">Natural
-Language as a Driver for Any Application</a></li>
-<li><a
-href="#you-dont-have-to-re-train-the-foundation-models-to-do-things"
-id="toc-you-dont-have-to-re-train-the-foundation-models-to-do-things">You
-Don’t Have to Re-Train the Foundation Models to Do Things</a></li>
+<li><a href="#why-are-large-language-models-compelling">Why Are Large Language Models Compelling?</a><ul>
+<li><a href="#tectonic-plate-shifts-in-technology">Tectonic Plate Shifts in Technology</a></li>
+<li><a href="#natural-language-as-a-driver-for-any-application">Natural Language as a Driver for Any Application</a></li>
+<li><a href="#you-dont-have-to-re-train-the-foundation-models-to-do-things">You Don’t Have to Re-Train the Foundation Models to Do Things</a></li>
 </ul></li>
-<li><a href="#summary" id="toc-summary">Summary</a></li>
+<li><a href="#summary-1">Summary</a></li>
+<li><a href="#references">References</a></li>
 </ul>
 </nav>
 <h1 id="introduction">Introduction</h1>
@@ -233,123 +51,185 @@ Don’t Have to Re-Train the Foundation Models to Do Things</a></li>
 <blockquote>
 <p>To understand what LLMs are</p>
 </blockquote>
-<p>This space is moving fast and its valuable to get a mental framing on
-how to think about LLMs to better understand how to apply them in your
-projects and organization</p>
-<p>It also sets context for a better understanding of new developments
-in LLMs</p>
-<p>Our technical series are based on private reports we produce for our
-enterprise customers.</p>
+<p>This space is moving fast and its valuable to get a mental framing on how to think about LLMs to better understand how to apply them in your projects and organization</p>
+<p>It also sets context for a better understanding of new developments in LLMs</p>
+<p>Our technical series are based on private reports we produce for our enterprise customers.</p>
 <p>The intended audience for this series is:</p>
 <blockquote>
-<p>Individual researchers, data scientists, and then also enterprise
-data teams as well</p>
+<p>Individual researchers, data scientists, and then also enterprise data teams as well</p>
 </blockquote>
 <p>Series:</p>
 <ul>
-<li><a href="intro_to_llms_part_1_terminology.html">Core Concepts and
-Terminology in LLMs</a></li>
-<li><a href="intro_to_llms_part_2_applications.html">LLMs and Enterprise
-Applications</a></li>
-<li><a href="intro_to_llms_part_3_model_management.html">Model Training
-and Management in LLMs</a></li>
-<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial
-Intelligence?</a></li>
+<li><a href="intro_to_llms_part_1_terminology.html">Core Concepts and Terminology in LLMs</a></li>
+<li><a href="intro_to_llms_part_2_applications.html">A Guide for Building Enterprise Application with LLMs</a></li>
+<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM Applications into Production</a></li>
+<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial Intelligence?</a></li>
 </ul>
-<h1 id="what-are-large-language-models-llms">What are Large Language
-Models (LLMs)?</h1>
+<h1 id="what-are-large-language-models-llms">What are Large Language Models (LLMs)?</h1>
+<p>A large language model (LLM) is ….</p>
+<p>LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input.</p>
+<p>GPT-3 and GPT-4 are examples of large language models.</p>
+<p>ChatGPT is an example of an application built around a large language model (here: GPT-3.5, etc)</p>
+<p>LLMs themselves DO:</p>
+<ul>
+<li>reason about instructions and context in the input (the “prompt”)</li>
+<li>create plans of actions, and then execute each step of the plan with further calls back to the LLM model</li>
+<li>integrate with external tools (search engines, wikipedia, python interpreters, etc) to try out commands and examine the input in a later LLM chained call</li>
+</ul>
+<p>LLMs do not:</p>
+<ul>
+<li>execute code inside the neural network itself</li>
+</ul>
+<p>Later on in this series we’ll introduce a generalized application architecture for LLM-based applications.</p>
 <p>todo</p>
 <p>https://www.theatlantic.com/technology/archive/2023/01/artificial-intelligence-ai-chatgpt-dall-e-2-learning/672754/</p>
 <p>emergent abilities</p>
 <p>https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/</p>
 <p>LLMs having their “stable diffusion”-moment</p>
 <p>https://simonwillison.net/2023/Mar/11/llama/</p>
-<h2 id="terminology-in-large-language-models-llms">Terminology in Large
-Language Models (LLMs)</h2>
+<blockquote>
+<p>“Rapid and pivotal advances in technology have a way of unsettling people, because they can reverberate mercilessly, sometimes, through business, employment, and cultural spheres. And so it is with the current shock and awe over large language models, such as GPT-4 from OpenAI.”</p>
+</blockquote>
+<blockquote>
+<p>“It’s a textbook example of the mixture of amazement and, especially, anxiety that often accompanies a tech triumph.”</p>
+</blockquote>
+<blockquote>
+<p>“It gives an answer with complete confidence, and I sort of believe it. And half the time, it’s completely wrong.”</p>
+</blockquote>
+<blockquote>
+<p>“A very famous senior person said, ‘Radiologists will be out of business before long.’ And people stopped enrolling in radiology specialties, and now there’s a shortage of them.”</p>
+</blockquote>
+<blockquote>
+<p>So what about these predictions that entire classes of employment will go away, paralegals, and so on? Is that a legitimate concern?</p>
+</blockquote>
+<blockquote>
+<p>Brooks: You certainly hear these things. I was reviewing a government report a few weeks ago, and it said, “Lawyers are going to disappear in 10 years.” So I tracked it down and it was one barrister in England, who knew nothing about AI. He said, “Surely, if it’s this good, it’s going to get so much better that we’ll be out of jobs in 10 years.” There’s a lot of disaster hype. Someone suggests something and it gets amplified.</p>
+</blockquote>
+<blockquote>
+<p>We saw that with radiologists. A very famous senior person said, “Radiologists will be out of business before long.” And people stopped enrolling in radiology specialties and now there’s a shortage of them. Same with truck driving…. There are so many ads from all these companies recruiting truck drivers because there’s not enough truck drivers, because three or four years ago, people were saying, “Truck driving is going to go away.”</p>
+</blockquote>
+<p>https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157</p>
+<p>LLMs and Artificial Intelligence — <a href="dl_book_appendix_a_ai.html">What is Artificial Intelligence?</a></p>
+<h2 id="terminology-in-large-language-models-llms">Terminology in Large Language Models (LLMs)</h2>
 <p>todo</p>
-<h3 id="prompts-and-prompt-engineering">Prompts and Prompt
-Engineering</h3>
+<ul>
+<li>Prompt</li>
+<li>Prompt Engineering</li>
+<li>In-Context Learning</li>
+<li>Indexing: (in realm of LLMs) can be considered a</li>
+<li>Chain of Thought</li>
+<li>Embeddings</li>
+<li>vector databases</li>
+<li>fine-tuning: the model is trained via repeated gradient updates using a large corpus of example tasks</li>
+<li>Instruction tuning</li>
+<li>Reinforcement Learning from Human Feedback (RLHF)</li>
+</ul>
 <p>todo</p>
 <p>https://exchange.scale.com/public/events/llm-prompt-engineering-and-rlhf-history-and-techniques-2023-03-09</p>
 <p>https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/</p>
 <p>https://github.com/dair-ai/Prompt-Engineering-Guide</p>
+<p>todo</p>
+<h3 id="prompts-and-prompt-engineering">Prompts and Prompt Engineering</h3>
+<ul>
+<li>core concept</li>
+</ul>
+<p>sub-topics:</p>
+<ul>
+<li>instructions</li>
+<li>external information</li>
+<li>user input</li>
+<li>output indicator</li>
+</ul>
 <p>https://www.pinecone.io/learn/langchain-prompt-templates/</p>
-<p>todo</p>
 <h3 id="in-context-learning">In-Context Learning</h3>
-<h3 id="indexing">Indexing</h3>
-<h3 id="embeddings">Embeddings</h3>
-<h2 id="deep-learning-transformers-and-generative-language-models">Deep
-Learning, Transformers, and Generative Language Models</h2>
+<ul>
+<li>zero-shot</li>
+<li>one-shot</li>
+<li>few-shot</li>
+</ul>
+<blockquote>
+<p>Since GPT-2 (Radford et al.) and GPT-3 (Brown et al.), we have seen that generative large language models (LLMs) pretrained on a general text corpus are capable of in-context learning, which doesn’t require us to further train or finetune pretrained LLMs if we want to perform specific or new tasks that the LLM wasn’t explicitly trained on. Instead, we can directly provide a few examples of a target task via the input prompt, as illustrated in the example below.</p>
+</blockquote>
+<blockquote>
+<p>In-context learning is very useful if we don’t have direct access to the model, for instance, if we are using the model through an API.</p>
+</blockquote>
+<h2 id="deep-learning-transformers-and-generative-language-models">Deep Learning, Transformers, and Generative Language Models</h2>
 <p>todo</p>
-<p>https://amatriain.net/blog/transformer-models-an-introduction-and-catalog-2d1e9039f376/</p>
+<ul>
+<li>refernece our strata talk in 2016</li>
+</ul>
 <h3 id="defining-deep-learning">Defining Deep Learning</h3>
 <ul>
 <li>DL is about automated feature learning</li>
 </ul>
-<h3 id="introduction-of-transformers-in-2017">Introduction of
-Transformers in 2017</h3>
-<p>todo</p>
+<h3 id="introduction-of-transformers-in-2017">Introduction of Transformers in 2017</h3>
+<p><img style="float: right;" src="./images/transformers_architecture_2017.png"></p>
 <ul>
 <li>dont need to create features</li>
 <li>can use tons of data</li>
 <li>can use tons of parameters</li>
 </ul>
-<p>LLMs are implemented with Neural Networks using the Transformer
-architecture Transformers were introduced in 2017 they are an
-architecture of deep learning neural networks that worked well in
-natural language applications</p>
-<p>Transformers can process long sequences of text and generate
-high-quality outputs for various language tasks, such as * text
-generation * question answering * translation</p>
+<p>https://amatriain.net/blog/transformer-models-an-introduction-and-catalog-2d1e9039f376/</p>
+<p>LLMs are implemented with Neural Networks using the Transformer architecture Transformers were introduced in 2017 they are an architecture of deep learning neural networks that worked well in natural language applications</p>
+<p>great visual explanation of transformers: http://jalammar.github.io/illustrated-transformer/</p>
+<p>Transformers can process long sequences of text and generate high-quality outputs for various language tasks, such as * text generation * question answering * translation</p>
 <p>Noteworthy because:</p>
-<p>Deep Learning is about using the correct architecture for a data type
-such that the architecture can perform automated feature engineering
-Transformers are a Deep Learning architecture for natural language
-Therefore, Transformer-based systems require no manual feature
-engineering</p>
-<p>Transformers and LLMs rely directly on raw natural language text as
-the input</p>
-<h3 id="generative-language-models">Generative Language Models</h3>
-<p>todo</p>
-<ul>
-<li>refernece our strata talk in 2016</li>
-</ul>
+<p>Deep Learning is about using the correct architecture for a data type such that the architecture can perform automated feature engineering Transformers are a Deep Learning architecture for natural language Therefore, Transformer-based systems require no manual feature engineering</p>
+<p>Transformers and LLMs rely directly on raw natural language text as the input</p>
 <h2 id="the-gpt-architecture">The GPT Architecture</h2>
 <ul>
 <li>based on transformers</li>
 <li>doesnt need feature engineering</li>
 <li>just give it structured set of natural language</li>
 </ul>
+<blockquote>
+<p>This is GPT’s rockstar application – a conditional generative model that creates near-human level quality text content.</p>
+</blockquote>
 <h3 id="gpt-series-of-models">GPT Series of Models</h3>
 <p>https://platform.openai.com/docs/models</p>
+<p>https://arxiv.org/abs/2005.14165</p>
+<blockquote>
+<p>GPT-3 comes in eight sizes, ranging from 125M to 175B parameters. The largest GPT-3 model is an order of magnitude larger than the previous record holder, T5-11B. The smallest GPT-3 model is roughly the size of BERT-Base and RoBERTa-Base.</p>
+</blockquote>
+<blockquote>
+<p>All GPT-3 models use the same attention-based architecture as their GPT-2 predecessor. The smallest GPT-3 model (125M) has 12 attention layers, each with 12x 64-dimension heads. The largest GPT-3 model (175B) uses 96 attention layers, each with 96x 128-dimension heads.</p>
+</blockquote>
+<blockquote>
+<p>GPT-3 expanded the capacity of its GPT-2 by three orders of magnitudes without significant modification of the model architecture — just more layers, wider layers, and more data to train it on</p>
+</blockquote>
+<blockquote>
+<p>But to put things into perspective, GPT-3 175B model required 3.14E23 FLOPS of computing for training. Even at theoretical 28 TFLOPS for V100 and lowest 3 year reserved cloud pricing we could find, this will take 355 GPU-years and cost $4.6M for a single training run. Similarly, a single RTX 8000, assuming 15 TFLOPS, would take 665 years to run.</p>
+</blockquote>
+<p>Ray used to train gpt-3</p>
+<p>https://www.anyscale.com/blog/ray-common-production-challenges-for-generative-ai-infrastructure</p>
+<p>https://thenewstack.io/how-ray-a-distributed-ai-framework-helps-power-chatgpt/</p>
 <h3 id="chatgpt">ChatGPT</h3>
 <p>https://help.openai.com/en/articles/6783457-what-is-chatgpt</p>
 <pre><code>ChatGPT is fine-tuned from GPT-3.5, a language model trained to produce text. ChatGPT was optimized for dialogue by using Reinforcement Learning with Human Feedback (RLHF) – a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior.</code></pre>
-<h3 id="training-data-for-gpt">Training Data for GPT</h3>
-<p>https://arxiv.org/abs/2005.14165</p>
-<h1 id="llm-abilities">LLM Abilities</h1>
-<h2 id="gpt-3-abilities-and-evolution">GPT-3 Abilities and
-Evolution</h2>
-<p>https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1</p>
-<p>Yao Fu writes about the 3 important abilities that the initial GPT-3
-exhibit:</p>
 <ul>
-<li><strong>Language generation</strong>: to follow a prompt and then
-generate a completion of the given prompt. Today, this might be the most
-ubiquitous way of human-LM interaction.</li>
-<li><strong>In-context learning</strong>: to follow a few examples of a
-given task and then generate the solution for a new test case. It is
-interesting to note that, although being a language model, the original
-GPT-3 paper barely talks about “language modeling” — the authors devoted
-their writing efforts to their visions of in-context learning, which is
-the real focus of GPT-3.</li>
-<li><strong>World knowledge</strong>: including factual knowledge and
-commonsense.</li>
+<li>key summary
+<ul>
+<li>text in, text out</li>
+<li>no feature engineering</li>
+</ul></li>
 </ul>
+<h1 id="llm-abilities-and-limitations">LLM Abilities and Limitations</h1>
+<ul>
+<li><p>the goal of this section is to communicate what you can expect out of LLMs</p></li>
+<li><p>this is analagous to understanding what to expect out of machine learning (classification, regression) and deep learning (image object detection, generative models, etc)</p></li>
+<li><p>its fun to talk about conscious robots and the like, but in the enterprise world of problem solving, we need to focus on what can be expected from our tools (here: llms)</p></li>
+</ul>
+<h2 id="initial-gpt-3-abilities-and-evolution">Initial GPT-3 Abilities and Evolution</h2>
+<p>Yao Fu <a href="https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1">writes about the 3 important abilities that the initial GPT-3 exhibit</a>:</p>
+<ul>
+<li><strong>Language generation</strong>: to follow a prompt and then generate a completion of the given prompt. Today, this might be the most ubiquitous way of human-LM interaction.</li>
+<li><strong>In-context learning</strong>: to follow a few examples of a given task and then generate the solution for a new test case. It is interesting to note that, although being a language model, the original GPT-3 paper barely talks about “language modeling” — the authors devoted their writing efforts to their visions of in-context learning, which is the real focus of GPT-3.</li>
+<li><strong>World knowledge</strong>: including factual knowledge and commonsense.</li>
+</ul>
+<p>For those inclined in the details, Fu’s article is wonderfully detailed and contains considerable insight into the evolution of the GPT-series of LLMs.</p>
 <p>Fu goes on to describe the origin of the abilites of GPT-3:</p>
 <blockquote>
-<p>Generally, the above three abilities should come from large-scale
-pretraining — to pretrain the 175B parameters model on 300B tokens</p>
+<p>Generally, the above three abilities should come from large-scale pretraining — to pretrain the 175B parameters model on 300B tokens</p>
 </blockquote>
 <ul>
 <li>60% 2016 - 2019 Common Crawl</li>
@@ -359,21 +239,10 @@ pretraining — to pretrain the 175B parameters model on 300B tokens</p>
 </ul>
 <p>Where:</p>
 <ul>
-<li>The <strong>language generation</strong> ability comes from the
-language modeling <strong>training objective</strong>.</li>
-<li>The <strong>world knowledge</strong> comes from the 300B token
-<strong>training corpora</strong> (or where else it could be).</li>
-<li>The <strong>175B model size</strong> is for <strong>storing
-knowledge</strong>, which is further evidenced by Liang et al. (2022),
-who conclude that the performance on tasks requiring knowledge
-correlates with model size.</li>
-<li>The source of the <strong>in-context learning</strong> ability, as
-well as its generalization behavior, <strong>is still elusive</strong>.
-Intuitively, this ability may come from the fact that data points of the
-same task are ordered sequentially in the same batch during pretraining.
-Yet there is little study on why language model pretraining induces
-in-context learning, and why in-context learning behaves so differently
-than fine-tuning.</li>
+<li>The <strong>language generation</strong> ability comes from the language modeling <strong>training objective</strong>.</li>
+<li>The <strong>world knowledge</strong> comes from the 300B token <strong>training corpora</strong> (or where else it could be).</li>
+<li>The <strong>175B model size</strong> is for <strong>storing knowledge</strong>, which is further evidenced by Liang et al. (2022), who conclude that the performance on tasks requiring knowledge correlates with model size.</li>
+<li>The source of the <strong>in-context learning</strong> ability, as well as its generalization behavior, <strong>is still elusive</strong>. Intuitively, this ability may come from the fact that data points of the same task are ordered sequentially in the same batch during pretraining. Yet there is little study on why language model pretraining induces in-context learning, and why in-context learning behaves so differently than fine-tuning.</li>
 </ul>
 <!--
 Yao Fu then goes on to offer a diagram (embedded below) showing the evolution tree of GPT-3
@@ -382,79 +251,94 @@ Yao Fu then goes on to offer a diagram (embedded below) showing the evolution tr
 
 Some abilities of note in the above diagram:
 -->
-<p>For reference, if we say the average book has 80,000 words in it, and
-~2 million tokens is roughly the equivalent to 1.5 million words, we can
-calculate the total books GPT-3 was trained on to be <strong>around 2.8
-million books</strong> based on a 300 billion token training
-corpora.</p>
-<p>For comparison, the average person might read around 700 books in
-their lifetime.</p>
-<p>The entire series is wonderful for insight into how large language
-models such as GPT-3 get certain types of “abilities” such as “code
-generation” and “in-context learning”.</p>
-<h2 id="llms-and-knowledge-lookup">LLMs and Knowledge Lookup</h2>
+<p>For reference, if we say the average book has 80,000 words in it, and ~2 million tokens is roughly the equivalent to 1.5 million words, we can calculate the total books GPT-3 was trained on to be <strong>around 2.8 million books</strong> based on a 300 billion token training corpora.</p>
+<p>For comparison, the average person might read around 700 books in their lifetime.</p>
+<p>The entire series is wonderful for insight into how large language models such as GPT-3 get certain types of “abilities” such as “code generation” and “in-context learning”.</p>
+<h2 id="more-abilities-and-the-evolution-of-gpt-3.5">More Abilities and the Evolution of GPT-3.5</h2>
+<p>More Yao Fu:</p>
+<blockquote>
+<p>Now let’s look at code-davinci-002 and text-davinci-002, the two first GPT3.5 models, one for code and the other for text. There are four important abilities they exhibit that differentiate them from the initial GPT-3</p>
+</blockquote>
+<ul>
+<li><strong>Responding to human instruction</strong>: previously, the outputs of GPT-3 were mostly high-frequency prompt-completion patterns within the training set. Now the model generates reasonable answers to the prompt, rather than related but useless sentences.</li>
+<li><strong>Generalization to unseen tasks</strong>: when the number of instructions used for tuning the model is beyond a certain scale, the model can automatically generate completions for new instructions that are not in the training set. <strong>This ability is crucial for deployment</strong>, as users with always come up with new prompts.</li>
+<li><strong>Code generation and code understanding</strong>: obviously, because the model is trained on code.</li>
+<li><strong>Complex reasoning</strong> <strong>with chain-of-thought</strong></li>
+</ul>
+<h3 id="conclusions-on-gpt-3.5-abilities">Conclusions on GPT-3.5 Abilities</h3>
+<ul>
+<li>todo</li>
+</ul>
+<p><code>The initial GPT-3 model gains its generation ability, world knowledge, and in-context learning from pretraining.</code></p>
+<p><code>Then the instruction tuning branch gains the ability to follow instructions and generalization to unseen tasks. The training on code branch gains the ability of code understanding, and potentially the side product of complex reasoning. Combining the two branches, code-davinci-002 seems to be the most capable GPT-3.5 model with all the powerful abilities.</code></p>
+<h3 id="knowledge-vs-reasoning">Knowledge vs Reasoning</h3>
 <ul>
 <li>define knowledge</li>
 <li>explain use in people and in LLMs</li>
 <li>discuss specific abilities of GPT-3</li>
 </ul>
-<h2 id="llms-and-reasoning-abilities">LLMs and Reasoning Abilities</h2>
+<p>Knowledge defined: &gt; “facts, information, and skills acquired by a person through experience or education; the theoretical or practical understanding of a subject.”</p>
+<p>Reasoning defined: &gt; “the action of thinking about something in a logical, sensible way.”</p>
+<p>https://arxiv.org/abs/2212.10403</p>
 <ul>
-<li>define reasoning</li>
 <li>explain and contrast reasoning vs knowledge</li>
 <li>discuss specific abilities of GPT-3</li>
 </ul>
-<p>More Yao Fu:</p>
-<blockquote>
-<p>Now let’s look at code-davinci-002 and text-davinci-002, the two
-first GPT3.5 models, one for code and the other for text. There are four
-important abilities they exhibit that differentiate them from the
-initial GPT-3</p>
-</blockquote>
+<p>Types of reasoning in LLMs: https://ai.googleblog.com/2022/05/language-models-perform-reasoning-via.html</p>
+<p>World knowledge: including factual knowledge and commonsense.</p>
+<p>Yao Fu: <code>- The two important but different abilities of GPT-3.5 are **knowledge** and **reasoning**. Generally, it would be ideal if we could **offload the knowledge part to the outside retrieval system and let the language model only focus on reasoning.** This is because:     - The model’s internal knowledge is always cut off at a certain time. The model always needs up-to-date knowledge to answer up-to-date questions.     - Recall we have discussed that is 175B parameter is heavily used for storing knowledge. If we could offload knowledge to be outside the model, then the model parameter might be significantly reduced such that eventually, it can run on a cellphone (call this crazy here, but ChatGPT is already science fiction enough, who knows what the future will be).</code></p>
+<p>discuss: “Chain of Thought”</p>
+<h4 id="use-cases-with-reasoning">Use Cases with Reasoning</h4>
 <ul>
-<li><strong>Responding to human instruction</strong>: previously, the
-outputs of GPT-3 were mostly high-frequency prompt-completion patterns
-within the training set. Now the model generates reasonable answers to
-the prompt, rather than related but useless sentences.</li>
-<li><strong>Generalization to unseen tasks</strong>: when the number of
-instructions used for tuning the model is beyond a certain scale, the
-model can automatically generate completions for new instructions that
-are not in the training set. <strong>This ability is crucial for
-deployment</strong>, as users with always come up with new prompts.</li>
-<li><strong>Code generation and code understanding</strong>: obviously,
-because the model is trained on code.</li>
-<li><strong>Complex reasoning</strong> <strong>with
-chain-of-thought</strong></li>
+<li>Arithmetic reasoning</li>
+<li>Problem solving</li>
+<li>Commonsense reasoning</li>
 </ul>
-<h2 id="in-context-learning-1">In-Context Learning</h2>
+<p>https://github.com/Mooler0410/LLMsPracticalGuide</p>
+<blockquote>
+<p>“Scaling of LLMs~(e.g. parameters, training computation, etc.) can greatly empower pretrained language models. With the model scaling up, a model generally becomes more capable in a range of tasks. Reflected in some metrics, the performance shows a power-law relationship with the model scale.”</p>
+</blockquote>
+<h4 id="use-cases-with-emergent-abilities">Use Cases with Emergent Abilities</h4>
+<ul>
+<li>Word manipulation</li>
+<li>Logical deduction</li>
+<li>Logical sequence</li>
+<li>Logic grid puzzles</li>
+<li>Simple math problems</li>
+<li>Coding abilities</li>
+<li>Concept understanding</li>
+</ul>
+<p>https://github.com/Mooler0410/LLMsPracticalGuide</p>
+<h3 id="in-context-learning-1">In-Context Learning</h3>
 <p>todo</p>
 <p>https://datascience.stackexchange.com/questions/115554/how-exactly-does-in-context-few-shot-learning-actually-work-in-theory-under-the</p>
 <p>https://arxiv.org/pdf/2005.14165.pdf</p>
 <p>https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00485/111728/True-Few-Shot-Learning-with-Prompts-A-Real-World</p>
 <p>http://ai.stanford.edu/blog/understanding-incontext/</p>
-<h2 id="emergent-abilities-of-language-models">Emergent Abilities of
-Language Models</h2>
-<p>https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1</p>
-<h2 id="chain-of-thought">Chain of Thought</h2>
-<h2 id="decomposed-prompting">Decomposed Prompting</h2>
-<p>[ICLR 2023] Decomposed Prompting: A Modular Approach for Solving
-Complex Tasks. [paper][code]</p>
-<h1 id="why-are-large-language-models-compelling">Why Are Large Language
-Models Compelling?</h1>
+<h3 id="chain-of-thought">Chain of Thought</h3>
+<h3 id="decomposed-prompting">Decomposed Prompting</h3>
+<p>[ICLR 2023] Decomposed Prompting: A Modular Approach for Solving Complex Tasks. [paper][code]</p>
+<h2 id="currrent-limitations-of-gpt-3.5">Currrent Limitations of GPT-3.5</h2>
+<ul>
+<li>on-the-fly overwriting the model’s beliefs</li>
+<li>formal reasoning</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p><code>- Will large language model replace search engine?     - No. LLMs are good for reasoning, not for knowledge. The knowledge within LLMs are unreliable and cannot be verified.     - On the other hand, the knowledge from search engine is orders or magnitude larger than LLM’s internal knowledge, one can easily verify credibility of search results by checking the source.     - Combining LLMs and search is a good direction. Let search handle knowledge, let LLMs handle reasoning.</code></p>
+<h1 id="why-are-large-language-models-compelling">Why Are Large Language Models Compelling?</h1>
 <p>todo</p>
-<h2 id="tectonic-plate-shifts-in-technology">Tectonic Plate Shifts in
-Technology</h2>
+<h2 id="tectonic-plate-shifts-in-technology">Tectonic Plate Shifts in Technology</h2>
 <p>todo</p>
-<h2 id="natural-language-as-a-driver-for-any-application">Natural
-Language as a Driver for Any Application</h2>
+<h2 id="natural-language-as-a-driver-for-any-application">Natural Language as a Driver for Any Application</h2>
 <p>toodo</p>
 <p>ChatGPT was a nice demo, but there is a lot more here</p>
-<h2
-id="you-dont-have-to-re-train-the-foundation-models-to-do-things">You
-Don’t Have to Re-Train the Foundation Models to Do Things</h2>
+<h2 id="you-dont-have-to-re-train-the-foundation-models-to-do-things">You Don’t Have to Re-Train the Foundation Models to Do Things</h2>
 <p>It’s amazing</p>
-<h1 id="summary">Summary</h1>
+<h1 id="summary-1">Summary</h1>
 <p>https://cube.dev/blog/conversational-interface-for-semantic-layer</p>
 <p>https://github.com/approximatelabs/sketch</p>
+<h1 id="references">References</h1>
+<p>Fu, Yao; Peng, Hao and Khot, Tushar. (Dec 2022). How does GPT Obtain its Ability? Tracing Emergent Abilities of Language Models to their Sources. Yao Fu’s Notion. https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1</p>
+<p>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., &amp; Polosukhin, I. (2017). Attention is All you Need. Neural Information Processing Systems, 30, 5998–6008. https://arxiv.org/pdf/1706.03762v5</p>
 </body>
 </html>

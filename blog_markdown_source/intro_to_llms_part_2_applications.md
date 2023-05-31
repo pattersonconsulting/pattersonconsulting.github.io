@@ -3,7 +3,7 @@ layout: post
 published-on: March 27th 2023
 author: Josh Patterson
 title: An Introduction to Large Language Models (LLMs)
-subtitle: Part 2 - LLMs and Enterprise Applications
+subtitle: Part 2 - A Guide for Building Enterprise Application with LLMs
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
@@ -22,11 +22,53 @@ The intended audience for this series is:
 Series:
 
 * [Core Concepts and Terminology in LLMs](intro_to_llms_part_1_terminology.html)
-* [LLMs and Enterprise Applications](intro_to_llms_part_2_applications.html)
-* [Model Training and Management in LLMs](intro_to_llms_part_3_model_management.html)
+* [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
+* [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 # Profiling Use Cases for LLMs
+
+* Task: “Understanding a Corpus”
+   * Ask a Question of a corpus
+   * Question / Answer
+   * Needs - Low cost of false positives
+* Task: “Query your tabular dataset”
+   * SQL
+   * Dataframes / CSVs
+* Task: “Automate Knowledge Work”
+   * create a spreadsheet
+   * create a database
+   * create a presentation
+   * write an email
+* Task: “Query the information in a phone conversation”
+   * ask questions about what happened in a meeting
+
+Abilities of a LLM that can be leveraged in an application
+
+* mimicking a human through text
+* basic reasoning
+* breaking down a goal into specific steps or tasks
+* text or code generation
+
+
+## Natural Language as a DSL for Anything with an API
+
+* So basically I think it can automate the creation of workflows that need humans in the middle
+* Ala “write me some code to do” but for anything — as long as you write a plug-in/bindings for the task
+* And you can use basically any llm to power the question analysis
+* Doesn’t replace people
+* But just like that office 365 video — a person does a shit load more stuff, faster
+* It’s a next generation scripting language, but in the case you don’t have to learn some domain specific language, you just use “your own natural language “ 
+
+## Examples of Use Cases
+
+Kubeflow / Tribal Knowledge
+* Benefit: allows us to query what happened in the audio meeting
+
+Office 365 CoPilot
+
+* https://www.youtube.com/watch?v=S7xTBa93TX8&t=2s
+* Office work / Knowledge work
 
 
 ## Raw Source Notes
@@ -158,6 +200,9 @@ A chat model is fine so long as it considers at least 3-parties in the conversat
 * Pinecone
 * Vectera
 * [ todo: more ]
+
+> Pinecone is an external database where developers can store relevant contextual data for LLM apps. Rather than sending large document collections back and forth with every API call, developers can store them in a Pinecone database, then pick only the few most relevant to any given query — an approach called in-context learning. It’s a must-have for enterprise use cases to truly bloom.
+> In particular, Pinecone is a vector database, which means data is stored in the form of semantically meaningful embeddings. While a technical explanation of embeddings is beyond the scope of this post, the important part to understand is that LLMs also operate on vector embeddings — so by storing data in Pinecone in this format, part of the AI work has effectively been pre-processed and offloaded to the database.
 
 ## Model Servers
 

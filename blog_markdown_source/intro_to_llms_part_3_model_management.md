@@ -21,7 +21,7 @@ The intended audience for this series is:
 
 Series:
 
-* [Core Concepts and Terminology in LLMs](intro_to_llms_part_1_terminology.html)
+* [Background and Core Concepts in LLMs](intro_to_llms_part_1_terminology.html)
 * [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
 * [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)

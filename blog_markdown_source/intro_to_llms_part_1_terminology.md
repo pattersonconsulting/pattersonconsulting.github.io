@@ -3,7 +3,7 @@ layout: post
 published-on: March 27th 2023
 author: Josh Patterson
 title: An Introduction to Large Language Models (LLMs)
-subtitle: Part 1 - Core Concepts and Terminology in LLMs
+subtitle: Part 1 - Background and Core Concepts in LLMs
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
@@ -27,16 +27,27 @@ The intended audience for this series is:
 
 Series:
 
-* [Core Concepts and Terminology in LLMs](intro_to_llms_part_1_terminology.html)
+* [Background and Core Concepts in LLMs](intro_to_llms_part_1_terminology.html)
 * [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
 * [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 # What are Large Language Models (LLMs)?
 
-A large language model (LLM) is ....
+Large language models, such as GPT-3.5, are advanced artificial intelligence systems designed to understand and generate human-like text. These models are trained on vast amounts of data to learn the patterns, structures, and semantics of language. They can then generate coherent and contextually relevant responses to various prompts.
 
+Training a large language model involves utilizing a massive dataset, which often includes a wide range of texts from books, articles, websites, and other written sources. This diverse corpus helps the model learn the nuances of human language and develop a broad understanding of various topics.
+
+Once trained, large language models can be used for a wide range of applications. They can generate human-like text, answer questions, assist with language translation, write code, summarize articles, create conversational agents, and much more. They achieve this by leveraging the knowledge and patterns they have learned during training.
+
+It's important to note that while large language models like GPT-3.5 can generate impressive and coherent text, they don't possess true understanding or consciousness. They are statistical models that rely on patterns and associations in the training data rather than true comprehension.
 LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input.
+
+Foundation models
+
+https://arxiv.org/abs/2205.09911
+
+> Foundation Models (FMs) are models trained on large corpora of data that, at very large scale, can generalize to new tasks without any task-specific finetuning. As these models continue to grow in size, innovations continue to push the boundaries of what these models can do on language and image tasks.
 
 GPT-3 and GPT-4 are examples of large language models.
 
@@ -60,6 +71,10 @@ https://www.theatlantic.com/technology/archive/2023/01/artificial-intelligence-a
 
 emergent abilities
 
+https://arxiv.org/abs/2205.09911
+
+> Emergent Behaviors Interestingly, the biggest GPT-3 variant (175B parameters) has the capacity to solve natural language tasks with only a few examples (called few-shot prompting), and in some cases, just a task description (e.g. “Translate French to English”). Unlike traditional finetuning, no model parameters are updated to fit the task. Few-shot prompting has proven to be effective on tasks widely different from the FMs pretraining objective. Some examples include code generation [84], Trivia QA [18, 48] and common sense reasoning tasks [18]. Smaller models (less than 10B parameters) typically require some form of task-specific finetuning to perform well. 
+
 https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/
 
 LLMs having their "stable diffusion"-moment
@@ -67,6 +82,9 @@ LLMs having their "stable diffusion"-moment
 https://simonwillison.net/2023/Mar/11/llama/
 
 
+## Will LLMs Start Replacing Jobs?
+
+<img style="float: right;" src="./images/19th_century_textile_loom.jpg">
 
 > "Rapid and pivotal advances in technology have a way of unsettling people, because they can reverberate mercilessly, sometimes, through business, employment, and cultural spheres. And so it is with the current shock and awe over large language models, such as GPT-4 from OpenAI."
 
@@ -87,6 +105,18 @@ https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157
 
 LLMs and Artificial Intelligence --- [What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
+
+Reference the luddites
+
+https://en.wikipedia.org/wiki/Luddite
+
+> The Luddites were members of a 19th-century movement of English textile workers which opposed the use of certain types of cost-saving machinery, often by destroying the machines in clandestine raids. They protested against manufacturers who used machines in "a fraudulent and deceitful manner" to replace the skilled labour of workers and drive down wages by producing inferior goods.[1][2] Members of the group referred to themselves as Luddites, self-described followers of "Ned Ludd", a legendary weaver whose name was used as a pseudonym in threatening letters to mill owners and government officials.[3]
+
+
+
+LLMs aren't taking jobs, they are accelerating workforce, a natural evolution of tooling
+
+soon, they will be table stakes in many / most industries
 
 ## Terminology in Large Language Models (LLMs)
 
@@ -118,7 +148,13 @@ todo
 
 ### Prompts and Prompt Engineering
 
-* core concept
+In the context of large language models, prompts are the input text or instructions given to the model to generate a desired response. A prompt can be a question, a statement, or an incomplete sentence that sets the context for the model to generate a coherent and relevant output.
+
+When providing a prompt, users specify their desired outcome or request, and the model generates a response based on the patterns and information it has learned during training. The prompt serves as a guide for the model to understand the user's intent and generate a suitable response accordingly.
+
+The effectiveness of a prompt depends on its clarity, specificity, and relevance to the desired task. Well-crafted prompts help elicit accurate and meaningful responses from the model, while ambiguous or poorly phrased prompts may yield inaccurate or undesired outputs.
+
+Prompt engineering, which involves optimizing the wording and structure of prompts, has become an important practice to improve the quality and reliability of model-generated responses. Researchers and developers often experiment with different prompt formulations to achieve the desired outcomes and mitigate potential biases or limitations of the language model.
 
 sub-topics:
 
@@ -130,6 +166,14 @@ sub-topics:
 https://www.pinecone.io/learn/langchain-prompt-templates/
 
 ### In-Context Learning
+
+In-context learning refers to a technique used with large language models to fine-tune or adapt them to specific tasks or domains by providing additional training on task-specific examples or data. This process allows the model to specialize and improve its performance on specific tasks or to better align with the requirements of a particular application.
+
+In large language models like GPT-3.5, the initial training involves exposing the model to a diverse range of text from various sources. However, this general training may not be sufficient for certain specific tasks or domains. In-context learning addresses this limitation by fine-tuning the model with additional examples or data that are relevant to the target task.
+
+To perform in-context learning, the model is provided with specific prompt-response pairs or labeled examples related to the desired task. These pairs serve as additional training data, and the model is retrained using this task-specific information. By exposing the model to task-specific examples, it can learn to generate more accurate and contextually appropriate responses for that particular task.
+
+In-context learning helps to enhance the model's performance, adaptability, and task-specific understanding. It allows large language models to be more versatile and capable of addressing a wide range of tasks and applications by leveraging the benefits of both general pre-training and task-specific fine-tuning.
 
 * zero-shot
 * one-shot
@@ -143,7 +187,21 @@ https://www.pinecone.io/learn/langchain-prompt-templates/
 
 ## Deep Learning, Transformers, and Generative Language Models
 
-todo
+The architecture of large language models typically consists of multiple layers of artificial neural networks. These networks contain millions or even billions of parameters that enable the model to capture and represent the complex relationships between words and concepts.
+
+----
+
+Deep learning, transformers, and large language models are interconnected concepts that play crucial roles in the development and success of advanced natural language processing (NLP) systems. Here's an overview of their relationship:
+
+Deep Learning: Deep learning is a subfield of machine learning that focuses on training artificial neural networks with multiple layers to learn and extract complex patterns and representations from data. Deep learning algorithms, such as convolutional neural networks (CNNs) and recurrent neural networks (RNNs), have revolutionized various fields, including computer vision, speech recognition, and natural language processing.
+
+Transformers: Transformers are a specific type of deep learning architecture that has significantly advanced NLP tasks. They were introduced in the seminal paper "Attention is All You Need" by Vaswani et al. in 2017. Transformers employ a self-attention mechanism to capture contextual dependencies between words in a sequence, allowing the model to weigh the importance of different words when generating responses. This attention mechanism helps transformers effectively model long-range dependencies and improves their ability to understand and generate coherent text.
+
+Large Language Models: Large language models, such as GPT-3.5, are deep learning models built using transformer architectures specifically designed for language understanding and generation tasks. These models have been trained on massive amounts of text data, learning to predict the next word or sequence of words given a context. By leveraging the power of transformers and deep learning techniques, large language models can generate human-like text, answer questions, perform language translation, and assist with a wide range of natural language processing tasks.
+
+The success of large language models is largely attributed to the transformer architecture's ability to capture long-range dependencies and learn contextual representations effectively. The deep learning techniques used in training these models allow them to understand complex patterns and relationships in language data, making them capable of generating coherent and contextually relevant text.
+
+In summary, deep learning forms the foundation of large language models, and transformers provide the architecture that empowers these models with the ability to understand and generate natural language text. Together, they have revolutionized the field of NLP and enabled the development of sophisticated language understanding and generation systems.
 
 
 * refernece our strata talk in 2016
@@ -313,11 +371,37 @@ More Yao Fu:
 * explain use in people and in LLMs
 * discuss specific abilities of GPT-3
 
+Knowledge: Knowledge refers to the information, facts, and understanding that an individual possesses about the world. It represents accumulated information and expertise gained through learning and experience.
+
+Reasoning: Reasoning is the mental process of drawing conclusions or making inferences based on available information, logic, and rules. It involves using logical and cognitive abilities to analyze, evaluate, and synthesize information.
+
+Nature:
+
+Knowledge: Knowledge is a repository of information and understanding. It encompasses facts, concepts, rules, relationships, and models about various domains. It is generally static and acquired through learning and observation.
+
+Reasoning: Reasoning is a dynamic cognitive process that involves actively manipulating and processing information to arrive at logical conclusions or make decisions. It involves using cognitive abilities such as deduction, induction, and abductive reasoning.
+
+Role:
+
+Knowledge: Knowledge provides the foundation and raw material for reasoning. It serves as a basis for making informed decisions, solving problems, and understanding the world. Knowledge provides context and background information that can be used in the reasoning process.
+Reasoning: Reasoning employs logical and cognitive processes to analyze and manipulate knowledge. It helps in organizing, connecting, and utilizing knowledge to derive new insights, solve problems, make judgments, and make predictions.
+Dependency:
+
+Knowledge: Knowledge is a prerequisite for effective reasoning. Reasoning heavily relies on the availability and accuracy of relevant knowledge. Lack of knowledge can limit the quality and accuracy of reasoning.
+Reasoning: Reasoning can operate even in the absence of complete knowledge. It can make use of partial or incomplete information to draw conclusions or make decisions. Reasoning can also be employed to fill gaps in knowledge and acquire new knowledge.
+
 Knowledge defined:
 > "facts, information, and skills acquired by a person through experience or education; the theoretical or practical understanding of a subject."
 
 Reasoning defined:
 > "the action of thinking about something in a logical, sensible way."
+
+In summary, knowledge and reasoning are interrelated cognitive processes. Knowledge provides the information and foundation for reasoning, while reasoning employs logical and cognitive processes to manipulate knowledge and arrive at conclusions. Knowledge represents accumulated information, while reasoning is a dynamic process of drawing inferences and making decisions based on available information.
+
+
+
+
+
 
 https://arxiv.org/abs/2212.10403
 
@@ -382,11 +466,58 @@ http://ai.stanford.edu/blog/understanding-incontext/
 
 [ICLR 2023] Decomposed Prompting: A Modular Approach for Solving Complex Tasks. [paper][code]
 
+
+
+## Comparing LLMs' Ability to do Complex Tasks
+
+Paper: https://arxiv.org/abs/2305.17306
+
+> As large language models (LLMs) are continuously being developed, their evaluation becomes increasingly important yet challenging. This work proposes Chain-of-Thought Hub, an open-source evaluation suite on the multi-step reasoning capabilities of large language models. We are interested in this setting for two reasons: (1) from the behavior of GPT and PaLM model family, we observe that complex reasoning is likely to be a key differentiator between weaker and stronger LLMs; (2) we envisage large language models to become the next-generation computational platform and foster an ecosystem of LLM-based new applications, this naturally requires the foundation models to perform complex tasks that often involve the composition of linguistic and logical operations. Our approach is to compile a suite of challenging reasoning benchmarks to track the progress of LLMs. Our current results show that: (1) model scale clearly correlates with reasoning capabilities; (2) As of May 2023, Claude-v1.3 and PaLM-2 are the only two models that are comparable with GPT-4, while open-sourced models still lag behind; (3) LLaMA-65B performs closely to code-davinci-002, indicating that with successful further development such as reinforcement learning from human feedback (RLHF), it has great potential to be close to GPT-3.5-Turbo. Our results also suggest that for the open-source efforts to catch up, the community may focus more on building better base models and exploring RLHF.
+
+https://github.com/FranxYao/chain-of-thought-hub
+
+> The key differentiator is whether a model can do complex tasks, like the old saying: "chit-chat is cheap, show me the reasoning." This is why we compile a list of complex reasoning tasks including math (GSM8K), science (MATH, TheoremQA), symbolic (BBH), knowledge (MMLU, C-Eval), coding (HumanEval), factual (SummEdits) to measure the models' performance on challenging tasks.
+
+Complex Reasoning Tasks:
+
+* math (GSM8K)
+* science (MATH, TheoremQA)
+* symbolic (BBH)
+* knowledge (MMLU, C-Eval)
+* coding (HumanEval)
+* factual (SummEdits)
+
+[ this is where we'd put some radar plots comparing abilities of models ]
+
+
+
+
+
+
+
+
 ## Currrent Limitations of GPT-3.5
 
 * on-the-fly overwriting the model's beliefs
 * formal reasoning
 
+While large language models have demonstrated remarkable capabilities, they also have several limitations:
+
+Biases and unfairness: Language models learn from vast amounts of data, which may contain biases present in the text. As a result, they can inadvertently generate biased or unfair content, reflecting and perpetuating societal biases, stereotypes, or prejudices.
+
+Lack of common sense: Large language models often struggle with common sense reasoning. They can generate plausible-sounding but incorrect or nonsensical responses. They lack true understanding of the world and may provide inaccurate or illogical information.
+
+Contextual misunderstandings: Language models may misinterpret or misjudge the context of a prompt, leading to incorrect or nonsensical responses. They often rely heavily on the immediate preceding text and may not consider broader or long-term context.
+
+Sensitivity to input phrasing: The phrasing or wording of a prompt can significantly impact the generated response. Small changes in the input can lead to different outputs, making the models less reliable for critical or sensitive tasks.
+
+Limited knowledge and outdated information: Language models have a knowledge cutoff, meaning they are not aware of events or information that occurred after their training data. Therefore, they may provide outdated or incorrect information about recent events.
+
+Ethical concerns: Language models raise ethical concerns, particularly regarding the potential for misuse, such as generating fake news or deepfake content, spreading misinformation, or engaging in malicious activities like impersonation or harassment.
+
+High computational requirements: Training and deploying large language models require significant computational resources, making them inaccessible to many researchers and organizations. This can hinder widespread adoption and contribute to the concentration of AI capabilities in a few entities.
+
+Addressing these limitations is an active area of research and development, with ongoing efforts to enhance model robustness, mitigate biases, improve understanding of context, and promote ethical use of large language models.
 
 ## Summary 
 

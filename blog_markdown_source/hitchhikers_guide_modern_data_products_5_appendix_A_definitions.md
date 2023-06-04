@@ -390,6 +390,12 @@ Many core machine learning libraries have vectorization classes. These libraries
 * weka
 * scikit-learn
 
+TODO: https://www.pinecone.io/learn/time-series-vectors/#:~:text=Time%20series%20embeddings%20are%20a,but%20uncommon%20within%20time%20series.
+
+> Once your time series are vectorized, you can use Pinecone to store and search for them in an easy-to-use and efficient environment. Check out this example showing how to perform time-series “pattern” matching to find out the most similar stock trends.
+
+
+
 ## Feature Vector
 
 **A feature vector is a vector that stores the features for a particular observation in a certain order.**

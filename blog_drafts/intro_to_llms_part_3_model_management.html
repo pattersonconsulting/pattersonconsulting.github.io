@@ -5,44 +5,220 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Josh Patterson" />
-  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
   <title>An Introduction to Large Language Models (LLMs)</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">An Introduction to Large Language Models (LLMs)</h1>
-<p class="subtitle">Part 3 - Putting LLM Applications into Production</p>
+<p class="subtitle">Part 3 - Putting LLM Applications into
+Production</p>
 <p class="author">Josh Patterson</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#which-model-should-i-use-for-my-llm-application">Which Model Should I Use for My LLM Application?</a><ul>
-<li><a href="#api-vs-in-house-models">API vs In-House Models</a></li>
-<li><a href="#the-cost-of-cloud-apis-at-scale">The Cost of Cloud APIs at Scale</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#which-model-should-i-use-for-my-llm-application"
+id="toc-which-model-should-i-use-for-my-llm-application">Which Model
+Should I Use for My LLM Application?</a>
+<ul>
+<li><a href="#api-vs-in-house-models"
+id="toc-api-vs-in-house-models">API vs In-House Models</a></li>
+<li><a href="#the-cost-of-cloud-apis-at-scale"
+id="toc-the-cost-of-cloud-apis-at-scale">The Cost of Cloud APIs at
+Scale</a></li>
 </ul></li>
-<li><a href="#how-are-llm-models-customized-or-trained">How are LLM Models Customized or Trained?</a><ul>
-<li><a href="#in-context-learning">In-Context Learning</a></li>
-<li><a href="#fine-tuninng">Fine-Tuninng</a></li>
-<li><a href="#rhlf-other-stuff">RHLF — other stuff</a></li>
-<li><a href="#llm-training-data">LLM Training Data</a></li>
-<li><a href="#the-impact-of-parameter-sizes-in-llms">The Impact of Parameter Sizes in LLMs</a></li>
+<li><a href="#how-are-llm-models-customized-or-trained"
+id="toc-how-are-llm-models-customized-or-trained">How are LLM Models
+Customized or Trained?</a>
+<ul>
+<li><a href="#in-context-learning"
+id="toc-in-context-learning">In-Context Learning</a></li>
+<li><a href="#fine-tuninng" id="toc-fine-tuninng">Fine-Tuninng</a></li>
+<li><a href="#rhlf-other-stuff" id="toc-rhlf-other-stuff">RHLF — other
+stuff</a></li>
+<li><a href="#llm-training-data" id="toc-llm-training-data">LLM Training
+Data</a></li>
+<li><a href="#the-impact-of-parameter-sizes-in-llms"
+id="toc-the-impact-of-parameter-sizes-in-llms">The Impact of Parameter
+Sizes in LLMs</a></li>
 </ul></li>
-<li><a href="#other-considerations-for-deploying-large-language-model-applications">Other Considerations for Deploying Large Language Model Applications</a><ul>
-<li><a href="#closed-source-vs-open-source-models">Closed Source vs Open Source Models</a></li>
-<li><a href="#trends-in-model-parameter-sizes">Trends in Model Parameter Sizes</a></li>
-<li><a href="#specializing-smaller-models-for-specific-performance">Specializing Smaller Models for Specific Performance</a></li>
+<li><a
+href="#other-considerations-for-deploying-large-language-model-applications"
+id="toc-other-considerations-for-deploying-large-language-model-applications">Other
+Considerations for Deploying Large Language Model Applications</a>
+<ul>
+<li><a href="#closed-source-vs-open-source-models"
+id="toc-closed-source-vs-open-source-models">Closed Source vs Open
+Source Models</a></li>
+<li><a href="#trends-in-model-parameter-sizes"
+id="toc-trends-in-model-parameter-sizes">Trends in Model Parameter
+Sizes</a></li>
+<li><a href="#specializing-smaller-models-for-specific-performance"
+id="toc-specializing-smaller-models-for-specific-performance">Specializing
+Smaller Models for Specific Performance</a></li>
 </ul></li>
-<li><a href="#summary">Summary</a></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
 </ul>
 </nav>
 <h1 id="introduction">Introduction</h1>
@@ -52,20 +228,27 @@
 </blockquote>
 <p>The intended audience for this series is:</p>
 <blockquote>
-<p>Individual researchers, data scientists, and then also enterprise data teams as well</p>
+<p>Individual researchers, data scientists, and then also enterprise
+data teams as well</p>
 </blockquote>
 <p>Series:</p>
 <ul>
-<li><a href="intro_to_llms_part_1_terminology.html">Background and Core Concepts in LLMs</a></li>
-<li><a href="intro_to_llms_part_2_applications.html">A Guide for Building Enterprise Application with LLMs</a></li>
-<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM Applications into Production</a></li>
-<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial Intelligence?</a></li>
+<li><a href="intro_to_llms_part_1_terminology.html">Background and Core
+Concepts in LLMs</a></li>
+<li><a href="intro_to_llms_part_2_applications.html">A Guide for
+Building Enterprise Application with LLMs</a></li>
+<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM
+Applications into Production</a></li>
+<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial
+Intelligence?</a></li>
 </ul>
-<h1 id="which-model-should-i-use-for-my-llm-application">Which Model Should I Use for My LLM Application?</h1>
+<h1 id="which-model-should-i-use-for-my-llm-application">Which Model
+Should I Use for My LLM Application?</h1>
 <p>todo</p>
 <h2 id="api-vs-in-house-models">API vs In-House Models</h2>
 <p>asdasd</p>
-<h2 id="the-cost-of-cloud-apis-at-scale">The Cost of Cloud APIs at Scale</h2>
+<h2 id="the-cost-of-cloud-apis-at-scale">The Cost of Cloud APIs at
+Scale</h2>
 <p>link work here</p>
 <p>https://huyenchip.com/2023/04/11/llm-engineering.html</p>
 <pre><code>The more explicit detail and examples you put into the prompt, the better the model performance (hopefully), and the more expensive your inference will cost.
@@ -86,35 +269,55 @@ Experimentation-wise, prompt engineering is a cheap and fast way get something u
 * By comparison, AWS personalization costs about $0.0417 / 1k predictions and AWS fraud detection costs about $7.5 / 1k predictions [for over 100,000 predictions a month]. AWS services are usually considered prohibitively expensive (and less flexible) for any company of a moderate scale.
 
 </code></pre>
-<h1 id="how-are-llm-models-customized-or-trained">How are LLM Models Customized or Trained?</h1>
+<h1 id="how-are-llm-models-customized-or-trained">How are LLM Models
+Customized or Trained?</h1>
 <p>now this is an interesting topic!</p>
 <h2 id="in-context-learning">In-Context Learning</h2>
 <h2 id="fine-tuninng">Fine-Tuninng</h2>
-<h3 id="when-should-i-fine-tune-a-model">When Should I Fine-Tune a Model?</h3>
-<p>Currently there is no great heuristic here for the threshold to fine-tune over using advanced context mechanics Does using Context Mechanics give you a “good enough” result for the current problem? if no, then it may be worth experimenting with fine-tuning</p>
-<p>Context Some papers suggest you need around 50K examples in order to improve alignment. So if you have that many examples maybe it’s worth it. Fine-tuning needs to improve “alignment” ultimately for any use case I think in the context of LLMs the purpose of “fine tuning” is really “alignment”; that is to better align model outputs with the intended task.</p>
+<h3 id="when-should-i-fine-tune-a-model">When Should I Fine-Tune a
+Model?</h3>
+<p>Currently there is no great heuristic here for the threshold to
+fine-tune over using advanced context mechanics Does using Context
+Mechanics give you a “good enough” result for the current problem? if
+no, then it may be worth experimenting with fine-tuning</p>
+<p>Context Some papers suggest you need around 50K examples in order to
+improve alignment. So if you have that many examples maybe it’s worth
+it. Fine-tuning needs to improve “alignment” ultimately for any use case
+I think in the context of LLMs the purpose of “fine tuning” is really
+“alignment”; that is to better align model outputs with the intended
+task.</p>
 <h2 id="rhlf-other-stuff">RHLF — other stuff</h2>
 <h2 id="llm-training-data">LLM Training Data</h2>
 <p>Training Data for Stanford Alpaca</p>
 <p>https://raw.githubusercontent.com/tatsu-lab/stanford_alpaca/main/alpaca_data.json</p>
-<h2 id="the-impact-of-parameter-sizes-in-llms">The Impact of Parameter Sizes in LLMs</h2>
-<p>there are light weight models that are approaching the quality of chat GPT.<br />
+<h2 id="the-impact-of-parameter-sizes-in-llms">The Impact of Parameter
+Sizes in LLMs</h2>
+<p>there are light weight models that are approaching the quality of
+chat GPT.<br />
 It’s a space to watch.<br />
-There is reason to believe this will all be very accessible on consumer grade hardware soon</p>
+There is reason to believe this will all be very accessible on consumer
+grade hardware soon</p>
 <h3 id="gpu-memory-as-upper-ceiling">GPU Memory as Upper Ceiling</h3>
 <p>1GB == 1B paramters</p>
-<h1 id="other-considerations-for-deploying-large-language-model-applications">Other Considerations for Deploying Large Language Model Applications</h1>
+<h1
+id="other-considerations-for-deploying-large-language-model-applications">Other
+Considerations for Deploying Large Language Model Applications</h1>
 <p>todo</p>
-<h2 id="closed-source-vs-open-source-models">Closed Source vs Open Source Models</h2>
+<h2 id="closed-source-vs-open-source-models">Closed Source vs Open
+Source Models</h2>
 <ul>
 <li>todo</li>
 </ul>
-<h2 id="trends-in-model-parameter-sizes">Trends in Model Parameter Sizes</h2>
+<h2 id="trends-in-model-parameter-sizes">Trends in Model Parameter
+Sizes</h2>
 <ul>
 <li>todo</li>
 </ul>
-<h2 id="specializing-smaller-models-for-specific-performance">Specializing Smaller Models for Specific Performance</h2>
-<p>[ICML 2023] Specializing Smaller Language Models towards Multi-Step Reasoning.</p>
+<h2
+id="specializing-smaller-models-for-specific-performance">Specializing
+Smaller Models for Specific Performance</h2>
+<p>[ICML 2023] Specializing Smaller Language Models towards Multi-Step
+Reasoning.</p>
 <p>https://arxiv.org/abs/2301.12726</p>
 <pre><code>We show that such abilities can, in fact, be distilled down from GPT3.5 (≥ 175B) to T5 variants (≤ 11B)
 

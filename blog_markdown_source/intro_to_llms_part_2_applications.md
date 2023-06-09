@@ -215,7 +215,60 @@ A chat model is fine so long as it considers at least 3-parties in the conversat
    * great documentation and easy to replicate examples
    * lots of out of the box plugins (sql, pandas, more)
 
+## Embeddings
+
+https://vickiboykis.com/what_are_embeddings/
+
+https://jalammar.github.io/illustrated-word2vec/
+
+
+Embeddings are a fundamental concept in machine learning models, including Large Language Models (LLMs). They are numerical representations of data, such as text, images, or audio, that capture the essence or semantic meaning of the data. The process of embedding involves converting the input data into vectors of numbers, allowing the machine learning model to understand and process the data effectively.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ISPId9Lhc1g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+For example, in the context of text data embeddings represent the semantic relationships between words, sentences, or documents. Each word or document is assigned a vector in a high-dimensional space, where the position of the vector records information about the meaning of the text based on various traits or criteria (as represented by the dimensions of the vector space). By mapping words or documents into a continuous vector space, embeddings allow for similarity comparisons (through the use of algorithms like nearest neighbors) and the clustering of textual data.
+
+There are different types of embeddings depending on the use case and training techniques used. A few popular examples of these include:
+
+1. Text Embeddings: These are embeddings that numerically capture the meaning of data in the form of text. There are three common forms of text embedding: word, sentence/paragraph, and document embeddings. 
+   * Word Embeddings: These embeddings record the semantic meaning of each individual word of a text. This allows for operations on the text using words, such as measuring the similarity of words, finding word analogies, and finding similar words. Some popular algorithms for word embedding include GloVe, fastText, and Word2Vec.
+   * Sentence/Paragraph Embeddings: These embeddings describe the meaning of entire sentences or paragraphs of a text. This is done by finding the context and relationships between words to capture the meaning of the sentence or paragraph in its entirety. Some examples of models that create sentence/paragraph embeddings include OpenAI embeddings, Cohere embeddings, and Sentence Transformers.
+   * Document Embeddings: Document embeddings are functionally very similar to sentence/paragraph embeddings but capture the meaning of entire documents or texts. These embeddings are particularly useful for tasks that involve clustering, document classification, and information retrieval.
+2. Audio Embeddings: These are embeddings that numerically capture the meaning of data in the form of audio. This allows for operations on audio files such as similarity comparisons and isolation(?). An example of an algorithm for audio embedding is OpenL3.
+3. Image Embeddings: These are embeddings that numerically capture the meaning of data in the form of images. This allows for operations on images such as classification, similarity comparisons, clustering, and identification. Some popular models for image embedding include VGG-16, ResNet50, and Inceptionv3
+
+Embeddings are used in many ML applications, and LangChain is no exception. LangChain has an embedding class built in that functions as an interface for text embedding models like Cohere, HuggingFace, and OpenAI. LangChain only supports text embedding. This basic embedding class has two methods, with one functioning within one document while the other functions across multiple documents. 
+
+Once an embedding is done and the vector is created, where does this information go? This is where embedding databases, also known as vector databases, are utilized. Vector databases play a crucial role in leveraging embeddings for efficient retrieval. These databases store the embeddings generated for various data points, such as documents, images, or audio segments, in the form of vectors. Rather than traditional database searches based on substrings or exact matches, vector databases allow searching based on the nearest neighbors in the vector space. By calculating the similarity between the embeddings of the query and the stored embeddings, vector databases can retrieve the most relevant data points in a more significant way than a substring or exact match search can.
+
+> It is important to note that repeatedly calling embedding models with LangChain to search over a large number of vectors quickly isn’t very efficient or cost-effective. In such a situation, using a vector database is a much more suitable option. (Unsure if necessary)
+
 ## Vector Databases
+
+### Vihaal Writing on Vector Databases
+
+Vector databases play a crucial role in machine learning (ML) and large language model (LLM) applications. They are designed to efficiently store, index, and retrieve high-dimensional vectors, which are numerical representations of data points. These vectors can represent various entities such as words, documents, images, or user preferences. Vector databases work hand in hand with the embedding models that create such high-dimensional vectors.
+
+The importance of vector databases lies in the many utilities and operations it allows embeddings to perform once the semantic meaning of data is vectorized. Of these, there are three that are particularly significant:
+
+1. Efficient Similarity Search: Vector databases excel at performing efficient similarity searches. ML algorithms often rely on measuring the similarity between vectors to make accurate predictions or recommendations. By using specialized indexing structures like KD-trees or Annoy, vector databases can quickly find the most similar vectors to a given query, enabling fast retrieval of relevant information.
+2. Nearest Neighbor Search: Vector databases enable efficient nearest neighbor search operations. Given a query vector, ML algorithms often need to find the closest vectors in the dataset. This operation is essential in recommendation systems, clustering, anomaly detection, and other ML tasks. Vector databases can perform nearest-neighbor searches efficiently, allowing ML models to find relevant data points in multi-dimensional spaces.
+3. Embedding Storage: LLMs often rely on pre-trained embeddings, where words or sentences are mapped to high-dimensional vectors. Vector databases provide a convenient and efficient way to store and retrieve these embeddings. By using vector databases, LLMs can quickly access pre-trained embeddings for various language-related tasks, such as text generation, language translation, or sentiment analysis instead of calling embedding models every time there is a query.
+
+Vector databases are undoubtedly important when used in conjunction with embedding models, but how exactly do they compare with traditional databases? While they are both databases, vector databases differ greatly from traditional databases when it comes to the format and structure of the database and how querying functions within the database:
+   
+1. Data Representation: Traditional databases are typically designed to store structured data in tabular formats, such as rows and columns. They are optimized for transactional operations and data consistency. In contrast, vector databases focus on storing and querying high-dimensional vectors, which are often unstructured or semi-structured data representations. They prioritize efficient similarity searches and nearest-neighbor operations rather than traditional relational operations.
+2. Indexing Techniques: Traditional databases use indexing techniques like B-trees or hash indexes to accelerate query performance based on certain attribute values. These indexing methods are not well-suited for high-dimensional vector searches. Instead, vector databases employ specialized indexing structures like KD trees, ball trees, or locality-sensitive hashing (LSH) to efficiently index and search high-dimensional vectors.
+
+Perhaps comparing vector databases with traditional databases wasn’t appropriate, after all, vector databases contain data formatted as high-dimensional vectors within a larger, interconnected vector space. Instead, a comparison between vector databases and graph databases seems more appropriate:
+
+1. Data Model: Graph databases are designed to represent and store relationships between entities in the form of nodes and edges. They focus on capturing complex relationships and querying graph-based patterns efficiently. On the other hand, vector databases primarily focus on storing and querying high-dimensional vectors, with a lower emphasis on explicitly modeling and querying relationships between entities.
+2. Query Paradigm: Graph databases offer powerful graph query languages (e.g., Cypher for Neo4j) that allow expressive queries to traverse and explore relationships in the graph. These queries emphasize graph traversal and pattern matching. In contrast, vector databases prioritize similarity search and nearest neighbor operations, which involve measuring vector distances rather than explicitly traversing graphical structures.
+3. Use Cases: Graph databases excel in use cases where the relationships between entities are critical, such as social networks, recommendation systems, fraud detection, or knowledge graphs. Vector databases, on the other hand, are particularly beneficial in ML/LLM applications where high-dimensional vector representations and similarity-based operations are essential, such as content-based recommendation systems, text search, or image retrieval.
+
+todo: summarize + segue
+
+### ChatGPT on Vector Databases
 
 Vector databases play a crucial role in large language model applications by enabling efficient and scalable retrieval of relevant information or embeddings for various tasks. Here's an explanation of their role in the context of large language models:
 

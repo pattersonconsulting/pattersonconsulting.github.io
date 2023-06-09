@@ -30,6 +30,10 @@ Series:
 
 todo
 
+Numbers every LLM developer should know:
+
+https://github.com/ray-project/llm-numbers
+
 ## API vs In-House Models
 
 asdasd

@@ -5,227 +5,48 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Josh Patterson" />
-  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
-pandas, dataframe, whl, pip, anaconda, dependency" />
-  <meta name="description" content="In this post we’ll ….." />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency" />
   <title>An Introduction to Large Language Models (LLMs)</title>
-  <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
+<header>
 <h1 class="title">An Introduction to Large Language Models (LLMs)</h1>
-<p class="subtitle">Part 2 - A Guide for Building Enterprise Application
-with LLMs</p>
+<p class="subtitle">Part 2 - A Guide for Building Enterprise Application with LLMs</p>
 <p class="author">Josh Patterson</p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#profiling-use-cases-for-llms"
-id="toc-profiling-use-cases-for-llms">Profiling Use Cases for LLMs</a>
-<ul>
-<li><a href="#natural-language-as-a-dsl-for-anything-with-an-api"
-id="toc-natural-language-as-a-dsl-for-anything-with-an-api">Natural
-Language as a DSL for Anything with an API</a></li>
-<li><a href="#examples-of-use-cases"
-id="toc-examples-of-use-cases">Examples of Use Cases</a></li>
-<li><a href="#task-composability" id="toc-task-composability">Task
-Composability</a></li>
-<li><a href="#raw-source-notes" id="toc-raw-source-notes">Raw Source
-Notes</a></li>
-<li><a href="#issues-in-integrating-llms-into-applications"
-id="toc-issues-in-integrating-llms-into-applications">Issues in
-Integrating LLMs into Applications</a></li>
-<li><a href="#example-claims-processing"
-id="toc-example-claims-processing">Example: Claims Processing</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#profiling-use-cases-for-llms">Profiling Use Cases for LLMs</a><ul>
+<li><a href="#natural-language-as-a-dsl-for-anything-with-an-api">Natural Language as a DSL for Anything with an API</a></li>
+<li><a href="#examples-of-use-cases">Examples of Use Cases</a></li>
+<li><a href="#task-composability">Task Composability</a></li>
+<li><a href="#raw-source-notes">Raw Source Notes</a></li>
+<li><a href="#issues-in-integrating-llms-into-applications">Issues in Integrating LLMs into Applications</a></li>
+<li><a href="#example-claims-processing">Example: Claims Processing</a></li>
 </ul></li>
-<li><a href="#application-frameworks-and-components"
-id="toc-application-frameworks-and-components">Application Frameworks
-and Components</a>
-<ul>
-<li><a href="#langchain" id="toc-langchain">LangChain</a></li>
-<li><a href="#vector-databases" id="toc-vector-databases">Vector
-Databases</a></li>
-<li><a href="#model-servers" id="toc-model-servers">Model
-Servers</a></li>
+<li><a href="#application-frameworks-and-components">Application Frameworks and Components</a><ul>
+<li><a href="#langchain">LangChain</a></li>
+<li><a href="#embeddings">Embeddings</a></li>
+<li><a href="#vector-databases">Vector Databases</a></li>
+<li><a href="#model-servers">Model Servers</a></li>
 </ul></li>
-<li><a href="#implementing-llms-in-applications"
-id="toc-implementing-llms-in-applications">Implementing LLMs in
-Applications</a>
-<ul>
-<li><a href="#general-architecture-of-llm-applications"
-id="toc-general-architecture-of-llm-applications">General Architecture
-of LLM Applications</a></li>
-<li><a href="#options-for-building-llm-applications"
-id="toc-options-for-building-llm-applications">Options for Building LLM
-Applications</a></li>
-<li><a href="#model-variations-in-llms"
-id="toc-model-variations-in-llms">Model Variations in LLMs</a></li>
-<li><a href="#building-a-question-answer-system-with-langchain"
-id="toc-building-a-question-answer-system-with-langchain">Building a
-Question / Answer System with LangChain</a></li>
-<li><a href="#natural-language-dataset-query-with-llms"
-id="toc-natural-language-dataset-query-with-llms">Natural Language
-Dataset Query with LLMs</a></li>
-<li><a href="#llms-agents-and-tools"
-id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a></li>
+<li><a href="#implementing-llms-in-applications">Implementing LLMs in Applications</a><ul>
+<li><a href="#general-architecture-of-llm-applications">General Architecture of LLM Applications</a></li>
+<li><a href="#options-for-building-llm-applications">Options for Building LLM Applications</a></li>
+<li><a href="#model-variations-in-llms">Model Variations in LLMs</a></li>
+<li><a href="#building-a-question-answer-system-with-langchain">Building a Question / Answer System with LangChain</a></li>
+<li><a href="#natural-language-dataset-query-with-llms">Natural Language Dataset Query with LLMs</a></li>
+<li><a href="#llms-agents-and-tools">LLMs, Agents, and Tools</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -236,29 +57,20 @@ id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a></li>
 </blockquote>
 <p>The intended audience for this series is:</p>
 <blockquote>
-<p>Individual researchers, data scientists, and then also enterprise
-data teams as well</p>
+<p>Individual researchers, data scientists, and then also enterprise data teams as well</p>
 </blockquote>
 <p>Series:</p>
 <ul>
-<li><a href="intro_to_llms_part_1_terminology.html">Background and Core
-Concepts in LLMs</a></li>
-<li><a href="intro_to_llms_part_2_applications.html">A Guide for
-Building Enterprise Application with LLMs</a></li>
-<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM
-Applications into Production</a></li>
-<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial
-Intelligence?</a></li>
+<li><a href="intro_to_llms_part_1_terminology.html">Background and Core Concepts in LLMs</a></li>
+<li><a href="intro_to_llms_part_2_applications.html">A Guide for Building Enterprise Application with LLMs</a></li>
+<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM Applications into Production</a></li>
+<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial Intelligence?</a></li>
 </ul>
 <h1 id="profiling-use-cases-for-llms">Profiling Use Cases for LLMs</h1>
-<p>We are most focused on applications where we can leverage
-LLM-assisted reasoning to complete tasks</p>
+<p>We are most focused on applications where we can leverage LLM-assisted reasoning to complete tasks</p>
 <p>For different industries, these tasks will be different.</p>
-<p>We dont want to focus on use cases that involve specific knowledge
-retrieval is the core task — because systems such as databases and
-search engines are already well-suited for those class of tasks.</p>
-<p>“Assisted Reasoning” should be where you spend your mental cycles
-with respect to enterprose use cases.</p>
+<p>We dont want to focus on use cases that involve specific knowledge retrieval is the core task — because systems such as databases and search engines are already well-suited for those class of tasks.</p>
+<p>“Assisted Reasoning” should be where you spend your mental cycles with respect to enterprose use cases.</p>
 <ul>
 <li>Task: “Understanding a Corpus”
 <ul>
@@ -290,25 +102,17 @@ with respect to enterprose use cases.</p>
 <li>breaking down a goal into specific steps or tasks</li>
 <li>text or code generation</li>
 </ul>
-<h2 id="natural-language-as-a-dsl-for-anything-with-an-api">Natural
-Language as a DSL for Anything with an API</h2>
+<h2 id="natural-language-as-a-dsl-for-anything-with-an-api">Natural Language as a DSL for Anything with an API</h2>
 <ul>
-<li>So basically I think it can automate the creation of workflows that
-need humans in the middle</li>
-<li>Ala “write me some code to do” but for anything — as long as you
-write a plug-in/bindings for the task</li>
-<li>And you can use basically any llm to power the question
-analysis</li>
+<li>So basically I think it can automate the creation of workflows that need humans in the middle</li>
+<li>Ala “write me some code to do” but for anything — as long as you write a plug-in/bindings for the task</li>
+<li>And you can use basically any llm to power the question analysis</li>
 <li>Doesn’t replace people</li>
-<li>But just like that office 365 video — a person does a shit load more
-stuff, faster</li>
-<li>It’s a next generation scripting language, but in the case you don’t
-have to learn some domain specific language, you just use “your own
-natural language “</li>
+<li>But just like that office 365 video — a person does a shit load more stuff, faster</li>
+<li>It’s a next generation scripting language, but in the case you don’t have to learn some domain specific language, you just use “your own natural language “</li>
 </ul>
 <h2 id="examples-of-use-cases">Examples of Use Cases</h2>
-<p>Kubeflow / Tribal Knowledge * Benefit: allows us to query what
-happened in the audio meeting</p>
+<p>Kubeflow / Tribal Knowledge * Benefit: allows us to query what happened in the audio meeting</p>
 <p>Office 365 CoPilot</p>
 <ul>
 <li>https://www.youtube.com/watch?v=S7xTBa93TX8&amp;t=2s</li>
@@ -316,70 +120,34 @@ happened in the audio meeting</p>
 </ul>
 <h2 id="task-composability">Task Composability</h2>
 <p>https://huyenchip.com/2023/04/11/llm-engineering.html</p>
-<p>One way to do this is to write a program that performs the following
-sequence of tasks: * Task 1: convert natural language input from user to
-SQL query [LLM] * Task 2: execute SQL query in the SQL database [SQL
-executor] * Task 3: convert the SQL result into a natural language
-response to show user [LLM]</p>
+<p>One way to do this is to write a program that performs the following sequence of tasks: * Task 1: convert natural language input from user to SQL query [LLM] * Task 2: execute SQL query in the SQL database [SQL executor] * Task 3: convert the SQL result into a natural language response to show user [LLM]</p>
 <h2 id="raw-source-notes">Raw Source Notes</h2>
-<p>` What are common LLM use cases? If I had to roughly categorize the
-use cases I’m hearing people ask about in the enterprise, in 2023, after
-the rise of ChatGPT, it’s something like:</p>
+<p>` What are common LLM use cases? If I had to roughly categorize the use cases I’m hearing people ask about in the enterprise, in 2023, after the rise of ChatGPT, it’s something like:</p>
 <ul>
-<li>40% question-answering: query a corpus of text in natural
-language</li>
+<li>40% question-answering: query a corpus of text in natural language</li>
 <li>10% chat: same, but interactive</li>
-<li>20% extraction / summarization: what are the top N issues in these
-10,000 reviews?</li>
-<li>20% (semi-)structured natural language querying: answer from SQL
-query results</li>
+<li>20% extraction / summarization: what are the top N issues in these 10,000 reviews?</li>
+<li>20% (semi-)structured natural language querying: answer from SQL query results</li>
 <li>10% other sci-fi use cases: write my business strategy</li>
 </ul>
-<p>Of course, there are a number of use cases too that I’d describe as
-simply not LLM problems. I’ve heard forecasting a few times. Even
-regression! Why?</p>
-<p>Some are too sci-fi, like, migrate my whole legacy data warehouse. I
-think that’s interesting. You show people a bit of magic, and it’s not
-at all clear how deep the magic goes. LLMs are a little magic, not the
-Starship Enterprise. Language models, not actually sentient. But you’d
-be forgiven for assuming otherwise.</p>
+<p>Of course, there are a number of use cases too that I’d describe as simply not LLM problems. I’ve heard forecasting a few times. Even regression! Why?</p>
+<p>Some are too sci-fi, like, migrate my whole legacy data warehouse. I think that’s interesting. You show people a bit of magic, and it’s not at all clear how deep the magic goes. LLMs are a little magic, not the Starship Enterprise. Language models, not actually sentient. But you’d be forgiven for assuming otherwise.</p>
 <p>Conspicuously missing from the conversations I’ve seen are:</p>
 <ul>
-<li>Translation, classification: these are real use cases, just, those
-that want to do this have already been doing this</li>
-<li>Content generation: write a response to this customer. I suppose
-individuals are doing this with ChatGPT?</li>
+<li>Translation, classification: these are real use cases, just, those that want to do this have already been doing this</li>
+<li>Content generation: write a response to this customer. I suppose individuals are doing this with ChatGPT?</li>
 <li>Code generation: already well in hand with Copilot et al</li>
 </ul>
-<p>It’s not surprising that natural-language querying over, well,
-natural language is a leading use case. It’s a natural fit for LLMs, and
-is quite easy already. I think these will rapidly get implemented and
-productized. More targeted extractive queries are a little harder at the
-margins but seem well within the capability of LLMs.</p>
-<p>The interesting frontier for the rest of the year is IMHO SQL
-generation. Everybody has a database, it’s an obvious use case, and it’s
-at least not-infeasible now. It’s just hard to do well enough, reliably
-enough to consider turning loose at scale, I think. It works OK now if
-you assume this is fundamentally a code assistant for SQL analysts,
-something to create a first draft that they’ll correct. It does not work
-if you assume the audience are users who would not know the correct
-answer, let alone SQL, when they saw it.</p>
-<p>This is a problem that will probably get solved well enough in the
-next year, such that there are services and OSS models that are close
-enough, to make this a next big focus.</p>
+<p>It’s not surprising that natural-language querying over, well, natural language is a leading use case. It’s a natural fit for LLMs, and is quite easy already. I think these will rapidly get implemented and productized. More targeted extractive queries are a little harder at the margins but seem well within the capability of LLMs.</p>
+<p>The interesting frontier for the rest of the year is IMHO SQL generation. Everybody has a database, it’s an obvious use case, and it’s at least not-infeasible now. It’s just hard to do well enough, reliably enough to consider turning loose at scale, I think. It works OK now if you assume this is fundamentally a code assistant for SQL analysts, something to create a first draft that they’ll correct. It does not work if you assume the audience are users who would not know the correct answer, let alone SQL, when they saw it.</p>
+<p>This is a problem that will probably get solved well enough in the next year, such that there are services and OSS models that are close enough, to make this a next big focus.</p>
 <p>That’s an interesting topic for another day! `</p>
-<h2 id="issues-in-integrating-llms-into-applications">Issues in
-Integrating LLMs into Applications</h2>
+<h2 id="issues-in-integrating-llms-into-applications">Issues in Integrating LLMs into Applications</h2>
 <p>https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications</p>
-<p>Overall, labor-intensive tasks in an insurance company tend to be
-those that</p>
-<p>require significant amounts of manual effort, analysis, and
-communication.</p>
-<p>As such, many companies are investing in automation and other
-technologies to streamline these processes and reduce the workload on
-human staff.</p>
-<p>The insurance industry is a great example of an industry that has
-many labor intensive tasks.</p>
+<p>Overall, labor-intensive tasks in an insurance company tend to be those that</p>
+<p>require significant amounts of manual effort, analysis, and communication.</p>
+<p>As such, many companies are investing in automation and other technologies to streamline these processes and reduce the workload on human staff.</p>
+<p>The insurance industry is a great example of an industry that has many labor intensive tasks.</p>
 <p>Here are a few examples:</p>
 <ul>
 <li>Claims processing</li>
@@ -391,19 +159,9 @@ many labor intensive tasks.</p>
 <ul>
 <li>todo: link QA demo notebook</li>
 </ul>
-<p>This involves verifying the accuracy of submitted claims, reviewing
-policy coverage and terms, (QA) and determining the appropriate payout
-amount. (QA) Claims processing often requires a significant amount of
-manual data entry, (Data Entry) analysis, and communication with
-(Document Generation) policyholders, medical professionals, and other
-stakeholders.</p>
-<p>QA Question answer Data Entry “enter the data from this person’s file
-into this template” Document Generation Similar to office 365 demo video
-examples “write a letter to the policyholder about their claim that
-approves/denies the claim” “create a CSV file with the medical history
-of the patient to send to the medical professional”</p>
-<h1 id="application-frameworks-and-components">Application Frameworks
-and Components</h1>
+<p>This involves verifying the accuracy of submitted claims, reviewing policy coverage and terms, (QA) and determining the appropriate payout amount. (QA) Claims processing often requires a significant amount of manual data entry, (Data Entry) analysis, and communication with (Document Generation) policyholders, medical professionals, and other stakeholders.</p>
+<p>QA Question answer Data Entry “enter the data from this person’s file into this template” Document Generation Similar to office 365 demo video examples “write a letter to the policyholder about their claim that approves/denies the claim” “create a CSV file with the medical history of the patient to send to the medical professional”</p>
+<h1 id="application-frameworks-and-components">Application Frameworks and Components</h1>
 <p>asdasd</p>
 <h2 id="langchain">LangChain</h2>
 <p>https://blog.langchain.dev/structured-tools/</p>
@@ -411,8 +169,7 @@ and Components</h1>
 <p>https://www.pinecone.io/learn/langchain-intro/</p>
 <p>https://www.pinecone.io/learn/langchain-agents/</p>
 <p>https://blog.langchain.dev/announcing-our-10m-seed-round-led-by-benchmark/</p>
-<p>https://medium.com/<span class="citation"
-data-cites="gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581">@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581</span></p>
+<p>https://medium.com/<span class="citation" data-cites="gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581">@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581</span></p>
 <pre><code>Langchain is on a productive and crucially important path, but things are still quite raw. This is to be expected. The github repo for Langchain began in October ‘22.
 
 New models will inevitably interact with these chains and their ‘agents’ in new ways such that the chain infrastructure will need to evolve with the models over time.
@@ -437,56 +194,61 @@ A chat model is fine so long as it considers at least 3-parties in the conversat
 <li>lots of out of the box plugins (sql, pandas, more)</li>
 </ul></li>
 </ul>
-<h2 id="vector-databases">Vector Databases</h2>
-<p>Vector databases play a crucial role in large language model
-applications by enabling efficient and scalable retrieval of relevant
-information or embeddings for various tasks. Here’s an explanation of
-their role in the context of large language models:</p>
+<h2 id="embeddings">Embeddings</h2>
+<p>https://vickiboykis.com/what_are_embeddings/</p>
+<p>https://jalammar.github.io/illustrated-word2vec/</p>
+<p>Embeddings are a fundamental concept in machine learning models, including Large Language Models (LLMs). They are numerical representations of data, such as text, images, or audio, that capture the essence or semantic meaning of the data. The process of embedding involves converting the input data into vectors of numbers, allowing the machine learning model to understand and process the data effectively.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ISPId9Lhc1g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<p>For example, in the context of text data embeddings represent the semantic relationships between words, sentences, or documents. Each word or document is assigned a vector in a high-dimensional space, where the position of the vector records information about the meaning of the text based on various traits or criteria (as represented by the dimensions of the vector space). By mapping words or documents into a continuous vector space, embeddings allow for similarity comparisons (through the use of algorithms like nearest neighbors) and the clustering of textual data.</p>
+<p>There are different types of embeddings depending on the use case and training techniques used. A few popular examples of these include:</p>
+<ol type="1">
+<li>Text Embeddings: These are embeddings that numerically capture the meaning of data in the form of text. There are three common forms of text embedding: word, sentence/paragraph, and document embeddings.
 <ul>
-<li><p>Efficient Similarity Search: Large language models often operate
-in high-dimensional vector spaces, where each word, sentence, or
-document is represented as a numerical vector. Vector databases provide
-efficient indexing and search capabilities, allowing for
-similarity-based retrieval of vectors. This is essential for tasks like
-semantic search, where the goal is to find similar or related content
-based on vector representations.</p></li>
-<li><p>Document and Text Retrieval: Large language models can be
-utilized for document or text retrieval tasks, where given a query, the
-goal is to retrieve the most relevant documents or passages. Vector
-databases help accelerate this process by efficiently indexing and
-querying large collections of text embeddings, allowing for fast
-retrieval of relevant documents or text snippets.</p></li>
-<li><p>Nearest Neighbor Search: Vector databases enable nearest neighbor
-search, which is fundamental in various applications. For example, in
-text completion or language generation tasks, a large language model may
-need to find the most semantically similar or contextually appropriate
-words or phrases to complete a given prompt. Vector databases enable
-efficient search for nearest neighbors in the embedding space, aiding in
-generating relevant and coherent responses.</p></li>
-<li><p>Clustering and Categorization: Vector databases facilitate
-clustering and categorization tasks by grouping similar vectors
-together. These clusters can help in organizing and structuring large
-amounts of text data, supporting tasks such as topic modeling, content
-recommendation, or information retrieval.</p></li>
-<li><p>Contextual Embedding Storage: Large language models like GPT-3.5
-generate contextual embeddings that capture the meaning and context of
-words, sentences, or documents. Vector databases allow for the storage
-and retrieval of these embeddings, enabling efficient access to
-contextual information for downstream tasks such as question answering,
-sentiment analysis, or text summarization.</p></li>
-<li><p>Scalability and Indexing: Vector databases provide efficient
-indexing and storage mechanisms that can handle large-scale language
-models and extensive text collections. They optimize memory usage,
-enable parallel processing, and support distributed computing to handle
-the high-dimensional vector representations generated by large language
-models.</p></li>
+<li>Word Embeddings: These embeddings record the semantic meaning of each individual word of a text. This allows for operations on the text using words, such as measuring the similarity of words, finding word analogies, and finding similar words. Some popular algorithms for word embedding include GloVe, fastText, and Word2Vec.</li>
+<li>Sentence/Paragraph Embeddings: These embeddings describe the meaning of entire sentences or paragraphs of a text. This is done by finding the context and relationships between words to capture the meaning of the sentence or paragraph in its entirety. Some examples of models that create sentence/paragraph embeddings include OpenAI embeddings, Cohere embeddings, and Sentence Transformers.</li>
+<li>Document Embeddings: Document embeddings are functionally very similar to sentence/paragraph embeddings but capture the meaning of entire documents or texts. These embeddings are particularly useful for tasks that involve clustering, document classification, and information retrieval.</li>
+</ul></li>
+<li>Audio Embeddings: These are embeddings that numerically capture the meaning of data in the form of audio. This allows for operations on audio files such as similarity comparisons and isolation(?). An example of an algorithm for audio embedding is OpenL3.</li>
+<li>Image Embeddings: These are embeddings that numerically capture the meaning of data in the form of images. This allows for operations on images such as classification, similarity comparisons, clustering, and identification. Some popular models for image embedding include VGG-16, ResNet50, and Inceptionv3</li>
+</ol>
+<p>Embeddings are used in many ML applications, and LangChain is no exception. LangChain has an embedding class built in that functions as an interface for text embedding models like Cohere, HuggingFace, and OpenAI. LangChain only supports text embedding. This basic embedding class has two methods, with one functioning within one document while the other functions across multiple documents.</p>
+<p>Once an embedding is done and the vector is created, where does this information go? This is where embedding databases, also known as vector databases, are utilized. Vector databases play a crucial role in leveraging embeddings for efficient retrieval. These databases store the embeddings generated for various data points, such as documents, images, or audio segments, in the form of vectors. Rather than traditional database searches based on substrings or exact matches, vector databases allow searching based on the nearest neighbors in the vector space. By calculating the similarity between the embeddings of the query and the stored embeddings, vector databases can retrieve the most relevant data points in a more significant way than a substring or exact match search can.</p>
+<blockquote>
+<p>It is important to note that repeatedly calling embedding models with LangChain to search over a large number of vectors quickly isn’t very efficient or cost-effective. In such a situation, using a vector database is a much more suitable option. (Unsure if necessary)</p>
+</blockquote>
+<h2 id="vector-databases">Vector Databases</h2>
+<h3 id="vihaal-writing-on-vector-databases">Vihaal Writing on Vector Databases</h3>
+<p>Vector databases play a crucial role in machine learning (ML) and large language model (LLM) applications. They are designed to efficiently store, index, and retrieve high-dimensional vectors, which are numerical representations of data points. These vectors can represent various entities such as words, documents, images, or user preferences. Vector databases work hand in hand with the embedding models that create such high-dimensional vectors.</p>
+<p>The importance of vector databases lies in the many utilities and operations it allows embeddings to perform once the semantic meaning of data is vectorized. Of these, there are three that are particularly significant:</p>
+<ol type="1">
+<li>Efficient Similarity Search: Vector databases excel at performing efficient similarity searches. ML algorithms often rely on measuring the similarity between vectors to make accurate predictions or recommendations. By using specialized indexing structures like KD-trees or Annoy, vector databases can quickly find the most similar vectors to a given query, enabling fast retrieval of relevant information.</li>
+<li>Nearest Neighbor Search: Vector databases enable efficient nearest neighbor search operations. Given a query vector, ML algorithms often need to find the closest vectors in the dataset. This operation is essential in recommendation systems, clustering, anomaly detection, and other ML tasks. Vector databases can perform nearest-neighbor searches efficiently, allowing ML models to find relevant data points in multi-dimensional spaces.</li>
+<li>Embedding Storage: LLMs often rely on pre-trained embeddings, where words or sentences are mapped to high-dimensional vectors. Vector databases provide a convenient and efficient way to store and retrieve these embeddings. By using vector databases, LLMs can quickly access pre-trained embeddings for various language-related tasks, such as text generation, language translation, or sentiment analysis instead of calling embedding models every time there is a query.</li>
+</ol>
+<p>Vector databases are undoubtedly important when used in conjunction with embedding models, but how exactly do they compare with traditional databases? While they are both databases, vector databases differ greatly from traditional databases when it comes to the format and structure of the database and how querying functions within the database:</p>
+<ol type="1">
+<li>Data Representation: Traditional databases are typically designed to store structured data in tabular formats, such as rows and columns. They are optimized for transactional operations and data consistency. In contrast, vector databases focus on storing and querying high-dimensional vectors, which are often unstructured or semi-structured data representations. They prioritize efficient similarity searches and nearest-neighbor operations rather than traditional relational operations.</li>
+<li>Indexing Techniques: Traditional databases use indexing techniques like B-trees or hash indexes to accelerate query performance based on certain attribute values. These indexing methods are not well-suited for high-dimensional vector searches. Instead, vector databases employ specialized indexing structures like KD trees, ball trees, or locality-sensitive hashing (LSH) to efficiently index and search high-dimensional vectors.</li>
+</ol>
+<p>Perhaps comparing vector databases with traditional databases wasn’t appropriate, after all, vector databases contain data formatted as high-dimensional vectors within a larger, interconnected vector space. Instead, a comparison between vector databases and graph databases seems more appropriate:</p>
+<ol type="1">
+<li>Data Model: Graph databases are designed to represent and store relationships between entities in the form of nodes and edges. They focus on capturing complex relationships and querying graph-based patterns efficiently. On the other hand, vector databases primarily focus on storing and querying high-dimensional vectors, with a lower emphasis on explicitly modeling and querying relationships between entities.</li>
+<li>Query Paradigm: Graph databases offer powerful graph query languages (e.g., Cypher for Neo4j) that allow expressive queries to traverse and explore relationships in the graph. These queries emphasize graph traversal and pattern matching. In contrast, vector databases prioritize similarity search and nearest neighbor operations, which involve measuring vector distances rather than explicitly traversing graphical structures.</li>
+<li>Use Cases: Graph databases excel in use cases where the relationships between entities are critical, such as social networks, recommendation systems, fraud detection, or knowledge graphs. Vector databases, on the other hand, are particularly beneficial in ML/LLM applications where high-dimensional vector representations and similarity-based operations are essential, such as content-based recommendation systems, text search, or image retrieval.</li>
+</ol>
+<p>todo: summarize + segue</p>
+<h3 id="chatgpt-on-vector-databases">ChatGPT on Vector Databases</h3>
+<p>Vector databases play a crucial role in large language model applications by enabling efficient and scalable retrieval of relevant information or embeddings for various tasks. Here’s an explanation of their role in the context of large language models:</p>
+<ul>
+<li><p>Efficient Similarity Search: Large language models often operate in high-dimensional vector spaces, where each word, sentence, or document is represented as a numerical vector. Vector databases provide efficient indexing and search capabilities, allowing for similarity-based retrieval of vectors. This is essential for tasks like semantic search, where the goal is to find similar or related content based on vector representations.</p></li>
+<li><p>Document and Text Retrieval: Large language models can be utilized for document or text retrieval tasks, where given a query, the goal is to retrieve the most relevant documents or passages. Vector databases help accelerate this process by efficiently indexing and querying large collections of text embeddings, allowing for fast retrieval of relevant documents or text snippets.</p></li>
+<li><p>Nearest Neighbor Search: Vector databases enable nearest neighbor search, which is fundamental in various applications. For example, in text completion or language generation tasks, a large language model may need to find the most semantically similar or contextually appropriate words or phrases to complete a given prompt. Vector databases enable efficient search for nearest neighbors in the embedding space, aiding in generating relevant and coherent responses.</p></li>
+<li><p>Clustering and Categorization: Vector databases facilitate clustering and categorization tasks by grouping similar vectors together. These clusters can help in organizing and structuring large amounts of text data, supporting tasks such as topic modeling, content recommendation, or information retrieval.</p></li>
+<li><p>Contextual Embedding Storage: Large language models like GPT-3.5 generate contextual embeddings that capture the meaning and context of words, sentences, or documents. Vector databases allow for the storage and retrieval of these embeddings, enabling efficient access to contextual information for downstream tasks such as question answering, sentiment analysis, or text summarization.</p></li>
+<li><p>Scalability and Indexing: Vector databases provide efficient indexing and storage mechanisms that can handle large-scale language models and extensive text collections. They optimize memory usage, enable parallel processing, and support distributed computing to handle the high-dimensional vector representations generated by large language models.</p></li>
 </ul>
-<p>In summary, vector databases play a vital role in large language
-model applications by facilitating efficient search, retrieval,
-clustering, and categorization of vector representations. They enable
-scalability and accelerate various tasks that rely on vector-based
-operations, enhancing the overall performance and usability of large
-language models.</p>
+<p>In summary, vector databases play a vital role in large language model applications by facilitating efficient search, retrieval, clustering, and categorization of vector representations. They enable scalability and accelerate various tasks that rely on vector-based operations, enhancing the overall performance and usability of large language models.</p>
 <ul>
 <li>ChromaDB</li>
 <li>Pinecone</li>
@@ -494,94 +256,44 @@ language models.</p>
 <li>[ todo: more ]</li>
 </ul>
 <blockquote>
-<p>Pinecone is an external database where developers can store relevant
-contextual data for LLM apps. Rather than sending large document
-collections back and forth with every API call, developers can store
-them in a Pinecone database, then pick only the few most relevant to any
-given query — an approach called in-context learning. It’s a must-have
-for enterprise use cases to truly bloom. In particular, Pinecone is a
-vector database, which means data is stored in the form of semantically
-meaningful embeddings. While a technical explanation of embeddings is
-beyond the scope of this post, the important part to understand is that
-LLMs also operate on vector embeddings — so by storing data in Pinecone
-in this format, part of the AI work has effectively been pre-processed
-and offloaded to the database.</p>
+<p>Pinecone is an external database where developers can store relevant contextual data for LLM apps. Rather than sending large document collections back and forth with every API call, developers can store them in a Pinecone database, then pick only the few most relevant to any given query — an approach called in-context learning. It’s a must-have for enterprise use cases to truly bloom. In particular, Pinecone is a vector database, which means data is stored in the form of semantically meaningful embeddings. While a technical explanation of embeddings is beyond the scope of this post, the important part to understand is that LLMs also operate on vector embeddings — so by storing data in Pinecone in this format, part of the AI work has effectively been pre-processed and offloaded to the database.</p>
 </blockquote>
 <h2 id="model-servers">Model Servers</h2>
 <ul>
 <li>[ todo: source ]</li>
 </ul>
-<h1 id="implementing-llms-in-applications">Implementing LLMs in
-Applications</h1>
-<h2 id="general-architecture-of-llm-applications">General Architecture
-of LLM Applications</h2>
+<h1 id="implementing-llms-in-applications">Implementing LLMs in Applications</h1>
+<h2 id="general-architecture-of-llm-applications">General Architecture of LLM Applications</h2>
 <p>diagram here</p>
-<h2 id="options-for-building-llm-applications">Options for Building LLM
-Applications</h2>
-<p>LangChain Open Source Python Library Can Use multiple Models (OpenAI,
-or Local) Google Generative AI Studio closed source Built into GCP
-Prompt Engineering Workbench Tons of emerging libraries, really…</p>
+<h2 id="options-for-building-llm-applications">Options for Building LLM Applications</h2>
+<p>LangChain Open Source Python Library Can Use multiple Models (OpenAI, or Local) Google Generative AI Studio closed source Built into GCP Prompt Engineering Workbench Tons of emerging libraries, really…</p>
 <h2 id="model-variations-in-llms">Model Variations in LLMs</h2>
 <p>Models</p>
 <ol type="1">
 <li>Use a Pre-Trained LLM</li>
-<li>In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing
-LLM</li>
+<li>In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing LLM</li>
 <li>Use Ray/DGX to Finetune models</li>
 </ol>
-<h2 id="building-a-question-answer-system-with-langchain">Building a
-Question / Answer System with LangChain</h2>
+<h2 id="building-a-question-answer-system-with-langchain">Building a Question / Answer System with LangChain</h2>
 <ul>
 <li>discuss, link notebook</li>
 </ul>
-<p>Required Tooling LangChain VectorStore Custom Corpus Something to ask
-questions about LLM OpenAI Other local model</p>
+<p>Required Tooling LangChain VectorStore Custom Corpus Something to ask questions about LLM OpenAI Other local model</p>
 <p>https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb</p>
 <h3 id="what-is-langchain">What is LangChain?</h3>
 <p>what what?</p>
-<p>Use Cases Personal Assistants (Agents) Autonomous Agents Agent
-Simulations Question Answering over Docs Chatbots Querying Tabular Data
-Code Understanding Interacting with APIs Summarization Extraction
-Evaluation</p>
+<p>Use Cases Personal Assistants (Agents) Autonomous Agents Agent Simulations Question Answering over Docs Chatbots Querying Tabular Data Code Understanding Interacting with APIs Summarization Extraction Evaluation</p>
 <p>Models supported:</p>
-<p>AI21 Aleph Alpha Azure OpenAI Banana CerebriumAI Cohere DeepInfra
-ForefrontAI GooseAI GPT4All Hugging Face Hub Hugging Face Local
-Pipelines Llama-cpp Manifest Modal NLP Cloud OpenAI Petals
-PredictionGuard PromptLayer OpenAI Replicate Runhouse SageMakerEndpoint
-StochasticAI Writer</p>
-<h2 id="natural-language-dataset-query-with-llms">Natural Language
-Dataset Query with LLMs</h2>
+<p>AI21 Aleph Alpha Azure OpenAI Banana CerebriumAI Cohere DeepInfra ForefrontAI GooseAI GPT4All Hugging Face Hub Hugging Face Local Pipelines Llama-cpp Manifest Modal NLP Cloud OpenAI Petals PredictionGuard PromptLayer OpenAI Replicate Runhouse SageMakerEndpoint StochasticAI Writer</p>
+<h2 id="natural-language-dataset-query-with-llms">Natural Language Dataset Query with LLMs</h2>
 <p>Natural Language Dataset Query with LLMs</p>
-<p>Querying Tabular Stores with NL:
-https://python.langchain.com/en/latest/use_cases/tabular.html Using
-Chains to Query APIs
-https://python.langchain.com/en/latest/use_cases/apis.html Using NL to
-Query SQL Databases
-https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
-https://github.com/hodgesmr/LangChain-Data-Demo</p>
+<p>Querying Tabular Stores with NL: https://python.langchain.com/en/latest/use_cases/tabular.html Using Chains to Query APIs https://python.langchain.com/en/latest/use_cases/apis.html Using NL to Query SQL Databases https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html https://github.com/hodgesmr/LangChain-Data-Demo</p>
 <h3 id="task-composability-1">Task Composability</h3>
-<p>Consider the “talk-to-your-data” use case where we want to connect to
-a database and query this database in natural language. Imagine a credit
-card transaction table. You want to ask things like: “How many unique
-merchants are there in Phoenix and what are their names?” and your
-database will return: “There are 9 unique merchants in Phoenix and they
-are …”.</p>
-<p>One way to do this is to write a program that performs the following
-sequence of tasks: Task 1: convert natural language input from user to
-SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL
-executor] Task 3: convert the SQL result into a natural language
-response to show user [LLM]</p>
-<h3
-id="querying-pandas-dataframes-with-natural-language-example-sketch">Querying
-Pandas Dataframes with Natural Language Example: Sketch</h3>
-<p>Sketch is an AI code-writing assistant for pandas users that
-understands the context of your data, greatly improving the relevance of
-suggestions. Sketch is usable in seconds and doesn’t require adding a
-plugin to your IDE.</p>
-<p>Data Catalogging: General tagging (eg. PII identification) Metadata
-generation (names and descriptions) Data Engineering: Data cleaning and
-masking (compliance) Derived feature creation and extraction Data
-Analysis: Data questions Data visualization</p>
+<p>Consider the “talk-to-your-data” use case where we want to connect to a database and query this database in natural language. Imagine a credit card transaction table. You want to ask things like: “How many unique merchants are there in Phoenix and what are their names?” and your database will return: “There are 9 unique merchants in Phoenix and they are …”.</p>
+<p>One way to do this is to write a program that performs the following sequence of tasks: Task 1: convert natural language input from user to SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL executor] Task 3: convert the SQL result into a natural language response to show user [LLM]</p>
+<h3 id="querying-pandas-dataframes-with-natural-language-example-sketch">Querying Pandas Dataframes with Natural Language Example: Sketch</h3>
+<p>Sketch is an AI code-writing assistant for pandas users that understands the context of your data, greatly improving the relevance of suggestions. Sketch is usable in seconds and doesn’t require adding a plugin to your IDE.</p>
+<p>Data Catalogging: General tagging (eg. PII identification) Metadata generation (names and descriptions) Data Engineering: Data cleaning and masking (compliance) Derived feature creation and extraction Data Analysis: Data questions Data visualization</p>
 <h2 id="llms-agents-and-tools">LLMs, Agents, and Tools</h2>
 <p>Re-write:</p>
 <pre><code>Why do LLMs need to use Tools?

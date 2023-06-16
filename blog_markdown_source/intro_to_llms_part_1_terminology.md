@@ -2,8 +2,8 @@
 layout: post
 published-on: March 27th 2023
 author: Josh Patterson
-title: An Introduction to Large Language Models (LLMs)
-subtitle: Part 1 - Background and Core Concepts in LLMs
+title: Building Enterprise Applications with Large Language Models
+subtitle: Part 1 - An Introduction to Large Language Models (LLMs)
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
@@ -82,41 +82,6 @@ LLMs having their "stable diffusion"-moment
 https://simonwillison.net/2023/Mar/11/llama/
 
 
-## Will LLMs Start Replacing Jobs?
-
-<img style="float: right;" src="./images/19th_century_textile_loom.jpg">
-
-> "Rapid and pivotal advances in technology have a way of unsettling people, because they can reverberate mercilessly, sometimes, through business, employment, and cultural spheres. And so it is with the current shock and awe over large language models, such as GPT-4 from OpenAI."
-
-> "It’s a textbook example of the mixture of amazement and, especially, anxiety that often accompanies a tech triumph."
-
-> “It gives an answer with complete confidence, and I sort of believe it. And half the time, it’s completely wrong.”
-
-> “A very famous senior person said, ‘Radiologists will be out of business before long.’ And people stopped enrolling in radiology specialties, and now there’s a shortage of them.”
-
-> So what about these predictions that entire classes of employment will go away, paralegals, and so on? Is that a legitimate concern?
-
-> Brooks: You certainly hear these things. I was reviewing a government report a few weeks ago, and it said, “Lawyers are going to disappear in 10 years.” So I tracked it down and it was one barrister in England, who knew nothing about AI. He said, “Surely, if it’s this good, it’s going to get so much better that we’ll be out of jobs in 10 years.” There’s a lot of disaster hype. Someone suggests something and it gets amplified.
-
-> We saw that with radiologists. A very famous senior person said, “Radiologists will be out of business before long.” And people stopped enrolling in radiology specialties and now there’s a shortage of them. Same with truck driving…. There are so many ads from all these companies recruiting truck drivers because there’s not enough truck drivers, because three or four years ago, people were saying, “Truck driving is going to go away.”
-
-https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157
-
-
-LLMs and Artificial Intelligence --- [What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
-
-
-Reference the luddites
-
-https://en.wikipedia.org/wiki/Luddite
-
-> The Luddites were members of a 19th-century movement of English textile workers which opposed the use of certain types of cost-saving machinery, often by destroying the machines in clandestine raids. They protested against manufacturers who used machines in "a fraudulent and deceitful manner" to replace the skilled labour of workers and drive down wages by producing inferior goods.[1][2] Members of the group referred to themselves as Luddites, self-described followers of "Ned Ludd", a legendary weaver whose name was used as a pseudonym in threatening letters to mill owners and government officials.[3]
-
-
-
-LLMs aren't taking jobs, they are accelerating workforce, a natural evolution of tooling
-
-soon, they will be table stakes in many / most industries
 
 ## Terminology in Large Language Models (LLMs)
 
@@ -300,7 +265,7 @@ ChatGPT is fine-tuned from GPT-3.5, a language model trained to produce text. Ch
 
 
 
-## Initial GPT-3 Abilities and Evolution
+## GPT-3 Abilities and Evolution
 
 
 
@@ -343,7 +308,7 @@ For comparison, the average person might read around 700 books in their lifetime
 The entire series is wonderful for insight into how large language models such as GPT-3 get certain types of "abilities" such as "code generation" and "in-context learning".
 
 
-## More Abilities and the Evolution of GPT-3.5
+### More Abilities and the Evolution of GPT-3.5
 
 
 More Yao Fu:
@@ -468,28 +433,6 @@ http://ai.stanford.edu/blog/understanding-incontext/
 
 
 
-## Comparing LLMs' Ability to do Complex Tasks
-
-Paper: https://arxiv.org/abs/2305.17306
-
-> As large language models (LLMs) are continuously being developed, their evaluation becomes increasingly important yet challenging. This work proposes Chain-of-Thought Hub, an open-source evaluation suite on the multi-step reasoning capabilities of large language models. We are interested in this setting for two reasons: (1) from the behavior of GPT and PaLM model family, we observe that complex reasoning is likely to be a key differentiator between weaker and stronger LLMs; (2) we envisage large language models to become the next-generation computational platform and foster an ecosystem of LLM-based new applications, this naturally requires the foundation models to perform complex tasks that often involve the composition of linguistic and logical operations. Our approach is to compile a suite of challenging reasoning benchmarks to track the progress of LLMs. Our current results show that: (1) model scale clearly correlates with reasoning capabilities; (2) As of May 2023, Claude-v1.3 and PaLM-2 are the only two models that are comparable with GPT-4, while open-sourced models still lag behind; (3) LLaMA-65B performs closely to code-davinci-002, indicating that with successful further development such as reinforcement learning from human feedback (RLHF), it has great potential to be close to GPT-3.5-Turbo. Our results also suggest that for the open-source efforts to catch up, the community may focus more on building better base models and exploring RLHF.
-
-https://github.com/FranxYao/chain-of-thought-hub
-
-> The key differentiator is whether a model can do complex tasks, like the old saying: "chit-chat is cheap, show me the reasoning." This is why we compile a list of complex reasoning tasks including math (GSM8K), science (MATH, TheoremQA), symbolic (BBH), knowledge (MMLU, C-Eval), coding (HumanEval), factual (SummEdits) to measure the models' performance on challenging tasks.
-
-Complex Reasoning Tasks:
-
-* math (GSM8K)
-* science (MATH, TheoremQA)
-* symbolic (BBH)
-* knowledge (MMLU, C-Eval)
-* coding (HumanEval)
-* factual (SummEdits)
-
-[ this is where we'd put some radar plots comparing abilities of models ]
-
-
 
 
 
@@ -519,20 +462,41 @@ High computational requirements: Training and deploying large language models re
 
 Addressing these limitations is an active area of research and development, with ongoing efforts to enhance model robustness, mitigate biases, improve understanding of context, and promote ethical use of large language models.
 
-## Summary 
+
+## Comparing LLMs' Ability to do Complex Tasks
+
+Paper: https://arxiv.org/abs/2305.17306
+
+> As large language models (LLMs) are continuously being developed, their evaluation becomes increasingly important yet challenging. This work proposes Chain-of-Thought Hub, an open-source evaluation suite on the multi-step reasoning capabilities of large language models. We are interested in this setting for two reasons: (1) from the behavior of GPT and PaLM model family, we observe that complex reasoning is likely to be a key differentiator between weaker and stronger LLMs; (2) we envisage large language models to become the next-generation computational platform and foster an ecosystem of LLM-based new applications, this naturally requires the foundation models to perform complex tasks that often involve the composition of linguistic and logical operations. Our approach is to compile a suite of challenging reasoning benchmarks to track the progress of LLMs. Our current results show that: (1) model scale clearly correlates with reasoning capabilities; (2) As of May 2023, Claude-v1.3 and PaLM-2 are the only two models that are comparable with GPT-4, while open-sourced models still lag behind; (3) LLaMA-65B performs closely to code-davinci-002, indicating that with successful further development such as reinforcement learning from human feedback (RLHF), it has great potential to be close to GPT-3.5-Turbo. Our results also suggest that for the open-source efforts to catch up, the community may focus more on building better base models and exploring RLHF.
+
+https://github.com/FranxYao/chain-of-thought-hub
+
+> The key differentiator is whether a model can do complex tasks, like the old saying: "chit-chat is cheap, show me the reasoning." This is why we compile a list of complex reasoning tasks including math (GSM8K), science (MATH, TheoremQA), symbolic (BBH), knowledge (MMLU, C-Eval), coding (HumanEval), factual (SummEdits) to measure the models' performance on challenging tasks.
+
+Complex Reasoning Tasks:
+
+* math (GSM8K)
+* science (MATH, TheoremQA)
+* symbolic (BBH)
+* knowledge (MMLU, C-Eval)
+* coding (HumanEval)
+* factual (SummEdits)
+
+[ this is where we'd put some radar plots comparing abilities of models ]
+
+
+# Why Are Large Language Models Compelling?
+
+todo
+
+* Tectonic Plate Shifts in Technology
+
 
 `- Will large language model replace search engine?
     - No. LLMs are good for reasoning, not for knowledge. The knowledge within LLMs are unreliable and cannot be verified.
     - On the other hand, the knowledge from search engine is orders or magnitude larger than LLM’s internal knowledge, one can easily verify credibility of search results by checking the source.
     - Combining LLMs and search is a good direction. Let search handle knowledge, let LLMs handle reasoning.`
 
-# Why Are Large Language Models Compelling?
-
-todo
-
-## Tectonic Plate Shifts in Technology
-
-todo
 
 ## Natural Language as a Driver for Any Application
 
@@ -544,6 +508,43 @@ ChatGPT was a nice demo, but there is a lot more here
 ## You Don't Have to Re-Train the Foundation Models to Do Things
 
 It's amazing
+
+
+## Will LLMs Start Replacing Jobs?
+
+<img style="float: right;" src="./images/19th_century_textile_loom.jpg">
+
+> "Rapid and pivotal advances in technology have a way of unsettling people, because they can reverberate mercilessly, sometimes, through business, employment, and cultural spheres. And so it is with the current shock and awe over large language models, such as GPT-4 from OpenAI."
+
+> "It’s a textbook example of the mixture of amazement and, especially, anxiety that often accompanies a tech triumph."
+
+> “It gives an answer with complete confidence, and I sort of believe it. And half the time, it’s completely wrong.”
+
+> “A very famous senior person said, ‘Radiologists will be out of business before long.’ And people stopped enrolling in radiology specialties, and now there’s a shortage of them.”
+
+> So what about these predictions that entire classes of employment will go away, paralegals, and so on? Is that a legitimate concern?
+
+> Brooks: You certainly hear these things. I was reviewing a government report a few weeks ago, and it said, “Lawyers are going to disappear in 10 years.” So I tracked it down and it was one barrister in England, who knew nothing about AI. He said, “Surely, if it’s this good, it’s going to get so much better that we’ll be out of jobs in 10 years.” There’s a lot of disaster hype. Someone suggests something and it gets amplified.
+
+> We saw that with radiologists. A very famous senior person said, “Radiologists will be out of business before long.” And people stopped enrolling in radiology specialties and now there’s a shortage of them. Same with truck driving…. There are so many ads from all these companies recruiting truck drivers because there’s not enough truck drivers, because three or four years ago, people were saying, “Truck driving is going to go away.”
+
+https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157
+
+
+LLMs and Artificial Intelligence --- [What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
+
+
+Reference the luddites
+
+https://en.wikipedia.org/wiki/Luddite
+
+> The Luddites were members of a 19th-century movement of English textile workers which opposed the use of certain types of cost-saving machinery, often by destroying the machines in clandestine raids. They protested against manufacturers who used machines in "a fraudulent and deceitful manner" to replace the skilled labour of workers and drive down wages by producing inferior goods.[1][2] Members of the group referred to themselves as Luddites, self-described followers of "Ned Ludd", a legendary weaver whose name was used as a pseudonym in threatening letters to mill owners and government officials.[3]
+
+
+
+LLMs aren't taking jobs, they are accelerating workforce, a natural evolution of tooling
+
+soon, they will be table stakes in many / most industries
 
 
 # Summary

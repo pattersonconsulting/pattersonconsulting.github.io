@@ -2,7 +2,7 @@
 layout: post
 published-on: March 27th 2023
 author: Josh Patterson
-title: An Introduction to Large Language Models (LLMs)
+title: Building Enterprise Applications with Large Language Models
 subtitle: Part 3 - Putting LLM Applications into Production
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency

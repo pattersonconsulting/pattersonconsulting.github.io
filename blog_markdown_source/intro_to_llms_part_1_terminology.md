@@ -130,6 +130,30 @@ sub-topics:
 
 https://www.pinecone.io/learn/langchain-prompt-templates/
 
+> Vibin Writing:
+
+Prompts are the primary means by which a user leverages LLMs, thus engineering prompts (prompt engineering) is key to fully utilize the strengths of LLMs. 
+Prompts direct generation/retrieval of responses/text. Prompts can be decomposed into four components, which aren't strictly necessary for every prompt. Instructions tie the other pieces together, directing how each of them should be used. External info/contexts are additional sources of knowledge. It's important to note that contexts do not have to be explicitly provided, and can be retrieved/referenced. User input/query is self explanatory. Output indicators mark where generated text begins. 
+
+Prompts & Vector Databases and Embeddings:
+
+	Prompts are used in conjunction with vector databases and embeddings. Effective prompts can include specific instructions that'll retrieve relevant data from vector databases. To optimize this, prompts must be constructed with consideration given to embedding space and the relationships between embeddings.
+
+Prompt Engineering Strategies
+
+	Reduce ambiguity in favor of more precise instructions. Also provide distinct steps and desired formats. Formats are best articulated through examples instead of description (show vs tell, essentially).
+	Ensure context is both relevant and comprehensive.
+	Use a model's previous responses as future input in order to iterate a more desirable prompt. This strategy is almost conversational, which (might be?) better suited for dynamic/interactive needs.
+	Using tokens to constrain/control output is a good way to fine-tune the output to meet specific requirements, such as length or writing style.
+
+Considerations to keep in mind while Engineering Prompts
+
+	Understanding the task/domain is crucial to leveraging an LLM.
+	Bias. Any bias in the input will likely be amplified in the output, especially since LLMs are not immune from bias as well. 
+	Good prompts should be consistent, even when variations are made from them. A common practice (seems to be) testing the response to many slight variations in order to uncover issues. 
+	Iteration is important, thus testing and feedback can often be vital to arriving at desired outcomes.
+
+
 ### In-Context Learning
 
 In-context learning refers to a technique used with large language models to fine-tune or adapt them to specific tasks or domains by providing additional training on task-specific examples or data. This process allows the model to specialize and improve its performance on specific tasks or to better align with the requirements of a particular application.
@@ -439,7 +463,7 @@ http://ai.stanford.edu/blog/understanding-incontext/
 
 
 
-## Currrent Limitations of GPT-3.5
+## Limitations of GPT-3.5
 
 * on-the-fly overwriting the model's beliefs
 * formal reasoning
@@ -463,7 +487,7 @@ High computational requirements: Training and deploying large language models re
 Addressing these limitations is an active area of research and development, with ongoing efforts to enhance model robustness, mitigate biases, improve understanding of context, and promote ethical use of large language models.
 
 
-## Comparing LLMs' Ability to do Complex Tasks
+## Meauring LLM Reasoning Ability
 
 Paper: https://arxiv.org/abs/2305.17306
 
@@ -507,10 +531,25 @@ ChatGPT was a nice demo, but there is a lot more here
 
 ## You Don't Have to Re-Train the Foundation Models to Do Things
 
-It's amazing
+Models have 2 abilities:
+
+1. Knowledge
+2. Reasoning
+
+Much like block-chain hype, its not smart to try and replace a database with something that's "not as good as a database" at the task of specific fact retrieval.
+
+Therefore, we focus on the reasoning ability of LLMs as their unique role in enterprise applications.
+
+LLMs have the potential to contain trillions of parameters and do amazing things.
+
+but models with parameters in the hundreds of millions to low billions are showing usefulness at reasoning tasks.
+
+The key is to select a model that has "good enough reasoning ability for the intended task at hand" --- e.g., you wouldn't hire a phd meteorologist to get you coffee from starbucks. It would just be a waste of the cost of their education.
+
+https://weightwatcher.ai/leaderboard.html
 
 
-## Will LLMs Start Replacing Jobs?
+## Large Language Models and the Evolution of Knowledge Work
 
 <img style="float: right;" src="./images/19th_century_textile_loom.jpg">
 

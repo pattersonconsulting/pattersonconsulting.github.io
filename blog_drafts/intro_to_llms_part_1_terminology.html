@@ -198,12 +198,11 @@ id="toc-llm-abilities-and-limitations">LLM Abilities and Limitations</a>
 <li><a href="#gpt-3-abilities-and-evolution"
 id="toc-gpt-3-abilities-and-evolution">GPT-3 Abilities and
 Evolution</a></li>
-<li><a href="#currrent-limitations-of-gpt-3.5"
-id="toc-currrent-limitations-of-gpt-3.5">Currrent Limitations of
-GPT-3.5</a></li>
-<li><a href="#comparing-llms-ability-to-do-complex-tasks"
-id="toc-comparing-llms-ability-to-do-complex-tasks">Comparing LLMs’
-Ability to do Complex Tasks</a></li>
+<li><a href="#limitations-of-gpt-3.5"
+id="toc-limitations-of-gpt-3.5">Limitations of GPT-3.5</a></li>
+<li><a href="#meauring-llm-reasoning-ability"
+id="toc-meauring-llm-reasoning-ability">Meauring LLM Reasoning
+Ability</a></li>
 </ul></li>
 <li><a href="#why-are-large-language-models-compelling"
 id="toc-why-are-large-language-models-compelling">Why Are Large Language
@@ -216,9 +215,9 @@ Language as a Driver for Any Application</a></li>
 href="#you-dont-have-to-re-train-the-foundation-models-to-do-things"
 id="toc-you-dont-have-to-re-train-the-foundation-models-to-do-things">You
 Don’t Have to Re-Train the Foundation Models to Do Things</a></li>
-<li><a href="#will-llms-start-replacing-jobs"
-id="toc-will-llms-start-replacing-jobs">Will LLMs Start Replacing
-Jobs?</a></li>
+<li><a href="#large-language-models-and-the-evolution-of-knowledge-work"
+id="toc-large-language-models-and-the-evolution-of-knowledge-work">Large
+Language Models and the Evolution of Knowledge Work</a></li>
 </ul></li>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
@@ -374,6 +373,31 @@ limitations of the language model.</p>
 <li>output indicator</li>
 </ul>
 <p>https://www.pinecone.io/learn/langchain-prompt-templates/</p>
+<blockquote>
+<p>Vibin Writing:</p>
+</blockquote>
+<p>Prompts are the primary means by which a user leverages LLMs, thus
+engineering prompts (prompt engineering) is key to fully utilize the
+strengths of LLMs. Prompts direct generation/retrieval of
+responses/text. Prompts can be decomposed into four components, which
+aren’t strictly necessary for every prompt. Instructions tie the other
+pieces together, directing how each of them should be used. External
+info/contexts are additional sources of knowledge. It’s important to
+note that contexts do not have to be explicitly provided, and can be
+retrieved/referenced. User input/query is self explanatory. Output
+indicators mark where generated text begins.</p>
+<p>Prompts &amp; Vector Databases and Embeddings:</p>
+<pre><code>Prompts are used in conjunction with vector databases and embeddings. Effective prompts can include specific instructions that&#39;ll retrieve relevant data from vector databases. To optimize this, prompts must be constructed with consideration given to embedding space and the relationships between embeddings.</code></pre>
+<p>Prompt Engineering Strategies</p>
+<pre><code>Reduce ambiguity in favor of more precise instructions. Also provide distinct steps and desired formats. Formats are best articulated through examples instead of description (show vs tell, essentially).
+Ensure context is both relevant and comprehensive.
+Use a model&#39;s previous responses as future input in order to iterate a more desirable prompt. This strategy is almost conversational, which (might be?) better suited for dynamic/interactive needs.
+Using tokens to constrain/control output is a good way to fine-tune the output to meet specific requirements, such as length or writing style.</code></pre>
+<p>Considerations to keep in mind while Engineering Prompts</p>
+<pre><code>Understanding the task/domain is crucial to leveraging an LLM.
+Bias. Any bias in the input will likely be amplified in the output, especially since LLMs are not immune from bias as well. 
+Good prompts should be consistent, even when variations are made from them. A common practice (seems to be) testing the response to many slight variations in order to uncover issues. 
+Iteration is important, thus testing and feedback can often be vital to arriving at desired outcomes.</code></pre>
 <h3 id="in-context-learning">In-Context Learning</h3>
 <p>In-context learning refers to a technique used with large language
 models to fine-tune or adapt them to specific tasks or domains by
@@ -754,8 +778,7 @@ Abilities</h4>
 <h3 id="decomposed-prompting">Decomposed Prompting</h3>
 <p>[ICLR 2023] Decomposed Prompting: A Modular Approach for Solving
 Complex Tasks. [paper][code]</p>
-<h2 id="currrent-limitations-of-gpt-3.5">Currrent Limitations of
-GPT-3.5</h2>
+<h2 id="limitations-of-gpt-3.5">Limitations of GPT-3.5</h2>
 <ul>
 <li>on-the-fly overwriting the model’s beliefs</li>
 <li>formal reasoning</li>
@@ -795,8 +818,8 @@ capabilities in a few entities.</p>
 development, with ongoing efforts to enhance model robustness, mitigate
 biases, improve understanding of context, and promote ethical use of
 large language models.</p>
-<h2 id="comparing-llms-ability-to-do-complex-tasks">Comparing LLMs’
-Ability to do Complex Tasks</h2>
+<h2 id="meauring-llm-reasoning-ability">Meauring LLM Reasoning
+Ability</h2>
 <p>Paper: https://arxiv.org/abs/2305.17306</p>
 <blockquote>
 <p>As large language models (LLMs) are continuously being developed,
@@ -855,9 +878,27 @@ Language as a Driver for Any Application</h2>
 <h2
 id="you-dont-have-to-re-train-the-foundation-models-to-do-things">You
 Don’t Have to Re-Train the Foundation Models to Do Things</h2>
-<p>It’s amazing</p>
-<h2 id="will-llms-start-replacing-jobs">Will LLMs Start Replacing
-Jobs?</h2>
+<p>Models have 2 abilities:</p>
+<ol type="1">
+<li>Knowledge</li>
+<li>Reasoning</li>
+</ol>
+<p>Much like block-chain hype, its not smart to try and replace a
+database with something that’s “not as good as a database” at the task
+of specific fact retrieval.</p>
+<p>Therefore, we focus on the reasoning ability of LLMs as their unique
+role in enterprise applications.</p>
+<p>LLMs have the potential to contain trillions of parameters and do
+amazing things.</p>
+<p>but models with parameters in the hundreds of millions to low
+billions are showing usefulness at reasoning tasks.</p>
+<p>The key is to select a model that has “good enough reasoning ability
+for the intended task at hand” — e.g., you wouldn’t hire a phd
+meteorologist to get you coffee from starbucks. It would just be a waste
+of the cost of their education.</p>
+<p>https://weightwatcher.ai/leaderboard.html</p>
+<h2 id="large-language-models-and-the-evolution-of-knowledge-work">Large
+Language Models and the Evolution of Knowledge Work</h2>
 <p><img style="float: right;" src="./images/19th_century_textile_loom.jpg"></p>
 <blockquote>
 <p>“Rapid and pivotal advances in technology have a way of unsettling

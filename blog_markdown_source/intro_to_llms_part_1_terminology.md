@@ -13,24 +13,22 @@ meta_og_image: pct_autogluon_dep_og_card.jpg
 
 Purpose of this series:
 
-> To understand what LLMs are
+> To understand the role of large language models in enteprise applications and some of the components, tools, and technologies relevant to building these applications.
 
-This space is moving fast and its valuable to get a mental framing on how to think about LLMs to better understand how to apply them in your projects and organization
-
-It also sets context for a better understanding of new developments in LLMs
-
-Our technical series are based on private reports we produce for our enterprise customers.
+This space is moving fast and its valuable to get a mental framing on how to think about LLMs to better understand how to apply them in your projects and organization. This series also sets context for a better understanding of new developments in LLMs. Our technical series are based on private reports we produce for our enterprise customers and other entities we advise as a company.
 
 The intended audience for this series is:
 
-> Individual researchers, data scientists, and then also enterprise data teams as well
+> Individual practitioners, enterprise data teams, and enterprise executives
 
 Series:
 
-* [Background and Core Concepts in LLMs](intro_to_llms_part_1_terminology.html)
+* [An Introduction to Large Language Models (LLMs)](intro_to_llms_part_1_terminology.html)
 * [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
 * [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
+
+The final post is where I give context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.
 
 # What are Large Language Models (LLMs)?
 
@@ -38,245 +36,123 @@ Large language models, such as GPT-3.5, are advanced artificial intelligence sys
 
 Training a large language model involves utilizing a massive dataset, which often includes a wide range of texts from books, articles, websites, and other written sources. This diverse corpus helps the model learn the nuances of human language and develop a broad understanding of various topics.
 
-Once trained, large language models can be used for a wide range of applications. They can generate human-like text, answer questions, assist with language translation, write code, summarize articles, create conversational agents, and much more. They achieve this by leveraging the knowledge and patterns they have learned during training.
+Once trained, large language models can be used for a wide range of applications. They can:
+
+* generate human-like text
+* answer questions
+* assist with language translation
+* write code
+* summarize articles
+* create conversational agents
+
+and much more. They achieve this by leveraging the knowledge and patterns they have learned during training.
 
 It's important to note that while large language models like GPT-3.5 can generate impressive and coherent text, they don't possess true understanding or consciousness. They are statistical models that rely on patterns and associations in the training data rather than true comprehension.
-LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input.
+LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input and have no mmemory of previous conversations between the context provided in the input text.
 
-Foundation models
+Recently its been [declared that large language models are having their "stable diffusion"-moment](https://simonwillison.net/2023/Mar/11/llama/), in that an audience beyond the research community could see that they were useful in many tasks beyond their intial focus.
 
-https://arxiv.org/abs/2205.09911
-
-> Foundation Models (FMs) are models trained on large corpora of data that, at very large scale, can generalize to new tasks without any task-specific finetuning. As these models continue to grow in size, innovations continue to push the boundaries of what these models can do on language and image tasks.
-
-GPT-3 and GPT-4 are examples of large language models.
-
-ChatGPT is an example of an application built around a large language model (here: GPT-3.5, etc)
-
-LLMs themselves DO:
-
-* reason about instructions and context in the input (the "prompt")
-* create plans of actions, and then execute each step of the plan with further calls back to the LLM model
-* integrate with external tools (search engines, wikipedia, python interpreters, etc) to try out commands and examine the input in a later LLM chained call
-
-LLMs do not:
-
-* execute code inside the neural network itself
-
-Later on in this series we'll introduce a generalized application architecture for LLM-based applications.
-
-todo
-
-https://www.theatlantic.com/technology/archive/2023/01/artificial-intelligence-ai-chatgpt-dall-e-2-learning/672754/
-
-emergent abilities
-
-https://arxiv.org/abs/2205.09911
-
-> Emergent Behaviors Interestingly, the biggest GPT-3 variant (175B parameters) has the capacity to solve natural language tasks with only a few examples (called few-shot prompting), and in some cases, just a task description (e.g. “Translate French to English”). Unlike traditional finetuning, no model parameters are updated to fit the task. Few-shot prompting has proven to be effective on tasks widely different from the FMs pretraining objective. Some examples include code generation [84], Trivia QA [18, 48] and common sense reasoning tasks [18]. Smaller models (less than 10B parameters) typically require some form of task-specific finetuning to perform well. 
-
-https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/
-
-LLMs having their "stable diffusion"-moment
-
-https://simonwillison.net/2023/Mar/11/llama/
-
-
+To get a better idea of the key topics in large language models, let's take a look at some key terminology in the field.
 
 ## Terminology in Large Language Models (LLMs)
 
-todo
+There are a lot of research topics that I can mention in the world of LLMs but for the purpose of this series I'll focus on the following concepts:
 
 * Prompt 
 * Prompt Engineering
 * In-Context Learning
-* Indexing: (in realm of LLMs) can be considered a 
-* Chain of Thought
 * Embeddings
-* vector databases
-* fine-tuning: the model is trained via repeated gradient updates using a large corpus of example tasks
-* Instruction tuning
-* Reinforcement Learning from Human Feedback (RLHF)
+* Vector databases
 
+Let's now jump into prompts and prompt engineering.
 
-todo
+### Prompts
 
-https://exchange.scale.com/public/events/llm-prompt-engineering-and-rlhf-history-and-techniques-2023-03-09
+Prompts are the primary means by which a user leverages LLMs, thus engineering prompts (prompt engineering) is key to fully utilize the strengths of LLMs. A prompt can be a question, a statement, or an incomplete sentence that sets the context for the model to generate a coherent and relevant output.
 
-https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/
-
-https://github.com/dair-ai/Prompt-Engineering-Guide
-
-
-
-todo
-
-### Prompts and Prompt Engineering
-
-In the context of large language models, prompts are the input text or instructions given to the model to generate a desired response. A prompt can be a question, a statement, or an incomplete sentence that sets the context for the model to generate a coherent and relevant output.
+Prompts direct generation/retrieval of responses/text. Prompts can be decomposed into four components, which aren't strictly necessary for every prompt. Instructions tie the other pieces together, directing how each of them should be used. External info/contexts are additional sources of knowledge. It's important to note that contexts do not have to be explicitly provided, and can be retrieved/referenced. User input/query is self explanatory. Output indicators mark where generated text begins. 
 
 When providing a prompt, users specify their desired outcome or request, and the model generates a response based on the patterns and information it has learned during training. The prompt serves as a guide for the model to understand the user's intent and generate a suitable response accordingly.
 
-The effectiveness of a prompt depends on its clarity, specificity, and relevance to the desired task. Well-crafted prompts help elicit accurate and meaningful responses from the model, while ambiguous or poorly phrased prompts may yield inaccurate or undesired outputs.
+### Prompt Engineering
 
 Prompt engineering, which involves optimizing the wording and structure of prompts, has become an important practice to improve the quality and reliability of model-generated responses. Researchers and developers often experiment with different prompt formulations to achieve the desired outcomes and mitigate potential biases or limitations of the language model.
 
-sub-topics:
-
-* instructions
-* external information
-* user input
-* output indicator
-
-https://www.pinecone.io/learn/langchain-prompt-templates/
-
-> Vibin Writing:
-
-Prompts are the primary means by which a user leverages LLMs, thus engineering prompts (prompt engineering) is key to fully utilize the strengths of LLMs. 
-Prompts direct generation/retrieval of responses/text. Prompts can be decomposed into four components, which aren't strictly necessary for every prompt. Instructions tie the other pieces together, directing how each of them should be used. External info/contexts are additional sources of knowledge. It's important to note that contexts do not have to be explicitly provided, and can be retrieved/referenced. User input/query is self explanatory. Output indicators mark where generated text begins. 
-
-Prompts & Vector Databases and Embeddings:
-
-	Prompts are used in conjunction with vector databases and embeddings. Effective prompts can include specific instructions that'll retrieve relevant data from vector databases. To optimize this, prompts must be constructed with consideration given to embedding space and the relationships between embeddings.
-
-Prompt Engineering Strategies
-
-	Reduce ambiguity in favor of more precise instructions. Also provide distinct steps and desired formats. Formats are best articulated through examples instead of description (show vs tell, essentially).
-	Ensure context is both relevant and comprehensive.
-	Use a model's previous responses as future input in order to iterate a more desirable prompt. This strategy is almost conversational, which (might be?) better suited for dynamic/interactive needs.
-	Using tokens to constrain/control output is a good way to fine-tune the output to meet specific requirements, such as length or writing style.
-
 Considerations to keep in mind while Engineering Prompts
 
-	Understanding the task/domain is crucial to leveraging an LLM.
-	Bias. Any bias in the input will likely be amplified in the output, especially since LLMs are not immune from bias as well. 
-	Good prompts should be consistent, even when variations are made from them. A common practice (seems to be) testing the response to many slight variations in order to uncover issues. 
-	Iteration is important, thus testing and feedback can often be vital to arriving at desired outcomes.
+* Understanding the task/domain is crucial to leveraging an LLM.
+* Bias. Any bias in the input will likely be amplified in the output, especially since LLMs are not immune from bias as well. 
+* Good prompts should be consistent, even when variations are made from them. A common practice (seems to be) testing the response to many slight variations in order to uncover issues. 
+* Iteration is important, thus testing and feedback can often be vital to arriving at desired outcomes.
 
+The effectiveness of a prompt depends on its clarity, specificity, and relevance to the desired task. Well-crafted prompts help elicit accurate and meaningful responses from the model, while ambiguous or poorly phrased prompts may yield inaccurate or undesired outputs.
+
+More resources on prompts and prompt engineering:
+
+* [https://exchange.scale.com/public/events/llm-prompt-engineering-and-rlhf-history-and-techniques-2023-03-09](https://exchange.scale.com/public/events/llm-prompt-engineering-and-rlhf-history-and-techniques-2023-03-09)
+* [https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/)
+* [https://github.com/dair-ai/Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
 ### In-Context Learning
 
-In-context learning refers to a technique used with large language models to fine-tune or adapt them to specific tasks or domains by providing additional training on task-specific examples or data. This process allows the model to specialize and improve its performance on specific tasks or to better align with the requirements of a particular application.
+[In-context learning](https://arxiv.org/pdf/2005.14165.pdf) refers to a technique used with large language models to fine-tune or adapt them to specific tasks or domains by providing additional training on task-specific examples or data. This process allows the model to specialize and improve its performance on specific tasks or to better align with the requirements of a particular application.
 
 In large language models like GPT-3.5, the initial training involves exposing the model to a diverse range of text from various sources. However, this general training may not be sufficient for certain specific tasks or domains. In-context learning addresses this limitation by fine-tuning the model with additional examples or data that are relevant to the target task.
 
-To perform in-context learning, the model is provided with specific prompt-response pairs or labeled examples related to the desired task. These pairs serve as additional training data, and the model is retrained using this task-specific information. By exposing the model to task-specific examples, it can learn to generate more accurate and contextually appropriate responses for that particular task.
+In-context learning is useful if we don’t have direct access to the model or we don't have the means to retrain the model.
 
-In-context learning helps to enhance the model's performance, adaptability, and task-specific understanding. It allows large language models to be more versatile and capable of addressing a wide range of tasks and applications by leveraging the benefits of both general pre-training and task-specific fine-tuning.
+### Embeddings
 
-* zero-shot
-* one-shot
-* few-shot
+Embeddings are a fundamental concept in machine learning models, including Large Language Models (LLMs). They are numerical representations of data, such as text, images, or audio, that capture the essence or semantic meaning of the data. The process of embedding involves converting the input data into vectors of numbers, allowing the machine learning model to understand and process the data effectively.
 
-> Since GPT-2 (Radford et al.) and GPT-3 (Brown et al.), we have seen that generative large language models (LLMs) pretrained on a general text corpus are capable of in-context learning, which doesn’t require us to further train or finetune pretrained LLMs if we want to perform specific or new tasks that the LLM wasn’t explicitly trained on. Instead, we can directly provide a few examples of a target task via the input prompt, as illustrated in the example below.
+By mapping data into a continuous vector space, embeddings allow for similarity comparisons (through the use of algorithms like nearest neighbors) and the clustering of textual data.
 
-> In-context learning is very useful if we don’t have direct access to the model, for instance, if we are using the model through an API.
+Prompts are used in conjunction with vector databases and embeddings. Effective prompts can include specific instructions that'll retrieve relevant data from vector databases. To optimize this, prompts must be constructed with consideration given to embedding space and the relationships between embeddings.
 
 
+### Vector Databases
 
-## Deep Learning, Transformers, and Generative Language Models
+Vector databases play a crucial role in machine learning (ML) and large language model (LLM) applications. They are designed to efficiently store, index, and retrieve high-dimensional vectors, which are numerical representations of data points. These vectors can represent various entities such as words, documents, images, or user preferences. Vector databases work hand in hand with the embedding models that create such high-dimensional vectors.
 
-The architecture of large language models typically consists of multiple layers of artificial neural networks. These networks contain millions or even billions of parameters that enable the model to capture and represent the complex relationships between words and concepts.
+The importance of vector databases lies in the many utilities and operations it allows embeddings to perform once the semantic meaning of data is vectorized
 
-----
+## Deep Learning, Transformers, and the Evolution of Large Language Models
 
-Deep learning, transformers, and large language models are interconnected concepts that play crucial roles in the development and success of advanced natural language processing (NLP) systems. Here's an overview of their relationship:
+<img style="float: right; max:276px; height: 420px;" src="./images/transformers_architecture_2017.png">
 
-Deep Learning: Deep learning is a subfield of machine learning that focuses on training artificial neural networks with multiple layers to learn and extract complex patterns and representations from data. Deep learning algorithms, such as convolutional neural networks (CNNs) and recurrent neural networks (RNNs), have revolutionized various fields, including computer vision, speech recognition, and natural language processing.
+To give a better idea of how large langauge models got to this point, I want to point out some recent history in the field of neural networks. Deep learning, transformers, and large language models are interconnected concepts that play crucial roles in the development and success of advanced natural language processing (NLP) systems. 
 
-Transformers: Transformers are a specific type of deep learning architecture that has significantly advanced NLP tasks. They were introduced in the seminal paper "Attention is All You Need" by Vaswani et al. in 2017. Transformers employ a self-attention mechanism to capture contextual dependencies between words in a sequence, allowing the model to weigh the importance of different words when generating responses. This attention mechanism helps transformers effectively model long-range dependencies and improves their ability to understand and generate coherent text.
+Deep learning is a subfield of machine learning that focuses on training artificial neural networks with multiple layers to learn and extract complex patterns and representations from data. Deep learning algorithms, such as convolutional neural networks (CNNs) and recurrent neural networks (RNNs), have revolutionized various fields, including computer vision, speech recognition, and natural language processing.
 
-Large Language Models: Large language models, such as GPT-3.5, are deep learning models built using transformer architectures specifically designed for language understanding and generation tasks. These models have been trained on massive amounts of text data, learning to predict the next word or sequence of words given a context. By leveraging the power of transformers and deep learning techniques, large language models can generate human-like text, answer questions, perform language translation, and assist with a wide range of natural language processing tasks.
+Before transformers, recurrent neural networks were commonly used as generative language models but they didn't have nearly as many abilities as today's large language models.
+
+Transformers are a specific type of deep learning architecture that has significantly advanced NLP tasks. They were introduced in the seminal paper ["Attention is All You Need" by Vaswani et al. in 2017](https://arxiv.org/abs/1706.03762). Transformers employ a self-attention mechanism to capture contextual dependencies between words in a sequence, allowing the model to weigh the importance of different words when generating responses. This attention mechanism helps transformers effectively model long-range dependencies and improves their ability to understand and generate coherent text. A [list of different transformer types can be found here](https://amatriain.net/blog/transformer-models-an-introduction-and-catalog-2d1e9039f376/) and a wonderful [visual explanation of transformers can be found here](http://jalammar.github.io/illustrated-transformer/).
+
+Large language models, such as GPT-3.5, are deep learning models built using transformer architectures specifically designed for language understanding and generation tasks. These models have been trained on massive amounts of text data, learning to predict the next word or sequence of words given a context. By leveraging the power of transformers and deep learning techniques, large language models can generate human-like text, answer questions, perform language translation, and assist with a wide range of natural language processing tasks.
 
 The success of large language models is largely attributed to the transformer architecture's ability to capture long-range dependencies and learn contextual representations effectively. The deep learning techniques used in training these models allow them to understand complex patterns and relationships in language data, making them capable of generating coherent and contextually relevant text.
 
-In summary, deep learning forms the foundation of large language models, and transformers provide the architecture that empowers these models with the ability to understand and generate natural language text. Together, they have revolutionized the field of NLP and enabled the development of sophisticated language understanding and generation systems.
+Something else to note is that Deep Learning is about using the correct architecture for a data type such that the architecture can perform automated feature engineering. Transformers are a Deep Learning architecture for natural language and use raw text as input and output. So its worth noting that Transformer-based systems require no manual feature engineering for training.
 
+Deep learning forms the foundation of large language models, and transformers provide the architecture that empowers these models with the ability to understand and generate natural language text. Together, they have revolutionized the field of NLP and enabled the development of sophisticated language understanding and generation systems.
 
-* refernece our strata talk in 2016
-
-
-### Defining Deep Learning
-
-* DL is about automated feature learning
-
-
-### Introduction of Transformers in 2017
-
-
-<img style="float: right;" src="./images/transformers_architecture_2017.png">
-
-* dont need to create features
-* can use tons of data
-* can use tons of parameters
-
-https://amatriain.net/blog/transformer-models-an-introduction-and-catalog-2d1e9039f376/
-
-LLMs are implemented with Neural Networks 
-using the Transformer architecture
-Transformers were introduced in 2017
-they are an architecture of deep learning neural networks that worked well in natural language applications
-
-great visual explanation of transformers: http://jalammar.github.io/illustrated-transformer/
-
-Transformers can process long sequences of text and generate high-quality outputs for various language tasks, such as 
-* text generation
-* question answering
-* translation
-
-Noteworthy because:
-
-Deep Learning is about using the correct architecture for a data type such that the architecture can perform automated feature engineering
-Transformers are a Deep Learning architecture for natural language
-Therefore, Transformer-based systems require no manual feature engineering
-
-Transformers and LLMs rely directly on raw natural language text as the input
-
-
+With the connection to deep learning and transformers established, let's move into taking a look at the architecture of a popular large language model, GPT.
 
 ## The GPT Architecture
 
-* based on transformers
-* doesnt need feature engineering
-* just give it structured set of natural language
+[GPT-3 is a language model that creates near-human level quality text content](https://arxiv.org/abs/2005.14165). It comes in eight different sizes, ranging from 125 million to 175 billion parameters. The largest GPT-3 model is ten times bigger than the previous record holder, T5-11B. The smallest GPT-3 model is approximately the same size as BERT-Base and RoBERTa-Base.
 
-> This is GPT's rockstar application -- a conditional generative model that creates near-human level quality text content.
+All GPT-3 models follow the same attention-based architecture as their predecessor, GPT-2. The smallest GPT-3 model has 12 attention layers, each with 12 sets of 64-dimensional heads. In contrast, the largest GPT-3 model has 96 attention layers, each with 96 sets of 128-dimensional heads.
 
-### GPT Series of Models
+GPT-3 achieved a substantial increase in capacity compared to GPT-2, expanding it by three orders of magnitude. This was accomplished through the addition of more layers, wider layers, and utilizing more training data.
 
-https://platform.openai.com/docs/models
-
-https://arxiv.org/abs/2005.14165
-
-> GPT-3 comes in eight sizes, ranging from 125M to 175B parameters. The largest GPT-3 model is an order of magnitude larger than the previous record holder, T5-11B. The smallest GPT-3 model is roughly the size of BERT-Base and RoBERTa-Base.
-
-> All GPT-3 models use the same attention-based architecture as their GPT-2 predecessor. The smallest GPT-3 model (125M) has 12 attention layers, each with 12x 64-dimension heads. The largest GPT-3 model (175B) uses 96 attention layers, each with 96x 128-dimension heads.
-
-> GPT-3 expanded the capacity of its GPT-2 by three orders of magnitudes without significant modification of the model architecture — just more layers, wider layers, and more data to train it on
-
-> But to put things into perspective, GPT-3 175B model required 3.14E23 FLOPS of computing for training. Even at theoretical 28 TFLOPS for V100 and lowest 3 year reserved cloud pricing we could find, this will take 355 GPU-years and cost $4.6M for a single training run. Similarly, a single RTX 8000, assuming 15 TFLOPS, would take 665 years to run.
-
-Ray used to train gpt-3
-
-https://www.anyscale.com/blog/ray-common-production-challenges-for-generative-ai-infrastructure
-
-https://thenewstack.io/how-ray-a-distributed-ai-framework-helps-power-chatgpt/
+However, it's important to note the immense computational requirements of training the largest GPT-3 model. The 175 billion parameter model necessitated 3.14E23 floating point operations per second (FLOPS) during training. Even with the most efficient hardware, such as the V100 GPU with a theoretical peak performance of 28 TFLOPS, it would take 355 GPU-years and cost approximately $4.6 million for a single training run. Similarly, using a single RTX 8000 GPU with an assumed performance of 15 TFLOPS, the training process would take approximately 665 years. These numbers provide perspective on the significant computational resources needed for training the largest GPT-3 model.
 
 ### ChatGPT
 
-https://help.openai.com/en/articles/6783457-what-is-chatgpt
-```
-ChatGPT is fine-tuned from GPT-3.5, a language model trained to produce text. ChatGPT was optimized for dialogue by using Reinforcement Learning with Human Feedback (RLHF) – a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior.
-```
+ChatGPT is based on the GPT-3.5 architecture, which is part of the GPT (Generative Pre-trained Transformer) series developed by OpenAI. ChatGPT is designed to generate human-like text responses and engage in conversations on a wide range of topics. It has been trained on a diverse corpus of text data to acquire knowledge and language patterns, enabling it to understand and generate coherent and contextually relevant responses. 
 
-
-
-
-* key summary
-   * text in, text out 
-   * no feature engineering
-
-
+Reinforcement Learning with Human Feedback (RLHF), a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior, was used to optimize ChatGPT for dialogue. ChatGPT can be used for various purposes, including answering questions, providing explanations, assisting with creative writing, and engaging in interactive dialogues.
 
 # LLM Abilities and Limitations
 
@@ -288,29 +164,59 @@ ChatGPT is fine-tuned from GPT-3.5, a language model trained to produce text. Ch
 
 
 
+LLMs themselves DO:
+
+* reason about instructions and context in the input (the "prompt")
+* create plans of actions, and then execute each step of the plan with further calls back to the LLM model
+* integrate with external tools (search engines, wikipedia, python interpreters, etc) to try out commands and examine the input in a later LLM chained call
+
+LLMs do not:
+
+* execute code inside the neural network itself
+
 
 ## GPT-3 Abilities and Evolution
 
+"Can Foundation Models Wrangle Your Data?" (Nik article)
 
+https://arxiv.org/abs/2205.09911
+
+> Emergent Behaviors Interestingly, the biggest GPT-3 variant (175B parameters) has the capacity to solve natural language tasks with only a few examples (called few-shot prompting), and in some cases, just a task description (e.g. “Translate French to English”). Unlike traditional finetuning, no model parameters are updated to fit the task. Few-shot prompting has proven to be effective on tasks widely different from the FMs pretraining objective. Some examples include code generation [84], Trivia QA [18, 48] and common sense reasoning tasks [18]. Smaller models (less than 10B parameters) typically require some form of task-specific finetuning to perform well. 
+
+// ----
+
+https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/
+
+https://openreview.net/forum?id=yzkSU5zdwD
+
+https://www.jasonwei.net/blog/emergence
+
+
+
+// ----
 
 Yao Fu [writes about the 3 important abilities that the initial GPT-3 exhibit](https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1):
  
-- **Language generation**: to follow a prompt and then generate a completion of the given prompt. Today, this might be the most ubiquitous way of human-LM interaction.
-- **In-context learning**: to follow a few examples of a given task and then generate the solution for a new test case. It is interesting to note that, although being a language model, the original GPT-3 paper barely talks about “language modeling” — the authors devoted their writing efforts to their visions of in-context learning, which is the real focus of GPT-3.
+- **Language generation**: to follow a prompt and then generate a completion of the given prompt. 
+- **In-context learning**: to follow a few examples of a given task and then generate the solution for a new test case.
 - **World knowledge**: including factual knowledge and commonsense.
 
 For those inclined in the details, Fu's article is wonderfully detailed and contains considerable insight into the evolution of the GPT-series of LLMs.
 
+>  It is interesting to note that, although being a language model, the original GPT-3 paper barely talks about “language modeling” — the authors devoted their writing efforts to their visions of in-context learning, which is the real focus of GPT-3.
+
 Fu goes on to describe the origin of the abilites of GPT-3:
 
 > Generally, the above three abilities should come from large-scale pretraining — to pretrain the 175B parameters model on 300B tokens 
+
+Further breaking down the source of the training data:
 
 * 60% 2016 - 2019 Common Crawl
 * 22% WebText2
 * 16% Books
 * 3% Wikipedia). 
 
-Where:
+Fu goes on to further hypothesize where specific abilites in GPT-3 come from:
 
 - The **language generation** ability comes from the language modeling **training objective**.
 - The **world knowledge** comes from the 300B token **training corpora** (or where else it could be).
@@ -331,9 +237,12 @@ For comparison, the average person might read around 700 books in their lifetime
 
 The entire series is wonderful for insight into how large language models such as GPT-3 get certain types of "abilities" such as "code generation" and "in-context learning".
 
+Key point of Section: "In-context learning is a big deal, and doesnt require retraining the model"
+
 
 ### More Abilities and the Evolution of GPT-3.5
 
+TODO: consider including this section to better outline abilities of models
 
 More Yao Fu:
 
@@ -346,7 +255,12 @@ More Yao Fu:
 
 ### Conclusions on GPT-3.5 Abilities
 
-* todo
+* todo: need to decide where we're going w the line of thought for the abilities
+   * is this to support ideas around focusing on specific tests for specific tasks -- short of retraining the model?
+   * is this to push further with the in-context line of thought?
+
+
+Below --- summarizes the source of abilities for GPT-3:
 
 `The initial GPT-3 model gains its generation ability, world knowledge, and in-context learning from pretraining.`
 
@@ -390,8 +304,6 @@ In summary, knowledge and reasoning are interrelated cognitive processes. Knowle
 
 
 
-
-
 https://arxiv.org/abs/2212.10403
 
 * explain and contrast reasoning vs knowledge
@@ -403,6 +315,8 @@ https://ai.googleblog.com/2022/05/language-models-perform-reasoning-via.html
 
 World knowledge: including factual knowledge and commonsense.
 
+> This is important: 
+
 Yao Fu:
 `- The two important but different abilities of GPT-3.5 are **knowledge** and **reasoning**. Generally, it would be ideal if we could **offload the knowledge part to the outside retrieval system and let the language model only focus on reasoning.** This is because:
     - The model’s internal knowledge is always cut off at a certain time. The model always needs up-to-date knowledge to answer up-to-date questions.
@@ -410,6 +324,14 @@ Yao Fu:
     `
 
 discuss: "Chain of Thought"
+
+
+Segue-out:
+
+* Databases are already good at knowledge
+
+* We like LLMs for their reasoning abilities
+
 
 #### Use Cases with Reasoning
 
@@ -569,6 +491,15 @@ https://weightwatcher.ai/leaderboard.html
 
 https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157
 
+I do more with MidJourney in terms of graphic design output than I did previously and no jobs were lost. The work product improves and the rate at which I can produce new artwork for articles increases and that's generally how technology advances have driven change in the workforce.
+
+Other examples:
+
+* textile looms
+* arrows supplanted by guns
+* steam engine
+* banks introduced to computers (need reference, but were now open 5 days / wk)
+
 
 LLMs and Artificial Intelligence --- [What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
@@ -591,6 +522,42 @@ soon, they will be table stakes in many / most industries
 https://cube.dev/blog/conversational-interface-for-semantic-layer
 
 https://github.com/approximatelabs/sketch
+
+
+## Foundation Models
+
+Large language models are basesd on [foundation models](https://arxiv.org/abs/2205.09911):
+
+> Foundation Models (FMs) are models trained on large corpora of data that, at very large scale, can generalize to new tasks without any task-specific finetuning. As these models continue to grow in size, innovations continue to push the boundaries of what these models can do on language and image tasks.
+
+https://hai.stanford.edu/news/reflections-foundation-models
+
+> The term Foundation Model (FM) was coined by Stanford researchers to introduce a new category of ML models. They defined FMs as models trained on broad data (generally using self-supervision at scale) that can be adapted to a wide range of downstream tasks.
+
+> The Stanford team made a point to note that FMs are NOT foundational models in the sense that they are not the foundation for AI — that is, such models are not implied to be AGI.
+
+
+> We define foundation models as models trained on broad data (generally using self-supervision at scale) that can be adapted to a wide range of downstream tasks. These models, which are based on standard ideas in transfer learning and recent advances in deep learning and computer systems applied at a very large scale, demonstrate surprising emergent capabilities and substantially improve performance on a wide range of downstream tasks. Given this potential, we see foundation models as the subject of a growing paradigm shift, where many AI systems across domains will directly build upon or heavily integrate foundation models.
+
+> Naming The name “foundation model” has also drawn significant attention; given this attention, we want to provide context on how the name came about. We began by surveying existing terms (e.g., “(large) language model”, “self-supervised model”, “pretrained model”). Of these terms, we found several did not identify the correct class or characteristics of models: “(large) language model” was too narrow given our focus was not only language; “self-supervised model” was too specific to the training objective; and “pretrained model” suggested that the noteworthy action all happened after “pretraining”. In general, we found most terms did not convey the care with which we felt these models should be built.
+
+
+
+Chat gpt -- check this: 
+> Foundation models are the initial versions of pre-trained language models that serve as the starting point for the development of large language models. They are typically trained on a diverse range of texts to learn the underlying patterns and structures of language.
+
+> Large language models, on the other hand, are more advanced versions that are built upon the foundation models. They undergo an extensive training process using vast amounts of data to improve their language understanding and generation capabilities. Large language models like GPT-3 are designed to perform a wide array of language-related tasks, such as text completion, translation, summarization, and more.
+
+> In essence, foundation models provide the basic building blocks for language understanding, while large language models are the enhanced and refined versions that have been trained on massive datasets to achieve impressive language processing abilities. They represent the culmination of iterative improvements and advancements in natural language processing research and technology.
+
+examples of foundation models
+
+* [BERT](https://arxiv.org/abs/1810.04805)
+* ChatGPT
+* GPT-3
+* [DALL-E](https://www.journal-dogorangsang.in/no_1_NECG_21/14.pdf)
+* Stable Diffusion
+
 
 
 # References

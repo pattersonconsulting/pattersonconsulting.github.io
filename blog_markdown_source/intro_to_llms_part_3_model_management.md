@@ -34,6 +34,13 @@ Numbers every LLM developer should know:
 
 https://github.com/ray-project/llm-numbers
 
+
+Ray used to train gpt-3
+
+https://www.anyscale.com/blog/ray-common-production-challenges-for-generative-ai-infrastructure
+
+https://thenewstack.io/how-ray-a-distributed-ai-framework-helps-power-chatgpt/
+
 ## API vs In-House Models
 
 asdasd

@@ -81,6 +81,8 @@ The cost of LLMOps is in inference.
 
 now this is an interesting topic!
 
+High computational requirements: Training and deploying large language models require significant computational resources, making them inaccessible to many researchers and organizations. This can hinder widespread adoption and contribute to the concentration of AI capabilities in a few entities.
+
 ## In-Context Learning
 
 

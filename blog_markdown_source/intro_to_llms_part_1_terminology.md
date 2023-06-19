@@ -152,50 +152,37 @@ However, it's important to note the immense computational requirements of traini
 
 ChatGPT is based on the GPT-3.5 architecture, which is part of the GPT (Generative Pre-trained Transformer) series developed by OpenAI. ChatGPT is designed to generate human-like text responses and engage in conversations on a wide range of topics. It has been trained on a diverse corpus of text data to acquire knowledge and language patterns, enabling it to understand and generate coherent and contextually relevant responses. 
 
-Reinforcement Learning with Human Feedback (RLHF), a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior, was used to optimize ChatGPT for dialogue. ChatGPT can be used for various purposes, including answering questions, providing explanations, assisting with creative writing, and engaging in interactive dialogues.
-
-# LLM Abilities and Limitations
-
-* the goal of this section is to communicate what you can expect out of LLMs
-
-* this is analagous to understanding what to expect out of machine learning (classification, regression) and deep learning (image object detection, generative models, etc)
-
-* its fun to talk about conscious robots and the like, but in the enterprise world of problem solving, we need to focus on what can be expected from our tools (here: llms)
+[Reinforcement Learning with Human Feedback (RLHF)](https://huggingface.co/blog/rlhf), a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior, was used to optimize ChatGPT for dialogue. ChatGPT can be used for various purposes, including answering questions, providing explanations, assisting with creative writing, and engaging in interactive dialogues.
 
 
 
-LLMs themselves DO:
+
+# Understanding LLM Abilities and How to Measure Them
+
+Any new technology that wows us is always fun to play with, but if we hope to build any applications of value, we need to put a fine edge on the 1-2 things the technology does well. When deep learning roared onto the tech scene, similarly many pundits and The Twitterati ascribed to it magical powers. The market had to come back to its senses and break down what we could realistically expect from deep learning (image object detection, generative models, etc).
+
+In this section I want to lay out the abilities and limitations of LLMs and then forecast where I think they'll be of most value in enterprise applications. For a broader view on the topic of artificial intelligence, I've also provided an [appendix from our O'Reilly book on deep learning](dl_book_appendix_a_ai.html). With that, let's jump into the abilities of large language models, focusing on GPT-3.
+
+
+
+
+## GPT-3 Abilities and Evolution
+
+I think its worth stating out of the gate some of the core abilities we see large language models performing commonly:
 
 * reason about instructions and context in the input (the "prompt")
 * create plans of actions, and then execute each step of the plan with further calls back to the LLM model
 * integrate with external tools (search engines, wikipedia, python interpreters, etc) to try out commands and examine the input in a later LLM chained call
 
-LLMs do not:
+Further, we can also state that large language models are not running code for themselves (yet?) or creating their own computing environments.
 
-* execute code inside the neural network itself
-
-
-## GPT-3 Abilities and Evolution
-
-"Can Foundation Models Wrangle Your Data?" (Nik article)
-
-https://arxiv.org/abs/2205.09911
+However, one of the more compelling things large language models have shown is the ability to learn a task from only a few examples shown in the prompt itself, as described in the paper ("Can Foundation Models Wrangle Your Data?")[https://arxiv.org/abs/2205.09911]:
 
 > Emergent Behaviors Interestingly, the biggest GPT-3 variant (175B parameters) has the capacity to solve natural language tasks with only a few examples (called few-shot prompting), and in some cases, just a task description (e.g. “Translate French to English”). Unlike traditional finetuning, no model parameters are updated to fit the task. Few-shot prompting has proven to be effective on tasks widely different from the FMs pretraining objective. Some examples include code generation [84], Trivia QA [18, 48] and common sense reasoning tasks [18]. Smaller models (less than 10B parameters) typically require some form of task-specific finetuning to perform well. 
 
-// ----
+There has been much [writing](https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/) on the topic of "emergent abilities" in large language models, [for and against the idea](https://openreview.net/forum?id=yzkSU5zdwD), but researcher Jason Wei does a great job [listing out some of the specific emergence abilities on his blog](https://www.jasonwei.net/blog/emergence).
 
-https://www.quantamagazine.org/the-unpredictable-abilities-emerging-from-large-ai-models-20230316/
-
-https://openreview.net/forum?id=yzkSU5zdwD
-
-https://www.jasonwei.net/blog/emergence
-
-
-
-// ----
-
-Yao Fu [writes about the 3 important abilities that the initial GPT-3 exhibit](https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1):
+Beyond listing abiltiies, Yao Fu goes further and [focses his analysis on the 3 important abilities that the initial GPT-3 exhibit](https://yaofu.notion.site/How-does-GPT-Obtain-its-Ability-Tracing-Emergent-Abilities-of-Language-Models-to-their-Sources-b9a57ac0fcf74f30a1ab9e3e36fa1dc1):
  
 - **Language generation**: to follow a prompt and then generate a completion of the given prompt. 
 - **In-context learning**: to follow a few examples of a given task and then generate the solution for a new test case.
@@ -214,7 +201,7 @@ Further breaking down the source of the training data:
 * 60% 2016 - 2019 Common Crawl
 * 22% WebText2
 * 16% Books
-* 3% Wikipedia). 
+* 3% Wikipedia
 
 Fu goes on to further hypothesize where specific abilites in GPT-3 come from:
 
@@ -223,203 +210,75 @@ Fu goes on to further hypothesize where specific abilites in GPT-3 come from:
 - The **175B model size** is for **storing knowledge**, which is further evidenced by Liang et al. (2022), who conclude that the performance on tasks requiring knowledge correlates with model size.
 - The source of the **in-context learning** ability, as well as its generalization behavior, **is still elusive**. Intuitively, this ability may come from the fact that data points of the same task are ordered sequentially in the same batch during pretraining. Yet there is little study on why language model pretraining induces in-context learning, and why in-context learning behaves so differently than fine-tuning.
 
-<!--
-Yao Fu then goes on to offer a diagram (embedded below) showing the evolution tree of GPT-3
+---
 
-![GPT Abilities](https://yaofu.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2ea67e8e-18e1-42d0-9bd9-dbb1f47e22f0%2FUntitled.png?id=a039705a-5a32-41ef-bfb7-1c2793e90e74&table=block&spaceId=281b3c78-d734-43fb-aa33-707babff9463&width=1150&userId=&cache=v2)
-
-Some abilities of note in the above diagram:
--->
-
-For reference, if we say the average book has 80,000 words in it, and ~2 million tokens is roughly the equivalent to 1.5 million words, we can calculate the total books GPT-3 was trained on to be **around 2.8 million books** based on a 300 billion token training corpora.
+For reference, A 750 word document will be about 1000 tokens. If we say the average book has 80,000 words in it, and ~2 million tokens is roughly the equivalent to 1.5 million words, we can calculate the total books GPT-3 was trained on to be **around 2.8 million books** based on a 300 billion token training corpora.
 
 For comparison, the average person might read around 700 books in their lifetime.
+
+---
 
 The entire series is wonderful for insight into how large language models such as GPT-3 get certain types of "abilities" such as "code generation" and "in-context learning".
 
 Key point of Section: "In-context learning is a big deal, and doesnt require retraining the model"
 
+To put the above in perspective, let's review the code ideas of knowledge and reasoning:
 
-### More Abilities and the Evolution of GPT-3.5
+* Knowledge provides the foundation and raw material for reasoning. It serves as a basis for making informed decisions, solving problems, and understanding the world. Knowledge provides context and background information that can be used in the reasoning process. 
+* Reasoning employs logical and cognitive processes to analyze and manipulate knowledge. It helps in organizing, connecting, and utilizing knowledge to derive new insights, solve problems, make judgments, and make predictions.
 
-TODO: consider including this section to better outline abilities of models
+Knowledge is a prerequisite for effective reasoning. Reasoning heavily relies on the availability and accuracy of relevant knowledge. Lack of knowledge can limit the quality and accuracy of reasoning. However, Reasoning can operate even in the absence of complete knowledge. It can make use of partial or incomplete information to draw conclusions or make decisions. Reasoning can also be employed to fill gaps in knowledge and acquire new knowledge.
 
-More Yao Fu:
+Knowledge and reasoning are interrelated cognitive processes. Knowledge provides the information and foundation for reasoning, while reasoning employs logical and cognitive processes to manipulate knowledge and arrive at conclusions. Knowledge represents accumulated information, while reasoning is a dynamic process of drawing inferences and making decisions based on available information.
 
-> Now let’s look at code-davinci-002 and text-davinci-002, the two first GPT3.5 models, one for code and the other for text. There are four important abilities they exhibit that differentiate them from the initial GPT-3
+If we take those ideas, and then consider that Yao Fu mentions:
 
-- **Responding to human instruction**: previously, the outputs of GPT-3 were mostly high-frequency prompt-completion patterns within the training set. Now the model generates reasonable answers to the prompt, rather than related but useless sentences.
-- **Generalization to unseen tasks**: when the number of instructions used for tuning the model is beyond a certain scale, the model can automatically generate completions for new instructions that are not in the training set. **This ability is crucial for deployment**, as users with always come up with new prompts.
-- **Code generation and code understanding**: obviously, because the model is trained on code.
-- **Complex reasoning** **with chain-of-thought**
+> The two important but different abilities of GPT-3.5 are **knowledge** and **reasoning**. 
 
-### Conclusions on GPT-3.5 Abilities
+He further concludes that:
 
-* todo: need to decide where we're going w the line of thought for the abilities
-   * is this to support ideas around focusing on specific tests for specific tasks -- short of retraining the model?
-   * is this to push further with the in-context line of thought?
+> Generally, it would be ideal if we could **offload the knowledge part to the outside retrieval system and let the language model only focus on reasoning.** 
 
+allowing for the advantages of using more up-to-date knowledge to answer questions using an outside retrieval system. It's also worth noting that a lot of the GPT-3 175B parameter model was used for storing knowledge, we could potentially use much smaller models coupled with an external knowledge system (e.g., data warehouse) and have models that are much smaller but still with effective reasoning capabilities.
 
-Below --- summarizes the source of abilities for GPT-3:
+The added benefit of outsourcing knowledge for LLM applications is that the knowledge within LLMs are unreliable and cannot be verified. However, knowledge from databases and search engines has more capacity and you can easily verify credibility of search results by checking the source.
 
-`The initial GPT-3 model gains its generation ability, world knowledge, and in-context learning from pretraining.`
-
-`Then the instruction tuning branch gains the ability to follow instructions and generalization to unseen tasks. The training on code branch gains the ability of code understanding, and potentially the side product of complex reasoning. Combining the two branches, code-davinci-002 seems to be the most capable GPT-3.5 model with all the powerful abilities.`
-
-
-
-### Knowledge vs Reasoning
-
-* define knowledge
-* explain use in people and in LLMs
-* discuss specific abilities of GPT-3
-
-Knowledge: Knowledge refers to the information, facts, and understanding that an individual possesses about the world. It represents accumulated information and expertise gained through learning and experience.
-
-Reasoning: Reasoning is the mental process of drawing conclusions or making inferences based on available information, logic, and rules. It involves using logical and cognitive abilities to analyze, evaluate, and synthesize information.
-
-Nature:
-
-Knowledge: Knowledge is a repository of information and understanding. It encompasses facts, concepts, rules, relationships, and models about various domains. It is generally static and acquired through learning and observation.
-
-Reasoning: Reasoning is a dynamic cognitive process that involves actively manipulating and processing information to arrive at logical conclusions or make decisions. It involves using cognitive abilities such as deduction, induction, and abductive reasoning.
-
-Role:
-
-Knowledge: Knowledge provides the foundation and raw material for reasoning. It serves as a basis for making informed decisions, solving problems, and understanding the world. Knowledge provides context and background information that can be used in the reasoning process.
-Reasoning: Reasoning employs logical and cognitive processes to analyze and manipulate knowledge. It helps in organizing, connecting, and utilizing knowledge to derive new insights, solve problems, make judgments, and make predictions.
-Dependency:
-
-Knowledge: Knowledge is a prerequisite for effective reasoning. Reasoning heavily relies on the availability and accuracy of relevant knowledge. Lack of knowledge can limit the quality and accuracy of reasoning.
-Reasoning: Reasoning can operate even in the absence of complete knowledge. It can make use of partial or incomplete information to draw conclusions or make decisions. Reasoning can also be employed to fill gaps in knowledge and acquire new knowledge.
-
-Knowledge defined:
-> "facts, information, and skills acquired by a person through experience or education; the theoretical or practical understanding of a subject."
-
-Reasoning defined:
-> "the action of thinking about something in a logical, sensible way."
-
-In summary, knowledge and reasoning are interrelated cognitive processes. Knowledge provides the information and foundation for reasoning, while reasoning employs logical and cognitive processes to manipulate knowledge and arrive at conclusions. Knowledge represents accumulated information, while reasoning is a dynamic process of drawing inferences and making decisions based on available information.
-
-
-
-
-https://arxiv.org/abs/2212.10403
-
-* explain and contrast reasoning vs knowledge
-* discuss specific abilities of GPT-3
-
-Types of reasoning in LLMs:
-https://ai.googleblog.com/2022/05/language-models-perform-reasoning-via.html
-
-
-World knowledge: including factual knowledge and commonsense.
-
-> This is important: 
-
-Yao Fu:
-`- The two important but different abilities of GPT-3.5 are **knowledge** and **reasoning**. Generally, it would be ideal if we could **offload the knowledge part to the outside retrieval system and let the language model only focus on reasoning.** This is because:
-    - The model’s internal knowledge is always cut off at a certain time. The model always needs up-to-date knowledge to answer up-to-date questions.
-    - Recall we have discussed that is 175B parameter is heavily used for storing knowledge. If we could offload knowledge to be outside the model, then the model parameter might be significantly reduced such that eventually, it can run on a cellphone (call this crazy here, but ChatGPT is already science fiction enough, who knows what the future will be).
-    `
-
-discuss: "Chain of Thought"
-
-
-Segue-out:
+The simple conclusion to draw from this section is:
 
 * Databases are already good at knowledge
-
 * We like LLMs for their reasoning abilities
 
-
-#### Use Cases with Reasoning
-
-* Arithmetic reasoning
-* Problem solving
-* Commonsense reasoning
-
-https://github.com/Mooler0410/LLMsPracticalGuide
-
-> "Scaling of LLMs~(e.g. parameters, training computation, etc.) can greatly empower pretrained language models. With the model scaling up, a model generally becomes more capable in a range of tasks. Reflected in some metrics, the performance shows a power-law relationship with the model scale."
+These early ideas begin to inform what large language model application architectures could look like, which I explore further in part 2 of this series. Now, let's take a look at some of the early known limitations of large language models.
 
 
-#### Use Cases with Emergent Abilities
+## Limitations of GPT-3
 
-* Word manipulation
-* Logical deduction
-* Logical sequence
-* Logic grid puzzles
-* Simple math problems
-* Coding abilities
-* Concept understanding
+Some of the things GPT-3 and large language models in general struggle with are:
 
-https://github.com/Mooler0410/LLMsPracticalGuide
-
-
-
-### In-Context Learning
-
-todo
-
-https://datascience.stackexchange.com/questions/115554/how-exactly-does-in-context-few-shot-learning-actually-work-in-theory-under-the
-
-https://arxiv.org/pdf/2005.14165.pdf
-
-https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00485/111728/True-Few-Shot-Learning-with-Prompts-A-Real-World
-
-http://ai.stanford.edu/blog/understanding-incontext/
-
-### Chain of Thought
-
-
-### Decomposed Prompting
-
-[ICLR 2023] Decomposed Prompting: A Modular Approach for Solving Complex Tasks. [paper][code]
-
-
-
-
-
-
-
-
-
-## Limitations of GPT-3.5
-
-* on-the-fly overwriting the model's beliefs
+* they cannot on-the-fly overwrite the model's beliefs
 * formal reasoning
+* Biases and unfairness
+* Lack of common sense
+* Contextual misunderstandings
+* Sensitivity to input phrasing
 
-While large language models have demonstrated remarkable capabilities, they also have several limitations:
-
-Biases and unfairness: Language models learn from vast amounts of data, which may contain biases present in the text. As a result, they can inadvertently generate biased or unfair content, reflecting and perpetuating societal biases, stereotypes, or prejudices.
-
-Lack of common sense: Large language models often struggle with common sense reasoning. They can generate plausible-sounding but incorrect or nonsensical responses. They lack true understanding of the world and may provide inaccurate or illogical information.
-
-Contextual misunderstandings: Language models may misinterpret or misjudge the context of a prompt, leading to incorrect or nonsensical responses. They often rely heavily on the immediate preceding text and may not consider broader or long-term context.
-
-Sensitivity to input phrasing: The phrasing or wording of a prompt can significantly impact the generated response. Small changes in the input can lead to different outputs, making the models less reliable for critical or sensitive tasks.
-
-Limited knowledge and outdated information: Language models have a knowledge cutoff, meaning they are not aware of events or information that occurred after their training data. Therefore, they may provide outdated or incorrect information about recent events.
-
-Ethical concerns: Language models raise ethical concerns, particularly regarding the potential for misuse, such as generating fake news or deepfake content, spreading misinformation, or engaging in malicious activities like impersonation or harassment.
-
-High computational requirements: Training and deploying large language models require significant computational resources, making them inaccessible to many researchers and organizations. This can hinder widespread adoption and contribute to the concentration of AI capabilities in a few entities.
-
-Addressing these limitations is an active area of research and development, with ongoing efforts to enhance model robustness, mitigate biases, improve understanding of context, and promote ethical use of large language models.
+From an application prototyping standpoint, the issues "sensitivity to input phrasing" and "outdated knowledge" come up early. The phrasing or wording of a prompt can significantly impact the generated response. Small changes in the input can lead to different outputs, making the models less reliable for critical or sensitive tasks. Sometimes this needs to be tested thoroughly before letting folks loose on a new application. Language models have a knowledge cutoff, meaning they are not aware of events or information that occurred after their training data. Therefore, they may provide outdated or incorrect information about recent events. These are just two of the early issues out team has hit developing LLM application prototypes.
 
 
 ## Meauring LLM Reasoning Ability
 
-Paper: https://arxiv.org/abs/2305.17306
+If we focus our applications on leveraging large language model's ability to reason, and we're to try and offload some knowledge requirements to an outside system to use smaller models, then it makes sense to understand how to measure the relative reasoning ability of different models.
 
-> As large language models (LLMs) are continuously being developed, their evaluation becomes increasingly important yet challenging. This work proposes Chain-of-Thought Hub, an open-source evaluation suite on the multi-step reasoning capabilities of large language models. We are interested in this setting for two reasons: (1) from the behavior of GPT and PaLM model family, we observe that complex reasoning is likely to be a key differentiator between weaker and stronger LLMs; (2) we envisage large language models to become the next-generation computational platform and foster an ecosystem of LLM-based new applications, this naturally requires the foundation models to perform complex tasks that often involve the composition of linguistic and logical operations. Our approach is to compile a suite of challenging reasoning benchmarks to track the progress of LLMs. Our current results show that: (1) model scale clearly correlates with reasoning capabilities; (2) As of May 2023, Claude-v1.3 and PaLM-2 are the only two models that are comparable with GPT-4, while open-sourced models still lag behind; (3) LLaMA-65B performs closely to code-davinci-002, indicating that with successful further development such as reinforcement learning from human feedback (RLHF), it has great potential to be close to GPT-3.5-Turbo. Our results also suggest that for the open-source efforts to catch up, the community may focus more on building better base models and exploring RLHF.
+For some great background reading on the type types of reading, check out Google's article on [Types of reasoning in LLMs](https://ai.googleblog.com/2022/05/language-models-perform-reasoning-via.html).
 
-https://github.com/FranxYao/chain-of-thought-hub
+Further, two key LLM reasoning benchmarking resources are:
 
-> The key differentiator is whether a model can do complex tasks, like the old saying: "chit-chat is cheap, show me the reasoning." This is why we compile a list of complex reasoning tasks including math (GSM8K), science (MATH, TheoremQA), symbolic (BBH), knowledge (MMLU, C-Eval), coding (HumanEval), factual (SummEdits) to measure the models' performance on challenging tasks.
+1. [The Chain of Though Hub](https://github.com/FranxYao/chain-of-thought-hub) (background: [paper](https://arxiv.org/abs/2305.17306))
+2. [The Weight Watcher Leaderboard](https://weightwatcher.ai/leaderboard.html)
 
-Complex Reasoning Tasks:
+Each ranking site uses a set of tests to measure how well each model can do different types of reasoning tasks. Some tests (e.g., MMLU) are used by both ranking sites.
+
+For example, the Chain of Thought Hub complex reasoning tasks:
 
 * math (GSM8K)
 * science (MATH, TheoremQA)
@@ -428,137 +287,93 @@ Complex Reasoning Tasks:
 * coding (HumanEval)
 * factual (SummEdits)
 
-[ this is where we'd put some radar plots comparing abilities of models ]
+So based on what kind of reasoning problem you were trying to solve, these individual benchmarks would help you understand what tradeoffs you could make in terms of parameter size vs reasoning ability. For example, if you had to run a model that was under 10B parameters, and the application called for math and science heavy reasoning, these benchmarks would help you filter and rank which models would be most effective for your criteria.
 
+So now let's close out part 1 of this series by looking out the value of large language models and why there is so much interest in the space.
 
 # Why Are Large Language Models Compelling?
 
-todo
+I believe large language models are compelling because they are what I call a "tectonic-plate shift"-class of technology; These technologies, which introduced, shift the landscape of multiple other technologies and industries because they change:
 
-* Tectonic Plate Shifts in Technology
+1. what is possible with other technologies
+2. the cost of certain tasks
+3. the speed at which tasks can be performed
 
+Examples of previous tectonic-plate shift technologies:
 
-`- Will large language model replace search engine?
-    - No. LLMs are good for reasoning, not for knowledge. The knowledge within LLMs are unreliable and cannot be verified.
-    - On the other hand, the knowledge from search engine is orders or magnitude larger than LLM’s internal knowledge, one can easily verify credibility of search results by checking the source.
-    - Combining LLMs and search is a good direction. Let search handle knowledge, let LLMs handle reasoning.`
+* databases
+* big data platforms
+* cloud platforms
+* deep learning
 
+Being able to embed applied reasoning into applications will change how tasks are accomplished in every industry.
+
+From my analysis of large language model research and early technology, the 3 themes I see as most compelling right now in the space are:
+
+1. you can create a natural language interface for any application with an API
+2. you don't have to re-train models to create specific applications
+3. knowledge work is beginning an evolution similar to the introduction of the textile loom in the 1800s
+
+In the sections below, I lightly touch on each of these themes.
 
 ## Natural Language as a Driver for Any Application
 
-toodo
+In prototyping LLM applications the thing that immediately struck me was that "ChatGPT was a nice demo, but there is a lot more here". After seeing the raw reasoning ability of LLMs up close, and then realizing that frameworks such as [LangChain](https://github.com/hwchase17/langchain) allowed you to "glue stuff together with LLMs" (effectively), my imagination ran wild.
 
-ChatGPT was a nice demo, but there is a lot more here
-
+Pretty soon we had all sorts of APIs wired up to LLM natural language input, and we could see how the LLM was able to reason about what sort of parameters should be sent to an API as well. This allows you to "speak" to an application in ways that just are not possible with classical "key word" parsing methods. Once I saw these effects first-hand in our prototypes, I began to think about LLMs as a tectonic-plate-shift-class technology.
 
 ## You Don't Have to Re-Train the Foundation Models to Do Things
 
-Models have 2 abilities:
+In class machine learning you learned quickly that you had to collect training data for your domain-specific application and re-train a new model to apply machine learning in your domain. It took a good decade for enterprises to come to fully appreciate this fact.
 
-1. Knowledge
-2. Reasoning
+And then large language models come along and introduce In-Context Learning, and all of that gets turned on its head.
 
-Much like block-chain hype, its not smart to try and replace a database with something that's "not as good as a database" at the task of specific fact retrieval.
+It's quickly evident in experimenting with LLM applications that base models plus a framework for prompt engineering is flexible enough to solve many problems without ever considering the idea of re-training a new LLM model.
 
-Therefore, we focus on the reasoning ability of LLMs as their unique role in enterprise applications.
+That was my second realization that this was a tectonic-plate-shift-class technology, as it has beeen so hard for enterprises to collect good data and get models re-trained. LLMs could be applied more similarly to traditional software engineering practices --- not exactly, but closer than "having to re-train a new model every time" in traditional machine learning.
 
-LLMs have the potential to contain trillions of parameters and do amazing things.
-
-but models with parameters in the hundreds of millions to low billions are showing usefulness at reasoning tasks.
-
-The key is to select a model that has "good enough reasoning ability for the intended task at hand" --- e.g., you wouldn't hire a phd meteorologist to get you coffee from starbucks. It would just be a waste of the cost of their education.
-
-https://weightwatcher.ai/leaderboard.html
-
+Once I could feel the tectonic plate shift coming, I began to ruminate on the coming evolution of knowledge work.
 
 ## Large Language Models and the Evolution of Knowledge Work
 
-<img style="float: right;" src="./images/19th_century_textile_loom.jpg">
+People are unsettled by rapid advances in technology.
 
-> "Rapid and pivotal advances in technology have a way of unsettling people, because they can reverberate mercilessly, sometimes, through business, employment, and cultural spheres. And so it is with the current shock and awe over large language models, such as GPT-4 from OpenAI."
+We've seen this historically with the introduction:
 
-> "It’s a textbook example of the mixture of amazement and, especially, anxiety that often accompanies a tech triumph."
-
-> “It gives an answer with complete confidence, and I sort of believe it. And half the time, it’s completely wrong.”
-
-> “A very famous senior person said, ‘Radiologists will be out of business before long.’ And people stopped enrolling in radiology specialties, and now there’s a shortage of them.”
-
-> So what about these predictions that entire classes of employment will go away, paralegals, and so on? Is that a legitimate concern?
-
-> Brooks: You certainly hear these things. I was reviewing a government report a few weeks ago, and it said, “Lawyers are going to disappear in 10 years.” So I tracked it down and it was one barrister in England, who knew nothing about AI. He said, “Surely, if it’s this good, it’s going to get so much better that we’ll be out of jobs in 10 years.” There’s a lot of disaster hype. Someone suggests something and it gets amplified.
-
-> We saw that with radiologists. A very famous senior person said, “Radiologists will be out of business before long.” And people stopped enrolling in radiology specialties and now there’s a shortage of them. Same with truck driving…. There are so many ads from all these companies recruiting truck drivers because there’s not enough truck drivers, because three or four years ago, people were saying, “Truck driving is going to go away.”
-
-https://spectrum.ieee.org/amp/gpt-4-calm-down-2660261157
-
-I do more with MidJourney in terms of graphic design output than I did previously and no jobs were lost. The work product improves and the rate at which I can produce new artwork for articles increases and that's generally how technology advances have driven change in the workforce.
-
-Other examples:
-
-* textile looms
-* arrows supplanted by guns
-* steam engine
-* banks introduced to computers (need reference, but were now open 5 days / wk)
+* the 1800s textile loom (and the Luddites)
+* the steam engine
+* the introduction of computers to banking
 
 
-LLMs and Artificial Intelligence --- [What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
+For reference, [the Luddites](https://en.wikipedia.org/wiki/Luddite):
 
+> The Luddites were members of a 19th-century movement of English textile workers which opposed the use of certain types of cost-saving machinery, often by destroying the machines in clandestine raids. They protested against manufacturers who used machines in "a fraudulent and deceitful manner" to replace the skilled labour of workers and drive down wages by producing inferior goods. Members of the group referred to themselves as Luddites, self-described followers of "Ned Ludd", a legendary weaver whose name was used as a pseudonym in threatening letters to mill owners and government officials.
 
-Reference the luddites
+Technology shifts have a way to reverberating uncomfortably through business, employment, and culture. I saw it first-hand when I had multiple physicians I know call me and start asking questions about "this new GPT thing" (and you know something has touched a nerve when the employment class that is used to playing god is concerned).
 
-https://en.wikipedia.org/wiki/Luddite
+However, I reminded these physicians that certain luminaries have forecasted (in the past decade) that ‘Radiologists will be out of business before long.’ (because of deep learning).
 
-> The Luddites were members of a 19th-century movement of English textile workers which opposed the use of certain types of cost-saving machinery, often by destroying the machines in clandestine raids. They protested against manufacturers who used machines in "a fraudulent and deceitful manner" to replace the skilled labour of workers and drive down wages by producing inferior goods.[1][2] Members of the group referred to themselves as Luddites, self-described followers of "Ned Ludd", a legendary weaver whose name was used as a pseudonym in threatening letters to mill owners and government officials.[3]
+Truckers, lawyers, and textile workers have all gotten similar treatment with past technology cycles. Yet we have more truck loads, lawsuits, and clothes being produced than ever.
 
+Workers aren't going away with new technology, but work does change and sometimes whole industries even evolve.
 
+For example: I do more with MidJourney in terms of graphic design output than I did previously and no jobs were lost (previously, I just would have less graphics work done). The work product improves and the rate at which I can produce new artwork for articles increases and that's generally how technology advances have driven change in the workforce.
 
-LLMs aren't taking jobs, they are accelerating workforce, a natural evolution of tooling
+Another examples is the effect computers had on banks; Banks have existed for centuries, and their operations have evolved over time. In the past, before the arrival of the computer age, banks relied primarily on manual processes for record-keeping and transactions. This included using ledgers to record deposits, withdrawals, and other financial transactions by hand. Banks also used paper checks and cash for most transactions. These manual processes were time-consuming and prone to errors, but they were the norm for many years. As technology advanced, banks began to adopt computers and automation to streamline their operations and improve efficiency. Before computers arrived, many banks were only open 4 days a week because they needed downtime to do record-keeping reconciliation work, etc. With the introduction of computers, some pundits forecasted that bank workers could take the 5th workday off because computers would handle the reconciliation.
 
-soon, they will be table stakes in many / most industries
+However, that's not what happened. Banks quickly realized, under competitive pressure, that they now had the option to be open 5 days per week, and they took advantage of that opportunity. 
 
+The [Red Queen never lets up](https://en.wikipedia.org/wiki/Red_Queen_hypothesis), it seems.
 
 # Summary
 
-https://cube.dev/blog/conversational-interface-for-semantic-layer
+In this article I introduced the idea of large language model, their abilities, and ways to measure these abilities. I also hypothesized that enterprise applications would leverage the reasoning ability of LLMs and use existing databases and data warehouses for knowledge retrieval, allowing us to use smaller and more efficient language models.
 
-https://github.com/approximatelabs/sketch
+In part 2 of this series, we'll look at some design patterns for building enterprise large language model applications.
 
+If you have further questions about large language models, or want to talk directly about how Patterson Consulting can help your enterprise build large language model applications, email me at josh@pattersonsultingtn.com.
 
-## Foundation Models
-
-Large language models are basesd on [foundation models](https://arxiv.org/abs/2205.09911):
-
-> Foundation Models (FMs) are models trained on large corpora of data that, at very large scale, can generalize to new tasks without any task-specific finetuning. As these models continue to grow in size, innovations continue to push the boundaries of what these models can do on language and image tasks.
-
-https://hai.stanford.edu/news/reflections-foundation-models
-
-> The term Foundation Model (FM) was coined by Stanford researchers to introduce a new category of ML models. They defined FMs as models trained on broad data (generally using self-supervision at scale) that can be adapted to a wide range of downstream tasks.
-
-> The Stanford team made a point to note that FMs are NOT foundational models in the sense that they are not the foundation for AI — that is, such models are not implied to be AGI.
-
-
-> We define foundation models as models trained on broad data (generally using self-supervision at scale) that can be adapted to a wide range of downstream tasks. These models, which are based on standard ideas in transfer learning and recent advances in deep learning and computer systems applied at a very large scale, demonstrate surprising emergent capabilities and substantially improve performance on a wide range of downstream tasks. Given this potential, we see foundation models as the subject of a growing paradigm shift, where many AI systems across domains will directly build upon or heavily integrate foundation models.
-
-> Naming The name “foundation model” has also drawn significant attention; given this attention, we want to provide context on how the name came about. We began by surveying existing terms (e.g., “(large) language model”, “self-supervised model”, “pretrained model”). Of these terms, we found several did not identify the correct class or characteristics of models: “(large) language model” was too narrow given our focus was not only language; “self-supervised model” was too specific to the training objective; and “pretrained model” suggested that the noteworthy action all happened after “pretraining”. In general, we found most terms did not convey the care with which we felt these models should be built.
-
-
-
-Chat gpt -- check this: 
-> Foundation models are the initial versions of pre-trained language models that serve as the starting point for the development of large language models. They are typically trained on a diverse range of texts to learn the underlying patterns and structures of language.
-
-> Large language models, on the other hand, are more advanced versions that are built upon the foundation models. They undergo an extensive training process using vast amounts of data to improve their language understanding and generation capabilities. Large language models like GPT-3 are designed to perform a wide array of language-related tasks, such as text completion, translation, summarization, and more.
-
-> In essence, foundation models provide the basic building blocks for language understanding, while large language models are the enhanced and refined versions that have been trained on massive datasets to achieve impressive language processing abilities. They represent the culmination of iterative improvements and advancements in natural language processing research and technology.
-
-examples of foundation models
-
-* [BERT](https://arxiv.org/abs/1810.04805)
-* ChatGPT
-* GPT-3
-* [DALL-E](https://www.journal-dogorangsang.in/no_1_NECG_21/14.pdf)
-* Stable Diffusion
-
-
+Thanks for reading.
 
 # References
 

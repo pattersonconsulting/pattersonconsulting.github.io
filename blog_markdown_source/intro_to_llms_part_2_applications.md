@@ -13,31 +13,95 @@ meta_og_image: pct_autogluon_dep_og_card.jpg
 
 Purpose of this series:
 
-> To understand what LLMs are
+> To understand the role of large language models in enteprise applications and some of the components, tools, and technologies relevant to building these applications.
+
+This article, part 2 of the series, is focused on design patterns for enterprise large language model applications. We build on ideas from part 1 around large language models' reasoning capabilities and how we can best use them in enterprise use cases.
 
 The intended audience for this series is:
 
-> Individual researchers, data scientists, and then also enterprise data teams as well
+> Individual practitioners, enterprise data teams, and enterprise executives
 
 Series:
 
-* [Background and Core Concepts in LLMs](intro_to_llms_part_1_terminology.html)
+* [An Introduction to Large Language Models (LLMs)](intro_to_llms_part_1_terminology.html)
 * [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
 * [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
-# Profiling Use Cases for LLMs
+The final post is where I give context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.
 
-We are most focused on applications where we can leverage LLM-assisted reasoning to complete tasks
+# Understanding Use Cases for LLMs
 
-For different industries, these tasks will be different.
+In part 1 of this series I talked about focusing on reasoning as the key ability of large language modeling and how to measure the reasoning capability of a model. For this series we are most focused on applications where we can leverage LLM-assisted reasoning to complete tasks. I call this style of application an "Augmented Reasoning" system.
 
-We dont want to focus on use cases that involve specific knowledge retrieval is the core task --- because systems such as databases and search engines are already well-suited for those class of tasks.
+We don't want to focus on use cases that involve specific knowledge retrieval is the core task --- because systems such as databases and search engines are already well-suited for those class of tasks. "Augmented Reasoning" should be where you spend your mental cycles with respect to enterprise use cases for near term large language model applications.
 
-"Assisted Reasoning" should be where you spend your mental cycles with respect to enterprose use cases.
+Let's get into a mental model on how to profile use cases appropriate for large language models in the enterprise.
 
+## Profiling Use Cases
 
+In any organization we want to identify use cases that:
 
+* are labor-intensive tasks 
+* require significant amounts of manual effort, analysis, and communication. 
+
+These are attractive tasks candidates for large language model applications because we can operate more efficiently as a business unit if these tasks are done more quickly or with less resources. Improving these tasks doesn't mean we're trying to reduce headcount, it means we're trying to do more with the same amount of resources (e.g., "banks being open more days with computers").
+
+The insurance industry is a great example of an industry that has many labor intensive tasks, with a few examples being:
+
+* Claims processing
+* Underwriting
+* Customer service
+* Compliance
+
+If we use the mindset that natural language is the universal domain specific language, then we can expand and empower the group of potential employees who can efficiently perform these tasks. This is similar to how systems that use SQL as the base interface in enterprise software tend to have more adoption than platforms that require higher-level programming skills.
+
+This allows us to frame large language model applications ***using natural language as the next generation scripting language***. 
+
+From this perspective, most companies are full of labor-intensive, analysis-intensive, and heavy-communication tasks that are candidates for large language model applications.
+
+### Mapping Types of Reasoning to Use Cases
+
+Thinking about reasoning is not a common mental model for many of us, so check out Google's article on [Types of reasoning in LLMs](https://ai.googleblog.com/2022/05/language-models-perform-reasoning-via.html) to get a refresher on reasoning that large language models are good at.
+
+Certain classes of LLM models are capable of Chain of Thought reasoning. Through chain of thought reasoning, models can break down intricate problems into separate intermediate steps that can be solved individually. Some of these problems that Chain of Thought enables include:
+
+* Arithmetic reasoning
+* Problem solving
+* Commonsense reasoning
+
+LLMs also demonstrate the ability to write code in languages such as SQL and Python (if they've been trained for that task).
+
+However, breaking up a task into multiple smaller tasks is a key way to enable large langauge model applications to better accomplish a complex task. If we do some work on the front end to identify certain types of tasks, we can use a pre-pass on the task to break it down into sub-tasks and then let a large language model chain the output of one task as the input to a later task.
+
+An example of this would be how we might convert natural language to SQL in the first task, and then execute the SQL, sending the results back to the LLM for interpretation and then explanation back in natural language, as described in this [article on task composability](https://huyenchip.com/2023/04/11/llm-engineering.html#part_2_task_composability):
+
+* Task 1: convert natural language input from user to SQL query [LLM]
+* Task 2: execute SQL query in the SQL database [SQL executor]
+* Task 3: convert the SQL result into a natural language response to show user [LLM]
+
+Now that we've mapped out some ideas in reasoning we can use in our use cases, let's look at a few emerging enterprise use cases.
+
+## Examples of Use Cases
+
+The major enterprise use cases being discussed at this point are:
+
+- question-answering: query a corpus of text in natural language
+- chat: same, but interactive
+- extraction / summarization: what are the top N issues in these 10,000 reviews? 
+- (semi-)structured natural language querying: answer from SQL query results
+
+A great example of a question answer system is what Jeremy Lewi came up with for the Kubeflow project. Jeremy designed a large language model application called "Tribal Knowledge" that allowed any user to dynamically ask questions about what was discussed in a Kubeflow project call. While there are folks who take notes during open source project meetings, many times a lot of the discussion or context is lost. This system allows a user to go back and query the discussion nearly like they were on the call.
+
+How he did it: Jeremy designed the system to transcribe the project management calls into text, and then fed those text transcriptions into a vector database. From there, he used a language model framework (LangChain) to take a natural language query, look in the vector database for contextual results, and then send the query text with the context text from the vector database to openAI's API to generate an answer to the natural langauge question.
+
+Another great example is how Microsoft is taking large language models and integrating them through MS Office to allow for acceleration of document creation:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S7xTBa93TX8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### Generalized LLM Sub-Tasks
+
+We can start to see some specific patterns, and outline some generalized use case types you can plug your industries use cases into:
 
 * Task: “Understanding a Corpus”
    * Ask a Question of a corpus
@@ -54,123 +118,47 @@ We dont want to focus on use cases that involve specific knowledge retrieval is 
 * Task: “Query the information in a phone conversation”
    * ask questions about what happened in a meeting
 
-Abilities of a LLM that can be leveraged in an application
+Additonally, we can perform tasks  with LLMs that have the following needs:
 
 * mimicking a human through text
 * basic reasoning
 * breaking down a goal into specific steps or tasks
 * text or code generation
 
+### Examples of Poor Use Cases for LLMs
 
-## Natural Language as a DSL for Anything with an API
+With any technology, without fail, folks take things too far and we see crazy requests. This is just part of the overall hype cycle naturally of any new technology in the orbit of artificial intelligence. Examples of these requests are things like:
 
-* So basically I think it can automate the creation of workflows that need humans in the middle
-* Ala “write me some code to do” but for anything — as long as you write a plug-in/bindings for the task
-* And you can use basically any llm to power the question analysis
-* Doesn’t replace people
-* But just like that office 365 video — a person does a shit load more stuff, faster
-* It’s a next generation scripting language, but in the case you don’t have to learn some domain specific language, you just use “your own natural language “ 
+* automate all financial advice (read: non-trivial legal issues here)
+* migrate my whole legacy data warehouse
+* automate all nurse practitioners 
 
-## Examples of Use Cases
-
-Kubeflow / Tribal Knowledge
-* Benefit: allows us to query what happened in the audio meeting
-
-Office 365 CoPilot
-
-* https://www.youtube.com/watch?v=S7xTBa93TX8&t=2s
-* Office work / Knowledge work
-
-
-## Task Composability
-
-https://huyenchip.com/2023/04/11/llm-engineering.html
-
-One way to do this is to write a program that performs the following sequence of tasks:
-* Task 1: convert natural language input from user to SQL query [LLM]
-* Task 2: execute SQL query in the SQL database [SQL executor]
-* Task 3: convert the SQL result into a natural language response to show user [LLM]
-
-
-## Raw Source Notes
-
-`
-What are common LLM use cases? If I had to roughly categorize the use cases I'm hearing people ask about in the enterprise, in 2023, after the rise of ChatGPT, it's something like:
-
-- 40% question-answering: query a corpus of text in natural language
-- 10% chat: same, but interactive
-- 20% extraction / summarization: what are the top N issues in these 10,000 reviews? 
-- 20% (semi-)structured natural language querying: answer from SQL query results
-- 10% other sci-fi use cases: write my business strategy
-
-Of course, there are a number of use cases too that I'd describe as simply not LLM problems. I've heard forecasting a few times. Even regression! Why?
-
-Some are too sci-fi, like, migrate my whole legacy data warehouse. I think that's interesting. You show people a bit of magic, and it's not at all clear how deep the magic goes. LLMs are a little magic, not the Starship Enterprise. Language models, not actually sentient. But you'd be forgiven for assuming otherwise.
-
-Conspicuously missing from the conversations I've seen are:
-
-- Translation, classification: these are real use cases, just, those that want to do this have already been doing this
-- Content generation: write a response to this customer. I suppose individuals are doing this with ChatGPT?
-- Code generation: already well in hand with Copilot et al
-
-It's not surprising that natural-language querying over, well, natural language is a leading use case. It's a natural fit for LLMs, and is quite easy already. I think these will rapidly get implemented and productized. More targeted extractive queries are a little harder at the margins but seem well within the capability of LLMs.
-
-The interesting frontier for the rest of the year is IMHO SQL generation. Everybody has a database, it's an obvious use case, and it's at least not-infeasible now. It's just hard to do well enough, reliably enough to consider turning loose at scale, I think. It works OK now if you assume this is fundamentally a code assistant for SQL analysts, something to create a first draft that they'll correct. It does not work if you assume the audience are users who would not know the correct answer, let alone SQL, when they saw it.
-
-This is a problem that will probably get solved well enough in the next year, such that there are services and OSS models that are close enough, to make this a next big focus.
-
-That's an interesting topic for another day!
-`
-
-## Issues in Integrating LLMs into Applications
-https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications
+Any time your use case runs into affecting the health or financial condition of people with little to no oversight, its probably a bad idea to try and use large language models for that use case at this point.
 
 
 
-Overall, labor-intensive tasks in an insurance company tend to be those that 
 
-require significant amounts of manual effort, analysis, and communication. 
+## A Design Process for Selecting LLM Use Cases
 
-As such, many companies are investing in automation and other technologies to streamline these processes and reduce the workload on human staff.
+A quick and easy way to think about it is to evaluate each potential use case like this:
 
-The insurance industry is a great example of an industry that has many labor intensive tasks.
+1. will it harm folks if it generates poor reasoning?
+   * if yes, then not a good use case
+2. Can I break the task down into a workflow of tasks?
+   * if yes, do any of the sub-tasks work well as the generalized LLM sub-tasks above overlap?
+3. Does this workflow accelerate a labor intensive workflow in your busienss unit?
 
-Here are a few examples:
+Use the above 3 filter criteria as a "low pass filter" on new LLM use case ideas to help triage things quickly. 
 
-* Claims processing
-* Underwriting
-* Customer service
-* Compliance
+Low-hanging fruit use case that pass the above filters are things such as:
 
+* document generation with database integration
+* significant data entry
+* insurance policy Q/A in customer service
+* email generation that requires knowledge integration and basic reasoning
+* anything that requires a lot of data lookup with basic reasoning applied
 
-## Example: Claims Processing
-
-* todo: link QA demo notebook
-
-This involves 
-verifying the accuracy of submitted claims, 
-reviewing policy coverage and terms, (QA)
-and determining the appropriate payout amount.  (QA)
-Claims processing often requires 
-a significant amount of manual data entry, (Data Entry)
-analysis, 
-and communication with (Document Generation)
-policyholders, 
-medical professionals, 
-and other stakeholders.
-
-
-QA
-Question answer
-Data Entry
-“enter the data from this person’s file into this template”
-Document Generation
-Similar to office 365 demo video
-examples
-“write a letter to the policyholder about their claim that approves/denies the claim”
-“create a CSV file with the medical history of the patient to send to the medical professional”
-
-
+Now that we have outlined some ways to triage use cases, let's look at some frameworks and components we can use to build large language model applications.
 
 # Application Frameworks and Components
 
@@ -294,23 +282,28 @@ In summary, vector databases play a vital role in large language model applicati
 > Pinecone is an external database where developers can store relevant contextual data for LLM apps. Rather than sending large document collections back and forth with every API call, developers can store them in a Pinecone database, then pick only the few most relevant to any given query — an approach called in-context learning. It’s a must-have for enterprise use cases to truly bloom.
 > In particular, Pinecone is a vector database, which means data is stored in the form of semantically meaningful embeddings. While a technical explanation of embeddings is beyond the scope of this post, the important part to understand is that LLMs also operate on vector embeddings — so by storing data in Pinecone in this format, part of the AI work has effectively been pre-processed and offloaded to the database.
 
-## Model Servers
+## LLM Models and Model Integration
 
 * [ todo: source ]
 
+### Issues in Integrating LLMs into Applications
+https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications
 
 
-# Implementing LLMs in Applications
+# Design Patterns for Building Large Language Model Applications
 
+
+The key is to select a model that has "good enough reasoning ability for the intended task at hand" --- e.g., you wouldn't hire a phd meteorologist to get you coffee from starbucks. It would just be a waste of the cost of their education.
+
+https://weightwatcher.ai/leaderboard.html
 
 
 ## General Architecture of LLM Applications
 
+* diagram here
 
-diagram here
 
-
-## Options for Building LLM Applications
+### Options for Building LLM Applications
 
 LangChain
 Open Source Python Library
@@ -322,7 +315,7 @@ Prompt Engineering Workbench
 Tons of emerging libraries, really…
 
 
-## Model Variations in LLMs
+### Model Variations in LLMs
 
 Models
 
@@ -330,7 +323,7 @@ Models
 2. In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing LLM
 3. Use Ray/DGX to Finetune models
 
-## Building a Question / Answer System with LangChain
+### Building a Question / Answer System with LangChain
 
 * discuss, link notebook
 
@@ -394,7 +387,10 @@ Writer
 
 
 
-## Natural Language Dataset Query with LLMs
+## LLMs, Data Modeling, and the Rise of the Semantic Layer
+
+
+***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
 
 
 Natural Language Dataset Query with LLMs
@@ -443,3 +439,14 @@ Providing LLMs access to tools can enable them to answer questions with context 
 ```
 
 GPT-Plugins ---- link page
+
+# Summary
+
+https://cube.dev/blog/conversational-interface-for-semantic-layer
+
+https://github.com/approximatelabs/sketch
+
+
+diagram here
+
+

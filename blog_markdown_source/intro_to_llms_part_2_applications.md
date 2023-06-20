@@ -147,6 +147,7 @@ A quick and easy way to think about it is to evaluate each potential use case li
 2. Can I break the task down into a workflow of tasks?
    * if yes, do any of the sub-tasks work well as the generalized LLM sub-tasks above overlap?
 3. Does this workflow accelerate a labor intensive workflow in your busienss unit?
+   * if yes, then this is likely a relevant use case
 
 Use the above 3 filter criteria as a "low pass filter" on new LLM use case ideas to help triage things quickly. 
 
@@ -162,11 +163,141 @@ Now that we have outlined some ways to triage use cases, let's look at some fram
 
 # Application Frameworks and Components
 
-asdasd
+In this section I'm going to review some of the key frameworks and components you need to be aware of as basic building blocks for large language model applications.
+
+A few we'll cover here:
+
+* LangChain
+* Embeddings
+* Vector Databases
+* Model Integration (Topic)
+
+
 
 ## LangChain
 
-https://blog.langchain.dev/structured-tools/
+what is langchain?
+
+LangChain is a comprehensive framework developed for building language model-powered applications. 
+
+The github repo for Langchain began in October ‘22.
+
+LangChain applications are built around 2 key characteristics:
+
+1. Data Awareness: These applications establish connections between language models and other data sources, allowing for a broader understanding and utilization of diverse information.
+
+2. Agentic Capability: Applications built on LangChain enable language models to actively interact with their environment, enhancing their ability to engage and respond in dynamic contexts.
+
+Further, the LangChain framework offers two primary value propositions:
+
+1. Components: LangChain provides modular abstractions for various components essential for working with language models. It includes a comprehensive collection of implementations for these abstractions. These components are designed to be easily utilized, whether you opt to utilize the entire LangChain framework or not.
+
+2. Use-Case Specific Chains: Chains can be seen as arrangements of these components tailored to address specific use cases effectively. They serve as a higher-level interface that simplifies the process of getting started with a particular use case. These chains are also designed to be customizable, allowing users to adapt and tailor them to their specific requirements.
+
+By offering both flexible components and purpose-built chains, LangChain empowers developers to create sophisticated language model applications that leverage data awareness and agentic capabilities, fostering innovation and customization.
+
+...
+
+The utilization of natural language for interacting with Python function return values presents an intriguing prospect. The advantage lies in avoiding the need for tightly coupled APIs. However, it is important to acknowledge that this approach also comes with certain drawbacks. One such drawback is that the language model (LLM) may initially rely on a trial-and-error process when engaging with the associated tools.
+
+```
+The hierarchy of LangChain Modules are loosely:
+1. Agents utilize components of LLMs and Tools and
+2. Chains utilize PromptTemplates and LLMs where
+3. LLMs provide the text generations given an input
+```
+
+### What is LangChain?
+
+Use Cases
+Personal Assistants (Agents)
+Autonomous Agents
+Agent Simulations
+Question Answering over Docs
+Chatbots
+Querying Tabular Data
+Code Understanding
+Interacting with APIs
+Summarization
+Extraction
+Evaluation
+
+Models supported:
+
+AI21
+Aleph Alpha
+Azure OpenAI
+Banana
+CerebriumAI
+Cohere
+DeepInfra
+ForefrontAI
+GooseAI
+GPT4All
+Hugging Face Hub
+Hugging Face Local Pipelines
+Llama-cpp
+Manifest
+Modal
+NLP Cloud
+OpenAI
+Petals
+PredictionGuard
+PromptLayer OpenAI
+Replicate
+Runhouse
+SageMakerEndpoint
+StochasticAI
+Writer
+
+
+LangChain Modules: 
+
+### Prompts and Prompt Templates
+
+By utilizing the Prompt Template module, you have the ability to establish the structure and arrangement of your prompts. This module serves the purpose of defining input data, context, and output indicators. Incorporating Prompt Templates can significantly contribute to maintaining consistency and enhancing the efficiency of prompt generation.
+
+### LLMs 
+
+The Large Language Model (LLM) module provides a standard interface for state-of-the-art language models for generating high-quality output. LangChain supports a wide range of tasks, including text summarization, mathematical reasoning, and code generation. The module includes pre-trained LLMs that can be fine-tuned to match the needs of specific conversational agents.
+
+### Document Loaders
+
+With the assistance of document loaders, generating documents from diverse sources becomes a seamless process. These documents can subsequently be loaded onto vector stores for convenient sourcing. The document loaders module offers two methods: "load" and "loadAndSplit." The "load" method retrieves the documents from the specified source and returns them as an array of documents. On the other hand, the "loadAndSplit" method loads the documents from the source, utilizes the provided TextSplitter to split them, and then returns them as an array of documents. These methods provide flexibility and efficiency in managing and manipulating document data within the system.
+[ summarize ]
+The Document Loaders module enables the ingestion of documents, such as PDFs or PowerPoints, into the LLM for subsequent analysis. Integrating language models with your custom text data presents an effective means of distinguishing their capabilities. The initial stage involves loading the data into "documents," which essentially refers to individual segments of text. This process establishes a foundation for leveraging the power of language models to extract valuable insights and enhance text processing tasks.
+
+### Chains
+
+The Chain module offers the capability to connect multiple LLMs, enabling the creation of intricate and advanced prompts and applications. This module proves valuable for tasks that involve multiple steps or stages. For instance, a chain can be established to take user input, apply formatting using a PromptTemplate, and subsequently pass the formatted response to an LLM. By combining multiple chains or integrating chains with other components like Utils, more complex chains can be constructed. This empowers the development of sophisticated workflows that leverage the strengths of various components to accomplish diverse objectives.
+
+### Agents 
+
+An Agent module facilitates the expansion of output generation by deploying prompts, enabling scalable operations. It leverages an LLM to determine the appropriate actions to undertake, whether it involves utilizing a tool and observing its output or providing a response back to the user. Tools, on the other hand, are functions designed to fulfill specific responsibilities, such as conducting a Google Search or performing a Database lookup. The Agent module relies on LLMs, which serve as the language models driving its functionality. Together, these components contribute to the efficient operation of the agent, empowering it to deliver enhanced performance and functionality in various contexts.
+
+### Memory
+
+The Memory component empowers agents to retain information from previous interactions with users, as well as remember important entities. This capability enables agents to offer users more personalized and contextually relevant responses over time. By leveraging stored memories, agents can enhance their understanding of user preferences and past conversations, facilitating a more tailored and engaging user experience. The Memory component plays a crucial role in enabling agents to evolve and adapt their responses based on accumulated knowledge, leading to more effective and satisfying interactions.
+
+### Tools
+
+
+### Other Similar Frameworks
+
+While there are other frameworks beside LangChain such as Llama Index (a "data framework"), for the purposes of focus I'm only going to cover LangChain here.
+
+
+### Some Thoughts on LangChain's Rapid Growth
+
+
+* adoption of langchain has been rapid
+* list attributes of langchain
+   * open source 
+   * simple quick install via pip or anaconda
+   * no server dependencies, docker images, or extra infra required
+   * great documentation and easy to replicate examples
+   * lots of out of the box plugins (sql, pandas, more)
+
 
 https://github.com/kyrolabs/awesome-langchain
 
@@ -178,64 +309,34 @@ https://www.pinecone.io/learn/langchain-agents/
 https://blog.langchain.dev/announcing-our-10m-seed-round-led-by-benchmark/
 
 
-https://medium.com/@gk_/chatgpt-and-langchain-an-attempt-at-scheduling-automation-part-3-of-3-db65906ab581
-```
-Langchain is on a productive and crucially important path, but things are still quite raw. This is to be expected. The github repo for Langchain began in October ‘22.
 
-New models will inevitably interact with these chains and their ‘agents’ in new ways such that the chain infrastructure will need to evolve with the models over time.
-
-The use of natural language to interact with Python function return values is intriguing. The benefit of this is not having to tightly couple APIs, the downside is the llm is in a trial-and-error mode with the tools.
-
-It seems clear that agent instructions (the prompts) need to be specialized to the type of automation needed. This is natural, if we hired a human to perform the task of scheduling they would need instructions.
-Overall…
-A fusion of functional code and LLMs is inevitable. Both must work together to create automation pathways.
-
-The use of natural language in managing programmatic functions (‘tools’) seems promising however once the llm has found the correct calling format it should remember it rather than repeating the trial&error each time.
-
-A chat model is fine so long as it considers at least 3-parties in the conversation: a) the customer/user, b) the chatbot, and c) the business representative
-```
-
-* adoption of langchain has been rapid
-* list attributes of langchain
-   * open source 
-   * simple quick install via pip or anaconda
-   * no server dependencies, docker images, or extra infra required
-   * great documentation and easy to replicate examples
-   * lots of out of the box plugins (sql, pandas, more)
 
 ## Embeddings
 
-https://vickiboykis.com/what_are_embeddings/
 
-https://jalammar.github.io/illustrated-word2vec/
+Embeddings<sup>Emb1</sup> are a fundamental concept in machine learning models, including Large Language Models (LLMs). They are numerical representations of data, such as text, images, or audio, that capture the essence or semantic meaning of the data. The process of embedding involves converting the input data into vectors of numbers, allowing the machine learning model to understand and process the data effectively. 
 
-
-Embeddings are a fundamental concept in machine learning models, including Large Language Models (LLMs). They are numerical representations of data, such as text, images, or audio, that capture the essence or semantic meaning of the data. The process of embedding involves converting the input data into vectors of numbers, allowing the machine learning model to understand and process the data effectively.
+For example, in the context of text data embeddings represent the semantic relationships between words, sentences, or documents. Each word or document is assigned a vector in a high-dimensional space, where the position of the vector records information about the meaning of the text based on various traits or criteria (as represented by the dimensions of the vector space). By mapping words or documents into a continuous vector space, embeddings allow for similarity comparisons (through the use of algorithms like nearest neighbors) and the clustering of textual data. For instance, in the video embedded below you cna see a detailed explanation about how text embeddings work.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ISPId9Lhc1g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For example, in the context of text data embeddings represent the semantic relationships between words, sentences, or documents. Each word or document is assigned a vector in a high-dimensional space, where the position of the vector records information about the meaning of the text based on various traits or criteria (as represented by the dimensions of the vector space). By mapping words or documents into a continuous vector space, embeddings allow for similarity comparisons (through the use of algorithms like nearest neighbors) and the clustering of textual data.
 
 There are different types of embeddings depending on the use case and training techniques used. A few popular examples of these include:
 
 1. Text Embeddings: These are embeddings that numerically capture the meaning of data in the form of text. There are three common forms of text embedding: word, sentence/paragraph, and document embeddings. 
-   * Word Embeddings: These embeddings record the semantic meaning of each individual word of a text. This allows for operations on the text using words, such as measuring the similarity of words, finding word analogies, and finding similar words. Some popular algorithms for word embedding include GloVe, fastText, and Word2Vec.
+   * Word Embeddings: These embeddings record the semantic meaning of each individual word of a text. This allows for operations on the text using words, such as measuring the similarity of words, finding word analogies, and finding similar words. Some popular algorithms for word embedding include GloVe, fastText, and [Word2Vec](https://jalammar.github.io/illustrated-word2vec/).
    * Sentence/Paragraph Embeddings: These embeddings describe the meaning of entire sentences or paragraphs of a text. This is done by finding the context and relationships between words to capture the meaning of the sentence or paragraph in its entirety. Some examples of models that create sentence/paragraph embeddings include OpenAI embeddings, Cohere embeddings, and Sentence Transformers.
    * Document Embeddings: Document embeddings are functionally very similar to sentence/paragraph embeddings but capture the meaning of entire documents or texts. These embeddings are particularly useful for tasks that involve clustering, document classification, and information retrieval.
 2. Audio Embeddings: These are embeddings that numerically capture the meaning of data in the form of audio. This allows for operations on audio files such as similarity comparisons and isolation(?). An example of an algorithm for audio embedding is OpenL3.
 3. Image Embeddings: These are embeddings that numerically capture the meaning of data in the form of images. This allows for operations on images such as classification, similarity comparisons, clustering, and identification. Some popular models for image embedding include VGG-16, ResNet50, and Inceptionv3
 
-Embeddings are used in many ML applications, and LangChain is no exception. LangChain has an embedding class built in that functions as an interface for text embedding models like Cohere, HuggingFace, and OpenAI. LangChain only supports text embedding. This basic embedding class has two methods, with one functioning within one document while the other functions across multiple documents. 
+Embeddings are used in many machine learning applications, and LangChain is no exception. LangChain has an embedding class built in that functions as an interface for text embedding models like Cohere, HuggingFace, and OpenAI. LangChain only supports text embedding. This basic embedding class has two methods, with one functioning within one document while the other functions across multiple documents. 
 
 Once an embedding is done and the vector is created, where does this information go? This is where embedding databases, also known as vector databases, are utilized. Vector databases play a crucial role in leveraging embeddings for efficient retrieval. These databases store the embeddings generated for various data points, such as documents, images, or audio segments, in the form of vectors. Rather than traditional database searches based on substrings or exact matches, vector databases allow searching based on the nearest neighbors in the vector space. By calculating the similarity between the embeddings of the query and the stored embeddings, vector databases can retrieve the most relevant data points in a more significant way than a substring or exact match search can.
 
-> It is important to note that repeatedly calling embedding models with LangChain to search over a large number of vectors quickly isn’t very efficient or cost-effective. In such a situation, using a vector database is a much more suitable option. (Unsure if necessary)
-
 ## Vector Databases
 
-### Vihaal Writing on Vector Databases
-
-Vector databases play a crucial role in machine learning (ML) and large language model (LLM) applications. They are designed to efficiently store, index, and retrieve high-dimensional vectors, which are numerical representations of data points. These vectors can represent various entities such as words, documents, images, or user preferences. Vector databases work hand in hand with the embedding models that create such high-dimensional vectors.
+Repeatedly generating all embeddings for a corpus would not be efficient, and that's where vector databases come into play. Vector databases play a crucial role in machine learning (ML) and large language model (LLM) applications. They are designed to efficiently store, index, and retrieve high-dimensional vectors, which are numerical representations of data points. These vectors can represent various entities such as words, documents, images, or user preferences. Vector databases work hand in hand with the embedding models that create such high-dimensional vectors.
 
 The importance of vector databases lies in the many utilities and operations it allows embeddings to perform once the semantic meaning of data is vectorized. Of these, there are three that are particularly significant:
 
@@ -243,44 +344,43 @@ The importance of vector databases lies in the many utilities and operations it 
 2. Nearest Neighbor Search: Vector databases enable efficient nearest neighbor search operations. Given a query vector, ML algorithms often need to find the closest vectors in the dataset. This operation is essential in recommendation systems, clustering, anomaly detection, and other ML tasks. Vector databases can perform nearest-neighbor searches efficiently, allowing ML models to find relevant data points in multi-dimensional spaces.
 3. Embedding Storage: LLMs often rely on pre-trained embeddings, where words or sentences are mapped to high-dimensional vectors. Vector databases provide a convenient and efficient way to store and retrieve these embeddings. By using vector databases, LLMs can quickly access pre-trained embeddings for various language-related tasks, such as text generation, language translation, or sentiment analysis instead of calling embedding models every time there is a query.
 
+### Vector Databases vs Traditional Databases
+
 Vector databases are undoubtedly important when used in conjunction with embedding models, but how exactly do they compare with traditional databases? While they are both databases, vector databases differ greatly from traditional databases when it comes to the format and structure of the database and how querying functions within the database:
    
-1. Data Representation: Traditional databases are typically designed to store structured data in tabular formats, such as rows and columns. They are optimized for transactional operations and data consistency. In contrast, vector databases focus on storing and querying high-dimensional vectors, which are often unstructured or semi-structured data representations. They prioritize efficient similarity searches and nearest-neighbor operations rather than traditional relational operations.
-2. Indexing Techniques: Traditional databases use indexing techniques like B-trees or hash indexes to accelerate query performance based on certain attribute values. These indexing methods are not well-suited for high-dimensional vector searches. Instead, vector databases employ specialized indexing structures like KD trees, ball trees, or locality-sensitive hashing (LSH) to efficiently index and search high-dimensional vectors.
+Traditional databases are typically designed to store structured data in tabular formats, such as rows and columns. They are optimized for transactional operations and data consistency. In contrast, vector databases focus on storing and querying high-dimensional vectors, which are often unstructured or semi-structured data representations. They prioritize efficient similarity searches and nearest-neighbor operations rather than traditional relational operations.
 
-Perhaps comparing vector databases with traditional databases wasn’t appropriate, after all, vector databases contain data formatted as high-dimensional vectors within a larger, interconnected vector space. Instead, a comparison between vector databases and graph databases seems more appropriate:
+Traditional databases use indexing techniques like B-trees or hash indexes to accelerate query performance based on certain attribute values. These indexing methods are not well-suited for high-dimensional vector searches. Instead, vector databases employ specialized indexing structures like KD trees, ball trees, or locality-sensitive hashing (LSH) to efficiently index and search high-dimensional vectors.
 
-1. Data Model: Graph databases are designed to represent and store relationships between entities in the form of nodes and edges. They focus on capturing complex relationships and querying graph-based patterns efficiently. On the other hand, vector databases primarily focus on storing and querying high-dimensional vectors, with a lower emphasis on explicitly modeling and querying relationships between entities.
-2. Query Paradigm: Graph databases offer powerful graph query languages (e.g., Cypher for Neo4j) that allow expressive queries to traverse and explore relationships in the graph. These queries emphasize graph traversal and pattern matching. In contrast, vector databases prioritize similarity search and nearest neighbor operations, which involve measuring vector distances rather than explicitly traversing graphical structures.
-3. Use Cases: Graph databases excel in use cases where the relationships between entities are critical, such as social networks, recommendation systems, fraud detection, or knowledge graphs. Vector databases, on the other hand, are particularly beneficial in ML/LLM applications where high-dimensional vector representations and similarity-based operations are essential, such as content-based recommendation systems, text search, or image retrieval.
+### Vector Databases vs Graph Databases
 
-todo: summarize + segue
+Vector databases contain data formatted as high-dimensional vectors within a larger, interconnected vector space. We can also compare vector databases and graph databases for a different take:
 
-### ChatGPT on Vector Databases
+Graph databases are designed to represent and store relationships between entities in the form of nodes and edges. They focus on capturing complex relationships and querying graph-based patterns efficiently. On the other hand, vector databases primarily focus on storing and querying high-dimensional vectors, with a lower emphasis on explicitly modeling and querying relationships between entities.
 
-Vector databases play a crucial role in large language model applications by enabling efficient and scalable retrieval of relevant information or embeddings for various tasks. Here's an explanation of their role in the context of large language models:
+Graph databases offer powerful graph query languages (e.g., Cypher for Neo4j) that allow expressive queries to traverse and explore relationships in the graph. These queries emphasize graph traversal and pattern matching. In contrast, vector databases prioritize similarity search and nearest neighbor operations, which involve measuring vector distances rather than explicitly traversing graphical structures.
 
-* Efficient Similarity Search: Large language models often operate in high-dimensional vector spaces, where each word, sentence, or document is represented as a numerical vector. Vector databases provide efficient indexing and search capabilities, allowing for similarity-based retrieval of vectors. This is essential for tasks like semantic search, where the goal is to find similar or related content based on vector representations.
+Graph databases excel in use cases where the relationships between entities are critical, such as social networks, recommendation systems, fraud detection, or knowledge graphs. Vector databases, on the other hand, are particularly beneficial in ML/LLM applications where high-dimensional vector representations and similarity-based operations are essential, such as content-based recommendation systems, text search, or image retrieval.
 
-* Document and Text Retrieval: Large language models can be utilized for document or text retrieval tasks, where given a query, the goal is to retrieve the most relevant documents or passages. Vector databases help accelerate this process by efficiently indexing and querying large collections of text embeddings, allowing for fast retrieval of relevant documents or text snippets.
+### Open Source and Commercial Vector Databases
 
-* Nearest Neighbor Search: Vector databases enable nearest neighbor search, which is fundamental in various applications. For example, in text completion or language generation tasks, a large language model may need to find the most semantically similar or contextually appropriate words or phrases to complete a given prompt. Vector databases enable efficient search for nearest neighbors in the embedding space, aiding in generating relevant and coherent responses.
+Open soure vector databases include:
 
-* Clustering and Categorization: Vector databases facilitate clustering and categorization tasks by grouping similar vectors together. These clusters can help in organizing and structuring large amounts of text data, supporting tasks such as topic modeling, content recommendation, or information retrieval.
+* [ChromaDB](https://github.com/chroma-core/chroma)
+* [Milvus](https://milvus.io/)
+* [Vespa](https://github.com/vespa-engine/vespa)
+* [Weaviate](https://weaviate.io/)
+* [Vald](https://github.com/vdaas/vald)
+* [Qdrant](https://github.com/qdrant/qdrant)
 
-* Contextual Embedding Storage: Large language models like GPT-3.5 generate contextual embeddings that capture the meaning and context of words, sentences, or documents. Vector databases allow for the storage and retrieval of these embeddings, enabling efficient access to contextual information for downstream tasks such as question answering, sentiment analysis, or text summarization.
+Most of the above open source vector databases have some sort of managed service that you can upgrade to in order to get support, enterprise features, etc.
 
-* Scalability and Indexing: Vector databases provide efficient indexing and storage mechanisms that can handle large-scale language models and extensive text collections. They optimize memory usage, enable parallel processing, and support distributed computing to handle the high-dimensional vector representations generated by large language models.
+Commercial vector database (services) include:
 
-In summary, vector databases play a vital role in large language model applications by facilitating efficient search, retrieval, clustering, and categorization of vector representations. They enable scalability and accelerate various tasks that rely on vector-based operations, enhancing the overall performance and usability of large language models.
+* [Pinecone](https://www.pinecone.io/)
+* [Vectera](https://vectara.com/)
 
-* ChromaDB
-* Pinecone
-* Vectera
-* [ todo: more ]
-
-> Pinecone is an external database where developers can store relevant contextual data for LLM apps. Rather than sending large document collections back and forth with every API call, developers can store them in a Pinecone database, then pick only the few most relevant to any given query — an approach called in-context learning. It’s a must-have for enterprise use cases to truly bloom.
-> In particular, Pinecone is a vector database, which means data is stored in the form of semantically meaningful embeddings. While a technical explanation of embeddings is beyond the scope of this post, the important part to understand is that LLMs also operate on vector embeddings — so by storing data in Pinecone in this format, part of the AI work has effectively been pre-processed and offloaded to the database.
+Although popular open-source vector search libraries such as NMSLIB or Faiss yield favorable outcomes in nearest neighbor benchmarks, they present challenges when it comes to implementing them in a production environment. These libraries solely provide the necessary functionality, but do not constitute complete vector similarity search systems. Consequently, users would need to construct a distributed system to scale and incorporate these libraries effectively. Additionally, it can be non-trivial to manage the indexes of these distributed systems.
 
 ## LLM Models and Model Integration
 
@@ -340,68 +440,7 @@ Other local model
 https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb
 
 
-### What is LangChain?
 
-what what?
-
-Use Cases
-Personal Assistants (Agents)
-Autonomous Agents
-Agent Simulations
-Question Answering over Docs
-Chatbots
-Querying Tabular Data
-Code Understanding
-Interacting with APIs
-Summarization
-Extraction
-Evaluation
-
-Models supported:
-
-AI21
-Aleph Alpha
-Azure OpenAI
-Banana
-CerebriumAI
-Cohere
-DeepInfra
-ForefrontAI
-GooseAI
-GPT4All
-Hugging Face Hub
-Hugging Face Local Pipelines
-Llama-cpp
-Manifest
-Modal
-NLP Cloud
-OpenAI
-Petals
-PredictionGuard
-PromptLayer OpenAI
-Replicate
-Runhouse
-SageMakerEndpoint
-StochasticAI
-Writer
-
-
-
-## LLMs, Data Modeling, and the Rise of the Semantic Layer
-
-
-***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
-
-
-Natural Language Dataset Query with LLMs
-
-Querying Tabular Stores with NL:
-https://python.langchain.com/en/latest/use_cases/tabular.html
-Using Chains to Query APIs
-https://python.langchain.com/en/latest/use_cases/apis.html
-Using NL to Query SQL Databases
-https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
-https://github.com/hodgesmr/LangChain-Data-Demo
 
 ### Task Composability
 
@@ -440,6 +479,24 @@ Providing LLMs access to tools can enable them to answer questions with context 
 
 GPT-Plugins ---- link page
 
+
+## LLMs, Data Modeling, and the Rise of the Semantic Layer
+
+
+***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
+
+
+Natural Language Dataset Query with LLMs
+
+Querying Tabular Stores with NL:
+https://python.langchain.com/en/latest/use_cases/tabular.html
+Using Chains to Query APIs
+https://python.langchain.com/en/latest/use_cases/apis.html
+Using NL to Query SQL Databases
+https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
+https://github.com/hodgesmr/LangChain-Data-Demo
+
+
 # Summary
 
 https://cube.dev/blog/conversational-interface-for-semantic-layer
@@ -449,4 +506,7 @@ https://github.com/approximatelabs/sketch
 
 diagram here
 
+# Footnotes
+
+[Emb1] For a deeper dive on embeddings, check out [Vicki Boykis' article](https://vickiboykis.com/what_are_embeddings/)
 

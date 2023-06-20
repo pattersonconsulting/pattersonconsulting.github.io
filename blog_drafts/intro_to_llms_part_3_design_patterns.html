@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Josh Patterson" />
+  <meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+  <meta name="description" content="In this post we’ll ….." />
+  <title>Building Enterprise Applications with Large Language Models</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Building Enterprise Applications with Large Language
+Models</h1>
+<p class="subtitle">Part 3 - Design Patterns for Building Large Language
+Model Applications</p>
+<p class="author">Josh Patterson</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a
+href="#design-patterns-for-building-large-language-model-applications"
+id="toc-design-patterns-for-building-large-language-model-applications">Design
+Patterns for Building Large Language Model Applications</a>
+<ul>
+<li><a href="#building-logical-sub-tasks-from-goals"
+id="toc-building-logical-sub-tasks-from-goals">Building Logical
+Sub-Tasks from Goals</a></li>
+<li><a href="#convert-sub-task-list-into-application-architecture"
+id="toc-convert-sub-task-list-into-application-architecture">Convert
+Sub-Task List into Application Architecture</a></li>
+</ul></li>
+<li><a href="#general-architecture-of-llm-applications"
+id="toc-general-architecture-of-llm-applications">General Architecture
+of LLM Applications</a>
+<ul>
+<li><a href="#task-composability" id="toc-task-composability">Task
+Composability</a></li>
+<li><a href="#llm-application-workflow"
+id="toc-llm-application-workflow">LLM Application Workflow</a></li>
+</ul></li>
+<li><a href="#llms-agents-and-tools"
+id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a>
+<ul>
+<li><a href="#llms-data-modeling-and-the-rise-of-the-semantic-layer"
+id="toc-llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
+Data Modeling, and the Rise of the Semantic Layer</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Purpose of this series:</p>
+<blockquote>
+<p>To understand the role of large language models in enteprise
+applications and some of the components, tools, and technologies
+relevant to building these applications.</p>
+</blockquote>
+<p>This article, part 2 of the series, is focused on design patterns for
+enterprise large language model applications. We build on ideas from
+part 1 around large language models’ reasoning capabilities and how we
+can best use them in enterprise use cases.</p>
+<p>The intended audience for this series is:</p>
+<blockquote>
+<p>Individual practitioners, enterprise data teams, and enterprise
+executives</p>
+</blockquote>
+<p>Series:</p>
+<ul>
+<li><a href="intro_to_llms_part_1_terminology.html">An Introduction to
+Large Language Models (LLMs)</a></li>
+<li><a href="intro_to_llms_part_2_use_cases.html">Understanding Use
+Cases for Large Language Models</a></li>
+<li><a href="intro_to_llms_part_3_design_patterns.html">Design Patterns
+for Large Language Model Applications</a></li>
+<li><a href="intro_to_llms_part_4_model_management.html">Putting LLM
+Applications into Production</a></li>
+<li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial
+Intelligence?</a></li>
+</ul>
+<p>The final post is where I give context on the arena of artificial
+intelligence based on the history of the field. This context and history
+gives the reader a better viewpoint on recent developments in large
+language models.</p>
+<h1
+id="design-patterns-for-building-large-language-model-applications">Design
+Patterns for Building Large Language Model Applications</h1>
+<p>This section is based on early prototyping notes our team has
+collected designing LLM application prototypes for customers and
+partners.</p>
+<p>To design a new LLM application, we follow the design steps listed
+below:</p>
+<ol type="1">
+<li>set a measurable goal for the system
+<ul>
+<li>example: “display a hurricane on a map based on a text command”</li>
+<li>example: “answer a question about a type of insurance policy”</li>
+</ul></li>
+<li>Choose a model to prototype around
+<ul>
+<li>most of the time you should use an existing model to prototype
+with</li>
+<li>if you are exploring ideas, just use OpenAI</li>
+<li>only in rare cases will you need to train a custom model</li>
+</ul></li>
+<li>Take goal and break it into sub-tasks
+<ul>
+<li>the sub-tasks should be tasks that can be answered by a small
+program</li>
+<li>not all sub-tasks will need to query a LLM model</li>
+</ul></li>
+<li>Blocks of sub-tasks create logical workflows
+<ul>
+<li>some workflows are building blocks in your application (e.g., the
+LangChain SQL Agent)</li>
+</ul></li>
+<li>Wire into prototype system for testing
+<ul>
+<li>sometimes command-line interfaces are ok</li>
+<li>other times, a quick UI in a framework such as Streamlit is
+helpful</li>
+</ul></li>
+</ol>
+<p>Let’s take some of these ideas and visualize how they work in
+practice.</p>
+<h2 id="building-logical-sub-tasks-from-goals">Building Logical
+Sub-Tasks from Goals</h2>
+<p>Most goals are more complex than a single task so we need to break
+the goal down into a few sub-tasks that are “bite-sized” enough for a
+large language model to process in a single call. Sometimes there are
+pre-processing steps to do on the original prompt so that down-stream
+tasks are more directed.</p>
+<p>An example of of this is anytime you are speaking in terms of a date
+or time, there can be some ambiguitiy in how time is expressed, so a
+pre-processing step might be something like “confirm the specific date
+in a MM/DD/YYYY format”. This is especially helpful in cases where the
+user implies a date such as “today”, etc.</p>
+<p>Visually, if we take our goal and break it into a sub-task workflow,
+it looks like:</p>
+<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_goal_to_sub_tasks.png"></p>
+<p>Once we have a logical flow of sub-tasks, we can begin to fit these
+tasks into a logical architecture that can be implemented by a LLM
+framework.</p>
+<h2 id="convert-sub-task-list-into-application-architecture">Convert
+Sub-Task List into Application Architecture</h2>
+<p>Once we’ve selected a goal and have broken it into sub-tasks, we can
+convert this workflow into a logical LLM Application architecture.</p>
+<p>We can see the above diagrams generalized into an application
+workflow below:</p>
+<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_workflow.png"></p>
+<p>In the diagram above we can see an agent pre-processing the prompt
+(e.g., add a template, add context) and then routing to different
+goal-specific agent. This is helpful when we have a system that has
+multiple potential goals that can be done depending on the text
+input.</p>
+<p>If there are multiple major tasks in the application then the system
+routes the task to an agent that can do specific processing towards the
+goal. Using a specific agent for a specific goal is helpful as it keeps
+the sub-task workflow</p>
+<hr />
+<p>Many times I see engineers talking about “training a new LLM” as soon
+as they have an idea for a new application, but I believe that to be the
+wrong place to start. As I wrote in part 1 of this series, you should be
+focused on the reasoning performance of the LLM you are using. Create
+some test sub-task LLM model inputs and see how well your chosen
+pre-trained LLM model performs. Through experimentation you’ll find a
+model that works well for your sub-task sets. A leaderboard of good
+models:</p>
+<p>https://weightwatcher.ai/leaderboard.html</p>
+<p>The key is to select a model that has “good enough reasoning ability
+for the intended task at hand” — e.g., you wouldn’t hire a phd
+meteorologist to get you coffee from starbucks. It would just be “a
+waste of the cost of their education”.</p>
+<hr />
+<pre><code>The hierarchy of LangChain Modules are loosely:
+1. Agents utilize components of LLMs and Tools and
+2. Chains utilize PromptTemplates and LLMs where
+3. LLMs provide the text generations given an input</code></pre>
+<h1 id="general-architecture-of-llm-applications">General Architecture
+of LLM Applications</h1>
+<ul>
+<li>diagram here</li>
+</ul>
+<h2 id="task-composability">Task Composability</h2>
+<p>Consider the “talk-to-your-data” use case where we want to connect to
+a database and query this database in natural language. Imagine a credit
+card transaction table. You want to ask things like: “How many unique
+merchants are there in Phoenix and what are their names?” and your
+database will return: “There are 9 unique merchants in Phoenix and they
+are …”.</p>
+<p>One way to do this is to write a program that performs the following
+sequence of tasks: Task 1: convert natural language input from user to
+SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL
+executor] Task 3: convert the SQL result into a natural language
+response to show user [LLM]</p>
+<h2 id="llm-application-workflow">LLM Application Workflow</h2>
+<h3 id="prompt-analysis">Prompt Analysis</h3>
+<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_prompt_pipeline.png"></p>
+<h3 id="task-cycle-1">Task Cycle 1</h3>
+<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_task_cycle_0.png"></p>
+<h3 id="task-cycle-2">Task Cycle 2</h3>
+<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_task_cycle_1.png"></p>
+<h3 id="model-variations-in-llms">Model Variations in LLMs</h3>
+<p>Models</p>
+<ol type="1">
+<li>Use a Pre-Trained LLM</li>
+<li>In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing
+LLM</li>
+<li>Use Ray/DGX to Finetune models</li>
+</ol>
+<h3 id="building-a-question-answer-system-with-langchain">Building a
+Question / Answer System with LangChain</h3>
+<ul>
+<li>discuss, link notebook</li>
+</ul>
+<p>Required Tooling LangChain VectorStore Custom Corpus Something to ask
+questions about LLM OpenAI Other local model</p>
+<p>https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb</p>
+<h3
+id="querying-pandas-dataframes-with-natural-language-example-sketch">Querying
+Pandas Dataframes with Natural Language Example: Sketch</h3>
+<p>Sketch is an AI code-writing assistant for pandas users that
+understands the context of your data, greatly improving the relevance of
+suggestions. Sketch is usable in seconds and doesn’t require adding a
+plugin to your IDE.</p>
+<p>Data Catalogging: General tagging (eg. PII identification) Metadata
+generation (names and descriptions) Data Engineering: Data cleaning and
+masking (compliance) Derived feature creation and extraction Data
+Analysis: Data questions Data visualization</p>
+<h1 id="llms-agents-and-tools">LLMs, Agents, and Tools</h1>
+<p>Re-write:</p>
+<pre><code>Why do LLMs need to use Tools?
+One of the most common challenges with LLMs is overcoming the lack of recency and specificity in their training data - answers can be out of date, and they are prone to hallucinations given the huge variety in their knowledge base. Tools are a great method of allowing an LLM to answer within a controlled context that draws on your existing knowledge bases and internal APIs - instead of trying to prompt engineer the LLM all the way to your intended answer, you allow it access to tools that it calls on dynamically for info, parses, and serves to customer.
+Providing LLMs access to tools can enable them to answer questions with context directly from search engines, APIs or your own databases. Instead of answering directly, an LLM with access to tools can perform intermediate steps to gather relevant information. </code></pre>
+<p>GPT-Plugins —- link page</p>
+<h3 id="issues-in-integrating-llms-into-applications">Issues in
+Integrating LLMs into Applications</h3>
+<p>https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications</p>
+<h3 id="limitations-of-llms">limitations of LLMs</h3>
+<ol type="1">
+<li>Ambiguous inputs + outputs</li>
+<li>Hallucination vs. factuality</li>
+<li>Privacy: how to ensure LLMs don’t reveal your user PII info?</li>
+<li>Unstable infra: performance + latency</li>
+<li>Inference cost</li>
+<li>Forward &amp; backward compatibility</li>
+</ol>
+<h2 id="llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
+Data Modeling, and the Rise of the Semantic Layer</h2>
+<p><strong><em>Play up Cube’s semantic layer here — key to giving LLMs
+the context they need to understand your data model</em></strong></p>
+<p>Natural Language Dataset Query with LLMs</p>
+<p>Querying Tabular Stores with NL:
+https://python.langchain.com/en/latest/use_cases/tabular.html Using
+Chains to Query APIs
+https://python.langchain.com/en/latest/use_cases/apis.html Using NL to
+Query SQL Databases
+https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
+https://github.com/hodgesmr/LangChain-Data-Demo</p>
+</body>
+</html>

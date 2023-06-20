@@ -172,8 +172,8 @@ pandas, dataframe, whl, pip, anaconda, dependency" />
 <header id="title-block-header">
 <h1 class="title">Building Enterprise Applications with Large Language
 Models</h1>
-<p class="subtitle">Part 2 - A Guide for Building Enterprise Application
-with LLMs</p>
+<p class="subtitle">Part 2 - Understanding Use Cases for Large Language
+Models</p>
 <p class="author">Josh Patterson</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -203,26 +203,6 @@ Databases</a></li>
 id="toc-llm-models-and-model-integration">LLM Models and Model
 Integration</a></li>
 </ul></li>
-<li><a
-href="#design-patterns-for-building-large-language-model-applications"
-id="toc-design-patterns-for-building-large-language-model-applications">Design
-Patterns for Building Large Language Model Applications</a>
-<ul>
-<li><a href="#building-logical-sub-tasks-from-goals"
-id="toc-building-logical-sub-tasks-from-goals">Building Logical
-Sub-Tasks from Goals</a></li>
-<li><a href="#convert-sub-task-list-into-application-architecture"
-id="toc-convert-sub-task-list-into-application-architecture">Convert
-Sub-Task List into Application Architecture</a></li>
-<li><a href="#general-architecture-of-llm-applications"
-id="toc-general-architecture-of-llm-applications">General Architecture
-of LLM Applications</a></li>
-<li><a href="#llms-agents-and-tools"
-id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a></li>
-<li><a href="#llms-data-modeling-and-the-rise-of-the-semantic-layer"
-id="toc-llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
-Data Modeling, and the Rise of the Semantic Layer</a></li>
-</ul></li>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 <li><a href="#footnotes" id="toc-footnotes">Footnotes</a></li>
 </ul>
@@ -247,9 +227,11 @@ executives</p>
 <ul>
 <li><a href="intro_to_llms_part_1_terminology.html">An Introduction to
 Large Language Models (LLMs)</a></li>
-<li><a href="intro_to_llms_part_2_applications.html">A Guide for
-Building Enterprise Application with LLMs</a></li>
-<li><a href="intro_to_llms_part_3_model_management.html">Putting LLM
+<li><a href="intro_to_llms_part_2_use_cases.html">Understanding Use
+Cases for Large Language Models</a></li>
+<li><a href="intro_to_llms_part_3_design_patterns.html">Design Patterns
+for Large Language Model Applications</a></li>
+<li><a href="intro_to_llms_part_4_model_management.html">Putting LLM
 Applications into Production</a></li>
 <li><a href="dl_book_appendix_a_ai.html">Appendix A: What is Artificial
 Intelligence?</a></li>
@@ -930,181 +912,6 @@ Integration</h2>
 <li>these notes are based on our internal prototyping for customer’s use
 cases</li>
 </ul>
-<h1
-id="design-patterns-for-building-large-language-model-applications">Design
-Patterns for Building Large Language Model Applications</h1>
-<p>This section is based on early prototyping notes our team has
-collected designing LLM application prototypes for customers and
-partners.</p>
-<p>To design a new LLM application, we follow the design steps listed
-below:</p>
-<ol type="1">
-<li>set a measurable goal for the system
-<ul>
-<li>example: “display a hurricane on a map based on a text command”</li>
-<li>example: “answer a question about a type of insurance policy”</li>
-</ul></li>
-<li>Choose a model to prototype around
-<ul>
-<li>most of the time you should use an existing model to prototype
-with</li>
-<li>if you are exploring ideas, just use OpenAI</li>
-<li>only in rare cases will you need to train a custom model</li>
-</ul></li>
-<li>Take goal and break it into sub-tasks
-<ul>
-<li>the sub-tasks should be tasks that can be answered by a small
-program</li>
-<li>not all sub-tasks will need to query a LLM model</li>
-</ul></li>
-<li>Blocks of sub-tasks create logical workflows
-<ul>
-<li>some workflows are building blocks in your application (e.g., the
-LangChain SQL Agent)</li>
-</ul></li>
-<li>Wire into prototype system for testing
-<ul>
-<li>sometimes command-line interfaces are ok</li>
-<li>other times, a quick UI in a framework such as Streamlit is
-helpful</li>
-</ul></li>
-</ol>
-<p>Let’s take some of these ideas and visualize how they work in
-practice.</p>
-<h2 id="building-logical-sub-tasks-from-goals">Building Logical
-Sub-Tasks from Goals</h2>
-<p>Most goals are more complex than a single task so we need to break
-the goal down into a few sub-tasks that are “bite-sized” enough for a
-large language model to process in a single call. Sometimes there are
-pre-processing steps to do on the original prompt so that down-stream
-tasks are more directed.</p>
-<p>An example of of this is anytime you are speaking in terms of a date
-or time, there can be some ambiguitiy in how time is expressed, so a
-pre-processing step might be something like “confirm the specific date
-in a MM/DD/YYYY format”. This is especially helpful in cases where the
-user implies a date such as “today”, etc.</p>
-<p>Visually, if we take our goal and break it into a sub-task workflow,
-it looks like:</p>
-<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_goal_to_sub_tasks.png"></p>
-<p>Once we have a logical flow of sub-tasks, we can begin to fit these
-tasks into a logical architecture that can be implemented by a LLM
-framework.</p>
-<h2 id="convert-sub-task-list-into-application-architecture">Convert
-Sub-Task List into Application Architecture</h2>
-<p>Once we’ve selected a goal and have broken it into sub-tasks, we can
-convert this workflow into a logical LLM Application architecture.</p>
-<p>We can see the above diagrams generalized into an application
-workflow below:</p>
-<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_workflow.png"></p>
-<p>In the diagram above we can see an agent pre-processing the prompt
-(e.g., add a template, add context) and then routing to different
-goal-specific agent. This is helpful when we have a system that has
-multiple potential goals that can be done depending on the text
-input.</p>
-<p>If there are multiple major tasks in the application then the system
-routes the task to an agent that can do specific processing towards the
-goal. Using a specific agent for a specific goal is helpful as it keeps
-the sub-task workflow</p>
-<hr />
-<p>Many times I see engineers talking about “training a new LLM” as soon
-as they have an idea for a new application, but I believe that to be the
-wrong place to start. As I wrote in part 1 of this series, you should be
-focused on the reasoning performance of the LLM you are using. Create
-some test sub-task LLM model inputs and see how well your chosen
-pre-trained LLM model performs. Through experimentation you’ll find a
-model that works well for your sub-task sets. A leaderboard of good
-models:</p>
-<p>https://weightwatcher.ai/leaderboard.html</p>
-<p>The key is to select a model that has “good enough reasoning ability
-for the intended task at hand” — e.g., you wouldn’t hire a phd
-meteorologist to get you coffee from starbucks. It would just be “a
-waste of the cost of their education”.</p>
-<hr />
-<pre><code>The hierarchy of LangChain Modules are loosely:
-1. Agents utilize components of LLMs and Tools and
-2. Chains utilize PromptTemplates and LLMs where
-3. LLMs provide the text generations given an input</code></pre>
-<h2 id="general-architecture-of-llm-applications">General Architecture
-of LLM Applications</h2>
-<ul>
-<li>diagram here</li>
-</ul>
-<h3 id="task-composability">Task Composability</h3>
-<p>Consider the “talk-to-your-data” use case where we want to connect to
-a database and query this database in natural language. Imagine a credit
-card transaction table. You want to ask things like: “How many unique
-merchants are there in Phoenix and what are their names?” and your
-database will return: “There are 9 unique merchants in Phoenix and they
-are …”.</p>
-<p>One way to do this is to write a program that performs the following
-sequence of tasks: Task 1: convert natural language input from user to
-SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL
-executor] Task 3: convert the SQL result into a natural language
-response to show user [LLM]</p>
-<h3 id="llm-application-workflow">LLM Application Workflow</h3>
-<h3 id="prompt-analysis">Prompt Analysis</h3>
-<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_prompt_pipeline.png"></p>
-<h3 id="task-cycle-1">Task Cycle 1</h3>
-<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_task_cycle_0.png"></p>
-<h3 id="task-cycle-2">Task Cycle 2</h3>
-<p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_task_cycle_1.png"></p>
-<h3 id="model-variations-in-llms">Model Variations in LLMs</h3>
-<p>Models</p>
-<ol type="1">
-<li>Use a Pre-Trained LLM</li>
-<li>In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing
-LLM</li>
-<li>Use Ray/DGX to Finetune models</li>
-</ol>
-<h3 id="building-a-question-answer-system-with-langchain">Building a
-Question / Answer System with LangChain</h3>
-<ul>
-<li>discuss, link notebook</li>
-</ul>
-<p>Required Tooling LangChain VectorStore Custom Corpus Something to ask
-questions about LLM OpenAI Other local model</p>
-<p>https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb</p>
-<h3
-id="querying-pandas-dataframes-with-natural-language-example-sketch">Querying
-Pandas Dataframes with Natural Language Example: Sketch</h3>
-<p>Sketch is an AI code-writing assistant for pandas users that
-understands the context of your data, greatly improving the relevance of
-suggestions. Sketch is usable in seconds and doesn’t require adding a
-plugin to your IDE.</p>
-<p>Data Catalogging: General tagging (eg. PII identification) Metadata
-generation (names and descriptions) Data Engineering: Data cleaning and
-masking (compliance) Derived feature creation and extraction Data
-Analysis: Data questions Data visualization</p>
-<h2 id="llms-agents-and-tools">LLMs, Agents, and Tools</h2>
-<p>Re-write:</p>
-<pre><code>Why do LLMs need to use Tools?
-One of the most common challenges with LLMs is overcoming the lack of recency and specificity in their training data - answers can be out of date, and they are prone to hallucinations given the huge variety in their knowledge base. Tools are a great method of allowing an LLM to answer within a controlled context that draws on your existing knowledge bases and internal APIs - instead of trying to prompt engineer the LLM all the way to your intended answer, you allow it access to tools that it calls on dynamically for info, parses, and serves to customer.
-Providing LLMs access to tools can enable them to answer questions with context directly from search engines, APIs or your own databases. Instead of answering directly, an LLM with access to tools can perform intermediate steps to gather relevant information. </code></pre>
-<p>GPT-Plugins —- link page</p>
-<h3 id="issues-in-integrating-llms-into-applications">Issues in
-Integrating LLMs into Applications</h3>
-<p>https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications</p>
-<h3 id="limitations-of-llms">limitations of LLMs</h3>
-<ol type="1">
-<li>Ambiguous inputs + outputs</li>
-<li>Hallucination vs. factuality</li>
-<li>Privacy: how to ensure LLMs don’t reveal your user PII info?</li>
-<li>Unstable infra: performance + latency</li>
-<li>Inference cost</li>
-<li>Forward &amp; backward compatibility</li>
-</ol>
-<h2 id="llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
-Data Modeling, and the Rise of the Semantic Layer</h2>
-<p><strong><em>Play up Cube’s semantic layer here — key to giving LLMs
-the context they need to understand your data model</em></strong></p>
-<p>Natural Language Dataset Query with LLMs</p>
-<p>Querying Tabular Stores with NL:
-https://python.langchain.com/en/latest/use_cases/tabular.html Using
-Chains to Query APIs
-https://python.langchain.com/en/latest/use_cases/apis.html Using NL to
-Query SQL Databases
-https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
-https://github.com/hodgesmr/LangChain-Data-Demo</p>
 <h1 id="summary">Summary</h1>
 <p>https://cube.dev/blog/conversational-interface-for-semantic-layer</p>
 <p>https://github.com/approximatelabs/sketch</p>

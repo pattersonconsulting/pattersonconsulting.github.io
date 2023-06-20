@@ -24,8 +24,9 @@ The intended audience for this series is:
 Series:
 
 * [An Introduction to Large Language Models (LLMs)](intro_to_llms_part_1_terminology.html)
-* [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
-* [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
+* [Understanding Use Cases for Large Language Models](intro_to_llms_part_2_use_cases.html)
+* [Design Patterns for Large Language Model Applications](intro_to_llms_part_3_design_patterns.html)
+* [Putting LLM Applications into Production](intro_to_llms_part_4_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 The final post is where I give context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.

@@ -3,7 +3,7 @@ layout: post
 published-on: March 27th 2023
 author: Josh Patterson
 title: Building Enterprise Applications with Large Language Models
-subtitle: Part 2 - A Guide for Building Enterprise Application with LLMs
+subtitle: Part 2 - Understanding Use Cases for Large Language Models
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
@@ -24,8 +24,9 @@ The intended audience for this series is:
 Series:
 
 * [An Introduction to Large Language Models (LLMs)](intro_to_llms_part_1_terminology.html)
-* [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
-* [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
+* [Understanding Use Cases for Large Language Models](intro_to_llms_part_2_use_cases.html)
+* [Design Patterns for Large Language Model Applications](intro_to_llms_part_3_design_patterns.html)
+* [Putting LLM Applications into Production](intro_to_llms_part_4_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 The final post is where I give context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.
@@ -140,6 +141,28 @@ Any time your use case runs into affecting the health or financial condition of 
 
 ## A Design Process for Selecting LLM Use Cases
 
+More thoughts:
+
+* set expectations
+* set realistic goals for success
+
+Areas where there are immediate use cases:
+
+1. Creative work: advertising, design, gaming, media, entertainment
+2. A lot of document processing: legal, insurance, HR
+
+Areas that can boost revenue:
+
+a. Customer support: chat, call centers
+b. Search & recommendation
+c. Productivity enhancement: automated note-taking, summarization, information aggregation
+
+Avoid panic decisions
+
+* build a plan that has steps in it
+* "redesign all of the things" plans tend to fail
+
+
 A quick and easy way to think about it is to evaluate each potential use case like this:
 
 1. will it harm folks if it generates poor reasoning?
@@ -172,7 +195,13 @@ A few we'll cover here:
 * Vector Databases
 * Model Integration (Topic)
 
+Age of tech --
 
+* Language modeling (1951)
+* Embeddings (2003)
+* Vector databases:
+   * Facebook’s Faiss (2017)
+   * Google’s ScaNN (2020)
 
 ## LangChain
 
@@ -200,27 +229,42 @@ By offering both flexible components and purpose-built chains, LangChain empower
 
 The utilization of natural language for interacting with Python function return values presents an intriguing prospect. The advantage lies in avoiding the need for tightly coupled APIs. However, it is important to acknowledge that this approach also comes with certain drawbacks. One such drawback is that the language model (LLM) may initially rely on a trial-and-error process when engaging with the associated tools.
 
-```
-The hierarchy of LangChain Modules are loosely:
-1. Agents utilize components of LLMs and Tools and
-2. Chains utilize PromptTemplates and LLMs where
-3. LLMs provide the text generations given an input
-```
 
-### What is LangChain?
+### JB on What is LangChain?
 
-Use Cases
-Personal Assistants (Agents)
-Autonomous Agents
-Agent Simulations
-Question Answering over Docs
-Chatbots
-Querying Tabular Data
-Code Understanding
-Interacting with APIs
-Summarization
-Extraction
-Evaluation
+
+#### Modules
+
+These modules are the core abstractions which we view as the building blocks of any LLM-powered application. For each module LangChain provides standard, extendable interfaces. LangChain also provides external integrations and even end-to-end implementations for off-the-shelf use. The docs for each module contain quickstart examples, how-to guides, reference docs, and conceptual guides.
+
+The modules are (from least to most complex):
+
+* [Models](https://python.langchain.com/en/latest/modules/models.html): Supported model types and integrations.
+* [Prompts](https://python.langchain.com/en/latest/modules/prompts.html): Prompt management, optimization, and serialization.
+* [Memory](https://python.langchain.com/en/latest/modules/memory.html): Memory refers to the state that is persisted between calls of a chain/agent.
+* [Indexes](https://python.langchain.com/en/latest/modules/indexes.html): Language models become much more powerful when combined with application-specific data - this module contains interfaces and integrations for loading, querying and updating external data.
+* [Chains](https://python.langchain.com/en/latest/modules/chains.html): Chains are structured sequences of calls (to an LLM or to a different utility).
+* [Agents](https://python.langchain.com/en/latest/modules/agents.html): An agent is a Chain in which an LLM, given a high-level directive and a set of tools, repeatedly decides an action, executes the action and observes the outcome until the high-level directive is complete.
+* [Callbacks](https://python.langchain.com/en/latest/modules/callbacks/getting_started.html): Callbacks let you log and stream the intermediate steps of any chain, making it easy to observe, debug, and evaluate the internals of an application.
+
+#### Use Cases
+
+Best practices and built-in implementations for common LangChain use cases:
+
+* [Autonomous Agents](https://python.langchain.com/en/latest/use_cases/autonomous_agents.html): Autonomous agents are long-running agents that take many steps in an attempt to accomplish an objective. Examples include AutoGPT and BabyAGI.
+* [Agent Simulations](https://python.langchain.com/en/latest/use_cases/agent_simulations.html): Putting agents in a sandbox and observing how they interact with each other and react to events can be an effective way to evaluate their long-range reasoning and planning abilities.
+* [Personal Assistants](https://python.langchain.com/en/latest/use_cases/personal_assistants.html): One of the primary LangChain use cases. Personal assistants need to take actions, remember interactions, and have knowledge about your data.
+* [Question Answering](https://python.langchain.com/en/latest/use_cases/question_answering.html): Another common LangChain use case. Answering questions over specific documents, only utilizing the information in those documents to construct an answer.
+* [Chatbots](https://python.langchain.com/en/latest/use_cases/chatbots.html): Language models love to chat, making this a very natural use of them.
+* [Querying Tabular Data](https://python.langchain.com/en/latest/use_cases/tabular.html): Recommended reading if you want to use language models to query structured data (CSVs, SQL, dataframes, etc).
+* [Code Understanding](https://python.langchain.com/en/latest/use_cases/code.html): Recommended reading if you want to use language models to analyze code.
+* [Interacting with APIs](https://python.langchain.com/en/latest/use_cases/apis.html): Enabling language models to interact with APIs is extremely powerful. It gives them access to up-to-date information and allows them to take actions.
+* [Extraction](https://python.langchain.com/en/latest/use_cases/extraction.html): Extract structured information from text.
+* [Summarization](https://python.langchain.com/en/latest/use_cases/summarization.html): Compressing longer documents. A type of Data-Augmented Generation.
+* [Evaluation](https://python.langchain.com/en/latest/use_cases/evaluation.html): Generative models are hard to evaluate with traditional metrics. One promising approach is to use language models themselves to do the evaluation.
+
+
+### LangChain Models Supported
 
 Models supported:
 
@@ -382,119 +426,19 @@ Commercial vector database (services) include:
 
 Although popular open-source vector search libraries such as NMSLIB or Faiss yield favorable outcomes in nearest neighbor benchmarks, they present challenges when it comes to implementing them in a production environment. These libraries solely provide the necessary functionality, but do not constitute complete vector similarity search systems. Consequently, users would need to construct a distributed system to scale and incorporate these libraries effectively. Additionally, it can be non-trivial to manage the indexes of these distributed systems.
 
+
+
+
+
+
+
 ## LLM Models and Model Integration
 
 * [ todo: source ]
-
-### Issues in Integrating LLMs into Applications
-https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-and-data-applications
-
-
-# Design Patterns for Building Large Language Model Applications
+* its early days, so design patterns are fluid now
+* these notes are based on our internal prototyping for customer's use cases
 
 
-The key is to select a model that has "good enough reasoning ability for the intended task at hand" --- e.g., you wouldn't hire a phd meteorologist to get you coffee from starbucks. It would just be a waste of the cost of their education.
-
-https://weightwatcher.ai/leaderboard.html
-
-
-## General Architecture of LLM Applications
-
-* diagram here
-
-
-### Options for Building LLM Applications
-
-LangChain
-Open Source Python Library
-Can Use multiple Models (OpenAI, or Local)
-Google Generative AI Studio
-closed source
-Built into GCP
-Prompt Engineering Workbench
-Tons of emerging libraries, really…
-
-
-### Model Variations in LLMs
-
-Models
-
-1. Use a Pre-Trained LLM
-2. In-Context Learning with Pre-Trained LLM - Fine-Tune an Existing LLM
-3. Use Ray/DGX to Finetune models
-
-### Building a Question / Answer System with LangChain
-
-* discuss, link notebook
-
-
-Required Tooling
-LangChain
-VectorStore
-Custom Corpus
-Something to ask questions about
-LLM
-OpenAI
-Other local model
-
-https://colab.research.google.com/drive/1Rl3eh_rrN7sco4bkzApVqOzu1CtjoWPb
-
-
-
-
-### Task Composability
-
-Consider the “talk-to-your-data” use case where we want to connect to a database and query this database in natural language. Imagine a credit card transaction table. You want to ask things like: 
-"How many unique merchants are there in Phoenix and what are their names?" 
-and your database will return: 
-"There are 9 unique merchants in Phoenix and they are …".
-
-One way to do this is to write a program that performs the following sequence of tasks:
-Task 1: convert natural language input from user to SQL query [LLM]
-Task 2: execute SQL query in the SQL database [SQL executor]
-Task 3: convert the SQL result into a natural language response to show user [LLM]
-
-### Querying Pandas Dataframes with Natural Language Example: Sketch
-
-Sketch is an AI code-writing assistant for pandas users that understands the context of your data, greatly improving the relevance of suggestions. Sketch is usable in seconds and doesn't require adding a plugin to your IDE.
-
-Data Catalogging:
-General tagging (eg. PII identification)
-Metadata generation (names and descriptions)
-Data Engineering:
-Data cleaning and masking (compliance)
-Derived feature creation and extraction
-Data Analysis:
-Data questions
-Data visualization
-
-## LLMs, Agents, and Tools
-
-Re-write:
-```
-Why do LLMs need to use Tools?
-One of the most common challenges with LLMs is overcoming the lack of recency and specificity in their training data - answers can be out of date, and they are prone to hallucinations given the huge variety in their knowledge base. Tools are a great method of allowing an LLM to answer within a controlled context that draws on your existing knowledge bases and internal APIs - instead of trying to prompt engineer the LLM all the way to your intended answer, you allow it access to tools that it calls on dynamically for info, parses, and serves to customer.
-Providing LLMs access to tools can enable them to answer questions with context directly from search engines, APIs or your own databases. Instead of answering directly, an LLM with access to tools can perform intermediate steps to gather relevant information. 
-```
-
-GPT-Plugins ---- link page
-
-
-## LLMs, Data Modeling, and the Rise of the Semantic Layer
-
-
-***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
-
-
-Natural Language Dataset Query with LLMs
-
-Querying Tabular Stores with NL:
-https://python.langchain.com/en/latest/use_cases/tabular.html
-Using Chains to Query APIs
-https://python.langchain.com/en/latest/use_cases/apis.html
-Using NL to Query SQL Databases
-https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
-https://github.com/hodgesmr/LangChain-Data-Demo
 
 
 # Summary

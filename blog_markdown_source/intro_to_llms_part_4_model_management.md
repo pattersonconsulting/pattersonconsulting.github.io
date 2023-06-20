@@ -21,9 +21,10 @@ The intended audience for this series is:
 
 Series:
 
-* [Background and Core Concepts in LLMs](intro_to_llms_part_1_terminology.html)
-* [A Guide for Building Enterprise Application with LLMs](intro_to_llms_part_2_applications.html)
-* [Putting LLM Applications into Production](intro_to_llms_part_3_model_management.html)
+* [An Introduction to Large Language Models (LLMs)](intro_to_llms_part_1_terminology.html)
+* [Understanding Use Cases for Large Language Models](intro_to_llms_part_2_use_cases.html)
+* [Design Patterns for Large Language Model Applications](intro_to_llms_part_3_design_patterns.html)
+* [Putting LLM Applications into Production](intro_to_llms_part_4_model_management.html)
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 # Which Model Should I Use for My LLM Application?
@@ -120,6 +121,10 @@ there are light weight models that are approaching the quality of chat GPT.
 It's a space to watch.  
 There is reason to believe this will all be very accessible on consumer grade hardware soon
 
+
+https://huyenchip.com/2023/06/07/generative-ai-strategy.html
+
+7B param model can run on a Macbook
 
 ### GPU Memory as Upper Ceiling
 

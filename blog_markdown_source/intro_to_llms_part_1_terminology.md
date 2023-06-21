@@ -7,6 +7,7 @@ subtitle: Part 1 - An Introduction to Large Language Models (LLMs)
 description: In this post we'll .....
 keywords: snowflake, snowpark, automl, AutoGluon, pandas, dataframe, whl, pip, anaconda, dependency
 meta_og_image: pct_autogluon_dep_og_card.jpg
+page-background: "../blog_drafts/images/llm_intro_series_cover_part_1.png"
 ---
 
 # Introduction

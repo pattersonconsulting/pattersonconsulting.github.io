@@ -99,13 +99,7 @@ The hierarchy of LangChain Modules are loosely:
 3. LLMs provide the text generations given an input
 ```
 
-
-# General Architecture of LLM Applications
-
-* diagram here
-
-
-## Task Composability
+### Task Composability
 
 Consider the “talk-to-your-data” use case where we want to connect to a database and query this database in natural language. Imagine a credit card transaction table. You want to ask things like: 
 "How many unique merchants are there in Phoenix and what are their names?" 
@@ -116,6 +110,12 @@ One way to do this is to write a program that performs the following sequence of
 Task 1: convert natural language input from user to SQL query [LLM]
 Task 2: execute SQL query in the SQL database [SQL executor]
 Task 3: convert the SQL result into a natural language response to show user [LLM]
+
+
+# General Architecture of LLM Applications
+
+* diagram here
+
 
 ## LLM Application Workflow
 
@@ -220,3 +220,9 @@ https://python.langchain.com/en/latest/use_cases/apis.html
 Using NL to Query SQL Databases
 https://python.langchain.com/en/latest/modules/chains/examples/sqlite.html
 https://github.com/hodgesmr/LangChain-Data-Demo
+
+
+
+# Summary
+
+something something something

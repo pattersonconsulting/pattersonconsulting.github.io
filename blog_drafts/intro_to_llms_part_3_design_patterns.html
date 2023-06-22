@@ -179,31 +179,39 @@ Model Applications</p>
 <nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a
-href="#design-patterns-for-building-large-language-model-applications"
-id="toc-design-patterns-for-building-large-language-model-applications">Design
-Patterns for Building Large Language Model Applications</a>
+<li><a href="#designing-an-augmented-reasoning-application"
+id="toc-designing-an-augmented-reasoning-application">Designing an
+Augmented Reasoning Application</a>
 <ul>
+<li><a href="#converting-goals-into-reasoning-workflows"
+id="toc-converting-goals-into-reasoning-workflows">Converting Goals Into
+Reasoning Workflows</a></li>
 <li><a href="#building-logical-sub-tasks-from-goals"
 id="toc-building-logical-sub-tasks-from-goals">Building Logical
 Sub-Tasks from Goals</a></li>
-<li><a href="#convert-sub-task-list-into-application-architecture"
-id="toc-convert-sub-task-list-into-application-architecture">Convert
-Sub-Task List into Application Architecture</a></li>
+<li><a href="#convert-sub-task-list-into-a-reasoning-workflow"
+id="toc-convert-sub-task-list-into-a-reasoning-workflow">Convert
+Sub-Task List into a Reasoning Workflow</a></li>
 </ul></li>
 <li><a href="#general-architecture-of-llm-applications"
 id="toc-general-architecture-of-llm-applications">General Architecture
 of LLM Applications</a>
 <ul>
-<li><a href="#llm-application-workflow"
-id="toc-llm-application-workflow">LLM Application Workflow</a></li>
+<li><a href="#prompt-routing" id="toc-prompt-routing">Prompt
+Routing</a></li>
+<li><a href="#agent-based-reasoning"
+id="toc-agent-based-reasoning">Agent-Based Reasoning</a></li>
+<li><a href="#knowledge-repository"
+id="toc-knowledge-repository">Knowledge Repository</a></li>
 </ul></li>
-<li><a href="#llms-agents-and-tools"
-id="toc-llms-agents-and-tools">LLMs, Agents, and Tools</a>
+<li><a href="#llm-application-workflow"
+id="toc-llm-application-workflow">LLM Application Workflow</a>
 <ul>
-<li><a href="#llms-data-modeling-and-the-rise-of-the-semantic-layer"
-id="toc-llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
-Data Modeling, and the Rise of the Semantic Layer</a></li>
+<li><a href="#prompt-analysis" id="toc-prompt-analysis">Prompt
+Analysis</a></li>
+<li><a href="#agents-and-knowledge-repository-integration"
+id="toc-agents-and-knowledge-repository-integration">Agents and
+Knowledge Repository Integration</a></li>
 </ul></li>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 </ul>
@@ -241,9 +249,27 @@ Intelligence?</a></li>
 intelligence based on the history of the field. This context and history
 gives the reader a better viewpoint on recent developments in large
 language models.</p>
-<h1
-id="design-patterns-for-building-large-language-model-applications">Design
-Patterns for Building Large Language Model Applications</h1>
+<h1 id="designing-an-augmented-reasoning-application">Designing an
+Augmented Reasoning Application</h1>
+<p>In 2018 I wrote an <a href="dl_book_appendix_a_ai.html">appendix in
+our O’Reilly Deep Learning book</a> that threw some (much-needed) cold
+water on the “deep learning as AI” hype cycle. I did however point out
+that one form of “artificial intelligence” was</p>
+<blockquote>
+<p>AI as the reasoner</p>
+</blockquote>
+<p>and that “Early AI pioneers were drawn to more refined and
+high-minded tasks—playing chess, solving logical proofs, and planning
+complex tasks” yet in 2018 that reasoning agents “Still struggle with
+tasks simple for children”.</p>
+<p>Obviously a few things have changed, and in part 1 of this series I
+call out “reasoning” as the key ability to focus on as unique for large
+language models. With that being said, reasoning workflows are the key
+design pattern that I see as valuable (so far) with large language model
+applications. Let’s take a look at a way to convert a use case goal into
+a workflow we could build with a framework such as LangChain.</p>
+<h2 id="converting-goals-into-reasoning-workflows">Converting Goals Into
+Reasoning Workflows</h2>
 <p>This section is based on early prototyping notes our team has
 collected designing LLM application prototypes for customers and
 partners.</p>
@@ -300,8 +326,8 @@ it looks like:</p>
 <p>Once we have a logical flow of sub-tasks, we can begin to fit these
 tasks into a logical architecture that can be implemented by a LLM
 framework.</p>
-<h2 id="convert-sub-task-list-into-application-architecture">Convert
-Sub-Task List into Application Architecture</h2>
+<h2 id="convert-sub-task-list-into-a-reasoning-workflow">Convert
+Sub-Task List into a Reasoning Workflow</h2>
 <p>Once we’ve selected a goal and have broken it into sub-tasks, we can
 convert this workflow into a logical LLM Application architecture.</p>
 <p>We can see the above diagrams generalized into an application
@@ -335,25 +361,58 @@ waste of the cost of their education”.</p>
 1. Agents utilize components of LLMs and Tools and
 2. Chains utilize PromptTemplates and LLMs where
 3. LLMs provide the text generations given an input</code></pre>
-<h3 id="task-composability">Task Composability</h3>
-<p>Consider the “talk-to-your-data” use case where we want to connect to
-a database and query this database in natural language. Imagine a credit
-card transaction table. You want to ask things like: “How many unique
-merchants are there in Phoenix and what are their names?” and your
-database will return: “There are 9 unique merchants in Phoenix and they
-are …”.</p>
-<p>One way to do this is to write a program that performs the following
-sequence of tasks: Task 1: convert natural language input from user to
-SQL query [LLM] Task 2: execute SQL query in the SQL database [SQL
-executor] Task 3: convert the SQL result into a natural language
-response to show user [LLM]</p>
+<!--
+### Task Composability
+
+Consider the “talk-to-your-data” use case where we want to connect to a database and query this database in natural language. Imagine a credit card transaction table. You want to ask things like: 
+"How many unique merchants are there in Phoenix and what are their names?" 
+and your database will return: 
+"There are 9 unique merchants in Phoenix and they are …".
+
+One way to do this is to write a program that performs the following sequence of tasks:
+Task 1: convert natural language input from user to SQL query [LLM]
+Task 2: execute SQL query in the SQL database [SQL executor]
+Task 3: convert the SQL result into a natural language response to show user [LLM]
+-->
 <h1 id="general-architecture-of-llm-applications">General Architecture
 of LLM Applications</h1>
+<p>General Components of a LLM Augmented Reasoning Application</p>
 <ul>
-<li>diagram here</li>
+<li>Prompt Router: sends the prompt to the right agent or group of
+agents to best process the prompt</li>
+<li>Agent: the process that analyzes the prompt, gathers the needed
+context, and eventually produces an answer or result from the prompt
+<ul>
+<li>Question Answer Agent: an agent designed to reason over a corpus of
+documents to answer a prompt question</li>
+<li>SQL Agent: an agent designed to take a natural language query and
+determine how to answer the question based on information available in a
+database</li>
+<li>Custom Agent: an agent built to pull in specific types of context
+for specific types of prompts</li>
+<li>Context Loop: the loop where the agent gathers the needed
+information to best process the prompt</li>
+</ul></li>
+<li>Knowledge Repository: any system that stores and retrieves
+information based on a query</li>
 </ul>
-<h2 id="llm-application-workflow">LLM Application Workflow</h2>
-<h3 id="prompt-analysis">Prompt Analysis</h3>
+<p>In my design pattern notes for frameworks like LangChain I like the
+pattern of the agent for specific tasks. The reason for this is that if
+you have too many instructions in a single prompt, the model can get
+confused and produce inconsistent results or “hallucinations”.</p>
+<h2 id="prompt-routing">Prompt Routing</h2>
+<p>https://python.langchain.com/docs/modules/chains/additional/multi_prompt_router</p>
+<p>When we use the</p>
+<h2 id="agent-based-reasoning">Agent-Based Reasoning</h2>
+<p>todo</p>
+<h2 id="knowledge-repository">Knowledge Repository</h2>
+<p>todo</p>
+<h3 id="data-modeling-and-the-rise-of-the-semantic-layer">Data Modeling
+and the Rise of the Semantic Layer</h3>
+<p><strong><em>Play up Cube’s semantic layer here — key to giving LLMs
+the context they need to understand your data model</em></strong></p>
+<h1 id="llm-application-workflow">LLM Application Workflow</h1>
+<h2 id="prompt-analysis">Prompt Analysis</h2>
 <p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_prompt_pipeline.png"></p>
 <h3 id="task-cycle-1">Task Cycle 1</h3>
 <p><img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_task_cycle_0.png"></p>
@@ -386,7 +445,8 @@ plugin to your IDE.</p>
 generation (names and descriptions) Data Engineering: Data cleaning and
 masking (compliance) Derived feature creation and extraction Data
 Analysis: Data questions Data visualization</p>
-<h1 id="llms-agents-and-tools">LLMs, Agents, and Tools</h1>
+<h2 id="agents-and-knowledge-repository-integration">Agents and
+Knowledge Repository Integration</h2>
 <p>Re-write:</p>
 <pre><code>Why do LLMs need to use Tools?
 One of the most common challenges with LLMs is overcoming the lack of recency and specificity in their training data - answers can be out of date, and they are prone to hallucinations given the huge variety in their knowledge base. Tools are a great method of allowing an LLM to answer within a controlled context that draws on your existing knowledge bases and internal APIs - instead of trying to prompt engineer the LLM all the way to your intended answer, you allow it access to tools that it calls on dynamically for info, parses, and serves to customer.
@@ -404,10 +464,6 @@ Integrating LLMs into Applications</h3>
 <li>Inference cost</li>
 <li>Forward &amp; backward compatibility</li>
 </ol>
-<h2 id="llms-data-modeling-and-the-rise-of-the-semantic-layer">LLMs,
-Data Modeling, and the Rise of the Semantic Layer</h2>
-<p><strong><em>Play up Cube’s semantic layer here — key to giving LLMs
-the context they need to understand your data model</em></strong></p>
 <p>Natural Language Dataset Query with LLMs</p>
 <p>Querying Tabular Stores with NL:
 https://python.langchain.com/en/latest/use_cases/tabular.html Using

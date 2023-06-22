@@ -31,8 +31,17 @@ Series:
 
 The final post is where I give context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.
 
+# Designing an Augmented Reasoning Application
 
-# Design Patterns for Building Large Language Model Applications
+In 2018 I wrote an [appendix in our O'Reilly Deep Learning book](dl_book_appendix_a_ai.html) that threw some (much-needed) cold water on the "deep learning as AI" hype cycle. I did however point out that one form of "artificial intelligence" was 
+
+> AI as the reasoner
+
+and that "Early AI pioneers were drawn to more refined and high-minded tasks—playing chess, solving logical proofs, and planning complex tasks" yet in 2018 that reasoning agents "Still struggle with tasks simple for children".
+
+Obviously a few things have changed, and in part 1 of this series I call out "reasoning" as the key ability to focus on as unique for large language models. With that being said, reasoning workflows are the key design pattern that I see as valuable (so far) with large language model applications. Let's take a look at a way to convert a use case goal into a workflow we could build with a framework such as LangChain.
+
+## Converting Goals Into Reasoning Workflows
 
 This section is based on early prototyping notes our team has collected designing LLM application prototypes for customers and partners.
 
@@ -68,7 +77,7 @@ Visually, if we take our goal and break it into a sub-task workflow, it looks li
 
 Once we have a logical flow of sub-tasks, we can begin to fit these tasks into a logical architecture that can be implemented by a LLM framework.
 
-## Convert Sub-Task List into Application Architecture
+## Convert Sub-Task List into a Reasoning Workflow
 
 Once we've selected a goal and have broken it into sub-tasks, we can convert this workflow into a logical LLM Application architecture.
 
@@ -99,6 +108,7 @@ The hierarchy of LangChain Modules are loosely:
 3. LLMs provide the text generations given an input
 ```
 
+<!--
 ### Task Composability
 
 Consider the “talk-to-your-data” use case where we want to connect to a database and query this database in natural language. Imagine a credit card transaction table. You want to ask things like: 
@@ -110,19 +120,48 @@ One way to do this is to write a program that performs the following sequence of
 Task 1: convert natural language input from user to SQL query [LLM]
 Task 2: execute SQL query in the SQL database [SQL executor]
 Task 3: convert the SQL result into a natural language response to show user [LLM]
-
+-->
 
 # General Architecture of LLM Applications
 
-* diagram here
+General Components of a LLM Augmented Reasoning Application
+
+* Prompt Router: sends the prompt to the right agent or group of agents to best process the prompt
+* Agent: the process that analyzes the prompt, gathers the needed context, and eventually produces an answer or result from the prompt
+   * Question Answer Agent: an agent designed to reason over a corpus of documents to answer a prompt question
+   * SQL Agent: an agent designed to take a natural language query and determine how to answer the question based on information available in a database
+   * Custom Agent: an agent built to pull in specific types of context for specific types of prompts
+   * Context Loop: the loop where the agent gathers the needed information to best process the prompt
+* Knowledge Repository: any system that stores and retrieves information based on a query
+
+In my design pattern notes for frameworks like LangChain I like the pattern of the agent for specific tasks. The reason for this is that if you have too many instructions in a single prompt, the model can get confused and produce inconsistent results or "hallucinations".
+
+## Prompt Routing
+
+https://python.langchain.com/docs/modules/chains/additional/multi_prompt_router
+
+When we use the 
+
+## Agent-Based Reasoning
+
+todo
+
+## Knowledge Repository
+
+todo
 
 
-## LLM Application Workflow
+### Data Modeling and the Rise of the Semantic Layer
+
+***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
+
+
+# LLM Application Workflow
 
 
 
 
-### Prompt Analysis
+## Prompt Analysis
 
 <img style="float: right; width: 750px;" src="./images/pct_llm_app_arch_prompt_pipeline.png">
 
@@ -181,7 +220,7 @@ Data Analysis:
 Data questions
 Data visualization
 
-# LLMs, Agents, and Tools
+## Agents and Knowledge Repository Integration
 
 Re-write:
 ```
@@ -204,11 +243,6 @@ https://www.datacamp.com/tutorial/introduction-to-lanchain-for-data-engineering-
 5. Inference cost
 6. Forward & backward compatibility
 
-
-## LLMs, Data Modeling, and the Rise of the Semantic Layer
-
-
-***Play up Cube's semantic layer here --- key to giving LLMs the context they need to understand your data model***
 
 
 Natural Language Dataset Query with LLMs

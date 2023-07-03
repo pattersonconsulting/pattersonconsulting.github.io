@@ -20,7 +20,7 @@ This space is moving fast and its valuable to get a mental framing on how to thi
 
 The intended audience for this series is:
 
-> Individual practitioners, enterprise data teams, and enterprise executives
+> Individual practitioners, platform engineers, and system architects 
 
 Series:
 
@@ -49,8 +49,8 @@ Once trained, large language models can be used for a wide range of applications
 
 and much more. They achieve this by leveraging the knowledge and patterns they have learned during training.
 
-It's important to note that while large language models like GPT-3.5 can generate impressive and coherent text, they don't possess true understanding or consciousness. They are statistical models that rely on patterns and associations in the training data rather than true comprehension.
-LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input and have no mmemory of previous conversations between the context provided in the input text.
+It's important to note that while large language models like GPT-3.5 can generate impressive and coherent text, they don't possess true understanding or consciousness. They are statistical models that rely on patterns and associations in the training data making them good reasoning engines.
+LLMs are good at understanding written language in the form of plain text input. LLMs output plain text based on the plain text input and have no memory of previous conversations between the context provided in the input text.
 
 Recently its been [declared that large language models are having their "stable diffusion"-moment](https://simonwillison.net/2023/Mar/11/llama/), in that an audience beyond the research community could see that they were useful in many tasks beyond their intial focus.
 

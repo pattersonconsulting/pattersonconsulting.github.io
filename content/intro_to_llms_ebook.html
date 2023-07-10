@@ -1,0 +1,401 @@
+
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+        
+
+    <title>Patterson Consulting: Building Enterprise Applications with Large Langugage Models (eBook)</title>
+    <meta name="description" content="Part 1: An Introduction into Large Language Models. ">
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="large language models, embeddings, deep learning, prompt engineering">
+    <meta itemprop="description" content="Part 1: An Introduction into Large Language Models.">
+    <meta itemprop="image"
+        content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/intro_llms_ebook_part1_meta_og.png">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Building Enterprise Applications with Large Langugage Models (eBook)">
+    <meta property="og:description" content="Part 1: An Introduction into Large Language Models">
+    <meta property="og:image"
+        content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/intro_llms_ebook_part1_meta_og.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    </meta>
+    <meta name="twitter:title" content="Building Enterprise Applications with Large Langugage Models (eBook)">
+    </meta>
+    <meta name="twitter:description" content="Part 1: An Introduction into Large Language Models">
+    </meta>
+    <meta name="twitter:image"
+        content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/intro_llms_ebook_part1_meta_og.png">
+    </meta>
+    </meta>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="./css/llms.ebook.bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: rgb(221, 131, 132);
+
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .blue-div {
+            background-color: #CECAC7;
+            ;
+        }
+
+        .indigo-text {
+            color: #228c3a !important;
+        }
+
+        .left-align {
+            text-align: left;
+        }
+
+        .custom-padding {
+            padding-top: 20px;
+        }
+
+        .btn-pct {
+
+            background-color: #F7500C;
+        }
+
+        .text-pct {
+            color: #F7500C;
+        }
+
+.btn-pct {
+    --bs-btn-padding-x: 0.75rem;
+    --bs-btn-padding-y: 0.375rem;
+    --bs-btn-font-family: ;
+    --bs-btn-font-size: 1.5rem;
+    --bs-btn-font-weight: 400;
+    --bs-btn-line-height: 1.5;
+    --bs-btn-color: #F7500C;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-width: 1px;
+    --bs-btn-border-color: transparent;
+    --bs-btn-border-radius: 0.375rem;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),0 1px 1px rgba(0, 0, 0, 0.075);
+    --bs-btn-disabled-opacity: 0.65;
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
+    display: inline-block;
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+    border-radius: var(--bs-btn-border-radius);
+    background-color: #F7500C;
+
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}        
+
+        img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        td {
+            white-space: normal !important;
+            word-wrap: break-word;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/front_cover.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <nav class="nav nav-masthead justify-content-center text-primary float-md-end">
+                    <a class="nav-link fw-bold py-1 px-0 active  text-primary" aria-current="page"
+                        href="https://www.pattersonconsultingtn.com">Patterson Consulting</a>
+                    <a class="nav-link fw-bold py-1 px-0  text-primary"
+                        href="https://www.augmentedreasoning.ai/">augmentedreasoning.ai</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="px-3">
+            <div class="container my-5">
+                <div class="p-5 text-center blue-div rounded-3">
+                    <p><img src="../blog_drafts/images/llm_intro_series_cover_part_1.png" width="500" height="768"></p>
+                    <!--
+                    <h1 class="text-pct">An Introduction to Large Language Models</h1>
+                -->
+
+                    <p class="lead">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="https://www.pattersonconsultingtn.com/content/intro_to_llms_part_1.pdf"
+                                class="btn-pct">Get PDF</a>
+                        </div>
+                    </div>
+
+
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                    </p>
+                    <ul class="nav nav-tabs gap-2 justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="">Overview</a>
+                        </li>
+                    </ul>
+
+
+                    <div class="row custom-padding">
+                        <div class="text-left gap-3">
+                            <p class="left-align">
+                                
+Large language models, such as GPT-3.5, are advanced artificial intelligence systems designed to understand and generate human-like text. These models are trained on vast amounts of data to learn the patterns, structures, and semantics of language. They can then generate coherent and contextually relevant responses to various prompts.
+
+
+                            </p>
+
+                            <p class="left-align">
+                                
+Training a large language model involves utilizing a massive dataset, which often includes a wide range of texts from books, articles, websites, and other written sources. This diverse corpus helps the model learn the nuances of human language and develop a broad understanding of various topics.
+
+
+                            </p>
+
+                            <p><img src="../blog_drafts/images/mj_textile_high_0_star.png" width="300"></p>
+
+                            <p class="left-align"> 
+
+Once trained, large language models can be used for a wide range of applications. They can:
+
+<ul style="text-align: left;">
+<li>generate human-like text</li>
+<li>answer questions</li>
+<li>assist with language translation</li>
+<li>write code</li>
+<li>summarize articles</li>
+<li>create conversational agents</li>
+</ul>
+
+</p>
+
+                            <p class="left-align"> 
+
+                            Large language models have many compelling use cases, but to me the most interesting attribute they offer is the ability to reason.
+
+                            </p>
+                            <p class="left-align">
+                                For years we've watched "software eat the world" and more often than not the "knowledge worker"-class was insulated from the direct effects on society from the point of view of "will this destroy my livelihood"?
+
+                            </p>
+
+                            <p class="left-align">
+                                However, if basic reasoning is commoditized, how do the knowledge workers adapt to this new world?
+
+                            </p>
+
+                            <p><img src="../blog_drafts/images/mj_textile_low_1_star.png" width="300"></p>
+
+                            <p class="left-align"> 
+
+                                In this series I not only cover topics such as "prompt engineering" and "vector databases", but also dive head-first into the looming existential dread for the knowledge worker. I look at several situations over the past 200 years where technology changed society and how it played out.
+                            </p>
+                            <p class="left-align">
+                                I also used Midjourney to generate the art in this article using combinations of themes such as "introspection", "1800's textile workers", and "existential dread in the face of a changing world". I really loved how the images turned out and the visuals helped tell the story in a way that I not of in my own words. The way that I was able to use generative AI here felt like a "meta" case in point where I was able to augment my own ability to reason/imagine/create/communicate.
+
+                            </p>
+
+                            <p class="left-align">
+                                It's an interesting time to work in the field of natural langauge and machine learning as old ideas are being re-evaluated. Application design patterns are being re-thought in a world where natural language is potentially the "domain specific language" for everything and many existing large language models are "good enough" for enterprise tasks without being specialized.
+                                
+
+                            </p>
+
+                            <p><img src="../blog_drafts/images/mj_textile_mid_0_star.png" width="300"></p>
+                            <p class="left-align">
+
+                                This e-book was fun to write because it touches on themes we started addressing back in 2018 in O'Reilly's "Deep Learning: A Practitioner's Approach" book. O'Reilly was also gracious enough to allow us to include "Appendix A: What is Artificial Intelligence?" from the book, and I've included it as an appendix in this e-Book as well. I felt it compelling to include because we touched on the many definitions of AI and that one of the definitions was "AI as the reasoner". With large language models bringing reasoning to the forefront, I felt that writing was useful in this context once again.
+
+                            </p>
+
+                            <p class=" left-align"> 
+                                There is much to reflect on in the world of large language models as our inner-Luddite does mental gymnastics with out imagination for what more we could accomplish with "augmented reasoning" through applied use of LLMs.
+
+
+                            </p>
+
+                            <p><img src="../blog_drafts/images/mj_textile_mid_4_star.png" width="300"></p>
+
+                            <p class=" left-align">
+                                The Patterson Consulting team <a href="https://www.youtube.com/embed/RzqvtNB2cik">continues to explore ways to 
+                                apply LLMs and integrate reasoning into enterprise use cases</a>. We also continue to explore ways to deliver custom private enterprise agents in production with our <a href="http://www.augmentedreasoning.ai">augmentedreasoning.ai</a> SaaS platfrom.
+                            </p>
+
+                            <p class=" left-align">
+
+
+                                I hope the themes in this series give you ideas of your own to explore. Don't hesitate to contact me if you have questions or want to just talk about themes touched on in this e-book.
+                                
+
+
+                            </p>
+<!--
+<iframe width="500" height="280" src="https://www.youtube.com/embed/RzqvtNB2cik" title="YouTube video player" frameborder="0" style="border: solid 1px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+-->
+
+                            <hr>
+                            <a href="https://www.pattersonconsultingtn.com/content/intro_to_llms_part_1.pdf"
+                                class="btn-pct">Get PDF</a>
+
+
+                            <hr>
+
+                            <p class="left-align">
+                            <h2>Audience </h2>
+                            <p class=" left-align">
+                                Anyone who needs to understand large language models, from machine learning engineers, to SWE,
+                                product
+                                or project manager, student, or simply curious. 
+
+                                To get a better idea on how to read the document:
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            
+                                            <th scope="col">If you want to understand</th>
+                                            <th scope="col">Check out sections</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            
+                                            <td>An overview of LLMs</td>
+                                            <td>Part 1, Section 1</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>LLM Abilities and How to Measure Them</td>
+                                            <td>Part 1, Section 2</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>What is Artificial Intelligence</td>
+                                            <td>Appendix A</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+
+                            <p class="left-align">
+                            <h2>Feedback / Contact Us</h2>
+
+                            <p class="left-align">If you'd like to share a comment about our work (typos, other papers, etc) or want to talk about potential use cases, feel free to <a href="http://www.pattersonconsultingtn.com/contact.html">reach out to us</a>.
+                            
+                            </p>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+        <hr>
+    </div></a>
+
+
+    <footer class="mt-auto text-black-50">
+        <div class="">Copyright © <!-- -->2023<!-- --> Patterson Consulting</div>
+    </footer>
+    </div>
+
+</body>
+
+
+
+</html>

@@ -10,6 +10,8 @@ meta_og_image: pct_autogluon_dep_og_card.jpg
 page-background: "../blog_drafts/images/llm_intro_series_cover_part_1.png"
 ---
 
+\pagebreak
+
 # Introduction
 
 Purpose of this series:
@@ -28,6 +30,8 @@ Series:
 * [Appendix A: What is Artificial Intelligence?](dl_book_appendix_a_ai.html)
 
 Appendix A gives context on the arena of artificial intelligence based on the history of the field. This context and history gives the reader a better viewpoint on recent developments in large language models.
+
+\pagebreak
 
 # What are Large Language Models (LLMs)?
 
@@ -151,6 +155,8 @@ However, it’s important to note the immense computational requirements of trai
 ChatGPT is based on the GPT-3.5 architecture, which is part of the GPT (Generative Pre-trained Transformer) series developed by OpenAI. ChatGPT is designed to generate human-like text responses and engage in conversations on a wide range of topics. It has been trained on a diverse corpus of text data to acquire knowledge and language patterns, enabling it to understand and generate coherent and contextually relevant responses. 
 
 [Reinforcement Learning with Human Feedback (RLHF)](https://huggingface.co/blog/rlhf), a method that uses human demonstrations and preference comparisons to guide the model toward desired behavior, optimizes ChatGPT for dialogue. ChatGPT can be used for various purposes, including answering questions, providing explanations, assisting with creative writing, and engaging in interactive dialogues.
+
+\pagebreak
 
 # Understanding LLM Abilities and How to Measure Them
 
@@ -281,6 +287,8 @@ So based on what kind of reasoning problem you were trying to solve, these indiv
 
 So now let’s close out part 1 of this series by looking at the value of large language models and why there is so much interest in the space.
 
+\pagebreak
+
 # Why Are Large Language Models Compelling?
 
 Large language models are compelling because they are what I call a “tectonic-plate shift”class of technology; These technologies, which introduced, shift the landscape of multiple other technologies and industries because they change:
@@ -354,15 +362,19 @@ However, that’s not what happened. Banks quickly realized, under competitive p
 
 The [Red Queen never lets up](https://en.wikipedia.org/wiki/Red_Queen_hypothesis), it seems.
 
+\pagebreak
+
 # Summary
 
 In this article I introduced the idea of large language models, their abilities, and ways to measure these abilities. I also hypothesized that enterprise applications would leverage the reasoning ability of LLMs and use existing databases and data warehouses for knowledge retrieval, allowing us to use smaller and more efficient language models.
 
 In part 2 of this series, we’ll look at some design patterns for building enterprise large language model applications.
 
-If you have further questions about large language models, or want to talk directly about how Patterson Consulting can help your enterprise build large language model applications, email me at josh@pattersonsultingtn.com.
+If you have further questions about large language models, or want to talk directly about how Patterson Consulting can help your enterprise build large language model applications, email me at josh@pattersonconsultingtn.com.
 
 Thanks for reading.
+
+\pagebreak
 
 # References
 

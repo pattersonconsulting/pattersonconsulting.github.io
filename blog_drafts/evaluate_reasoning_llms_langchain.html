@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Using Local LLM Models and LangChain to Evaluate Reasoning
+Ability of LLMs - Testing LLMs with LangChain in a local environment for
+(6) types of reasoning</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="Within (30) minutes of reading this
+post, you should be able to complete model serving requests from two
+variants of a popular python-based large language model (LLM) using
+LangChain on your local computer" />
+	<meta name="keywords" content="llms, large language models, langchain,
+models, prompts, testing, reasoning" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Using Local LLM Models and LangChain
+to Evaluate Reasoning Ability of LLMs - Testing LLMs with LangChain in a
+local environment for (6) types of reasoning"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_eval_reasoning_llms_langchain_og_meta_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/evaluate_reasoning_llms_langchain.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="Within (30) minutes of reading
+this post, you should be able to complete model serving requests from
+two variants of a popular python-based large language model (LLM) using
+LangChain on your local computer"/>
+	
+
+	<meta name="twitter:title" content="Using Local LLM Models and LangChain
+to Evaluate Reasoning Ability of LLMs - Testing LLMs with LangChain in a
+local environment for (6) types of reasoning" />
+	<meta data-rh="true" property="twitter:description" content="Within (30)
+minutes of reading this post, you should be able to complete model
+serving requests from two variants of a popular python-based large
+language model (LLM) using LangChain on your local computer"/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_eval_reasoning_llms_langchain_og_meta_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/evaluate_reasoning_llms_langchain.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Using Local LLM Models and LangChain to Evaluate Reasoning Ability
+of LLMs</h1>
+						<p>
+							<h3>Testing LLMs with LangChain in a local environment for (6) types of
+reasoning</h3>
+						</p>
+						<p>
+							Author: Josh Bottum<br/>
+<p class="date">Date: July 25th, 2023</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a
+href="#testing-llms-with-langchain-in-a-local-environment-for-6-types-of-reasoning"
+id="toc-testing-llms-with-langchain-in-a-local-environment-for-6-types-of-reasoning">Testing
+LLMs with LangChain in a local environment for (6) types of
+reasoning</a>
+<ul>
+<li><a href="#why-run-local" id="toc-why-run-local">Why run
+local</a></li>
+<li><a href="#large-language-models---flan-t5-large-and-flan-t5-xl"
+id="toc-large-language-models---flan-t5-large-and-flan-t5-xl">Large
+Language Models - Flan-T5-Large and Flan-T5-XL</a></li>
+<li><a href="#langchain---what-is-it-why-use-it"
+id="toc-langchain---what-is-it-why-use-it">LangChain - What is it? Why
+use it?</a></li>
+<li><a href="#modules" id="toc-modules">Modules</a></li>
+<li><a href="#use-cases" id="toc-use-cases">Use Cases</a></li>
+</ul></li>
+<li><a href="#installing-dependencies-for-the-models-step1"
+id="toc-installing-dependencies-for-the-models-step1">Installing
+dependencies for the models (#step1)</a>
+<ul>
+<li><a href="#build-your-python-script-t5pat.py"
+id="toc-build-your-python-script-t5pat.py">Build your python script,
+T5pat.py</a></li>
+</ul></li>
+<li><a href="#run-your-script" id="toc-run-your-script">Run your
+script</a>
+<ul>
+<li><a href="#sample-script-output" id="toc-sample-script-output">Sample
+script output</a></li>
+</ul></li>
+<li><a href="#review-of-the-scripts-output-and-performance"
+id="toc-review-of-the-scripts-output-and-performance">Review of the
+script’s output and performance</a>
+<ul>
+<li><a href="#summary-for-the-large-model"
+id="toc-summary-for-the-large-model">Summary for the Large
+model</a></li>
+<li><a href="#xl-model-review" id="toc-xl-model-review">XL Model
+Review</a></li>
+</ul></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
+</ul>
+</nav>
+<h1
+id="testing-llms-with-langchain-in-a-local-environment-for-6-types-of-reasoning">Testing
+LLMs with LangChain in a local environment for (6) types of
+reasoning</h1>
+<p>Within (30) minutes of reading this post, you should be able to
+complete model serving requests from two variants of a popular
+python-based large language model (LLM) using LangChain on your local
+computer without requiring the connection or costs to an external 3rd
+party API server, such as HuggingFaceHub or OpenAI. This exercise
+provides the scripts that will enable you to test these LLMs’
+capabilities in answering three prompt types i.e. knowledge retrieval,
+six forms of reasoning questions and a long question, which provides
+context in its details. After providing some background on the models
+and LangChain, we will walk you through installing dependencies, and we
+will provide the code and the output of each model. We will also provide
+side by side comparisons on model performance and processing times. We
+hope that these examples will help you to develop your LLM testing
+plans, especially for your LLM’s reasoning requirements.</p>
+<p>Caveats and notes - Although you will not need a real-time connection
+to HuggingFace for model serving, you will need a connection to
+Huggingface to fetch code. You will not need a
+HuggingFaceHub_API_Token.</p>
+<h2 id="why-run-local">Why run local</h2>
+<p>Some of the reasons why you may need to run your model locally, and
+not use an external API server, include:</p>
+<ul>
+<li>Security
+<ul>
+<li>You might want to fine tune the model and not post the derivative
+model on an external API server.</li>
+</ul></li>
+<li>Cost
+<ul>
+<li>You might want to avoid paying an external company for API
+calls.</li>
+</ul></li>
+<li>Performance
+<ul>
+<li>You might need to manage your model’s response times by using a
+private network and/or a specific server / processor type.</li>
+</ul></li>
+<li>Functionality
+<ul>
+<li>Your model might only run locally (e.g. Blenderbot, Meta’s chatbot
+models).</li>
+</ul></li>
+</ul>
+<h2 id="large-language-models---flan-t5-large-and-flan-t5-xl">Large
+Language Models - Flan-T5-Large and Flan-T5-XL</h2>
+<p>In this blog, we will show the process to run the Flan-T5-Large and
+Flan-T5-XL models. This family of transformer models, open sourced from
+Google, is designed for natural language processing tasks and provides
+both text-to-text and text generation capabilities, especially for
+question answering.</p>
+<p>The Flan-T5-Large version is based on the T5 (Text-To-Text Transfer
+Transformer) architecture and has 780M parameters. This <a
+href="https://arxiv.org/pdf/2210.11416.pdf">paper</a>, which provides
+the following chart, claims that the Flan-T5-Large achieved a MMLU
+Direct score of 45.1%, which is pretty good when compared to ChatGPT-3’s
+score of 43.9% (see page 10). It is a fairly popular model, which had
+446,125 downloads last month. For more detailed information on this
+model’s background, performance and capabilities, please see this <a
+href="https://huggingface.co/google/flan-t5-large">link</a> on
+HuggingFaceHub. For reference, the Measuring Massive Multitask Language
+Understanding(MMLU) tests cover 57 tasks including elementary
+mathematics, US history, computer science, law, and more. To attain high
+accuracy on this test, models must possess extensive world knowledge and
+problem solving ability. Please find more on MMLU in this <a
+href="https://arxiv.org/pdf/2009.03300.pdf">paper</a>.</p>
+<p>The Flan-T5-xl version is based on the T5 (Text-To-Text Transfer
+Transformer) architecture and has 3B parameters. It is a fairly popular
+model, which had 349,257 downloads last month. It achieved a MMLU score
+of 52%, which is better than T5-Large and ChatGPT-3. For more detailed
+information on this model’s background, performance and capabilities,
+please see this link on HuggingFaceHub, <a
+href="https://huggingface.co/google/flan-t5-xl">https://huggingface.co/google/flan-t5-xl</a>.</p>
+<p><img src="./images/eval_reasoning_july_2023_image1.png"
+title="image_tooltip" /></p>
+<h2 id="langchain---what-is-it-why-use-it">LangChain - What is it? Why
+use it?</h2>
+<p>The text in this section is from <a
+href="https://python.langchain.com/en/latest/index.html">https://python.LangChain.com/en/latest/index.html</a></p>
+<p>LangChain is a framework for developing applications powered by
+language models. We believe that the most powerful and differentiated
+applications will not only call out to a language model, but will also
+be:</p>
+<ol type="1">
+<li><em>Data-aware</em>: connect a language model to other sources of
+data</li>
+<li><em>Agentic</em>: allow a language model to interact with its
+environment</li>
+</ol>
+<p>The LangChain framework is designed around these principles. This is
+the Python specific portion of the documentation. For a purely
+conceptual guide to LangChain, see <a
+href="https://docs.langchain.com/docs/">here</a>. For the JavaScript
+documentation, see <a href="https://js.langchain.com/docs/">here</a>.
+For concepts and terminology, please see <a
+href="https://python.langchain.com/en/latest/getting_started/concepts.html">here</a>.</p>
+<h2 id="modules">Modules</h2>
+<p>These modules are the core abstractions which we view as the building
+blocks of any LLM-powered application. For each module LangChain
+provides standard, extendable interfaces. LangChain also provides
+external integrations and even end-to-end implementations for
+off-the-shelf use. The docs for each module contain quickstart examples,
+how-to guides, reference docs, and conceptual guides.</p>
+<p>The modules are (from least to most complex):</p>
+<ul>
+<li><a
+href="https://python.langchain.com/en/latest/modules/models.html">Models</a>:
+Supported model types and integrations.</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/prompts.html">Prompts</a>:
+Prompt management, optimization, and serialization.</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/memory.html">Memory</a>:
+Memory refers to the state that is persisted between calls of a
+chain/agent.</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/indexes.html">Indexes</a>:
+Language models become much more powerful when combined with
+application-specific data - this module contains interfaces and
+integrations for loading, querying and updating external data.</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/chains.html">Chains</a>:
+Chains are structured sequences of calls (to an LLM or to a different
+utility).</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/agents.html">Agents</a>:
+An agent is a Chain in which an LLM, given a high-level directive and a
+set of tools, repeatedly decides an action, executes the action and
+observes the outcome until the high-level directive is complete.</li>
+<li><a
+href="https://python.langchain.com/en/latest/modules/callbacks/getting_started.html">Callbacks</a>:
+Callbacks let you log and stream the intermediate steps of any chain,
+making it easy to observe, debug, and evaluate the internals of an
+application.</li>
+</ul>
+<h2 id="use-cases">Use Cases</h2>
+<p>Best practices and built-in implementations for common LangChain use
+cases:</p>
+<ul>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/autonomous_agents.html">Autonomous
+Agents</a>: Autonomous agents are long-running agents that take many
+steps in an attempt to accomplish an objective. Examples include AutoGPT
+and BabyAGI.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/agent_simulations.html">Agent
+Simulations</a>: Putting agents in a sandbox and observing how they
+interact with each other and react to events can be an effective way to
+evaluate their long-range reasoning and planning abilities.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/personal_assistants.html">Personal
+Assistants</a>: One of the primary LangChain use cases. Personal
+assistants need to take actions, remember interactions, and have
+knowledge about your data.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/question_answering.html">Question
+Answering</a>: Another common LangChain use case. Answering questions
+over specific documents, only utilizing the information in those
+documents to construct an answer.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/chatbots.html">Chatbots</a>:
+Language models love to chat, making this a very natural use of
+them.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/tabular.html">Querying
+Tabular Data</a>: Recommended reading if you want to use language models
+to query structured data (CSVs, SQL, dataframes, etc).</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/code.html">Code
+Understanding</a>: Recommended reading if you want to use language
+models to analyze code.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/apis.html">Interacting
+with APIs</a>: Enabling language models to interact with APIs is
+extremely powerful. It gives them access to up-to-date information and
+allows them to take actions.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/extraction.html">Extraction</a>:
+Extract structured information from text.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/summarization.html">Summarization</a>:
+Compressing longer documents. A type of Data-Augmented Generation.</li>
+<li><a
+href="https://python.langchain.com/en/latest/use_cases/evaluation.html">Evaluation</a>:
+Generative models are hard to evaluate with traditional metrics. One
+promising approach is to use language models themselves to do the
+evaluation.</li>
+</ul>
+<p>As you can see, LangChain includes many advanced features and it
+enables complex model processing. In our example, we will use models,
+prompts, and pipelines for question answering.</p>
+<h1 id="installing-dependencies-for-the-models-step1">Installing
+dependencies for the models (#step1)</h1>
+<p>From the terminal, please run the commands below:</p>
+<pre><code>pip3 install transformers
+pip3 install langchain
+pip3 install torch
+pip3 install matplotlib</code></pre>
+<h2 id="build-your-python-script-t5pat.py">Build your python script,
+T5pat.py</h2>
+<p>After installing the dependencies, please build your python script.
+In your terminal or code editor, please create a file, t5pat.py, in your
+directory i.e. t5pat, and cut and paste in the following code into your
+t5pat.py file.</p>
+<pre><code>import time
+import matplotlib.pyplot as plt
+from langchain.llms import HuggingFacePipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
+
+import os
+# Disable parallelism and avoid the warning message
+os.environ[&quot;TOKENIZERS_PARALLELISM&quot;] = &quot;false&quot;
+
+# Define model IDs
+model_ids = [&#39;google/flan-t5-large&#39;, &#39;google/flan-t5-xl&#39;]
+
+# Define prompts and types
+prompts = [
+    &#39;What is the capital of Germany?&#39;,
+    &#39;What is the capital of Spain?&#39;,
+    &#39;What is the capital of Canada?&#39;,
+    &#39;What is the next number in the sequence: 2, 4, 6, 8, ...? If all cats have tails, and Fluffy is a cat, does Fluffy have a tail?&#39;,
+    &#39;If you eat too much junk food, what will happen to your health? How does smoking affect the risk of lung cancer?&#39;,
+    &#39;In the same way that pen is related to paper, what is fork related to? If tree is related to forest, what is brick related to?&#39;,
+    &#39;Every time John eats peanuts, he gets a rash. Does John have a peanut allergy? Every time Sarah studies for a test, she gets an A. Will Sarah get an A on the next test if she studies?&#39;,
+    &#39;All dogs have fur. Max is a dog. Does Max have fur? If it is raining outside, and Mary does not like to get wet, will Mary take an umbrella?&#39;,
+    &#39;If I had studied harder, would I have passed the exam? What would have happened if Thomas Edison had not invented the light bulb?&#39;,
+    &#39;The center of Tropical Storm Arlene, at 02/1800 UTC, is near 26.7N 86.2W. This position is about 425 km/230 nm to the west of Fort Myers in Florida, and it is about 550 km/297 nm to the NNW of the western tip of Cuba. The tropical storm is moving southward, or 175 degrees, 4 knots. The estimated minimum central pressure is 1002 mb. The maximum sustained wind speeds are 35 knots with gusts to 45 knots. The sea heights that are close to the tropical storm are ranging from 6 feet to a maximum of 10 feet.  Precipitation: scattered to numerous moderate is within 180 nm of the center in the NE quadrant. Isolated moderate is from 25N to 27N between 80W and 84W, including parts of south Florida.  Broad surface low pressure extends from the area of the tropical storm, through the Yucatan Channel, into the NW part of the Caribbean Sea.   Where and when will the storm make landfall?&#39;
+]
+
+types = [
+    &#39;Knowledge Retrieval&#39;,
+    &#39;Knowledge Retrieval&#39;,
+    &#39;Knowledge Retrieval&#39;,
+    &#39;Logical Reasoning&#39;,
+    &#39;Cause and Effect&#39;,
+    &#39;Analogical Reasoning&#39;,
+    &#39;Inductive Reasoning&#39;,
+    &#39;Deductive Reasoning&#39;,
+    &#39;Counterfactual Reasoning&#39;,
+    &#39;In Context&#39;
+]
+
+# Create empty lists to store generation times, model load times, tokenizer load times, and pipeline load times
+xl_generation_times = []
+large_generation_times = []
+
+xl_model_load_times = []
+large_model_load_times = []
+
+xl_tokenizer_load_times = []
+large_tokenizer_load_times = []
+
+xl_pipeline_load_times = []
+large_pipeline_load_times = []
+
+prompt_types = []
+
+for model_id in model_ids:
+    # Load tokenizer
+    tokenizer_start_time = time.time()
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    tokenizer_end_time = time.time()
+
+    # Load model
+    model_start_time = time.time()
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_id)
+    model_end_time = time.time()
+
+    # Load pipeline
+    pipe_start_time = time.time()
+    pipe = pipeline(&quot;text2text-generation&quot;, model=model, tokenizer=tokenizer, max_length=512)
+    local_llm = HuggingFacePipeline(pipeline=pipe)
+    pipe_end_time = time.time()
+
+    # Store loading times
+    if model_id == &#39;google/flan-t5-large&#39;:
+        large_model_load_times.append(model_end_time - model_start_time)
+        large_tokenizer_load_times.append(tokenizer_end_time - tokenizer_start_time)
+        large_pipeline_load_times.append(pipe_end_time - pipe_start_time)
+    elif model_id == &#39;google/flan-t5-xl&#39;:
+        xl_model_load_times.append(model_end_time - model_start_time)
+        xl_tokenizer_load_times.append(tokenizer_end_time - tokenizer_start_time)
+        xl_pipeline_load_times.append(pipe_end_time - pipe_start_time)
+
+    # Print model results
+    print()
+    print(f&quot;Results for model: {model_id}&quot;)
+    print(&quot;=&quot; * 30)
+
+    # Loop thru prompt list, measure the time to the generate answers, print prompt, answer, time, type
+    for i, prompt in enumerate(prompts):
+        start_time = time.time()
+        answer = local_llm(prompt)
+        end_time = time.time()
+        print(f&quot;Prompt: {prompt}&quot;)
+        print(f&quot;Answer: {answer}&quot;)
+        print(f&quot;Generation Time: {end_time - start_time:.5f} seconds&quot;)
+        print(f&quot;Type: {types[i]}&quot;)
+        print()
+
+    # store prompt types and time measures to generate ansswers by prompt types 
+        prompt_types.append(types[i])  # Store the prompt type
+
+        if model_id == &#39;google/flan-t5-large&#39;:
+            large_generation_times.append(end_time - start_time)
+        elif model_id == &#39;google/flan-t5-xl&#39;:
+            xl_generation_times.append(end_time - start_time)
+
+    # print loading times
+    print(f&quot;Loading times for model {model_id}&quot;)
+    print(&quot;Tokenizer Loading Time:&quot;, f&quot;{tokenizer_end_time - tokenizer_start_time:.5f}&quot;, &quot;seconds&quot;)
+    print(&quot;Model Loading Time:&quot;, f&quot;{model_end_time - model_start_time:.5f}&quot;, &quot;seconds&quot;)
+    print(&quot;Pipeline Loading Time:&quot;, f&quot;{pipe_end_time - pipe_start_time:.5f}&quot;, &quot;seconds\n\n&quot;)
+
+
+# Plot model load times
+model_load_times = [sum(xl_model_load_times), sum(large_model_load_times)]
+model_labels = [&#39;XL Model&#39;, &#39;Large Model&#39;]
+
+plt.figure(figsize=(18, 6))
+plt.subplot(131)
+plt.bar(model_labels, model_load_times, color=[&#39;blue&#39;, &#39;orange&#39;])
+plt.ylabel(&#39;Load Time (seconds)&#39;)
+plt.xlabel(&#39;Model&#39;)
+plt.title(&#39;Model Load Time Comparison&#39;)
+
+# Plot tokenizer load times
+tokenizer_load_times = [sum(xl_tokenizer_load_times), sum(large_tokenizer_load_times)]
+
+plt.subplot(132)
+plt.bar(model_labels, tokenizer_load_times, color=[&#39;blue&#39;, &#39;orange&#39;])
+plt.ylabel(&#39;Load Time (seconds)&#39;)
+plt.xlabel(&#39;Model&#39;)
+plt.title(&#39;Tokenizer Load Time Comparison&#39;)
+
+# Plot pipeline load times
+pipeline_load_times = [sum(xl_pipeline_load_times), sum(large_pipeline_load_times)]
+plt.subplot(133)
+plt.bar(model_labels, pipeline_load_times, color=[&#39;blue&#39;, &#39;orange&#39;])
+plt.ylabel(&#39;Load Time (seconds)&#39;)
+plt.xlabel(&#39;Model&#39;)
+plt.title(&#39;Pipeline Load Time Comparison&#39;)
+
+# Plot generation times
+plt.figure(figsize=(9, 6))
+plt.barh(range(len(types)), xl_generation_times, height=0.4, align=&#39;center&#39;, color=&#39;blue&#39;, label=&#39;XL Model&#39;)
+plt.barh([x + 0.4 for x in range(len(types))], large_generation_times, height=0.4, align=&#39;center&#39;, color=&#39;orange&#39;, alpha=0.5, label=&#39;Large Model&#39;)
+plt.yticks(range(len(types)), types)
+plt.ylabel(&#39;Type&#39;)
+plt.xlabel(&#39;Generation Time (seconds)&#39;)
+plt.title(&#39;Generation Time Comparison&#39;)
+plt.legend()
+
+plt.tight_layout()
+plt.show()</code></pre>
+<h1 id="run-your-script">Run your script</h1>
+<p>To run your script, please open your terminal to the directory that
+holds the file, i.e. t5pat. Then run the following statement:</p>
+<pre><code>python3 t5pat.py</code></pre>
+<h2 id="sample-script-output">Sample script output</h2>
+<p>The following provides sample model output from running the script.
+Your answers and generation times will likely be different. The script
+has a text output followed by four charts. You can save the charts using
+the file button on the chart displays or just close them out. Either
+action will release the script and bring you back to the terminal
+prompt.</p>
+<pre><code>
+Results for model: google/flan-t5-large
+==============================
+Prompt: What is the capital of Germany?
+Answer: berlin
+Generation Time: 1.06194 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the capital of Spain?
+Answer: turin
+Generation Time: 0.73172 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the capital of Canada?
+Answer: toronto
+Generation Time: 1.12487 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the next number in the sequence: 2, 4, 6, 8, ...? If all cats have tails, and Fluffy is a cat, does Fluffy have a tail?
+Answer: yes
+Generation Time: 1.08774 seconds
+Type: Logical Reasoning
+
+Prompt: If you eat too much junk food, what will happen to your health? How does smoking affect the risk of lung cancer?
+Answer: no
+Generation Time: 0.69614 seconds
+Type: Cause and Effect
+
+Prompt: In the same way that pen is related to paper, what is fork related to? If tree is related to forest, what is brick related to?
+Answer: brick is related to brick
+Generation Time: 1.51508 seconds
+Type: Analogical Reasoning
+
+Prompt: Every time John eats peanuts, he gets a rash. Does John have a peanut allergy? Every time Sarah studies for a test, she gets an A. Will Sarah get an A on the next test if she studies?
+Answer: yes
+Generation Time: 1.24550 seconds
+Type: Inductive Reasoning
+
+Prompt: All dogs have fur. Max is a dog. Does Max have fur? If it is raining outside, and Mary does not like to get wet, will Mary take an umbrella?
+Answer: yes
+Generation Time: 1.28181 seconds
+Type: Deductive Reasoning
+
+Prompt: If I had studied harder, would I have passed the exam? What would have happened if Thomas Edison had not invented the light bulb?
+Answer: no one would have invented the light bulb
+Generation Time: 2.15294 seconds
+Type: Counterfactual Reasoning
+
+Prompt: The center of Tropical Storm Arlene, at 02/1800 UTC, is near 26.7N 86.2W. This position is about 425 km/230 nm to the west of Fort Myers in Florida, and it is about 550 km/297 nm to the NNW of the western tip of Cuba. The tropical storm is moving southward, or 175 degrees, 4 knots. The estimated minimum central pressure is 1002 mb. The maximum sustained wind speeds are 35 knots with gusts to 45 knots. The sea heights that are close to the tropical storm are ranging from 6 feet to a maximum of 10 feet.  Precipitation: scattered to numerous moderate is within 180 nm of the center in the NE quadrant. Isolated moderate is from 25N to 27N between 80W and 84W, including parts of south Florida.  Broad surface low pressure extends from the area of the tropical storm, through the Yucatan Channel, into the NW part of the Caribbean Sea.   Where and when will the storm make landfall?
+Answer: about 425 km/230 nm to the west of Fort Myers in Florida, and it is about 550 km/297 nm to the NNW of the western tip of Cuba
+Generation Time: 10.67541 seconds
+Type: In Context
+
+Loading times for model google/flan-t5-large
+Tokenizer Loading Time: 0.94174 seconds
+Model Loading Time: 17.28348 seconds
+Pipeline Loading Time: 0.11213 seconds
+
+
+Loading checkpoint shards: 100%|██████████████████| 2/2 [01:38&lt;00:00, 49.17s/it]
+
+Results for model: google/flan-t5-xl
+==============================
+Prompt: What is the capital of Germany?
+Answer: berlin
+Generation Time: 43.58305 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the capital of Spain?
+Answer: santander
+Generation Time: 2.80783 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the capital of Canada?
+Answer: ottawa
+Generation Time: 3.06489 seconds
+Type: Knowledge Retrieval
+
+Prompt: What is the next number in the sequence: 2, 4, 6, 8, ...? If all cats have tails, and Fluffy is a cat, does Fluffy have a tail?
+Answer: yes
+Generation Time: 2.89040 seconds
+Type: Logical Reasoning
+
+Prompt: If you eat too much junk food, what will happen to your health? How does smoking affect the risk of lung cancer?
+Answer: It increases the risk of developing lung cancer.
+Generation Time: 5.07974 seconds
+Type: Cause and Effect
+
+Prompt: In the same way that pen is related to paper, what is fork related to? If tree is related to forest, what is brick related to?
+Answer: building
+Generation Time: 2.60167 seconds
+Type: Analogical Reasoning
+
+Prompt: Every time John eats peanuts, he gets a rash. Does John have a peanut allergy? Every time Sarah studies for a test, she gets an A. Will Sarah get an A on the next test if she studies?
+Answer: yes
+Generation Time: 3.53700 seconds
+Type: Inductive Reasoning
+
+Prompt: All dogs have fur. Max is a dog. Does Max have fur? If it is raining outside, and Mary does not like to get wet, will Mary take an umbrella?
+Answer: yes
+Generation Time: 2.90499 seconds
+Type: Deductive Reasoning
+
+Prompt: If I had studied harder, would I have passed the exam? What would have happened if Thomas Edison had not invented the light bulb?
+Answer: the world would be dark
+Generation Time: 3.81147 seconds
+Type: Counterfactual Reasoning
+
+Prompt: The center of Tropical Storm Arlene, at 02/1800 UTC, is near 26.7N 86.2W. This position is about 425 km/230 nm to the west of Fort Myers in Florida, and it is about 550 km/297 nm to the NNW of the western tip of Cuba. The tropical storm is moving southward, or 175 degrees, 4 knots. The estimated minimum central pressure is 1002 mb. The maximum sustained wind speeds are 35 knots with gusts to 45 knots. The sea heights that are close to the tropical storm are ranging from 6 feet to a maximum of 10 feet.  Precipitation: scattered to numerous moderate is within 180 nm of the center in the NE quadrant. Isolated moderate is from 25N to 27N between 80W and 84W, including parts of south Florida.  Broad surface low pressure extends from the area of the tropical storm, through the Yucatan Channel, into the NW part of the Caribbean Sea.   Where and when will the storm make landfall?
+Answer: Fort Myers in Florida
+Generation Time: 14.06618 seconds
+Type: In Context
+
+Loading times for model google/flan-t5-xl
+Tokenizer Loading Time: 0.54048 seconds
+Model Loading Time: 131.81162 seconds
+Pipeline Loading Time: 0.57841 seconds</code></pre>
+<p><img src="./images/eval_reasoning_july_2023_Figure_1.png"
+title="image_tooltip" /> <img
+src="./images/eval_reasoning_july_2023_Figure_2.png"
+title="image_tooltip" /></p>
+<p>Note - the following might display on the terminal while the figures
+are rendering. This message is informational.</p>
+<pre><code>Python[23374:939566] +[CATransaction synchronize] called within transaction </code></pre>
+<h1 id="review-of-the-scripts-output-and-performance">Review of the
+script’s output and performance</h1>
+<p>For each model, the script prints text output for each prompt
+including the prompt, answer, generation time and prompt type. It
+provides a text output on the loading times for the model, tokenizer and
+pipeline times. It produces charts for generation time for each prompt
+type and load times for the model, tokenizer and pipeline.</p>
+<p>In our tests, the XL model took significantly longer in all aspects
+than the Large model, but the XL model answered more questions
+correctly. Neither model did a good job with prompts that contained two
+questions and both models mostly answered the second question and
+ignored the 1st question. The answers did not provide much context,
+although we did not ask for context. Determining what is correct or
+incorrect for a reasoning question could have some subjectivity. The XL
+was stronger than the Large model on knowledge retrieval, in context,
+cause and effect, and analogical reasoning. The XL did not perform well
+initially on analogical or counterfactual questions but its answers
+improved as we ran more epochs. Both models were better at answering
+reasoning questions than knowledge retrieval or in context
+questions.</p>
+<p>The following table provides a summary of the models’ correct
+answers. We recognize that the format of the prompts, especially asking
+two questions in one prompt, can impact the model. We used these more
+complex examples as they might reflect human interaction. As you can
+see, the model’s performance can vary depending on the question type and
+the prompt construction. This is to be expected and could be fine tuned,
+which is a potential topic for follow-on discussions and/or further
+experimentations.</p>
+<p><img src="./images/eval_reasoning_july_2023_correct.png"
+title="image_tooltip" /></p>
+<h2 id="summary-for-the-large-model">Summary for the Large model</h2>
+<p>The Large model did not answer the first question in the prompts
+which contained multiple questions. If you count the first questions,
+the Large model missed more questions than it answered correctly.
+Additionally, the answers did not provide much context, but to be fair,
+we did not ask for context in the answer. Determining what is correct or
+incorrect for a reasoning question could have some subjectivity.</p>
+<p>Let’s analyze the output for the Large model’s output. This chart
+provides the question types, the correctness of the answer, and the time
+required to generate the pipelines answers.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Prompt</th>
+<th>Correct</th>
+<th>Time in sec</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Knowledge retrieval 1</td>
+<td>100%</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td>Knowledge retrieval 2</td>
+<td>0%</td>
+<td>0.7</td>
+</tr>
+<tr class="odd">
+<td>Knowledge retrieval 3</td>
+<td>0%</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td>Logical Reasoning</td>
+<td>50%</td>
+<td>1.1</td>
+</tr>
+<tr class="odd">
+<td>Cause Effect Reasoning</td>
+<td>0%</td>
+<td>0.7</td>
+</tr>
+<tr class="even">
+<td>Analogical Reasoning</td>
+<td>0%</td>
+<td>1.5</td>
+</tr>
+<tr class="odd">
+<td>Inductive Reasoning</td>
+<td>50%</td>
+<td>1.2</td>
+</tr>
+<tr class="even">
+<td>Deductive Reasoning</td>
+<td>50%</td>
+<td>1.3</td>
+</tr>
+<tr class="odd">
+<td>Counterfactual Reasoning</td>
+<td>50%</td>
+<td>2.2</td>
+</tr>
+<tr class="even">
+<td>In Context</td>
+<td>0%</td>
+<td>10.7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xl-model-review">XL Model Review</h2>
+<p>Now, let’s examine the results of the flan-t5-xl model. The XL model
+takes longer but provides better answers. Before the XL produces answers
+to the prompts, it prints the following informational message (below) as
+the script loads its checkpoint shards. In our test, this took 49
+seconds and it caused a noticable delay between the completion of the
+Large model output and the start of output from the XL Model.</p>
+<pre><code>Loading checkpoint shards: 100%|██████████████████| 2/2 [01:38&lt;00:00, 49.17s/it]</code></pre>
+<p>Next let’s analyze output for the XL model’s output. This chart
+provides the question types, the correctness of the answer, and the time
+required to generate the pipelines answers.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Prompt</th>
+<th>Correct</th>
+<th>Time in sec</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Knowledge retrieval 1</td>
+<td>100%</td>
+<td>43.6</td>
+</tr>
+<tr class="even">
+<td>Knowledge retrieval 2</td>
+<td>0%</td>
+<td>2.8</td>
+</tr>
+<tr class="odd">
+<td>Knowledge retrieval 3</td>
+<td>100%</td>
+<td>3.1</td>
+</tr>
+<tr class="even">
+<td>Logical Reasoning</td>
+<td>50%</td>
+<td>2.9</td>
+</tr>
+<tr class="odd">
+<td>Cause Effect Reasoning</td>
+<td>50%</td>
+<td>5.1</td>
+</tr>
+<tr class="even">
+<td>Analogical Reasoning</td>
+<td>50%</td>
+<td>2.6</td>
+</tr>
+<tr class="odd">
+<td>Inductive Reasoning</td>
+<td>50%</td>
+<td>3.5</td>
+</tr>
+<tr class="even">
+<td>Deductive Reasoning</td>
+<td>50%</td>
+<td>2.9</td>
+</tr>
+<tr class="odd">
+<td>Counterfactual Reasoning</td>
+<td>50%</td>
+<td>3.8</td>
+</tr>
+<tr class="even">
+<td>In Context</td>
+<td>25%</td>
+<td>14.1</td>
+</tr>
+</tbody>
+</table>
+<p>The XL model did a pretty good job. It answered (2) of the (3)
+Knowledge retrieval questions correctly. It answered all of the
+reasoning questions correctly and it provided an answer for the In
+Context question that could be correct. From a grading standpoint, it
+only answered the second question in the reasoning prompts, and so we
+gave it a grade of 50% for answering those prompts.</p>
+<h1 id="summary">Summary</h1>
+<p>This initial post is intended to help you to develop a plan to test
+reasoning questions in your LLMs. In a follow-on post, we plan to
+provide more details and descriptions of the code and output. We look
+forward to your feedback and hope these examples provide you with ideas
+for your LLM testing.</p>
+<p>For more on building applications with large language models, check
+out:</p>
+<ul>
+<li>Cube + Patterson Consulting <a
+href="https://event.on24.com/wcc/r/4277494/E4B6E2FE4CF11C5DA82477349983E002">Webinar</a></li>
+<li>eBook: <a
+href="http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html">An
+Introduction to LLMs</a></li>
+<li>Sign up for our <a
+href="http://www.pattersonconsultingtn.com/campaigns/llm_workshop_july_2023.html">Free
+Private 90-min Workshop on LLMs</a></li>
+<li>Check out our <a
+href="https://github.com/pattersonconsulting/langchain_examples">Open
+Source LangChain Examples</a></li>
+</ul>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

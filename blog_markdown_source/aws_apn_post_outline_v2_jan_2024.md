@@ -137,6 +137,6 @@ https://aws.amazon.com/blogs/opensource/deploy-large-language-models-easily-with
 * Patterson Consulting can help you further fine-tune a specific model for a use cases
 
 
-Write 1 paragraphs for section 2 of the article based on the outline above. 
+Write 1 paragraphs for an article based on section 2 in the outline above 
 
 

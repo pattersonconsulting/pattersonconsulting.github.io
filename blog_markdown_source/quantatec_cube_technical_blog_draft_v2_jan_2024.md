@@ -14,50 +14,78 @@ meta_og_image: pct_autogluon_dep_og_card.jpg
 
 # Introduction
 
-In the rapidly evolving landscape of knowledge work platforms, the surge in end-user numbers presents both opportunities and challenges for organizations. Training new users on intricate analytics tools is not only a resource-intensive process but also time-consuming. Recognizing this, the integration of a natural language interface into analytics products emerges as a transformative solution, promising a significant reduction in training time and a simultaneous boost in productivity. As technical leaders in Fortune 500 companies navigate the complexities of managing expanding user bases, leveraging advancements in Large Language Models (LLMs) becomes pivotal for staying ahead of the curve. This article delves into the strategic adoption of LLMs, exploring how they serve as a linchpin for next-generation applications, enhancing enterprise value by seamlessly blending human-like text generation with domain-specific knowledge, ultimately redefining the landscape of reasoning applications in 2024.
+In the evolving landscape of knowledge work platforms, the rise in end-user numbers presents both opportunities and challenges for organizations. Training new users on analytics tools is not only a resource-intensive process but also time-consuming. Recognizing this, the integration of a natural language interface into analytics products emerges as a key solution, promising a significant reduction in training time and a simultaneous boost in productivity. As technical leaders in Fortune 500 companies navigate the complexities of managing expanding user bases, leveraging advancements in Large Language Models (LLMs) becomes pivotal for staying ahead of the curve. 
 
-# Market Trends
+This article explores using natural language, LLMs, and LangChain as a front end interface for an analytics or report generation application.
 
-notes:
-* talk about "a NL interface for anything"
+## The Rise of Natural Language in the User Experience
 
-As technical leaders in Fortune 500 companies seek innovative solutions to harness the burgeoning potential of knowledge work platforms, Large Language Models (LLMs) emerge as a transformative force in shaping the next generation of applications. These advanced models showcase remarkable capabilities, ranging from generating human-like text and answering complex questions to assisting with language translation, code writing, summarizing articles, and even creating conversational agents. The intrinsic value of LLM applications for enterprises is further amplified by their ability to seamlessly integrate with and leverage knowledge from enterprise data, including database lookups and document reviews.
+In recent years more data is collected from more types of digital devices, expanding the amout of data work in the enterprise. With more data work brings more new users, and this trend demands end-users to undergo specialized training for each application, contributing to prolonged onboarding times and increased costs. Compounding this issue is the expectation in some cases that analysts should possess knowledge of a programming language, introducing an additional layer of complexity to the usability of analytics tools.
 
-In 2024, investing in LLMs for reasoning applications has become a strategic imperative for forward-thinking organizations. The impact of LLMs on enterprise productivity, market share, and profitability is profound, making it a key driver for competitive advantage. This section explores the tangible benefits of incorporating LLMs into the technological fabric of Fortune 500 companies, emphasizing the strategic advantage they confer. Additionally, it delves into the potential risks and costs of inaction, addressing the concerns of late adopters striving to catch up in the fast-paced technological landscape. To effectively bridge the gap between private knowledge and the reasoning power of LLMs, this article introduces the RAG design pattern, providing technical leaders with a roadmap for building next-gen AI applications that leverage the full potential of these language models.
+While SQL boasts the broadest adoption within the analyst community due to its user-friendly nature, training large numbers of new users on SQL remains a time-consuming and expensive endeavor. Recognizing these challenges is pivotal for technical leaders navigating the landscape of knowledge work platforms. This section aims to shed light on the obstacles associated with user interface design and skill requirements, paving the way for the exploration of how LLMs can offer a solution to streamline user interactions through Natural Language User Interfaces (NLUIs). This approach not only reduces the training time for end-users but also significantly enhances productivity by democratizing access to analytical tools. 
 
-# Challenges
+In 2023 we saw LLMs burst onto the scene with their ability to understand natural language, write code, and answer logical questions. 
 
-notes: 
-* mention the evolution of RAG from last article
+In 2024, investing in LLMs for reasoning applications has become a strategic imperative for forward-thinking organizations. 
 
-In the pursuit of seamlessly integrating Large Language Models (LLMs) into the fabric of analytics products, technical leaders face a myriad of challenges. Among these challenges, the design and implementation of user interfaces for applications stand out as a significant hurdle. This process is not only inherently expensive but also demands end-users to undergo specialized training for each application, contributing to prolonged onboarding times and increased costs. Compounding this issue is the expectation in some cases that analysts should possess knowledge of a programming language, introducing an additional layer of complexity to the usability of analytics tools.
+LLMs allow us to analyze and process raw natural language and capture the subtlties that we're previously opaque to our systems. With this advancement in natural language processing, we can now begin to think about using natural language as a part of any user experience. LLMs allow someone to quickly map a natural language interface over any system, be it virtual (e.g., analytics, user interface, shopping system, etc) or physical (e.g., elevator UX with voice interface). 
 
-While SQL boasts the broadest adoption within the analyst community due to its user-friendly nature, training large numbers of new users on SQL remains a time-consuming and expensive endeavor. Recognizing these challenges is pivotal for technical leaders navigating the landscape of knowledge work platforms. This section aims to shed light on the obstacles associated with user interface design and skill requirements, paving the way for a strategic exploration of how LLMs can offer a solution to streamline user interactions through Natural Language User Interfaces (NLUIs). By overcoming these challenges, organizations can not only reduce training overhead but also enhance the accessibility of analytics tools, ultimately driving productivity gains within their teams.
+**The value of using natural language is that it becomes a user interface that everyone is taught from a young age, so the learning curve is reduced by an order of a magnitude.**
+
+This suddenly opens up the potential userbase of any system to a much wider audience, lower training costs and increasing productivity for organizations.
+
+## Challenges with Integrating Natural Language in Applications
+
+In the pursuit of integrating Large Language Models (LLMs) into a product (such as an analytics application), we face challenges such as:
+
+1. parsing the subtle variations in natural langauge
+2. integrating private enterprise knowledge into the reasoning system into answers
+3. generating a natural language response based on the integrated private knowledge
+
+Foundationally we want to offload the knowledge part to the outside retrieval system and let the LLM only focus on reasoning.
+
+* diagram: knowledge vs reasoning
+
+With the above challeneges in mind, and the "knowledge vs reasoning" architecture in mind, we can start to sketch out some design patterns.
 
 # Using LLMs to build Natural Language User Interfaces
 
-note: edit this down some
 
-Addressing the challenges outlined in Section 3, the integration of Large Language Models (LLMs) into analytics products introduces a paradigm shift towards Natural Language User Interfaces (NLUIs). By leveraging LLMs, organizations can transcend the barriers associated with traditional user interfaces, offering end-users the ability to interact with analytics tools in plain English. This transformative approach allows for providing clear and concise answers to questions posed by end-users without the need for specialized training in a particular application or programming language.
+LLMs are adept at analyzing and reasoning through plain natural language questions. However, many times we need to do several passes over an input natural language query to determine the best way to respond. To organize our natural language user interface to make quality responses, we need:
 
-The integration process involves harnessing the analytical prowess of LLMs, seamlessly intertwining them with private datasets. These LLMs are not only adept at analyzing and reasoning through plain English questions but also possess the capability to determine the type of information required for each query. Subsequently, they generate comprehensive plain English answers based on the insights extracted from the organization's private data. This approach not only reduces the training time for end-users but also significantly enhances productivity by democratizing access to analytical tools. By adopting NLUIs powered by LLMs, technical leaders can usher in a new era of user-friendly and efficient analytics experiences, ultimately paving the way for the development of next-gen AI applications.
+1. A system architecture to integrate private enterprise knowledge with LLM-based reasoning
+2. Prompt analysis to help make decisions on how to further process the prompt
+3. A system to route the prompt to the correct set of specialist agents or workflows
+4. A way to integrate private data with processed prompts for futher analysis
+5. A way to generate a natural language response
 
-## Using Prompt Routing to Generate Analytical Answers
+Let's start off by defining an architecture for managing the integration of knowledge and reasoning.
 
-section outline:
+## Architecture, LangChain, and Retrieval Augmented Generation
 
-* in an analytics system, we know the N types of questions (Generally) that will be asked
-* we can use a prompt router to send the request to different workflows or agents
-* this allows us to pre-write certain SQL queries
-* once we have the SQL, we can also extract filter criteria such as user, date, etc
-* we then run the SQL query manually (retrieval), we serialize the results into a string and insert them into our prompt (augmentation) to generate natural language results
+If we want to integrate the knowledge management and the reasoning parts of our application, a great architecture that works well with LLMs is [Retrieval Augmented Generation (RAG)](./evolution_rag.html).
 
-diagrams
-1. prompt analysis
-2. prompt routing table
-3. multi-agent system
-4. augmented prompt
-5. answer
+With RAG we need 3 components to our architecture:
+
+1. Retrieval: go get the knowledge we need to reason over
+2. Augmentation: take the data, graph, or knowledge and integrate it into a prompt with further processing instructions
+3. Generation: now take the newly created prompt and send it to an LLM for further reasoning
+
+To implement the above architecture we could do it with raw Python, but frameworks such as LangChain have a lot of useful primitives, classes, and tooling to help accelerate LLM-application development.
+
+Once we have our basic architecture and a programming framework for LLMs, we can move on to user natural language input analysis workflow.
+
+## Organizing Our Natural Language Processing Workflow
+
+In an analytics system, we know the N types of questions that will be asked; for the purposes of this example we assume that the system will respond "I don't know" to any request that it does not have a sub-workflow for. Once we get the raw input from a user input box, we can use a "prompt router" to send the request to different workflows or agents. If we can constrain the type of request we're working with, this allows us to pre-write certain SQL queries as opposed to asking the LLM to write complex SQL under uncertain conditions.
+
+* diagram: prompt routing table to different agents
+
+Once we have the SQL, we can also extract filter criteria such as user, date, etc from the raw original prompt with LLM calls (e.g., "What date does this question refer to?"). We can manually inject the parameters for the SQL statements based on the answers from the LLM.
+
+* diagram: augmented prompt --> answer
+
+Then we run the SQL query manually (**retrieval**) and serialize the results into a string and insert them into our prompt (**augmentation**) to generate natural language results (**generation**). Now let's dig into what a "prompt router" might look like.
 
 ### Prompt Routing to Multiple Agents
 
@@ -86,6 +114,8 @@ Once we have our SQL data results back, we need to serialize the rows into our p
 Now we're ready for our agent to pass this augmented prompt on to our LLM for **generation**.
 
 ### Generating Natural Language Analytical Results
+
+* Subsequently, they generate comprehensive plain English answers based on the insights extracted from the organization's private data. 
 
 Now that we have a newly **augmented** prompt, we can pass it over to our LLM to generate a natural language response that is readable by a technical or non-technical user.
 

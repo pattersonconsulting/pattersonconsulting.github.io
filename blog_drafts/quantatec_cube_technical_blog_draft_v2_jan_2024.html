@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Building Natural Language User Interfaces over Analytics
+Applications - Using LLMs and the Semantic Layer to Expand the Analytics
+User Base</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll ….." />
+	<meta name="keywords" content="aws, bedrock, llm, ai, reasoning
+workbench, private models" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Building Natural Language User
+Interfaces over Analytics Applications - Using LLMs and the Semantic
+Layer to Expand the Analytics User Base"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/quantatec_cube_technical_blog_draft_v2_jan_2024.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll ….."/>
+	
+
+	<meta name="twitter:title" content="Building Natural Language User
+Interfaces over Analytics Applications - Using LLMs and the Semantic
+Layer to Expand the Analytics User Base" />
+	<meta data-rh="true" property="twitter:description" content="In this
+post we’ll ….."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/quantatec_cube_technical_blog_draft_v2_jan_2024.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Building Natural Language User Interfaces over Analytics
+Applications</h1>
+						<p>
+							<h3>Using LLMs and the Semantic Layer to Expand the Analytics User
+Base</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: January 18th 2024</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#the-rise-of-natural-language-in-the-user-experience"
+id="toc-the-rise-of-natural-language-in-the-user-experience">The Rise of
+Natural Language in the User Experience</a></li>
+<li><a
+href="#challenges-with-integrating-natural-language-in-applications"
+id="toc-challenges-with-integrating-natural-language-in-applications">Challenges
+with Integrating Natural Language in Applications</a></li>
+</ul></li>
+<li><a href="#using-llms-to-build-natural-language-user-interfaces"
+id="toc-using-llms-to-build-natural-language-user-interfaces">Using LLMs
+to build Natural Language User Interfaces</a>
+<ul>
+<li><a href="#architecture-langchain-and-retrieval-augmented-generation"
+id="toc-architecture-langchain-and-retrieval-augmented-generation">Architecture,
+LangChain, and Retrieval Augmented Generation</a></li>
+<li><a href="#organizing-our-natural-language-processing-workflow"
+id="toc-organizing-our-natural-language-processing-workflow">Organizing
+Our Natural Language Processing Workflow</a></li>
+</ul></li>
+<li><a href="#summary-and-webinar" id="toc-summary-and-webinar">Summary
+and Webinar</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>In the evolving landscape of knowledge work platforms, the rise in
+end-user numbers presents both opportunities and challenges for
+organizations. Training new users on analytics tools is not only a
+resource-intensive process but also time-consuming. Recognizing this,
+the integration of a natural language interface into analytics products
+emerges as a key solution, promising a significant reduction in training
+time and a simultaneous boost in productivity. As technical leaders in
+Fortune 500 companies navigate the complexities of managing expanding
+user bases, leveraging advancements in Large Language Models (LLMs)
+becomes pivotal for staying ahead of the curve.</p>
+<p>This article explores using natural language, LLMs, and LangChain as
+a front end interface for an analytics or report generation
+application.</p>
+<h2 id="the-rise-of-natural-language-in-the-user-experience">The Rise of
+Natural Language in the User Experience</h2>
+<p>In recent years more data is collected from more types of digital
+devices, expanding the amout of data work in the enterprise. With more
+data work brings more new users, and this trend demands end-users to
+undergo specialized training for each application, contributing to
+prolonged onboarding times and increased costs. Compounding this issue
+is the expectation in some cases that analysts should possess knowledge
+of a programming language, introducing an additional layer of complexity
+to the usability of analytics tools.</p>
+<p>While SQL boasts the broadest adoption within the analyst community
+due to its user-friendly nature, training large numbers of new users on
+SQL remains a time-consuming and expensive endeavor. Recognizing these
+challenges is pivotal for technical leaders navigating the landscape of
+knowledge work platforms. This section aims to shed light on the
+obstacles associated with user interface design and skill requirements,
+paving the way for the exploration of how LLMs can offer a solution to
+streamline user interactions through Natural Language User Interfaces
+(NLUIs). This approach not only reduces the training time for end-users
+but also significantly enhances productivity by democratizing access to
+analytical tools.</p>
+<p>In 2023 we saw LLMs burst onto the scene with their ability to
+understand natural language, write code, and answer logical
+questions.</p>
+<p>In 2024, investing in LLMs for reasoning applications has become a
+strategic imperative for forward-thinking organizations.</p>
+<p>LLMs allow us to analyze and process raw natural language and capture
+the subtlties that we’re previously opaque to our systems. With this
+advancement in natural language processing, we can now begin to think
+about using natural language as a part of any user experience. LLMs
+allow someone to quickly map a natural language interface over any
+system, be it virtual (e.g., analytics, user interface, shopping system,
+etc) or physical (e.g., elevator UX with voice interface).</p>
+<p><strong>The value of using natural language is that it becomes a user
+interface that everyone is taught from a young age, so the learning
+curve is reduced by an order of a magnitude.</strong></p>
+<p>This suddenly opens up the potential userbase of any system to a much
+wider audience, lower training costs and increasing productivity for
+organizations.</p>
+<h2
+id="challenges-with-integrating-natural-language-in-applications">Challenges
+with Integrating Natural Language in Applications</h2>
+<p>In the pursuit of integrating Large Language Models (LLMs) into a
+product (such as an analytics application), we face challenges such
+as:</p>
+<ol type="1">
+<li>parsing the subtle variations in natural langauge</li>
+<li>integrating private enterprise knowledge into the reasoning system
+into answers</li>
+<li>generating a natural language response based on the integrated
+private knowledge</li>
+</ol>
+<p>Foundationally we want to offload the knowledge part to the outside
+retrieval system and let the LLM only focus on reasoning. I write a lot
+about this topic in our <a
+href="http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html">online
+ebook “Introduction to Large Langauge Models”</a>. The idea is also
+visually illustrated in the diagram below.</p>
+<p><img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" /></p>
+<p>With the above challeneges in mind, and the “knowledge vs reasoning”
+architecture in mind, we can start to sketch out some design
+patterns.</p>
+<h1 id="using-llms-to-build-natural-language-user-interfaces">Using LLMs
+to build Natural Language User Interfaces</h1>
+<p>LLMs are adept at analyzing and reasoning through plain natural
+language questions. However, many times we need to do several passes
+over an input natural language query to determine the best way to
+respond. To organize our natural language user interface to make quality
+responses, we need:</p>
+<ol type="1">
+<li>A system architecture to integrate private enterprise knowledge with
+LLM-based reasoning</li>
+<li>Prompt analysis to help make decisions on how to further process the
+prompt</li>
+<li>A system to route the prompt to the correct set of specialist agents
+or workflows</li>
+<li>A way to integrate private data with processed prompts for futher
+analysis</li>
+<li>A way to generate a natural language response</li>
+</ol>
+<p>Let’s start off by defining an architecture for managing the
+integration of knowledge and reasoning.</p>
+<h2
+id="architecture-langchain-and-retrieval-augmented-generation">Architecture,
+LangChain, and Retrieval Augmented Generation</h2>
+<p>If we want to integrate the knowledge management and the reasoning
+parts of our application, a great architecture that works well with LLMs
+is <a href="./evolution_rag.html">Retrieval Augmented Generation
+(RAG)</a>.</p>
+<p>With RAG we need 3 components to our architecture:</p>
+<ol type="1">
+<li>Retrieval: go get the knowledge we need to reason over</li>
+<li>Augmentation: take the data, graph, or knowledge and integrate it
+into a prompt with further processing instructions</li>
+<li>Generation: now take the newly created prompt and send it to an LLM
+for further reasoning</li>
+</ol>
+<p>Visually we can see the RAG architecture below:</p>
+<p><img src="./images/pct_generalized_rag_architecture_jan_2024.png" width="1000px" /></p>
+<p>To implement the above architecture we could do it with raw Python,
+but frameworks such as LangChain have a lot of useful primitives,
+classes, and tooling to help accelerate LLM-application development.</p>
+<p>Once we have our basic architecture and a programming framework for
+LLMs, we can move on to user natural language input analysis
+workflow.</p>
+<h2 id="organizing-our-natural-language-processing-workflow">Organizing
+Our Natural Language Processing Workflow</h2>
+<p>In an analytics system, we know the N types of questions that will be
+asked; for the purposes of this example we assume that the system will
+respond “I don’t know” to any request that it does not have a
+sub-workflow for. Once we get the raw input from a user input box, we
+can use a “prompt router” to send the request to different workflows or
+agents, as shown in the diagram below.</p>
+<p><img src="./images/pct_llm_prompt_routing_jan_2024.png" width="1000px" /></p>
+<p>If we can constrain the type of request we’re working with, this
+allows us to pre-write certain SQL queries as opposed to asking the LLM
+to write complex SQL under uncertain conditions. This allows our
+retrieval phase of our RAG implementation to be simpler and more
+efficient.</p>
+<p>Once we have the SQL, we can also extract filter criteria such as
+user, date, etc from the raw original prompt with LLM calls (e.g., “What
+date does this question refer to?”). We can manually inject the
+parameters for the SQL statements based on the answers from the LLM.</p>
+<p>Then we run the SQL query manually (<strong>retrieval</strong>) and
+serialize the results into a string and insert them into our prompt
+(<strong>augmentation</strong>) to generate natural language results
+(<strong>generation</strong>), as seen in the exmaple diagram below.</p>
+<p><img src="./images/pct_augmented_prompt_jan_2024.png" width="800px" /></p>
+<p>Now let’s dig into what a “prompt router” might look like.</p>
+<h3 id="prompt-routing-to-multiple-agents">Prompt Routing to Multiple
+Agents</h3>
+<p>The first stage of the workflow is to use a “prompt router” (e.g., a
+type of prompt classifier) to classify the prompt into 1 of N “buckets”
+or types, as we saw in the diagram above.</p>
+<table style="margin: 12px;">
+<thead>
+<tr>
+<td align="left" style="padding: 12px; background-color: #EEEEEE;">
+<strong>Note:</strong> LangChain now has functionality similar to this
+called <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>.
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 12px;">
+A Langchain <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>
+dynamically directs program flow based on input conditions, enabling
+non-deterministic step execution. It enhances structure and consistency
+in LLM interactions, offering routing through a RunnableBranch or custom
+factory function. The former selects and executes a runnable based on
+conditions, while the latter returns a runnable without execution based
+on input from a previous step, implemented via the LangChain Expression
+Language.<br />
+
+</td>
+</tr>
+</tbody>
+</table>
+<p>Once we know what kind of analytical question we’re dealing with, we
+can send the prompt over to an agent or group of agents for further
+focused processing.</p>
+<p>These agent(s) can now be more specialized and focus their workflow
+of prompt analysis on answering the specific analytic question for that
+“bucket”.</p>
+<h3 id="prompt-augmentation-with-sql-results">Prompt Augmentation with
+SQL Results</h3>
+<p>Now that we know what kind of query we’re dealing with, we need to
+<strong>retrieve</strong> the relevant information from a knowledge
+repository to augment our prompt (in a retrieval augmented generation
+architecture).</p>
+<p>In some cases we may not know the database schema and will need to
+use a tool such as LangChain’s SQLChain.</p>
+<p>In other cases, however, we can leverage our knowledge of the schema
+ahead of time and manually write the SQL for our agent. In this case, we
+can use further focused prompt analysis to determine variables for our
+SQL such as filter criteria or date ranges. We’ll also want to segment
+out the data that only the current user should be able to see.</p>
+<p>For example, if we have classified the user input as a question about
+“where is my fleet of trucks today?”, we could then map that to
+pre-written SQL that might look like:</p>
+<pre><code>Select [truck id], [Avg MPH], latitude, longitude from logistics where CustomerID == [user-id-inserted-here];</code></pre>
+<p>Which would query a table such as one represented by the sample rows
+below:</p>
+<p><img src="./images/pct_db_table_info_jan_2024.png" width="800px" /></p>
+<p>If we are able to use pre-written SQL such as the above command, we
+can use standard database connection libraries to retrieve the result
+rows from the RDBMS and then serialize them back into a new
+<strong>augemented</strong> prompt.</p>
+<p><img src="./images/pct_augmented_prompt_jan_2024.png" width="800px" /></p>
+<p>Now we’re ready for our agent to pass this augmented prompt on to our
+LLM for <strong>generation</strong>.</p>
+<h3 id="generating-natural-language-analytical-results">Generating
+Natural Language Analytical Results</h3>
+<p>LLMs are great at generating comprehensive plain English answers
+based on the insights extracted from the organization’s private
+data.</p>
+<p>Now that we have a newly <strong>augmented</strong> prompt, we can
+pass it over to our LLM to generate a natural language response that is
+readable by a technical or non-technical user.</p>
+<p>The answer from the above augmented prompt might look something
+like:</p>
+<blockquote>
+<p>Truck 829 was running above the speed limit of 65 MPG on average.</p>
+</blockquote>
+<p>Depending on how we want to display the above information to the
+user, we might have another post-analysis prompt that re-wrote the above
+answer in a certain way, or we might ask several questions and then
+combine all of their answers into a final augmented prompt to synthesize
+a summary report.</p>
+<h1 id="summary-and-webinar">Summary and Webinar</h1>
+<p>If you enjoyed this article, <a
+href="https://event.on24.com/wcc/r/4467432/02B67FC81F416636388BBC2B238485AE">sign
+up to watch our webinar with Cube and Quantatec on January 24th</a>
+where we’ll talk about how we put these ideas into practice for
+Quantatec’s new analytics system.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

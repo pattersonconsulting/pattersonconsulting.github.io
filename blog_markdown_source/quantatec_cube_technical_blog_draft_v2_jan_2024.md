@@ -1,16 +1,14 @@
-<!--
 ---
 layout: post
-published-on: January 10th 2024
+published-on: January 18th 2024
 author: Josh Patterson
-title: Building Natural Language User Interfaces over Analytics Platforms
-subtitle: Using LLMs and the Semantic Layer to Extend Analytics Platforms
+title: Building Natural Language User Interfaces over Analytics Applications
+subtitle: Using LLMs and the Semantic Layer to Expand the Analytics User Base
 description: In this post we'll .....
 keywords: aws, bedrock, llm, ai, reasoning workbench, private models
 meta_og_image: pct_autogluon_dep_og_card.jpg
 ---
 
--->
 
 # Introduction
 
@@ -42,9 +40,9 @@ In the pursuit of integrating Large Language Models (LLMs) into a product (such 
 2. integrating private enterprise knowledge into the reasoning system into answers
 3. generating a natural language response based on the integrated private knowledge
 
-Foundationally we want to offload the knowledge part to the outside retrieval system and let the LLM only focus on reasoning.
+Foundationally we want to offload the knowledge part to the outside retrieval system and let the LLM only focus on reasoning. I write a lot about this topic in our [online ebook "Introduction to Large Langauge Models"](http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html). The idea is also visually illustrated in the diagram below.
 
-* diagram: knowledge vs reasoning
+<img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" />
 
 With the above challeneges in mind, and the "knowledge vs reasoning" architecture in mind, we can start to sketch out some design patterns.
 
@@ -71,33 +69,55 @@ With RAG we need 3 components to our architecture:
 2. Augmentation: take the data, graph, or knowledge and integrate it into a prompt with further processing instructions
 3. Generation: now take the newly created prompt and send it to an LLM for further reasoning
 
+Visually we can see the RAG architecture below:
+
+<img src="./images/pct_generalized_rag_architecture_jan_2024.png" width="1000px" />
+
 To implement the above architecture we could do it with raw Python, but frameworks such as LangChain have a lot of useful primitives, classes, and tooling to help accelerate LLM-application development.
 
 Once we have our basic architecture and a programming framework for LLMs, we can move on to user natural language input analysis workflow.
 
 ## Organizing Our Natural Language Processing Workflow
 
-In an analytics system, we know the N types of questions that will be asked; for the purposes of this example we assume that the system will respond "I don't know" to any request that it does not have a sub-workflow for. Once we get the raw input from a user input box, we can use a "prompt router" to send the request to different workflows or agents. If we can constrain the type of request we're working with, this allows us to pre-write certain SQL queries as opposed to asking the LLM to write complex SQL under uncertain conditions.
+In an analytics system, we know the N types of questions that will be asked; for the purposes of this example we assume that the system will respond "I don't know" to any request that it does not have a sub-workflow for. Once we get the raw input from a user input box, we can use a "prompt router" to send the request to different workflows or agents, as shown in the diagram below.
 
-* diagram: prompt routing table to different agents
+<img src="./images/pct_llm_prompt_routing_jan_2024.png" width="1000px" />
+
+If we can constrain the type of request we're working with, this allows us to pre-write certain SQL queries as opposed to asking the LLM to write complex SQL under uncertain conditions. This allows our retrieval phase of our RAG implementation to be simpler and more efficient.
 
 Once we have the SQL, we can also extract filter criteria such as user, date, etc from the raw original prompt with LLM calls (e.g., "What date does this question refer to?"). We can manually inject the parameters for the SQL statements based on the answers from the LLM.
 
-* diagram: augmented prompt --> answer
+Then we run the SQL query manually (**retrieval**) and serialize the results into a string and insert them into our prompt (**augmentation**) to generate natural language results (**generation**), as seen in the exmaple diagram below.
 
-Then we run the SQL query manually (**retrieval**) and serialize the results into a string and insert them into our prompt (**augmentation**) to generate natural language results (**generation**). Now let's dig into what a "prompt router" might look like.
+<img src="./images/pct_augmented_prompt_jan_2024.png" width="800px" />
+
+Now let's dig into what a "prompt router" might look like.
 
 ### Prompt Routing to Multiple Agents
 
-The first stage of the workflow is to use a "prompt router" (e.g., a type of prompt classifier) to classify the prompt into 1 of N "buckets" or types. A typical prompt router looks like:
+The first stage of the workflow is to use a "prompt router" (e.g., a type of prompt classifier) to classify the prompt into 1 of N "buckets" or types, as we saw in the diagram above.
 
-> code here
+<table style="margin: 12px;">
+  <thead>
+    <tr>
+      <td align="left" style="padding: 12px; background-color: #EEEEEE;">
+        **Note:** LangChain now has functionality similar to this called [RunnableBranch](https://python.langchain.com/docs/expression_language/how_to/routing). 
+      </td>
+    </tr>
+  </thead>
 
-![image test](../blog_drafts/images/pct_llm_app_arch_prompt_pipeline.png)
-
-LangChain also now offers **code branching** concept (look up)
+  <tbody>
+    <tr>
+      <td style="padding: 12px;">
+A Langchain [RunnableBranch](https://python.langchain.com/docs/expression_language/how_to/routing) dynamically directs program flow based on input conditions, enabling non-deterministic step execution. It enhances structure and consistency in LLM interactions, offering routing through a RunnableBranch or custom factory function. The former selects and executes a runnable based on conditions, while the latter returns a runnable without execution based on input from a previous step, implemented via the LangChain Expression Language.        
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 Once we know what kind of analytical question we're dealing with, we can send the prompt over to an agent or group of agents for further focused processing.
+
+These agent(s) can now be more specialized and focus their workflow of prompt analysis on answering the specific analytic question for that "bucket".
 
 ### Prompt Augmentation with SQL Results
 
@@ -107,21 +127,35 @@ In some cases we may not know the database schema and will need to use a tool su
 
 In other cases, however, we can leverage our knowledge of the schema ahead of time and manually write the SQL for our agent. In this case, we can use further focused prompt analysis to determine variables for our SQL such as filter criteria or date ranges. We'll also want to segment out the data that only the current user should be able to see. 
 
-* diagram: SQL Statement
+For example, if we have classified the user input as a question about "where is my fleet of trucks today?", we could then map that to pre-written SQL that might look like:
 
-Once we have our SQL data results back, we need to serialize the rows into our prompt to **augment** the existing prompt.
+```
+Select [truck id], [Avg MPH], latitude, longitude from logistics where CustomerID == [user-id-inserted-here];
+```
 
-* diagram: prompt with table results embedded
+Which would query a table such as one represented by the sample rows below:
+
+<img src="./images/pct_db_table_info_jan_2024.png" width="800px" />
+
+If we are able to use pre-written SQL such as the above command, we can use standard database connection libraries to retrieve the result rows from the RDBMS and then serialize them back into a new **augemented** prompt.
+
+<img src="./images/pct_augmented_prompt_jan_2024.png" width="800px" />
 
 Now we're ready for our agent to pass this augmented prompt on to our LLM for **generation**.
 
 ### Generating Natural Language Analytical Results
 
-* Subsequently, they generate comprehensive plain English answers based on the insights extracted from the organization's private data. 
+LLMs are great at generating comprehensive plain English answers based on the insights extracted from the organization's private data. 
 
 Now that we have a newly **augmented** prompt, we can pass it over to our LLM to generate a natural language response that is readable by a technical or non-technical user.
 
+The answer from the above augmented prompt might look something like:
+
+> Truck 829 was running above the speed limit of 65 MPG on average.
+
+Depending on how we want to display the above information to the user, we might have another post-analysis prompt that re-wrote the above answer in a certain way, or we might ask several questions and then combine all of their answers into a final augmented prompt to synthesize a summary report.
+
 # Summary and Webinar
 
-If you enjoyed this article, sign up to watch our webinar with Cube and Quantatec on January 24th where we'll talk about how we put these ideas into practice for Quantatec's new analytics system.
+If you enjoyed this article, [sign up to watch our webinar with Cube and Quantatec on January 24th](https://event.on24.com/wcc/r/4467432/02B67FC81F416636388BBC2B238485AE) where we'll talk about how we put these ideas into practice for Quantatec's new analytics system.
 

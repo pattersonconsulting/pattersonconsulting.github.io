@@ -93,6 +93,8 @@ The first stage of the workflow is to use a "prompt router" (e.g., a type of pro
 
 > code here
 
+![image test](../blog_drafts/images/pct_llm_app_arch_prompt_pipeline.png)
+
 LangChain also now offers **code branching** concept (look up)
 
 Once we know what kind of analytical question we're dealing with, we can send the prompt over to an agent or group of agents for further focused processing.

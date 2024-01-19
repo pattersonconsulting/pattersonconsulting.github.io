@@ -377,29 +377,32 @@ href="https://python.langchain.com/docs/modules/data_connection/">blog</a>
 which includes this workflow:</p>
 <p><img src="https://python.langchain.com/assets/images/data_connection-95ff2033a8faa5f3ba41376c0f6dd32a.jpg" width="1000px" /></p>
 <p>The traditional vector store workflow include six functions:</p>
-<p><strong>1) Document loaders:</strong> Document loaders simplify the
+<ol type="1">
+<li><p><strong>Document loaders:</strong> Document loaders simplify the
 loading of different types of documents (HTML, PDF, code) from different
-locations (private S3 buckets, public websites, private storage).</p>
-<p><strong>2) Text Splitting:</strong> Long documents need to be split
+locations (private S3 buckets, public websites, private
+storage).</p></li>
+<li><p><strong>Text Splitting:</strong> Long documents need to be split
 or chunked into smaller pieces and specialized algorithms transform the
 data (code, markdown, etc.) into smaller chunks. This enables you to
-fetch only the relevant parts of documents.</p>
-<p><strong>3) Text embedding models:</strong> Text embedding is a
+fetch only the relevant parts of documents.</p></li>
+<li><p><strong>Text embedding models:</strong> Text embedding is a
 process to capture the semantic meaning of the text. This enables you to
-efficiently find similar chunks.</p>
-<p><strong>4) Vector stores:</strong> Vectors stores are databases that
-store and search embeddings.</p>
-<p><strong>5) Retrievers:</strong> Data is retrieved from your vector
+efficiently find similar chunks.</p></li>
+<li><p><strong>Vector stores:</strong> Vectors stores are databases that
+store and search embeddings.</p></li>
+<li><p><strong>Retrievers:</strong> Data is retrieved from your vector
 database using a retrieval algorithm, such as semantic search. Adding
 these algorithms can increase performance: Parent Document Retriever
 (returns a larger context from multiple small chunks), Self Query
 Retriever (selects the semantic part from other metadata filters), and
 Ensemble Retriever (returns and integrates chunks from multiple
-documents).</p>
-<p><strong>6) Indexing:</strong> An indexing API syncs your data sources
-with your vector store. Indexing provides more efficient vector store
-operations by mitigating unnecessary actions on unchanged or duplicate
-content.</p>
+documents).</p></li>
+<li><p><strong>Indexing:</strong> An indexing API syncs your data
+sources with your vector store. Indexing provides more efficient vector
+store operations by mitigating unnecessary actions on unchanged or
+duplicate content.</p></li>
+</ol>
 <h2 id="expanding-rags-definition">Expanding RAG’s Definition</h2>
 <p>Contributions to RAG’s thought leadership are wide spread. For
 example, this Microsoft <a
@@ -473,6 +476,7 @@ for Dynamic Discovery</h2>
 another layer above the connectors: the use of data catalogs, such as
 Alation’s data catalog, to let systems reason about where the data they
 need may reside.</p>
+<p><img src="./images/pct_retrieval_w_data_catalog_jan_2024.png" width="1000px" /></p>
 <p>This type of RAG augmentation is a pre-step to retrieval where the
 system reasons about which data repository it wants to query, and then
 loads the correct semantic data connector based on the selected data

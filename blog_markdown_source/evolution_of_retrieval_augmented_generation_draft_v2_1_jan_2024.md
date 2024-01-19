@@ -82,22 +82,22 @@ During 2023, we saw important investments in RAG and most market leaders publish
 
 The traditional vector store workflow include six functions:
 
-**1) Document loaders:**
+1. **Document loaders:**
 Document loaders simplify the loading of different types of documents (HTML, PDF, code) from different locations (private S3 buckets, public websites, private storage).
 
-**2) Text Splitting:**
+2. **Text Splitting:**
 Long documents need to be split or chunked into smaller pieces and specialized algorithms transform the data (code, markdown, etc.) into smaller chunks.  This enables you to fetch only the relevant parts of documents.
 
-**3) Text embedding models:**
+3. **Text embedding models:**
 Text embedding is a process to capture the semantic meaning of the text.  This enables you to efficiently find similar chunks.  
 
-**4) Vector stores:**
+4. **Vector stores:**
 Vectors stores are databases that store and search embeddings. 
 
-**5) Retrievers:**
+5. **Retrievers:**
 Data is retrieved from your vector database using a retrieval algorithm, such as semantic search.  Adding these algorithms can increase performance: Parent Document Retriever (returns a larger context from multiple small chunks),  Self Query Retriever (selects the semantic part from other metadata filters), and Ensemble Retriever (returns and integrates chunks from multiple documents).
 
-**6) Indexing:**
+6. **Indexing:**
 An indexing API syncs your data sources with your vector store.  Indexing provides more efficient vector store operations by mitigating unnecessary actions on unchanged or duplicate content. 
 
 ## Expanding RAG's Definition
@@ -133,6 +133,8 @@ A semantic data connector is a connector to a knowledge repository (e.g., "sales
 ## Use of Data Catalogs for Dynamic Discovery
 
 Similar to semantic data connectors, we also have experimented with another layer above the connectors: the use of data catalogs, such as Alation's data catalog, to let systems reason about where the data they need may reside.
+
+<img src="./images/pct_retrieval_w_data_catalog_jan_2024.png" width="1000px" />
 
 This type of RAG augmentation is a pre-step to retrieval where the system reasons about which data repository it wants to query, and then loads the correct semantic data connector based on the selected data repository type.
 

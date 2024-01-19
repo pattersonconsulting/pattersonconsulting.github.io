@@ -4,9 +4,9 @@ published-on: January 18th 2024
 author: Josh Patterson
 title: Building Natural Language User Interfaces over Analytics Applications
 subtitle: Using LLMs and the Semantic Layer to Expand the Analytics User Base
-description: In this post we'll .....
+description: This article explores using natural language, LLMs, and LangChain as a front end interface for an analytics or report generation application.
 keywords: aws, bedrock, llm, ai, reasoning workbench, private models
-meta_og_image: pct_autogluon_dep_og_card.jpg
+meta_og_image: og_meta_card_nl_user_interfaces_jan_2024.png
 ---
 
 
@@ -77,7 +77,13 @@ To implement the above architecture we could do it with raw Python, but framewor
 
 If we want to further improve our general RAG architecture, we can add a semantic layer (such as [Cube.dev](https://www.cube.dev/)) to the retrieval stage of the RAG pipeline and use data modeling for better retrieval performance, as shown in the diagram below.
 
-<img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" />
+<img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" />
+
+Adding a semantic layer to our RAG architecture can help with things such as
+
+* partitioning data automatically according to customer
+* better metadata information on tables and columns in your data model
+* data modeling over canonical data warehouse tables that is more appropriate for LLM evaluation
 
 Once we have our basic architecture and a programming framework for LLMs, we can move on to user natural language input analysis workflow.
 
@@ -143,7 +149,7 @@ Which would query a table such as one represented by the sample rows below:
 
 If we are able to use pre-written SQL such as the above command, we can use standard database connection libraries to retrieve the result rows from the RDBMS and then serialize them back into a new **augemented** prompt.
 
-<img src="./images/pct_augmented_prompt_jan_2024.png" width="800px" />
+<img src="./images/pct_augmented_example_prompt_jan_2024.png" width="800px" />
 
 Now we're ready for our agent to pass this augmented prompt on to our LLM for **generation**.
 

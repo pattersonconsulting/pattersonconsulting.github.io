@@ -386,10 +386,25 @@ into a prompt with further processing instructions</li>
 for further reasoning</li>
 </ol>
 <p>Visually we can see the RAG architecture below:</p>
-<p><img src="./images/pct_generalized_rag_architecture_jan_2024.png" width="1000px" /></p>
+<p><img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" /></p>
 <p>To implement the above architecture we could do it with raw Python,
 but frameworks such as LangChain have a lot of useful primitives,
 classes, and tooling to help accelerate LLM-application development.</p>
+<p>If we want to further improve our general RAG architecture, we can
+add a semantic layer (such as <a
+href="https://www.cube.dev/">Cube.dev</a>) to the retrieval stage of the
+RAG pipeline and use data modeling for better retrieval performance, as
+shown in the diagram below.</p>
+<p><img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" /></p>
+<p>Adding a semantic layer to our RAG architecture can help with things
+such as</p>
+<ul>
+<li>partitioning data automatically according to customer</li>
+<li>better metadata information on tables and columns in your data
+model</li>
+<li>data modeling over canonical data warehouse tables that is more
+appropriate for LLM evaluation</li>
+</ul>
 <p>Once we have our basic architecture and a programming framework for
 LLMs, we can move on to user natural language input analysis
 workflow.</p>

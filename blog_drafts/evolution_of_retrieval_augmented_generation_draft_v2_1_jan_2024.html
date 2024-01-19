@@ -21,7 +21,9 @@
 with Private Data to Generate Better Answers</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="In this post we’ll ….." />
+<meta name="description" content="In this article we take a look at
+“what is retrieval augmented generation?” and “how is retrieval
+augmented generation’s definition evolving?”." />
 	<meta name="keywords" content="aws, bedrock, llm, ai, reasoning
 workbench, private models" />
 	<meta name="author" content="Patterson Consulting" />
@@ -30,19 +32,22 @@ workbench, private models" />
 	<meta property="og:title" content="The Evolution of Retrieval Augmented
 Generation - Enhancing LLMs with Private Data to Generate Better
 Answers"/>
-	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png"/>
 	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_draft_v2_1_jan_2024.html"/>
 	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content="In this post we’ll ….."/>
+	<meta property="og:description" content="In this article we take a look
+at “what is retrieval augmented generation?” and “how is retrieval
+augmented generation’s definition evolving?”."/>
 	
 
 	<meta name="twitter:title" content="The Evolution of Retrieval Augmented
 Generation - Enhancing LLMs with Private Data to Generate Better
 Answers" />
 	<meta data-rh="true" property="twitter:description" content="In this
-post we’ll ….."/>
+article we take a look at “what is retrieval augmented generation?” and
+“how is retrieval augmented generation’s definition evolving?”."/>
 
-	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png" />
 	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_draft_v2_1_jan_2024.html" />
 	<meta name="twitter:card" content="summary_large_image" />
 
@@ -224,8 +229,8 @@ span.needs_editing {
 							<h3>Enhancing LLMs with Private Data to Generate Better Answers</h3>
 						</p>
 						<p>
-							Author: Josh Patterson<br/>
-<p class="date">Date: January 10th 2024</p>
+							Author: Josh Patterson and Josh Bottom<br/>
+<p class="date">Date: January 19th 2024</p>
 							
 							
 						</p>
@@ -295,6 +300,9 @@ href="https://arxiv.org/pdf/2005.11401.pdf">paper</a>,
 “Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks”, when
 it concluded that LLMs with RAG performed better than LLMs, and better
 than humans.</p>
+<p>In this article we take a look at “what is retrieval augmented
+generation?” and “how is retrieval augmented generation’s definition
+evolving?”.</p>
 <h2 id="what-is-retrieval-augmented-generation">What is Retrieval
 Augmented Generation?</h2>
 <p>Retrieval Augmented Generation is a strategic approach employed to
@@ -303,22 +311,34 @@ responses or content with large language models. Unlike traditional
 LLMs, which rely solely on their training data, RAG allows these models
 to dynamically fetch relevant information from external sources during
 the generation phase.</p>
+<p>With the architecture of RAG we are seperating the role of knowledge
+and reasoning. This idea is visually illustrated in the diagram
+below.</p>
+<p><img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" /></p>
 <p>We use the RAG design pattern to connect our private knowledge with
-the reasoning power of LLMs to build next-generation AI
-applications.</p>
+the reasoning power of LLMs to build next-generation AI applications.
+RAG is made up of 3 logical phases:</p>
 <ol type="1">
-<li><p>The <strong>Retrieval</strong> part of “Retrieval Augmented
+<li>Retrieval</li>
+<li>Augmentation</li>
+<li>Generation</li>
+</ol>
+<p>We can see a general RAG architecture in the diagram below.</p>
+<p><img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" /></p>
+<h3 id="retrieval">Retrieval</h3>
+<p>The <strong>Retrieval</strong> part of “Retrieval Augmented
 Generation” is focused on gathering data from knowledge systems to use
 directly inside a prompt (“raw text”) sent to a large language
-model.</p></li>
-<li><p>The <strong>Augmentation</strong> part of “Retrieval Augmented
+model.</p>
+<h3 id="augmentation">Augmentation</h3>
+<p>The <strong>Augmentation</strong> part of “Retrieval Augmented
 Generation” is how we take the extracted information from a knowledge
-system and integrate it into prompt or prompt template.</p></li>
-<li><p>The <strong>Generation</strong> part of “Retrieval Augmented
+system and integrate it into prompt or prompt template.</p>
+<h3 id="generation">Generation</h3>
+<p>The <strong>Generation</strong> part of “Retrieval Augmented
 Generation” is how we take the combination of the extracted information
 and the custom prompt and pass it to a large language model for
-evaluation, reasoning, and response generation.</p></li>
-</ol>
+evaluation, reasoning, and response generation.</p>
 <h2 id="why-is-rag-important">Why is RAG Important?</h2>
 <p>RAG provides specific functionality for LLM-based applications such
 as:</p>
@@ -465,12 +485,24 @@ routing” to branch the execution of our code to a set of sub-agents to
 handle a specific type of request. This allows the sub-agents in this
 multi-agent system to focus specifically on an identified task and
 restrict their prompts to goals associated with this task pipeline.</p>
-<p>LangChain now has functionality similar to this called</p>
-<ul>
-<li>LangChain branching</li>
-</ul>
-<p>In our next article on “Building Natural Language Interfaces for
-Analytics Systems” we talk more about how this works in practice.</p>
+<p><img src="./images/pct_llm_prompt_routing_jan_2024.png" width="1000px" /></p>
+<p>Currently Patterson Consulting uses our own implementation of prompt
+routing, customized for different scenarios, as part of our Augmented
+Reasoning library.</p>
+<p>LangChain now has functionality similar to this called <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>.</p>
+<p>A Langchain <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>
+dynamically directs program flow based on input conditions, enabling
+non-deterministic step execution. It enhances structure and consistency
+in LLM interactions, offering routing through a RunnableBranch or custom
+factory function. The former selects and executes a runnable based on
+conditions, while the latter returns a runnable without execution based
+on input from a previous step, implemented via the LangChain Expression
+Language.</p>
+<!--
+In our next article on "Building Natural Language Interfaces for Analytics Systems" we talk more about how prompt routing/branching works in practice.
+-->
 <h2 id="retrieval-augmented-generation-and-semantic-layers">Retrieval
 Augmented Generation and Semantic Layers</h2>
 <p>In some situations we want to use llms to generate SQL queries with
@@ -480,13 +512,18 @@ metadata that looks more like full natural language as opposed to
 short-hand words and codes.</p>
 <p>In these situations using a semantic layer to provide a more verbose
 and descriptive set of tags on data models can help improve query
-generation. When we are able to generate better SQL queries, we can pull
-more accurate information back for the augementation phase to better
-support the generation phase. This gives more consistent and better
-quality results to the end user.</p>
-<p>A great example of this is using a Cube.dev data model over a
-Snowflake table, exposing the more verbose Cube.dev data model to the
-LangChain SQLChain tool.</p>
+generation, as seen in the diagram below.</p>
+<p><img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" /></p>
+<p>A semantic layer can improve retrieval performance through better
+user management, better metadata, and better data modeling over
+canonical tables. When we are able to generate better SQL queries, we
+can pull more accurate information back for the augementation phase to
+better support the generation phase. This gives more consistent and
+better quality results to the end user.</p>
+<p>A great example of this is using a <a
+href="https://www.cube.dev">Cube.dev</a> data model over a Snowflake
+table, exposing the more verbose Cube.dev data model to the LangChain
+SQLChain tool.</p>
 <h1 id="summary">Summary</h1>
 <p>In this article we provided a traditional definition of retrieval
 augmented generation, we looked at the areas where retrieval augmented

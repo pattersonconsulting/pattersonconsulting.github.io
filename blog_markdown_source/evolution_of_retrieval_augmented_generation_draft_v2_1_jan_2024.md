@@ -1,13 +1,13 @@
 
 ---
 layout: post
-published-on: January 10th 2024
-author: Josh Patterson
+published-on: January 19th 2024
+author: Josh Patterson and Josh Bottom
 title: The Evolution of Retrieval Augmented Generation
 subtitle: Enhancing LLMs with Private Data to Generate Better Answers
-description: In this post we'll .....
+description: In this article we take a look at "what is retrieval augmented generation?" and "how is retrieval augmented generation's definition evolving?".
 keywords: aws, bedrock, llm, ai, reasoning workbench, private models
-meta_og_image: pct_autogluon_dep_og_card.jpg
+meta_og_image: meta_og_evolution_rag_jan_2024.png
 ---
 
 <!--
@@ -25,15 +25,26 @@ In 2023, enterprise CTOs acknowledged that Large Language Models (LLMs) can gene
 
 RAG gained speed in April 2021 in this seminal [paper](https://arxiv.org/pdf/2005.11401.pdf), "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", when it concluded that LLMs with RAG performed better than LLMs, and better than humans. 
 
+In this article we take a look at "what is retrieval augmented generation?" and "how is retrieval augmented generation's definition evolving?".
+
 ## What is Retrieval Augmented Generation?
 
 Retrieval Augmented Generation is a strategic approach employed to integrate external, user-specific data into the process of generating responses or content with large language models. Unlike traditional LLMs, which rely solely on their training data, RAG allows these models to dynamically fetch relevant information from external sources during the generation phase.
+
+With the architecture of RAG we are seperating the role of knowledge and reasoning. This idea is visually illustrated in the diagram below.
+
+<img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" />
 
 We use the RAG design pattern to connect our private knowledge with the reasoning power of LLMs to build next-generation AI applications. RAG is made up of 3 logical phases:
 
 1. Retrieval
 2. Augmentation
 3. Generation
+
+We can see a general RAG architecture in the diagram below.
+
+<img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" />
+
 
 ### Retrieval
 
@@ -61,7 +72,7 @@ RAG provides specific functionality for LLM-based applications such as:
 3. **Improved Problem-Solving:**
    - In dynamic business environments, quick and accurate decision-making is crucial. RAG equips LLMs with the ability to fetch real-time data, aiding managers and VPs in solving problems efficiently.
 
-RAG enables a broader set of applications to be supported because current information is used to deliver logically developed answers with human-like reasoning.  Reasoning greatly enhances the value of answers, especially for enterprise applications.  LLM reasoning apps are compelling from operational and functional perspectives.
+RAG enables a broader set of applications to be supported because current information is used to deliver logically developed answers with human-like reasoning.  Reasoning greatly enhances the value of answers, especially for enterprise applications. LLM reasoning apps are compelling from operational and functional perspectives.
 
 # Defining Traditional RAG
 
@@ -129,19 +140,29 @@ This type of RAG augmentation is a pre-step to retrieval where the system reason
 
 Sometimes we know an application (e.g., "analytics") will be handling N number of types of requests, and we can use a method called "prompt routing" to branch the execution of our code to a set of sub-agents to handle a specific type of request. This allows the sub-agents in this multi-agent system to focus specifically on an identified task and restrict their prompts to goals associated with this task pipeline.
 
+<img src="./images/pct_llm_prompt_routing_jan_2024.png" width="1000px" />
+
+Currently Patterson Consulting uses our own implementation of prompt routing, customized for different scenarios, as part of our Augmented Reasoning library.
+
 LangChain now has functionality similar to this called [RunnableBranch](https://python.langchain.com/docs/expression_language/how_to/routing).
 
-A Langchain [RunnableBranch](https://python.langchain.com/docs/expression_language/how_to/routing) dynamically directs program flow based on input conditions, enabling non-deterministic step execution. It enhances structure and consistency in LLM interactions, offering routing through a RunnableBranch or custom factory function. The former selects and executes a runnable based on conditions, while the latter returns a runnable without execution based on input from a previous step, implemented via the LangChain Expression Language.
+A Langchain [RunnableBranch](https://python.langchain.com/docs/expression_language/how_to/routing) dynamically directs program flow based on input conditions, enabling non-deterministic step execution. It enhances structure and consistency in LLM interactions, offering routing through a RunnableBranch or custom factory function. The former selects and executes a runnable based on conditions, while the latter returns a 
+runnable without execution based on input from a previous step, implemented via the LangChain Expression Language.
 
+<!--
 In our next article on "Building Natural Language Interfaces for Analytics Systems" we talk more about how prompt routing/branching works in practice.
-
+-->
 ## Retrieval Augmented Generation and Semantic Layers
 
 In some situations we want to use llms to generate SQL queries with tools such as LangChain's SQLChain. In these cases the application performs more consistently when the databases, tables, and columns have metadata that looks more like full natural language as opposed to short-hand words and codes.
 
-In these situations using a semantic layer to provide a more verbose and descriptive set of tags on data models can help improve query generation. When we are able to generate better SQL queries, we can pull more accurate information back for the augementation phase to better support the generation phase. This gives more consistent and better quality results to the end user.
+In these situations using a semantic layer to provide a more verbose and descriptive set of tags on data models can help improve query generation, as seen in the diagram below.
 
-A great example of this is using a Cube.dev data model over a Snowflake table, exposing the more verbose Cube.dev data model to the LangChain SQLChain tool.
+<img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" />
+
+A semantic layer can improve retrieval performance through better user management, better metadata, and better data modeling over canonical tables. When we are able to generate better SQL queries, we can pull more accurate information back for the augementation phase to better support the generation phase. This gives more consistent and better quality results to the end user.
+
+A great example of this is using a [Cube.dev](https://www.cube.dev) data model over a Snowflake table, exposing the more verbose Cube.dev data model to the LangChain SQLChain tool.
 
 # Summary
 

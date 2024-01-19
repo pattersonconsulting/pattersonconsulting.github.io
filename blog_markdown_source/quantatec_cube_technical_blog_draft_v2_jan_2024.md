@@ -71,9 +71,13 @@ With RAG we need 3 components to our architecture:
 
 Visually we can see the RAG architecture below:
 
-<img src="./images/pct_generalized_rag_architecture_jan_2024.png" width="1000px" />
+<img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" />
 
 To implement the above architecture we could do it with raw Python, but frameworks such as LangChain have a lot of useful primitives, classes, and tooling to help accelerate LLM-application development.
+
+If we want to further improve our general RAG architecture, we can add a semantic layer (such as [Cube.dev](https://www.cube.dev/)) to the retrieval stage of the RAG pipeline and use data modeling for better retrieval performance, as shown in the diagram below.
+
+<img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" />
 
 Once we have our basic architecture and a programming framework for LLMs, we can move on to user natural language input analysis workflow.
 

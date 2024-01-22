@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>The Evolution of Retrieval Augmented Generation - Enhancing LLMs
+with Private Data to Generate Better Answers</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this article we take a look at
+“what is retrieval augmented generation?” and “how is retrieval
+augmented generation’s definition evolving?”." />
+	<meta name="keywords" content="Large language models, llms, ai,
+reasoning, private models, retrieval augmented generation, rag" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="The Evolution of Retrieval Augmented
+Generation - Enhancing LLMs with Private Data to Generate Better
+Answers"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_draft_v2_1_jan_2024.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this article we take a look
+at “what is retrieval augmented generation?” and “how is retrieval
+augmented generation’s definition evolving?”."/>
+	
+
+	<meta name="twitter:title" content="The Evolution of Retrieval Augmented
+Generation - Enhancing LLMs with Private Data to Generate Better
+Answers" />
+	<meta data-rh="true" property="twitter:description" content="In this
+article we take a look at “what is retrieval augmented generation?” and
+“how is retrieval augmented generation’s definition evolving?”."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_draft_v2_1_jan_2024.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>The Evolution of Retrieval Augmented Generation</h1>
+						<p>
+							<h3>Enhancing LLMs with Private Data to Generate Better Answers</h3>
+						</p>
+						<p>
+							Author: Josh Patterson and Josh Bottum<br/>
+<p class="date">Date: January 19th 2024</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#what-is-retrieval-augmented-generation"
+id="toc-what-is-retrieval-augmented-generation">What is Retrieval
+Augmented Generation?</a></li>
+<li><a href="#why-is-rag-important" id="toc-why-is-rag-important">Why is
+RAG Important?</a></li>
+</ul></li>
+<li><a href="#defining-traditional-rag"
+id="toc-defining-traditional-rag">Defining Traditional RAG</a>
+<ul>
+<li><a href="#expanding-rags-definition"
+id="toc-expanding-rags-definition">Expanding RAG’s Definition</a></li>
+</ul></li>
+<li><a href="#advances-in-retrieval"
+id="toc-advances-in-retrieval">Advances in Retrieval</a>
+<ul>
+<li><a href="#semantic-data-connectors"
+id="toc-semantic-data-connectors">Semantic Data Connectors</a></li>
+<li><a href="#use-of-data-catalogs-for-dynamic-discovery"
+id="toc-use-of-data-catalogs-for-dynamic-discovery">Use of Data Catalogs
+for Dynamic Discovery</a></li>
+<li><a href="#prompt-routing-and-multi-agent-systems"
+id="toc-prompt-routing-and-multi-agent-systems">Prompt Routing and
+Multi-Agent Systems</a></li>
+<li><a href="#retrieval-augmented-generation-and-semantic-layers"
+id="toc-retrieval-augmented-generation-and-semantic-layers">Retrieval
+Augmented Generation and Semantic Layers</a></li>
+<li><a href="#use-of-private-llms-with-retrieval-augmented-generation"
+id="toc-use-of-private-llms-with-retrieval-augmented-generation">Use of
+Private LLMs with Retrieval Augmented Generation</a></li>
+</ul></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
+</ul>
+</nav>
+<!--
+   Editing notes:
+
+      * Purpose of article: educate on "what is RAG" and "why should I care about it"
+      * Article will support the follow on article for the Cube/Quantatec Webinar on "Building Natural Language User Interfaces over Analytics Platforms" 
+
+-->
+<h1 id="introduction">Introduction</h1>
+<p>In 2023, enterprise CTOs acknowledged that Large Language Models
+(LLMs) can generate better answers than humans. In 2024, CTOs are
+expanding their LLM use cases, while carefully navigating the rapidly
+changing LLM landscape, which now includes LLMs with Retrieval Augmented
+Generation (RAG). RAG adds tremendous value because it enables LLMs to
+generate answers with fresh data from internal and external sources. RAG
+expands the delivery of higher-value applications, especially for use
+cases that require reasoning, enabling market leaders to materially
+differentiate their business functions.</p>
+<p>RAG gained speed in April 2021 in this seminal <a
+href="https://arxiv.org/pdf/2005.11401.pdf">paper</a>,
+“Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks”, when
+it concluded that LLMs with RAG performed better than LLMs, and better
+than humans.</p>
+<p>In this article we take a look at “what is retrieval augmented
+generation?” and “how is retrieval augmented generation’s definition
+evolving?”.</p>
+<h2 id="what-is-retrieval-augmented-generation">What is Retrieval
+Augmented Generation?</h2>
+<p>Retrieval Augmented Generation is a strategic approach employed to
+integrate external, user-specific data into the process of generating
+responses or content with large language models. Unlike traditional
+LLMs, which rely solely on their training data, RAG allows these models
+to dynamically fetch relevant information from external sources during
+the generation phase.</p>
+<p>With the architecture of RAG we are seperating the <a
+href="https://pattersonconsultingtn.com/content/intro_to_llms_ebook.html">role
+of knowledge and reasoning (book link)</a>. This idea is visually
+illustrated in the diagram below.</p>
+<p><img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" /></p>
+<p>We use the RAG design pattern to connect our private knowledge with
+the reasoning power of LLMs to build next-generation AI applications.
+RAG is made up of 3 logical phases:</p>
+<ol type="1">
+<li>Retrieval</li>
+<li>Augmentation</li>
+<li>Generation</li>
+</ol>
+<p>We can see a general RAG architecture in the diagram below.</p>
+<p><img src="./images/pct_general_rag_arch_v2_jan_2024.png" width="1000px" /></p>
+<h3 id="retrieval">Retrieval</h3>
+<p>The <strong>Retrieval</strong> part of “Retrieval Augmented
+Generation” is focused on gathering data from knowledge systems to use
+directly inside a prompt (“raw text”) sent to a large language
+model.</p>
+<h3 id="augmentation">Augmentation</h3>
+<p>The <strong>Augmentation</strong> part of “Retrieval Augmented
+Generation” is how we take the extracted information from a knowledge
+system and integrate it into prompt or prompt template.</p>
+<h3 id="generation">Generation</h3>
+<p>The <strong>Generation</strong> part of “Retrieval Augmented
+Generation” is how we take the combination of the extracted information
+and the custom prompt and pass it to a large language model for
+evaluation, reasoning, and response generation.</p>
+<h2 id="why-is-rag-important">Why is RAG Important?</h2>
+<p>RAG provides specific functionality for LLM-based applications such
+as:</p>
+<ol type="1">
+<li><strong>Enhanced Decision Support:</strong>
+<ul>
+<li>End users often deal with complex and rapidly changing business
+scenarios. RAG empowers LLM applications to provide more nuanced and
+informed responses by incorporating the latest market trends, industry
+news, and company-specific data.</li>
+</ul></li>
+<li><strong>Personalized Communication:</strong>
+<ul>
+<li>RAG facilitates personalized communication by considering
+user-specific information. This is particularly beneficial when
+addressing individualized queries, making interactions more meaningful
+and relevant.</li>
+</ul></li>
+<li><strong>Improved Problem-Solving:</strong>
+<ul>
+<li>In dynamic business environments, quick and accurate decision-making
+is crucial. RAG equips LLMs with the ability to fetch real-time data,
+aiding managers and VPs in solving problems efficiently.</li>
+</ul></li>
+</ol>
+<p>RAG enables a broader set of applications to be supported because
+current information is used to deliver logically developed answers with
+human-like reasoning. Reasoning greatly enhances the value of answers,
+especially for enterprise applications. LLM reasoning apps are
+compelling from operational and functional perspectives.</p>
+<h1 id="defining-traditional-rag">Defining Traditional RAG</h1>
+<p>During 2023, we saw important investments in RAG and most market
+leaders published detailed RAG technical reviews. For example, LangChain
+delivered a traditional RAG architecture with a vector store, in this <a
+href="https://python.langchain.com/docs/modules/data_connection/">blog</a>
+which includes this workflow:</p>
+<p><img src="https://python.langchain.com/assets/images/data_connection-95ff2033a8faa5f3ba41376c0f6dd32a.jpg" width="1000px" /></p>
+<p>The traditional vector store workflow includes six functions:</p>
+<ol type="1">
+<li><p><strong>Document loaders:</strong> Document loaders simplify the
+loading of different types of documents (HTML, PDF, code) from different
+locations (private S3 buckets, public websites, private
+storage).</p></li>
+<li><p><strong>Text Splitting:</strong> Long documents need to be split
+or chunked into smaller pieces and specialized algorithms transform the
+data (code, markdown, etc.) into smaller chunks. This enables you to
+fetch only the relevant parts of documents.</p></li>
+<li><p><strong>Text embedding models:</strong> Text embedding is a
+process to capture the semantic meaning of the text. This enables you to
+efficiently find similar chunks.</p></li>
+<li><p><strong>Vector stores:</strong> Vectors stores are databases that
+store and search embeddings.</p></li>
+<li><p><strong>Retrievers:</strong> Data is retrieved from your vector
+database using a retrieval algorithm, such as semantic search. Adding
+these algorithms can increase performance: Parent Document Retriever
+(returns a larger context from multiple small chunks), Self Query
+Retriever (selects the semantic part from other metadata filters), and
+Ensemble Retriever (returns and integrates chunks from multiple
+documents).</p></li>
+<li><p><strong>Indexing:</strong> An indexing API syncs your data
+sources with your vector store. Indexing provides more efficient vector
+store operations by mitigating unnecessary actions on unchanged or
+duplicate content.</p></li>
+</ol>
+<h2 id="expanding-rags-definition">Expanding RAG’s Definition</h2>
+<p>Contributions to RAG’s thought leadership are wide spread. For
+example, this Microsoft <a
+href="https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview">blog</a>
+provides the following diagram, which demonstrates how RAG and LLM
+functionality are evolving:</p>
+<figure>
+<img
+src="https://learn.microsoft.com/en-us/azure/search/media/retrieval-augmented-generation-overview/architecture-diagram.png#lightbox"
+alt="RAG Diagram from the Microsoft Blog" />
+<figcaption aria-hidden="true">RAG Diagram from the Microsoft
+Blog</figcaption>
+</figure>
+<p>As you can see in the chart above, query - knowledge now replaces the
+concept of the more specific embeddings and vector databases from the
+LangChain diagram.</p>
+<p>AWS similarly has a blog article that shows the “retrieval” part of
+RAG as “search relevant information”:</p>
+<figure>
+<img
+src="https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/jumpstart/jumpstart-fm-rag.jpg"
+alt="RAG Diagram from the AWS Sagemaker Blog" />
+<figcaption aria-hidden="true">RAG Diagram from the AWS Sagemaker
+Blog</figcaption>
+</figure>
+<p>In early 2024, a new paper delivered an extensive analysis of RAG’s
+evolution, <a
+href="https://arxiv.org/pdf/2312.10997.pdf">Retrieval-Augmented
+Generation for Large Language Models: A Survey</a>. Quoting from the
+abstract:</p>
+<blockquote>
+<p>“This comprehensive review paper offers a detailed examination of the
+progression of RAG paradigms, encompassing the Naive RAG, the Advanced
+RAG, and the Modular RAG… Furthermore, this paper introduces the metrics
+and benchmarks for assessing RAG models, along with the most up-to-date
+evaluation framework.”</p>
+</blockquote>
+<p>Technically, the paper introduces the Advanced RAG paradigm,
+extending beyond the Naive approach by incorporating sophisticated
+architectural elements such as query rewriting, chunk reranking, and
+prompt summarization. It explores hybrid content retrieval with both
+structured and unstructured data sources (e.g., images, videos, code)
+and reviews cutting-edge research on self-retrieval from LLMs, including
+dynamic timing of information retrieval.</p>
+<p>The paper also introduces an evaluation framework for RAG models,
+including benchmark tests and automated evaluation tools providing
+quantitative metrics. It emphasizes four key abilities indicating a
+model’s adaptability and efficiency: noise robustness, negative
+rejection, information integration, and counterfactual robustness.
+Finally, it underscores the imperative to mature and refine evaluation
+methodologies.</p>
+<p>The generalization of the two cloud RAG architecture diagrams and the
+2024 paper show that the idea of Retrieval in RAG is evolving beyond the
+original “embedding + vector database” concept to include other styles
+of retrieval.</p>
+<h1 id="advances-in-retrieval">Advances in Retrieval</h1>
+<p>We close out this article by discussing some of the ways we’re
+evolving and expanding the concepts of retrieval augmented generation at
+Patterson Consulting.</p>
+<h2 id="semantic-data-connectors">Semantic Data Connectors</h2>
+<p>A semantic data connector is a connector to a knowledge repository
+(e.g., “salesforce”, etc), but primarily focuses on using a combination
+of metadata APIs and LLM calls to reason about what type of data is in
+the repository, and what type of data it needs to extract. This type of
+data connector needs good natural language information returned from the
+API metadata so that it can better reason about what is in the different
+tables of the repository. It is similar to LangChain’s SQLChain in idea,
+but has different data structures and different sets of custom prompts
+for reasoning over the knowledge repository metadata.</p>
+<h2 id="use-of-data-catalogs-for-dynamic-discovery">Use of Data Catalogs
+for Dynamic Discovery</h2>
+<p>Similar to semantic data connectors, we also have experimented with
+another layer above the connectors: the use of data catalogs, such as
+Alation’s data catalog, to let systems reason about where the data they
+need may reside.</p>
+<p><img src="./images/pct_retrieval_w_data_catalog_jan_2024.png" width="1000px" /></p>
+<p>This type of RAG augmentation is a pre-step to retrieval where the
+system reasons about which data repository it wants to query, and then
+loads the correct semantic data connector based on the selected data
+repository type.</p>
+<h2 id="prompt-routing-and-multi-agent-systems">Prompt Routing and
+Multi-Agent Systems</h2>
+<p>Sometimes we know an application (e.g., “analytics”) will be handling
+N number of types of requests, and we can use a method called “prompt
+routing” to branch the execution of our code to a set of sub-agents to
+handle a specific type of request. This allows the sub-agents in this
+multi-agent system to focus specifically on an identified task and
+restrict their prompts to goals associated with this task pipeline.</p>
+<p><img src="./images/pct_llm_prompt_routing_jan_2024.png" width="1000px" /></p>
+<p>Currently Patterson Consulting uses our own implementation of prompt
+routing, customized for different scenarios, as part of our Augmented
+Reasoning library.</p>
+<p>LangChain now has functionality similar to this called <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>.</p>
+<p>A Langchain <a
+href="https://python.langchain.com/docs/expression_language/how_to/routing">RunnableBranch</a>
+dynamically directs program flow based on input conditions, enabling
+non-deterministic step execution. It enhances structure and consistency
+in LLM interactions, offering routing through a RunnableBranch or custom
+factory function. The former selects and executes a runnable based on
+conditions, while the latter returns a runnable without execution based
+on input from a previous step, implemented via the LangChain Expression
+Language.</p>
+<!--
+In our next article on "Building Natural Language Interfaces for Analytics Systems" we talk more about how prompt routing/branching works in practice.
+-->
+<h2 id="retrieval-augmented-generation-and-semantic-layers">Retrieval
+Augmented Generation and Semantic Layers</h2>
+<p>In some situations we want to use llms to generate SQL queries with
+tools such as LangChain’s SQLChain. In these cases the application
+performs more consistently when the databases, tables, and columns have
+metadata that looks more like full natural language as opposed to
+short-hand words and codes.</p>
+<p>In these situations using a semantic layer to provide a more verbose
+and descriptive set of tags on data models can help improve query
+generation, as seen in the diagram below.</p>
+<p><img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" /></p>
+<h3 id="what-is-a-semantic-layer">What is a Semantic Layer?</h3>
+<p>A semantic layer can improve retrieval performance through</p>
+<ul>
+<li>better user management and security</li>
+<li>better metadata</li>
+<li>better data modeling over canonical tables</li>
+</ul>
+<p>A semantic layer is useful for the scenarios where we are using LLMs
+to select the correct table and then write a good SQL query statement to
+return the right data for the natural language query.</p>
+<p><img src="./images/semantic_layer_relationship_jan_2024.png" width="1000px" /></p>
+<p>The data modeling provided by a semantic layer is critical to giving
+the SQL Agent the context it needs to reason about which tables to use
+to answer the question posed.</p>
+<p><img src="./images/semantic_layer_schema_view_example_jan_2024.png" width="1000px" /></p>
+<p>When we are able to generate better SQL queries, we can pull more
+accurate information back for the augmentation phase to better support
+the generation phase. This gives more consistent and better quality
+results to the end user.</p>
+<p>A great example of this is using a <a
+href="https://www.cube.dev">Cube.dev</a> data model over a Snowflake
+table, exposing the more verbose Cube.dev data model to the LangChain
+SQLChain tool.</p>
+<h2 id="use-of-private-llms-with-retrieval-augmented-generation">Use of
+Private LLMs with Retrieval Augmented Generation</h2>
+<p>As we integrated more of our private information and customer
+information into LLM-based applications, if we are using LLM models that
+we do not control (e.g., “openAI”), there exists a scenario where the
+company who operates the model as an API may change their terms of
+service and begin training on our private data (or our customer’s
+private data).</p>
+<p>In this scenario you should strongly consider using a private model
+as your reasoning engine for your retrieval augmented generation
+architectures.</p>
+<p>Advantages include:</p>
+<ol type="1">
+<li>security of sensitive data exposure</li>
+<li>use of specialized models for your domain</li>
+<li>cheaper cost of operation at scale</li>
+</ol>
+<h1 id="summary">Summary</h1>
+<p>In this article we provided a traditional definition of retrieval
+augmented generation, we looked at the areas where retrieval augmented
+generation is becoming more broadly defined, and then finally closed
+with some specific ways Patterson Consulting is developing new ways to
+improve retrieval augmented generation.</p>
+<p>The video below shows our suite of concept applications that we
+demonstrated at AWS Re:Invent 2023 this year.</p>
+<div style="width: 100%; text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sXqdCGeWvdE?si=X4gQrG9sZVC-jV3w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+</div>
+<p><br/></p>
+<p>If you’d like to know more about how we apply retrieval augmented
+generation in practice for Enterprise customers, <a
+href="https://event.on24.com/wcc/r/4467432/02B67FC81F416636388BBC2B238485AE">join
+our webinar with Cube and Quantatec on January 24th</a>.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

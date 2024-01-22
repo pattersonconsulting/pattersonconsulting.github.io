@@ -2,11 +2,11 @@
 ---
 layout: post
 published-on: January 19th 2024
-author: Josh Patterson and Josh Bottom
+author: Josh Patterson and Josh Bottum
 title: The Evolution of Retrieval Augmented Generation
 subtitle: Enhancing LLMs with Private Data to Generate Better Answers
 description: In this article we take a look at "what is retrieval augmented generation?" and "how is retrieval augmented generation's definition evolving?".
-keywords: aws, bedrock, llm, ai, reasoning workbench, private models
+keywords: Large language models, llms, ai, reasoning, private models, retrieval augmented generation, rag
 meta_og_image: meta_og_evolution_rag_jan_2024.png
 ---
 
@@ -31,7 +31,7 @@ In this article we take a look at "what is retrieval augmented generation?" and 
 
 Retrieval Augmented Generation is a strategic approach employed to integrate external, user-specific data into the process of generating responses or content with large language models. Unlike traditional LLMs, which rely solely on their training data, RAG allows these models to dynamically fetch relevant information from external sources during the generation phase.
 
-With the architecture of RAG we are seperating the role of knowledge and reasoning. This idea is visually illustrated in the diagram below.
+With the architecture of RAG we are seperating the [role of knowledge and reasoning (book link)](https://pattersonconsultingtn.com/content/intro_to_llms_ebook.html). This idea is visually illustrated in the diagram below.
 
 <img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" />
 
@@ -80,7 +80,7 @@ During 2023, we saw important investments in RAG and most market leaders publish
 
 <img src="https://python.langchain.com/assets/images/data_connection-95ff2033a8faa5f3ba41376c0f6dd32a.jpg" width="1000px" />
 
-The traditional vector store workflow include six functions:
+The traditional vector store workflow includes six functions:
 
 1. **Document loaders:**
 Document loaders simplify the loading of different types of documents (HTML, PDF, code) from different locations (private S3 buckets, public websites, private storage).
@@ -104,13 +104,13 @@ An indexing API syncs your data sources with your vector store.  Indexing provid
 
 Contributions to RAG's thought leadership are wide spread.  For example, this Microsoft [blog](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) provides the following diagram, which demonstrates how RAG and LLM functionality are evolving:
 
-![Alt text](https://learn.microsoft.com/en-us/azure/search/media/retrieval-augmented-generation-overview/architecture-diagram.png#lightbox)
+![RAG Diagram from the Microsoft Blog](https://learn.microsoft.com/en-us/azure/search/media/retrieval-augmented-generation-overview/architecture-diagram.png#lightbox)
 
 As you can see in the chart above, query - knowledge now replaces the concept of the more specific embeddings and vector databases from the LangChain diagram. 
 
 AWS similarly has a blog article that shows the "retrieval" part of RAG as "search relevant information":
 
-![Alt text](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/jumpstart/jumpstart-fm-rag.jpg)
+![RAG Diagram from the AWS Sagemaker Blog](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/jumpstart/jumpstart-fm-rag.jpg)
 
 In early 2024, a new paper delivered an extensive analysis of RAG’s evolution, [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/pdf/2312.10997.pdf). Quoting from the abstract: 
 
@@ -162,14 +162,48 @@ In these situations using a semantic layer to provide a more verbose and descrip
 
 <img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" />
 
-A semantic layer can improve retrieval performance through better user management, better metadata, and better data modeling over canonical tables. When we are able to generate better SQL queries, we can pull more accurate information back for the augementation phase to better support the generation phase. This gives more consistent and better quality results to the end user.
+### What is a Semantic Layer?
+
+A semantic layer can improve retrieval performance through 
+
+* better user management and security
+* better metadata
+* better data modeling over canonical tables
+
+A semantic layer is useful for the scenarios where we are using LLMs to select the correct table and then write a good SQL query statement to return the right data for the natural language query.
+
+<img src="./images/semantic_layer_relationship_jan_2024.png" width="1000px" />
+
+The data modeling provided by a semantic layer is critical to giving the SQL Agent the context it needs to reason about which tables to use to answer the question posed.
+
+<img src="./images/semantic_layer_schema_view_example_jan_2024.png" width="1000px" />
+
+When we are able to generate better SQL queries, we can pull more accurate information back for the augmentation phase to better support the generation phase. This gives more consistent and better quality results to the end user.
 
 A great example of this is using a [Cube.dev](https://www.cube.dev) data model over a Snowflake table, exposing the more verbose Cube.dev data model to the LangChain SQLChain tool.
+
+## Use of Private LLMs with Retrieval Augmented Generation
+
+As we integrated more of our private information and customer information into LLM-based applications, if we are using LLM models that we do not control (e.g., "openAI"), there exists a scenario where the company who operates the model as an API may change their terms of service and begin training on our private data (or our customer's private data).
+
+In this scenario you should strongly consider using a private model as your reasoning engine for your retrieval augmented generation architectures.
+
+Advantages include:
+
+1. security of sensitive data exposure
+2. use of specialized models for your domain
+3. cheaper cost of operation at scale
 
 # Summary
 
 In this article we provided a traditional definition of retrieval augmented generation, we looked at the areas where retrieval augmented generation is becoming more broadly defined, and then finally closed with some specific ways Patterson Consulting is developing new ways to improve retrieval augmented generation.
 
-If you'd like to know more about how we apply retrieval augmented generation in practice for Enterprise customers, join our webinar with Cube and Quantatec on January 24th.
+The video below shows our suite of concept applications that we demonstrated at AWS Re:Invent 2023 this year.
+
+<div style="width: 100%; text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sXqdCGeWvdE?si=X4gQrG9sZVC-jV3w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div><br/>
+
+If you'd like to know more about how we apply retrieval augmented generation in practice for Enterprise customers, [join our webinar with Cube and Quantatec on January 24th](https://event.on24.com/wcc/r/4467432/02B67FC81F416636388BBC2B238485AE).
 
 

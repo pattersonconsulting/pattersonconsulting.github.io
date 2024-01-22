@@ -24,8 +24,8 @@ with Private Data to Generate Better Answers</title>
 <meta name="description" content="In this article we take a look at
 “what is retrieval augmented generation?” and “how is retrieval
 augmented generation’s definition evolving?”." />
-	<meta name="keywords" content="aws, bedrock, llm, ai, reasoning
-workbench, private models" />
+	<meta name="keywords" content="Large language models, llms, ai,
+reasoning, private models, retrieval augmented generation, rag" />
 	<meta name="author" content="Patterson Consulting" />
 
   	<!-- Facebook and Twitter integration -->
@@ -229,7 +229,7 @@ span.needs_editing {
 							<h3>Enhancing LLMs with Private Data to Generate Better Answers</h3>
 						</p>
 						<p>
-							Author: Josh Patterson and Josh Bottom<br/>
+							Author: Josh Patterson and Josh Bottum<br/>
 <p class="date">Date: January 19th 2024</p>
 							
 							
@@ -274,6 +274,9 @@ Multi-Agent Systems</a></li>
 <li><a href="#retrieval-augmented-generation-and-semantic-layers"
 id="toc-retrieval-augmented-generation-and-semantic-layers">Retrieval
 Augmented Generation and Semantic Layers</a></li>
+<li><a href="#use-of-private-llms-with-retrieval-augmented-generation"
+id="toc-use-of-private-llms-with-retrieval-augmented-generation">Use of
+Private LLMs with Retrieval Augmented Generation</a></li>
 </ul></li>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 </ul>
@@ -311,9 +314,10 @@ responses or content with large language models. Unlike traditional
 LLMs, which rely solely on their training data, RAG allows these models
 to dynamically fetch relevant information from external sources during
 the generation phase.</p>
-<p>With the architecture of RAG we are seperating the role of knowledge
-and reasoning. This idea is visually illustrated in the diagram
-below.</p>
+<p>With the architecture of RAG we are seperating the <a
+href="https://pattersonconsultingtn.com/content/intro_to_llms_ebook.html">role
+of knowledge and reasoning (book link)</a>. This idea is visually
+illustrated in the diagram below.</p>
 <p><img src="./images/pct_knowledge_vs_reasoning_jan_2024.png" width="1000px" /></p>
 <p>We use the RAG design pattern to connect our private knowledge with
 the reasoning power of LLMs to build next-generation AI applications.
@@ -376,7 +380,7 @@ delivered a traditional RAG architecture with a vector store, in this <a
 href="https://python.langchain.com/docs/modules/data_connection/">blog</a>
 which includes this workflow:</p>
 <p><img src="https://python.langchain.com/assets/images/data_connection-95ff2033a8faa5f3ba41376c0f6dd32a.jpg" width="1000px" /></p>
-<p>The traditional vector store workflow include six functions:</p>
+<p>The traditional vector store workflow includes six functions:</p>
 <ol type="1">
 <li><p><strong>Document loaders:</strong> Document loaders simplify the
 loading of different types of documents (HTML, PDF, code) from different
@@ -412,8 +416,9 @@ functionality are evolving:</p>
 <figure>
 <img
 src="https://learn.microsoft.com/en-us/azure/search/media/retrieval-augmented-generation-overview/architecture-diagram.png#lightbox"
-alt="Alt text" />
-<figcaption aria-hidden="true">Alt text</figcaption>
+alt="RAG Diagram from the Microsoft Blog" />
+<figcaption aria-hidden="true">RAG Diagram from the Microsoft
+Blog</figcaption>
 </figure>
 <p>As you can see in the chart above, query - knowledge now replaces the
 concept of the more specific embeddings and vector databases from the
@@ -423,8 +428,9 @@ RAG as “search relevant information”:</p>
 <figure>
 <img
 src="https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/jumpstart/jumpstart-fm-rag.jpg"
-alt="Alt text" />
-<figcaption aria-hidden="true">Alt text</figcaption>
+alt="RAG Diagram from the AWS Sagemaker Blog" />
+<figcaption aria-hidden="true">RAG Diagram from the AWS Sagemaker
+Blog</figcaption>
 </figure>
 <p>In early 2024, a new paper delivered an extensive analysis of RAG’s
 evolution, <a
@@ -518,25 +524,63 @@ short-hand words and codes.</p>
 and descriptive set of tags on data models can help improve query
 generation, as seen in the diagram below.</p>
 <p><img src="./images/pct_semantic_layer_rag_arch_v2_jan_2024.png" width="1000px" /></p>
-<p>A semantic layer can improve retrieval performance through better
-user management, better metadata, and better data modeling over
-canonical tables. When we are able to generate better SQL queries, we
-can pull more accurate information back for the augementation phase to
-better support the generation phase. This gives more consistent and
-better quality results to the end user.</p>
+<h3 id="what-is-a-semantic-layer">What is a Semantic Layer?</h3>
+<p>A semantic layer can improve retrieval performance through</p>
+<ul>
+<li>better user management and security</li>
+<li>better metadata</li>
+<li>better data modeling over canonical tables</li>
+</ul>
+<p>A semantic layer is useful for the scenarios where we are using LLMs
+to select the correct table and then write a good SQL query statement to
+return the right data for the natural language query.</p>
+<p><img src="./images/semantic_layer_relationship_jan_2024.png" width="1000px" /></p>
+<p>The data modeling provided by a semantic layer is critical to giving
+the SQL Agent the context it needs to reason about which tables to use
+to answer the question posed.</p>
+<p><img src="./images/semantic_layer_schema_view_example_jan_2024.png" width="1000px" /></p>
+<p>When we are able to generate better SQL queries, we can pull more
+accurate information back for the augmentation phase to better support
+the generation phase. This gives more consistent and better quality
+results to the end user.</p>
 <p>A great example of this is using a <a
 href="https://www.cube.dev">Cube.dev</a> data model over a Snowflake
 table, exposing the more verbose Cube.dev data model to the LangChain
 SQLChain tool.</p>
+<h2 id="use-of-private-llms-with-retrieval-augmented-generation">Use of
+Private LLMs with Retrieval Augmented Generation</h2>
+<p>As we integrated more of our private information and customer
+information into LLM-based applications, if we are using LLM models that
+we do not control (e.g., “openAI”), there exists a scenario where the
+company who operates the model as an API may change their terms of
+service and begin training on our private data (or our customer’s
+private data).</p>
+<p>In this scenario you should strongly consider using a private model
+as your reasoning engine for your retrieval augmented generation
+architectures.</p>
+<p>Advantages include:</p>
+<ol type="1">
+<li>security of sensitive data exposure</li>
+<li>use of specialized models for your domain</li>
+<li>cheaper cost of operation at scale</li>
+</ol>
 <h1 id="summary">Summary</h1>
 <p>In this article we provided a traditional definition of retrieval
 augmented generation, we looked at the areas where retrieval augmented
 generation is becoming more broadly defined, and then finally closed
 with some specific ways Patterson Consulting is developing new ways to
 improve retrieval augmented generation.</p>
+<p>The video below shows our suite of concept applications that we
+demonstrated at AWS Re:Invent 2023 this year.</p>
+<div style="width: 100%; text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sXqdCGeWvdE?si=X4gQrG9sZVC-jV3w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+</div>
+<p><br/></p>
 <p>If you’d like to know more about how we apply retrieval augmented
-generation in practice for Enterprise customers, join our webinar with
-Cube and Quantatec on January 24th.</p>
+generation in practice for Enterprise customers, <a
+href="https://event.on24.com/wcc/r/4467432/02B67FC81F416636388BBC2B238485AE">join
+our webinar with Cube and Quantatec on January 24th</a>.</p>
 
 					</div>
 				</div>

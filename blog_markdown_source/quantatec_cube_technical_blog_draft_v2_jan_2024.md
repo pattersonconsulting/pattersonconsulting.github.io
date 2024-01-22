@@ -163,7 +163,9 @@ The answer from the above augmented prompt might look something like:
 
 > Truck 829 was running above the speed limit of 65 MPG on average.
 
-Depending on how we want to display the above information to the user, we might have another post-analysis prompt that re-wrote the above answer in a certain way, or we might ask several questions and then combine all of their answers into a final augmented prompt to synthesize a summary report.
+Depending on how we want to display the above information to the user, we might have another post-analysis prompt that re-wrote the above answer in a certain way, or we might ask several questions and then combine all of their answers into a final augmented prompt to synthesize a summary report. The embedded video below shows an example of what a finished report could look like.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3_DkaCuCdvY?si=UPjb85OVBrhQwxv5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 # Summary and Webinar
 

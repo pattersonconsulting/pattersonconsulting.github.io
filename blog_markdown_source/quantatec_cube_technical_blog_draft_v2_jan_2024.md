@@ -107,6 +107,54 @@ Now let's dig into what a "prompt router" might look like.
 
 The first stage of the workflow is to use a "prompt router" (e.g., a type of prompt classifier) to classify the prompt into 1 of N "buckets" or types, as we saw in the diagram above.
 
+In the code block below, we can see a simple example of this idea:
+
+```
+
+prompt_path_mappings = [
+    {
+        "name": "Medical Sales", 
+        "description": "Good for when you need to build a plan for selling medical devices, vaccines, and medicines."
+    },
+    {
+        "name": "Construction Sales", 
+        "description": "Good for when you need to build a plan for selling construction materials"
+    }
+
+]
+
+destinations = [f"{p['name']}: {p['description']}" for p in prompt_path_mappings]
+destinations_str = "\n".join(destinations)
+router_template = MULTI_PROMPT_ROUTER_TEMPLATE.format(
+    destinations=destinations_str
+)
+
+router_prompt = PromptTemplate(
+    template=router_template,
+    input_variables=["input"],
+    output_parser=RouterOutputParser(),
+)
+
+prompt_type_router = LLMRouterChain.from_llm(llm, router_prompt)
+
+```
+
+And then later on when we want to use our prompt routing (`prompt_type_router`) method:
+
+```
+
+input_query = "build a medical sales plan for vaccines"
+
+prompt_route = prompt_type_router.route( input_query )
+
+if "Medical Sales" == str(prompt_route.destination):
+
+    print("Building medical product sales plan...")
+
+```
+
+This allows us to break down logic into workflows and embed snippets of reasoning between the stages of the workflow.
+
 <table style="margin: 12px;">
   <thead>
     <tr>
@@ -165,7 +213,11 @@ The answer from the above augmented prompt might look something like:
 
 Depending on how we want to display the above information to the user, we might have another post-analysis prompt that re-wrote the above answer in a certain way, or we might ask several questions and then combine all of their answers into a final augmented prompt to synthesize a summary report. The embedded video below shows an example of what a finished report could look like.
 
+<div style="width: 100%; text-align: center;">
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3_DkaCuCdvY?si=UPjb85OVBrhQwxv5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+</div>
 
 # Summary and Webinar
 

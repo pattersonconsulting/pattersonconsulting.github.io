@@ -23,7 +23,7 @@ meta_og_image: meta_og_evolution_rag_jan_2024.png
 
 In 2023, enterprise CTOs acknowledged that Large Language Models (LLMs) can generate better answers than humans.  In 2024, CTOs are expanding their LLM use cases, while carefully navigating the rapidly changing LLM landscape, which now includes LLMs with Retrieval Augmented Generation (RAG).  RAG adds tremendous value because it enables LLMs to generate answers with fresh data from internal and external sources. RAG expands the delivery of higher-value applications, especially for use cases that require reasoning, enabling market leaders to materially differentiate their business functions.
 
-RAG gained speed in April 2021 in this seminal [paper](https://arxiv.org/pdf/2005.11401.pdf), "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", when it concluded that LLMs with RAG performed better than LLMs, and better than humans. 
+RAG gained speed in April 2021 in this seminal [paper](https://arxiv.org/pdf/2005.11401.pdf), "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", which demonstrated that LLMs with RAG performed better than LLMs, and better than humans. 
 
 In this article we take a look at "what is retrieval augmented generation?" and "how is retrieval augmented generation's definition evolving?".
 
@@ -76,7 +76,7 @@ RAG enables a broader set of applications to be supported because current inform
 
 # Defining Traditional RAG
 
-During 2023, we saw important investments in RAG and most market leaders published detailed RAG technical reviews.  For example, LangChain delivered a traditional RAG architecture with a vector store, in this [blog](https://python.langchain.com/docs/modules/data_connection/) which includes this workflow:
+During 2023, we saw important investments in RAG and most market leaders published detailed RAG technical reviews.  For example, LangChain documented their [traditional RAG architecture](https://python.langchain.com/docs/modules/data_connection/) utilizing a vector store which includes this workflow:
 
 <img src="https://python.langchain.com/assets/images/data_connection-95ff2033a8faa5f3ba41376c0f6dd32a.jpg" width="1000px" />
 
@@ -102,7 +102,7 @@ An indexing API syncs your data sources with your vector store.  Indexing provid
 
 ## Expanding RAG's Definition
 
-Contributions to RAG's thought leadership are wide spread.  For example, this Microsoft [blog](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) provides the following diagram, which demonstrates how RAG and LLM functionality are evolving:
+Contributions in the RAG domain are wide spread.  For example, this Microsoft [blog](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) provides the following diagram, which demonstrates how RAG and LLM functionality are evolving:
 
 ![RAG Diagram from the Microsoft Blog](https://learn.microsoft.com/en-us/azure/search/media/retrieval-augmented-generation-overview/architecture-diagram.png#lightbox)
 
@@ -112,11 +112,13 @@ AWS similarly has a blog article that shows the "retrieval" part of RAG as "sear
 
 ![RAG Diagram from the AWS Sagemaker Blog](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/jumpstart/jumpstart-fm-rag.jpg)
 
-In early 2024, a new paper delivered an extensive analysis of RAG’s evolution, [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/pdf/2312.10997.pdf). Quoting from the abstract: 
+In early 2024, a new paper delivered an extensive analysis of RAG’s evolution, [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/pdf/2312.10997.pdf). 
+
+<!--Quoting from the abstract: 
 
 > “This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG… Furthermore, this paper introduces the metrics and benchmarks for assessing RAG models, along with the most up-to-date evaluation framework.” 
-
-Technically, the paper introduces the Advanced RAG paradigm, extending beyond the Naive approach by incorporating sophisticated architectural elements such as query rewriting, chunk reranking, and prompt summarization. It explores hybrid content retrieval with both structured and unstructured data sources (e.g., images, videos, code) and reviews cutting-edge research on self-retrieval from LLMs, including dynamic timing of information retrieval.
+-->
+Technically, the paper introduces the Advanced RAG paradigm, extending beyond the naive approach by incorporating sophisticated architectural elements such as query rewriting, chunk reranking, and prompt summarization. It explores hybrid content retrieval with both structured and unstructured data sources (e.g., images, videos, code) and reviews cutting-edge research on self-retrieval from LLMs, including dynamic timing of information retrieval.
 
 The paper also introduces an evaluation framework for RAG models, including benchmark tests and automated evaluation tools providing quantitative metrics. It emphasizes four key abilities indicating a model's adaptability and efficiency: noise robustness, negative rejection, information integration, and counterfactual robustness. Finally, it underscores the imperative to mature and refine evaluation methodologies.
 

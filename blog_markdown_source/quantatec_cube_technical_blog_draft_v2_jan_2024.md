@@ -61,7 +61,7 @@ Let's start off by defining an architecture for managing the integration of know
 
 ## Architecture, LangChain, and Retrieval Augmented Generation
 
-If we want to integrate the knowledge management and the reasoning parts of our application, a great architecture that works well with LLMs is [Retrieval Augmented Generation (RAG)](./evolution_rag.html).
+If we want to integrate the knowledge management and the reasoning parts of our application, a great architecture that works well with LLMs is [Retrieval Augmented Generation (RAG)](https://pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_jan_2024.html).
 
 With RAG we need 3 components to our architecture:
 

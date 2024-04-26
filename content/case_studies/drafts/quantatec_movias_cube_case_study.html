@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>How Quantatec Built a Natural Langauge UX for their Embedded
+Analytics Platform - A Case Study of How Patterson Consulting Helped
+Quantatec Build a Next-Generation Fleet Management Platform</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll ….." />
+	<meta name="keywords" content="case-study, quantatec, cube, movias,
+fleet-management, embedded-analytics" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="How Quantatec Built a Natural
+Langauge UX for their Embedded Analytics Platform - A Case Study of How
+Patterson Consulting Helped Quantatec Build a Next-Generation Fleet
+Management Platform"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/quantatec_movias_cube_case_study.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll ….."/>
+	
+
+	<meta name="twitter:title" content="How Quantatec Built a Natural
+Langauge UX for their Embedded Analytics Platform - A Case Study of How
+Patterson Consulting Helped Quantatec Build a Next-Generation Fleet
+Management Platform" />
+	<meta data-rh="true" property="twitter:description" content="In this
+post we’ll ….."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/quantatec_movias_cube_case_study.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>How Quantatec Built a Natural Langauge UX for their Embedded
+Analytics Platform</h1>
+						<p>
+							<h3>A Case Study of How Patterson Consulting Helped Quantatec Build a
+Next-Generation Fleet Management Platform</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: January 10th 2024</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<nav id="TOC">
+<ul>
+<li><a href="#quantatec-profile" id="toc-quantatec-profile">Quantatec
+Profile</a></li>
+<li><a href="#overview" id="toc-overview">Overview</a>
+<ul>
+<li><a href="#quantatecs-challenge"
+id="toc-quantatecs-challenge">Quantatec’s Challenge</a></li>
+<li><a href="#patterson-consultings-solution"
+id="toc-patterson-consultings-solution">Patterson Consulting’s
+Solution</a></li>
+</ul></li>
+<li><a href="#making-fleet-management-data-driven"
+id="toc-making-fleet-management-data-driven">Making Fleet Management
+Data-Driven</a></li>
+<li><a href="#quantatecs-challenge-1"
+id="toc-quantatecs-challenge-1">Quantatec’s Challenge</a></li>
+<li><a href="#results" id="toc-results">Results</a>
+<ul>
+<li><a href="#improving-the-user-experience-with-natural-language"
+id="toc-improving-the-user-experience-with-natural-language">Improving
+the User Experience with Natural Language</a></li>
+<li><a href="#making-self-service-easier-by-making-data-conversational"
+id="toc-making-self-service-easier-by-making-data-conversational">Making
+Self Service Easier by Making Data Conversational</a></li>
+</ul></li>
+<li><a href="#why-patterson-consulting"
+id="toc-why-patterson-consulting">Why Patterson Consulting?</a></li>
+<li><a href="#call-to-action" id="toc-call-to-action">Call To
+Action</a></li>
+</ul>
+</nav>
+<p>Editing Notes: * add a riff on “data engineering for genAI”</p>
+<h1 id="quantatec-profile">Quantatec Profile</h1>
+<ul>
+<li>Industry: SaaS</li>
+<li>Stack: Postgres, Angular, Azure Kubernetes Service, Azure OpenAI,
+Langchain</li>
+<li>Employees: 15</li>
+<li>Use Case: Natural Language UX for Embedded Analytics</li>
+<li>Headquarters: Sã0 Paulo, Brazil</li>
+</ul>
+<h1 id="overview">Overview</h1>
+<h2 id="quantatecs-challenge">Quantatec’s Challenge</h2>
+<p>Customers were asking for complex custom reports that required a
+sophisticated user interface to configure for each report. This
+interface was cumbersome to build and also not easy for new users to
+quickly learn.</p>
+<h2 id="patterson-consultings-solution">Patterson Consulting’s
+Solution</h2>
+<p>The Patterson Consulting team brought three critical peices to the
+engagement:</p>
+<ul>
+<li>Data engineering expertise in setting up both cloud data platforms
+and data pipelines</li>
+<li>In-house custom methods for getting consistent answers with private
+enterprise data and large language models</li>
+<li>A professional engineering process that kept Quantatec’s end goals
+in mind setting them up for future success</li>
+</ul>
+<h1 id="making-fleet-management-data-driven">Making Fleet Management
+Data-Driven</h1>
+<p>With more than 32 years of experience in automotive electronics and
+more than 23 years of leadership and innovation in the automotive
+tracking segment, Brazilian company Quantatec specializes in tracking,
+logistics control, fleet management, accident, and cost reduction for
+fleets of vehicles of any type and size.</p>
+<p>Quantatec provides fleet managers access to their tracking device
+data in Movias, their exclusive fleet management platform. Mauricio
+Cirelli manages the Movias platform. The embedded analytics solution,
+available on the web and mobile, presents account-specific data to
+hundreds of customers in South America. Six million tracker messages are
+received and processed daily, amounting to about 1TB of data
+annually.</p>
+<h1 id="quantatecs-challenge-1">Quantatec’s Challenge</h1>
+<p>Before Cube, Quantatec’s multi-tenant embedded analytics solution
+delivered static, hard-coded reports with basic filtering. Fleet
+managers soon wanted customizations, such as adding a column for the
+driver’s name or the fleet name to the report. Each request was slightly
+different. The team would either create a new report or modify an
+existing one in a way that would not impact others.</p>
+<p>Demand was high. A growing number of unique SQL queries for the
+current user were sent to the database to return account-specific data.
+The increased volume of direct database queries combined with real-time
+data processing from over 10,000 devices resulted in unpredictable
+database performance and degraded customer experience.</p>
+<ul>
+<li>diagram</li>
+</ul>
+<p>When customers began asking for their own interactive dashboards and
+the ability to customize them, Mauricio knew that more custom queries
+would only add to the existing performance issues. He began searching
+for a solution. It turned out to be just the beginning of a series of
+major innovations for Quantatec’s customers.</p>
+<h1 id="results">Results</h1>
+<p>Inspired by Patterson Consulting’s demo to showcase an LLM chatbot’s
+potential, Mauricio imagined a user-friendly, chat interface over
+Quantatec’s fleet data. Mauricio partnered with Patterson Consulting to
+realize his vision.</p>
+<h2 id="improving-the-user-experience-with-natural-language">Improving
+the User Experience with Natural Language</h2>
+<p>Using the Cube’s universal semantic layer, OpenAI API, and LangChain
+framework, Mauricio and Josh introduced Movias AI, a chatbot interface,
+capable of interpreting natural language queries and fetching relevant
+data from Cube’s cache or database as needed. Development took only
+about six weeks from POC to production. With chatbot integration,
+Quantatec provided a truly unique experience to deliver data to fleet
+managers. Questions can be written in any language supported by the LLM.
+In particular, English, Spanish and Brazilian Portuguese were
+evaluated.</p>
+<p>Connecting the next-generationa with large language models also
+required a non-trivial amount of data engineering work to get the
+integration correct. The Patterson Consulting team leverage their
+experience working on data pipelines and in data modeling to create the
+right integration for LangChain and the Generative AI engine.</p>
+<h2 id="making-self-service-easier-by-making-data-conversational">Making
+Self Service Easier by Making Data Conversational</h2>
+<p>Mauricio shared, “Ultimately, fleet managers have questions and want
+them to be answered. We can do that by providing them a report or a
+dashboard, but it is much more efficient for them to just ask the system
+and get a clean response to their questions.</p>
+<p>Combining the power of the universal semantic layer’s with Patterson
+Consulting’s Generative AI expertise, Quantatec revolutionized fleet
+management operations, empowering fleet managers to extract actionable
+insights with ease.</p>
+<h1 id="why-patterson-consulting">Why Patterson Consulting?</h1>
+<p>Patterson Consulting has consistently demonstrated the
+forward-looking expertise in data engineering, Azure, and large language
+models to build Generative AI applications. Our project scoping process
+was detailed and clearly communicated expectations to Quantatec on how
+the project would be run and what they could expect for delivered
+functionality.</p>
+<p>Mauricio Cirelli of Quantatec states:</p>
+<blockquote>
+<p>“We worked with Patterson Consulting on this Generative AI project.
+We wanted a large language model (LLM) to answer customer’s questions
+about their own fleet data and Patterson Consulting helped us to
+integrate the LLM properly and provide consistent quality answers to the
+user. They delivered the project on schedule, well documented and
+according to all specs we had defined in the SoW. It was a pleasure and
+a profit to work with them.”</p>
+</blockquote>
+<h1 id="call-to-action">Call To Action</h1>
+<ul>
+<li>Take the next step with Patterson Consulting</li>
+</ul>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

@@ -61,7 +61,7 @@ When customers began asking for their own interactive dashboards and the ability
 
 Using the Cube’s universal semantic layer, OpenAI API, and LangChain framework, Mauricio and Josh introduced Movias AI, a chatbot interface, capable of interpreting natural language queries and fetching relevant data from Cube's cache or database as needed. Development took only about six weeks from POC to production. With chatbot integration, Quantatec provided a truly unique experience to deliver data to fleet managers. Questions can be written in any language supported by the LLM. In particular, English, Spanish and Brazilian Portuguese were evaluated.
 
-Connecting the next-generationa with large language models also required a non-trivial amount of data engineering work to get the integration correct. The Patterson Consulting team leverage their experience working on data pipelines and in data modeling to create the right integration for LangChain and the Generative AI engine.
+Connecting the next-generation application with large language models also required a non-trivial amount of data engineering work to get the integration correct. The Patterson Consulting team leverage their experience working on data pipelines and in data modeling to create the right integration for LangChain and the Generative AI engine.
 
 ## Making Self Service Easier by Making Data Conversational
 

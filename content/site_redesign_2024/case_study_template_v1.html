@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>Case Study | [ Template ] v.1</title>
+    <meta name="description" content="Patterson Consulting - Case Study | [ Template ] v.1">
+    <meta name="keywords" content="bootstrap, business, corporate, coworking space, services, creative agency, dashboard, e-commerce, mobile app showcase, saas, multipurpose, product landing, shop, software, ui kit, web studio, landing, light and dark mode, html5, css3, javascript, gallery, slider, touch, creative">
+    <meta name="author" content="Patterson Consulting">
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/app-icons/icon-180x180.png">
+        
+    <!-- Theme switcher (color modes) -->
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+        }
+      })()
+    </script>
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <!--
+                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
+                -->
+
+
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Generative AI</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/content/intro_to_llms_ebook.html">eBook</a></li>
+                    <li><a class="dropdown-item" href="account-settings.html">Services Overview</a></li>
+
+                  </ul>
+
+
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="account-overview.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="account-settings.html">Data Migration</a></li>
+                    <li><a class="dropdown-item" href="account-billing.html">Generative AI</a></li>
+                    <li><a class="dropdown-item" href="account-orders.html">AI Strategy</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="account-overview.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="account-settings.html">Ebooks</a></li>
+                    <li><a class="dropdown-item" href="account-billing.html">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="components/typography.html">About</a>
+                </li>
+              </ul>
+              <div class="d-sm-none p-3 mt-n3">
+                <a class="btn btn-primary w-100 rounded-pill mb-1" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener">
+                  <i class="ai-cart fs-xl me-2 ms-n1"></i>
+                  Buy now
+                </a>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image: url(assets/img/video_preview_quantatec_v3_2023.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+
+
+          <!-- Page title -->
+          <div class="d-none d-xxl-block" style="height: 100px;"></div>
+          <div class="d-none d-lg-block d-xxl-none" style="height: 120px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 80px;"></div>
+          <div class="d-md-none" style="height: 40px;"></div>
+          <h4>Case Studies / Quantatec</h4>
+          <h1 class="display-2 mb-4">How Quantatec Built a Natural Langauge Interface for their Analytics Platform</h1>
+          <p class="text-body mb-0" >A Case Study of How Patterson Consulting Helped Quantatec integrate <strong>Generative AI</strong> into their Logistics Platform</p>
+
+          
+                  
+
+          <!-- Features -->
+          <div class="d-none d-xxl-block" style="height: 50px;"></div>
+
+                  <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col mb-2">
+                      <img class="" src="assets/img/logo_quanta_negativa.png" width="150" height="20" alt="Quantatec logo">  
+                    </div>
+                  </div>
+
+            <div class="d-none d-xxl-block" style="height: 50px;"></div>
+
+          <div class="d-none d-lg-block d-xxl-none" style="height: 160px;"></div>
+          <!--
+          <div class="d-none d-md-block d-lg-none" style="height: 100px;"></div>
+        -->
+          <div class="d-md-none" style="height: 50px;"></div>
+
+          <!--
+          <div class="row  g-4 pb-1 pb-md-3">
+
+            <div class="col">
+              <div class="align-items-center">
+                <h3 class="">Quantatec's Challenge</h3>
+                <p class="text-body">Customers were asking for complex custom reports that required a sophisticated user interface to configure for each report. This interface was cumbersome to build and also not easy for new users to quickly learn.</p>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="">
+                <h3 class="">Patterson Consulting's Solution</h3>
+                <p class="text-body">The Patterson Consulting team brought three critical peices to the engagement:
+                  <ul>
+                    <li>Data engineering expertise in setting up both cloud data platforms and data pipelines </li>
+                    <li>In-house custom methods for getting consistent answers with private enterprise data and large language models</li>
+                    <li>A professional engineering process that kept Quantatec's end goals in mind setting them up for future success</li>
+                  </ul>
+                </p>
+              </div>
+
+            </div>
+
+
+          </div>
+        -->
+
+
+                  <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col mb-4">
+
+                      <div class="card bg-opacity-10 border-primary h-100">
+                        <!--
+                        <div class="card-header text-white border-light">Quantatec's Challenge</div>
+                      -->
+                        <div class="card-body">
+                          <h4 class="card-title text-white">Quantatec's Challenge</h4>
+                          <p class="card-text text-white">
+                            <strong>
+                            Customers were asking for complex custom reports that required a sophisticated user interface to configure for each report. This interface was cumbersome to build and also not easy for new users to quickly learn.
+                            </strong>
+                          </p>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col mb-4">
+                      <div class="card border-0 bg-primary h-100">
+                        <div class="card-body">
+                          <h4 class="card-title">Patterson Consulting's Solution</h4>
+                          <p class="card-text"><strong>
+                            
+The Patterson Consulting team brought three critical peices to the engagement:
+                  <ul>
+                    <li>Data engineering expertise in setting up both cloud data platforms and data pipelines </li>
+                    <li>In-house custom methods for getting consistent answers with private enterprise data and large language models</li>
+                    <li>A professional engineering process that kept Quantatec's end goals in mind setting them up for future success</li>
+                  </ul>
+
+                            </strong>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>        
+        </div>
+      </section>
+
+
+
+
+<section class="container py-5 my-md-2 my-lg-3 my-xl-4">
+        <div class="row pt-xxl-2">
+          <div class="col-lg-9 col-xl-8 pe-lg-4 pe-xl-0">
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Making Fleet Management Data-Driven</h2>
+
+            <p class="fs-lg">With more than 32 years of experience in automotive electronics and more than 23 years of leadership and innovation in the automotive tracking segment, Brazilian company Quantatec specializes in tracking, logistics control, fleet management, accident, and cost reduction for fleets of vehicles of any type and size.</p>
+
+            <p class="fs-lg mb-3">Quantatec provides fleet managers access to their tracking device data in Movias, their exclusive fleet management platform. Mauricio Cirelli manages the Movias platform. The embedded analytics solution, available on the web and mobile, presents account-specific data to hundreds of customers in South America. Six million tracker messages are received and processed daily, amounting to about 1TB of data annually.</p>
+            
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Quantatec's Challenge</h2>
+            <!--
+            <p class="fs-lg pb-4 pb-xl-5">Ut pellentesque bibendum dignissim a molestie. Ultrices diam ut vel neque tincidunt eget. Sed ut quis sit semper nunc at etiam lacinia. Quam laoreet eget id sapien a pharetra, ornare diam dignissim. Lorem amet nisl, enim mi aenean mauris. Porta nisl a ultrices ut libero id. Gravida a mi neque, tristique justo, et pharetra. Laoreet nulla est nulla cras ac arcu sed mattis tristique. Morbi convallis suspendisse enim blandit massa. Cursus augue dui mattis morbi velit.</p>
+-->
+
+<p class="fs-lg mb-3">
+Before Cube, Quantatec’s multi-tenant embedded analytics solution delivered static, hard-coded reports with basic filtering. Fleet managers soon wanted customizations, such as adding a column for the driver’s name or the fleet name to the report. Each request was slightly different. The team would either create a new report or modify an existing one in a way that would not impact others.
+</p>
+
+<p class="fs-lg mb-3">
+Demand was high. A growing number of unique SQL queries for the current user were sent to the database to return account-specific data. The increased volume of direct database queries combined with real-time data processing from over 10,000 devices resulted in unpredictable database performance and degraded customer experience.
+</p>
+
+            <div class="row text-center justify-content-center input-group mb-4">
+            <figure class="figure">
+              <img class="figure-img rounded-1 mb-3" src="assets/img/quantatec_movias_ux.jpg" alt="Quantatec's Movias User Interface">
+              <figcaption class="figure-caption">Quantatec's Movias User Interface</figcaption>
+            </figure>
+            </div>
+
+<p class="fs-lg mb-3">
+When customers began asking for their own interactive dashboards and the ability to customize them, Mauricio knew that more custom queries would only add to the existing performance issues. He began searching for a solution. It turned out to be just the beginning of a series of major innovations for Quantatec’s customers.
+</p>
+
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Project Results</h2>
+            <p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5"> Inspired by Patterson Consulting’s demo to showcase an LLM chatbot's potential, Mauricio imagined a user-friendly, chat interface over Quantatec’s fleet data. Mauricio partnered with Patterson Consulting to realize his vision.
+            </p>
+
+
+
+<h3 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Improving the User Experience with Natural Language</h3>
+
+<p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5">
+Using the Cube’s universal semantic layer, OpenAI API, and LangChain framework, Mauricio and Josh introduced Movias AI, a chatbot interface, capable of interpreting natural language queries and fetching relevant data from Cube's cache or database as needed. Development took only about six weeks from POC to production. With chatbot integration, Quantatec provided a truly unique experience to deliver data to fleet managers. Questions can be written in any language supported by the LLM. In particular, English, Spanish and Brazilian Portuguese were evaluated.
+</p>
+
+<p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5">
+Connecting the next-generation application with large language models also required a non-trivial amount of data engineering work to get the integration correct. The Patterson Consulting team leverage their experience working on data pipelines and in data modeling to create the right integration for LangChain and the Generative AI engine.
+</p>
+
+<p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5">Check out our webinar with Quantatec:</p>
+
+              <div class="position-relative">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+                  <a href="https://www.youtube.com/watch?v=CF1Z-R81dE8&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                </div>
+                <img src="assets/img/video_preview_quantatec_v3_2023.jpg" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                <img src="assets/img/video_preview_quantatec_v3_2023.png" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+              </div>
+
+
+
+
+
+
+
+          <h3 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">
+            Making Self Service Easier by Making Data Conversational
+          </h3>
+
+          <p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5">
+
+          Combining the power of the universal semantic layer’s with Patterson Consulting's Generative AI expertise, Quantatec revolutionized fleet management operations, empowering fleet managers to extract actionable insights with ease. Mauricio added:
+          </p>
+
+            <div class="card border-0 bg-secondary mb-3">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p>Ultimately, fleet managers have questions and want them to be answered. We can do that by providing them a report or a dashboard, but it is much more efficient for them to just ask the system and get a clean response to their questions.</p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Mauricio Cirelli, Quantatec</figcaption>
+                </figure>
+              </div>
+            </div>
+          </p>
+
+
+
+          <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Patterson Consulting?</h2>
+
+          <p class="fs-lg pb-2 pb-lg-0 mb-4 mb-lg-5">
+          Patterson Consulting has consistently demonstrated the forward-looking expertise in data engineering, Azure, and large language models to build Generative AI applications. Our project scoping process was detailed and clearly communicated expectations to Quantatec on how the project would be run and what they could expect for delivered functionality.
+
+          </p>
+
+
+            <div class="card border-0 bg-secondary mb-3">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p>We worked with Patterson Consulting on this Generative AI project. We wanted a large language model (LLM) to answer customer’s questions about their own fleet data and Patterson Consulting helped us to integrate the LLM properly and provide consistent quality answers to the user. They delivered the project on schedule, well documented and according to all specs we had defined in the SoW. It was a pleasure and a profit to work with them.</p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Mauricio Cirelli, Quantatec</figcaption>
+                </figure>
+              </div>
+            </div>
+
+
+
+<!--
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Lorem ipsum dolor sit amet consectetur</h2>
+            <p class="fs-lg">Ut pellentesque bibendum dignissim a molestie. Ultrices diam ut vel neque tincidunt eget. Sed ut quis sit semper nunc at etiam lacinia. Quam laoreet eget id sapien a pharetra, ornare diam dignissim.</p>
+            <ul>
+              <li class="mb-1">Quam laoreet eget id sapien</li>
+              <li class="mb-1">Morbi convallis suspendisse</li>
+              <li class="mb-1">Vivamus non ante</li>
+              <li class="mb-1">Praesent dignissim efficitur</li>
+              <li class="mb-1">Gravida a mi neque</li>
+            </ul>
+            <p class="fs-lg">Donec diam neque, efficitur vitae ante a, eleifend placerat est. Phasellus dapibus scelerisque diam, eu rhoncus lorem vulputate lobortis. Praesent pulvinar venenatis mauris, eget fringilla sem.</p>
+-->
+            <!-- Tags -->
+            <!--
+            <div class="d-flex flex-wrap pt-3 pt-md-4 pt-xl-5 mt-xl-n2">
+              <h3 class="h6 py-1 mb-0 me-4">Relevant tags:</h3>
+              <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                <span class="text-primary">#</span>Nature
+              </a>
+              <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                <span class="text-primary">#</span>Books
+              </a>
+              <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                <span class="text-primary">#</span>Travel
+              </a>
+            </div>
+          -->
+
+          </div>
+
+
+          <!-- Sidebar -->
+          <aside class="col-lg-3 offset-xl-1 pt-4 pt-lg-0" style="margin-top: -7rem;">
+            <div class="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style="padding-top: 7rem;">
+
+
+              <h4 class="pt-xl-1 mb-4 border-bottom"> Quantatec</h4>
+              <ul class="list-unstyled mb-0">
+                <li class="pb-3 mb-3">
+                  <span>Industry:</span>
+                  <span class="h6 mb-0">
+                    SaaS
+                  </span>
+                </li>
+
+                <li class="pb-3 mb-3">
+                  <span>Employees:</span>
+                  <span class="h6 mb-0">
+                     15
+                  </span>
+                </li>
+
+                <li class="pb-3 mb-3">
+                  <span>Headquarters:</span>
+                  <span class="h6 mb-0">
+                     Sã0 Paulo, Brazil
+                  </span>
+                </li>
+
+                <li class="pb-3 mb-3">
+                  <span>Use Case: </span>
+                  <span class="h6 mb-0">
+                    Generative AI
+                  </span>
+                </li>
+
+
+                <li class="pb-3 mb-3">
+                  <span>Stack: </span><br/>
+                  <span class="h6 mb-0">
+                    Postgres, Angular, Azure Kubernetes Service, Azure OpenAI, Langchain
+                  </span>
+                </li>
+
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+
+
+      <section class="border-top border-light ">
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+
+                  <div class="card overflow-hidden" style="background-color: #eeeeee;">
+                    <div class="row g-0">
+                      <div class="col-sm-5 bg-repeat-0 bg-size-cover order-sm-2" style="background-image: url(assets/img/footer_cta_img.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-7 order-sm-1">
+                        <div class="card-body">
+                          <h3 class="card-title">Let's start building your Generative AI project together</h3>
+                          <p class="card-text">Reach out to start a discussion with our team about your data engineering and generative AI needs.</p>
+                          <a class="btn btn-primary" href="#">Talk to our team</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+
+      </section>
+
+
+
+    </main>
+
+    
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
+                <i class="ai-facebook"></i>
+              </a>
+            -->
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
+                <i class="ai-instagram"></i>
+              </a>
+            -->
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="#" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="#">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

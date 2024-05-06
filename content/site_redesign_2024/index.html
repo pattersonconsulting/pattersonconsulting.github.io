@@ -127,18 +127,6 @@
     </style>
 
 
-    <!-- Page loading scripts -->
-    <script>
-      (function () {
-        window.onload = function () {
-          const preloader = document.querySelector('.page-loading')
-          preloader.classList.remove('active')
-          setTimeout(function () {
-            preloader.remove()
-          }, 1500)
-        }
-      })()
-    </script>
   </head>
 
 
@@ -252,12 +240,6 @@
                   <a class="nav-link" href="components/typography.html">About</a>
                 </li>
               </ul>
-              <div class="d-sm-none p-3 mt-n3">
-                <a class="btn btn-primary w-100 rounded-pill mb-1" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener">
-                  <i class="ai-cart fs-xl me-2 ms-n1"></i>
-                  Buy now
-                </a>
-              </div>
             </nav>
           </div>
         </div>
@@ -1346,5 +1328,28 @@
 
     <!-- Bootstrap + Theme scripts -->
     <script src="assets/js/theme.min.js"></script>
+
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+        }
+        //alert("loaded");
+
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+
+        //alert('theme confirmed')
+
+      })()
+    </script>
+
   </body>
 </html>

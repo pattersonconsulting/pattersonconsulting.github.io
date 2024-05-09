@@ -2,7 +2,7 @@
 layout: post
 published-on: January 10th 2024
 author: Josh Patterson
-title: Building Natural Language User Interfaces over Analytics Platforms
+title: Case Study - 
 subtitle: Using LLMs and the Semantic Layer to Extend Analytics Platforms
 description: In this post we'll .....
 keywords: aws, bedrock, llm, ai, reasoning workbench, private models
@@ -69,6 +69,23 @@ This structure allows readers to understand the problem faced by the financial i
 
 
 Write 1-2 paragraphs for section 2 of the article based on the outline above. Your audience is a technical VP of Engineering in Fortune 500 companies.
+
+
+
+
+
+# Making Fleet Management Data-Driven
+
+With more than 32 years of experience in automotive electronics and more than 23 years of leadership and innovation in the automotive tracking segment, Brazilian company Quantatec specializes in tracking, logistics control, fleet management, accident, and cost reduction for fleets of vehicles of any type and size.
+
+Quantatec provides fleet managers access to their tracking device data in Movias, their exclusive fleet management platform. Mauricio Cirelli manages the Movias platform. The embedded analytics solution, available on the web and mobile, presents account-specific data to hundreds of customers in South America. Six million tracker messages are received and processed daily, amounting to about 1TB of data annually.
+
+
+
+
+
+
+
 
 
 

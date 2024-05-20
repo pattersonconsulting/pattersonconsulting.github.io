@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>What is Data Engineering? - How does data engineering evolve
+in the age of generative AI?</title>
+    <meta name="description" content="How does data engineering evolve
+in the age of generative AI?">
+    <meta name="keywords" content="generative ai, llm, large language models, embedded analytics, cube, data modeling, natural language interface">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="What is Data Engineering?" />
+    <meta property="og:description" content="How does data engineering
+evolve in the age of generative AI?">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/case_studies/case_study_quantatec_gen_ai_2024.html" />
+    <meta property="og:image" content="https://www.pattersonconsultingtn.com/content/site_redesign_2024/assets/img/meta_og_image_what_is_data_engineering.jpg" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/app-icons/icon-180x180.png">
+        
+    <!-- Theme switcher (color modes) -->
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <!--
+                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
+                -->
+
+
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="./contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Generative AI</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/content/intro_to_llms_ebook.html">eBook</a></li>
+                    <li><a class="dropdown-item" href="generative_ai.html">GenAI Services Overview</a></li>
+                    <li><a class="dropdown-item" href="ai_strategy.html">AI Strategy</a></li>
+
+                  </ul>
+
+
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Data Engineering</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="data_engineering.html">Data Engineering Services</a></li>
+                    <li><a class="dropdown-item" href="data_strategy.html">Data Strategy</a></li>
+                    
+                    
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="account-overview.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="case_studies.html">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image: url(assets/img/meta_og_image_what_is_data_engineering.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+
+
+          <!-- Page title -->
+          <div class="d-none d-xxl-block" style="height: 100px;"></div>
+          <div class="d-none d-lg-block d-xxl-none" style="height: 120px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 80px;"></div>
+          <div class="d-md-none" style="height: 40px;"></div>
+          <div class="col-lg-9 ">
+            <h4>January 10th 2024</h4>
+            <h3 class="display-3">What is Data Engineering?</h3>
+            <h5>How does data engineering evolve in the age of
+generative AI?</h5>
+
+            <p class="text-body">Author: Josh Patterson</p>
+          </div>
+          
+                  
+
+          <!-- Features -->
+
+
+          <div class="d-none d-lg-block d-xxl-none" style="height: 160px;"></div>
+          
+          <div class="d-none d-md-block d-lg-none" style="height: 100px;"></div>
+        
+          <div class="d-md-none" style="height: 50px;"></div>
+      
+        </div>
+      </section>
+
+
+<section class="container py-5 my-md-2 my-lg-3 my-xl-4">
+        <div class="row pt-xxl-2">
+          <div class="col-lg-9 col-xl-8 pe-lg-4 pe-xl-0">
+
+
+            <!--
+
+
+            concept:
+
+                * Goal: 
+
+                    establish the importance of data engineering in enterprise modern data platforms
+
+                * Ending State
+
+                    Where should the reader end up: by thinking of Patterson Consulting as an expert in data engineering
+
+
+            -->
+            <h1 id="a-definition-for-data-engineering">A Definition for
+            Data Engineering</h1>
+            <p><strong>Data engineering is the discipline focused on
+            designing, constructing, and maintaining the systems that
+            manage the reliable and efficient processing of large
+            volumes of data. This encompasses tasks such as collecting,
+            storing, transforming, and organizing data to make it
+            accessible and usable for analysis, reporting, and
+            decision-making.</strong></p>
+            <p>By working with various tools and technologies, data
+            engineers build robust data pipelines, ensure data quality,
+            and support the needs of data scientists, analysts, and
+            other stakeholders within an organization. Essentially, data
+            engineering provides the crucial infrastructure for
+            data-driven insights and strategic decisions.</p>
+            <p>A data engineer’s role is multifaceted, reflecting the
+            diverse needs of an organization. They are responsible for
+            storing, extracting, transforming, loading, aggregating, and
+            validating data. This involves building efficient data
+            pipelines, ensuring data adheres to governance rules, and
+            understanding the best storage and query options based on
+            the data’s structure. For instance, an enterprise might use
+            AWS for cloud services, requiring different strategies for
+            handling structured, unstructured, normalized, or
+            denormalized data, as well as row or columnar data formats.
+            Key considerations include the nature of the data (e.g.,
+            key/value-based) and the complexity of relationships within
+            the data, influencing how it is ingested, processed, and
+            curated.</p>
+            <p>For application developers, data engineering focuses on
+            moving data in bulk rather than transaction by transaction,
+            addressing a common pain point in many organizations. For
+            upper management, it can be likened to constructing a solid
+            foundation necessary for all data-related projects and
+            initiatives. The versatility of a data engineer, much like a
+            Swiss army knife, allows them to adapt to various roles and
+            responsibilities, ensuring that systems have reliable,
+            timely, and well-controlled data. Their work enables the
+            organization to derive meaningful insights and solve complex
+            problems, making data engineering a strategic initiative for
+            any data-driven enterprise.</p>
+            <p>Before we get into the 3 phases of data engineering and
+            then further in this article the evolution of data
+            engineering, I want to talk for a minute about where great
+            data products and ideas come from with respect to the data
+            engineering proces. I want to talk about the ideas
+            introduced in “The Lab and the Factory”.</p>
+            <h2 id="the-lab-and-the-factory">The Lab and the
+            Factory</h2>
+            <p>In the context of data engineering, the concepts of “<a
+            href="https://hbr.org/2013/04/two-departments-for-data-succe">The
+            Lab and The Factory</a>” (from the original article “To Work
+            with Data, You Need a Lab and a Factory” by Thomas C. Redman
+            and Bill Sweeney in Harvard Business Review, 2013)
+            illustrate two distinct yet interconnected phases of data
+            handling and processing.</p>
+            <p>The “Lab” represents the experimental phase where data
+            scientists and analysts explore data, develop hypotheses,
+            and create new ideas, machine learning models, or new data
+            products. This environment is characterized by agility,
+            flexibility, and spartan use of resources. This allows for
+            rapid iteration and the testing of various approaches and
+            ideas. Many new and emerge data products come from the lab,
+            where engineers test out an idea in a Jupyter notebook or a
+            python script with a data sample. However, many times the
+            engineer needs to quickly throw together some tools or code,
+            and its often a jumbled mess — which is ok because many of
+            the ideas will fail.</p>
+            <p>On the other hand, the “Factory” refers to the production
+            phase where data workflows and models developed in the “Lab”
+            are operationalized and scaled for regular use. This
+            involves automating data pipelines, ensuring data quality,
+            and optimizing performance to handle large volumes of data
+            efficiently. In the “Factory”, data engineering emphasizes
+            stability, scalability, and reliability, ensuring that the
+            insights and models produced in the “Lab” can be
+            consistently applied in real-world scenarios.</p>
+            <p>By bridging these two phases, data engineering enables
+            organizations to transition seamlessly from experimentation
+            to deployment, driving sustained value from their data
+            assets. However, this is not always easy because when we
+            want to move one of those precious few good ideas that make
+            it out of the “Lab”, the code or notebook is not ready to be
+            a full productionized data pipeline or process. This is
+            where a good data engineering practice and team shine. Let’s
+            dig into what the 3 phases of the productionized data
+            engineering process look like.</p>
+            <h2 id="the-3-key-phases-of-data-engineering">The 3 Key
+            Phases of Data Engineering</h2>
+            <p>Data engineering involves three crucial phases:</p>
+            <ul>
+            <li>data collection</li>
+            <li>data transformation</li>
+            <li>data analysis and integration</li>
+            </ul>
+            <figure>
+            <img src="../images/pct_3_stages_data_eng_2024.png"
+            alt="The 3 Stages of Data Engineering" />
+            <figcaption aria-hidden="true">The 3 Stages of Data
+            Engineering</figcaption>
+            </figure>
+            <p>The first phase, data collection, focuses on gathering
+            data from diverse internal and external sources, which can
+            be ingested in real-time or in batch processes. Ensuring
+            this data is cataloged properly is essential for maintaining
+            security, governance, and compliance. Additionally,
+            monitoring the quality and performance of the collected data
+            is vital to prevent issues downstream and to maintain the
+            integrity of the datasets.</p>
+            <p>The second phase, data transformation, involves cleansing
+            and enriching the data to enhance its value and usability.
+            This phase includes modeling the data to suit the specific
+            needs of various stakeholders, making it more accessible and
+            relevant. Effective management of workflows for scheduling,
+            auditing, and performance is critical during this phase to
+            ensure smooth and efficient operations.</p>
+            <p>The final phase, data analysis and integration, leverages
+            tools for analytics, machine learning, and AI to extract
+            insights from the data. This phase also focuses on serving
+            data to applications, processes, or people, and governing
+            the catalog of data, dictionaries, and mappings to maintain
+            an organized and accessible data environment. In more recent
+            times this involves integrating data into systems that
+            support generative AI as well.</p>
+            <p>Together, these phases enable a seamless flow from raw
+            data to actionable insights, driving informed
+            decision-making and innovation.</p>
+            <h1 id="why-is-data-engineering-important">Why is Data
+            Engineering Important?</h1>
+            <p>Data engineering serves as the backbone of any
+            data-driven operation, facilitating the collection, storage,
+            processing, and analysis of vast quantities of information.
+            Here are three key reasons why data engineering holds
+            paramount importance:</p>
+            <ol type="1">
+            <li>Data Quality Assurance</li>
+            <li>Scalability and Performance Optimization</li>
+            <li>Enablement of Advanced Analytics and AI</li>
+            </ol>
+            <p>Data engineers play a crucial role in efficiently
+            collecting data from various sources, storing it in data
+            lakes or Kafka topics, and determining optimal ways to join
+            these datasets. They ensure data pipelines have accurate
+            inputs and outputs, often involving reconciliation and
+            validation processes. By utilizing monitoring tools and SRE
+            practices, they maintain continuous data flow and keep
+            information current.</p>
+            <p><strong>Ultimately, data engineers add significant value
+            by automating and optimizing complex systems, transforming
+            raw data into accessible and actionable business
+            assets.</strong></p>
+            <h2
+            id="how-do-organizations-derive-value-from-data-engineering">How
+            Do Organizations Derive Value from Data Engineering?</h2>
+            <p><strong>Organizations derive immense value from data
+            engineering by efficiently aggregating data from diverse
+            sources like ERP systems, supply chains, and third-party
+            vendors into centralized data lakes, cloud data warehouses,
+            or semantic layers.</strong></p>
+            <p>Data engineers optimize the joining of these datasets and
+            build robust pipelines that ensure seamless data flow and
+            availability for business intelligence tools. They maintain
+            data accuracy through reconciliation and validation, and use
+            monitoring tools and SRE practices to keep data pipelines
+            up-to-date. Ultimately, data engineers transform complex
+            data systems into accessible, valuable business assets
+            through automation and optimization.</p>
+            <p>Data engineering supports business teams, product owners,
+            and data science teams by providing a reliable
+            infrastructure for data management. It ensures data is
+            aggregated, validated, and stored centrally, allowing
+            business teams to quickly access accurate information for
+            decision-making. Product owners benefit from up-to-date and
+            accessible data for tracking metrics and improving products.
+            Data scientists rely on the robust data pipelines maintained
+            by data engineers, freeing them to focus on analysis and
+            model building. Overall, data engineering transforms complex
+            data systems into valuable, actionable assets for these key
+            stakeholders.</p>
+            <h2 id="data-engineering-and-generative-ai">Data Engineering
+            and Generative AI</h2>
+            <p>Data engineering is pivotal in enabling generative AI by
+            transforming and preparing datasets for optimal use in AI
+            applications. At Patterson Consulting, we specialize in
+            modernizing legacy systems through platform migrations to
+            the cloud and establishing efficient data pipelines. Our
+            approach ensures that your data is clean, well-structured,
+            and ready for prompt injection, creating a robust
+            information architecture tailored for generative AI.</p>
+            <p>By focusing on these essential elements, enterprises can
+            leverage their industry-specific datasets to build
+            next-generation applications such as:</p>
+            <ul>
+            <li>accelerating workflows with GenAI automation</li>
+            <li>generating unique insights through GenAI scenarios</li>
+            <li>expanding their reach with <a
+            href="https://pattersonconsultingtn.com/blog/natural_language_ux_with_llms_jan_2024.html">GenAI
+            conversations</a></li>
+            </ul>
+            <p>This process not only modernizes data infrastructure but
+            also unlocks the full potential of generative AI, driving
+            innovation and competitive advantage.</p>
+            <h1 id="what-are-key-technologies-in-data-engineering">What
+            are Key Technologies in Data Engineering?</h1>
+            <p>Key technologies in data engineering include:</p>
+            <ul>
+            <li>Data Collection: Fivetran, etc</li>
+            <li>Data Warehousing: Amazon Redshift, Google BigQuery, and
+            Snowflake</li>
+            <li>Data Storage: Including relational databases (e.g.,
+            MySQL, PostgreSQL), NoSQL databases (e.g., MongoDB,
+            Cassandra), and cloud storage solutions (e.g., Amazon S3,
+            Google Cloud Storage).</li>
+            <li>Data Pipeline Orchestration: Tools such as DBT, Apache
+            Airflow, Apache Oozie, and AWS Glue</li>
+            </ul>
+            <p>These technologies work together to enable data engineers
+            to efficiently collect, process, store, analyze, and
+            visualize large volumes of data, ultimately supporting
+            data-driven decision-making and innovation within
+            organizations.</p>
+            <p>Key data transformation technologies in data engineering
+            enable the processing, manipulation, and enrichment of data
+            to prepare it for analysis, reporting, or other downstream
+            tasks. These technologies help transform raw data into a
+            format that is suitable for consumption by users or
+            applications. Some of the key data transformation
+            technologies include:</p>
+            <ul>
+            <li>Azure Synapse</li>
+            <li>AWS Redshift</li>
+            <li>Google BigQuery</li>
+            <li>Apache Spark / PySpark</li>
+            <li>Pandas / Python ecosystem</li>
+            </ul>
+            <p>These data transformation technologies offer a range of
+            capabilities for processing and manipulating data to meet
+            the needs of different use cases and requirements in data
+            engineering. They play a critical role in enabling
+            organizations to extract value from their data assets and
+            drive data-driven decision-making and innovation.</p>
+            <p>Orchestration technologies in data engineering enable the
+            coordination and automation of various data processing tasks
+            and workflows. These technologies help manage complex data
+            pipelines, ensuring efficient and reliable execution. These
+            orchestration technologies offer capabilities for managing
+            the complexity of data workflows, ensuring scalability,
+            fault tolerance, and reliability in data processing
+            operations. They play a crucial role in enabling efficient
+            data engineering practices and supporting the development of
+            data-driven applications and analytics solutions.</p>
+            <h2
+            id="why-are-cloud-platforms-popular-for-data-engineering">Why
+            Are Cloud Platforms Popular for Data Engineering?</h2>
+            <p>Cloud platforms are popular for data engineering due to
+            their scalability, flexibility, and cost-effectiveness. They
+            allow data engineers to easily scale resources up or down
+            based on demand, handle large data volumes, and experiment
+            with various configurations without upfront hardware
+            investments. The pay-as-you-go pricing model ensures cost
+            efficiency by charging only for the resources used,
+            eliminating the need for significant capital
+            expenditures.</p>
+            <p>Additionally, cloud platforms offer managed services that
+            simplify infrastructure management, allowing data engineers
+            to focus on optimizing data pipelines. Their global reach
+            reduces latency for distributed applications, and robust
+            security features ensure data protection and regulatory
+            compliance. Seamless integration with other services and
+            continuous innovation provide data engineers with the latest
+            tools and technologies, making cloud platforms a versatile
+            and forward-thinking choice for data engineering across
+            diverse industries.</p>
+            <p>However, data engineering did not start in the cloud. I
+            believe to understand data engineering you need to be aware
+            of the evolution of data engineering.</p>
+            <h2 id="the-evolution-of-data-engineering">The Evolution of
+            Data Engineering</h2>
+            <p>To better understand the role of data engineering and the
+            types of engineers involved, I want to take a quick look at
+            how the space has evolved over the past 20 years. In that
+            timespan there have been 4 major eras:</p>
+            <ul>
+            <li>pre-2010: “Traditional RDBMS”, Stored Procedures, SQL,
+            Informatica, etc</li>
+            <li>2010-2015: “Big data era”, hadoop, MapReduce, Oozie</li>
+            <li>2016-2020: “Migration to the cloud”, data pipelines on
+            cloud platforms, rise of python, re-birth of SQL</li>
+            <li>2021-2024: “The Semantic Era”, DBT, semantic layer,
+            supporting Gen AI</li>
+            </ul>
+            <h3 id="pre-2010-traditional-rdbms">pre-2010: Traditional
+            RDBMS</h3>
+            <p>In this era tools such traditional RDBMS systems (Oracle,
+            MySQL, SQL Server, etc) and distributed database systems
+            (e.g., Teradata, Vertica) worked with tooling such as
+            Informatica to build early data pipelines. SQL was the
+            dominant data transformation language.</p>
+            <h3 id="big-data">2010-2015: Big Data</h3>
+            <p>This era was defined by the growth of “big data”, Hadoop,
+            distributed systems, and computation at scale. In the “big
+            data”-era, data engineering was more commonly referred to as
+            ETL (Extract, Transform, Load) and there was a movement away
+            from SQL towards other methods such as MapReduce (note:
+            projects such as Apache Hive still allowed a SQL-variant to
+            run on MapReduce). Apache Oozie was the go-to workflow
+            orchestrator during the Hadoop era. Data pipelines for
+            machine learning use cases began to emerge at the tail end
+            of this era.</p>
+            <h3 id="migration-to-the-cloud">2016-2020: Migration to the
+            Cloud</h3>
+            <p>Cloud costs came down, python continued to rise in
+            prominence in the data space, and SQL finds a re-birth with
+            the introduction of cloud platform data warehouses.
+            Companies began to test out moving some of their data
+            pipelines to the cloud.</p>
+            <p>Machine learning and data science comes to prominence
+            with the rise of deep learning, GPUs, and the python
+            ecosystem. In this era feature engineering becomes a
+            practice that dovetails into the outputs of data engineering
+            for machine learning projects.</p>
+            <p>Maxime Beauchemin wrote a key article on the role of the
+            data engineering in 2017 called “<a
+            href="https://www.freecodecamp.org/news/the-rise-of-the-data-engineer-91be18f1e603/">The
+            Rise of the Data Engineer</a>” where he defines Data
+            Engineering as:</p>
+            <blockquote>
+            <p>“data engineers build tools, infrastructure, frameworks,
+            and services. In fact, it’s arguable that data engineering
+            is much closer to software engineering than it is to a data
+            science”</p>
+            </blockquote>
+            <p>It was also in this era that DBT emerges as an
+            orchestration tool built on SQL, rising with the new wave of
+            cloud data warehouses. Further, there is a shift from ETL
+            towards ELT that reflects a broader evolution in data
+            engineering practices, driven by the need for more efficient
+            and scalable data processing solutions.</p>
+            <h3 id="the-semantic-era">2021-2024: The Semantic Era</h3>
+            <p>In our current era we continue to see companies build out
+            their data platforms and data products on the cloud in the
+            generative AI age. New trends we see are “data modeling in
+            the semantic layer” (e.g., <a
+            href="http://www.cube.dev/">cube.dev’s semantic layer</a>)
+            to abstract certain logic out of the BI-layer such that
+            other tools can use a unified data model.</p>
+            <p>This centralized data model is also useful in the
+            generative AI era where we can allow agents to use business
+            logic over data models specific to the organization. There
+            is also associated semantic metadata that is useful for
+            reasoning in large language models (e.g., “generative AI”).
+            These new Gen AI use cases <a
+            href="https://pattersonconsultingtn.com/blog/evolution_of_retrieval_augmented_generation_jan_2024.html">need
+            data and metadata in a way that is different from
+            traditional data science and machine learning</a>. This
+            information is closer in structure to traditional data
+            warehouse data models yet have their own specific data
+            structures and query methods to power semantic Gen AI
+            applications. This new area of data engineering is why I
+            call this era “The Semantic Era” of data engineering.</p>
+            <p>Now that we understand what data engineering is and how
+            it has evolved, let’s take a look at how data teams are
+            structured.</p>
+            <h1 id="data-engineers-in-data-teams">Data Engineers in Data
+            Teams</h1>
+            <p>There are different roles on modern data teams in larger
+            organizations. These roles are commonly:</p>
+            <ul>
+            <li>data engineer</li>
+            <li>analytics engineer</li>
+            <li>data analyst</li>
+            <li>platform engineer</li>
+            <li>ml engineer</li>
+            <li>generative AI engineer</li>
+            <li>data scientist</li>
+            </ul>
+            <p>They each have different yet overlapping skills.</p>
+            <figure>
+            <img src="../images/polar_plot_roles_20230413.png"
+            alt="Skill Comparison of Different Roles" />
+            <figcaption aria-hidden="true">Skill Comparison of Different
+            Roles</figcaption>
+            </figure>
+            <p>I want to start out by digging into what a data engineer
+            does in 2024.</p>
+            <h2 id="data-engineer">Data Engineer</h2>
+            <p>A data engineer is like the backbone of a thriving
+            ecosystem, ensuring every component works harmoniously to
+            sustain the whole. Data engineers primarily focus on
+            designing, building, and maintaining data infrastructure and
+            pipelines to support data-driven applications and analytics.
+            Their responsibilities include data ingestion,
+            transformation, storage, and retrieval. They also ensure
+            data quality, reliability, and availability.</p>
+            <p>Data engineers typically possess skills in programming
+            languages like Python, SQL, and Scala. They are proficient
+            in working with big data technologies such as Apache Spark,
+            Hadoop, and Kafka. They also have expertise in data
+            modeling, ETL (Extract, Transform, Load) processes, and
+            database management.</p>
+            <p>Their main objective is to enable efficient data
+            processing, analysis, and visualization, ultimately
+            supporting decision-making and business insights.</p>
+            <h3 id="what-tasks-are-handled-by-data-engineers">What Tasks
+            are Handled by Data Engineers?</h3>
+            <p>In smaller companies, data engineering roles often extend
+            to encompass platform engineering (DevOps) responsibilities,
+            managing the organization’s data infrastructure. This
+            includes setting up and maintaining platforms like Hadoop,
+            Hive, HBase, and Spark. By handling both data engineering
+            and infrastructure operations, these professionals ensure
+            that data systems are robust and efficient, laying the
+            groundwork for reliable data processing and analysis.</p>
+            <p>In larger companies the tasks are split up between roles
+            such as the platform engineer, machine learning, engineer,
+            data analyts, etc roles. In larger companies the data
+            engineer focuses more on the specific data pipelines that
+            load, transform, and analyze the data as opposed to building
+            out the platform or performing platform migrations.</p>
+            <h3 id="data-engineer-vs-data-scientists">Data Engineer vs
+            Data Scientists</h3>
+            <p>Data engineers and data scientists play distinct yet
+            complementary roles in the data ecosystem. Data engineers
+            focus on building and maintaining the infrastructure needed
+            for data collection, storage, and processing. They implement
+            data governance practices to ensure data quality and
+            accuracy, and they perform large-scale transformations to
+            prepare data for analysis. Data scientists, on the other
+            hand, use this well-prepared data to create models and
+            extract insights. They conduct complex analyses and develop
+            algorithms, often requiring sophisticated mathematical and
+            statistical techniques that go beyond the typical scope of a
+            data engineer’s work. In scenarios where these models need
+            to be productionized, machine learning engineers bridge the
+            gap, turning prototypes into scalable solutions. This
+            division of labor ensures that each expert can leverage
+            their specialized skills to contribute to the overall
+            success of data-driven projects.</p>
+            <h2 id="data-analysts">Data Analysts</h2>
+            <p>A data analyst is a professional who examines large and
+            complex sets of data to identify patterns, trends, and
+            insights that can be used to inform business decisions. They
+            use statistical and analytical techniques such as regression
+            analysis, hypothesis testing, and data visualization to
+            extract insights from data. They are skilled in programming
+            languages such as SQL, Python, or R, and data manipulation
+            tools such as Excel or Tableau.</p>
+            <p>Data analysts are responsible for collecting and cleaning
+            data, preparing it for analysis, and presenting their
+            findings to stakeholders through reports or visualizations.
+            They play a critical role in informing business decisions by
+            providing insights based on data analysis. Overall, data
+            analysts are highly analytical professionals who are
+            responsible for extracting insights from data and
+            communicating their findings to stakeholders.</p>
+            <h2 id="analytics-engineer">Analytics Engineer</h2>
+            <p>An analytics engineer bridges the gap between data
+            engineering and data analysis, providing clean, well-modeled
+            data sets that empower end users to perform their own
+            analyses. Unlike data analysts, who focus primarily on
+            interpreting data, analytics engineers spend their time
+            transforming, testing, deploying, and documenting data. They
+            apply software engineering best practices, such as version
+            control and continuous integration, to maintain a reliable
+            analytics code base. This role is crucial for ensuring that
+            data is accessible, accurate, and well-organized, enabling
+            businesses to make informed decisions efficiently and
+            effectively.</p>
+            <h2 id="machine-learning-engineer">Machine Learning
+            Engineer</h2>
+            <p>A machine learning engineer sits at the crossroads of
+            data engineering and data science, equipped with robust
+            mathematical skills and practical knowledge of data
+            structures and algorithms. These engineers are adept at
+            using data engineering tools and frameworks within big data
+            ecosystems to apply data models developed by data
+            scientists. Their key role is to productionize these models,
+            ensuring they can handle and process large volumes of
+            real-time data efficiently. This involves creating
+            high-performance environments for data ingestion and
+            computation, often managing terabytes of data to drive
+            actionable business insights. Their work is essential in
+            making advanced analytics scalable and operational within an
+            organization, blending technical precision with innovative
+            application.</p>
+            <h2 id="generative-ai-engineer">Generative AI Engineer</h2>
+            <p>I’m going to introduce a new member to the data team
+            called the “generative AI engineer”. The generative AI
+            engineer is similar in idea to the machine learning engineer
+            (uses output of data engineering to build new products) but
+            is closer to a more traditional software engineer.</p>
+            <p>A generative AI engineer uses tools such as LangChain to
+            integrate data products from data models and the semantic
+            layer into prompts via prompt engineering to reason over
+            with large language models.</p>
+            <p>A generative AI engineer understands retrieval augmented
+            generation (RAG) and how to blend the reasoning power of
+            large language models with enterprise knowledge in the data
+            warehouse.</p>
+            <p>These new generative AI applications use several task
+            workflows of the above prompt engineering pattern to <a
+            href="https://pattersonconsultingtn.com/blog/natural_language_ux_with_llms_jan_2024.html">integrate
+            enterprise data into natural language interfaces</a>,
+            scenario analyses, and workflow automations.</p>
+            <p>Generative AI Engineer == Data Enginer + Prompt
+            Engineer</p>
+            <p>Make no mistake, “Generative AI Engineer” is that next
+            hot job title.</p>
+            <h2 id="platform-engineer">Platform Engineer</h2>
+            <p>Platform Engineers (e.g., “cloud dev ops”) focus on
+            automating and managing the deployment, scaling, and
+            monitoring of applications and infrastructure within cloud
+            environments. Their responsibilities include configuring and
+            managing cloud resources, implementing CI/CD pipelines,
+            automating infrastructure provisioning, and ensuring high
+            availability and reliability of cloud-based
+            applications.</p>
+            <p>Cloud DevOps professionals need expertise in cloud
+            platforms such as AWS, Azure, or Google Cloud Platform. They
+            should be familiar with infrastructure as code (IaC) tools
+            like Terraform or AWS CloudFormation, containerization
+            technologies like Docker and Kubernetes, and continuous
+            integration/continuous deployment (CI/CD) practices.</p>
+            <p>Their main objective is to streamline the development and
+            deployment processes, improve scalability and reliability,
+            and reduce time-to-market for applications running in the
+            cloud.</p>
+            <figure>
+            <img src="../images/radar_plot_data_eng_vs_cloud_devops.png"
+            alt="Data Engineering vs Cloud Dev Ops" />
+            <figcaption aria-hidden="true">Data Engineering vs Cloud Dev
+            Ops</figcaption>
+            </figure>
+            <p>A data engineer and a platform engineer both possess
+            strong technical skills and work closely with various teams
+            to ensure smooth operations within an organization. However,
+            their focuses differ significantly. Data engineers
+            concentrate on building and maintaining data-related
+            infrastructure, enabling data scientists and analysts to
+            derive insights and make data-driven decisions.</p>
+            <p>In contrast, platform engineers, often involved in cloud
+            DevOps, manage a broader scope that includes the overall
+            cloud infrastructure and application deployment processes.
+            While data engineers primarily collaborate with data
+            professionals, platform engineers work more closely with
+            developers to streamline the software development lifecycle
+            and ensure efficient, scalable, and reliable application
+            performance. This delineation highlights the specialized yet
+            complementary roles both play in advancing organizational
+            technology goals.</p>
+            <p>Overall, while there may be some overlap in their
+            responsibilities, data engineers and cloud DevOps
+            professionals have distinct roles and skill sets, each
+            contributing to the success of IT operations within
+            organizations.</p>
+            <h1 id="summary">Summary</h1>
+            <p>In today’s data-driven world, knowledge is a potent
+            currency, and large companies are harnessing vast amounts of
+            data to gain insights and drive strategic decisions.
+            However, the process of turning this data into actionable
+            knowledge is increasingly complex. While experience and
+            domain expertise play crucial roles in understanding
+            business practices, data engineering is now more critical
+            than ever in extracting valuable insights from the
+            overwhelming volume of data generated. Data engineering
+            bridges the gap between raw data and meaningful insights,
+            enabling organizations to leverage the full potential of
+            their data to drive innovation, efficiency, and
+            competitiveness in the modern market landscape.</p>
+            <p>This post aims to provide a comprehensive understanding
+            of the role of data engineers and their significance in
+            improving decision-making processes within organizations. By
+            partnering with the experienced data engineering team at
+            Patterson Consulting, organizations can unlock the full
+            potential of their data assets. Our seasoned experts are
+            equipped to assist in designing, building, and
+            operationalizing modern data products tailored to specific
+            needs, enabling organizations to derive maximum value from
+            their data and drive better outcomes.</p>
+            <p>Other Selected Articles on Data Engineering</p>
+            <ul>
+            <li><a
+            href="https://maximebeauchemin.medium.com/the-downfall-of-the-data-engineer-5bfb701e5d6b">The
+            Downfall of the Data Engineer</a></li>
+            <li><a
+            href="https://preset.io/blog/reshaping-data-engineering/">Reshaping
+            Data Engineering</a></li>
+            </ul>
+
+
+
+
+
+          </div>
+
+
+          <!-- Sidebar -->
+          <aside class="col-lg-3 offset-xl-1 pt-4 pt-lg-0" style="margin-top: -7rem;">
+            <div class="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style="padding-top: 7rem;">
+
+
+              <h4 class="pt-xl-1 mb-4 border-bottom">Table of Contents</h4>
+<!--
+              <ul class="list-unstyled mb-0">
+-->
+            <div id="TOC" class="">
+        <div class="well toc">
+
+        <ul>
+        <li><a href="#a-definition-for-data-engineering"
+        id="toc-a-definition-for-data-engineering">A Definition for Data
+        Engineering</a>
+        <ul>
+        <li><a href="#the-lab-and-the-factory"
+        id="toc-the-lab-and-the-factory">The Lab and the
+        Factory</a></li>
+        <li><a href="#the-3-key-phases-of-data-engineering"
+        id="toc-the-3-key-phases-of-data-engineering">The 3 Key Phases
+        of Data Engineering</a></li>
+        </ul></li>
+        <li><a href="#why-is-data-engineering-important"
+        id="toc-why-is-data-engineering-important">Why is Data
+        Engineering Important?</a>
+        <ul>
+        <li><a
+        href="#how-do-organizations-derive-value-from-data-engineering"
+        id="toc-how-do-organizations-derive-value-from-data-engineering">How
+        Do Organizations Derive Value from Data Engineering?</a></li>
+        <li><a href="#data-engineering-and-generative-ai"
+        id="toc-data-engineering-and-generative-ai">Data Engineering and
+        Generative AI</a></li>
+        </ul></li>
+        <li><a href="#what-are-key-technologies-in-data-engineering"
+        id="toc-what-are-key-technologies-in-data-engineering">What are
+        Key Technologies in Data Engineering?</a>
+        <ul>
+        <li><a
+        href="#why-are-cloud-platforms-popular-for-data-engineering"
+        id="toc-why-are-cloud-platforms-popular-for-data-engineering">Why
+        Are Cloud Platforms Popular for Data Engineering?</a></li>
+        <li><a href="#the-evolution-of-data-engineering"
+        id="toc-the-evolution-of-data-engineering">The Evolution of Data
+        Engineering</a></li>
+        </ul></li>
+        <li><a href="#data-engineers-in-data-teams"
+        id="toc-data-engineers-in-data-teams">Data Engineers in Data
+        Teams</a>
+        <ul>
+        <li><a href="#data-engineer" id="toc-data-engineer">Data
+        Engineer</a></li>
+        <li><a href="#data-analysts" id="toc-data-analysts">Data
+        Analysts</a></li>
+        <li><a href="#analytics-engineer"
+        id="toc-analytics-engineer">Analytics Engineer</a></li>
+        <li><a href="#machine-learning-engineer"
+        id="toc-machine-learning-engineer">Machine Learning
+        Engineer</a></li>
+        <li><a href="#generative-ai-engineer"
+        id="toc-generative-ai-engineer">Generative AI Engineer</a></li>
+        <li><a href="#platform-engineer"
+        id="toc-platform-engineer">Platform Engineer</a></li>
+        </ul></li>
+        <li><a href="#summary" id="toc-summary">Summary</a></li>
+        </ul>
+
+        </div>
+      </div>
+      <!--
+                <li class="pb-3 mb-3">
+                  <span>Industry:</span>
+                  <span class="h6 mb-0">
+                    SaaS
+                  </span>
+                </li>
+
+
+              </ul>
+-->
+            </div>
+          </aside>
+        </div>
+      </section>
+
+
+
+      <!-- Statistics -->
+      <!--
+      <section class="jarallax bg-dark position-relative py-md-1  mt-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+
+      
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+
+        <div class="container  position-relative z-2  mt-xxl-5 pb-5 pt-5">        
+
+          <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none" style="background: linear-gradient(360deg, #fff 5.39%, #f6f9fc 78.66%);"></span>
+          <span class="position-absolute top-0 start-0 w-100 h-100 d-none d-dark-mode-block" style="background: linear-gradient(360deg, #121519 5.39%, rgba(255, 255, 255, .03) 78.66%);"></span>
+          <div class="container position-relative z-2 py-2 py-sm-3 py-sm-4 py-md-5">
+            <div class="row align-items-center py-lg-2 py-xl-3 my-xl-1 my-xxl-3">
+
+              <div class="col-md-7  ">
+                <div class="position-relative">
+                  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+                    <a href="https://www.youtube.com/watch?v=sXqdCGeWvdE&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                      <i class="ai-play-filled"></i>
+                    </a>
+                  </div>
+                  <img src="assets/img/gen_ai_art_of_possible_title_card.jpg" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                  <img src="assets/img/gen_ai_art_of_possible_title_card.jpg" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+                </div>
+              </div>
+
+              <div class="col-md-5 col-xl-4">
+                <h5>Art of the Possible: </h5>
+                <h2 class="h1 pb-2 pb-sm-3 mb-md-0">Take a look at <span class="text-gradient-primary">some of our team's Generative AI Application Prototypes</span></h2>
+                <p class="text-body pb-sm3 pb-md-4 mb-2">This video will give you ideas on the different ways you can creatively enhance your existing applications with Generative AI.</p>
+                
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+      -->
+
+
+
+
+      <!-- Use cases -->
+      <section class="border-top border-light py-2 py-sm-3 py-md-4 py-lg-5">
+        <!--
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none" style="background: linear-gradient(141deg, rgba(255, 255, 255, .01) 17.3%, #f6f9fc 78.21%);"></span>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-dark-mode-block" style="background: linear-gradient(141deg, rgba(18, 21, 25, .00) 17.3%, rgba(255, 255, 255, .03) 78.21%);"></div>
+-->
+      <!--
+        <div class="container position-relative z-2 pt-3 pt-md-4 pt-lg-5 mt-lg-2 mt-xl-4">
+        -->
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+          <h2 class="h1 text-center pb-1 mb-2">Related Blog Resources</h2>
+          <p class="fs-lg text-center pb-lg-2">Articles on Data Engineering from the Patterson Consulting team</p>
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+
+          <div class="col">
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/og_meta_card_nl_user_interfaces_jan_2024.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Building Natural Language User Interfaces over Analytics Applications</h4>
+                <p class="card-text">Using LLMs and the Semantic Layer to Expand the Analytics User Base</p>
+                <a href="/blog/natural_language_ux_with_llms_jan_2024.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- Item -->
+          <div class="col">
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/pct_eval_reasoning_llms_langchain_og_meta_card.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Evaluating the Reasoning Ability of LLMs</h4>
+                <p class="card-text">Use LangChain to evaluate the reasoning ability of a local LLM.</p>
+                <a href="/blog/evaluate_reasoning_llms_langchain.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col">
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">The Evolution of RAG</h4>
+                <p class="card-text">This article delves into "What is a technical definition of RAG?" and "How is RAG evolving?"</p>
+                <a href="/blog/evolution_of_retrieval_augmented_generation_jan_2024.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        
+      </div>
+
+      </section>
+
+
+
+
+      <!-- CTA -->
+      <section class="bg-secondary position-relative py-md-1">
+
+        <div class="container  mt-xxl-5 pb-5">        
+
+          <div class="row pt-1 pt-sm-1 pt-md-4 pt-lg-1 mt-xl-1">
+            <div class="col-lg-4">
+
+              <h4 class="display-5">Let's talk about your Data Engineering project.</h4>
+
+            </div> 
+            <div class="col-lg-8 pt-5 pl-5">  
+
+              <p>
+                Patterson Consutling engineering teams help you build out data pipelines and generative AI capabilities. We specialize in integrating cutting-edge Generative AI capabilities into legacy and new systems alike.
+              </p>
+
+
+                <a class="btn btn-primary" href="#">Talk to our experts</a>
+
+
+            </div> 
+
+          </div>   
+
+        </div>
+      </section>
+
+    </main>
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
+                <i class="ai-facebook"></i>
+              </a>
+            -->
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
+                <i class="ai-instagram"></i>
+              </a>
+            -->
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./case_studies.html">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./team_publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="assets/vendor/aos/dist/aos.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

@@ -1,734 +1,1412 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
 
-  gtag('config', 'UA-119541534-1');
-</script>
-		
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Patterson Consulting</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Services Offered: Large Language Models, Data Engineering, Cloud DevOps, and Managed Services" />
-	<meta name="keywords" content="amazon, aws, snowflake, snowpark, kubernetes, large language models, cloud, Cloud Operations, patterson consulting, machine learning, dgx, nvidia" />
-	<meta name="author" content="Patterson Consulting" />
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>Patterson Consulting</title>
+    <meta name="description" content="Patterson Consulting - Company Page">
+    <meta name="keywords" content="Patterson Consulting, solution integrator, data platforms, platform engineering, data engineering, generative ai">
+    <meta name="author" content="Patterson Consulting">
 
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="Patterson Consulting"/>
-	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/snowflake_summit_2023_meta_og_card.png"/>
-	<meta property="og:url" content="http://www.pattersonconsultingtn.com/"/>
-	<meta property="og:site_name" content="Patterson Consulting"/>
-	<meta property="og:description" content="Services Offered: Large Language Models, Data Engineering, Cloud DevOps, and Managed Services"/>
+    <!-- Webmanifest + Favicon / App icons -->
+    <!--
+    <link rel="manifest" href="/a_manifest.json">
+  -->
+    <link rel="icon" type="image/png" href="assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/app-icons/icon-180x180.png">
+        
+    <!-- Theme switcher (color modes) -->
+    <script src="assets/js/theme-switcher.js"></script>
 
-	<meta name="twitter:title" content="Patterson Consulting" />
-	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/snowflake_summit_2023_meta_og_card.png" />
-	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/" />
-	<meta name="twitter:card" content="summary_large_image" />
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
-	
-	<link rel="stylesheet" href="../css/animate.css">
-	<link rel="stylesheet" href="../css/bootstrap.css">
-	<link rel="stylesheet" href="../css/icomoon.css">
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
 
-	<link rel="stylesheet" href="../css/owl.carousel.min.css">
-	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <!-- Font icons -->
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
 
-	<link rel="stylesheet" href="../css/style.css">
-	<style type="text/css">
-		
-		/* unvisited link */
-a:link {
-  color: red;
-}
-table {
-	border-collapse:separate; 
-border-spacing:.5em;
-}
-td.course_info {
-	background-color: #FF5126;
-	color:  #FFFFFF;
-	border-radius: 6px;
-	padding: 6px;
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
 
-}
-td.course_data {
-	padding: 6px;
-	margin-left:  12px;
-
-	background-color: #ffffff;
-	color:  #999999;
-	border-radius: 6px;
-	padding: 6px;
-
-}
-
-
-
-
-td.offering_title {
-	background-color: #FF5126;
-	color:  #FFFFFF;
-	border-radius: 6px;
-	padding: 6px;
-	width: 15%;
-
-}
-
-
-td.offering_title_alt {
-	background-color: #4287f5;
-	color:  #FFFFFF;
-	border-radius: 6px;
-	padding: 6px;
-	width: 15%;
-
-}
-
-
-
-td.offering_desc {
-	padding: 6px;
-	margin-left:  12px;
-
-	background-color: #eeeeee;
-	color:  #666666;
-	border-radius: 6px;
-	padding: 6px;
-	width: 30%;
-
-}
-
-
-div.stair_offering_spacer {
-	background-color: #ffffff;
-	color:  #FFFFFF;
-	border-radius: 6px;
-	padding: 6px;
-
-	display: table-cell;
-	
-
-}
-
-
-div.stair_offering_title {
-	background-color: #4287f5;
-	color:  #FFFFFF;
-	border-radius: 6px;
-	padding: 6px;
-	
-	display: table-cell;
-	vertical-align: middle;
-
-}
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
 
 
 
-div.stair_offering_desc {
-	padding: 6px;
-	margin-left:  12px;
-
-	background-color: #eeeeee;
-	color:  #666666;
-	border-radius: 6px;
-	padding: 6px;
-	width: 20%;
-	font-size:12px;
-
-	display: table-cell;
-
-	height: 80px;
-
-}
-
-div.grid_offering_row {
-		display: table;
-
-    float: left;
-    table-layout: fixed; /*Optional*/
-    border-spacing: 10px; /*Optional*/
 
 
-}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
 
 
-div.grid_offering_cell {
-	padding: 12px;
-	margin-left:  12px;
+  <!-- Body -->
+  <body>
 
-	background-color: #eeeeee;
-	color:  #666666;
-	border-radius: 6px;
-	width: 20%;
-	font-size:12px;
-
-	display: table-cell;
-
-	height: 140px;
-
-}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->    
 
 
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
 
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
 
-/* The Close Button */
-#streamlit_stair {
-/*  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  */
-}
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
 
-#streamlit_stair:hover,
-#streamlit_stair:focus {
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <!--
+                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
+                -->
+
+
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="./contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./insurance_industry.html">Insurance</a></li>
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="./data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="./generative_ai.html">GenAI Services</a></li>
+
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="./publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./about.html">About</a>
+                </li>
+              </ul>            
+            </nav>
+
+          </div>
+        </div>
+      </header>
+      
+
+      <!-- Hero section -->
+      <section class="position-relative bg-dark pt-lg-4 pt-xl-5">
+        <div class="jarallax position-absolute top-0 start-0 w-100 h-100" data-jarallax data-speed="0.4">
+          <!--
+          <div class="jarallax-img" style="background-image: url(assets/img/hero-bg-pattern.png);"></div>
+        -->
+          <div class="jarallax-img" style="background-image: url(assets/img/graph_bg.jpg);"></div>
+        </div>
+        <div class="container position-relative z-2 pt-2 pt-sm-4 pt-md-5">
+          <div class="row justify-content-center pt-5">
+            <div class="col-lg-9 col-xl-8 text-center pt-5 mt-1">
+              <!--
+              <a href="#" class="d-inline-flex align-items-center fs-sm fw-semibold text-decoration-none bg-warning bg-opacity-10 text-warning rounded-pill py-2 px-3">
+                <span class="fw-semibold lh-sm">New Around v2.0</span>
+                <i class="ai-arrow-right fs-lg ms-2 me-n1"></i>
+              </a>
+            -->
+              <h1 class="display-4 text-white pt-3 mt-3 mb-4">World-class <span style="color: #ff7b00;">platform engineering and generative AI services.</span></h1>
+              <p class="text-white opacity-70 fs-xl">Delivering data platforms, data pipelines, and generative AI applications.</p>
+            </div>
+          </div>
+        </div>
+        <div class="d-none d-lg-block" style="height: 480px;"></div>
+        <div class="d-lg-none" style="height: 400px;"></div>
+        <div class="d-flex position-absolute bottom-0 start-0 w-100 overflow-hidden mb-n1" style="color: var(--ar-body-bg);">
+          <div class="position-relative start-50 translate-middle-x flex-shrink-0" style="width: 3774px;">
+            <svg width="3774" height="201" viewBox="0 0 3774 201" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 200.003C0 200.003 1137.52 0.188224 1873.5 0.000134392C2614.84 -0.189325 3774 200.003 3774 200.003H0Z" fill="currentColor"/></svg>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Categories (Slider) -->
+      <section class="container position-relative z-3">
+        <div class="d-none d-lg-block" style="margin-top: -428px;"></div>
+        <div class=" d-lg-none" style="margin-top: -370px;"></div>
+        <div class="swiper" data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 24,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "560": {
+              "slidesPerView": 2
+            },
+            "960": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+
+            <!-- Item -->
+            <div class="swiper-slide">
+              <a href="./insurance_industry.html" class="card card-hover zoom-effect border-0 rounded-5 overflow-hidden">
+                <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(18, 21, 25, 0.00) 35.56%, #121519 95.3%);"></span>
+                <div class="position-absolute bottom-0 w-100 z-2 p-4">
+                  <div class="px-md-3">
+                    <h3 class="h4 text-white mb-0">Insurance</h3>
+                    <div class="d-flex align-items-center justify-content-between opacity-0">
+                      <span class="text-white fs-xs text-truncate opacity-70 pe-3">Architecture, Platform Engineering, Data Engineering</span>
+                      <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="zoom-effect-wrapper">
+                  <div class="zoom-effect-img">
+                    <img src="assets/img/wave_analytics_card.jpg" alt="Insurance">
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide">
+              <a href="#" class="card card-hover zoom-effect border-0 rounded-5 overflow-hidden">
+                <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(18, 21, 25, 0.00) 35.56%, #121519 95.3%);"></span>
+                <div class="position-absolute bottom-0 w-100 z-2 p-4">
+                  <div class="px-md-3">
+                    <h3 class="h4 text-white mb-0">Financial Services</h3>
+                    <div class="d-flex align-items-center justify-content-between opacity-0">
+                      <span class="text-white fs-xs text-truncate opacity-70 pe-3">Data Engineering, Cloud DevOps, Managed Services</span>
+                      <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="zoom-effect-wrapper">
+                  <div class="zoom-effect-img">
+                    <!--
+                    <img src="assets/img/ecommerce.jpg" alt="Ecommerce">
+                  -->
+                    
+                    <img src="assets/img/insurance_wave_ball.jpg" alt="Financial Services">
+                  </div>
+                </div>
+              </a>
+            </div>
+
+
+            <!-- Item -->
+            <div class="swiper-slide">
+              <a href="#" class="card card-hover zoom-effect border-0 rounded-5 overflow-hidden">
+                <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(18, 21, 25, 0.00) 35.56%, #121519 95.3%);"></span>
+                <div class="position-absolute bottom-0 w-100 z-2 p-4">
+                  <div class="px-md-3">
+                    <h3 class="h4 text-white mb-0">Telecom</h3>
+                    <div class="d-flex align-items-center justify-content-between opacity-0">
+                      <span class="text-white fs-xs text-truncate opacity-70 pe-3">Data Strategy, Data Engineering, Architecture</span>
+                      <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="zoom-effect-wrapper">
+                  <div class="zoom-effect-img">
+                    <!--
+                    <img src="assets/img/telecom_radial_art.jpg" alt="Marketing">
+                  -->
+                    <img src="assets/img/telecom_vertical_isometric.jpg" alt="Telecom">
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide">
+              <a href="#" class="card card-hover zoom-effect border-0 rounded-5 overflow-hidden">
+                <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(18, 21, 25, 0.00) 35.56%, #121519 95.3%);"></span>
+                <div class="position-absolute bottom-0 w-100 z-2 p-4">
+                  <div class="px-md-3">
+                    <h3 class="h4 text-white mb-0">Smart City</h3>
+                    <div class="d-flex align-items-center justify-content-between opacity-0">
+                      <span class="text-white fs-xs text-truncate opacity-70 pe-3">Data Architecture and Generative AI for Smart City Applications</span>
+                      <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="zoom-effect-wrapper">
+                  <div class="zoom-effect-img">
+                    <img src="assets/img/smart_city_industry_vertical.jpg" alt="Robotics">
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- 
+            <div class="swiper-slide">
+              <a href="#" class="card card-hover zoom-effect border-0 rounded-5 overflow-hidden">
+                <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(18, 21, 25, 0.00) 35.56%, #121519 95.3%);"></span>
+                <div class="position-absolute bottom-0 w-100 z-2 p-4">
+                  <div class="px-md-3">
+                    <h3 class="h4 text-white mb-0">Programming</h3>
+                    <div class="d-flex align-items-center justify-content-between opacity-0">
+                      <span class="text-white fs-xs text-truncate opacity-70 pe-3">Code generation, code debugging and optimization</span>
+                      <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="zoom-effect-wrapper">
+                  <div class="zoom-effect-img">
+                    <img src="assets/img/programming.jpg" alt="Programming">
+                  </div>
+                </div>
+              </a>
+            </div>
+          -->
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative bottom-0 pt-2 pt-md-3 mt-4"></div>
+        </div>
+      </section>
+
+
+
+      <section class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+        <h2 class="h1 text-center pb-1 mb-2">Expert services with our partners</h2>
+        <div class="overflow-auto pb-sm-4 pb-md-5 pt-sm-2 pt-md-3 mt-n2 mt-sm-0 mt-md-1 mt-lg-3 mb-lg-2" data-simplebar="init"><div class="simplebar-wrapper" style="margin: -16px 0px -48px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 16px 0px 48px;">
+          <div class="row row-cols-5 g-0 pb-2" style="min-width: 768px;">
+            <div class="col d-flex justify-content-center" style="padding-top: 40px;">
+              <!--
+              <img class="d-dark-mode-none" src="assets/img/deloitte-light.svg" width="196" alt="Deloitte">
+              <img class="d-none d-dark-mode-block" src="assets/img/deloitte-dark.svg" width="196" alt="Deloitte">
+            -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="99" height="29" fill="none" alt="Cube Dev logo" class="Footer_Logo__ZDL4J"><path fill="#FF6492" d="M26.18 8.038L14.027 1v4.87l12.153 7.007v-4.84z"></path><path fill="#0F0F23" d="M26.18 12.877L22.534 15l-8.509-4.919-4.862 2.8-3.647-1.967 8.511-5.044 12.153 7.007z"></path><path fill="#A14474" d="M9.163 12.881l-3.647-1.967V15l3.647-2.119z"></path><path fill="#0F0F23" d="M1.87 21.962L14.025 15l12.155 6.962L14.025 29 1.87 21.962z"></path><path fill="#FF6492" d="M26.18 17.13l-12.155-7.125V15l12.155 6.962V17.13z"></path><path fill="#7A77FF" d="M5.516 15v-4.086l8.511-5.044V1L1.87 8.038v13.924L14.025 15v-4.995L5.516 15z"></path><path fill="#0F0F23" d="M33.72 15.628c0-4.21 3.345-7.485 7.56-7.485 2.704 0 4.797 1.316 6.019 3.332l-2.151 1.696c-.931-1.316-2.123-2.193-3.838-2.193-2.617 0-4.477 2.047-4.477 4.648 0 2.66 1.86 4.676 4.477 4.676 1.687 0 2.878-.846 3.838-2.162l2.15 1.667c-1.25 2.016-3.344 3.332-6.018 3.332-4.215.002-7.56-3.273-7.56-7.511zm16.225 1.17V8.466h3.023v8.565c0 2.016 1.424 3.273 3.228 3.273 1.745 0 3.14-1.257 3.14-3.273V8.466h3.054v8.332c0 3.888-2.704 6.343-6.192 6.343-3.549 0-6.253-2.455-6.253-6.343zm30.968-1.142c0 4.268-2.936 7.485-6.978 7.485-2.094 0-3.926-.847-5-2.309v1.988h-2.85V.894h3.053v9.326c1.077-1.315 2.792-2.075 4.769-2.075 4.07-.002 7.007 3.243 7.007 7.511zm-3.14-.028c0-2.778-1.919-4.677-4.363-4.677-2.15 0-4.304 1.462-4.304 4.707 0 3.274 2.181 4.677 4.304 4.677 2.472 0 4.363-1.93 4.363-4.707zm18.929 1.023H86.06c.408 2.368 2.21 3.771 4.651 3.771 1.659 0 2.965-.644 4.159-1.695l1.454 2.105c-1.513 1.432-3.431 2.309-5.7 2.309-4.419 0-7.677-3.245-7.677-7.485 0-4.209 3.228-7.513 7.387-7.513 3.809 0 6.6 2.806 6.6 6.577a9.13 9.13 0 01-.232 1.931zm-10.584-2.398h7.764c-.058-2.252-1.714-3.508-3.663-3.508-2.008.002-3.636 1.374-4.1 3.508z"></path></svg>
+            </div>
+            <div class="col ">
+              <img src="assets/img/gcp.png" width="196" alt="Google Cloud">
+            </div>
+            <div class="col  d-flex justify-content-center ">
+              <img class="d-dark-mode-none" src="assets/img/aws_logo.png" width="136" alt="Amazon Web Services" style="position: relative; top: -16px;" >
+              <img class="d-none d-dark-mode-block" src="assets/img/aws_logo.png" width="136" alt="Amazon Web Services">
+            </div>
+            
+            <div class="col d-flex justify-content-center">
+              <img class="d-dark-mode-none" src="assets/img/open_teams_logo.svg" width="196" alt="Open Teams">
+              <img class="d-none d-dark-mode-block" src="assets/img/open_teams_logo.svg" width="196" alt="Open Teams">
+            </div>
+
+          
+            <div class="col d-flex justify-content-center">
+              <img class="d-dark-mode-none" src="assets/img/snowflake_logo.svg" width="196" alt="Snowflake">
+              <img class="d-none d-dark-mode-block" src="assets/img/snowflake_logo.svg" width="196" alt="Snowflake">
+            </div>
+          </div>
+        </div></div></div></div><div class="simplebar-placeholder" style="width: 1158px; height: 2px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div>
+      </section>
+
+
+
+      <!-- Video -->
+      <section class="position-relative py-5">
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none" style="background: linear-gradient(360deg, #fff 5.39%, #f6f9fc 78.66%);"></span>
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-none d-dark-mode-block" style="background: linear-gradient(360deg, #121519 5.39%, rgba(255, 255, 255, .03) 78.66%);"></span>
+        <div class="container position-relative z-2 py-2 py-sm-3 py-sm-4 py-md-5">
+          <div class="row align-items-center py-lg-2 py-xl-3 my-xl-1 my-xxl-3">
+            <div class="col-md-5 col-xl-4">
+              <h5>Case Study: </h5>
+              <h2 class="h1 pb-2 pb-sm-3 mb-md-0">Learn <span class="text-gradient-primary">how Quantatec integrated generative AI</span> into their Movias logistics platform.</h2>
+              <p class="card-text pb-sm3 pb-md-4 mb-2">Quantatec wanted a large language model (LLM) to answer customer’s questions about their own fleet data and Patterson Consulting helped us to integrate the LLM properly and provide consistent quality answers to the user.</p>
+
+
+                <a class="btn btn-lg btn-link px-0" href="./case_study_quantatec_gen_ai_2024.html">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+<!--
+              <div class="d-flex flex-wrap align-items-center pt-1 mt-n2">
+                
+                <a class="badge bg-primary bg-opacity-10 text-primary fs-xs mt-2" href="#">Generative AI</a> <a class="badge bg-primary bg-opacity-10 text-primary fs-xs mt-2" href="#">Data Engineering</a>
+              </div>
+-->
+            </div>
+            <div class="col-md-7 offset-xl-1 ">
+              <div class="position-relative">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+                  <!--
+                  <a href="https://youtu.be/CF1Z-R81dE8?si=aP-GMlDqwSJ_OowT" class="btn btn-icon btn-xl btn-primary rounded-circle stretched-link" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                -->
+                  <a href="https://www.youtube.com/watch?v=CF1Z-R81dE8&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                </div>
+                <img src="assets/img/video_preview_quantatec_v3_2023.jpg" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                <img src="assets/img/video_preview_quantatec_v3_2023.png" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+<!--
+<section class="container pt-5 pb-sm-3 mt-5 mb-2 mb-md-3 mb-lg-4 mb-xxl-5">
+
+
+        <h1 class="pb-3">Our case studies</h1>
+
+        <div class="row align-items-center pt-xl-2 pb-5 mb-lg-2 mb-xl-3 mb-xxl-4">
+          <div class="col-md-7 col-lg-6 mb-4 mb-md-0">
+            <a class="d-block position-relative" href="portfolio-single-v1.html">
+              <div class="bg-info rounded-5 position-absolute top-0 start-0 w-100 h-100 aos-init aos-animate" data-aos="zoom-in" data-aos-duration="600" data-aos-offset="250"></div>
+              <img class="d-block position-relative z-2 mx-auto aos-init aos-animate" src="assets/img/portfolio/list/06.png" width="636" alt="Image" data-aos="fade-in" data-aos-duration="400" data-aos-offset="250">
+            </a>
+          </div>
+          <div class="col-md-5 col-xl-4 offset-lg-1 aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" data-aos-offset="170">
+            <div class="ps-md-3 ps-lg-0">
+              <img class="d-block d-dark-mode-none mb-2 mb-lg-3" src="assets/img/portfolio/brands/champion-blue-dark.svg" alt="Champion">
+              <img class="d-none d-dark-mode-block mb-2 mb-lg-3" src="assets/img/portfolio/brands/champion-blue-light.svg" alt="Champion">
+              <h2 class="h4">Development of an application for a national bank</h2>
+              <p class="fs-sm pb-3 pb-lg-4 mb-3">Morbi et massa fames ac scelerisque sit commodo dignissim faucibus vel quisque proin lectus. Morbi et massa fames ac scelerisque sit commodo dignissim.</p>
+              <a class="btn btn-sm btn-outline-dark rounded-pill" href="portfolio-single-v1.html">Read the full story</a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+-->
+
+
+
+
+
+      <section class="container pt-2 pt-sm-4 pb-5 mb-lg-3 mb-xl-4 mb-xxl-5">
+        
+        <h2 id="case_studies" class="h1 text-center pb-3 pb-lg-4">Recent case studies</h2>
+      
+        <!--
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+        -->
+
+                <div class="tab-pane fade show active" id="preview5" role="tabpanel">
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(assets/img/um_case_study_card.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Data Engineering with the University of Michigan</h4>
+
+                          <p class="card-text">Patterson Consulting worked with a team of researchers to build out the needed data pipelines to extract modeled data from a mix of different raw data sources.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="#">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Data Platform Migration with Large Midwest Insurance Company</h4>
+                          <p class="card-text">Patterson Consulting worked with the platform engineering team of a large midwest insurance company to help migrate data pipelines from AWS to GCP. New data pipelines were built out on Google BigQuery and orchestration was implemented with Airflow.</p>
+                          
+                          <!--
+                          <a class="btn btn-primary" href="#">Go somewhere</a>
+                        -->
+                <a class="btn btn-lg btn-link px-0" href="./case_studies/case_study_data_engineering_large_insurance_company.html">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>                  
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(assets/img/finsrv_case_study_card.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Managed MLOps Infrastructure for Large Financial Services Company</h4>
+                          <p class="card-text">Patterson Consulting worked with a large east coast financial services company to help them integrate Kubeflow with Kerberos, Active Directory, and NVIDIA DGX GPUs for an on-premise Jupyter Notebook-based data science environment with fixed cost profile.</p>
+                          
+                          <!--
+                          <a class="btn btn-primary" href="#">Go somewhere</a>
+                        -->
+                <a class="btn btn-lg btn-link px-0" href="#">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>     
+
+                </div>
+
+
+<!--
+          <div class="col">
+            <div class="card bg-primary border-0 h-100 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-light">Robotics &amp; artificial intelligence</h3>
+                <p class="card-text text-light opacity-80 pb-sm3 pb-md-4 mb-2">Cursus volutpat pharetra vel in. Felis ut nulla dui nec, vulputate viverra sit eget vel. Convallis diam nunc, vitae, orci, nibh quam tristique pulvinar. In semper etiam aliquam molestie arcu. Nullam id sed tempor, volutpat blandit urna sagittis, commodo vestibulum. Adipiscing dictumst nunc enim massa.</p>
+                <a class="btn btn-lg btn-link text-light px-0" href="#">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+              </div>
+              <div class="d-flex justify-content-end mt-sm-n5 me-n4">
+                <img src="assets/img/01.png" width="347" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card bg-primary bg-opacity-10 border-0 h-100 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Toothbrush from natural eco materials</h3>
+                <p class="card-text text-primary pb-sm3 pb-md-4 mb-2">Cursus volutpat pharetra vel in. Felis ut nulla dui nec, vulputate viverra sit eget vel. Convallis diam nunc, vitae, orci, nibh quam tristique pulvinar. In semper etiam aliquam molestie arcu. Nullam id sed tempor, volutpat blandit urna sagittis, commodo vestibulum. Adipiscing dictumst nunc enim massa.</p>
+                <a class="btn btn-lg btn-link px-0" href="#">
+                  Read case study
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+              </div>
+              <div class="d-flex justify-content-end mt-n4 mt-sm-n5 me-n4">
+                <img src="assets/img/02.png" width="291" alt="Image">
+              </div>
+            </div>
+          </div>
+        </div>
+-->
+
+
+
+        <!-- More button -->
+        <div class="text-center my-2 mt-sm-3 mt-lg-0 pt-4 pb-1 pb-sm-3 pb-md-4 pt-lg-5">
+          <a class="btn btn-outline-primary" href="#">Read all case studies</a>
+        </div>
+      </section>
+
+
+
+
+
+      <section class="bg-dark border-top border-light py-2 py-sm-3 py-md-4 py-lg-5" data-bs-theme="dark">
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+          <h4>Our Services</h4>
+          <h2 class="h1 text-center text-md-start mt-lg-n3 pb-4 pb-md-5" style="max-width: 660px;">End-to-End Services for Developing Next Generation Data Platforms</h2>
+          <div class="row pt-sm-2 pt-md-0 pt-xl-1 pt-xxl-3">
+            <div class="col-md-6 col-xl-5 offset-xl-1 order-md-2 pb-4 pb-md-0 mb-2 mb-md-0">
+
+              <!-- Images (binded content) -->
+              <div class="binded-content" style="max-width: 526px;">
+                <div class="binded-item active" id="platform-eng-image">
+                  <div class="from-bottom">
+                    <div class="d-flex justify-content-center position-absolute top-0 start-0 w-100 h-100">
+                      <div class="bg-primary rounded-5 h-100" style="width: 88.2%;"></div>
+                    </div>
+                    <img class="d-block position-relative z-2 rounded-5" src="assets/img/services_2024_v2_data_engineering.jpg" alt="Data Migrations" >
+                  </div>
+                </div>
+
+                <div class="binded-item" id="data-eng-image">
+                  <div class="from-bottom">
+                    <div class="d-flex justify-content-center position-absolute top-0 start-0 w-100 h-100">
+                      <div class="bg-info rounded-5 h-100" style="width: 88.2%;"></div>
+                    </div>
+                    <img class="d-block position-relative z-2 rounded-5" src="assets/img/services_2024_data_migrations.jpg" alt="Data Engineering">
+                  </div>
+                </div>
+
+
+                
+                <div class="binded-item" id="gen-ai-image">
+                  <div class="from-bottom">
+                    <div class="d-flex justify-content-center position-absolute top-0 start-0 w-100 h-100">
+                      <div class="bg-warning rounded-5 h-100" style="width: 88.2%;"></div>
+                    </div>
+                    <img class="d-block position-relative z-2 rounded-5" src="assets/img/services_2024_generative_ai.jpg" alt="Generative AI">
+                  </div>
+                </div>
+                <!--
+                <div class="binded-item" id="startups-image">
+                  <div class="from-bottom">
+                    <div class="d-flex justify-content-center position-absolute top-0 start-0 w-100 h-100">
+                      <div class="bg-danger rounded-5 h-100" style="width: 88.2%;"></div>
+                    </div>
+                    <img class="d-block position-relative z-2 rounded-5" src="assets/img/landing/saas-1/industries/04.png" alt="Image">
+                  </div>
+                </div>
+              -->
+              </div>
+            </div>
+            <div class="col-md-6 order-md-1">
+              
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs flex-nowrap overflow-auto text-nowrap pb-3 mb-3 mb-xl-4" role="tablist">
+
+                <li class="nav-item mb-0" role="presentation">
+                  <a class="nav-link active" href="#platform-eng-text" data-bs-toggle="tab" data-binded-content="#platform-eng-image" role="tab" aria-selected="true" tabindex="-1">Platform Engineering</a>
+                </li>
+
+                <li class="nav-item mb-0" role="presentation">
+                  <a class="nav-link" href="#data-eng-text" data-bs-toggle="tab" data-binded-content="#data-eng-image" role="tab" aria-selected="false" tabindex="-1">Data Engineering</a>
+                </li>
+
+                <li class="nav-item mb-0" role="presentation">
+                  <a class="nav-link" href="#gen-ai-text" data-bs-toggle="tab" data-binded-content="#gen-ai-image" role="tab" aria-selected="false" tabindex="-1">Generative AI</a>
+                </li>
+                <!--
+                <li class="nav-item mb-0" role="presentation">
+                  <a class="nav-link" href="#startups-text" data-bs-toggle="tab" data-binded-content="#startups-image" role="tab" aria-selected="false">Data and AI Strategy</a>
+                </li>
+              -->
+              </ul>
+
+              <!-- Tab content -->
+              <div class="tab-content pt-lg-2 pt-xl-3">
+                <div class="tab-pane fade active show" id="platform-eng-text" role="tabpanel">
+                  <h3 class="mb-lg-4">Build better data platforms</h3>
+
+                  <p class="text-body">Patterson Consulting can help you review existing data platform architectures or design new ones from the ground up. We use a mix of traditional business analysis coupled with deep platform engineering expertise to best match platform architecture to what data platform configuration will best drive line of business key indicators.</p>
+
+                  <p class="text-body">If you are already in the cloud and need to migrate your data platform to another cloud, Patterson Consulting simplifies and expedites data platform migrations in the Cloud. Whether your cloud provider is Azure, AWS, or GCP, Patterson Consulting will efficiently move your data from one platform to another with minimal disruptions.</p>
+                  <a class="btn btn-lg btn-link px-0 mt-n2 mt-lg-0" href="platform_engineering.html">
+                    Learn more
+                    <i class="ai-arrow-right ms-2"></i>
+                  </a>
+                </div>
+
+
+                <div class="tab-pane fade" id="data-eng-text" role="tabpanel">
+                  <h3 class="mb-lg-4">Deploy new data pipelines with a team of experts</h3>
+                  <p class="text-body">Leveraging the latest technologies and best practices, we design robust and scalable pipelines tailored to meet the unique needs of each client. Our expert team meticulously architects the entire process, from data ingestion to transformation and storage, ensuring seamless integration with cloud-native services for maximum efficiency and performance. Trust us to transform your data challenges into opportunities for innovation and growth in the cloud.</p>
+
+                  <p class="text-body">
+                    From data products, to analytics, to semantic layers, to building dashboards, the Patterson Consulting team will design and deploy efficient data pipelines that improve how your business operates. 
+                  </p>
+
+                  <p class="text-body">
+                  Our data pipeline design process focuses on data integration integrity and lowering the latency it takes from "data intake to data answer" in the line of business.
+                  </p>
+
+                  <a class="btn btn-lg btn-link px-0 mt-n2 mt-lg-0" href="data_engineering.html">
+                    Learn more
+                    <i class="ai-arrow-right ms-2"></i>
+                  </a>
+                </div>
+
+
+                <div class="tab-pane fade" id="gen-ai-text" role="tabpanel">
+                  <h3 class="mb-lg-4">Accelerate your line of business with generative AI</h3>
+                  <!--
+                  <p class="text-body">From natural language processing to process automation and beyond, we leverage advanced techniques to create AI applications that not only meet but exceed expectations. 
+                  </p>
+                -->
+
+                  <p class="text-body">
+                    We focus on 3 core areas of application in generative AI:
+
+                    <ul>
+                      <li>Conversational User Interfaces</li>
+                      <li>Process Automation</li>
+                      <li>Decision Support</li>
+
+                    </ul>
+
+                  </p>
+
+                  <p class="text-body">
+
+                    Focusing on these 3 areas allow our customers to frame generative AI use cases and drive towards return on investment for the line of business.
+
+                  </p>
+
+                  <p class="text-body">
+
+                  Our rigorous development process ensures that each application is rigorously tested and fine-tuned for optimal performance, reliability, and scalability. </p>
+                  <!--
+                    Partner with Patterson Consulting to unleash the creative potential of generative AI and revolutionize your business operations with unparalleled efficiency and ingenuity.
+                  -->
+                  <a class="btn btn-lg btn-link px-0 mt-n2 mt-lg-0" href="generative_ai.html">
+                    Learn more
+                    <i class="ai-arrow-right ms-2"></i>
+                  </a>
+                </div>
+                <!--
+                <div class="tab-pane fade active show" id="startups-text" role="tabpanel">
+                  <h3 class="mb-lg-4">Track fast growth with important data</h3>
+                  <p class="text-body">Porttitor in mauris tellus ipsum commodo praesent nunc vel integer mi at tristique id faucibus pretium vestibulum massa nisl at massa sagittis congue ac uismod tortor dictum enim tincidunt gravida odio. Auctor arcu ante malesuada pharetra gravida nunc euismod egestas quam dolor ut vel venenatis quis egestas orci.</p>
+                  <a class="btn btn-lg btn-link px-0 mt-n2 mt-lg-0" href="#">
+                    Learn more
+                    <i class="ai-arrow-right ms-2"></i>
+                  </a>
+                </div>
+              -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+        
+      <!-- Use cases -->
+      <section class="border-top border-light py-2 py-sm-3 py-md-4 py-lg-5">
+        <!--
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none" style="background: linear-gradient(141deg, rgba(255, 255, 255, .01) 17.3%, #f6f9fc 78.21%);"></span>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-dark-mode-block" style="background: linear-gradient(141deg, rgba(18, 21, 25, .00) 17.3%, rgba(255, 255, 255, .03) 78.21%);"></div>
+-->
+      <!--
+        <div class="container position-relative z-2 pt-3 pt-md-4 pt-lg-5 mt-lg-2 mt-xl-4">
+        -->
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+          <h2 class="h1 text-center pb-1 mb-2">Our latest blog resources</h2>
+          <p class="fs-lg text-center pb-lg-2">Articles on data engineering and generative AI from the Patterson Consulting team</p>
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+
+          <!-- Item -->
+          <div class="col">
+
+
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/pct_apm_p2_og_card.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">IoT Data with Snowflake</h4>
+                <p class="card-text">In this article we take a look at how to ingest IoT data into Snowflake tables and then how to connect Google Colab Jupyter Notebooks to Snowflake.</p>
+                <a href="/blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col">
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">The Evolution of RAG</h4>
+                <p class="card-text">In this article we take a look at “what is retrieval augmented generation?” and “how is retrieval augmented generation’s definition evolving?”.</p>
+                <a href="#" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col">
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/pct_dbt_duckdb_part_2_og_card.jpg" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Data Modeling Healthcare Data with DBT</h4>
+                <p class="card-text">In this post we’ll build our first DBT pipeline to summarize patient history data for downstream data engineers.</p>
+                <a href="/blog/dbt_hello_world_part_2_pipeline.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+
+          <!-- Item -->
+          <div class="col">
+
+
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/pct_ccfd_p1_og_card.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Loading the Credit Card Transaction Data Into Snowflake</h4>
+                <p class="card-text">In this blog post series we will demonstrate how to build a credit card fraud detection system on realistic data.</p>
+                <a href="/blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col">
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/og_meta_card_nl_user_interfaces_jan_2024.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Building a GenAI UX for Embedded Analytics</h4>
+                <p class="card-text">This article explores using natural language, LLMs, and LangChain as a front end interface for an analytics or report generation application.</p>
+                <a href="/blog/natural_language_ux_with_llms_jan_2024.html" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col">
+
+
+            <div class="card">
+              <img src="../../blog/images/meta_og_images/meta_og_evolution_rag_jan_2024.png" class="card-img-top" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">What is Data Engineering?</h4>
+                <p class="card-text">Our article where we lay out clear definitions for data engineering.</p>
+                <a href="#" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+
+          <div class="col">
+
+
+            <div class="">
+
+            </div>
+          </div>
+
+          <div class="col">
+
+
+            <div class="card">
+
+              <a href="#" class="btn btn-lg btn-outline-primary rounded-pill">Explore all blog articles</a>
+
+            </div>
+          </div>
+
+        </div>
+        
+      </div>
+
+
+
+
+            
+
+      </section>
+
+
+
+
+
+
+
+      <section class="border-top border-light ">
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+
+                  <div class="card overflow-hidden" style="background-color: #eeeeee;">
+                    <div class="row g-0">
+                      <div class="col-sm-5 bg-repeat-0 bg-size-cover order-sm-2" style="background-image: url(assets/img/footer_cta_img.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-7 order-sm-1">
+                        <div class="card-body">
+                          <h3 class="card-title">Take the next step with Patterson Consulting</h3>
+                          <p class="card-text">Reach out to start a discussion with our team about your data engineering and generative AI needs.</p>
+                          <a class="btn btn-primary" href="./contact_us.html">Talk to our team</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+
+      </section>
+
+
+
+    </main>
+
+    
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
+                <i class="ai-facebook"></i>
+              </a>
+            -->
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
+                <i class="ai-instagram"></i>
+              </a>
+            -->
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./case_studies.html">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>   
+
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+<!--
+
+<a class="position-fixed top-50  " href="#customizer" data-bs-toggle="" style=" box-shadow: var(--ar-btn-scroll-top-box-shadow); right: 1.75rem;  transform: rotate(0deg); z-index: 1030;">
   
-  text-decoration: none;
-  cursor: pointer;
-}
-
-	</style>
-	<script>
-// When the user clicks on the button, open the modal
-function streamlit_stair_onmouseover() {
-
-	// Get the modal
-	var modal = document.getElementById("myModal");
-
-	// Get the button that opens the modal
-	var btn = document.getElementById("streamlit_stair");
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	//alert('modal: ' + modal)
-
-
-	//alert('foo')
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-function modal_dialog_click() {
-	var modal = document.getElementById("myModal");	
-
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-
-	// Get the modal
-	var modal = document.getElementById("myModal");	
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-	</script>
-	<script src="../js/modernizr-2.6.2.min.js"></script>
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
-	</head>
-	<body class="boxed">
-	<!-- Loader -->
-	<div class="fh5co-loader"></div>
-
-	<div id="wrap">
-
-	<div id="fh5co-page">
-		<header id="fh5co-header" role="banner">
-			<div class="container">
-				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-				<div id="fh5co-logo"><a href="../index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
-				<nav id="fh5co-main-nav" role="navigation">
-					<ul>
-						
-						<li class="has-sub">
-							<div class="drop-down-menu">
-								<a href="#">Services</a>
-								<div class="dropdown-menu-wrap">
-									<ul>
-										
-
-										<li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
-										<li><a href="../offerings/aws_services.html">AWS</a></li>
-										<li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
-										<li><a href="../offerings/data_science.html">Data Science</a></li>
-
-										<li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
-										
-										<li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
-
-										<li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
-
-										<li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
-
-										<li><a href="../offerings/training_classes.html">Training</a></li>
-										
-									</ul>
-								</div>
-							</div>
-						</li>
-						
-						<li><a href="../partners.html">Partners</a></li>
-
-						<li><a href="../blog/blog_index.html">Blog</a></li>
-					
-						<li class="cta"><a href="../contact.html">Contact</a></li>
-					</ul>
-				</nav>
-			</div>
-		</header>
-		<!-- Header -->
-
-<!--
-		<div class="fh5co-slider" >
-			<div class="container"  style="border: 0px solid #990000; width: 100%; height: 323px; background-image: url(../images/managed_kf_hand.png);    background-repeat: no-repeat; background-position: 40px 90px; background-size: 1000px 323px;">
-				
-				<div class="cd-hero__content cd-hero__content--half-width" style="width: 80%; padding-left: 50px;">
-						<h1>Managed Kubeflow</h1>
-						<p class="fh5co-lead">The Patterson Consulting team .....</p>	
-				</div>		
-			</div>
-		</div>
-	-->
-		<!-- Slider -->
-		
-		<div id="fh5co-intro" class="fh5co-section">
-			<div class="container">
-
-
-
-
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; ">
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; border-bottom: 2px solid #dddddd;">
-						<h1>Patterson Consulting provides comprehensive LLM, Data Engineering, and DevOps Services for Fortune 500 companies</h1>
-
-					</div>
-
-					</div>
-				</div>
-
-
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; ">
-
-				</div>
-
-
-				<!-- start row -->
-
-				<div class="row row-bottom-padded-sm" style="padding-left: 20px;">
-
-
-					
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; ">
-						<h2>Services Offered:</h2>
-
-
-
-				<div  style=" border: 1px solid #cccccc; border-radius: 10px; height: 400px; padding: 8px; padding-top: 8px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 16px; text-decoration: underline; font-size: 16px;">
-						<p>
-							<div>
-
-								<div class="grid_offering_row">
-									<div class="grid_offering_cell" style="width: 500px; background-color: ; color: #000000;"><h3>Custom Large Language Model Applications</h3>We help customers design, build, and deploy augmented reasoning large language model applications. <a href="http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html" style="color: #FF5126; text-decoration: underline;">Download our e-Book on "An Introduction to Large Language Models"</a></div>
-
-									<div class="grid_offering_cell" style="width: 500px; background-color: ; color: #000000;"><h3>Data Engineering</h3>We help customers design, build, and orchestrate complex data pipelines.</div>
-								</div>
-
-								<div class="grid_offering_row">
-									<div class="grid_offering_cell" style="width: 500px; background-color: ; color: #000000;"><h3>Cloud DevOps</h3>We help customers build out and deploy platforms built on the Cloud.</div>
-
-									<div class="grid_offering_cell" style="width: 500px; background-color: ; color: #000000;"><h3>Managed Platforms</h3>We can run your infrastructure for you, on-premise or in the cloud.</div>									
-								</div>
-
-							</div>
-						</p>
-					</div>
-
-					</div>
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 4px; padding-left: 30px; height: 100%; margin-left: 6px; ">					
-
-
-				<div  style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 4px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 16px; text-decoration: underline; font-size: 16px;">
-					
-						
-							<a href="../contact.html" style="color: #ffffff;">Reach out and let's talk about working together</a>.
-
-						
-					</div>						
-						
-						</div>
-		
-
-
-
-				</div>	
-				<!-- end row -->				
-
-
-
-
-
-
-
-
-
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; text-align: ; ">
-					
-					<div class="col-md-1" id="fh5co-content" style="border: 0px solid; background-color: ; padding-top: 50px; padding-left: 6px; height: 100%; text-align: center;">
-
-					</div>
-
-					<div class="col-md-10" id="fh5co-content" style="border: 0px solid; background-color: #eeeeee; padding-top: 20px; padding-left: 20px; height: 100%;">
-					
-					<div class="" id="" style="float:  right; background-color: #eeeeee; height:  100%; border: 0px solid; padding-top: 28px; margin-right: 6px; text-align: center; ">
-							<a href="../content/kubeflow_operations_oreilly_book.html">
-								<img src="../images/kfops_book_cover_final.png" style="width: 212px; height: 280px; border: 1px solid; " >
-							</a>
-					</div>
-					<div class="" id="" style="float:  right; background-color: #eeeeee; height:  100%; border: 0px solid; padding-top: 28px; width:  6px; margin-right: 6px; text-align: center; ">
-					</div>
-
-					<div class="" id="" style="float:  right; background-color: #eeeeee; height:  100%; border: 0px solid; padding-top: 28px; padding-left: 6px;  text-align: center; ">
-
-
-							<a href="https://www.oreilly.com/library/view/deep-learning/9781491924570/">
-								<img src="../images/book_cover.png" style="width: 212px; height: 280px; border: 1px solid;" >
-							</a>
-
-					</div>		
-
-						<h2>Who is Patterson Consulting?</h2>
-
-							<p>
-
-							<ul>
-<li>Our customer list includes multiple Fortune 100 banks, insurance, telecoms, and healthcare organizations</li>
-<li>We are trusted by partners such as Cube, Amazon Web Services, Snowflake, and Confluent to work with their own critical customers</li>
-
-<li>Members of our team co-created the <a href="https://github.com/eclipse/deeplearning4j">Deeplearning4j</a> Deep Learning Library</li>
-<li>Our Deep Learning book has 7 translations published and is <a href="https://dl.acm.org/doi/10.5555/3169957">cited in many scientific papers</a></li>
-
-
-							</ul>
-
-						</p>
-					</div>
-
-				</div>		
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; text-align: ; ">
-					
-					<div class="col-md-1" id="fh5co-content" style="border: 0px solid; background-color: ; padding-top: 50px; padding-left: 6px; height: 100%; text-align: center;">
-
-					</div>
-
-					<div class="col-md-10" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 0px; padding-left: 0px; height: 100%; margin-left: 6px; text-align: center;">
-
-						<h2>Our Large Language Model Demo in Cube's Booth at this Year's Snowflake Summit 2023</h2>
-
-<iframe width="873" height="491" src="https://www.youtube.com/embed/RzqvtNB2cik" title="YouTube video player" frameborder="0" style="border: solid 1px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					</div>
-
-					<div class="col-md-1" id="fh5co-content" style="border: 0px solid; background-color: ; padding-top: 50px; padding-left: 6px; height: 100%; text-align: center;">
-
-					</div>
-					<div class="col-md-9" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 0px; padding-left: 0px; height: 100%; margin-left: 44px; text-align: left;">
-
-						<div class="" id="" style="float:  right; background-color: #eeeeee; height:  100%; border: 0px solid; padding-top: 28px; margin-bottom: 6px; margin-right: 6px; text-align: center; ">
-								<a href="../content/kubeflow_operations_oreilly_book.html">
-									<img src="../images/summit_2023_cube_booth_map.png" style="width: 400px; height: 319px; border: 0px solid; " >
-								</a>
-						</div>	
-
-						<br/>
-						<h3>Demo Overview</h3>				
-
-						
-
-							<p>
-								This year we'll be giving a live demo of a next generation enterprise large language model that takes advantage of Cube's semantic layer for better knowledge repository integration. Included in the demo:
-<ul>
-<li>A walk-through of an example enterprise LLM-application built with <a href="https://python.langchain.com/docs/get_started/introduction.html">LangChain</a></li>
-<li>This applications shows how we can support any analyst role (here, a meteorologist) with an expert assistant to do ground work while they focus on higher-level analysis work</li>
-<li>We explain the architecture of the system for each of the types of natural language commands</li>
-<li>And how <a href="https://cube.dev/">Cube</a>'s <a href="https://cube.dev/blog/semantic-layer-the-backbone-of-ai-powered-data-experiences">semantic layer supports certain types of queries</a>, supplying knowledge from the corporate Snowflake cloud data warehouse to support the Augmented Reasoning engine</li>
-</ul>
-
-Demo Time Slots:
-<ul>
-	<li>Tuesday, June 27th @ 1pm</li>
-	<li>Wednesday, June 28th @ 1pm</li>
-</ul>
-
-
-
-						</p>
-
-						<div  style=" border: 1px solid #cccccc; border-radius: 10px; padding: 8px; padding-top: 4px; background-color: #FF5126; color: #ffffff; font-size: 14px; font-weight: normal; margin-bottom: 16px;  font-size: 16px;">
-							
-								Want to know more about building enterprise applications with large language models? 
-									<a href="http://www.pattersonconsultingtn.com/content/intro_to_llms_ebook.html" style="color: #ffffff;text-decoration: underline;">Download our e-Book on "An Introduction to Large Language Models"</a>.
-
-								
-							</div>				
-
-					</div>
-
-
-
-				</div>		
-
-
-
-
-
-
-
-
-
-
-
-
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; ">
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; text-align: center;">
-						<h2>We Also Offer Different Lines of Snowflake Workshops</h2>
-
-<iframe width="873" height="491" src="https://www.youtube.com/embed/DM5cVdxpmYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					</div>
-				</div>
-
-
-				<!-- start row -->
-
-				<div class="row row-bottom-padded-sm" style="padding-left: 20px;">
-
-
-					
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; ">
-						<h2>Selected Entries and Series from Our <a href="http://www.pattersonconsultingtn.com/blog/blog_index.html">Blog</a></h2>
-
-
-						<p>
-
-
-									<h3>Detecting Credit Card Fraud with Snowflake, Snowpark, and Amazon SageMaker Studio</h3>
-
-							<ul>
-
-								<li>Part 1: <a href="../blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_1.html">Loading the Credit Card Transaction Data Into Snowflake</a></li>
-								<li>Part 2: <a href="../blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_2.html">Scalable Feature Engineering with Snowpark</a></li>
-								<li>Part 3: <a href="../blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_3.html">Connecting AWS Sagemaker Studio Lab to Snowflake</a></li>
-								<li>Part 4: <a href="../blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_4.html">Grid Search Model Selection with AWS Sagemaker Studio Lab and Shap Hypertune</a></li>
-								<li>Part 5: <a href="../blog/creditcard_fraud_detection_w_snowflake_sagemaker_part_5.html">Deploying the Model as a Streamlit Application</a></li>
-							</ul>
-
-
-						</p>
-					</div>
-
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; ">
-
-
-						<h3>Building an End-to-End Cloud Predictive Maintenance System with Snowflake</h3>
-		
-
-
-						<p>
-
-
-									
-									<ul>
-
-
-										<li>Part 1: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_1_biz.html">Making the Business Case for Predictive Maintenance</a></li>
-										<li>Part 2: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_2_ingest.html">Sensor Data Ingest, Storage, and Analysis with Snowflake</a></li>
-										<li>Part 3: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_3_eda.html">Exploratory Data Analysis</a></li>
-										<li>Part 4: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_4_modeling.html">Machine Learning Workflows with Sci-Kit Learn to Build Predictive Maintenance Models</a></li>
-										<li>Part 5: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_5_biz_value_analysis.html">Analyzing the Results</a></li>
-										<li>Part 6: <a href="../blog/predictive_maintenance_w_snowflake_ml_part_6_snowpark.html">Going to Production with Snowpark</a></li>
-
-									</ul>
-
-						</p>
-
-					</div>
-
-				</div>	
-				<!-- end row -->
-
-				
-
-
-					<div class="col-md-12" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 24px; padding-left: 30px; height: 100%; margin-left: 6px; ">
-
-
-						<h3>Other Selected Articles on Our Blog</h3>
-		
-
-
-						<p>
-
-
-									
-									<ul>
-
-										<li>DBT Hello World: <a href="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_1_setup.html">Part 1</a> and <a href="http://www.pattersonconsultingtn.com/blog/dbt_hello_world_part_2_pipeline.html">Part 2</a></li>
-
-
-										<li>AWS Spend Forecasting: <a href="http://www.pattersonconsultingtn.com/blog/forecasting_your_aws_gpu_cloud_spend.html">Forecasting Your AWS Cloud GPU Spend</a></li>
-
-										<li>Understanding Cloud Resource Value: <a href="http://www.pattersonconsultingtn.com/blog/cloud_gpu_value_model_for_nvidia_mig.html">A Cloud GPU Value Model for NVIDIA Multi-Instance GPUs (MIG)</a></li>
-										
-										<li>Computer Vision: <a href="http://www.pattersonconsultingtn.com/blog/unsupervised_anomaly_detection.html">GANs for Unsupervised Anomaly Detection in Manufacturing</a></li>
-
-										<li>Machine Learning Model Serving on Kubernetes: <a href="http://www.pattersonconsultingtn.com/blog/deploying_huggingface_with_kfserving.html">Deploying a HuggingFace NLP Model with KFServing</a></li>
-
-										<li>Tutorial: <a href="http://www.pattersonconsultingtn.com/blog/set_up_kafka_on_aws.html">Setting Up Kafka on Amazon Web Services</a></li>
-
-									</ul>
-
-						</p>
-
-					</div>
-
-				</div>	
-				<!-- end row -->				
-		
-<!--
-				<div class="row row-bottom-padded-sm">
-					<div class="col-md-12" id="fh5co-content"  style="border: 1px solid #dddddd; padding: 18px; padding-top: 24px;">
-						<h2>Hybrid On-Premise / Cloud Kubeflow</h2>
-						<p>We also offer hybrid Kubeflow clusters that can run machine learning workflows on an on-premise cluster and burst to a kubernetes cluster based on public cloud infrastructure as needed.</p>
-
-					</div>
-				</div>
+      
+<div class="hotspots">
+<div class="hotspot" style="top: 8%; right: 16%;" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Chat with our suite of Generative AI Agents" aria-label="Augmented Reasoning" data-bs-original-title="Questions?" >
+                      <div class="hotspot-inner">
+
+                      <svg class="d-block text-warning mb-4" width="40" height="40" viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <path d="M34.25 2H5.25C4.12344 2.00198 3.04359 2.45039 2.24699 3.24699C1.45039 4.04359 1.00198 5.12344 1 6.25V27.75C1.00198 28.8766 1.45039 29.9564 2.24699 30.753C3.04359 31.5496 4.12344 31.998 5.25 32H8.5V38.25C8.50037 38.4929 8.5715 38.7304 8.70469 38.9336C8.83789 39.1367 9.02738 39.2966 9.25 39.3938C9.40728 39.4641 9.5777 39.5003 9.75 39.5C10.0629 39.5 10.3644 39.3827 10.595 39.1712L18.4188 32H34.25C35.3766 31.998 36.4564 31.5496 37.253 30.753C38.0496 29.9564 38.498 28.8766 38.5 27.75V6.25C38.498 5.12344 38.0496 4.04359 37.253 3.24699C36.4564 2.45039 35.3766 2.00198 34.25 2ZM28.5 24.5H11C10.6685 24.5 10.3505 24.3683 10.1161 24.1339C9.8817 23.8995 9.75 23.5815 9.75 23.25C9.75 22.9185 9.8817 22.6005 10.1161 22.3661C10.3505 22.1317 10.6685 22 11 22H28.5C28.8315 22 29.1495 22.1317 29.3839 22.3661C29.6183 22.6005 29.75 22.9185 29.75 23.25C29.75 23.5815 29.6183 23.8995 29.3839 24.1339C29.1495 24.3683 28.8315 24.5 28.5 24.5ZM28.5 18.25H11C10.6685 18.25 10.3505 18.1183 10.1161 17.8839C9.8817 17.6495 9.75 17.3315 9.75 17C9.75 16.6685 9.8817 16.3505 10.1161 16.1161C10.3505 15.8817 10.6685 15.75 11 15.75H28.5C28.8315 15.75 29.1495 15.8817 29.3839 16.1161C29.6183 16.3505 29.75 16.6685 29.75 17C29.75 17.3315 29.6183 17.6495 29.3839 17.8839C29.1495 18.1183 28.8315 18.25 28.5 18.25ZM28.5 12H11C10.6685 12 10.3505 11.8683 10.1161 11.6339C9.8817 11.3995 9.75 11.0815 9.75 10.75C9.75 10.4185 9.8817 10.1005 10.1161 9.86612C10.3505 9.6317 10.6685 9.5 11 9.5H28.5C28.8315 9.5 29.1495 9.6317 29.3839 9.86612C29.6183 10.1005 29.75 10.4185 29.75 10.75C29.75 11.0815 29.6183 11.3995 29.3839 11.6339C29.1495 11.8683 28.8315 12 28.5 12Z"></path>
+                </svg>
+
+                      
+
+                      </div>
+                    </div>
+</div>
+                 
+    </a>
 -->
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">augmentedreasoning.ai / Demo Agents</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body fs-sm">
+<!-- content start -->
+
+<div class="container py-1 mb-lg-4">
+        <div class="row pt-sm-2 pt-lg-0">
+
+          <!-- Sidebar (offcanvas on sreens < 992px) -->
+          <aside class="col-lg-3 pe-lg-4 pe-xl-5 mt-n3">
+            <div class="position-lg-sticky top-0">
+              <div class="d-none d-lg-block" style="padding-top: 105px;"></div>
+              <div class="offcanvas-lg offcanvas-start" id="sidebarAccount">
+                <button class="btn-close position-absolute top-0 end-0 mt-3 me-3 d-lg-none" type="button" data-bs-dismiss="offcanvas" data-bs-target="#sidebarAccount" aria-label="Close"></button>
+                <div class="offcanvas-body">
+                  <!--
+                  <div class="pb-2 pb-lg-0 mb-4 mb-lg-5">
+                    <img class="d-block rounded-circle mb-2" src="assets/img/avatar/02.jpg" width="80" alt="Isabella Bocouse">
+                    <h3 class="h5 mb-1">Isabella Bocouse</h3>
+                    <p class="fs-sm text-body-secondary mb-0">bocouse@example.com</p>
+                  </div>
+                -->
+                  <nav class="nav flex-column pb-2 pb-lg-4 mb-3">
+                    <h4 class="fs-xs fw-medium text-body-secondary text-uppercase pb-1 mb-2">Agents</h4>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-overview.html">
+                      <i class="ai-user-check fs-5 opacity-60 me-2"></i>
+                      Patterson Consulting Site Agent
+                    </a>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-settings.html">
+                      <i class="ai-user fs-5 opacity-60 me-2"></i>
+                      Sales KPIs Demo Agent
+                    </a>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-billing.html">
+                      <i class="ai-user fs-5 opacity-60 me-2"></i>
+                      Cube.dev Demo Agent
+                    </a>
+                  </nav>
+                  
+                  <nav class="nav flex-column pb-2 pb-lg-4 mb-1">
+                    <h4 class="fs-xs fw-medium text-body-secondary text-uppercase pb-1 mb-2">Integration Code Examples</h4>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-orders.html">
+                      <i class="ai-cart fs-5 opacity-60 me-2"></i>
+                      Python REST Code
+                    </a>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-earnings.html">
+                      <i class="ai-activity fs-5 opacity-60 me-2"></i>
+                      Javascript Code
+                    </a>
+                  <!--
+                    <a class="nav-link fw-semibold py-2 px-0 active" href="account-chat.html">
+                      <i class="ai-messages fs-5 opacity-60 me-2"></i>
+                      Chat
+                      <span class="badge bg-danger ms-auto">4</span>
+                    </a>
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-favorites.html">
+                      <i class="ai-heart fs-5 opacity-60 me-2"></i>
+                      Favorites
+                    </a>
+                  -->
+                  </nav>
+                  <!--
+                  <nav class="nav flex-column">
+                    <a class="nav-link fw-semibold py-2 px-0" href="account-signin.html">
+                      <i class="ai-logout fs-5 opacity-60 me-2"></i>
+                      Sign out
+                    </a>
+                  </nav>
+                -->
+                </div>
+              </div>
+            </div>
+          </aside>
+
+
+          <!-- Page content -->
+          <div class="col-lg-9 pt-1 pb-1 pb-sm-4">
+            <!--
+            <h1 class="h2 mb-4">Chats</h1>
+          -->
+            <div class="row position-relative overflow-hidden gx-2 z-1">
+
+
+
+              <!-- Chat window -->
+              <div class="col-xl-12">
+                <div class="card h-100 border-0">
+
+                  <!-- Header -->
+                  <div class="navbar card-header w-100 mx-0 px-1">
+                    <div class="d-flex align-items-center w-100 px-sm-1">
+                      <button class="navbar-toggler d-xl-none me-3 me-sm-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#contactsList" aria-controls="contactsList" aria-label="Toggle contacts list">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="position-relative flex-shrink-0">
+                        <img class="rounded-circle" src="assets/img/avatar/19.jpg" width="48" alt="Avatar">
+                        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle me-1" style="width: .625rem; height: .625rem;"></span>
+                      </div>
+                      <div class="h6 ps-2 ms-1 mb-0">Patterson Consulting Site Agent</div>
+                      <div class="dropdown ms-auto">
+                        <button class="btn btn-icon btn-sm btn-outline-secondary border-0 rounded-circle me-n2" type="button" data-bs-toggle="dropdown" aria-label="Actions">
+                          <i class="ai-dots-vertical fs-4 fw-bold"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end my-1">
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-user fs-base opacity-80 me-2"></i>
+                            View profile
+                          </a>
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-bell-off fs-base opacity-80 me-2"></i>
+                            Disable notifications
+                          </a>
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-edit fs-base opacity-80 me-2"></i>
+                            Edit contact
+                          </a>
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-trash fs-base opacity-80 me-2"></i>
+                            Delete contact
+                          </a>
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-logout fs-base opacity-80 me-2"></i>
+                            Leave chat
+                          </a>
+                          <a class="dropdown-item" href="#">
+                            <i class="ai-circle-slash fs-base opacity-80 me-2"></i>
+                            Block user
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Body -->
+                  <div class="card-body pb-0 pt-4 simplebar-scrollable-y" data-simplebar="init" style="max-height: 580px;"><div class="simplebar-wrapper" style="margin: -24px -38px 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 24px 38px 0px;">
+                    <div class="text-body-secondary text-center mb-4">May 27, 2023</div>
+
+                    <!-- Message -->
+                    <div class="mb-3" style="max-width: 392px;">
+                      <div class="d-flex align-items-end mb-2">
+                        <div class="flex-shrink-0 pe-2 me-1">
+                          <img class="rounded-circle" src="assets/img/avatar/19.jpg" width="48" alt="Avatar">
+                        </div>
+                        <div class="message-box-start text-dark">Thank you for recommending me as a designer. I have an interview tomorrow!</div>
+                      </div>
+                      <div class="fs-xs text-body-secondary text-end">11:32 am</div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="ms-auto mb-3" style="max-width: 392px;">
+                      <div class="d-flex align-items-end mb-2">
+                        <div class="message-box-end bg-primary text-white">Oh no thanks! I just know that you are a great specialist!</div>
+                        <div class="flex-shrink-0 ps-2 ms-1">
+                          <img class="rounded-circle" src="assets/img/avatar/01.jpg" width="48" alt="Avatar">
+                        </div>
+                      </div>
+                      <div class="fs-xs text-body-secondary">
+                        <i class="ai-checks text-primary fs-xl mt-n1 me-1"></i>
+                        2:18 pm
+                      </div>
+                    </div>
+                    <div class="text-body-secondary text-center my-4">May 29, 2023</div>
+
+
+                    <!-- Message -->
+                    <div class="mb-3" style="max-width: 392px;">
+                      <div class="d-flex align-items-end mb-2">
+                        <div class="flex-shrink-0 pe-2 me-1">
+                          <img class="rounded-circle" src="assets/img/avatar/19.jpg" width="48" alt="Avatar">
+                        </div>
+                        <div class="message-box-start text-dark">I'm so happy to be part of the team and work with you on this new exciting project. Can't thank you enough 😊</div>
+                      </div>
+                      <div class="fs-xs text-body-secondary text-end">10:17 am</div>
+                    </div>
+                  </div></div></div></div><div class="simplebar-placeholder" style="width: 572px; height: 834px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 403px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div>
+
+                  <!-- Footer (Textarea) -->
+                  <div class="card-footer w-100 border-0 mx-0 px-4">
+                    <div class="d-flex align-items-end border rounded-3 pb-3 pe-3 mx-sm-3">
+                      <textarea class="form-control border-0" rows="3" placeholder="Type a message" style="resize: none;"></textarea>
+                      <div class="nav flex-nowrap align-items-center">
+                        <a class="nav-link text-body-secondary p-1 me-1" href="#" aria-label="Attach">
+                          <i class="ai-paperclip fs-xl"></i>
+                        </a>
+                        <a class="nav-link text-body-secondary p-1" href="#" aria-label="Emoji">
+                          <i class="ai-emoji-smile fs-xl"></i>
+                        </a>
+                        <button class="btn btn-sm btn-secondary ms-3" type="button">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- content end -->
+
+      </div>
+
 <!--
-				<div class="row row-bottom-padded-sm">
-					<div class="col-md-12" id="fh5co-content">
-						<h2>Contact Us to Start Moving to the Cloud on AWS</h2>
-						<p>For more information on how we can help your organization, <a href="../contact.html">reach out to Patterson Consulting</a> and we can work with your team to develop a custom cloud migration roadmap for your organization to move from developing use cases to full production.</p>
-					</div>
-				</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
 -->
-<!--
-				<div class="row row-bottom-padded-sm" style="border: 0px solid; height: 250px; margin-bottom: 12px;">
 
+        <div class="modal-footer">
+          <!--
+          <button class="btn btn-secondary w-100 w-sm-auto mb-3 mb-sm-0" type="button" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary w-100 w-sm-auto ms-sm-3" type="button">Save changes</button>
+        -->
+        <!--
+          <a class="nav-link text-body-secondary p-1 me-1" href="#" aria-label="Attach">
+            <i class="ai-paperclip fs-xl"></i> Add an augmentedreasoning.ai agent to your application or web site.
+          </a>
+        -->
 
-
-					<div class="col-md-6" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; padding-top: 0px; padding-left: 30px; height: ;">
-						<h2>Selected</h2>
-					</div>
-
-
-<div class="col-md-1" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; height: 100%; padding: 20px; text-align: center; ">
+                    <div class="d-flex align-items-center justify-content-between">
+                      
+                      <a href="http://augmentedreasoning.ai" target="_blank" rel="noopener">
+                        <span class="text-black text-truncate opacity-100">
+                        Add an augmentedreasoning.ai agent to your application or web site.</span>
+                        <i class="ai-circle-arrow-right fs-3 text-primary"></i>
+                      </a>
+                    </div>
+        </div>
+    </div>
+  </div>
 </div>
 
-					
-					<div class="col-md-3" id="fh5co-content" style="border: 0px solid; background-color: #ffffff; height: 100%; padding-top: 48px; text-align: center; margin-right: 4px;">
-						<a href="http://www.aws.com">
-							<img src="../images/amazon-aws-logo-transparent.png" width="170" height="95" />
-						</a>
-					</div>
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/shufflejs/dist/shuffle.min.js"></script>
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="assets/vendor/parallax-js/dist/parallax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
 
 
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+        }
+        //alert("loaded");
 
-				</div>
 
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
 
-			</div>
-		</div>
--->
-		<footer id="fh5co-footer" role="contentinfo">
-			<div class="container">
-				<div class="row row-bottom-padded-sm">
-					<div class="col-md-4 col-sm-12">
-					</div>
-					
-					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
-						
-						<div class="fh5co-footer-widget">
-							<h3>Follow us</h3>
-							<ul class="fh5co-social">
-								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
-								<li class="linkedin"><a href="https://www.linkedin.com/in/joshlpatterson/"><i class="icon-linkedin"></i></a></li>
-								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
-							</ul>
-						</div>
-					</div>
+        //alert('theme confirmed')
 
-				</div>
+      })()
+    </script>
 
-			</div>
-		</footer>
-	</div>
-	</div>
-
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
-	</div>
-	
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/jquery.easing.1.3.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/owl.carousel.min.js"></script>
-	<script src="../js/main.js"></script>
-
-	</body>
+  </body>
 </html>
-
-
-

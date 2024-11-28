@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Prologue - Open Sourcing a Geospatial Analyical Tool - Geospatial
+Hurricane Analytics</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll ….." />
+	<meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="Prologue - Open Sourcing a Geospatial
+Analyical Tool - Geospatial Hurricane Analytics"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/geospatial_hurricane_impact_modeling_prologue.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll ….."/>
+	
+
+	<meta name="twitter:title" content="Prologue - Open Sourcing a
+Geospatial Analyical Tool - Geospatial Hurricane Analytics" />
+	<meta data-rh="true" property="twitter:description" content="In this
+post we’ll ….."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/geospatial_hurricane_impact_modeling_prologue.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>Prologue - Open Sourcing a Geospatial Analyical Tool</h1>
+						<p>
+							<h3>Geospatial Hurricane Analytics</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: February 15th 2023</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<h1 id="prologue">Prologue</h1>
+<blockquote>
+<p>A prologue is an opening to a story that establishes the context and
+gives background details, often some earlier story that ties into the
+main one, and other miscellaneous information</p>
+</blockquote>
+<p>Other entries in this series:</p>
+<ul>
+<li>Part 1: Building a Data Pipeline with DBT</li>
+<li>Part 2: Building a Geospatial Hurricane Analytics Tool with
+Streamlit</li>
+<li>Part 3: Data Engineering with the Snowpark Python API</li>
+</ul>
+<blockquote>
+<p>Who is the intended audience for this article?</p>
+<p>Does the Main title market to them?</p>
+<p>Who is the secondary audience?</p>
+</blockquote>
+<h2 id="core-thesis-why-do-i-care">Core thesis (“Why do I care?”):</h2>
+<ul>
+<li>Easy-to-use Building blocks drive higher-level application
+development</li>
+<li>analytics are the foundation of building next-generation smart city
+applications</li>
+<li>building next-gen smart city applications is imperative in the race
+against the Red Queen</li>
+</ul>
+<h2 id="what-tool-are-we-releasing">What Tool Are We Releasing?</h2>
+<ul>
+<li>An open source set of dbt templates to transform raw census and
+hurricane data</li>
+<li>A map-generation system based on streamlit and folium to do
+Geospatial EDA</li>
+<li>A set of jupyter notebooks to perform tabular EDA on the unified
+dataset</li>
+</ul>
+<h2 id="how-are-we-using-the-tool">How Are We Using The Tool?</h2>
+<ul>
+<li>This tool has helped us analyze 20 years of Hurricane data</li>
+<li>The insights gleamed from the tool impacted our EDA methods in the
+Jupyter notebooks</li>
+<li>This has directly impacted our results in building models to predict
+hospital admissions post-hurricane</li>
+</ul>
+<h2 id="what-else-might-it-be-used-for">What Else Might it Be Used
+for?</h2>
+<ul>
+<li>Understanding geospatial relationships between weather events and
+other events in
+<ul>
+<li>Transit</li>
+<li>Housing</li>
+<li>Water</li>
+<li>Power</li>
+<li>Air Quality</li>
+<li>Foot Traffic</li>
+</ul></li>
+<li>Spatially exploring complex dataset</li>
+<li>Informing the tabular EDA workflow</li>
+</ul>
+<p>We include an example where we analyze hurricanes’ impact on FEMA
+inspected damage across 20 years.</p>
+<h1 id="collaboration-with-university-of-michigan">Collaboration with
+University of Michigan</h1>
+<p>sue anne bell</p>
+<p>AMS invited talk</p>
+<p>Started out with a few counties of data Couldnt find relationships
+Then moved to a lot more counties worth of data Found some of the spikes
+we were looking for But realized there was a larger story Then moved to
+looking at a 5-7 states worth of data For admissions Added per-county
+storm data in Found compelling results in the analysis</p>
+<p>Talked these results over with another data expert They pointed out:
+Storm (N=1) Difficult to draw any generalizations when N = 1 Now we know
+we needed to look at 20 years worth of storm data And as much admission
+data as we could get our hands on Our geospatial system needed to be
+more robust</p>
+<p>[ Presented the storyline to AMS in 2022 ]</p>
+<h1 id="evolution-of-the-project">Evolution of the Project</h1>
+<p>Evolution of project</p>
+<p>“The Principal Investigator, the data scientist, and the data
+engineer” Need to be able to share a hurricane dashboard with folks
+outside of data science Non-computer scientists researchers (e.g., Sue
+Anne)
+https://locallyoptimistic.com/post/building-more-effective-data-teams-using-the-jtbd-framework/?utm_source=substack&amp;utm_medium=email
+Need to provide the same same of analytical data to Researchers Data
+engineers Data scientists Emailing jupyter notebooks is brittle and
+prone to error E.g., “not the latest spike calculation code”, etc</p>
+<p>Researchers Want to better understand geo-spatial data with a custom
+visual tool Analyst Want to be able to build out analytics in a fashion
+consistent with &gt; “In the spirit of bringing software engineering
+practices to the SQL-centric ELT data warehousing world, any modern
+approach would be incomplete without automating the testing and
+deployment process and integrating with a CI/CD process.” Data Engineers
+Want to provide features to the data scientist that are consistent with
+what is presented in the BI tool Data Scientists Want to build models
+and not fuss about where the data came from</p>
+<p>Talk about the themes from the AMS talk — cross-discipline
+collaboration Open sourcing research results — for others to collaborate
+with!</p>
+<p>Maps @ UM Research Not traditional EDA But we still need some custom
+visualization Possibly could have used ERSI for the geospatial or
+another traditional GIS tool But those tend to be locked down And we
+started from a data-centric perspective, operating with python, and then
+later on bringing in GIS components The open source world has added a
+lot of functionality that was traditionally in tools such as ERSI</p>
+<h2 id="we-started-with-a-need-to-do-traditional-eda">We started with a
+need to do traditional EDA</h2>
+<p>But then realized we needed geospatial visualization combined with
+our python analysis To leverage cross-discipline research Disasters
+Computer science We also needed a way to let multiple people work on the
+system Data Analysts – SQL This started out as a jupyter notebook And
+then became a series of notebooks Soon the data processing pipeline was
+long and un-weldy And calculated the metrics for admission data and
+storm data slightly differently over time Making comparison of results
+more difficult too</p>
+<blockquote>
+<p>JD: JD says he experiments with concepts in a notebook, and then once
+it gets to a certain point, he hands it off to an analyst</p>
+</blockquote>
+<h2 id="lab-to-factory-pattern">“Lab to Factory”-Pattern</h2>
+<p>Concepts do not start as large pipelines Concepts start in the lab as
+a jupyter notebook Not all analysts can do python But most can do SQL We
+want to expand the surface area More analysts can become engaged Take
+data pipeline out of notebook once it gets to a certain
+size/complexity</p>
+<h2 id="leverage-open-source-as-building-blocks">Leverage Open Source As
+Building Blocks</h2>
+<p>https://github.com/geanders/hurricaneexposure</p>
+<p>CSV Data extracted from GEAnders Hurricane Exposure</p>
+<h1 id="investment-thesis-for-the-smart-city-space">Investment Thesis
+for the Smart City Space</h1>
+<blockquote>
+<p>The world is facing countless decision problems that often require
+balancing competing criteria: How to respond to new pandemic diseases
+while reducing their economic impact? How to react to a changing climate
+while sustaining economic growth? How to reduce community violence while
+preserving liberties? How to plan for city growth while considering
+effects to the environment and social inequality?</p>
+</blockquote>
+<p>The world is changing Nations need GDP to compete How does
+manufacturing play a role in this? How does the Red Queen drive
+productivity? Climate change is here How we use our resources is more
+important than ever Foundationally, managing cities are key to
+mitigating climate change</p>
+<p>https://twitter.com/Chattanooga_gov/status/1560021936549281794</p>
+<h2 id="key-challenges-faced-by-cities-today">Key Challenges Faced by
+Cities Today</h2>
+<p>The core challenges faced by the managers and operators of urban
+centers today are:</p>
+<ul>
+<li>Population Growth</li>
+<li>Traffic</li>
+<li>Operational Costs</li>
+<li>Planning</li>
+<li>Building Codes, Infrastructure, and Compliance</li>
+</ul>
+<p>All of these challenges can be measured through data yet many today
+are not managed effectively. Population growth in urban centers is a key
+driver towards more managed solutions for other aspects of city
+management such as traffic.</p>
+<p>In the following sub-sections we take a look at published research on
+each of these challenges.</p>
+<h3 id="population-growth">Population Growth</h3>
+<p>Many research papers and studies show a strong trend of population
+movement into major cities as expressed in the passage below from the
+University of Michigan:</p>
+<p>http://css.umich.edu/factsheets/us-cities-factsheet</p>
+<blockquote>
+<p>“Approximately 84% of the U.S. population lives in urban areas, up
+from 64% in 1950. By 2050, 89% of the U.S. population and 68% of the
+world population is projected to live in urban areas.”</p>
+</blockquote>
+<p>Another publication states the following:</p>
+<p>https://graylinegroup.com/urbanization-catalyst-overview/</p>
+<blockquote>
+<p>The United Nations in 2009 and the International Organization for
+Migration in 2015 both estimated that around 3 million people are moving
+to cities every week. Approximately 54% of people worldwide now live in
+cities, up from 30% in 1950. Sources estimate this will grow to 2/3 of
+world population in the next 15-30 years. More than half of urban
+dwellers live in the 1,022 cities with greater than 500,000 inhabitants.
+There are currently 29 megacities with populations of over 10 million,
+up from 2 in 1950 and projected to grow to between 41 and 53 by 2030.
+Additionally, there are 468 cities with a population of over 1 million,
+up from 83 in 1950.</p>
+</blockquote>
+<p>The UN website goes on to state:</p>
+<blockquote>
+<p>“Today, 55% of the world’s population lives in urban areas, a
+proportion that is expected to increase to 68% by 2050. Projections show
+that urbanization, the gradual shift in residence of the human
+population from rural to urban areas, combined with the overall growth
+of the world’s population could add another 2.5 billion people to urban
+areas by 2050, with close to 90% of this increase taking place in Asia
+and Africa, according to a new United Nations data set launched
+today.“”</p>
+</blockquote>
+<h4 id="growth-factors-of-cities">Growth Factors of cities</h4>
+<p>Some of the drivers of the growth of city population size include:
+<a href="http://www.yourarticlelibrary.com/essay/factors-influencing-growth-of-cities-around-the-world/24287">http://www.yourarticlelibrary.com/essay/factors-influencing-growth-of-cities-around-the-world/24287</a></p>
+<ul>
+<li>Surplus Resources</li>
+<li>Industrialization and Commercialization</li>
+<li>Development of Transport and Communication</li>
+<li>Economic Pull of the City</li>
+<li>Educational and Recreational Facilities.</li>
+</ul>
+<p>https://twitter.com/DKThomp/status/1507006859818901506</p>
+<h3 id="traffic">Traffic</h3>
+<p>Top listed challenges from the “What Challenges Must We Address?”
+report:
+<a href="http://www.trca.on.ca/dotAsset/164995.pdf">http://www.trca.on.ca/dotAsset/164995.pdf</a></p>
+<blockquote>
+<p>Two million more people: Provincial plans anticipate that the
+population of the Greater Toronto Area (GTA) will grow by approximately
+two million people over the next 20 years.</p>
+</blockquote>
+<blockquote>
+<p>New housing and infrastructure required: This will require the
+construction of new housing, institutional and commercial supports,
+transportation systems, and servicing infrastructure.</p>
+</blockquote>
+<blockquote>
+<p>Pace of rapid urbanization: Rapid urbanization will present
+environmental, social and traffic congestion challenges, which can
+impose costs on residents and businesses alike.</p>
+</blockquote>
+<p>Another report identifies:
+<a href="https://d3n8a8pro7vhmx.cloudfront.net/socialplanningtoronto/pages/574/attachments/original/1487348389/Report-v4-web.pdf?1487348389">https://d3n8a8pro7vhmx.cloudfront.net/socialplanningtoronto/pages/574/attachments/original/1487348389/Report-v4-web.pdf?1487348389</a></p>
+<p>Major concerns around this growth are: </p>
+<ul>
+<li>Gentrification</li>
+<li>Lack of affordable housing</li>
+<li>Transit</li>
+<li>Lack of amenities and greenspace</li>
+</ul>
+<h3 id="operational-costs">Operational Costs</h3>
+<p>Cities are progressively finding it harder to manage the higher
+operational burden with the same resources as before: “Recent
+<a href="https://www.strongtowns.org/journal/2017/1/9/the-real-reason-your-city-has-no-money">research</a>
+into the tax efficiency (property tax revenues vs. infrastructure
+maintenance costs) of a variety of American cities and found that
+walkable urban districts tended to be revenue-positive – in effect,
+subsidizing surrounding low-density areas”
+<a href="https://www.strongtowns.org/journal/2017/1/9/the-real-reason-your-city-has-no-money">https://www.strongtowns.org/journal/2017/1/9/the-real-reason-your-city-has-no-money</a></p>
+<h4 id="fiscal-issues-facing-the-operations-of-cities">Fiscal Issues
+Facing the Operations of Cities</h4>
+<p>As cities become more complex, costs are outpacing tax revenue: “One
+evident problem is fiscal: Cities typically have serious difficulties in
+paying for basic services such as policing, public education, trash
+removal, street maintenance, and snow removal (at least in cold
+climates), and in providing certain services for their residents who are
+poor or disabled or who have other conditions. “</p>
+<h3 id="planning">Planning</h3>
+<p>Planning is compelling to look at from a historical perspective.
+Appendix A of this report shows a table with the largest cities in
+history over the past 9,000 years. We can see a trend of cities hitting
+a progressively larger size plateau over time. In this sub-section on
+planning we take a look at some of the historical aspects of city
+infrastructure, building codes, and failures of major cities.</p>
+<h4 id="historical-sanitation-and-issues-with-a-growing-city">Historical
+Sanitation and Issues with a Growing City</h4>
+<p>For a many hundreds of years core sanitation practices limited the
+size of cities as plagues and disease continually restricted the growth
+of urban centers through killing off large portions of the population,
+as discussed in the following quote:</p>
+<p><a href="https://blogs.scientificamerican.com/lab-rat/plague-and-the-city/">https://blogs.scientificamerican.com/lab-rat/plague-and-the-city/</a></p>
+<blockquote>
+<p>“When the Black Death, caused by the bacteria Yersinia pestis, swept
+across Europe it killed over 1/3 of the population. This level of
+destruction is almost impossible to imagine today (particularly given
+that one third of the population of Europe today would be around 250
+million people). One of the things that helped the bacteria to thrive
+was the conditions that the cities encouraged. Yersinia infects fleas,
+which travel on rats and huge populations of rats could be found in
+every major city in Europe. Often I suspect, they outnumbered the
+people. It wasn't just rats either, cities were crammed with animals
+including sheep, goats and pigs. Animals and humans in close proximity
+creates a breeding ground for zoonotic diseases, which can be highly
+deadly when they switch species.“</p>
+</blockquote>
+<blockquote>
+<p>“Not only are cities a good way to put humans and animals in close
+contact, they are also notorious for ill-health and bad living
+conditions compared to nomadic lifestyles. Water has to be brought in
+and shared around between many people. Overcrowding is common, as are
+disease vectors such as fleas and bed-bugs that can carry bacteria
+between humans. With the bad conditions, the close cramped living
+conditions and the complete lack of understanding of germ theory it's no
+wonder the disease swept through Europe until pretty much everyone had
+either died or survived.”</p>
+</blockquote>
+<blockquote>
+<p>“Before the development of cities bacterial diseases would have been
+present (cystitis springs to mind…) but the virulent and decimating
+plague-bearing diseases were unlikely to have arisen, or if they did
+there was no way for them to spread so far. Hunter gatherer populations
+did face hardships but on general they ate better and more regularly,
+got more exercise, and drank water that they were pretty certain was not
+contaminated. Cities might provide protection, and a solid base for
+trade and economic infrastructure, but they are also a brilliant way to
+encourage bacteria to grow and spread disease.”</p>
+</blockquote>
+<p>While cities were attracting people with protection and economic
+infrastructure, but city planning had not yet caught up to operating a
+city of that size. We can also see a list of the worst pandemics in
+history:</p>
+<p><a href="https://www.mphonline.org/worst-pandemics-in-history/">https://www.mphonline.org/worst-pandemics-in-history/</a></p>
+<p>And then “How The Black Death moved around the world”:
+<a href="https://www.nytimes.com/2010/11/01/health/01plague.html?_r=0">https://www.nytimes.com/2010/11/01/health/01plague.html?_r=0</a></p>
+<p>excerpt:</p>
+<blockquote>
+<p>“The third great wave of plague began in China’s Yunnan province in
+1894, emerged in Hong Kong and then spread via shipping routes
+throughout the world. It reached the United States through a plague ship
+from Hong Kong that docked at Hawaii, where plague broke out in December
+1899, and then San Francisco, whose plague epidemic began in March
+1900.” Beyond sanitation issues, there we also issues packing that many
+buildings closely together without consistent building rules.</p>
+</blockquote>
+<p>History Lesson</p>
+<p>Largest Cities over Time – and what became of the cities Make
+reference to
+https://twitter.com/culturaltutor/status/1544793776186589184</p>
+<h4 id="fires-that-changed-how-city-codes-were-written">Fires that
+Changed How City Codes were Written</h4>
+<p>Many times in history natural urban sprawl set conditions such that
+entire cities burnt to the ground
+<a href="https://en.wikipedia.org/wiki/List_of_town_and_city_fires">https://en.wikipedia.org/wiki/List_of_town_and_city_fires</a></p>
+<p>specifically in the united states in the past 100 years, specific
+fires have shaped how we write building codes:
+<a href="https://www.nfpa.org/~/media/Files/forms%20and%20premiums/101%20handbook/NFP101HB09_CHS1.pdf">https://www.nfpa.org/~/media/Files/forms%20and%20premiums/101%20handbook/NFP101HB09_CHS1.pdf</a></p>
+<p><a href="https://fireprevention.utexas.edu/firesafety/historic-fires">https://fireprevention.utexas.edu/firesafety/historic-fires</a></p>
+<p>To grow larger, cities had to change how they were built with better
+building codes and better operations.</p>
+<h4
+id="the-evolution-of-building-codes-and-compliance-to-allow-larger-cities">The
+Evolution of Building Codes and Compliance to Allow Larger Cities</h4>
+<p>In response to such issues as:</p>
+<ul>
+<li>Plagues</li>
+<li>Fires</li>
+<li>Earthquakes</li>
+</ul>
+<p>Cities began to change how they wrote their building codes and
+operated their cities. Development of basic potable water handling and
+sanitation codes helping clean up cities:</p>
+<p><a href="https://wwwnc.cdc.gov/eid/article/24/5/17-1609_article">https://wwwnc.cdc.gov/eid/article/24/5/17-1609_article</a></p>
+<p>A need for public health standards:</p>
+<p><a href="https://www.floridamemory.com/exhibits/medicine/disease/disease5.php">https://www.floridamemory.com/exhibits/medicine/disease/disease5.php</a></p>
+<blockquote>
+<p>“Within three decades of establishment of the Board of Health, better
+regulation to ensure sanitary drinking water had begun to reduce
+instances of diseases such as hookworm, and more effective quarantining
+and more extensive state-run stations had allowed the state to limit the
+spread of yellow fever epidemics.“</p>
+</blockquote>
+<p>In many cases, changing building codes proved to be a valuable
+endeavor:</p>
+<p><a href="https://www.eesi.org/papers/view/the-value-and-impact-of-building-codes">https://www.eesi.org/papers/view/the-value-and-impact-of-building-codes</a></p>
+<p>In some cases, “some buildings are too expensive to change”, but
+cities were still able to raise the ceiling of maximum operating size
+with better codes and design. Urban planning and sanitation became key
+to building the major urban centers we see today.</p>
+<h4
+id="technology-as-a-mechanism-for-larger-cities-aqueducts">Technology as
+a Mechanism for Larger Cities: Aqueducts</h4>
+<p>Lastly, we’ll note how infrastructure advancements (such as the Roman
+aqueducts) notably enabled certain cities to grow to previously unseen
+sizes:</p>
+<p><a href="https://www.pbs.org/wgbh/nova/article/roman-aqueducts/">https://www.pbs.org/wgbh/nova/article/roman-aqueducts/</a></p>
+<blockquote>
+<p> “The Romans could not have built cities as big as they did without
+aqueducts—and some of their cities wouldn't have existed at all. Romans
+sometimes built cities on dry plains. They'd find a spring in the
+mountains and take that water into the city, which would not have been
+possible without the transported water. With the water, they could have
+their baths, their fountains, and their drinking water.</p>
+</blockquote>
+<blockquote>
+<p>It also would be impossible to imagine Rome, which had about
+1,000,000 people at its peak, without its large aqueducts. The Romans
+could have obtained their water from the river, wells, and springs, but
+these sources would have become polluted in a large city.”</p>
+</blockquote>
+<h2 id="impact-of-the-industrial-revolution">Impact of the Industrial
+Revolution</h2>
+<p>Impact of the Industrial Revolution</p>
+<p>https://lukemuehlhauser.com/industrial-revolution/</p>
+<h3 id="catastrophes">Catastrophes</h3>
+<p>Impact of Catastrophes</p>
+<h3 id="world-populations">World Populations</h3>
+<p>World Population</p>
+<h3 id="pandemics">Pandemics</h3>
+<p>Pandemic impacts
+https://docs.google.com/spreadsheets/d/14I49e43PphzocDcZghYm6ekQZcJ3JeuicJ9ZafTa7GA/edit#gid=447443392</p>
+<p>Covid, more recently</p>
+<h2 id="the-smarter-city-races-the-red-queen">The Smarter City Races the
+Red Queen</h2>
+<p>The Smart City Cities need to better understand Transit Housing Water
+Power Air Quality Foot Traffic Population</p>
+<p>Why?
+https://www.artemis.bm/news/cat-models-dont-properly-reflect-climate-change-renre-ceo-odonnell/</p>
+<h3 id="how-does-this-help-cities">How Does This Help Cities?</h3>
+<p>This empowers better Codes and compliance Municipal planning
+Operations To do this, we need to measure and analyze Traffic People Air
+Water Buildings</p>
+<h3 id="creating-new-types-of-next-gen-applications">Creating New Types
+of Next-Gen Applications</h3>
+<p>This creates applications in: Road tolling Traffic management Road
+safety Security Parking management Freight management Automotive
+telematics Public transport Environmental protection</p>
+<h3 id="municipal-use-cases-and-models-of-utility">Municipal Use Cases
+and Models of Utility</h3>
+<p>The 3 models of utility to consider when framing municipal use
+cases:</p>
+<p>User-Based Insurance Example: “lowering a city’s insurance costs
+through monitoring / code compliance” Applications that save a city
+money Example: “Quantify and Prioritize Repairs” Applications that
+mitigate a city’s operational risk Example “Reviewing historical data to
+understand the cause of adverse events”</p>
+<h3 id="the-municipal-operating-system">The Municipal Operating
+System</h3>
+<p>For cities to meet the demands of growth, they will have to be
+consumed by software</p>
+<p>The City Operating System Nobody loves city codes But they power
+cities of our current epoch Without standards, we would have to abandon
+major cities Continuing the framing, make the case for data and
+analytics as the operating system of next generation cities Red queen
+demands it</p>
+<p>Relate to how ML use cases make us “just efficient enough” to meet
+demand</p>
+<p>https://www.artemis.bm/news/cat-models-dont-properly-reflect-climate-change-renre-ceo-odonnell/</p>
+<p>Closing As cities grow, they become more interconnected Cite flight
+statistics A trip across a city now becomes a trip across the country to
+another city If we can look at cities as needing management / OS to meet
+demand Then by extension we have to consider a network cities as a
+logical unit in the 21st century Covid / Pandemics Climate Change
+Pandemics and global coordinated resource management will be the
+challenge of smart city 2.0</p>
+<h1
+id="promoting-open-research-and-applications-with-building-blocks">Promoting
+Open Research and Applications with Building Blocks</h1>
+<p>[ relate to SciPy and Anaconda ]</p>
+<p>[ what is the core challnege we address with this project? ]</p>
+<p>[ Geospatial EDA Tooling as core building blocks — just as we built
+on GEAnders work ]</p>
+<p>[ tie into the world of analytical data products ]</p>
+<p>[ foundational building block in building next-gen smart city
+applications ]</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

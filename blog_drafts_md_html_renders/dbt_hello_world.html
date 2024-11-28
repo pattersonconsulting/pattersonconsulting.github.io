@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119541534-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119541534-1');
+</script>
+		
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DBT Hello World - Understanding the Basics of Building a Data
+Pipeline with DBT</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="In this post we’ll ….." />
+	<meta name="keywords" content="snowflake, snowpark, automl, AutoGluon,
+pandas, dataframe, whl, pip, anaconda, dependency" />
+	<meta name="author" content="Patterson Consulting" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="DBT Hello World - Understanding the
+Basics of Building a Data Pipeline with DBT"/>
+	<meta property="og:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg"/>
+	<meta property="og:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world.html"/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content="In this post we’ll ….."/>
+	
+
+	<meta name="twitter:title" content="DBT Hello World - Understanding the
+Basics of Building a Data Pipeline with DBT" />
+	<meta data-rh="true" property="twitter:description" content="In this
+post we’ll ….."/>
+
+	<meta name="twitter:image" content="http://www.pattersonconsultingtn.com/blog/images/meta_og_images/pct_autogluon_dep_og_card.jpg" />
+	<meta name="twitter:url" content="http://www.pattersonconsultingtn.com/blog/dbt_hello_world.html" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/icomoon.css">
+
+	<link rel="stylesheet" href="../css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
+
+	<link rel="stylesheet" href="../css/style.css">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<link rel="shortcut icon" href="http://www.pattersonconsultingtn.com/pct.ico" type="image/x-icon" />
+
+	<style>
+		a { 
+			color: #FF0000; 
+			text-decoration: underline;
+		}
+
+		span.quote_to_rewrite {
+			color: #FF0000;
+			font-style: italic;
+		}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+h2 {
+	color: #555555;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+.news_item_row {
+	border: 0px solid #999999; 
+	padding: 0px; 
+	padding-top: 20px; 
+	padding-bottom: 24px; 
+	margin: 0px; 
+	margin-bottom: 6px; 
+	background-color: #ffffff;
+
+}
+
+.news_item_label {
+	border: 1px solid #cccccc; 
+	border-bottom: 0px; 
+	width: 50%; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 0px; 
+	margin-left: 0px; 
+	background-color: #dddddd;
+}
+
+
+.news_item_body {
+	border: 2px solid #cccccc; 
+	padding: 12px; 
+	padding-top: 18px; 
+	margin: 20px; 
+	margin-left: 0px; 
+	margin-top: 0px; 
+	background-color: #ffffff;
+
+}
+
+span.needs_editing {
+	color:  purple;
+}
+
+
+
+</style>	
+
+	<script src="../js/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="boxed">
+	<!-- Loader -->
+	<div class="fh5co-loader"></div>
+
+	<div id="wrap">
+
+	<div id="fh5co-page">
+		<header id="fh5co-header" role="banner">
+			<div class="container">
+				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+				<div id="fh5co-logo"><a href="index.html"><img src="../images/website_header_top_march2018_v0.png" ></a></div>
+				<nav id="fh5co-main-nav" role="navigation">
+		          <ul>
+		            
+		            <li class="has-sub">
+		              <div class="drop-down-menu">
+		                <a href="#">Services</a>
+		                <div class="dropdown-menu-wrap">
+		                  <ul>
+		                    
+		                    <li><a href="../offerings/snowflake_services.html">Snowflake</a></li>
+		                    <li><a href="../offerings/data_engineering.html">Data Engineering</a></li>
+		                    <li><a href="../offerings/data_science.html">Data Science</a></li>
+
+		                    <li><a href="../offerings/cloud_operations.html">Cloud Operations and Engineering</a></li>
+		                    
+		                    <li><a href="../offerings/managed_kubeflow.html">Managed Kubeflow</a></li>
+
+		                    <li><a href="../offerings/managed_kafka.html">Managed Kafka</a></li>
+
+		                    <li><a href="../offerings/research_partnerships.html">Research Partnerships</a></li>
+		                    
+		                  </ul>
+		                </div>
+		              </div>
+		            </li>
+		            
+		            <li><a href="../partners.html">Partners</a></li>
+
+		            <li><a href="../blog/blog_index.html">Blog</a></li>
+		          
+		            <li class="cta"><a href="../contact.html">Contact</a></li>
+		          </ul>
+		        </nav>
+			</div>
+
+
+		</header>
+		<!-- Header -->
+
+		
+		<div id="fh5co-intro" class="fh5co-section">
+			<div class="container">
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+						<h1>DBT Hello World</h1>
+						<p>
+							<h3>Understanding the Basics of Building a Data Pipeline with DBT</h3>
+						</p>
+						<p>
+							Author: Josh Patterson<br/>
+<p class="date">Date: February 15th 2023</p>
+							
+							
+						</p>
+						
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+				<!-- START markdown generated content -->
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-12" id="fh5co-content">
+
+<h1 id="introduction-to-dbt">Introduction to DBT</h1>
+<p>Other entries in this series:</p>
+<h2 id="what-is-dbt">What is DBT?</h2>
+<h2 id="role-in-analytics">Role in Analytics</h2>
+<ul>
+<li>what does DBT replace?</li>
+<li>why would we use dbt?</li>
+</ul>
+<h2 id="anatomy-of-a-dbt-project">Anatomy of a DBT Project</h2>
+<ul>
+<li>core files</li>
+<li>directory structure</li>
+<li>configuring a dbt project</li>
+<li>connecting to databases</li>
+</ul>
+<h2 id="core-concepts-in-dbt-data-modeling">Core Concepts in DBT Data
+Modeling</h2>
+<ul>
+<li>Data Model – what is it?</li>
+</ul>
+<h1 id="building-our-dbt-hello-world-project">Building Our DBT Hello
+World Project</h1>
+<ul>
+<li>conda env creation</li>
+<li>install dbt-snowflake via conda</li>
+<li>dbt init [project]</li>
+<li>configuring connection to snowflake</li>
+</ul>
+<h2 id="create-environment-in-conda">Create Environment in Conda</h2>
+<h2 id="install-dbt-and-connector">Install DBT and Connector</h2>
+<h2 id="initialize-dbt-project">Initialize DBT Project</h2>
+<h2 id="run-pipeline">Run Pipeline</h2>
+<h3 id="run-dbt-pipeline-locally">Run DBT Pipeline Locally</h3>
+<h3 id="run-dbt-pipeline-from-github">Run DBT Pipeline from Github</h3>
+<h1 id="summary">Summary</h1>
+<p>In this blog post we gave you an overview of DBT and then showed how
+to build a simple “Hello World”-style of application. For more
+information on DBT, check out their documentation. For more information
+on cloud infrastructure, check out the rest of the articles in our
+blog.</p>
+<p>We also offer private workshops for companies on topics such as
+creating and running DBT pipelines, please feel free to reach out if
+you’d like to discuss attending one of our workshops.</p>
+
+					</div>
+				</div>
+				<!-- END markdown generated content -->
+
+
+
+			</div>
+		</div>
+
+
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-bottom-padded-sm">
+					<div class="col-md-4 col-sm-12">
+					</div>
+					<div class="col-md-3 col-md-push-1 col-sm-12 col-sm-push-0">
+						<div class="fh5co-footer-widget">
+				
+
+						</div>
+					</div>
+					<div class="col-md-3 col-md-push-2 col-sm-12 col-sm-push-0">
+						
+						<div class="fh5co-footer-widget">
+							<h3>Follow us</h3>
+							<ul class="fh5co-social">
+								<li class="twitter"><a href="https://twitter.com/PattersonCnsltg"><i class="icon-twitter"></i></a></li>
+								<li class="linkedin"><a href="https://www.linkedin.com/company/patterson-consulting-tn"><i class="icon-linkedin"></i></a></li>
+								<li class="message"><a href="mailto:josh@pattersonconsultingtn.com"><i class="icon-mail"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-chevron-down"></i></a>
+	</div>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.easing.1.3.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+	<script src="../js/main.js"></script>
+
+	</body>
+</html>					

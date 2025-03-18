@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>What is Artificial Intelligence? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Companies don't buy software. Companies buy productivity.">
+    <meta name="keywords" content="ebook, knowledge work, technology, efficiency, productivity, economics, line of business, investment, Artificial intelligence, data platform">
+    <meta name="author" content="Josh Patterson">
+
+
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="What is Artificial Intelligence? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/what_is_ai_header.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/prologue.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Companies don't buy software. Companies buy productivity."/>
+
+
+
+
+    <meta name="twitter:title" content="What is Artificial Intelligence? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/what_is_ai_header.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/prologue.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+        
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+
+      .quote_block {
+
+        white-space: pre-wrap;
+
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <!--
+                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
+                -->
+
+
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                    <!--
+                    <li><a class="dropdown-item" href="../../data_strategy.html">Data Strategy</a></li>
+                  -->
+                    
+                    
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">What is Artificial Intelligence?</li>
+          </ol>
+          
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">What is Artificial Intelligence?</h1>
+
+        <!--
+        <div class="d-flex flex-wrap align-items-center justify-content-center mt-n2">
+          <span class="text-body-secondary fs-sm fw-normal p-0 mt-2 me-3">
+            12
+            <i class="ai-share fs-lg ms-1"></i>
+          </span>
+          <a class="nav-link position-relative text-body-secondary fs-sm fw-normal d-flex align-items-end p-0 mt-2" href="#comments" data-scroll data-scroll-offset="60">
+            <span class="position-absolute w-100 h-100 top-0 start-0" data-bs-toggle="collapse" data-bs-target="#commentsCollapse"></span>
+            4
+            <i class="ai-message fs-lg ms-1"></i>
+          </a>
+          <span class="fs-xs opacity-20 mt-2 mx-3">|</span>
+          <span class="fs-sm text-body-secondary mt-2">16 hours ago</span>
+          <span class="fs-xs opacity-20 mt-2 mx-3">|</span>
+          <a class="badge text-nav fs-xs border mt-2" href="#">Inspiration</a>
+        </div>
+        -->
+
+            <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Josh Patterson
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+              <!--
+              <div class="d-flex align-items-center mb-4">
+                <span class="fs-sm me-2">Share post:</span>
+                <div class="d-flex">
+                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Instagram" aria-label="Instagram">
+                    <i class="ai-instagram"></i>
+                  </a>
+                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook">
+                    <i class="ai-facebook"></i>
+                  </a>
+                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram">
+                    <i class="ai-telegram fs-sm"></i>
+                  </a>
+                  <a class="nav-link p-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="X" aria-label="X">
+                    <i class="ai-x"></i>
+                  </a>
+                </div>
+              </div>
+              -->
+            </div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/what_is_ai_header2.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 360px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+            <p class="fs-lg">
+              <i>
+              (Note: this article was original Appendix A of our book O'Reilly's "Deep Learning: A Practitioner's Approach" (2018), and is included in this series with O'Reilly's permission.)
+            </i>
+
+            </p>
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class="quote_block"><i>Cooper: Hey TARS, what's your honesty parameter?
+
+TARS: 90 percent.
+
+Cooper: 90 percent?
+
+TARS: Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.
+
+Cooper: Okay, 90 percent it is.</i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Scene from the movie "Interstellar"</figcaption>
+                </figure>
+              </div>
+            </div>          
+
+            
+            <p class="fs-lg">
+
+
+Artificial Intelligence (AI) is a discipline as old as the study of philosophy itself. It has evolved over time, yet we still
+struggle to find its place in society, let alone the existential implications for the human race itself. One of the most salient written lines about the beginnings of AI was by author Pamela McCorduck when she wrote that AI began with "an ancient wish to forge the gods."[McCorduck. 2004. *Machines Who Think* (2nd ed.).]
+
+</p>
+<p class="fs-lg">
+
+
+While McCorduck had high-minded prose for the topic, much of marketing today plays on such aspirational themes yet is actually promoting far simpler functions in terms of business results. Deep learning comes up in the context of discussion of AI regularly, and it becomes difficult to have a directed conversation on the topic.
+
+</p>
+<p class="fs-lg">
+
+We added this appendix because the practitioner commonly needs to have a grounded conversation with customers, executives, and managers about what deep learning can do for them and how it fits into the AI landscape. The themes in this appendix are a mixture of a history of the discipline of AI (for context) and discussions we have had with customers and industry peers. We seek to provide you, the practitioner, with the tools to reset the narrative around deep learning, communicate realistic expectations with stakeholders in projects, and to put them on ground that will better support their deep learning efforts going forward. Simply put, the narrative around AI has become overhyped and eventually the market will correct.
+
+</p>
+<p class="fs-lg">
+
+This appendix is also meant to be fun and thought provoking in a way that stokes the imagination of the researcher or practitioner such that we can still dream but with our feet on the ground. We\'ll work through some basic definitions, provides a short history of the topic of AI, and then look forward to where this all could go. Hopefully we\'ll help folks avoid the pitfalls of previous cycles of AI interest and better support their deep learning projects to be more successful through responsibly setting goals and expectations.
+            </p>
+
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Story So Far</h2>
+
+<p class="fs-lg">
+
+The main topic of this book, deep learning, is constantly attached to
+the term "Artificial Intelligence" in media and marketing. Definitions
+are fluid at best and make it difficult to have a discussion on the
+topic with other practitioners or stakeholders. Marketing departments
+run with the theme of the current hype cycle. Here are some themes from
+the not-too-distant past:
+</p>
+
+<ul>
+<li>Smart grid</li>
+<li>The cloud</li>
+<li>Big data</li>
+</ul>
+
+<p class="fs-lg">
+
+When we work in domains like these or in deep learning, as practitioners
+we need to delineate what is real from what is marketing hype. That
+begins with understanding the history of a subject and having solid
+definitions from which to build. Let's begin by reviewing what we
+consider to be deep learning, and then we'll dive into the topic of
+defining AI.
+
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Defining Deep Learning</h2>
+
+<p class="fs-lg">
+
+In Chapters [\#review\_of\_ml](#review_of_ml) and
+[\#fundamentalls\_of\_deep\_networks](#fundamentalls_of_deep_networks),
+we laid out a working definition for deep learning that is described as
+neural networks with the following properties:
+</p>
+
+<ul>
+<li>More neurons than previous neural networks</li>
+<li>More complex ways of connecting layers</li>
+<li>"Cambrian-like" explosion of computing power to train</li>
+<li>Automatic feature learning</li>
+</ul>
+
+<p class="fs-lg">
+
+These networks perform the same modeling functions as other machine
+learning models (regression, classification) but have also been shown to
+be good at tasks such as the following:
+</p>
+
+<ul>
+<li>Generative modeling (e.g., generating art and text)</li>
+<li>Speech-recognition technology</li>
+<li>Image-recognition technology</li>
+</ul>
+
+<p class="fs-lg">
+Another key driving feature of deep learning is that it is able to
+automatically learn features (as opposed to hand-engineering features)
+from data in a domain-agnostic fashion. These capabilities of deep
+learning are driving many of the new technology applications and have
+stimulated the imagination of many folks beyond technology circles. By
+itself, however, deep learning does not have higher-level functions such
+as \"automatically understanding the most interesting question to ask a
+dataset,\" let alone any type of sentient operation.
+</p>
+
+
+            <p class="fs-lg">
+              ...
+            </p>
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Defining Artificial Intelligence</h2>
+
+            <p class="fs-lg">
+The   history of AI is fraught with myths, stories, and overzealous
+marketing departments trying to tap into the latest technology
+narrative. To define AI, we need some context around the history of the
+study of intelligence, modern arguments, and how the discipline has
+evolved over time.
+</p>
+
+            <p class="fs-lg">
+Using that line as our embarkation point, let\'s explore how the
+discipline got its start and then evolved as an industry over the past
+60 years.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Study of Intelligence</h2>
+
+<p class="fs-lg">
+The  study of intelligence was formally initiated in 1956 at Dartmouth
+yet is at least 2,000 years old. The field is based on understanding
+intelligent entities and studying topics such as these:
+</p>
+
+<ul>
+<li>Seeing</li>
+<li>Learning</li>
+<li>Remembering</li>
+<li>Reasoning</li>
+</ul>
+
+<p class="fs-lg">
+These topics are components of what we\'d consider intelligent function
+to the capacity we have to understand intelligence (and this is a
+relative perspective). We can find the study of intelligence throughout
+history if we look for it. The list that follows presents a few of the
+building blocks of intelligent study over time:
+</p>
+
+<p class="fs-lg">
+<b>Philosophy (400 BC)</b><br/>
+
+Philosophers began to suggest the mind as a mechanical machine that encodes knowledge in some form inside the brain.
+
+</p>
+
+<p class="fs-lg">
+<b>Mathematics</b><br/>
+
+Mathematicians developed the core ideas of working with statements of logic along with the groundwork for reasoning about algorithms.
+</p>
+
+<p class="fs-lg">
+<b>Psychology</b><br/>
+
+This field of study is built on the ideas that animals and humans have a brain that can process information.
+</p>
+
+<p class="fs-lg">
+<b>Computer science</b><br/>
+
+Practitioners came up with hardware, data structures, and algorithms to support reverse engineering basic components of the brain.
+  </p>
+
+<p class="fs-lg">
+The study and application of AI techniques we see today are based on
+these fundamentals. We typically see the study of AI broken into a focus
+on either behaving or thinking in simulated intelligent systems. We see
+these applied in areas such as machine learning applications, basic
+knowledge systems, and game playing (e.g., Chess and Go).
+</p>
+
+<p class="fs-lg">
+However, there are limitations to our implementations of intelligent
+study. There are still no good models of higher-order brain functions
+such as consciousness. Science has also yet to determine where in the
+brain consciousness resides. This leads some to question if
+consciousness is even a real function of the brain, but we\'ll leave
+that to the philosophers and computer scientists to debate.
+</p>
+
+
+
+<!-- Post preview card no image -->
+<article class="card border-0 bg-secondary">
+  <div class="card-body pb-4">
+    <!--
+    <div class="d-flex align-items-center mb-4 mt-n1">
+      <span class="fs-sm text-body-secondary">July 16, 2023</span>
+      <span class="fs-xs opacity-20 mx-3">|</span>
+      <a href="#" class="badge text-nav fs-xs border">Inspiration</a>
+    </div>
+    -->
+    <h3 class="h4 card-title">
+      <a href="#">For Further Study</a>
+    </h3>
+    <p class="card-text">
+
+One of the best books written on the subject of AI (if not the best) is
+Stuart Russell and Peter Norvig\'s [*Artificial Intelligence: A Modern
+Approach*](http://aima.cs.berkeley.edu/). We can\'t recommend this book
+enough for you to get a more complete idea of the depth and history of
+AI.      
+
+    </p>
+  </div>
+  <!--
+  <div class="card-footer pt-3">
+    <a href="#" class="d-flex align-items-center text-decoration-none pb-2">
+      <img src="assets/img/avatar/08.jpg" class="rounded-circle" width="48" alt="Post author">
+      <h6 class="ps-3 mb-0">Guy Hawkins</h6>
+    </a>
+  </div>
+  -->
+</article>
+
+
+
+
+
+
+<!--
+::: {.section data-type="sect3"}
+### Cognitive dissonance and modern definitions
+-->
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Cognitive dissonance and modern definitions</h2>
+
+
+<p class="fs-lg">
+When we're dealing with a topic such as AI that ties
+into so many core definitions society depends on, we naturally find
+dissonance around setting ground truth to work from. Beau Cronin
+writes:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Like the Internet of Things, Web 2.0, and big data, AI is discussed and debated in many different contexts by people with all sorts of motives and backgrounds: academics, business types, journalists, and technologists. As with these other nebulous technologies, it's no wonder the meaning of AI can be hard to pin down; everyone sees what they want to see.                      
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Beau Cronin, http://oreil.ly/2sODKk2</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+Part of the problem with viewpoints and defining intelligence is that we
+weave liberally into defining consciousness and then by extension more
+philosophical (e.g., \"what is consciousness\") and religious topics
+(e.g., \"what is a soul?\"). We\'re touching on some complex territory
+at this point and any discussion about the definition of the soul is
+fraught with complications. Our best maps today for the definition of
+intelligence are covered in regions of "Here Be Dragons." Given that we
+don\'t understand natural intelligence, it is even more difficult to
+define the artificial variant.
+</p>
+
+<p class="fs-lg">
+Dr. Jason Baldridge wrote on the topic of AI
+and machine learning and talked about how there are conflicting meanings
+in play around the topic:
+</p>
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Regardless of any nuanced technical definition of AI, I\'m pretty sure that when the public hears \"artificial intelligence,\" they think of conscious nonbiological entities that interact with humans much as we interact with each other.
+
+They don\'t think of an expert system that can analyze a complex domain-specific problem and provide interesting courses of action, or machine learning algorithms that find fascinating patterns in heaps of data.
+
+Despite this, the general public seems to find it all to easy to mentally close the gap between these two very different levels of technological and scientific accomplishment on the spectrum of AI-related work.                   
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Dr. Jason Baldridge, http://bit.ly/2tUwIt5</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+
+<p class="fs-lg">
+Dr. Baldridge goes on to define the difference between deep learning and
+a full artificial model of the biological brain:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Despite all this progress, and for better or for worse, these are still far from sentient machines. Deep learning is inspired by the functioning of human neurons, but as far as I\'m aware, artificial neural networks as yet have nothing like the architecture of meat-based intelligence             
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Dr. Jason Baldridge</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+
+<p class="fs-lg">
+So, we struggle with these definitions because they are complicated and
+touch on many topics from many viewpoints. Let\'s take a step toward a
+better definition by segmenting the topic and breaking these segments
+down into simpler topics.
+</p>
+
+<p class="fs-lg">
+Francois Chollet recently made the following [salient comment on
+Twitter](http://bit.ly/2tUsJNl):
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Artificial intelligence is a poorly defined thing, to which many people attribute wildly unrealistic abilities. It\'s a recipe for trouble.          
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Francois Chollet, http://bit.ly/2tUsJNl</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+And then a further tweet:
+</p>
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Part of the problem is that some companies and journalists are hyping it up, blurring the line between sci-fi and reality. Because it sells.
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Francois Chollet, http://bit.ly/2uz6vhF</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+Chollet goes on to say that [we should \"define\" what we\'re
+talking](http://bit.ly/2u05jXA) about:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+When you talk about \"AI\", \*define\* what you are talking about. Make explicit what it can do, and what it can\'t do. Avoid brain analogies.
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Francois Chollet, http://bit.ly/2u05jXA</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+This is sound advice and the industry needs to do a far better job of
+locking down these definitions.
+</p>
+
+
+
+
+
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What AI is not</h2>
+<!--
+::: {.section data-type="sect4"}
+#### What AI is not
+-->
+<p class="fs-lg">
+Folks   who claim machine learning to be AI do the entire computer
+science industry a disservice. Machine learning is classification and
+regression and in no way matches up to ephemeral aspirations of an
+all-knowing, self-aware system that can help the reader with their
+marketing problem. As Francois Chollet mentioned earlier, it\'s just
+best (for now) to avoid brain analogies.
+</p>
+
+<p class="fs-lg">
+Many times AI is marketed as an application with all of the answers. It
+will not, at least not anytime soon.
+</p>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Moving the goal posts</h2>
+<!--
+::: {.section data-type="sect4"}
+#### Moving the goal posts
+-->
+
+<p class="fs-lg">
+Psychologists habitually have had disdain for the metaphor of the human
+brain as a computer. [In a 2016 article](http://bit.ly/2tABWqX), Robert
+Epstein states:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+No matter how hard they try, brain scientists and cognitive psychologists will never find a copy of Beethoven's 5th Symphony in the brain---or copies of words, pictures, grammatical rules or any other kinds of environmental stimuli.
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">(http://bit.ly/2tABWqX), Robert Epstein</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+Unfortunately Dr. Epstein has not seen the renders in
+[\#major\_architectures\_of\_deep\_networks](#major_architectures_of_deep_networks)
+of Convolutional Neural Network (CNN) filter renders. His central
+argument in the article is stated as:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+Your brain does not process information, retrieve knowledge, or store memories. In short: your brain is not a computer.
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">(http://bit.ly/2tABWqX), Robert Epstein</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+<p class="fs-lg">
+This isn\'t a new sentiment and has been echoed, by and large, by the
+disciplines outside computer science for the past 60 years. As stated in
+Russell and Norvig\'s book on AI:
+</p>
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+The intellectual establishment, by and large, preferred to believe that a "machine can never do X."
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">"Introduction to AI", Russell and Norvig</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+
+<p class="fs-lg">
+They go on to demonstrate examples in which AI researchers have
+systematically responded by demonstrating one X after another. Thus, the
+study of AI and definitions for the discipline have long suffered from
+the industry \"moving the goal posts\" with respect to what they really
+mean by \"Artificial Intelligence.\"
+</p>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Segmenting the definitions of AI</h2>
+<!--
+::: {.section data-type="sect4"}
+#### Segmenting the definitions of AI
+-->
+
+<p class="fs-lg">
+It\'s useful to break down the different viewpoints of how folks talk
+about AI today and list them. [A good writeup](http://oreil.ly/2sODKk2)
+by Beau Cronin uses the following four major segmented definitions of
+AI:
+</p>
+
+<ul>
+  <li>AI as interlocutor
+    <ul>
+      <li>HAL, Siri, Cortana, Watson</li>
+      <li>Conversational intelligence</li>
+      <li>Limited reasoning</li>
+    </ul>
+  </li>
+  <li>AI as android
+    <ul>
+      <li>Machine in the form of a humanoid</li>
+      <li>AI as mechanically embodied</li>
+      <li>Examples would be The Terminator or C3PO</li>
+      <li>Similar to the interlocutor but in a humanoid body</li>
+    </ul>
+  </li>
+  <li>AI as the reasoner
+    <ul>
+      <li>Early AI pioneers were drawn to more refined and high-minded
+        tasks---playing chess, solving logical proofs, and planning
+        complex tasks</li>
+      <li>Still struggle with tasks simple for children</li>
+    </ul>
+  </li>
+  <li>AI as the big data learner
+    <ul>
+      <li>More recent definition</li>
+      <li>Seeing many people talk about building \"AI models\"</li>
+    </ul>
+  </li>
+
+</ul>
+
+<p class="fs-lg">
+Let\'s now look at these segmented definitions with a critical eye.
+</p>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Segmenting the definitions of AI</h2>
+<!--
+::: {.section data-type="sect4"}
+#### Critical commentary on segments
+-->
+<p class="fs-lg">
+AI as the interlocutor and AI as the big data learner are both recent
+definitions due to the incorporation of many machine learning techniques
+into engineered commercial products. AI as the interlocutor can perform
+basic functions based on voice recognition. It\'s the combination of
+voice-to-text machine learning (or deep learning) and Natural Language
+Processing (NLP) technology to determine what the user wants to
+accomplish. AI as the interlocutor has limited reasoning capabilities
+because it typically relies on a separate system to send the
+voice-to-text and NLP-processed results as input. This separate system
+is many times as basic as a classic rule-base system or \"expert
+system.\"
+</p>
+<p class="fs-lg">
+Even though users might be initially entertained with conversation by
+the system and even fooled by its \"intelligence," they quickly realize
+the limitations of the interactions. Ultimately, AI as the interlocutor
+is a well-engineered combination of machine learning techniques that
+over time became just good enough to progressively be wired further into
+useful consumer products.
+</p>
+
+<p class="fs-lg">
+AI as the android is an interesting embodiment of the concept yet is
+ultimately dependent on a network of machine learning subsystems just as
+the interlocutor is. AI as the reasoner is a classical implementation of
+AI yet has plateaued in recent years with respect to levels of industry
+product integration interest. It continues to be a core component in
+intelligent systems that wire together multiple components to produce
+value, as in the interlocutor example.
+</p>
+
+<p class="fs-lg">
+\"AI as the big data learner\" is a troublesome use of the term that has
+gained popularity in the past few years (2010--2015). Many times, a
+marketing department will rebrand a product\'s use of a basic machine
+learning technique over customer data as \"Artificial Intelligence.\"
+Worse, other times the product is doing basic business intelligence
+functions and is also lumped into this category. The practice of machine
+learning (or deep learning) alone should not be considered a type of AI.
+It is, however, a useful subsystem of an intelligent system.
+</p>
+
+
+<!-- Post preview card no image -->
+<article class="card border-0 bg-secondary">
+  <div class="card-body pb-4">
+
+    <h3 class="h4 card-title">
+      <a href="#">Showing Restraint When Marketing Deep Learning</a>
+    </h3>
+    <p class="card-text">
+
+You should show restraint in labeling a machine learning model---deep
+learning model or not---as \"Artificial Intelligence.\" Overselling
+capabilities early might attract funding but will hamper your project in
+the longer term.
+
+    </p>
+  </div>
+
+</article>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A fifth aspirational definition of AI</h2>
+
+<p class="fs-lg">
+Another way to frame the question of \"What is Artificial
+Intelligence?\" is to ask another question. If we look at this question
+from the viewpoint of \"what would definitively end the debate of \'What
+is AI\'?\"
+</p>
+
+<p class="fs-lg">
+If we were presented with a transcendent, conscious, self-aware
+intelligence that understood our world (and data) far better than any
+human, we\'d probably call it \"true Artificial Intelligence.\" Or, an
+alien.
+</p>
+
+<p class="fs-lg">
+Unfortunately chasing the mirage of AI is what brings on the unrealistic
+expectations that always crash down on the industry no matter how much
+tangible progress was made.
+</p>
+
+
+
+
+
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The AI winters</h2>
+
+<p class="fs-lg">
+The  AI industry has experienced multiple periods of up and down
+interest and funding. These down periods of interest have been the
+result of the sector being unrealistically overhyped followed by a cycle
+of predictably underwhelming results. This down period is referred to as
+an \"AI winter\" and involves cuts in academic research funding, reduced
+venture capital interest, and stigma in the marketing realm around
+anything connected to the term \"artificial intelligence.\"
+</p>
+
+<p class="fs-lg">
+The result of these cycles is that the good technical advances (e.g.,
+voice recognition or optical character recognition) is rebranded and is
+integrated into other products.
+</p>
+
+
+
+
+
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">AI Winter I: (1974--1980)</h2>
+
+<p class="fs-lg">
+The lead-up to the first [AI
+winter](https://en.wikipedia.org/wiki/AI_winter) saw machine translation
+fail to live up to the hype. Connectionism (neural networks) interest
+waned in the 1970s, and speech understanding research overpromised and
+underdelivered.
+</p>
+
+<p class="fs-lg">
+In 1973, DARPA cut academic research in the AI domain. The Lighthill
+report in the United Kingdom harshly criticized the field and research
+funding was further curtailed.
+</p>
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">AI Winter II: Late 1980s</h2>
+
+<p class="fs-lg">
+In the late 1980s and early 1990s, there was overpromotion of
+technologies such as expert systems and LISP machines, both of which
+failed to live up to expectations. The Strategic Computing Initiative
+canceled new spending at the end of this cycle. The fifth-generation
+computer also failed to meet its goals.
+</p>
+
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The common patterns of AI Winters</h2>
+
+<p class="fs-lg">
+The common patterns of these winters see the industry being overhyped by
+a series of promising successes. After conditions percolate enough we
+see the hype reach a nadir and the money for academic and industrial
+research pour into the AI domain. A few real projects based on solid
+technology reach at least part of their goals and solve real problems.
+Most of the marketed promises go unfulfilled, however, and the Trough of
+Disillusionment looms.
+</p>
+
+<p class="fs-lg">
+Winter kills the weak.
+</p>
+
+<p class="fs-lg">
+A few interesting applications slowly emerge from the trough, are
+rebranded (\"voice recognition\"), and are integrated into other
+projects as features, generally under the \"latent intelligence\" class
+of improvements. We\'ve seen this with the following:
+</p>
+
+<ul>
+<li>Informatics</li>
+<li>Machine learning</li>
+<li>Knowledge-based systems</li>
+<li>Business rules management</li>
+<li>Cognitive systems</li>
+<li>Intelligent systems</li>
+<li>Computational intelligence</li>
+</ul>
+
+<p class="fs-lg">
+The name change might be partly because they consider their field to be
+fundamentally different from AI. It is also true that the new names help
+to procure funding by avoiding the stigma of the false promises attached
+to the name \"Artificial Intelligence.\"
+</p>
+
+<p class="fs-lg">
+Here\'s an interesting note from an AI meeting in the 1980s:
+</p>
+
+
+
+            <div class="card border-0 bg-secondary mb-2">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+At the meeting, Roger Schank and Marvin Minsky---two leading AI researchers who had survived the \"winter\" of the 1970s---warned the business community that enthusiasm for AI had spiraled out of control in the \'80s and that disappointment would certainly follow. Three years later, the billion-dollar AI industry began to collapse.
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">source ?</figcaption>
+                </figure>
+              </div>
+            </div>    
+
+
+
+<h2 class="h1 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Is Driving Interest Today in AI Today?</h2>
+
+<p class="fs-lg">
+Three  major contributors are driving interest in AI today:
+</p>
+
+<ol>
+  <li>The big jump in computer-vision technology in the late 2000s</li>
+  <li>The big data wave of the early 2010s</li>
+  <li>Advancements in applications of deep learning by top technology firms</li>
+</ol>
+
+<p class="fs-lg">
+In 2006, Geoff Hinton and his team at the University of Toronto
+published a key paper on Deep Belief Networks (DBNs).[Hinton, Osindero,
+and Teh. 2006. ["A fast learning algorithm for deep belief
+nets."](https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf)]{data-type="footnote"}
+This provided the industry with a spark of creativity on what could
+possibly improve the state of the art. We\'ve seen a tsunami of deep
+learning publications at top journals over the succeeding decade. These
+publications began improving top scores for accuracy in many areas
+beyond just computer vision, and deep learning took over the applied
+machine learning landscape in short order.
+</p>
+
+<p class="fs-lg">
+Large web firms such as Google, Facebook, and Amazon all watch top
+journals for the best ideas. These firms saw the developments by Yann
+LeCun, Hinton, and others and began implementing these ideas in their
+own pipelines. These new applications (e.g., better face detection, or
+Alexa at Amazon) were widely recognized in the technology media.
+</p>
+
+<p class="fs-lg">
+In the mid-2000s much of the storage and ETL technology developed on the
+West Coast by the large web firms began to be open source as projects
+such as Hadoop and MongoDB.
+</p>
+
+<p class="fs-lg">
+Just as these web firms (Google, Yahoo!, etc.) had ramped up their
+storage and ETL systems, they were then building out new machine
+learning and deep learning techniques to better take advantage these new
+and larger datasets.
+</p>
+
+<p class="fs-lg">
+Traditional *Fortune 500* enterprise companies were bringing online
+large distributed systems in the early 2010s to hold their growing
+transactional datasets. These enterprise companies tend to follow what
+the West Coast web firms do by about 5 to 10 years. This has given rise
+to an interest in deep learning in the *Fortune 500* and in systems that
+allow the traditional enterprise to better exploit their investments in
+big data.
+</p>
+
+<p class="fs-lg">
+If we combine the aforementioned three factors and then mix in the very
+public successes of projects such as Watson (winning *Jeopardy*),
+AlphaGo (winning Go), and Google\'s self-driving cars, we create an
+environment in which enthusiasm outstrips the reality of the road ahead.
+</p>
+
+<p class="fs-lg">
+It\'s high tide in coverage and enthusiasm around AI. Unfortunately, in
+these types of cycles, we also see the tide go back out eventually.
+There are real applications using complex datasets for deep learning.
+Here are just some of these applications:
+</p>
+
+-   Healthcare (e.g., predicting patient length of stay)
+-   Retail (e.g., analyzing the shopping experience)
+-   Telecom/Financial Services (e.g., analyzing transactions for
+    fraudulent patterns)
+
+<p class="fs-lg">
+We\'ve touched on some of the aforementioned use cases (and more) in
+this book. When you, as practitioner, promote deep learning and AI we
+recommend finding real use cases such as these and standing on \"solid
+ground." We mention solid ground here metaphorically because eventually
+the tide will go out and we hope our fellow practitioners will have
+something to stand on when it does.
+</p>
+
+
+
+
+
+<h2 class="h1 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Winter Is Coming</h2>
+
+<p class="fs-lg">
+Deep learning in and of itself has been grounded in reality over the
+course of this book. It is a framework for performing industry-leading
+neural network modeling on complex data types. Deep learning, by itself,
+would not fulfill our aforementioned fifth aspirational definition of
+AI, so we don\'t have much to worry about on that front.
+</p>
+
+<p class="fs-lg">
+We are seeing systems marketed in 2016 as \"Artificial Intelligence for
+X,\" which are plainly using basic machine learning. AlphaGo was a
+tremendous advancement in game playing, but as we saw with DeepBlue and
+Chess, game-playing advances do not always translate easily to business
+use cases.[*Jeopardy* does seem to be a \"solved problem,\"
+however.]{contenteditable="false" data-type="footnote"}
+</p>
+
+<p class="fs-lg">
+Marketing departments are setting up similar scenarios as occurred in
+the previous two AI winters, unfortunately. The coals of the real
+advances in the domain, as in previous winters, will keep the true
+enthusiasts and hardcore researchers warm during the cold of the coming
+third AI winter.
+</p>
+
+
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            <!-- Tags -->
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Why Does a Company Need to Grow? </h4>
+                          <p class="card-text">Why is growth a prized metric in company operations?</p>
+                          
+                          <!--
+                          <a class="btn btn-primary" href="#">Go somewhere</a>
+                        -->
+                <a class="btn btn-lg btn-link px-0" href="./why_does_a_company_need_growth.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
+                <i class="ai-facebook"></i>
+              </a>
+            -->
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
+                <i class="ai-instagram"></i>
+              </a>
+            -->
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

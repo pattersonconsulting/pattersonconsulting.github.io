@@ -47,6 +47,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
 
+
+
+
     <!-- Vendor styles -->
     <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
@@ -339,29 +342,11 @@
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Josh Patterson
+                  Darren Clark
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
-              <!--
-              <div class="d-flex align-items-center mb-4">
-                <span class="fs-sm me-2">Share post:</span>
-                <div class="d-flex">
-                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Instagram" aria-label="Instagram">
-                    <i class="ai-instagram"></i>
-                  </a>
-                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook">
-                    <i class="ai-facebook"></i>
-                  </a>
-                  <a class="nav-link p-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram">
-                    <i class="ai-telegram fs-sm"></i>
-                  </a>
-                  <a class="nav-link p-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="X" aria-label="X">
-                    <i class="ai-x"></i>
-                  </a>
-                </div>
-              </div>
-              -->
+
             </div>
 
       </section>
@@ -370,7 +355,7 @@
       <!-- Post cover image (parallax) -->
       <section class="jarallax" data-jarallax data-speed=".65">
         <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/fnol_property_insurance_header.jpg);"></div>
-        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xxl-block" style="height: 760px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
         <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
@@ -390,341 +375,490 @@
 
 
             <p class="fs-lg">
+Is your claims team still relying on manual data organization and cumbersome spreadsheets instead of clear, actionable data? Imagine it's peak storm season. Claims flood your desk, and critical insights are buried deep inside your "First Notice of Loss" (FNOL) data, insights that help you spot fraud patterns, optimize claims handling, and enhance underwriting, all without needing a PhD in analytics. Power BI gives you that clarity and brings those metrics to the surface. 
 
-              We seek growth because it <a href="./why_does_a_company_need_growth.html">confers strategic advantages</a>.
 
             </p>
 
-
             <p class="fs-lg">
-
-              Labor has shifted from agriculture and manufacturing to services through <a href="./structural_transformation.html">structural transformation</a>.
-
-            </p>
-
-
-            <p class="fs-lg">
-
-              Companies <a href="./technology_transforms_the_information_economy.html">adopted better tooling to process information</a> in knowledge work heavy services sectors in an effort to be more productive and competitive.
-
-            </p>
-
-
-            <p class="fs-lg">
-
-              <a href="./what_is_knowledge_work.html">Knowledge work</a> is <a href="./knowledge_work_as_information_transformation.html">information processing</a> in non-labor-output roles.
-
-            </p>
-
-
-            <p class="fs-lg">
-
-              Technology and tools <a href="./knowledge_work_as_information_transformation.html">accelerate information processing</a> and team coordination in organizations.
+This guide walks you through how to use Power BI with incoming bordereaux claims data, similar to what insurers might receive from a broker or TPA to uncover trends, reduce manual effort, and drive smarter decisions across your insurance operations. 
 
             </p>
 
             <p class="fs-lg">
 
-              To be more productive and efficient as an organization, we have to invest in our technology to create a competitive edge in our market. This gives us:
+              After reading, you'll be able to: 
+
+
+            </p>
+
+            <ul>
+              <li>Quickly visualize trends in FNOL data</li>
+              <li>Spot seasonal spikes or patterns that may warrant deeper investigation</li>
+              <li>Save hours spent digging through spreadsheets</li>
+              <li>Make more confident, data-driven underwriting decisions</li>
+
+
+            </ul>
+
+
+
+
+
+            <p class="fs-lg">
+
+              FNOL data doesn’t just mark the beginning of a claim, it serves as a prominent indicator for operational trends. By analyzing FNOL activity over time, insurers can better anticipate resource needs, forecast seasonal claim volume, and ensure adequate reserves are in place to absorb peak losses. It also plays a vital role in the customer experience, offering the first opportunity to demonstrate responsiveness, build trust, and shape overall satisfaction. 
+
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Setting Up the Data</h2>
+
+
+
+            <p class="fs-lg">
+Bordereaux reports are periodic claims summaries received from brokers or TPAs (third-party administrators). They're critical for tracking FNOL trends, claim types, and financial impacts. 
+
+            </p>
+
+
+
+
+            <p class="fs-lg">
+
+              Key fields in FNOL data include: 
+
 
             </p>
 
             <ul>
 
-              <li>better information processing will translate into better YoY revenue growth</li>
-              <li>better revenue growth will not only help your organization meet their goals but also make them more valuable as a company</li>
+              <li>FNOL Date – When the claim was first reported</li>
+              <li>Claim Type – Fire, Theft, Storm, Auto, etc</li>
+              <li>Claim Number – A unique identifier</li>
+              <li>Claim Status – Open or Closed</li>
+              <li>Policyholder Info – Customer attributes like tenure, location, etc</li>
+              <li>Loss Amount & Deductibles – Key financials for decision-making</li>
 
             </ul>
 
             <p class="fs-lg">
 
-              This is how I connect technology investment to the growth of an organization through minimizing the friction of information processing.
-
-
-
+Each column in this dataset tells a story. FNOL Date marks when the policyholder first reached out. Claim Type gives us the nature of the incident, while Claim Status tells us whether it’s been resolved. Loss Amount and Deductible provide the cost picture. 
             </p>
 
             <p class="fs-lg">
-            Companies don't buy software.
-            </p>
-            <p class="fs-lg">
-            <b>Companies buy (information processing) productivity.</b>
-            </p>
 
-
-            <p class="fs-lg">
-
-              This is my foundational thesis on how technology investment enables revenue and organizational growth. With this framing you can develop your own custom technology investment thesis. For part 2 and 3 of this ebook, I will continue to build on the ideas from part 1 in how we should think about investing in data platforms and artificial intelligence.
+              By structuring this information properly up front (you can see an example in the image below), we make it easier to build charts, KPIs, and filters that actually deliver insight. 
 
             </p>
 
 
 
-
-
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">An Investment in Information Processing</h2>
-
-
-
-            <p class="fs-lg">
-
-
-If we accept the framing that <a href="./what_is_knowledge_work.html">"non-labor roles are knowledge work”</a> and <a href="./knowledge_work_as_information_transformation.html">“knowledge work is information manufacturing”</a> then we can also accept the idea that companies can <a href="./technology_transforms_the_information_economy.html">improve efficiency by either accelerating work processes or coordinating teams more efficiently</a>.
-
-            </p>
-   
-
-            <p class="fs-lg">
-
-              We care less about the technology involved and more about how well the technology lowers information processing friction and makes our core business more productive. If you remove the technology parts of an organization, you can think of this idea as a graph where information is flowing across the edges towards a goal states.
-
-              The graph below shows an example of how we can model information flow through a graph of knowledge work units in an organization.
-
-            </p>
-
-
-
+<!--
             <figure class="figure">
-              <img class="figure-img rounded-0 mb-3" src="../../assets/img/information_processing_graph.png" alt="Image">
-              <figcaption class="figure-caption">Information Processing as a Graph</figcaption>
+              <img class="figure-img rounded-0 mb-3" src="../../assets/img/01_raw_data_import_powerbi.png" alt="Image">
+              <figcaption class="figure-caption">"First Notice of Loss" (FNOL) raw data import into Power BI</figcaption>
             </figure>
-
-            <p class="fs-lg">
-
-              The more effective we can move information through this graph, the more efficiently we can convert sales opportunities into realized revenue and cash flow.
-
-            </p>
-
-
-
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Chasing Productivity</h2>
-
-            <p class="fs-lg">
-
-              The remainder of this eBook is dedicated to framing the specific ways how data platforms and artificial intelligence can improve information processing in your knowledge work workflows.
-
-            </p>
-
-
-
-
-            <p class="fs-lg">
-Technology at serves as a critical catalyst for converting incoming data into actionable insights, ultimately facilitating a faster and more efficient flow of sales into cash. By optimizing these processes, a company can generate additional capital to reinvest in marketing and sales, driving new customer acquisition and overall business growth. As your organization broadens its customer base and revenue, it simultaneously strengthens its valuation and positions itself favorably for future expansion.
-            </p>
-
-            <p class="fs-lg">
-
-              This is the relationship between technology investment and information productivity.
-
-            </p>
-
-
-
-            <p class="fs-lg">
-
-From that perspective, any technology investment (e.g., data platform, generative AI, "agents", etc) or architectural changes should consider
-
-
-            </p>
-
-<ul>
-  <li>How does this affect line of business efficiency?</li>
-  <li>How well does our platform convert raw input data into information that produces revenue?</li>
-
-</ul>    
-
-            <p class="fs-lg">     
-              The only thing that matters in a business is how effectively the line of business knowledge workers are transforming information in their core workflow. Any activity that takes them away from their core role is a distraction and raises information processing friction. 
-            </p>
-
-
-<!--
-            <p class="fs-lg">     
-
-              All technology and artificial intelligence investments should be framed as "well does this affect a specific information processing workflow?"
-
-            </p>
-
-
-
-            <p class="fs-lg">
-
-Technology investments by organizations should be focused on tooling capable of supporting consistent and timely information processing that minimizes information processing friction in core knowledge work workflows.
-            </p>
-
-
-            <p class="fs-lg">     
-
-              If the technology does not lower processing time, do the same amout of work more cheaply, or improve the quality of the work unit, then it should be culled from consideration.
-
-            </p>
-
-
-
-            <p class="fs-lg todo_edit">
-
-              choose poorly and...
-
-            </p>
 -->
 
 
 
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Data Platforms</h2>
-
-<!--
-            <p class="fs-lg">
- This growth-focused model not only directs all platform engineering expenditures but also ensures that the resulting technological infrastructure aligns with the company’s strategic objectives. 
-            </p>
-
-
-
-            <figure class="figure">
-              <img class="figure-img rounded-0 mb-3" src="../../assets/img/kw_architecture_layers.png" alt="Image">
-              <figcaption class="figure-caption">The Layers of Knowledge Work Architecture</figcaption>
-            </figure>
-
-
-            <p class="fs-lg">
-Your organization's strategic focus on growth needs to align with investor expectations, so you need to invest in tools that enable you to produce output at the rate promised to investors.
-            </p>
+<!-- Image gallery -->
+<div class="gallery">
+  <a href="../../assets/img/01_raw_data_import_powerbi.png" class="gallery-item d-block card-hover">
+    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+        Loading raw bordereaux data into Power BI
+      </div>
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+    </div>
+    <img src="../../assets/img/01_raw_data_import_powerbi.png" class="d-block rounded-1" alt="Loading raw bordereaux data into Power BI">
+  </a>
+</div>
 
 
-<p class="fs-lg">
-To capture additional market share and drive operational efficiencies you will have to minimize your internal information processing friction. 
-            </p>
-<p class="fs-lg">
-To do this you will need to centralize information and integrate systems, which will increase productivity while sustaining momentum for valuation growth.
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Loading the Data into Power BI</h2>
 
-            </p>
-
-            <p class="fs-lg">
-The data platform must also accommodate the integration of external Managing General Agents (MGAs) and Brokers, reflecting the expanded ecosystem required to support both current and future lines of business. As revenue doubles, data volumes will similarly increase—an approximate 100% rise—driven by a higher number of policies and associated information flows through underwriting, actuarial, and core systems like PEGA and Majesco.
-            </p>
--->
+            <ol>
+              <li>Import the Dataset – Load the bordereaux data file into Power BI</li>
+              <li>Verify Field Types – Confirm that dates are set as date types, and categories/numbers are properly formatted</li>
+              <li>Create a YearMonth Column – Helpful for grouping claims chronologically</li>
+            </ol>
 
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Processing, Data Engineering, and Artificial Intelligence</h2>
+<div class="d-flex align-items-center pt-4">
+  <div class="bg-light rounded-circle flex-shrink-0 position-relative z-2 me-n5">
+    <img src="../../assets/img/tips-icon.png" class="" width="80" alt="Avatar">
+  </div>
+  <div class="card bg-secondary border-0 rounded-4 py-3 ps-4 ps-sm-5 pe-3">
+    <div class="card-body py-3 px-2 p-sm-4 ms-4 ms-sm-0">
+      <div class="h5 fw-bold mb-0">Tip</div><br/>
+      <p class="fs-xl">Use Power BI’s “Transform Data” pane to clean columns before building visuals. </p>
+      <!--
+      <div class="h5 fw-bold mb-0">Eleanor Pena</div>
+      -->
+    </div>
+  </div>
+</div>
 
-            <p class="fs-lg">
-
-              ...
-
-            </p>
-
-            <p class="fs-lg">
-
-              ...
-
-            </p>
-
-            <p class="fs-lg">
-
-              At this stage many vendors will talk about artificial intelligence (e.g., "LLMs", "Agents", etc) as if they have the magic solution for all of your information processing ailments.
-
-              Many cycles of artificial intelligence winters have shown that once the buying market figures out what part of the information processing pipeline is improved by the "artificial intelligence", the method is rebranded (e.g., "speech to text", "character recognition") and sold as a commodity technology.
-
-            </p>
-
-            <p class="fs-lg">
-
-              The current cycle of large language models and agents will follow the same cycle; once they are integrated into knowledge work workflows specific to industries and datasets, they will become less "magic" or more just "productivity enhancement".
-
-            </p>
-
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Strategy of Growth</h2>
-
-<!--
-            <p class="fs-lg todo_edit">
-
-              Data platforms
-
-            </p>
+<div class="d-flex align-items-center pt-4">
+  <div class="bg-light rounded-circle flex-shrink-0 position-relative z-2 me-n5">
+    <img src="../../assets/img/note_icon.svg" class="" width="80" alt="Avatar">
+  </div>
+  <div class="card bg-secondary border-0 rounded-4 py-3 ps-4 ps-sm-5 pe-3">
+    <div class="card-body py-3 px-2 p-sm-4 ms-4 ms-sm-0">
+      <div class="h5 fw-bold mb-0">Note</div><br/>
+      <p class="fs-xl"><i>Throughout this guide, we’ll refer to KPIs—Key Performance Indicators—which are high-level metrics that help insurance teams monitor performance and track outcomes.</i></p>
+      <!--
+      <div class="h5 fw-bold mb-0">Eleanor Pena</div>
+      -->
+    </div>
+  </div>
+</div>
 
 
-            <p class="fs-lg todo_edit">
+            <p class="fs-lg pt-3">
 
-              Data Engineering
-
-            </p>
+              <i>
 
 
-            <p class="fs-lg todo_edit">
-
-              Generative AI
-
-            </p>
--->
-
-            <p class="fs-lg todo_edit">
-A robust data platform underpins Palomar’s ability to transform knowledge work into tangible cash flow improvements. When information is managed and shared more effectively—especially regarding billing, underwriting, claims, and financial operations—the company maximizes its ability to collect revenue, forecast future losses, and plan liquidity. This in turn ensures that Palomar can continue investing in growth initiatives such as marketing, sales, and new business opportunities without overextending its capital.
-            </p>
-
-            <p class="fs-lg todo_edit">
-Ultimately, capital efficiency derived from effective data integration and knowledge management helps ensure that Palomar avoids the common pitfall of inefficient cash flow management during critical growth phases. By optimizing cash flow and minimizing operational overhead, the company positions itself to grow at the highest rate allowed by market conditions, reinforcing a virtuous cycle of expansion, strong valuation, and sustained competitiveness.
-            </p>
-
-
-            <p class="fs-lg">
-              We can sum up <a href="./technology_transforms_the_information_economy.html">the rise of the information economy</a> as:
+              </i>
 
             </p>
 
 
             <p class="fs-lg">
 
-              With an increasing amount data being digital, competitive pressures evolved better tools to increase productivity with information handling and transformation. Companies that adopted technology and invested in tooling benefited through better efficiency and higher productivtiy. 
-
-              
-
-            </p>
-            
-
-
-            
-            <p class="fs-lg">
-
-              As competitive pressures demand “doing more” with a finite amount of time and resources we are pressed to find ways to be more competitive. Knowledge work tasks are great candidates to find more productivity as we can use better software methods.
-
+Small details in data prep can make or break the visual layer. Power BI depends on structured input to render accurate charts. Grouping FNOL dates into a single YearMonth column gives a clean, intuitive way to analyze seasonality, especially when filtering by year or claim type. 
 
             </p>
 
 
-            
-
-            <p class="fs-lg">
-              If we evaluate any tool, technology, or platformn in our organization, the only thing we care about is how well it transforms information (costs less, automates faster, etc).
-            </p>
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Creating Key FNOL Visuals</h2>
 
             <p class="fs-lg">
 
-              ultimately: how well does our tool / platform convert raw input into information that produces revenue or archieves our goal?
+              Now let's create a Bar Chart to represent FNOL Claims by Year and Month.
+
 
             </p>
 
-   
+          <ul>
+            <li>Identifies seasonal patterns in claim volume</li>
+            <li>Helpful for planning and resource allocation</li>
+            <li>This visual is ideal for quickly spotting claim surges during high-risk months, such as hurricane or tornado seasons, helping you allocate adjusters or resources more efficiently</li>
+          </ul>
 
-<!--
+
+
+
+
+<!-- Image gallery -->
+<div class="gallery">
+  <a href="../../assets/img/02_fnol_claims_by_yearmonth_bar_chart.png" class="gallery-item d-block card-hover">
+    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+        Bar Chart: FNOL Claims by Year and Month 
+      </div>
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+    </div>
+    <img src="../../assets/img/02_fnol_claims_by_yearmonth_bar_chart.png" class="d-block rounded-1" alt="Bar Chart: FNOL Claims by Year and Month ">
+  </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Line Chart: FNOL Trends Over Time</h2>
+
             <p class="fs-lg">
-In today’s digital landscape, knowledge work functions as a form of modern information manufacturing—where raw data is systematically transformed into higher-value information. For a data platform to be effective, particularly in the insurance industry, it must be evaluated based on its ability to enable this transformation. The core metric is how well the platform converts raw input data into actionable insights that drive revenue. Ultimately, the success of our tools, technologies, and platforms hinges on their capacity to support and accelerate this process of information creation.
-            </p>
--->
 
+              Now let's create a line chart to represent FNOL trends over time in Power BI.
+
+
+            </p>
+
+            <ul>
+              <li>Makes fluctuations in claims volume easier to detect</li>
+              <li>Can reveal unusual spikes that may indicate fraud</li>
+              <li>Ideal for executives and analysts monitoring the impact of weather or operational changes</li>
+            </ul>
 
             <p class="fs-lg">
 
+            Unlike aggregated bar charts, line charts emphasize the volatility of claims over time. Sudden jumps or dips may correspond to large-scale weather events or system changes, offering a fast way to spot abnormalities. For instance, a sudden spike in a specific month could point to fraud clusters or gaps in coverage.
 
-              ...
-              
             </p>
+
+
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/03_fnol_trends_line_chart.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Line Chart: FNOL Trends Over Time
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/03_fnol_trends_line_chart.png" class="d-block rounded-1" alt="Line Chart: FNOL Trends Over Time">
+              </a>
+            </div>
+
+
+
+
+
+
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Stacked Bar Chart: FNOL Claims by Type Over Time</h2>
+
+            <p class="fs-lg">
+
+              Now let's create a stacked bar chart to represent FNOL trends over time in Power BI.
+
+
+            </p>
+
+            <ul>
+              <li>Breaks down FNOL by cause: Fire, Theft, Storm, Auto, etc. </li>
+              <li>Great for seeing distribution and shifts across categories</li>
+              <li>Helps surface claims types that are over- or under-represented over time</li>
+            </ul>
+
+            <p class="fs-lg">
+
+            By visualizing the proportion of each claim type over time, this chart supports strategic decision-making. It helps leaders understand shifts in portfolio risk, uncover long-term patterns, and determine if a spike in one claim category is part of a trend or an isolated event.
+
+
+            </p>
+
+
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/04_fnol_claims_by_type_stacked_bar.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Stacked Bar Chart: FNOL Claims by Type Over Time
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/04_fnol_claims_by_type_stacked_bar.png" class="d-block rounded-1" alt="Stacked Bar Chart: FNOL Claims by Type Over Time">
+              </a>
+            </div>
+
+
+
+
+
+
+
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">KPI Cards for Quick Insights</h2>
+
+            <p class="fs-lg">
+
+              Now let's create a line chart to represent FNOL trends over time in Power BI.
+
+
+            </p>
+
+            <ul>
+              <li>Total FNOL Claims</li>
+              <li>Avg FNOL Claims Per Month</li>
+              <li>Max FNOL Month</li>
+              <li>Min FNOL Month</li>
+            </ul>
+
+            <p class="fs-lg">
+
+KPI cards are often the first place decision-makers look. They set the narrative for the report: Is the claim volume trending higher than expected? Are there particular months we need to watch? With just a glance, you can spot potential anomalies and prioritize further exploration. 
+
+
+            </p>
+
+
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/05_kpi_fnol_summary_cards.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Summary KPIs showing total FNOL claims, average per month, and the highest and lowest volume months.
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/05_kpi_fnol_summary_cards.png" class="d-block rounded-1" alt="Summary KPIs showing total FNOL claims, average per month, and the highest and lowest volume months.">
+              </a>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Adding Interactivity with Slicers</h2>
+
+            <p class="fs-lg">
+
+To enhance data interactivity and support strategic decision-making, two slicers have been incorporated into the Power BI dashboard. The Year Slicer enables users to filter data by calendar year, facilitating clear year-over-year comparisons. The Claim Type Slicer allows segmentation by FNOL category, offering focused insights into specific claim areas such as auto and property. These interactive elements empower users to explore trends dynamically and tailor analysis to business priorities.
+
+
+            </p>
+
+
+                  
+                    <div class="row">
+                      <div class="col-4 pr-5">
+                        
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/06_year_slicer_fnol_filter.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Adding Interactivity with Slicers
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/06_year_slicer_fnol_filter.png" class="d-block rounded-1" alt="Adding Interactivity with Slicers">
+              </a>
+            </div>
+
+
+                      </div>
+                      <div class="col-4">
+
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/07_claim_type_slicer_fnol_filter.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Adding Interactivity with Slicers
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/07_claim_type_slicer_fnol_filter.png" class="d-block rounded-1" alt="Adding Interactivity with Slicers">
+              </a>
+            </div>
+
+                      </div>
+                    </div>
+                  
+
+
+
+
+
+
+<div class="d-flex align-items-center pt-4">
+  <div class="bg-light rounded-circle flex-shrink-0 position-relative z-2 me-n5">
+    <img src="../../assets/img/tips-icon.png" class="" width="80" alt="Avatar">
+  </div>
+  <div class="card bg-secondary border-0 rounded-4 py-3 ps-4 ps-sm-5 pe-3">
+    <div class="card-body py-3 px-2 p-sm-4 ms-4 ms-sm-0">
+      <div class="h5 fw-bold mb-0">Tip</div><br/>
+      <p class="fs-xl">Keep slicers aligned horizontally at the top of the dashboard for easier access</p>
+      <!--
+      <div class="h5 fw-bold mb-0">Eleanor Pena</div>
+      -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Finalizing the Report for Clarity</h2>
+
+            <p class="fs-lg">
+
+To ensure clarity and professionalism in the final Power BI report, a neutral, industry-appropriate color palette and consistent, readable fonts have been applied. The layout is optimized for executive viewing, with key KPIs positioned prominently at the top and visualizations grouped logically—time-based trends displayed together and category-based charts organized accordingly. To support swift, data-driven action, the report highlights critical trends and visually emphasizes notable fluctuations, such as monthly spikes or drops.
+
+            </p>
+
+            <p class="fs-lg">
+
+Whether the reader is a claims adjuster, analyst, or executive, a clear visual structure makes insights easier to digest. The best reports use design not as decoration, but as a way to prioritize clarity, flow, and real-time decision-making.
+
+
+            </p>
+
+
+
+            <!-- Image gallery -->
+            <div class="gallery">
+              <a href="../../assets/img/08_final_dashboard_layout.png" class="gallery-item d-block card-hover">
+                <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+                  <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+                  <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+                    Finalizing the Report for Clarity
+                  </div>
+                  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+                </div>
+                <img src="../../assets/img/08_final_dashboard_layout.png" class="d-block rounded-1" alt="Finalizing the Report for Clarity">
+              </a>
+            </div>
+
+
+
+
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion & Key Takeaways </h2>
+
+            <p class="fs-lg">
+Every FNOL record is an opportunity to learn. With the right visuals, what used to be buried in rows of spreadsheets becomes instantly accessible and meaningful. The more your team can interact with the data, the faster you can respond to seasonal trends, detect anomalies, and improve your claims process over time. 
+            </p>
+
+            <p class="fs-lg">            
+By connecting these data points through tools like Power BI, insurers gain a clearer view of operational efficiency, customer behavior, and risk exposure—all while streamlining workflows and reducing decision lag. 
+            </p>
+
+            <p class="fs-lg">            
+Why This Matters 
+            </p>
+            <ul>
+              <li>Better Claims Management – See volume, cause, and trends at a glance</li>
+              <li>Fraud Detection – Spot sudden jumps in a certain claim type</li>
+              <li>Underwriting Confidence – Use trends to justify pricing, policy updates, and risk segmentation</li>
+
+
+            </ul>
 
 
           </div>
@@ -734,10 +868,11 @@ In today’s digital landscape, knowledge work functions as a form of modern inf
 
 
       <!-- Post content -->
+      
       <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+<!--
 
-
-            <!-- Tags -->
+            
             <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
               <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
             </div>
@@ -752,9 +887,6 @@ In today’s digital landscape, knowledge work functions as a form of modern inf
                           <h4 class="card-title">Why Does a Company Need to Grow? </h4>
                           <p class="card-text">Why is growth a prized metric in company operations?</p>
                           
-                          <!--
-                          <a class="btn btn-primary" href="#">Go somewhere</a>
-                        -->
                 <a class="btn btn-lg btn-link px-0" href="./why_does_a_company_need_growth.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
@@ -764,8 +896,9 @@ In today’s digital landscape, knowledge work functions as a form of modern inf
                       </div>
                     </div>
                   </div>
-
+-->
       </section>
+   
 
 
 
@@ -865,10 +998,24 @@ In today’s digital landscape, knowledge work functions as a form of modern inf
 
 
     <!-- Vendor scripts: JS libraries and plugins -->
+    <!--
     <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    -->
+
+
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
 
     <!-- Bootstrap + Theme scripts -->
-    <script src="assets/js/theme.min.js"></script>
+    <script src="../../assets/js/theme.min.js"></script>
   </body>
 </html>

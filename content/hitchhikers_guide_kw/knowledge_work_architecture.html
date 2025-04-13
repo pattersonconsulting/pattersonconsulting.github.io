@@ -477,6 +477,34 @@ The Information Layer abstracts the complexity of raw data management, enabling 
             </p>
 
 
+
+
+<p>The Medallion Architecture (commonly associated with data lakehouses, such as on Databricks) organizes data into different layers: <strong>Bronze</strong>, <strong>Silver</strong>, and <strong>Gold</strong>. Each layer serves a specific purpose in ensuring data quality, integrity, and accessibility.</p>
+
+<h4>Bronze Layer</h4>
+<ul>
+    <li><strong>Raw Data Ingestion:</strong> The Bronze layer stores raw, unprocessed data, often ingested directly from source systems (e.g., CSV files, JSON logs, streaming data).</li>
+    <li><strong>Minimal Transformation:</strong> Data in the Bronze layer typically undergoes minimal or no transformation—there may be basic cleaning (such as removing corrupted records) or partitioning for storage efficiency.</li>
+    <li><strong>Data Retention:</strong> Because it is raw, the Bronze layer serves as a reliable “landing zone” or system of record, preserving the original state of the data should it need to be reprocessed or audited.</li>
+</ul>
+
+<h4>Silver Layer</h4>
+<ul>
+    <li><strong>Cleansed and Refined Data:</strong> The Silver layer refines Bronze data by applying data cleaning and normalization steps (e.g., removing duplicates, standardizing formats, fixing malformed records, or filling missing values).</li>
+    <li><strong>Data Validation:</strong> Data quality checks and validations happen in this layer, ensuring that only data meeting predefined quality thresholds moves forward.</li>
+    <li><strong>Intermediate Business Logic:</strong> This layer starts to incorporate certain business rules or transformations needed for advanced analytics, but it still retains a relatively broad scope.</li>
+</ul>
+
+<h4>Gold Layer</h4>
+<ul>
+    <li><strong>Curated, Business-Ready Data:</strong> The Gold layer contains data sets that have gone through all necessary transformations, making them ready for dashboards, advanced analytics, or machine learning models.</li>
+    <li><strong>Aggregations and Summaries:</strong> Common operations here include aggregations, dimensional modeling, and calculations of key performance indicators (KPIs), effectively preparing data to meet specific business requirements.</li>
+    <li><strong>High Trust, Low Volume:</strong> Compared to the raw data in Bronze, the Gold layer is typically smaller in size but holds the highest data quality and is trusted for direct business consumption.</li>
+</ul>
+
+<p>This multi-layer approach improves data quality, ensures trust, and provides an efficient framework for data reuse. It is a flexible model that can be adapted to various use cases and technology platforms.</p>
+
+
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Infrastructure Layer</h2>
 
 

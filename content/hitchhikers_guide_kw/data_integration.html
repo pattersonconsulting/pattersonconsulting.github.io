@@ -150,6 +150,54 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }     
+
     </style>
 
     <!-- Page loading scripts -->
@@ -352,177 +400,197 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
             
-            <p class="fs-lg">
 
-              In the age of generative AI, many people forget that the humble data platform is the foundation for information transformation in today's organizations.
-
-            </p>
-            
-            <!-- technology_transforms_the_information_economy.html -->
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logical Layers of a Data Platform</h2>
 
 
 
             <p class="fs-lg">
 
-              At Patterson Consulting we model an organization's data platform as 3 logical layers:
+Most organizations struggle to support knowledge work workflows due to fragmented data systems, poor integration between internal and external platforms, and the absence of a unified information layer. 
+
+</p>
+
+          <p class="fs-lg">
+<b>These challenges result in manual, resource-intensive processes that scale inefficiently with data volume, leading to rising labor costs, delayed decision-making, and operational bottlenecks. </b>
+</p>
+
+
+            <p class="fs-lg">
+
+Without a cohesive data strategy and robust orchestration, teams are forced to divert effort from high-value tasks to data extraction and reconciliation. The lack of a centralized, logically complete information source hampers productivity across divisions and makes it difficult to scale operations while maintaining efficiency, agility, and cost control.
+</p>
+
+<!--
+            <p class="fs-lg">
+
+As organizations scale and integrate more data sources, the technical debt associated with fragmented systems and inefficient workflows grows exponentially. Without a unified integration strategy, each new source adds complexity, increases operational burden, and magnifies performance bottlenecks. Manual reconciliation processes, rising headcount requirements, delayed reporting cycles, and strained development resources are common symptoms of this compounding debt. If left unaddressed, the cost of scaling data operations linearly with volume can severely impact agility, financial performance, and time-to-market capabilities. Building a scalable, efficient information processing architecture is critical to maintaining operational efficiency, supporting growth objectives, and reducing long-term risks associated with expanding data ecosystems.
+
 
             </p>
+-->
+
+<img class="d-block" src="../../assets/img/scaling_data_sources_graph.png" alt="Image">
+
+
+            <p class="fs-lg">
+
+              A great example of this effect is how as property insurance companies scale they add MGA partners, resulting in more incoming bordereaux data to integrate. As the number of MGAs rise (to help scale the business), the manual data integration work the line of business has to perform rises super-linearly.
+            </p>
+
+            <p class="fs-lg">
+
+              To better perform <a href="./what_is_knowledge_work.html" target="_blank">knowledge work</a> on complete information, companies build out robust data integration systems to supply quality information to their knowledge workers.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Defining Data Integration</h2>
+
+            <p class="fs-lg">
+Data integration is the process of bringing together data from different sources into a unified view, so business users and systems can access consistent, <a href="./technology_transforms_the_information_economy.html" target="_blank">high-quality information</a>. It's essential for analytics, reporting, and enabling coordinated decision-making across departments. Assembling the incoming data into a logical information architecture is the goal of data integration.
+
+            </p>
+
+
+
+            <p class="fs-lg">
+
+              In both internal and external data integration systems, we have 3 stages of acquiring and processing data into information:
+
+            </p>
+
 
             <ol>
-              <li>The knowledge work layer</li>
-              <li>The information layer</li>
-              <li>The infrastructure layer</li>
+            <li><b>Data Ingestion</b> – Collecting data from multiple sources such as APIs, databases, files, or third-party platforms</li>
+
+            <li><b>Data Mapping & Transformation</b> – Standardizing data formats, cleaning inconsistencies, and aligning schemas so the data can work together</li>
 
 
+            <li><b>Data Storage & Access</b> – Consolidating integrated data into a warehouse, data lake, or lakehouse for efficient querying.</li>
             </ol>
+
+
 
             <p class="fs-lg">
 
-              Obviously this is different than many other shop's platform architectures; We went to this logical model (based on our industry experience) because honestly most of the industry had 
-<span class="badge border border-info text-info fs-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover" title="The Modern Data Stack Didn't Last Long" data-bs-content="Most technical memes that make a run on social media have a lifespan before they get completely run into the ground. See also: 'venn diagrams'.">run the idea into the ground 
-
-</span>
-with 100's of boxes tacked onto a diagram (e.g., all the "modern data platform architecture" diagrams).
-              
+              Most organizations deal with having to integrate data that is both external as well as internal to their company, too. Internal data integration is for systems that are inside the company data center (on-premise or in the cloud) and are the direct operational control of their IT team. External data integration is for systems, typically cloud SaaS applications, that the company uses for key operations (e.g., external partner's IT systems, billing systems, accounting systems, ERP, CRM).
 
             </p>
 
+
             <p class="fs-lg">
 
-               If we accept the framing that: 
-             </p>
+              Examples of systems that connected with external data integration include:
 
-             <p class="fs-lg"><b>
-
-              “insurance/finance/[your domain] is <a href="./what_is_knowledge_work.html">knowledge work</a>”
-
-             </b></p>
-
-             <p class="fs-lg">
-              and
-
-             </p>
-
-
-             <p class="fs-lg"><b>
-              “Knowledge work is <a href="./knowedge_work_as_information_transformation.html">information transformation</a>”
-
-             </b></p>
-
-
-             <p class="fs-lg">
-
-  Then we can also accept the idea that companies can improve efficiency by either accelerating work processes or coordinating teams more efficiently.
-             </p>
-
-            <p class="fs-lg">             
-
-From that perspective, any data platform investment or change should consider:
 
             </p>
 
             <ul>
-              <li>“How does this affect line of business efficiency?”</li>
-              <li>“How well does our platform convert raw input data into information that produces revenue?”</li>
+
+              <li>TPAs and MGAs in Property Insurance</li>
+              <li>Accounting companies</li>
+              <li>Salesforce</li>
+              <li>SAP</li>
 
             </ul>
-
+            
             <p class="fs-lg">
-              By starting with a logical definition of a data platform we can avoid any specific technology, platform, or vendor bias in the planning or review phase of data platfrom architecture. This is an advantage because many times an organization will get sold by a vendor on the idea that their platform <span class="badge border border-info text-info fs-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover" title="Or It Will Soon..." data-bs-content="I've seen many a presentation where any extra needed feature always seemed to be 'in the roadmap for next quarter'...">"will do it all"</span> and yet the technology never meets this threshold after much investment.
+
+              In the diagram below we can see an example of external data integration where a research team is bringing in FEMA data, GIS data, and hurricane geospatial data into a centralized cloud data platform.
+
 
             </p>
 
 
-            <p class="fs-lg">
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../../assets/img/external_data_integration_architecture.png" alt="Image">
 
-              So let's begin with "what is the knowledge work layer?"
+<!--
+            <div class="position-absolute aos-init aos-animate" style="top: 8%; right: 9%; width: 4rem; height: 4rem;" data-aos="zoom-in" data-aos-easing="ease-out-back" data-aos-offset="300">
+              <div class="hotspot" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="The only reason to have a data platform is to reduce information friction and support information obligations in the Knowledge Work of any business." aria-label="Knowledge Work Applications" data-bs-original-title="Knowledge Work Applications">
+                <div class="hotspot-inner">
+                  <i class="ai-plus"></i>
+                </div>
+              </div>
+            </div>
+            
 
-
-
-
-
-            </p>
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Knowledge Work Layer</h2>
-
+            <div class="position-absolute aos-init aos-animate" style="bottom: 25%; left: 55%; width: 4rem; height: 4rem;" data-aos="zoom-in" data-aos-easing="ease-out-back" data-aos-offset="100" data-aos-delay="150">
+              <div class="hotspot" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Getting your data strategy and information architecture on a cloud data warehouse can be a challenge. Getting these parts right for your architecture is critical in supporting core knowledge work in the line of business." aria-label="Data Warehouse Architecture" data-bs-original-title="Data Warehouse Architecture">
+                <div class="hotspot-inner">
+                  <i class="ai-plus"></i>
+                </div>
+              </div>
+            </div>
             
 
 
 
+
+            <div class="position-absolute aos-init aos-animate" style="bottom: 43%; left: 13%; width: 4rem; height: 4rem;" data-aos="zoom-in" data-aos-easing="ease-out-back" data-aos-offset="200" data-aos-delay="300">
+              <div class="hotspot" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Many times companies struggle with reliably getting data between external partners and internal systems." aria-label="External Data Integration" data-bs-original-title="External Data Integration">
+                <div class="hotspot-inner">
+                  <i class="ai-plus"></i>
+                </div>
+              </div>
+            </div>
+-->
+
+          </div>            
+
+            <p class="fs-lg mt-3">
+
+In the example diagram above, you can see the beginngings of the medallion data pattern where the incoming external data is landed in the "bronze"-layer of the information architecture.
+
+Several tools are commonly used for data integration, including Fivetran, Informatica, Talend, Boomi, and SnapLogic.
+
+</p>
+
             <p class="fs-lg">
-Beyond workflow efficiency, data platforms enhance organizational coordination by structuring and synchronizing knowledge work. Just as early civilizations used stone tablets to record transactions and calendars to organize activities, today’s data platforms centralize information, enabling seamless collaboration and decision-making across teams. Without this capability, these systems risk becoming mere technical overhead, failing to deliver the competitive advantages necessary to improve key business outcomes.            
+
+
+
+Orchestration and data governance are essential enablers of effective data integration, ensuring that data flows reliably, securely, and in the correct sequence across systems. Orchestration automates and coordinates complex data pipelines, reducing manual intervention and improving processing efficiency. 
+
+</p>
+
+        <p class="fs-lg">
+Data governance establishes clear ownership, quality standards, and access controls, ensuring consistency and trust in the data being integrated. Together, they create a scalable foundation that aligns data operations with business needs, enabling faster, more accurate decision-making and reducing operational risk.
+
+
 
             </p>
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Information Layer</h2>
 
-            
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Consolidating Data with Information Architecture</h2>
+
+
+
+
 
             <p class="fs-lg">
-              
 
-The Information Layer serves as the foundation for ensuring data consistency, accessibility, and strategic value within an organization. As data sources grow in complexity and business users rely on various BI tools and self-service analytics, maintaining a single logical source of truth becomes critical. This layer aggregates and standardizes data, enabling knowledge work tools to function effectively while ensuring consistency across metrics. By aligning with the company’s broader data strategy, the Information Layer helps transform raw data into actionable insights, supporting decision-making and driving business objectives.
-
-              
-
-            </p>
-            <p class="fs-lg">
+              Once we have the data in our data platform we can use a logical information architecture to arrange the data into useful information. This is critical because knowledge work operates on information, not data, and a quality information architecture is key to enabling the business to transform information at its potential.
 
 
-
-The Information Layer abstracts the complexity of raw data management, enabling business users to focus on generating insights rather than dealing with data engineering challenges. By integrating data from multiple sources into a unified data store and model, it ensures consistency, accessibility, and efficiency in decision-making. Similar to how a restaurant menu allows customers to select meals without needing to understand the cooking process, the Information Layer provides a curated, ready-to-use view of data, accelerating knowledge work and ensuring that teams can derive business value without being burdened by underlying technical complexities.            
             </p>
 
 
+            <p class="fs-lg">
 
+              A common data platform information architecture today is the medallion data pattern. This design pattern starts with raw data, enriching the data as it moves through the "layers". The final layer is the gold layer and this is the centralized, logically complete information source the knowledge workers will access.
 
-<p>The Medallion Architecture (commonly associated with data lakehouses, such as on Databricks) organizes data into different layers: <strong>Bronze</strong>, <strong>Silver</strong>, and <strong>Gold</strong>. Each layer serves a specific purpose in ensuring data quality, integrity, and accessibility.</p>
+            </p>            
 
-<h4>Bronze Layer</h4>
-<ul>
-    <li><strong>Raw Data Ingestion:</strong> The Bronze layer stores raw, unprocessed data, often ingested directly from source systems (e.g., CSV files, JSON logs, streaming data).</li>
-    <li><strong>Minimal Transformation:</strong> Data in the Bronze layer typically undergoes minimal or no transformation—there may be basic cleaning (such as removing corrupted records) or partitioning for storage efficiency.</li>
-    <li><strong>Data Retention:</strong> Because it is raw, the Bronze layer serves as a reliable “landing zone” or system of record, preserving the original state of the data should it need to be reprocessed or audited.</li>
-</ul>
+            <p class="fs-lg">
 
-<h4>Silver Layer</h4>
-<ul>
-    <li><strong>Cleansed and Refined Data:</strong> The Silver layer refines Bronze data by applying data cleaning and normalization steps (e.g., removing duplicates, standardizing formats, fixing malformed records, or filling missing values).</li>
-    <li><strong>Data Validation:</strong> Data quality checks and validations happen in this layer, ensuring that only data meeting predefined quality thresholds moves forward.</li>
-    <li><strong>Intermediate Business Logic:</strong> This layer starts to incorporate certain business rules or transformations needed for advanced analytics, but it still retains a relatively broad scope.</li>
-</ul>
+              In the <a href="./knowledge_work_architecture.html" target="_blank">knowledge work architecture model</a>, the knowledge work layer exposes already-cleaned, aggregated data through standard APIs (SQL, REST), allowing business users to act in Tableau, Power BI, Looker, and automated report generators without worrying about data silos or plumbing. 
 
-<h4>Gold Layer</h4>
-<ul>
-    <li><strong>Curated, Business-Ready Data:</strong> The Gold layer contains data sets that have gone through all necessary transformations, making them ready for dashboards, advanced analytics, or machine learning models.</li>
-    <li><strong>Aggregations and Summaries:</strong> Common operations here include aggregations, dimensional modeling, and calculations of key performance indicators (KPIs), effectively preparing data to meet specific business requirements.</li>
-    <li><strong>High Trust, Low Volume:</strong> Compared to the raw data in Bronze, the Gold layer is typically smaller in size but holds the highest data quality and is trusted for direct business consumption.</li>
-</ul>
-
-<p>This multi-layer approach improves data quality, ensures trust, and provides an efficient framework for data reuse. It is a flexible model that can be adapted to various use cases and technology platforms.</p>
-
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Infrastructure Layer</h2>
+            </p>            
 
 
 
             <p class="fs-lg">
 
-              ...
-
-              
-
-            </p>
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">[ Conclusion ]</h2>
-
-
-            <p class="fs-lg">
-
-              ...
+              Now that we've put together a general knowledge work architecture and laid out the concepts of data integration, let's take a look at the full definition of a data platform to more towards a physical implementation of these concepts.
 
             </p>
 

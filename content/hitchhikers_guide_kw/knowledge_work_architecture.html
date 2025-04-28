@@ -150,6 +150,54 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }          
     </style>
 
     <!-- Page loading scripts -->
@@ -363,14 +411,16 @@ Knowledge work architecture is the discipline of structuring a data platform so 
 </p>
 
 
-            <p class="fs-lg">
+            <p class="fs-lg todo_edit">
 In this model the “knowledge-work layer” exposes already-cleaned, aggregated data through standard APIs (SQL, REST), allowing business users to act in Tableau, Power BI, Looker, and automated report generators without worrying about data silos or plumbing. Every architectural choice is therefore evaluated by a single test: does it improve the rate at which the platform transforms data into business value? This technology-agnostic lens keeps leadership focused on measurable gains in line-of-business productivity rather than on vendor promises.
             </p>
+            
+
             
             <!-- technology_transforms_the_information_economy.html -->
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logical Layers of a Data Platform</h2>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logical Layers of Knowledge Work Architecture</h2>
 
 
 
@@ -438,7 +488,7 @@ In this model the “knowledge-work layer” exposes already-cleaned, aggregated
 <li>Data model definitions</li>
 
 <li>Semantic layer</li>
-</li>
+<li>APIS: SQL, REST, GraphQL</li>
 
 </ul>
 
@@ -490,7 +540,7 @@ with 100's of boxes tacked onto a diagram (e.g., all the "modern data platform a
               
 
             </p>
-
+<!--
             <p class="fs-lg">
 
                If we accept the framing that: 
@@ -512,7 +562,13 @@ with 100's of boxes tacked onto a diagram (e.g., all the "modern data platform a
               “Knowledge work is <a href="./knowedge_work_as_information_transformation.html">information transformation</a>”
 
              </b></p>
+-->
 
+              <p class="fs-lg todo_segue">
+
+Knowledge work is information processing in non-labor-output roles. As information flows into the company's business units, it is processed and enriched through knowledge work until it acts on its intended goal (e.g., "capturing revenue").
+
+              </p>
 
              <p class="fs-lg">
 
@@ -553,12 +609,18 @@ Abstracting knowledge work from underlying data platform implementation details 
             </p>
 
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Knowledge Work Layer</h2>
+<!--
+<p class="fs-lg">
 
+The Knowledge Work Layer is the highest logical layer in our information architecture, designed explicitly for efficiency in business operations. At this layer, users engage directly with standardized, readily available information through clearly defined APIs (ODBC/SQL, REST APIs), without needing to manage or understand underlying data integration processes. The data presented here is already aggregated, validated, and structured, freeing knowledge workers to focus exclusively on their core tasks—transforming customer-related information into actionable outcomes and revenue-generating activities.
+
+</p>
             
+
             <p class="fs-lg todo_edit">
 The Knowledge Work Layer in Patterson Consulting’s Knowledge Work Architecture represents a logical abstraction that separates business processes and decision-making from underlying data infrastructure complexities. By placing knowledge work atop a clearly defined information layer, this approach enables users to efficiently convert information into actionable insights and revenue without needing to manage technical implementation details. 
 </p>
-            <p class="fs-lg todo_edit">
+            <p class="fs-lg todo_segue">
 Consequently, this increases workflow efficiency, allows stakeholders to maintain strategic focus, and ensures that technological changes enhance overall productivity, aligning directly with business outcomes rather than specific software or infrastructure choices.
 
 </p>
@@ -570,9 +632,29 @@ Beyond workflow efficiency, data platforms enhance organizational coordination b
 
 
 
+            <p class="fs-lg">
+
+Common tools in knowledge work workflows are designed to enable users to efficiently transform structured information into insights that drive business outcomes. Business intelligence platforms such as Tableau, Power BI, and Looker support data visualization and analysis, while reporting tools facilitate the generation of PDFs, CSVs, and other business-critical documents. At this layer, the focus remains on using clean, aggregated information to support decision-making and revenue generation, without requiring users to engage in underlying data integration or management activities. Data science workflows are typically handled separately from this operational knowledge work layer.
+
+</p>
+-->
+
+            <p class="fs-lg">
+The Knowledge Work Layer is the highest logical tier in Patterson Consulting’s Knowledge Work Architecture, designed to maximize operational efficiency by abstracting users from underlying data complexities. At this layer, users access validated, aggregated information through standardized APIs such as SQL, ODBC, and REST, enabling them to focus on converting information into actionable outcomes without managing technical details.
+            </p>
+
+<img class="d-block" src="../../assets/img/kw_layers_example_insurance.png" alt="Image">
 
 
+            <p class="fs-lg">
 
+This separation between knowledge work and infrastructure ensures that technological changes directly enhance business outcomes, improving workflow efficiency and coordination across teams. Centralized, structured information reduces operational friction, enabling faster decision-making and avoiding the pitfalls of technical overhead that can hinder competitiveness.
+
+</p>
+
+            <p class="fs-lg">
+Business intelligence platforms like Tableau, Power BI, and Looker support activities at this layer, allowing users to visualize, analyze, and report information efficiently. The focus remains on using clean, curated data to drive results, while data science workflows are handled separately to preserve operational speed and clarity.
+            </p>
 
 
 
@@ -580,7 +662,7 @@ Beyond workflow efficiency, data platforms enhance organizational coordination b
 
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Information Layer</h2>
 
-            
+            <!--
             <p class="fs-lg todo_edit">
 
 The information layer is a logical stratum that shields front-line teams from the mechanics of data ingestion, cleansing, and storage, presenting a single, trusted view of information through familiar SQL, API, and BI interfaces. By decoupling analysis and decision-making from infrastructure concerns, it replaces ad-hoc spreadsheets and brittle point integrations with governed, reusable datasets that scale effortlessly as data volumes grow. 
@@ -614,20 +696,68 @@ Labeling the uppermost tier of the data platform the “Information Layer” rei
 
 </p>
 
+
+<p class="fs-lg">
+
+The information layer provides a standardized interface between data infrastructure and knowledge work, enabling tools and users to access enterprise information through common APIs such as SQL/ODBC, Python, GraphQL, DAX, and REST. By decoupling information access from the underlying systems, organizations ensure that business users can operate efficiently without concern for infrastructure complexity. This separation not only streamlines current operations but also strengthens future data readiness, laying a foundation for AI-driven use cases by enabling consistent metric definitions and accelerating the development of AI models.
+
+</p>
+-->
+
+<p class="fs-lg">
+The Information Layer serves as the critical bridge between raw data management and business decision-making (in the knowledge work layer), presenting a single, trusted view of enterprise information through familiar interfaces such as SQL, APIs, and BI tools. By abstracting the complexity of ingestion, cleansing, and storage, it eliminates reliance on ad-hoc spreadsheets and fragile point integrations, enabling faster, more accurate insights. 
+</p>
+
+<p class="fs-lg">
+This architecture ensures that knowledge workers (in the knowledge work layer) can engage directly with curated, governed datasets without needing to navigate underlying infrastructure, accelerating both individual productivity and team collaboration.
+</p>
+<p class="fs-lg">
+Functioning as the foundation for data consistency and strategic alignment, the Information Layer aggregates and standardizes data from diverse sources into a unified model. This approach strengthens cross-functional coordination, compresses time-to-insight for new initiatives, and drives operational leverage without proportional increases in headcount. By maintaining a consistent logical source of truth, it enhances business agility, improves analytical accuracy, and supports seamless scaling as information needs grow.
+</p>
+<p class="fs-lg todo_edit">
+Framing the top tier of the platform as the “Information Layer” keeps organizational focus on the real drivers of business performance: the speed and efficiency with which raw data is converted into actionable intelligence. Rather than emphasizing technical toolsets or vendor platforms, the architecture foregrounds clean, reusable, API-accessible information, enabling leaders to evaluate any technology investment by a clear, unchanging metric—its ability to transform customer and operational data into revenue-generating knowledge work.
+</p>
+
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Infrastructure Layer</h2>
 
 
 
             <p class="fs-lg">
 
-              ...
+The infrastructure layer is responsible for ingesting, integrating, and maintaining a continuously updated golden copy of enterprise information to support efficient knowledge work. 
+</p>
+            <p class="fs-lg">
+Its core functions include:
+</p>
 
-              
+<ul>
+ <li>delivering scalable, cost-effective storage</li>
+ <li>enabling high-performance ANSI SQL-native processing</li>
+ <li>feeding the logical information layer with refreshed, accurate data on a daily basis</li>
+</ul>
 
+
+<!-- Image gallery -->
+<div class="gallery">
+  <a href="../../assets/img/data_platform_general_arch.png" class="gallery-item d-block card-hover">
+    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+        A generalized data platform architecture
+      </div>
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+    </div>
+    <img src="../../assets/img/data_platform_general_arch.png" class="d-block rounded-1" alt="A generalized data platform architecture">
+  </a>
+</div>
+
+
+            <p class="fs-lg">
+To ensure a clean separation of concerns, the infrastructure layer interacts with end-user tools exclusively through the information layer, without direct access. This design supports legacy workflows, enables logical platform evolution, ensures seamless internal and external data integration, and establishes a foundation for advanced analytics and AI readiness.
 </p>
 
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Commentary on Nomenclature</h2>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Framework Focused on Information Processing Results</h2>
 
             <p class="fs-lg todo_edit">
 
@@ -655,12 +785,9 @@ This flexible structure accommodates heterogeneous data types, including raw tex
 </p>
             
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">[ Conclusion ]</h2>
+            <p class="fs-lg todo_segue">
 
-
-            <p class="fs-lg">
-
-              ...
+              [ segue into data integration ]
 
             </p>
 
@@ -686,11 +813,11 @@ This flexible structure accommodates heterogeneous data types, including raw tex
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/data_integration_header.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Why Does a Company Need to Grow? </h4>
-                          <p class="card-text">Why is growth a prized metric in company operations?</p>
+                          <h4 class="card-title">Data Integration</h4>
+                          <p class="card-text">Why Do We Need Data Integration?</p>
                           
                           <!--
                           <a class="btn btn-primary" href="#">Go somewhere</a>

@@ -475,6 +475,22 @@ The University of Michigan College of Nursing is adopting a multifaceted strateg
             </p>
 
 
+
+
+
+
+
+              <div class="position-relative mt-5 mb-5">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+                  <a href="https://youtu.be/JiWVETI8wh8&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                </div>
+                <img src="../assets/img/um_customer_success_20250429.png" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                <img src="../assets/img/um_customer_success_20250429.png" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+              </div>
+
+
             <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Data Platform Challenge</h2>       
 
             <p class="fs-lg">
@@ -503,14 +519,35 @@ There was no processing or analytical infrastructure for the data. These limitat
             <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Implementation Journey</h2>       
 
 
-            <p class="fs-lg mb-3 " >
+            <p class="fs-lg" >
 
               
-              ...
+              The implementation journey for the University of Michigan College of Nursing research team began with a deep <a href="../content/hitchhikers_guide_kw/what_is_knowledge_work.html" target="_blank">knowledge workflow</a> review to understand how they worked. From there we analyzed their project goals, the tools they wanted to use, and the datasets they needed to integrate to reach those goals.
 
             </p>
 
+            <p class="fs-lg" >
 
+              
+              Once we understood what information was needed for the project, our platform engineering team stood up the appropriate <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">information architecture</a> in Google Cloud Storage to organize the incoming data. Once we had the information architecture ready, we could begin standing up data ingest pipelines to pull in:
+
+            </p>
+
+            <ul>
+
+              <li>hurricane geospatial data</li>
+              <li>FEMA hurricane damage data</li>
+              <li>general geospatial map data</li>
+              <li>medicare data</li>
+
+            </ul>
+
+
+            <p class="fs-lg mb-3 " >
+
+              This <a href="../content/hitchhikers_guide_kw/data_integration.html" target="_blank">external data integration</a> pattern can be seen in the diagram below, where incoming data is being placed in a bronze layer of a medallion data architecture pattern in storage.
+
+            </p>
 
 
           <div class="hotspots mx-auto" style="max-width: 1200px;">
@@ -521,13 +558,19 @@ There was no processing or analytical infrastructure for the data. These limitat
 
 
 
-            <p class="fs-lg mb-3 " >
+            <p class="fs-lg mt-3 " >
 
               
-              ...
+              Through a series of python ETL pipelines, the data was transformed into information ("data models") in the Information Layer of our architecture. In this layer, transform engineering tools such as Jupyter noteboks could analyze the data for EDA and further refinement purposes.
 
             </p>
 
+            <p class="fs-lg mb-3 " >
+
+              
+              These ETL and transform engineering processes produced consolidate usable information for the research team ("Knowledge workers"). The produced information ("data models") were created in a semantic layer for further analysis and usage by the research group via APIs such as ODBC and REST. This allowed for multiple knowledge work tools such as PowerBI, Excel, Google Sheets, and our custom geospatial EDA tool to work on common data models. The architecture can seen in the diagram below.
+
+            </p>
 
 
 
@@ -537,26 +580,57 @@ There was no processing or analytical infrastructure for the data. These limitat
 
           </div>  
 
+
+            <p class="fs-lg mb-3 mt-4 " >
+
+              The Patterson Consulting engineering team also created a custom Streamlit application for geospatial EDA that allowed researchers to quickly map and compare hurricane attributes (location, track, FEMA damage, wind speed, etc) across 50 years of hurricane data, as seen in the diagram below.              
+
+            </p>
+
+
+
+
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../assets/img/geo_eda_hurricane_season_ux_web.png" alt="Image">
+
+
+          </div>  
+
+
+            <p class="fs-lg mb-3 mt-4" >
+
+              To accelerate the knowledge work of the researchers, a generative AI natural language interface was added over the geospatial EDA tool to allow faster data analysis. It allow analyses such as:
+
+              
+
+            </p>
+
+            <ul>
+
+              <li>show all storms in a specific hurricane season</li>
+              <li>analyze a specific depression forming in the atlantic and compare it to historical storms that formed nearby</li>
+              <li>show the wind speeds per-FIPS code of a specific historical storm and its associated FEMA damage per FIPS code</li>
+
+            </ul>
+
+
+            <p class="fs-lg mb-3 mt-4" >
+
+              These next-generation generative AI-based tools allowed the researchers to work with 50 years of hurricanes faster than they could have with just traditional code and dashboards.
+
+              
+
+            </p>
+
+
             <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Project Results</h2>       
 
             <p class="fs-lg mb-3">
 
 
-To support and accelerate the College of Nursing's data platform challenges, Patterson Consulting engineered and deployed a modernized compute platform centered a cloud data warehouse, data engineering pipelines, and a semantic layer for modernized information analysis. Patterson Consulting also developed a generative AI user interface to quickly navigate decades worth of detailed hurricane geospatial data so researchers could work with the data faster.
+To support and accelerate the College of Nursing's <a href="../content/hitchhikers_guide_kw/what_is_a_data_platform.html" target="_blank">data platform</a> challenges, Patterson Consulting engineered and deployed a modernized compute platform centered a cloud data warehouse, data engineering pipelines, and a semantic layer for modernized information analysis. Patterson Consulting also developed a generative AI user interface to quickly navigate decades worth of detailed hurricane geospatial data so researchers could work with the data faster.
 
           </p>
-
-
-              <div class="position-relative mt-5 mb-5">
-                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
-                  <a href="https://youtu.be/nwvJzpfqd8g&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
-                    <i class="ai-play-filled"></i>
-                  </a>
-                </div>
-                <img src="../assets/img/um_case_study_video_card_2025.jpg" class="d-dark-mode-none rounded-3 " alt="Video cover">
-                <img src="../assets/img/um_case_study_video_card_2025.jpg" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
-              </div>
-
 
 
 
@@ -577,10 +651,10 @@ This transformation accelerated the College of Nursing's ability to generate tim
 
             <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Strategic Impact of the Project</h2>       
 
-            <p class="fs-lg ">
+            <p class="fs-lg mb-5">
 
 
-By leveraging predictive modeling techniques, the University of Michigan College of Nursing’s research offers urban decision-makers data-driven insights into resource allocation following hurricanes, particularly in densely populated and growing urban areas. The ability to anticipate healthcare surges—especially in historically marginalized and at-risk communities—enables a more proactive deployment of critical resources like medical staff, supplies, and emergency transportation. 
+By leveraging predictive modeling techniques, the University of Michigan College of Nursing’s research offers urban decision-makers data-driven insights into resource allocation following hurricanes, particularly in densely populated and growing urban areas. The ability to anticipate healthcare surges—especially in historically marginalized and at-risk communities—<b>enables a more proactive deployment of critical resources like medical staff, supplies, and emergency transportation</b>. 
             </p>
 
             <div class="card border-0 bg-secondary mb-3">
@@ -597,7 +671,7 @@ By leveraging predictive modeling techniques, the University of Michigan College
 
 
 
-            <p class="fs-lg ">
+            <p class="fs-lg mt-5">
 This targeted approach helps municipal leaders and healthcare networks mitigate disruptions, safeguard public health, and maintain the essential services that underpin economic and social stability in rapidly expanding urban environments.
 
             </p>

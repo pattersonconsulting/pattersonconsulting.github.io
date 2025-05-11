@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
     <!-- SEO meta tags -->
-    <title>Capturing Email Attachments with Apache Airflow</title>
-    <meta name="description" content="This guide walks you through how to use Power BI with incoming bordereaux claims data, similar to what insurers might receive from a broker or TPA to uncover trends, reduce manual effort, and drive smarter decisions across your insurance operations.">
+    <title>An Introduction to Apache Iceberg</title>
+    <meta name="description" content="...">
     <meta name="keywords" content="powerbi, knowledge work, technology, efficiency, productivity, economics, line of business, investment, Artificial intelligence, data platform">
     <meta name="author" content="Darren Clark">
 
 
 
     <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content="Capturing Email Attachments with Apache Airflow"/>
+    <meta property="og:title" content="An Introduction to Apache Iceberg"/>
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/fnol_property_insurance_header.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="This guide walks you through how to use Power BI with incoming bordereaux claims data, similar to what insurers might receive from a broker or TPA to uncover trends, reduce manual effort, and drive smarter decisions across your insurance operations."/>
+    <meta property="og:description" content="..."/>
 
 
 
 
-    <meta name="twitter:title" content="Capturing Email Attachments with Apache Airflow" />
+    <meta name="twitter:title" content="An Introduction to Apache Iceberg" />
     <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/fnol_property_insurance_header.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/power_bi_first_notice_of_loss_analysis.html" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -153,6 +153,54 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }    
     </style>
 
     <!-- Page loading scripts -->
@@ -311,14 +359,14 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Capturing Email Attachments with Apache Airflow</li>
+            <li class="breadcrumb-item"><a href="../blog_index.html">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">An Introduction to Apache Iceberg</li>
           </ol>
           
         </nav>
 
         <!-- Post title + post meta -->
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Capturing Email Attachments with Apache Airflow</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">An Introduction to Apache Iceberg</h1>
 
         <!--
         <div class="d-flex flex-wrap align-items-center justify-content-center mt-n2">
@@ -342,7 +390,7 @@
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Darren Clark
+                  Josh Patterson
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
@@ -374,348 +422,173 @@
 
 
 
-            <p class="fs-lg">
-It’s 8:00 a.m. and instead of diving into data work, you’re
-sifting through yesterday’s emails, scanning subjects,
-hunting for attachments, downloading each one by hand
-before you can even get started. That ritual eats into your
-morning and steals focus from analysis.
+           <p class="fs-lg">
 
-            </p>
-
-<!-- Image gallery -->
-<div class="gallery">
-  <a href="../assets/img/01_raw_data_import_powerbi.png" class="gallery-item d-block card-hover">
-    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
-      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
-      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
-        Loading raw bordereaux data into Power BI
-      </div>
-      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
-    </div>
-    <img src="../assets/img/01_raw_data_import_powerbi.png" class="d-block rounded-1" alt="Loading raw bordereaux data into Power BI">
-  </a>
-</div>
-
-
-            <p class="fs-lg">
-
-              After reading this guide, you’ll be able to:
-
-            </p>
-
-            <ul>
-
-              <li>Automatically fetch all new attachments from your
-Gmail account on a schedule</li>
-              <li>Save every file into a shared downloads folder ready
-for any analytics tool</li>
-              <li>Maintain a precise audit trail of which attachments
-were retrieved and when</li>
-              <li>Seamlessly integrate incoming files into your BI or
-data pipeline with just a few lines of Python</li>
-              <li>Streamline your workflow so your first task each day
-is insight, not inbox maintenance</li>
-
-            </ul>
-
-
-            <p class="fs-lg">
-Next, you’ll deploy Apache Airflow inside Docker on Windows
-and configure a simple Python workflow that logs into your inbox, retrieves unread attachments, and marks them as
-processed, reliable, and ready for whatever comes next.
-
-            </p>
-
-
-
-            <h2 class="h1 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Manual Hunting Fails</h2>
-
-            <p class="fs-lg">
-
-              Numerous industries generate files for various reasons. If
-you work in insurance that is likely to include loss
-reporting, reinsurance accounting, compliance standards,
-and sales metrics. Yet the process often relies on manual
-triage:
-
-            </p>
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-            <p class="fs-lg">
-
-              Every missed attachment interrupts your workflow:
-dashboards stall awaiting data, reports get delayed, and
-confidence in your workflow begins to erode. Automation
-that works every time gives you back that mental headroom,
-letting you focus on insights instead of inbox management.
-
-            </p>
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Solutions Overview</h2>
-
-            <p class="fs-lg">
-
-              Below is a high-level overview of how all the pieces fit
-together. Don’t worry if some of these terms are
-unfamiliar, you’ll see exactly how each part works in the
-steps to come.
-
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-            <p class="fs-lg">
-
-              Each new attachment lands in your shared downloads/ folder,
-readily available to Power BI, Excel, or any analytics
-tool. Once this pipeline is live, you can extend it with
-just a few lines of code to parse, validate, and load data
-into your database.
-
-            </p>
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Prerequisites</h2>
-
-            <p class="fs-lg">
-
-Before you begin, ensure:
-
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Prepare your workspace</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Configure credentials</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3: Launch the Airflow stack</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4: Access the Airflow UI</h2>
-
-            <p class="fs-lg">
+            [ cold open intro ]
 
 
             </p>
 
 
 
-            <ul>
+           <p class="fs-lg pre">
 
-              <li></li>
-              <li></li>
-              <li></li>
+            [ needs to property insurance ]
 
-            </ul>
+            what kind of data is coming in and from where?
 
+            why kinds of files?
 
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 5: Key code walkthrough</h2>
-
-            <p class="fs-lg">
-
-Open dags/gmail_attachment_retrieval.py in your editor.
-Below are a handful of lines that power the DAG -- you’ll
-find the full DAG file in “Full Code Listings” later.
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 6: Trigger & validate</h2>
-
-            <p class="fs-lg">
+            how does it scale?
 
 
             </p>
 
 
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Apache Iceberg?</h2>
 
 
 
+           <p class="fs-lg">
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Real-world edge cases</h2>
+            [ why do we care? ]
 
-            <p class="fs-lg">
+
+            </p>
+
+           <p class="fs-lg todo_edit">
+
+            At a high level, table formats such as Iceberg enable tools to understand which files correspond to a table and to store metadata about the table to improve performance and interoperability.
+
+
+
+            </p>
+
+           <p class="fs-lg ">
+
+Apache Iceberg is an open-source table format designed to bring database-like capabilities to large-scale data lakes. Built to support reliable analytics over cloud-based object stores, Iceberg enables critical features such as ACID transactions, schema evolution, and time travel. It addresses common limitations of traditional file-based architectures by maintaining table-level metadata and providing consistent semantics across query engines. This creates a more stable and performant environment for analytical workloads at scale.
+
+            </p>
+
+           <p class="fs-lg todo_edit">
+A key advantage of Iceberg is its performance optimization. Traditional file formats require engines to scan numerous files to identify relevant data, leading to inefficiencies. Iceberg mitigates this by maintaining rich metadata that enables query pruning, compaction, and incremental processing. These features significantly reduce the cost and time associated with querying large datasets, making it easier to manage data over time without compromising speed or reliability.
+
+            </p>
+
+           <p class="fs-lg todo_edit">
+Interoperability is another major strength of Iceberg. As a format that is engine- and file-agnostic by design, it allows multiple tools and platforms to safely read from and write to the same dataset without risk of corruption or misinterpretation. This flexibility supports diverse technology ecosystems and reduces the need to duplicate data or enforce tool-specific workflows, which lowers operational overhead and enhances consistency.
+
+            </p>
+
+           <p class="fs-lg todo_edit">
+Iceberg also offers strong support for evolving data structures and managing change. Through built-in schema evolution and data versioning capabilities, users can track and query historical data states while safely introducing new fields or renaming existing ones. These features help ensure long-term adaptability and make it easier to maintain analytical systems as business needs change.
+
+            </p>
+
+           <p class="fs-lg todo_edit">
+The project’s governance under the Apache Software Foundation ensures transparency, vendor neutrality, and long-term sustainability. With an active and diverse community, Iceberg continues to innovate through collaborative development. The result is a modern, flexible, and high-performance foundation for any data platform strategy focused on openness, scalability, and future-ready architecture.
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why is Iceberg Useful in Building Data Platforms?</h2>
+
+
+           <p class="fs-lg">
+
+            [ ACID transactions in the data lake, snowflake getting updates for free ]
+
+
+            </p>
+
+
+           <p class="fs-lg pre">
+
+
+
+To meet the demands of high-throughput data processing in a property insurance environment, our information architecture must support:
+
+- **Concurrent Write Operations**: Multiple ETL pipelines need to ingest and update data simultaneously to ensure timely availability across underwriting, claims, and reporting functions. This is essential for maintaining data freshness in a multi-tenant system where business units or partners operate in parallel.
+
+- **Concurrent Read Access**: The architecture must enable many users and downstream systems to read data at the same time without performance degradation. This is critical for analytics, regulatory reporting, and operational dashboards that rely on real-time or near-real-time data access.
+
+- **Efficient Storage Handling**: The underlying storage format must scale seamlessly across a wide range of table sizes—from small reference datasets to massive historical claims and policy records—ensuring performance and cost efficiency across all data workloads.
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            different stages of an ingest workflow --- python in early stages, then switching to DBT / SQL
+
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            ability to just leverage blob cloud FS storage while also treating things as logical tables for better multi-tenancy
 
 
             </p>
 
 
 
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Quick Iceberg "Hello World" Tutorial</h2>
 
 
+           <p class="fs-lg">
+
+            [ create a test table ]
 
 
+            </p>
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Extending the pipeline</h2>
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Create a Test Warehouse</h2>
 
-            <p class="fs-lg">
+           <p class="fs-lg">
+
+            [ create warehouse ]
+
+
+            </p>
+
+           <p class="fs-lg">
+
+            [ load some data --- let's generate some data with our bordereaux data generator ]
 
 
             </p>
 
 
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Query with PyIceberg Dataframes</h2>
 
-            <ul>
+           <p class="fs-lg">
 
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Docker on Windows?</h2>
-
-            <p class="fs-lg">
+            [ create warehouse ]
 
 
             </p>
 
 
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Query with DuckDB</h2>
 
-            <ul>
+           <p class="fs-lg">
 
-              <li></li>
-              <li></li>
-              <li></li>
+            [ create warehouse ]
 
-            </ul>            
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion: From Inbox Chores to Insights</h2>
-
-            <p class="fs-lg">
 
             </p>
 
-            <p class="fs-lg">            
-              ...
+
+          <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Iceberg Next Steps</h2>
+
+           <p class="fs-lg">
+
+            [ other engines that it can interop with ]
+
+
             </p>
-
-            <ul>
-              <li>...</li>
-              <li>...</li>
-              <li>...</li>
-
-
-            </ul>
-
 
           </div>
         </div>

@@ -420,8 +420,19 @@
 
             
 
+           <p class="fs-lg">
 
+The choice of data storage architecture directly impacts your organization's ability to efficiently query, manage, and scale large datasets on <a href="/content/hitchhikers_guide_kw/what_is_a_data_platform.html" target="_blank">your data platform</a>. A well-designed storage architecture enables critical capabilities such as schema flexibility, historical data analysis, and transactional reliability, essential for accurate analytics and operational agility. 
 
+          </p>
+
+           <p class="fs-lg">
+
+Conversely, poor architecture choices increase complexity, reduce interoperability between tools, and raise operational costs, ultimately hindering <a href="/content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html" target="_blank">strategic decision-making and long-term growth</a>.
+
+          </p>
+
+<!--
            <p class="fs-lg">
 
             [ cold open intro ]
@@ -435,16 +446,26 @@
 
 
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg todo_edit pre">
 
             cold open
+
+            links
+
+            /content/hitchhikers_guide_kw/what_is_a_data_platform.html
+
+            /content/hitchhikers_guide_kw/data_integration.html
+
+            /content/hitchhikers_guide_kw/knowledge_work_architecture.html
 
 
 
             </p>
+-->
 
+<!--
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Considerations for Storage Strategy</h2>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Data Storage Strategy</h2>
 
 
 
@@ -459,37 +480,77 @@
 
             </p>
 
+-->
 
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Designing with the End User In Mind</h2>
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Consideration of the Knowledge Workflows Consuming Information</h2>
 
 
            <p class="fs-lg">
 
-            BI tools, reporting tools, xls, pbi, dashboards, LLM automation workflows
+Knowledge workers need data platforms that reduce friction and accelerate turning raw data into actionable insights, ensuring data consistency, reliability, and ease of use. 
+
+The platform should enable flexibility in managing data structures, efficient query performance, and support interoperability across various analytics tools. 
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            Data engineering transform pipelines operate on data.
 
 
             </p>
 
            <p class="fs-lg">
 
-            transform pipelines operate on data
+            Knowledge work tools operate on information.
 
 
             </p>
+
 
            <p class="fs-lg">
 
-            knowledge work tools operate on information
+            The job of the data platform is to transform data into information and your data storage strategy directly affects how efficient this data transformation is performed.
 
 
             </p>
 
 
+           <p class="fs-lg">
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Access Patterns of Transform Tools</h2>
+            Examples of line of business knowledge work tools are:
+
+          </p>
+
+          <ul>
+
+            <li>Business Intelligence tools (Power BI, Tableau)</li>
+            <li>Report generation tools</li>
+            <li>Spreadsheets (Excel, Google Sheets)</li>
+            <li>Dashboards</li>
+            <li>LLM Automation Workflows</li>
+
+          
+          </ul>
 
 
+           <p class="fs-lg">
+
+            Most of the time, the end-user knowledge worker will be operating off a materialized view (information) of the raw data. How this raw data is arranged (information architecture) and processed is a key architectural decision in any data platform.
+
+          </p>
+
+          <p class="fs-lg">
+
+            This materialized view of the information needed at the knowledge work layer will be in a low-latency cached system.
+
+          </p>
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Keys to Consider for Data Storage</h2>
+
+<!--
            <p class="fs-lg">
 
             ... spark, python, sql, row vs columnar
@@ -500,32 +561,48 @@
 
            <p class="fs-lg">
 
+
+
             dont want to change code to scale when needed
 
             would ideally likely to not have to think about information architecture in the transform jobs
 
             concurrency needs to just work when building multi-tenant systems
 
+            Data integration with multiple inside and external data sources ends up creating mutliple writers for datasets
+
             need to support both SQL and python pipelines
 
             dont want to move data
+
 
 
             </p>
 
 
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Reader and Writer Counts</h2>
-
+-->
 
            <p class="fs-lg">
 
-            ... multi-tenancy
+
+You want a data storage strategy that seamlessly supports knowledge workflows, handling diverse data types and sources with minimal operational friction. 
+
+Effective architectures should enable dynamic scalability without modifying existing workflows, ensure concurrency in multi-tenant environments, and allow multiple writers to interact safely with datasets. 
+
+Compatibility with both SQL and Python pipelines is essential, as is eliminating unnecessary data movement, to ensure the infrastructure efficiently converts raw inputs into actionable insights.
+
 
 
             </p>
 
+          <p class="fs-lg">
 
+            A major theme in your decision criteria should be "let's keep this as simple as we can". In past lives, I've worked on complex distributed systems, and they are require a lot of care and feeding. If you can get away with "just a bunch of files in the directory for my own analytical queries" --- then you should do just that.
 
+          </p>
+
+<!--
 
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Calculate Upper Bounds on Table Row Counts</h2>
 
@@ -582,15 +659,29 @@
 
 
 
-
+-->
 
 
             <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Selecting a Data Storage Strategy</h2>
 
            <p class="fs-lg">
 
-            applying tradeoffs [ diagram of decision tree ]
+            I'm going to lay out the 3 major ways storage strategies come together for data platforms, describe each one, and then give you a generalized decision tree on how to map your situation to a specific strategy. The 3 major storage architectures are:
 
+
+            </p>
+
+            <ul>
+
+              <li>DuckDB and CSV/Parquet Files ("Just a Bunch of Files")</li>
+              <li>Traditional RDBMS</li>
+              <li>Cloud Data Warehouse</li>
+
+            </ul>
+
+            <p class="fs-lg">
+
+              Now let's dig into some notes about each one and then I'll put them together in simple decision tree on how to figure out where you should end up.
 
             </p>
 
@@ -598,32 +689,49 @@
 
 
 
-          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Just a Bunch of Files</h2>
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">"Just a Bunch of Files"</h2>
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
-            pros and cons of raw files (and what gets me to transition to the next tier up?)
+            If you are a single entity that has some data and needs to do some analysis locally (or even if the files are in the cloud in blob storage (s3, etc)) --- then this is the option for you. You just need DuckDB and you'll be able to analyze a ton of data quickly.
+
+          </p> 
+          <p class="fs-lg">
+
+            The thing that creates complexity in data platforms is multi-tenancy.
+
+          </p>
+          <p class="fs-lg">
+
+
+            With "Just a bunch of files" you won't need to worry about operating databases or managing schemas or any other operational overhead because there just aren't any other users to worry about, so multi-tenancy is not a concern here. That makes things a lot simpler, and DuckDB makes the analytical queries fast.
 
            </p>
 
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Traditional RDBMS</h2>
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
-            pros and cons of RDBMS technology (and what gets me to transition to the next tier up?)
-
-            eventually the coordination of readers and writers happens either in the storage system (RDBMS, CDW, Iceberg, etc) or it ends up in the application logic (you dont want it in the application logic...)
+            Once you start needing to coordinate with other folks writing to the data platform "just a bunch of files" starts to break down as a strategy. That's where the traditional RDBMS makes more sense as the option for your data platform storage.
 
 
 
            </p>
 
+          <p class="fs-lg">
+
+
+Traditional relational database systems offer a proven, structured foundation for managing high-value, transactional knowledge work. Their mature architecture ensures strong consistency, optimized indexing, and reliable query performance—all critical for enabling accurate, repeatable decisions in environments where data integrity and operational precision are essential. 
+
+While they may face scalability limitations in high-volume, unstructured workloads, their stability and clarity of schema make them an effective core for platforms where structured data drives coordination, compliance, and business insight.
+
+           </p>
 
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Cloud Data Warehouse</h2>
 
 
 
-
+<!--
            <p class="fs-lg pre">
 
 
@@ -637,18 +745,39 @@ To meet the demands of high-throughput data processing in a property insurance e
 - **Efficient Storage Handling**: The underlying storage format must scale seamlessly across a wide range of table sizes—from small reference datasets to massive historical claims and policy records—ensuring performance and cost efficiency across all data workloads.
 
             </p>
+-->
 
+<p class="fs-lg">
+Cloud data warehouses provide the scalable backbone needed for modern knowledge work, where information must move fast and stay accurate. They support high-volume, concurrent writes and reads, allowing teams and systems to operate in parallel without bottlenecks. Their architecture handles everything from small lookups to massive historical datasets with efficiency, making it easier to maintain performance as demands grow. In fast-moving environments where data must be fresh, accessible, and reliable, cloud-native platforms offer the flexibility and throughput that traditional systems struggle to match.
+</p>
 
-           <p class="fs-lg todo_edit">
-
-            pros and cons of CDW (and when is this overkill?)
+           <p class="fs-lg">
+            The thing is, with cloud data warehouses the amount of operational overhead is a tier above just running a RDBMS. You are now running a distributed system with many components in the cloud to integrate, manage, and support. This produces operational overhead and costs that are not always obvious on the front end. You should only end up in this option when the need is evident and you understand your cost model well.
 
            </p>
 
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">When to Move from an RDBMS to a Parallel Cloud Data Warehouse</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Simple Decision Tree for Choosing Your Data Platform Storage Strategy</h2>
+
+
 
     
+
+
+
+<!-- Image gallery -->
+<div class="gallery">
+  <a href="../assets/img/simple_data_storage_decision_tree_v0_1.png" class="gallery-item d-block card-hover">
+    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+        A simple decision tree for deciding on what kind of storage to use for your data platform
+      </div>
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+    </div>
+    <img src="../assets/img/simple_data_storage_decision_tree_v0_1.png" class="d-block rounded-1" alt="A simple decision tree for deciding on what kind of storage to use for your data platform">
+  </a>
+</div>
            <p class="fs-lg todo_edit">
 
             Row Count Thresholds
@@ -684,12 +813,21 @@ To meet the demands of high-throughput data processing in a property insurance e
         <li>Decisions often rely more on complexity, performance, cost-efficiency, and analytical goals rather than purely row count.</li>
     </ul>
 
-
+<!--
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Data Storage Technology by Company Market Size</h2>
 
 
+           <p class="fs-lg todo_edit pre">
 
+            note: we do query analysis for companies 
+
+            there is no hard and fast way for row count to correlate directly into a transition into a CDW
+
+            companies many times will have far less than 500mm rows in a table but their joins slow down and they prompts them to move to a CDW
+
+           </p>
+-->
           </div>
         </div>
       </section>

@@ -424,25 +424,93 @@
 
            <p class="fs-lg">
 
-            [ cold open intro ]
+            [ cold open intro -- what is the pain here? ]
+
+            insurance is fundamentally about managing a budget and accurately forecasting costs
+
+            when you miss on either of those core tasks then the consequences are felt across the company
+
+
+
+
+            </p>
+
+<!--
+
+            /content/hitchhikers_guide_kw/what_is_a_data_platform.html
+
+            /content/hitchhikers_guide_kw/data_integration.html
+
+            /content/hitchhikers_guide_kw/knowledge_work_architecture.html
+
+
+
+-->
+
+
+          <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Property Insurance Knowledge Work</h2>
+
+           <p class="fs-lg">
+
+Knowledge workers need data platforms that reduce friction and accelerate turning raw data into actionable insights, ensuring data consistency, reliability, and ease of use. 
+
+The platform should enable flexibility in managing data structures, efficient query performance, and support interoperability across various analytics tools. 
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            Data engineering transform pipelines operate on data.
+
+
+            </p>
+
+           <p class="fs-lg">
+
+            Knowledge work tools operate on information.
 
 
             </p>
 
 
+           <p class="fs-lg">
 
-           <p class="fs-lg pre">
-
-            [ needs to property insurance ]
-
-            what kind of data is coming in and from where?
-
-            why kinds of files?
-
-            how does it scale?
+            The job of the data platform is to transform data into information and your data storage strategy directly affects how efficient this data transformation is performed.
 
 
             </p>
+
+
+           <p class="fs-lg">
+
+            Examples of line of business knowledge work tools are:
+
+          </p>
+
+          <ul>
+
+            <li>Business Intelligence tools (Power BI, Tableau)</li>
+            <li>Report generation tools</li>
+            <li>Spreadsheets (Excel, Google Sheets)</li>
+            <li>Dashboards</li>
+            <li>LLM Automation Workflows</li>
+
+          
+          </ul>
+
+
+           <p class="fs-lg">
+
+            Most of the time, the end-user knowledge worker will be operating off a materialized view (information) of the raw data. How this raw data is arranged (information architecture) and processed is a key architectural decision in any data platform.
+
+          </p>
+
+          <p class="fs-lg">
+
+            This materialized view of the information needed at the knowledge work layer will be in a low-latency cached system.
+
+          </p>
 
 
             <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Obligations of Property Insurance Data Platforms</h2>
@@ -464,10 +532,65 @@
 
            <p class="fs-lg">
 
-            ...
+            claims and actuary need a full and accurate view of claims inforation (not data)
 
 
             </p>
+
+           <p class="fs-lg">
+
+            data != information
+
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            Chief claims officer is your prime knowledge worker, along with actuary
+
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">TPA Data Integration</h2>
+
+
+           <p class="fs-lg">
+
+            [ what raw data is coming in? what are the challenges in transforming the data into information? ] 
+
+            bordereaux data being emailed from TPAs from claims processing
+
+
+            </p>
+
+           <p class="fs-lg">
+
+            where do we land the bordereaux data? blob / local disk (Medallion data pattern)
+
+
+            </p>
+
+
+           <p class="fs-lg">
+
+            upper bound on property insurance bordereaux tpa data!
+
+
+            </p>
+
+           <p class="fs-lg">
+
+            whats our storage strategy? why? concurrency!
+
+
+            </p>
+
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Platform Architecture</h2>
+
 
 
             <p class="fs-lg">
@@ -493,27 +616,10 @@
 
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Property Insurance Data Integration</h2>
-
-
-           <p class="fs-lg">
-
-            [ what raw data is coming in? what are the challenges in transforming the data into information? ]
-
-
-            </p>
-
-           <p class="fs-lg">
-
-            ...
-
-
-            </p>
 
 
 
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Architecture for Property Insurance</h2>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Architecture for a Claims Data Model</h2>
 
 
            <p class="fs-lg">
@@ -523,54 +629,6 @@
 
             </p>
 
-           <p class="fs-lg pre">
-
-
-
-To meet the demands of high-throughput data processing in a property insurance environment, our information architecture must support:
-
-- **Concurrent Write Operations**: Multiple ETL pipelines need to ingest and update data simultaneously to ensure timely availability across underwriting, claims, and reporting functions. This is essential for maintaining data freshness in a multi-tenant system where business units or partners operate in parallel.
-
-- **Concurrent Read Access**: The architecture must enable many users and downstream systems to read data at the same time without performance degradation. This is critical for analytics, regulatory reporting, and operational dashboards that rely on real-time or near-real-time data access.
-
-- **Efficient Storage Handling**: The underlying storage format must scale seamlessly across a wide range of table sizes—from small reference datasets to massive historical claims and policy records—ensuring performance and cost efficiency across all data workloads.
-
-            </p>
-
-
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sizing Storage</h2>
-
-
-           <p class="fs-lg pre todo_edit">
-
-            TODO: JD's analysis of property insurance upper bound on TPA data incomign
-
-           </p>
-
-
-
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Selecting a Data Storage Strategy</h2>
-
-
-           <p class="fs-lg todo_edit">
-
-            pros and cons of raw files (and what gets me to transition to the next tier up?)
-
-           </p>
-
-           <p class="fs-lg todo_edit">
-
-            pros and cons of RDBMS technology (and what gets me to transition to the next tier up?)
-
-           </p>
-
-
-           <p class="fs-lg todo_edit">
-
-            pros and cons of CDW (and when is this overkill?)
-
-           </p>
 
            <p class="fs-lg pre">
 
@@ -591,6 +649,29 @@ Merging the new data into the current master file
 
             </p>
 
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Towards a Standard Claims Data Model</h2>
+
+
+
+           <p class="fs-lg">
+
+            this architecture exercise represents the Patterson Consulting claims information architecture reference design
+
+
+            </p>
+
+
+
+
+                <div class="card">
+                  <img src="../assets/img/hhgtwks_kw_information_transformation_header.jpg" class="card-img-top" alt="Card image">
+                  <div class="card-body">
+                    <h4 class="card-title">Need Platform Architecture Help?</h4>
+                    <p class="card-text">Patterson Consulting offers business workflow analysis, data strategy, and platform architecture review services. 
+                Check out our <a href="../offerings/platform_engineering/architecture/kw_review.html">Knowledge Work Architecture Review</a> offering.</p>
+                    <a href="../offerings/platform_engineering/architecture/kw_review.html" class="btn btn-primary">Let's Talk</a>
+                  </div>
+                </div>
 
           </div>
         </div>

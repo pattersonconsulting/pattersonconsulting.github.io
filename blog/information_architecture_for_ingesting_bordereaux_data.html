@@ -424,16 +424,32 @@
 
            <p class="fs-lg">
 
-            [ cold open intro -- what is the pain here? ]
+            
 
-            insurance is fundamentally about managing a budget and accurately forecasting costs
+            <b>Running an insurance company is fundamentally about managing a budget and accurately forecasting costs.</b>
 
-            when you miss on either of those core tasks then the consequences are felt across the company
+          </p>
+          <p class="fs-lg">
+
+             Underwriting, claims, actuary, and finance <b>all have to work in concert on the same view of common information</b> to minimize the error in operational budgeting and forecasting.
 
 
 
 
             </p>
+
+            <p class="fs-lg">
+
+            When you miss on either of budgeting or forecasting the consequences are felt across the company. Your <a href="/content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html" target="_blank">technology investment</a> as a property insurance company should be focused around minimizing the error in budgeting and forecasting by giving each division a way to work off common information.
+
+          </p>
+
+
+            <p class="fs-lg">
+
+            You provide common information to your <a href="/content/hitchhikers_guide_kw/what_is_knowledge_work.html" target="_blank">knowledge workers</a> through information architecture. This article will take you through the planning sesson for designing the information architecture for a mid-sized property insurance company that works with multiple TPAs for claims processing.
+
+          </p>
 
 <!--
 
@@ -450,11 +466,18 @@
 
           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Property Insurance Knowledge Work</h2>
 
+
            <p class="fs-lg">
 
-Knowledge workers need data platforms that reduce friction and accelerate turning raw data into actionable insights, ensuring data consistency, reliability, and ease of use. 
+            The data consumer in this scenario we are focused on is the claims team, and specifically the <b>chief claims officer</b>. This knowledge worker uses reports and dashboards built in a business intelligence tool (Power BI, Tableau, etc) to make business decisions about how to deal with potential future losses that might disrupt cash flow in the company.
 
-The platform should enable flexibility in managing data structures, efficient query performance, and support interoperability across various analytics tools. 
+           </p>
+
+           <p class="fs-lg">
+
+Knowledge workers like the chief claims officer need data platforms that reduce friction and accelerate turning raw data into actionable insights, ensuring data consistency, reliability, and ease of use. 
+
+The platform should enable flexibility in managing data structures, efficient query performance, and support interoperability across various analytics tools. Just giving the chief claims officer direct access to the raw data coming in from parter TPAs is not effective as your company scales. The chief claims officer operates on information, not data.
 
             </p>
 
@@ -468,7 +491,7 @@ The platform should enable flexibility in managing data structures, efficient qu
 
            <p class="fs-lg">
 
-            Knowledge work tools operate on information.
+            <b>Knowledge workers operate on information.</b>
 
 
             </p>
@@ -484,7 +507,9 @@ The platform should enable flexibility in managing data structures, efficient qu
 
            <p class="fs-lg">
 
-            Examples of line of business knowledge work tools are:
+            Further, you need to consider how your chief claims officer wants to work with her information.
+
+            Examples of line of business knowledge work tools for a chief claims officer are:
 
           </p>
 
@@ -502,7 +527,7 @@ The platform should enable flexibility in managing data structures, efficient qu
 
            <p class="fs-lg">
 
-            Most of the time, the end-user knowledge worker will be operating off a materialized view (information) of the raw data. How this raw data is arranged (information architecture) and processed is a key architectural decision in any data platform.
+            Most of the time, the end-user claims knowledge worker will be operating off a materialized view (information) of the raw data. How this raw data is arranged (information architecture) and processed is a key architectural decision in any data platform.
 
           </p>
 
@@ -513,55 +538,226 @@ The platform should enable flexibility in managing data structures, efficient qu
           </p>
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Obligations of Property Insurance Data Platforms</h2>
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Planning Information Architecture for a Property Insurance Data Platform</h2>
 
 
 
            <p class="fs-lg">
 
-            [ what do we need to support? what is the knowledge workflows that need information? ]
+            The key things we need to do to develop our information architecture for ingesting bordereaux data are:
+
+
+            </p>
+
+            <ol>
+
+              <li>Provide a method to capture the incoming bordereaux files from TPA partners.</li>
+
+              <li>Select a storage architecture for our data platform</li>
+
+              <li>Build a transformation pipeline to combine and transform the raw TPA data into usable and complete claims information</li>
+
+              <li>Integrate the claims information we've constructed into the tools the line of business uses (e.g., Power BI, etc)</li>
+
+            </ol>
+
+
+           <p class="fs-lg">
+
+            In this design example I want to consider the full knowledge work architecture for property insurance workflows and not just a single data pipeline; The value of good architecture is make all the parts work together as a cohesive whole in way that reduces the friction on information transformation. With that in mind, let's take a look at how TPAs operate.
 
 
             </p>
 
 
+<!--
             <figure class="figure">
               <img class="figure-img rounded-0 mb-3" src="../assets/img/information_processing_graph.png" alt="Image">
               <figcaption class="figure-caption">Information Processing as a Graph</figcaption>
             </figure>
-
+-->
            <p class="fs-lg">
 
-            claims and actuary need a full and accurate view of claims inforation (not data)
 
 
             </p>
 
            <p class="fs-lg">
 
-            data != information
 
 
             </p>
 
 
-           <p class="fs-lg">
 
-            Chief claims officer is your prime knowledge worker, along with actuary
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">TPA Data Integration</h2>
 
+            <p class="fs-lg">
+A property insurance TPA (Third-Party Administrator) is an external service provider that manages claims processing on behalf of the insurer. While the insurer retains final decision-making authority and financial responsibility, the TPA handles key operational tasks such as intake, investigation, and coordination with adjusters or contractors. This model allows insurers to scale efficiently, reduce internal workload, and improve responsiveness, particularly during high-volume or specialized claim events.
 
             </p>
+<!--
+            <p class="fs-lg todo_edit">
 
+              every month you get a few claims. But... some TPAs don't do incremental feeds. They do "trunc and reload" type feeds where they send everything whether it was changed or not. So over time those can get bulky-ish. But it's still one claim per row. 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">TPA Data Integration</h2>
-
+            </p>
+-->
 
            <p class="fs-lg">
+
+            TPAs email excel spreadsheet files containing the rows of bordereaux data to the insurance carrier periodically (this is the industry norm).
+
+          </p>
+
+           <p class="fs-lg">
+
+Some TPAs use full "truncate and reload" data feeds rather than incremental updates, sending the entire claims dataset each time regardless of changes. While each claim remains a single row, these full refreshes can become increasingly bulky over time, especially as monthly claim volume accumulates. This has implications for storage efficiency and pipeline performance.
+
+            </p>
+<!--
+           <p class="fs-lg todo_edit">
+
+            TPAs email excel spreadsheet files containing the rows of bordereaux data to the insurance carrier periodically (this is the industry norm).
+
+
+            /content/hitchhikers_guide_kw/data_integration.html
 
             [ what raw data is coming in? what are the challenges in transforming the data into information? ] 
 
             bordereaux data being emailed from TPAs from claims processing
 
+
+            </p>
+-->
+
+           <p class="fs-lg mb-4">
+
+              Our TPA bordereaux <a href="/content/hitchhikers_guide_kw/data_integration.html" target="_blank">data integration</a> strategy for this platform will be to use Apache Airflow to watch an email account for incoming Excel spreadsheet attachments (seen in the diagram below). 
+            </p>
+
+
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../assets/img/tpa_data_integration_airflow_20250515.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg mt-5">
+
+            As it finds those emails, it will write the files into a directory (cloud blob storage, AWS S3, Azure Blob Storage, etc). From there they will be picked up into a processing pipeline post-processing before they are written into the staging tables in our data platform storage system.
+
+
+          </p>
+
+
+           <p class="fs-lg">
+
+            For a full example on <a href="./capturing_email_attachments_with_airflow.html">how to stand up Apache Airflow to capture email attachments</a>, check out our blog post.
+
+            
+
+           </p>            
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Testing TPA Data Integration with Synthetic Bordereaux Data</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+
+
+Testing new data platform architectures in property insurance presents challenges due to the sensitivity of claims and underwriting data. Regulatory and privacy constraints often prevent teams from using real data in development environments, making it difficult to quickly validate new ideas or system designs.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  
+
+                  The Patterson Consulting team has <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/tree/main/bordereaux_data_generator" target="_blank">developed a tool that generates realistic synthetic insurance bordereaux data</a> to support safe and efficient development, testing, and demonstration of new platform capabilities. It models real-world claim behavior, maintains logical date sequences, and supports multiple output formats including JSON, CSV, and Excel. The tool also allows teams to simulate TPA data variations, introduce optional data inconsistencies for robustness testing, and customize outputs through a flexible schema configuration or command-line overrides. This enables faster innovation without compromising sensitive information.
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  
+                  For more details, check out our <a href="./python_script_to_generate_bordereaux_data.html">blog post on the bordereaux data generation tool</a>.
+
+                </p>
+
+              </div>
+            </div>
+
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Estimating Size of the Data</h2>
+<!--
+            <p class="fs-lg todo_consider">
+
+              in contrast, there are 111 million structures in the USA.
+in the US there are 33 million businesses. 100m households.
+and 350m ppl.
+so if you had 2 policies per person, 1 per structure, and 1 per business you'd still have <1b records.
+if you were the only company in the whole USA.
+assuming 1 record per policy (imagine like an MGA)
+and then if 20% had a claim, that would be <200m records.
+so I always think "can this scale to 10m?" and assume it's good
+
+
+            </p>
+-->
+
+            <p class="fs-lg">
+
+
+Even at national scale, insurance data volumes remain manageable with modern architecture. The U.S. has 350 million people, 100 million households, 111 million structures, and 33 million businesses. Assuming generous coverage—two policies per person, one per structure, and one per business—results in fewer than one billion policy records. If 20% of those policies generate claims, the total volume stays under 200 million claim records. This back-of-the-envelope estimate shows that even in a scenario where one carrier insures the entire country, the data storage needs would be in the 200-300 million row range.
+<!--
+a claims database supporting under a billion records is well within the reach of systems designed to scale past 10 million rows.
+-->
+            </p>
+
+
+            <p class="fs-lg">
+
+              A mid-market property insurance company would realistically only need to manage mid-10's of millions of rows in their data platform for claims data management.
+
+            </p>
+
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Selecting a Data Storage Strategy</h2>
+
+            <p class="fs-lg">
+
+              Selecting a data storage strategy doesn't have to be ultra-complex for a data platform, but thinking through a few decisions can save you headache down the road. The major things you need to consider are:
+
+            </p>
+
+            <ul>
+
+              <li>How important is reader/writer multi-tenancy support in this system? (Is this just me? or is a team using this system?)</li>
+
+              <li>How much data do we need to manage with this system?</li>
+
+            </ul>
+
+<!--
+           <p class="fs-lg pre">
+
+Implementation
+ We’ll use directories of files on MS Azure storage
+We’ll use Apache Iceberg to represent our “tables of data” per stage
+Produces parquet files + catalog files
+
+
+            </p>
+
+           <p class="fs-lg pre">
+
+Need to talk about directory structure based on
+future file schema conversion
+Merging of multiple files into a single file
+Merging the new data into the current master file
 
             </p>
 
@@ -580,6 +776,8 @@ The platform should enable flexibility in managing data structures, efficient qu
 
             </p>
 
+            -->
+
            <p class="fs-lg">
 
             whats our storage strategy? why? concurrency!
@@ -589,7 +787,7 @@ The platform should enable flexibility in managing data structures, efficient qu
 
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Platform Architecture</h2>
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A General Platform Architecture for Bordereaux Data Capture</h2>
 
 
 
@@ -619,7 +817,10 @@ The platform should enable flexibility in managing data structures, efficient qu
 
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Architecture for a Claims Data Model</h2>
+
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Providing Consistent Claims Information</h2>
 
 
            <p class="fs-lg">
@@ -630,26 +831,20 @@ The platform should enable flexibility in managing data structures, efficient qu
             </p>
 
 
-           <p class="fs-lg pre">
+           <p class="fs-lg">
 
-Implementation
- We’ll use directories of files on MS Azure storage
-We’ll use Apache Iceberg to represent our “tables of data” per stage
-Produces parquet files + catalog files
+            [ information layer integration with powerBI --- need a data model, and want the data model to be useful to more tools beyond PBI, so we'll use a semantic layer as part of our information layer architecture ]
+
+           </p>
 
 
-            </p>
 
-           <p class="fs-lg pre">
+           <p class="fs-lg">
 
-Need to talk about directory structure based on
-future file schema conversion
-Merging of multiple files into a single file
-Merging the new data into the current master file
+            given that the incoming data is logically the same, and we've converted the data to be all of the same schema, we can now build data models in our semantic layer from our unified dataset for claims
 
-            </p>
+           </p>
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Towards a Standard Claims Data Model</h2>
 
 
 

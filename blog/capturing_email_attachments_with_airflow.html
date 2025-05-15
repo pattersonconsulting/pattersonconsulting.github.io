@@ -8,7 +8,7 @@
     
     <!-- SEO meta tags -->
     <title>Capturing Email Attachments with Apache Airflow</title>
-    <meta name="description" content="This guide walks you through how to use Power BI with incoming bordereaux claims data, similar to what insurers might receive from a broker or TPA to uncover trends, reduce manual effort, and drive smarter decisions across your insurance operations.">
+    <meta name="description" content="Automate email attachment capture with Apache Airflow on Docker. Learn how to automatically fetch Gmail attachments, save files to shared folders, maintain audit trails, and integrate with BI tools - all with just a few lines of Python.">
     <meta name="keywords" content="powerbi, knowledge work, technology, efficiency, productivity, economics, line of business, investment, Artificial intelligence, data platform">
     <meta name="author" content="Darren Clark">
 
@@ -19,7 +19,12 @@
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/fnol_property_insurance_header.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="This guide walks you through how to use Power BI with incoming bordereaux claims data, similar to what insurers might receive from a broker or TPA to uncover trends, reduce manual effort, and drive smarter decisions across your insurance operations."/>
+    <meta property="og:description" content="After reading this guide, you'll be able to: 
+    Automatically fetch all new attachments from your Gmail account on a schedule,
+    Save every file into a shared downloads folder ready for any analytics tool,
+    Maintain a precise audit trail of which attachments were retrieved and when,
+    Seamlessly integrate incoming files into your BI or data pipeline with just a few lines of Python, 
+    Streamline your workflow so your first task each day is insight, not inbox maintenance."/>
 
 
 
@@ -389,11 +394,11 @@ morning and steals focus from analysis.
     <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
       <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
       <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
-        Loading raw bordereaux data into Power BI
+        cluttered inbox - 00_inbox
       </div>
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
     </div>
-    <img src="../assets/img/01_raw_data_import_powerbi.png" class="d-block rounded-1" alt="Loading raw bordereaux data into Power BI">
+    <img src="../assets/img/01_raw_data_import_powerbi.png" class="d-block rounded-1" alt="Image of a cluttered email inbox.">
   </a>
 </div>
 
@@ -443,12 +448,11 @@ triage:
 
             <ul>
 
-              <li></li>
-              <li></li>
-              <li></li>
-
+              <li>Daily volume. Carriers flood your inbox each day with new emails, many of which have critical, time sensitive attachments.</li>
+              <li>Inconsistent subjects. Filenames vary by carrier; one might send BORD_Q1_2025.xlsx, another LossReport.zip.</li>
+              <li>No audit trail. Email clients record only the delivery; analysts cannot prove when a file was accessed.</li>
+            
             </ul>
-
 
             <p class="fs-lg">
 
@@ -475,11 +479,11 @@ steps to come.
 
 
             <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
+              <li>Docker Desktop + WSL 2 – Provides a Linux-compatible host on Windows</li>
+              <li>Airflow Webserver – The central UI and REST API for monitoring flows</li>
+              <li>Airflow Scheduler – Queues and triggers your DAG runs on schedule</li>
+              <li>Airflow Worker – Executes the Python task that retrieves attachments</li>
+              <li>Postgres + Redis – Houses Airflow's metadata and task queue</li>
             </ul>
 
             <p class="fs-lg">
@@ -505,177 +509,294 @@ Before you begin, ensure:
 
 
             <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
+              <li>Docker Desktop is installed on Windows 10/11. If it's not installed yet, follow the official guide at <a href="https://docs.docker.com/desktop/setup/install/windows-install/">https://docs.docker.com/desktop/setup/install/windows-install/</a></li>
+              <li>Gmail account with IMAP enabled and a 16-character app password generated (Google Account → Search Google Account → "App Passwords"). Store this somewhere safe.</li>
+              <li>PowerShell or your preferred command-line interface for navigation and Docker commands.</li>
             </ul>
 
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Prepare your workspace</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Configure credentials</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3: Launch the Airflow stack</h2>
-
-            <p class="fs-lg">
-
-...
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4: Access the Airflow UI</h2>
-
-            <p class="fs-lg">
+            <p class="fs-lg">With these in place, you are much closer to automation.
 
 
             </p>
 
 
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
-
-
-
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 5: Key code walkthrough</h2>
-
-            <p class="fs-lg">
-
-Open dags/gmail_attachment_retrieval.py in your editor.
-Below are a handful of lines that power the DAG -- you’ll
-find the full DAG file in “Full Code Listings” later.
-            </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Prepare your workspace</h2>
+<p class="fs-lg">
+1. Open PowerShell (or your shell of choice).<br>
+2. Create a new project folder and enter it:
+</p>
+<pre><code>mkdir C:\Users\YourUserName\airflow-email
+cd C:\Users\YourUserName\airflow-email</code></pre>
+<p class="fs-lg">
+3. Create subfolders for configuration, code, and logs:
+</p>
+<pre><code>mkdir config
+mkdir dags
+mkdir downloads
+mkdir logs</code></pre>
+<p class="fs-lg">
+4. Open your editor (e.g., VS Code) and create the following files:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;• config\docker-compose.yaml<br>
+&nbsp;&nbsp;&nbsp;&nbsp;• dags\gmail_attachment_retrieval.py<br>
+&nbsp;&nbsp;&nbsp;&nbsp;• .env (in the root directory you just created)<br><br>
+5. In Windows explorer or your code editor you should see something similar to this:
+</p>
+<!-- Add screenshot of file structure -->
+<img src="../assets/img/airflow_project_structure.png" alt="Airflow project folder structure">
 
 
 
 
-            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 6: Trigger & validate</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Configure credentials</h2>
+<p class="fs-lg">
+Open .env in your editor and add your Gmail address and the 16-digit app password you created, and AIRFLOW_UID=50000
+</p>
+<pre><code>AIRFLOW_UID=50000
+EMAIL_USER=your.address@gmail.com
+EMAIL_PASSWORD=abcdefghijklmnop</code></pre>
+<ul>
+  <li>Fast iteration. The dotenv library loads these values at runtime.</li>
+  <li>Security caveat! Keep this file local. In a shared or production environment move these values into an Airflow Connection (Admin → Connections) or a Secrets Backend.</li>
+</ul>
 
-            <p class="fs-lg">
+<!-- Missing image: 03_env_file.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: Environment file configuration screenshot</p>
+</div>
 
 
-            </p>
 
 
 
-            <ul>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3: Launch the Airflow stack</h2>
+<p class="fs-lg">
+1. In PowerShell, run:
+</p>
+<pre><code>docker compose up --build</code></pre>
+<p class="fs-lg">
+2. After you see airflow-webserver and airflow-scheduler logs indicating readiness, stop streaming with Ctrl+C.<br><br>
+3. Relaunch in detached mode by using the following command:
+</p>
+<pre><code>docker compose up -d</code></pre>
+<p class="fs-lg">
+Note: The first execution downloads ~2 GB of images<br><br>
+Your Airflow environment is now running locally.
+</p>
+<p class="fs-lg">
+<strong>Note:</strong> As part of startup the Docker Compose file runs an 'airflow-init' service that:
+</p>
+<ol>
+  <li>Initializes the Airflow metadata database ('airflow db init')</li>
+  <li>Creates your Admin user - By default, that command is:
+    <pre><code>airflow users create \
+--username airflow --password airflow \
+--firstname Air --lastname Flow \
+--role Admin --email admin@example.com</code></pre>
+  </li>
+</ol>
+<p class="fs-lg">
+If you'd like a different user id or password, edit the 'airflow-init' block in `config/docker-compose.yaml` before running the stack.
+</p>
 
-              <li></li>
-              <li></li>
-              <li></li>
+<!-- Missing image: 04_composeup_success.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: after Note: from above </p>
+</div>
+<!-- Add screenshot of docker compose output -->
+<img src="../assets/img/docker_compose_running.png" alt="Docker compose showing all services running">
 
-            </ul>
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4: Access the Airflow UI</h2>
+<p class="fs-lg">
+Navigate to <a href="http://localhost:8081">http://localhost:8081</a>.<br><br>
+Login credentials (created by airflow-init):<br>
+Username: airflow<br>
+Password: airflow<br><br>
+Toggle the gmail_attachment_retrieval DAG from Off to On; do not trigger yet.
+</p>
+<!-- Add screenshot of Airflow UI -->
+<img src="../assets/img/airflow_ui_dashboard.png" alt="Airflow UI showing DAG list">
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 5: Key code walkthrough</h2>
+<p class="fs-lg">
+Open dags/gmail_attachment_retrieval.py in your editor. Below are a handful of lines that power the DAG -- you'll find the full DAG file in "Full Code Listings" later.
+</p>
+
+<h3>1. Load your credentials and connect to Gmail.</h3>
+<!-- Missing image: 06_code_snippet.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: DAG code snippet 06</p>
+</div>
+<pre><code class="language-python"># Create the DAG
+dag = DAG(
+    'gmail_attachment_retrieval',
+    default_args=default_args,
+    description='A DAG to retrieve attachments from Gmail using IMAP',
+    schedule_interval='@daily',
+    catchup=False,
+)
+
+def fetch_gmail_attachments(**kwargs):
+    """
+    Fetch attachments from emails in Gmail using IMAP
+    """
+    imap_host = 'imap.gmail.com'
+    imap_port = 993
+    email_user = os.getenv('EMAIL_USER')
+    email_password = os.getenv('EMAIL_PASSWORD')
+    
+    download_dir = '/opt/airflow/downloads/'
+    Path(download_dir).mkdir(parents=True, exist_ok=True)
+    
+    print(f"Connecting to Gmail IMAP server for account: {email_user}")
+    mail = imaplib.IMAP4_SSL(imap_host, imap_port)
+    
+    try:
+        mail.login(email_user, email_password)
+        print("Successfully logged in to Gmail")
+        
+        mail.select('inbox')
+        print("Selected inbox")</code></pre>
+<p class="fs-lg">
+This block opens a secure connection to Gmail's IMAP server using your credentials from .env, then selects the Inbox folder. If the login or folder select fails, the DAG will stop here and report the issue in the log.
+</p>
+
+<h3>2. Search for unread messages.</h3>
+<!-- Missing image: 07_code_snippet2.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: Code snippet 07</p>
+</div>
+
+<pre><code class="language-python"># --- add UNSEEN so only unread mails are returned
+date_since = (datetime.now() - timedelta(days=7)).strftime("%d-%b-%Y")
+search_criteria = f'(UNSEEN SINCE "{date_since}")'
+print(f"Searching for emails with criteria: {search_criteria}")
+
+status, email_ids = mail.search(None, search_criteria)
+email_id_list = email_ids[0].split()
+
+if not email_id_list:
+    print("No emails found matching the criteria.")
+    return
+
+print(f"Found {len(email_id_list)} emails matching the criteria.")</code></pre>
+<p class="fs-lg">
+Unseen ensures only messages you haven't processed come back. The 'if not' guard cleanly exits the task when there's nothing new. Finally, the 'print' confirms how many emails you'll download in the next step.
+</p>
+
+<h3>3. Download and save attachments.</h3>
+<!-- Missing image: 08_code_snippet3.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: code snippet 08</p>
+</div>
+
+<pre><code class="language-python">for email_id in email_id_list:
+    status, msg_data = mail.fetch(email_id, '(RFC822)')
+    msg = email.message_from_bytes(msg_data[0][1])
+    
+    subject = msg.get('subject', 'No Subject')
+    sender = msg.get('from', 'Unknown Sender')
+    print(f"Processing email from {sender} with subject: {subject}")
+    
+    if msg.get_content_maintype() == 'multipart':
+        for part in msg.walk():
+            if part.get_content_disposition() == 'attachment':
+                filename = part.get_filename()
+                if filename:
+                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                    safe_filename = f"{timestamp}_{filename}"
+                    filepath = os.path.join(download_dir, safe_filename)
+                    
+                    print(f"Saving attachment: {filename} as {safe_filename}")
+                    with open(filepath, 'wb') as f:
+                        f.write(part.get_payload(decode=True))
+                    print(f"Attachment saved to: {filepath}")</code></pre>
+<p class="fs-lg">
+This loop walks through each part of every unread message, finds attachments, and writes them into your downloads/ folder with a timestamped name so nothing is overwritten.
+</p>
+
+<h3>4. Mark messages as read.</h3>
+<!-- Missing image: 09_code_snippet4.png -->
+<div class="alert alert-warning text-center mb-4">
+  <i class="ai-image fs-4 mb-2"></i>
+  <p class="mb-0">Missing image: Code snippet 04</p>
+</div>
+
+<pre><code class="language-python"># --- mark this message as read so it won't be fetched again
+mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
+<p class="fs-lg">
+Marking each message \Seen ensures it won't be matched by UNSEEN the next time the DAG is executed.
+</p>
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 6: Trigger & validate</h2>
+<p class="fs-lg">
+1. Back in the Airflow UI, the gmail_attachment_retrieval switch should be set to On already. If not, do so now.<br><br>
+2. Near the upper right, click the Trigger DAG button (►)<br><br>
+3. Observe the DAG's grid square turn from queued to running to green indicating success.<br><br>
+4. In Windows Explorer if you open your downloads folder under the root directory of the project folder, you should see new files appear with timestamped names of any email attachments that were in your inbox.
+</p>
+<!-- Add screenshot of Airflow UI with successful DAG run -->
+<img src="../assets/img/airflow_dag_success.png" alt="Airflow UI showing successful DAG execution">
 
 
 
 
             <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Real-world edge cases</h2>
 
-            <p class="fs-lg">
+
+
+
+
+<ul>
+  <li>Variable subject lines. Senders may often change filenames or email subjects unexpectedly. If your search returns too few or too many messages, adjust or remove the SUBJECT clause in your IMAP query or combine multiple keywords with OR.</li>
+  <li>Attachments inside ZIPs. When files arrive zipped, download the .zip first and then add a small Python step (using the zipfile module) to extract its contents into your downloads/ folder.</li>
+  <li>Multiple attachments per email. The loop handles each file sequentially, but you may prefer to group them by email—e.g., create a subfolder per message or prefix filenames with the message UID.</li>
+  <li>Intermittent IMAP errors. Network blips or Gmail throttling can cause mail.fetch or mail.search to fail. Wrap those calls in try/except with retry logic (for example, three attempts with exponential backoff) and log failures so you can surface persistent issues.</li>
+</ul>
+
+            <p class="fs-lg">Each case requires only small modifications, preserving the core pipeline.
 
 
             </p>
-
-
-
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
-
 
 
 
 
             <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Extending the pipeline</h2>
 
-            <p class="fs-lg">
+            <p class="fs-lg">Once the core DAG runs reliably, you can add tasks for:
 
 
             </p>
 
 
 
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>
+<ul>
+  <li>Excel parsing. Use Pandas to read each file and write rows into Postgres.</li>
+  <li>Database triggers. Configure Airflow's SqlSensor to kick off when new rows appear.</li>
+  <li>TaskFlow API. Refactor to @dag and @task decorators for cleaner orchestration.</li>
+  <li>Secrets management. Migrate from .env to AWS Secrets Manager or Vault.</li>
+</ul>
+<p class="fs-lg">
+A few lines of code transform this into a full ETL pipeline.
+</p>
 
 
 
@@ -683,38 +804,36 @@ find the full DAG file in “Full Code Listings” later.
 
             <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Docker on Windows?</h2>
 
-            <p class="fs-lg">
-
-
-            </p>
 
 
 
-            <ul>
-
-              <li></li>
-              <li></li>
-              <li></li>
-
-            </ul>            
+<ul>
+  <li>Signal handling. Airflow components rely on Unix signals (SIGTERM, SIGQUIT) that Windows cannot emit.</li>
+  <li>Multi-container orchestration. A single docker-compose up brings up five coordinated services.</li>
+  <li>Consistency. The same YAML file works on any machine or CI runner, eliminating "it works on my laptop" issues.</li>
+</ul>
+<p class="fs-lg">
+Docker abstracts OS differences so you focus on business logic.
+</p>          
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion: From Inbox Chores to Insights</h2>
-
-            <p class="fs-lg">
-
-            </p>
-
-            <p class="fs-lg">            
-              ...
-            </p>
-
-            <ul>
-              <li>...</li>
-              <li>...</li>
-              <li>...</li>
-
-
-            </ul>
+<p class="fs-lg">
+By now you've automated daily attachment retrieval, built an audit trail, and freed up minutes each morning. From this foundation you can expand into a full ETL pipeline, so your first task is always analysis, never inbox chores.
+</p>
+<p class="fs-lg">            
+Automation pays dividends quickly. By eliminating manual inbox triage, teams can see real time saving each day. Time that can be reclaimed and redirected toward exception handling, data validation, and strategic insights.
+</p>
+<h3>Appendix – Full Code Files</h3>
+<p class="fs-lg">
+Rather than embedding every line of YAML and Python directly into this article, I've provided the contents of each file for you to copy and paste.
+</p>
+<ul>
+  <li>config/docker-compose.yaml – Place this file into your config/ folder.</li>
+  <li>dags/gmail_attachment_retrieval.py – Place this file into your dags/ folder.</li>
+</ul>
+<p class="fs-lg">
+Once those files are in place, you can follow the steps in this guide to launch Airflow and retrieve email attachments.
+</p>
 
 
           </div>

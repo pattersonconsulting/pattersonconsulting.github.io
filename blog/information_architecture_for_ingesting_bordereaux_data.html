@@ -692,6 +692,23 @@ Testing new data platform architectures in property insurance presents challenge
             </div>
 
 
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Bordereaux Schema</h2>
+
+            <p class="fs-lg">
+
+              The bordereaux schema is not exact between every TPA (making integration tricky sometimes), but the general set of columns are:
+
+
+            </p>
+
+            <p class="fs-lg">
+
+              [ table ]
+
+
+            </p>
+
+
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Estimating Size of the Data</h2>
 <!--
             <p class="fs-lg todo_consider">
@@ -741,50 +758,44 @@ a claims database supporting under a billion records is well within the reach of
 
             </ul>
 
-<!--
-           <p class="fs-lg pre">
-
-Implementation
- We’ll use directories of files on MS Azure storage
-We’ll use Apache Iceberg to represent our “tables of data” per stage
-Produces parquet files + catalog files
 
 
-            </p>
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Landing File Directory Structure</h2>
 
-           <p class="fs-lg pre">
 
-Need to talk about directory structure based on
-future file schema conversion
-Merging of multiple files into a single file
-Merging the new data into the current master file
+            <p class="fs-lg">
+
+              we'll use blob storage for the landing zone in our medallion data pattern
 
             </p>
 
-           <p class="fs-lg">
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Cloud Provider and Table Storage</h2>
 
-            where do we land the bordereaux data? blob / local disk (Medallion data pattern)
 
+            <p class="fs-lg">
+
+              we'll run Postgres RDBMS on Azure for this exercise
 
             </p>
 
 
            <p class="fs-lg">
 
-            upper bound on property insurance bordereaux tpa data!
+            why tables for the staging layer? concurrency!
 
 
             </p>
 
-            -->
 
-           <p class="fs-lg">
 
-            whats our storage strategy? why? concurrency!
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Orchestration and Data Transformation</h2>
 
+
+            <p class="fs-lg">
+
+              Airflow for orchestration, and pandas for data transformation (?)
 
             </p>
-
 
 
             <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A General Platform Architecture for Bordereaux Data Capture</h2>

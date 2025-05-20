@@ -941,7 +941,7 @@ Testing new data platform architectures in property insurance presents challenge
 
             <p class="fs-lg">
 
-              Here I'm mentioning "storage system" seperately from processing engine as <a href="https://materializedview.io/p/databases-are-falling-apart">we are in a period of "database disassembly"</a> and many platforms make those decisions seperately now.
+              Here I'm mentioning "storage system" seperately from processing engine as <a href="https://materializedview.io/p/databases-are-falling-apart">we are in a period of "database disaggregation"</a> and many platforms make those decisions seperately now.
 
 
             </p>
@@ -1096,18 +1096,53 @@ a claims database supporting under a billion records is well within the reach of
             Based on these constraints, we'll start with a RDBMS, postgres, as it gives us logical table concurrency management for reads and writes and also is cheaper to operate than a full cloud data warehouse.
             </p>
 
-
+<!--
             <p class="fs-lg">
 
             I ran some pricing estimates for both Postgres on AWS and Snowflake, and Postgres can be run for ... [ TODO ]
             </p>
-
+-->
 
             <p class="fs-lg">
 
             It's worth noting that depending on the analytical queries we run on Postgres, and the number of concurrent queries, the database may begin to have query performance degradation over time. You'll need to watch out for this issue as you data platform grows.
 
             </p>
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">But Wait, My Other Dataset has a Ton of Data In It</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  You may say to yourself, "Josh we have other datasets beyond claims that need to be in a larger parallel cloud data warehouse".
+
+
+
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Hey I get it, sometimes we have that one dataset in our business that blows up all the assumptions that we made for one side of our business. Another factor that is relevant is that we are in a <a href="https://materializedview.io/p/databases-are-falling-apart" target="_blank">period of "database disaggregation"</a> and using a tightly coupled traditional RDBMS just may not be your jam.
+
+                  
+
+                  
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  
+                  To that end, we're writing parallel versions of this series where we are going to use AWS S3-Tables to show off the platform using Apache Iceberg on S3 as the storage system. This opens up our query tool options as well, while still integrating well with our materialized view platform.
+
+                </p>
+
+              </div>
+            </div>
 
 
 <!--

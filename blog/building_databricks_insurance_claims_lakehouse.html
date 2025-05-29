@@ -428,6 +428,28 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Claims Bordereaux Data Table Schema</h2>            
 
 
+
+<pre class="line-numbers">
+  <code class="lang-html">
+{
+  "policy_number": "POL1038",
+  "months_insured": 113,
+  "has_claims": true,
+  "items_insured": 4,
+  "claim_reference": "CLM1071",
+  "insured_name": "Company 1038",
+  "policy_start_date": "2023-10-02",
+  "date_of_loss": "2024-01-16",
+  "date_reported": "2024-02-15",
+  "claim_status": "Open",
+  "loss_type": "Property Damage",
+  "paid_amount": 11463.65,
+  "reserve_amount": 11962.45,
+  "total_incurred": 23426.10,
+  "claim_propensity": 0.5
+}
+  </code>
+</pre>
            <p class="fs-lg">
 
             ..
@@ -437,6 +459,30 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
             
 
           </p>         
+
+
+
+<pre class="line-numbers">
+  <code class="lang-html">
+CREATE TABLE claims_data (
+    policy_number        VARCHAR(20),
+    months_insured       INTEGER,
+    has_claims           BOOLEAN,
+    items_insured        INTEGER,
+    claim_reference      VARCHAR(20),
+    insured_name         VARCHAR(255),
+    policy_start_date    DATE,
+    date_of_loss         DATE,
+    date_reported        DATE,
+    claim_status         VARCHAR(50),
+    loss_type            VARCHAR(100),
+    paid_amount          NUMERIC(12, 2),
+    reserve_amount       NUMERIC(12, 2),
+    total_incurred       NUMERIC(12, 2),
+    claim_propensity     NUMERIC(3, 2)
+);
+  </code>
+</pre>
 
 
 
@@ -464,6 +510,41 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
 
           </p>
 
+
+<pre class="line-numbers">
+  <code class="lang-html">
+
+with DAG(
+    'test_dag_read_s3_from_local',
+    default_args={
+        "depends_on_past": False,
+        "retries": 1,
+        "retry_delay": timedelta(minutes=5)
+    },
+    description="Testing s3 local connection functionality",
+    schedule=timedelta(days=1),
+    start_date=datetime(2021, 1, 1),
+    catchup=False,
+    tags=["example", "s3"]
+
+) as dag:
+    task_read_file = PythonOperator(
+        task_id='read_s3_file',
+        python_callable=read_file
+    )
+
+  </code>
+</pre>
+
+           <p class="fs-lg">
+
+            
+
+            ...
+
+          </p>
+
+
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">DAG Step 2: Loading New Data Into Delta Lake Table</h2>
 
            <p class="fs-lg">
@@ -475,6 +556,38 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
           </p>
 
 
+<pre class="line-numbers">
+  <code class="lang-html">
+
+with DAG(
+    'test_dag_read_s3_from_local',
+    default_args={
+        "depends_on_past": False,
+        "retries": 1,
+        "retry_delay": timedelta(minutes=5)
+    },
+    description="Testing s3 local connection functionality",
+    schedule=timedelta(days=1),
+    start_date=datetime(2021, 1, 1),
+    catchup=False,
+    tags=["example", "s3"]
+
+) as dag:
+    task_read_file = PythonOperator(
+        task_id='read_s3_file',
+        python_callable=read_file
+    )
+
+  </code>
+</pre>
+
+           <p class="fs-lg">
+
+            
+
+            ...
+
+          </p>
  
             
 
@@ -491,6 +604,11 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
 
           </p>
 
+            <p class="fs-lg todo_edit">
+
+              The holy trinity of data platform storage: blob storage, data tables, and data models --- maps well to medallion data pattern as well
+
+            </p>
 
 
 

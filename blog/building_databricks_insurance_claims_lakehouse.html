@@ -16,7 +16,7 @@
     <!-- Facebook and Twitter integration -->
     <meta property="og:title" content="Building a Property Insurance Claims Data Lakehouse with Airflow and Databricks"/>
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/dbx_claims_data_lakehouse_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/capturing_email_attachments_with_airflow.html"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_databricks_insurance_claims_lakehouse.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="After reading this guide, you'll be able to: 
     Automatically fetch all new attachments from your Gmail account on a schedule,
@@ -28,7 +28,7 @@
 
     <meta name="twitter:title" content="Building a Property Insurance Claims Data Lakehouse with Airflow and Databricks" />
     <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/dbx_claims_data_lakehouse_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/capturing_email_attachments_with_airflow.html" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_databricks_insurance_claims_lakehouse.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
@@ -267,9 +267,9 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
-                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
-                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
                     <!--
                     <li><a class="dropdown-item" href="../../data_strategy.html">Data Strategy</a></li>
                   -->
@@ -282,16 +282,16 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
-                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
-                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
                     <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
                   </ul>
 
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="../../about.html">About</a>
+                  <a class="nav-link" href="../about.html">About</a>
                 </li>
               </ul>
             </nav>
@@ -370,29 +370,22 @@
 
            <p class="fs-lg">
 
+            In this branch of our series on building property insurance claims data platforms we're going to use the Databricks platform for our storage system. We need to process the incoming TPA bordereaux data each day, and we'll use Airflow pipelines to orchestrate python code to get the data into data lakehouse.
+
             
 
-            <b>Running an insurance company is fundamentally about managing a budget and accurately forecasting costs.</b>
+            
+
+          </p>
+
+          <p class="fs-lg">
+
+
+            Since we're focused on managing a budget and accurately forecasting costs in property insurance, we want to get our claims data updates at least daily so that our chief claims officer can make the best quality decisions possible. To do that we're going to have to integrate bordereaux data with different schemas in our automated pipeline. Let's start out by setting up a data lakehouse to store the incoming data once we have it converted and merged each day.
 
           </p>
 
             
-
-
-
-
-
-
-          <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Dealing with Different TPA Bordereaux Schemas</h2>
-
-
-           <p class="fs-lg">
-
-            The data consumer in this scenario we are focused on is the claims team, and specifically the <b>chief claims officer</b>. This knowledge worker uses reports and dashboards built in a business intelligence tool (Power BI, Tableau, etc) to make business decisions about how to deal with potential future losses that might disrupt cash flow in the company.
-
-           </p>
-
-
 
 
 
@@ -406,28 +399,122 @@
 
             
 
-A Databricks Table is a structured dataset stored as files in cloud object storage and tracked through a catalog and metastore. Built on the Delta Lake format, it supports ACID transactions, scalable metadata, versioned data (time travel), and both batch and streaming workloads. Databricks offers two types: <b>managed tables</b>, which it controls fully within its storage environment, and <b>unmanaged (external) tables</b>, where storage and governance remain with the user. This flexibility allows insurance data teams to balance control with performance, optimizing for both compliance and scale.
+A Databricks Table is a structured dataset stored as files in cloud object storage and tracked through a catalog and metastore. 
+<!--
+Built on the Delta Lake format, it supports ACID transactions, scalable metadata, versioned data (time travel), and both batch and streaming workloads. 
+-->
+Databricks offers two types: <b>managed tables</b>, which it controls fully within its storage environment, and <b>unmanaged (external) tables</b>, where storage and governance remain with the user. 
 
           </p>
             
 
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Value of Data Tables</h2>            
+           <p class="fs-lg">
+
+            Building your data platform around managed data tables has the following key advantages of unmanaged blob storage.
+
+            
+
+            
+
+            </p>
+<ul>
+  <li>
+    <strong>Reliable Data with ACID Transactions</strong>
+    <ul>
+      <li>Prevents data corruption from concurrent writes.</li>
+      <li>Supports safe, multi-user ETL operations.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Time Travel for Easy Recovery</strong>
+    <ul>
+      <li>Access past versions of data anytime.</li>
+      <li>Helps with audits, debugging, and rollbacks.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Faster Queries and Lower Costs</strong>
+    <ul>
+      <li>Built-in optimizations like file compaction and indexing.</li>
+      <li>Speeds up analytics and reduces compute/storage usage.</li>
+    </ul>
+  </li>
+</ul>
+
+           <p class="fs-lg">
+
+This flexibility allows insurance data teams to balance control with performance, optimizing for both compliance and scale.
+
+           </p>         
+
 
 
            <p class="fs-lg">
 
-            ....
+To begin building a modern data lakehouse on Databricks, you’ll need to create a Databricks account and provision a workspace. Current Databricks workspaces are designed to leverage Unity Catalog for centralized governance and support Serverless SQL for scalable, on-demand compute.
+            </p>         
+
+
+
+
+           <p class="fs-lg">
+
+Within the workspace, set up a catalog and a namespace (schema) to logically organize your claims data. For structuring tables and data pipelines, the Medallion Architecture offers a useful framework—dividing data into Bronze (raw), Silver (cleaned), and Gold (aggregated) layers—to support scalable, modular claims processing and analytics.
+
+            
+
+            </p>         
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Data Table for Bordereaux Claims Data</h2>            
+
+
+
+
+
+
+           <p class="fs-lg">
+
+            The SQL create table statement to setup our data lakehouse managed data table is shown below.
 
             
 
             
+
+          </p>         
+
+
+
+<pre class="line-numbers">
+  <code class="lang-html">
+CREATE TABLE claims_workspace.bronze.bordereaux_data (
+    policy_number        STRING,
+    months_insured       INT,
+    has_claims           BOOLEAN,
+    items_insured        INT,
+    claim_reference      STRING,
+    insured_name         STRING,
+    policy_start_date    TIMESTAMP,
+    date_of_loss         TIMESTAMP,
+    date_reported        TIMESTAMP,
+    claim_status         STRING,
+    loss_type            STRING,
+    paid_amount          DOUBLE,
+    reserve_amount       DOUBLE,
+    total_incurred       DOUBLE,
+    claim_propensity     DOUBLE
+);
+  </code>
+</pre>
+
+
+
+           <p class="fs-lg mt-5 mb-5">
+
+            
+
+            In the code listing below, I show a JSON-format sample of a row of bordereaux data so you can get a feel for the type of data that we'll be working with.
 
           </p>
-
-
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Claims Bordereaux Data Table Schema</h2>            
-
-
 
 <pre class="line-numbers">
   <code class="lang-html">
@@ -450,53 +537,44 @@ A Databricks Table is a structured dataset stored as files in cloud object stora
 }
   </code>
 </pre>
-           <p class="fs-lg">
 
-            ..
 
-            
+           <p class="fs-lg mt-5">
 
             
 
-          </p>         
+            The challenge with this data is, however, that each partner TPA has their own column schema for the bordereaux data they'll send over, so we'll need to do some translation work in our ingest pipeline.
 
-
-
-<pre class="line-numbers">
-  <code class="lang-html">
-CREATE TABLE claims_data (
-    policy_number        VARCHAR(20),
-    months_insured       INTEGER,
-    has_claims           BOOLEAN,
-    items_insured        INTEGER,
-    claim_reference      VARCHAR(20),
-    insured_name         VARCHAR(255),
-    policy_start_date    DATE,
-    date_of_loss         DATE,
-    date_reported        DATE,
-    claim_status         VARCHAR(50),
-    loss_type            VARCHAR(100),
-    paid_amount          NUMERIC(12, 2),
-    reserve_amount       NUMERIC(12, 2),
-    total_incurred       NUMERIC(12, 2),
-    claim_propensity     NUMERIC(3, 2)
-);
-  </code>
-</pre>
-
-
+          </p>
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Airflow Pipeline to Process Incoming Bordereaux Files</h2>
 
            <p class="fs-lg">
+            We need a way to run a data pipeline each day and pickup all of the files sent in via email from our partner TPAs. In the <a href="capturing_email_attachments_with_airflow.html">last article in this series, we showed how to use Airflow to watch an email address to pickup bordereaux files</a> as they come in and save them to S3 for processing later.
+
+           </p>
+
+
+           <p class="fs-lg">
 
             
 
-            ...
+            Apache Airflow is an open-source workflow orchestration tool designed to programmatically author, schedule, and monitor data pipelines. For data platforms, Airflow provides a scalable and reliable way to manage complex dependencies across ETL jobs, analytics workflows, and machine learning pipelines. Its modular architecture and support for DAG-based task scheduling make it a critical component in ensuring data quality, operational consistency, and timely data delivery across the enterprise.
+
 
           </p>
 
 
+
+
+           <p class="fs-lg">
+
+            
+
+            So we have a subdirectory per company in S3 for incoming daily bordereaux files that need to be converted before they can be written to our data lakehouse data table. The first stage in this Airflow work does just this and then writes the merged data back to S3 for further processing.
+
+
+          </p>
 
 
 
@@ -506,7 +584,7 @@ CREATE TABLE claims_data (
 
             
 
-            ...
+            The first stage of our Airflow job uses a per-company schema configuration file to analyze each incoming file and then convert it to a normalized schema that is compatible with our data table.
 
           </p>
 
@@ -514,104 +592,198 @@ CREATE TABLE claims_data (
 <pre class="line-numbers">
   <code class="lang-html">
 
+...
+
+def merge_incoming_s3_tpa_schemas():
+
+    schema_conf_file_string = load_s3_file_as_text(bucket, subdirectory + schema_conf_file)
+
+    data_company_schemas = json.loads( schema_conf_file_string )
+
+
+    subdirs, subdirs_full = list_subdirectories(bucket, subdirectory)
+
+    tpa_converted_df_list = []
+
+    print("Processing Subdirectories:")
+
+    for subdir, full_subdir in zip(subdirs, subdirs_full):
+
+        print(full_subdir)
+
+        file_list_subdir = list_files(bucket, full_subdir)
+
+
+        for filename in file_list_subdir:
+
+            print("\t" + filename)
+
+            df_tmp = load_s3_file_to_dataframe(bucket, full_subdir + filename)
+
+            print("Convert schema to standard internal schema: " + filename)
+
+            df_new_claims_cols = df_tmp.rename(columns=data_company_schemas[subdir]["schema"])
+
+            df_new_claims_cols['policy_start_date'] = pd.to_datetime(df_new_claims_cols['policy_start_date'], format=data_company_schemas[subdir]["date_format"])
+            df_new_claims_cols['date_of_loss'] = pd.to_datetime(df_new_claims_cols['date_of_loss'], format=data_company_schemas[subdir]["date_format"])
+            df_new_claims_cols['date_reported'] = pd.to_datetime(df_new_claims_cols['date_reported'], format=data_company_schemas[subdir]["date_format"])
+
+
+            tpa_converted_df_list.append( df_new_claims_cols )
+
+    df_all_bordereaux = pd.concat(tpa_converted_df_list)
+
+    s3_key_write_merged_data = 'test-bordereaux-data/daily_bordereaux_merged_data/20250422_daily_merged.csv'
+    write_df_to_s3_csv(df_all_bordereaux, bucket, s3_key_write_merged_data)
+
+
+
 with DAG(
-    'test_dag_read_s3_from_local',
+    'dbx_merge_incoming_tpa_schemas',
     default_args={
         "depends_on_past": False,
         "retries": 1,
-        "retry_delay": timedelta(minutes=5)
+        "retry_delay": timedelta(minutes=5),
+
     },
-    description="Testing s3 local connection functionality",
+    description="Takes the incoming bordereaux data in different schemas in S3 and converts them to a single schema. Also merges them into a single csv.",
     schedule=timedelta(days=1),
     start_date=datetime(2021, 1, 1),
     catchup=False,
-    tags=["example", "s3"]
+    tags=["s3", "bordereaux", "bronze"],
 
 ) as dag:
     task_read_file = PythonOperator(
-        task_id='read_s3_file',
-        python_callable=read_file
+        task_id='merge_tpa_schemas_python_task',
+        python_callable=merge_incoming_s3_tpa_schemas
     )
 
   </code>
 </pre>
 
-           <p class="fs-lg">
+           <p class="fs-lg mt-5">
 
             
 
-            ...
+            The above code does some Pandas dataframe magic to process each incoming company's specific schema (defined in the json file) and then merges all the converted dataframes together, before writing it back to S3. In the next step, we take this result and load it into our lakehouse table.
 
           </p>
 
 
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">DAG Step 2: Loading New Data Into Delta Lake Table</h2>
 
-           <p class="fs-lg">
+           <p class="fs-lg mb-5">
 
             
 
-            ...
+            Once our pipeline has merged the converted bordereaux data, it now needs to load this data into our data lakehouse data table. In the Airflow code below we can see the DAG task that uses the <code>DatabricksSqlOperator</code> to execute our saved <code>load_s3_bordereaux_into_dbx_airflow.sql</code> statement that will load the data from S3 into the data table.
 
           </p>
 
 
 <pre class="line-numbers">
   <code class="lang-html">
+...
 
 with DAG(
-    'test_dag_read_s3_from_local',
+    'dbx_load_data_into_dbx_lakehouse',
     default_args={
         "depends_on_past": False,
         "retries": 1,
-        "retry_delay": timedelta(minutes=5)
+        "retry_delay": timedelta(minutes=5),
+
     },
-    description="Testing s3 local connection functionality",
+    description="Loads data into Databricks Delta Lake Table from S3",
     schedule=timedelta(days=1),
     start_date=datetime(2021, 1, 1),
     catchup=False,
-    tags=["example", "s3"]
+    tags=["s3", "bordereaux", "silver"],
 
 ) as dag:
-    task_read_file = PythonOperator(
-        task_id='read_s3_file',
-        python_callable=read_file
+    test_dbx_data_task = DatabricksSqlOperator(
+        task_id="dbx_sql_data_insert_task",
+        databricks_conn_id="databricks_connection",
+        http_path=sql_endpoint_name,
+        sql="load_s3_bordereaux_into_dbx_airflow.sql"
+
     )
 
   </code>
 </pre>
 
-           <p class="fs-lg">
+           <p class="fs-lg mt-5 mb-5">
 
             
 
-            ...
+            The above Airflow operator executes the Databricks SQL below inside the Databricks platform on the SQL Server-less data warehouse.
 
           </p>
  
+
+
+
+<pre class="line-numbers">
+  <code class="lang-html">
+
+copy into  claims_workspace.bronze.bordereaux_data 
+from 
+    (
+        SELECT 
+        policy_number,
+        CAST(months_insured as BIGINT) as months_insured,
+        has_claims,
+        CAST(items_insured as BIGINT) as items_insured,
+        claim_reference,
+        insured_name,
+        CAST(policy_start_date as DATE) as policy_start_date,
+        CAST(date_of_loss as DATE) as date_of_loss,
+        CAST(date_reported as DATE) as date_reported,
+        claim_status,
+        loss_type,
+        paid_amount,
+        reserve_amount,
+        total_incurred,
+        claim_propensity
+        
+
+        FROM 's3://property-insurance-examples/test-bordereaux-data/daily_bordereaux_merged_data/'
+    )
+FILEFORMAT = CSV FORMAT_OPTIONS('sep' = ',', 'header' = 'true', 'inferSchema' = 'true')
+COPY_OPTIONS ('force' = 'true', 'mergeSchema' = 'true')
+
+  </code>
+</pre>
+
+           <p class="fs-lg mt-5 mb-5">
+
             
 
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Medallion Data Pattern</h2>            
-
-
-           <p class="fs-lg">
-
-            where do our tables sit in this data pattern for our information architecture?
-
-            
-
-            
+            The SQL statement will pull data from S3 where our Airflow DAG wrote the converted and merged bordereaux data and write it into the Delta lake table we previously created.
 
           </p>
-
-            <p class="fs-lg todo_edit">
-
-              The holy trinity of data platform storage: blob storage, data tables, and data models --- maps well to medallion data pattern as well
-
-            </p>
+ 
 
 
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">But the Pipeline Doesn't Do X...</h3>
 
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  The challenge of platform architecture examples is that its impossible to cover every variation that you may want to try. In this example we're skipping a few things like "pipeline flexibiltiy" and also merging row updates as part of the data table update process. If we're missing a key feature you want to talk about, 
+                  <a  href="../contact_us.html">reach out and let's talk</a> and we'll see how we can help.
+
+
+
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+            
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">From Data Tables to Data Models</h2>
 
@@ -619,12 +791,24 @@ with DAG(
 
             
 
-            Our data lake tables are a great starting point, but we want to standardize the knowledge work formulas over our data lakehouse ...
+            Our data lake tables are a great starting point, but we want to standardize the knowledge work formulas over our data lakehouse in a way that is easily accessible to the claims team. To do that, we'll use the Cube.dev semantic layer to integrate with our Databricks claims data lakehouse and build standardized claims data models. This allows us to further refine the data in a data table into standardized claims information (in our knowledge work architecture "information layer") that is useful to the claims team.
 
           </p>
+
+           <p class="fs-lg">
+            
+Data models in a semantic layer add critical business context and structure on top of raw data tables in a lakehouse, enabling more consistent, governed, and user-friendly access to information. Unlike raw tables, semantic models define metrics, dimensions, and relationships in business terms, allowing teams to self-serve insights without needing to understand complex SQL or data schemas. This abstraction enhances data trust, accelerates decision-making, and ensures alignment across analytics, reporting, and AI applications.
+
+          </p>
+
+
+           <p class="fs-lg">
+
             
 
+            In the next post we connect our Databricks data platform to the Cube.dev semantic layer and construct our claims data models for use in the claims team's knowledge work tools.
 
+          </p>
 
           </div>
         </div>
@@ -646,13 +830,13 @@ with DAG(
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/claims_data_model_cube_dbx_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
                           <h4 class="card-title">Building a Standard Claims Data Model With the Cube Semantic Layer and Databricks</h4>
                           <p class="card-text">Creating standard claims data models for claims knowledge work in property insurance companies.</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="./why_does_a_company_need_growth.html">
+                <a class="btn btn-lg btn-link px-0" href="./building_standard_claims_data_model_cube_dbx_lakehouse.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>
@@ -734,12 +918,12 @@ with DAG(
               <div class="col mb-4 mb-md-0">
                 <h4 class="h6 fw-bold pb-lg-1">Company</h4>
                 <ul class="nav flex-column">
-                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
-                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
-                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
-                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../publications.html">eBooks</a></li>
                   <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
-                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../about.html">About</a></li>
                 </ul>
               </div>
             </div>

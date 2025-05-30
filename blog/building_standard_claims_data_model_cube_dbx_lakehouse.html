@@ -368,36 +368,20 @@
 
 
 
-           <p class="fs-lg">
-
-            
-
-            <b>Running an insurance company is fundamentally about managing a budget and accurately forecasting costs.</b>
-
-          </p>
-
-            
-
 
            <p class="fs-lg">
 
-            
-
-            What is the pain point in data lakes? modeling business logic, consistency across applications
-
-          </p>
-
-            
-
-
-
-           <p class="fs-lg">
-
-            The data consumer in this scenario we are focused on is the claims team, and specifically the <b>chief claims officer</b>. This knowledge worker uses reports and dashboards built in a business intelligence tool (Power BI, Tableau, etc) to make business decisions about how to deal with potential future losses that might disrupt cash flow in the company.
+            Effective claims data modeling is essential for empowering the claims team to make informed, high-quality decisions. By implementing a robust data model through a semantic layer, like Cube, insurance companies can create a unified, consistent foundation for their data. This model bridges the gap between raw data and business intelligence tools, such as Power BI or Tableau, enabling the Chief Claims Officer to better forecast potential losses, optimize cash flow management, and make strategic decisions. With features like real-time query performance, integration with Excel, and secure authentication, the right data model ensures the claims team has reliable, actionable insights, driving improved decision-making and business outcomes.
 
            </p>
 
 
+
+           <p class="fs-lg">
+
+            In this article I'm going to take you through how to model the bordereaux claims data we've ingested into our Databricks data table with the Cube semantic layer. The advantage here will be that we're providing standardize and complete information in our Information Layer for the knowledge work in the claims division.
+
+          </p>
 
 
 
@@ -406,52 +390,201 @@
 
            <p class="fs-lg">
 
-            
+The Cube semantic layer enhances knowledge workflow efficiency by offering a unified, governed data access platform that ensures consistent, trustworthy models and metrics across the organization. One advantage of Cube is that it integrates seamlessly with tools like Power BI and Excel, enabling faster, more reliable query performance and reducing common errors from SQL translations. With features such as the Cube DAX API and enterprise-friendly authentication (including SSO), Cube not only simplifies data consumption but also accelerates decision-making by providing a single source of truth. This makes it a compelling choice for improving data accessibility and supporting impactful business decisions in a dynamic environment.
 
-            what is the value of a consistent data model for claims data in property insurance?
+           </p>
 
+
+
+          
+
+          <p class="fs-lg">
+          
+          Cube, like OLAP systems, organizes data into a multidimensional model that supports efficient aggregation and analysis across various levels of detail.
           </p>
 
-           <p class="fs-lg">
-
-            
-
-            what issues do we prevent when we standardize our business logic outside of BI applications?
-
+          <p class="fs-lg">
+            <strong>Key components:</strong>
           </p>
 
+          <ul>
+            <li>
+              <strong>Measures</strong><br/>
+              Quantitative values used for analysis, such as:
+              <ul>
+                <li>Totals</li>
+                <li>Averages</li>
+                <li>Counts</li>
+                <li>Ratios</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Dimensions</strong><br/>
+              Categories used to group, filter, and explore measures, such as:
+              <ul>
+                <li>Time (e.g., year, quarter, month)</li>
+                <li>Geography (e.g., region, city)</li>
+                <li>Product or business unit</li>
+              </ul>
+            </li>
+          </ul>
+
+          <p class="fs-lg">
+          This structure allows users to quickly navigate complex datasets using familiar business hierarchies,
+          enabling deeper and faster insights. We want to provide quality information that is complete and quick to access in our Information Layer up to the Knowledge Work Layer. Let's quickly review the Knowledge Work Architecture concepts before we move on to connecting Cube to our Databricks data lakehouse.
+          </p>
 
 
 
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Information Layer</h2>
 
+
+
+           <p class="fs-lg">
+
+In the diagram below we see the knowledge work architecture abstractions of the knowledge work layer, the information layer, and the infrastructure layer.
+          </p>
+
+
+
+
+
+
+        <div class="container pt-2 pt-sm-4 pt-lg-5">
+
+        
+          <div class="row g-4">
+
+            <div class="col-md-6 order-md-2 aos-init aos-animate" data-aos="fade-left" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 rounded-1 py-5 px-4 px-lg-5 align-items-center" style="background-color: #d2edc7;">
+                <h4>Knowledge Work Layer</h4>
+              </div>
+              
+            </div>
+
+            <div class="col-md-6 order-md-1 aos-init aos-animate" data-aos="fade-right" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 bg-secondary rounded-3 py-4 px-2 px-lg-2">
+                <!--
+                <p class="mb-4 mb-xl-5">Explore the world with confidence, knowing you're protected wherever you go. Discover our travel insurance plans designed to keep you safe on your journeys. From solo escapades to family getaways, we offer a range of travel insurance options to match your travel style and needs.</p>
+                -->
+
+<ul>
+<li>Business processes using information</li>
+<li>People using expertise with information</li>
+<li>Convert information into revenue</li>
+</ul>
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="row g-4 py-3">
+
+            <div class="col-md-6 order-md-2 aos-init aos-animate" data-aos="fade-left" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 rounded-1 py-5 px-4 px-lg-5 align-items-center" style="background-color: #badadb;">
+                <h4>Information Layer</h4>
+              </div>
+              
+            </div>
+
+            <div class="col-md-6 order-md-1 aos-init aos-animate" data-aos="fade-right" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 bg-secondary rounded-3 py-4 px-2 px-lg-2">
+                <!--
+                <p class="mb-4 mb-xl-5">Explore the world with confidence, knowing you're protected wherever you go. Discover our travel insurance plans designed to keep you safe on your journeys. From solo escapades to family getaways, we offer a range of travel insurance options to match your travel style and needs.</p>
+                -->
+
+<ul>
+<li>Data model definitions</li>
+
+<li>Semantic layer</li>
+<li>APIS: SQL, REST, GraphQL</li>
+
+</ul>
+
+
+              </div>
+            </div>
+          </div><!-- end row definition -->
+
+
+
+          <div class="row g-4 py-2">
+
+            <div class="col-md-6 order-md-2 aos-init aos-animate" data-aos="fade-left" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 rounded-1 py-5 px-4 px-lg-5 align-items-center" style="background-color: #91c1eb;">
+                <h4>Infrastructure Layer</h4>
+              </div>
+              
+            </div>
+
+            <div class="col-md-6 order-md-1 aos-init aos-animate" data-aos="fade-right" data-aos-duration="600" data-aos-offset="280" data-disable-parallax-down="md">
+
+              <div class="d-flex flex-column h-100 bg-secondary rounded-3 py-4 px-2 px-lg-2">
+
+<ul>
+<li>Cloud infrastructure</li>
+<li>Databases, ETL pipelines, Servers</li>
+<li>Data Governance, Security</li>
+
+</ul>
+
+
+              </div>
+            </div>
+          </div><!-- end row definition -->
+
+
+        </div><!-- end container -->
+
+
+
+          <p class="fs-lg mt-5">
+
+            At Patterson Consulting we frame every data platform project and tool in this framework to keep outcomes aligned on impacting the line of business through the knowledge work layer.
+
+          </p>
+
+
+
+
+
+
+          <p class="fs-lg">
+
+            Given that the line of busniess tools (Excel, PowerBI, etc) in the knowledge work layer operate on information, not data, we need to build a logical materialized view of the claims information needed (our claims data model) in the information layer.
+
+           
+
+          </p>
+
+
+
            <p class="fs-lg">
 
             
 
-            relate back to knowledge work architecture
+             In this example we are building our materialized view of the bordereaux claims data in the Cube semantic layer. This materialized view of the information needed at the knowledge work layer will be in a low-latency cached system.
 
           </p>
             
 
 
-           <p class="fs-lg">
-
-            
-
-            implement as a semantic layer with Cube
-
-          </p>
-            
-
-
 
            <p class="fs-lg">
 
             
 
-            who is cube?
+            Now that we've gotten the background framing out of the way, let's connect the Cube platform to our Databricks data lakehouse.
 
           </p>
             
@@ -464,52 +597,53 @@
 
             
 
-            <b>Running an insurance company is fundamentally about managing a budget and accurately forecasting costs.</b>
+            Head over to Cube.dev and sign up for a free account to start your first Cube deployment. From there, click on "Create Deployment" on the main account portal and you should see a screen similar to the one below for creating a new deployment.
 
           </p>
 
-          <div class="hotspots mx-auto" style="max-width: 1200px;">
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/cube_create_deployment_claims_20250529.png" alt="Image">
 
           </div>    
 
-            
+
            <p class="fs-lg">
 
             
 
-            ...
+            You will need to provide some configuration information from your Databricks workspace such as:
+
+          </p>
+
+          <ul>
+            <li>Databricks <a href="https://docs.databricks.com/aws/en/integrations/jdbc-oss/configure" target="_blank">JDBC Connection string</a></li>
+            <li>Databricks <a href="https://docs.databricks.com/aws/en/dev-tools/auth/pat" target="_blank">Personal Access Token</a></li>
+            <li>A default catalog to work from</li>
+
+
+          </ul>
+            
+           <p class="fs-lg">
+
+            Once you've established connectivity with your Databricks workspace's Serverless SQL Data Warehouse, you can start building out your data model.
+
+            
+
+            You can use the visual guide to build a data model (as shown below), but the wasier way will be to just skip this part and use the <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/blob/main/information_architecture/cube_semantic_layer/data_models/claims_summary.yml" target="_blank">data model definition we include as part of this series</a> once your deployment is completely set up. 
 
           </p>
 
 
 
-          <div class="hotspots mx-auto" style="max-width: 1200px;">
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/cube_gen_data_model_setup_screen_20250529.png" alt="Image">
 
           </div>    
 
 
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Our Claims Data Model</h2>            
-
-
            <p class="fs-lg">
 
-            ....
-
-            
-
-            
-
-          </p>
-
-
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Demo in Cube Playground</h2>            
-
-
-           <p class="fs-lg">
-
-            ..
+            Once you are beyond the visual data modeling UX screen and your deployment is ready, you should see a screen similar to the one below.
 
             
 
@@ -519,16 +653,306 @@
             
 
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration with Knowledge Work Tools</h2>
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/cube_deployment_dashboard_20250530.png" alt="Image">
+
+          </div>    
+
 
            <p class="fs-lg">
 
+            You are now to start building out data models over your Databricks delta lake tables.
+
             
 
-            We can now integrate easily with PBI, Excel, GSheets, Tableau, more
+            
+
+          </p>         
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Our Claims Data Model</h2>            
+
+
+           <p class="fs-lg">
+
+            To define a standardized claims model I want to start with a list of areas we want to cover in this data model. The list of areas of the claims data model are listed below.
+
+            
+
+            
 
           </p>
+
+          <ul>
+            <li>Claims Summary at Current</li>
+            <li>KPIs</li>
+            <li>Claims Lag</li>
+            <li>FNOL Reported by Month</li>
+            <li>Aged Pending</li>
+            <li>No Reserve</li>
+            <li>Reserve Change</li>
+            <li>Large Loss</li>
+            <li>Open to Reported & Case Reserve by Age</li>
+            <li>CAT Claim Summary</li>
+            <li>All Claim Summary</li>
+
+          </ul>
+
+
+
+
+           <p class="fs-lg">
+
+            If we start with just one of the above parts of our standardized claims data model, we want to build out the "claims summary at current" part. This part of the data model is defined as "A comprehensive snapshot of all active claims at any specific point in time, showing status, reserves, and key metrics across the entire claims portfolio". The code listing below (also <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/blob/main/information_architecture/cube_semantic_layer/data_models/claims_summary.yml" target="_blank">provided on our github repo</a>) is how we implement this part of the claims model as part of the semantic layer on Cube.dev.
+
             
+
+            
+
+          </p>
+
+
+
+<pre class="line-numbers mt-5 mb-5">
+  <code class="lang-html">
+cubes:
+  - name: claims_summary_current
+    sql: SELECT * FROM claims_workspace.bronze.bordereaux_data
+    title: Claims Summary at Current
+    description: A comprehensive snapshot of all active claims at any specific point in time, showing status, reserves, and key metrics across the entire claims portfolio.
+    joins: []
+    dimensions:
+    - name: policy_number
+      sql: "{CUBE}.policy_number"
+      type: string
+      description: The policy number of the claims record.
+
+    - name: months_insured
+      sql: "{CUBE}.months_insured"
+      type: number
+      description: The number of months the customer has been insured.
+
+    - name: has_claims
+      sql: "{CUBE}.has_claims"
+      type: boolean
+      description: Whether the policy has any associated claims.
+
+    - name: items_insured
+      sql: "{CUBE}.items_insured"
+      type: number
+      description: Number of items insured under the policy.
+
+    - name: claim_reference
+      sql: "{CUBE}.claim_reference"
+      type: string
+      description: A unique reference for the claim.
+
+    - name: insured_name
+      sql: "{CUBE}.insured_name"
+      type: string
+      description: Name of the insured party.
+
+    - name: policy_start_date
+      sql: "{CUBE}.policy_start_date"
+      type: time
+      description: Start date of the policy coverage.
+
+    - name: date_of_loss
+      sql: "{CUBE}.date_of_loss"
+      type: time
+      description: The date on which the loss occurred.
+
+    - name: date_reported
+      sql: "{CUBE}.date_reported"
+      type: time
+      description: The date the loss was reported.
+
+    - name: claim_status
+      sql: "{CUBE}.claim_status"
+      type: string
+      description: Status of the claim (e.g., Open, Closed, Reopened).
+
+    - name: loss_type
+      sql: "{CUBE}.loss_type"
+      type: string
+      description: Type of loss associated with the claim.
+
+    - name: paid_amount
+      sql: "{CUBE}.paid_amount"
+      type: number
+      description: Amount paid on the claim to date.
+
+    - name: reserve_amount
+      sql: "{CUBE}.reserve_amount"
+      type: number
+      description: Reserve amount set aside for future payments.
+
+    - name: total_incurred
+      sql: "{CUBE}.total_incurred"
+      type: number
+      description: Total cost incurred for the claim (paid + reserve).
+
+    - name: claim_propensity
+      sql: "{CUBE}.claim_propensity"
+      type: number
+      description: Model-driven score estimating the likelihood of a claim.
+
+    measures:
+      - name: count
+        type: count
+
+      - name: total_claims
+        type: count
+      
+      - name: open_claims
+        type: count
+        filters:
+          - sql: "{CUBE}.claims_status != 'Closed'"
+
+      - name: total_reserves
+        sql: "reserve_acount"
+        type: sum
+        filters:
+          - sql: "{CUBE}.claims_status != 'Closed'"
+
+      - name: total_paid
+        sql: "paid_amount"
+        type: sum
+
+      - name: total_incurred_all
+        sql: "total_incurred"
+        type: sum
+
+      - name: average_claim_size
+        sql: "{total_incurred} / {total_claims}"
+        type: number        
+  </code>
+</pre>
+
+
+
+
+           <p class="fs-lg">
+
+            Here are the steps to update your main branch of your claims data models in your Cube deployment:
+
+            
+
+            
+
+            </p>    
+
+            <ul>
+              <li>Click on "Data Model" on the left side toolbar</li>
+              <li>Click on "Dev Model" at the top, and create a new branch to work from</li>
+              <li>Add the file contents above to a new file in the data model file named "claims_summary.yml" via the file toolbar area on the left side</li>
+              <li>Save the changes, wait a few seconds, and then merge the changes back into the "master" branch</li>
+
+
+            </ul>
+
+
+           <p class="fs-lg">
+
+            Once you've merged your updates to your Cube.dev claims data model, you are ready to head over to the Cube.dev "Playground" to test out your data model.
+
+            
+
+            
+
+            </p>    
+
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Demo in Cube Playground</h2>            
+
+
+           <p class="fs-lg">
+
+            Let's run a quick test with our claims data model and generate a quick report on the Companies that generated a loss in the claims data in the past week. 
+
+            Click on "Playground" in the left hand toolbar in the main Cube deployment dashboard area.
+
+
+            Once in the data model "Playground" part of the deployment you can visually edit test queries for your newly deployed data model. Click on the dimension <code>"insured_name"</code> and the measure <code>"date_of_loss"</code> and select "This week" for the temporal filter. It should look like what you see in the Cube.dev UX image below.
+
+
+
+            
+
+           </p>          
+            
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/cube_playground_claims_model_20250530.png" alt="Image">
+
+          </div>    
+
+
+
+
+
+           <p class="fs-lg">
+
+            If your query runs and gives results similar to what you see above, congratulations, you now have a claims data model operational for your property insurance data lakehouse. Let's move on to thinking about how to integrate this semantic layer into the rest of our knowledge work tools.
+
+            
+
+            
+
+            
+
+          </p>          
+            
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration with Knowledge Work Tools</h2>
+
+
+           <p class="fs-lg">
+
+            Cube provides out of the box integrations for the following 
+
+            
+
+            
+
+          </p>          
+            
+
+          <div class="hotspots mx-auto mt-5 mb-5  " style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-5 bg-dark" src="../assets/img/cube_apis_20250530.svg" alt="Image">
+
+          </div>    
+
+
+
+           <p class="fs-lg">
+
+            This allows our data model to efficiently integrate with many of today's core knowledge work tools as shown below.
+
+            
+
+            
+
+          </p>   
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/cube_supported_tool_integrations_20250530.png" alt="Image">
+
+          </div>    
+
+
+
+
+
+           <p class="fs-lg">
+
+            In the next article, we'll dig into just how to use our data models directly in a Google GSheet.
+
+            
+
+            
+
+          </p>     
+
 
 
 

@@ -371,13 +371,21 @@
             
 
 
-
+<!--
 <p class="fs-lg">
   It’s 8:00 a.m. and instead of diving into data work, you’re
   sifting through yesterday’s emails, scanning subjects,
   hunting for attachments, downloading each one by hand
   before you can even get started. That ritual eats into your
   morning and steals focus from analysis.
+</p>
+
+-->
+
+<p class="fs-lg">
+
+  In the world of property insurance you have to extract information from TPAs and MGAs that share data in the form of emailed bordereaux data files. Automating this process can be a pain, so in this example we're going to show you how to use Airflow to watch a mailbox and capture specific types of files (here, bordereaux csv files) and save them locally for later processing.
+
 </p>
 
 <!-- Image gallery -->
@@ -796,13 +804,13 @@ mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 6: Trigger & validate</h2>
 
-<p class="fs-lg todo_edit">connective sentence</p>
+<p class="fs-lg">Back in the Airflow UI, the gmail_attachment_retrieval switch should be set to On already. If not, do so now.</p>
 
 <p class="fs-lg">
-  1. Back in the Airflow UI, the gmail_attachment_retrieval switch should be set to On already. If not, do so now.<br><br>
-  2. Near the upper right, click the Trigger DAG button (►)<br><br>
-  3. Observe the DAG's grid square turn from queued to running to green indicating success.<br><br>
-  4. In Windows Explorer if you open your downloads folder under the root directory of the project folder, you should see new files appear with timestamped names of any email attachments that were in your inbox.
+  
+  1. Near the upper right, click the Trigger DAG button (►)<br><br>
+  2. Observe the DAG's grid square turn from queued to running to green indicating success.<br><br>
+  3. In Windows Explorer if you open your downloads folder under the root directory of the project folder, you should see new files appear with timestamped names of any email attachments that were in your inbox.
 </p>
 
 <div class="gallery mt-5 mb-5">
@@ -820,7 +828,7 @@ mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Real-world edge cases</h2>
 
-<p class="fs-lg todo_edit">connective sentence</p>
+<p class="fs-lg">There are a few edge cases I'll point out that may trip you up in practice:</p>
 <ul>
   <li>Variable subject lines. Senders may often change filenames or email subjects unexpectedly. If your search returns too few or too many messages, adjust or remove the SUBJECT clause in your IMAP query or combine multiple keywords with OR.</li>
   <li>Attachments inside ZIPs. When files arrive zipped, download the .zip first and then add a small Python step (using the zipfile module) to extract its contents into your downloads/ folder.</li>
@@ -849,9 +857,24 @@ mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
   A few lines of code transform this into a full ETL pipeline.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Docker on Windows?</h2>
 
-<p class="fs-lg todo_edit">connective sentence</p>
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Why Docker on Windows?</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  For the Windows users out there, you may question the need for Docker; Here are a few good reasons to use Docker on windows:
+
+
+
+
+
+                </p>
 
 <ul>
   <li>Signal handling. Airflow components rely on Unix signals (SIGTERM, SIGQUIT) that Windows cannot emit.</li>
@@ -859,9 +882,17 @@ mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
   <li>Consistency. The same YAML file works on any machine or CI runner, eliminating "it works on my laptop" issues.</li>
 </ul>
 
-<p class="fs-lg">
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+
   Docker abstracts OS differences so you focus on business logic.
-</p>          
+
+                </p>
+
+              </div>
+            </div>
+
+     
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion: From Inbox Chores to Insights</h2>
 
@@ -891,6 +922,44 @@ mail.store(email_id, '+FLAGS', '\\Seen')</code></pre>
           </div>
         </div>
       </section>
+
+
+
+
+
+      <!-- Post content -->
+      
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/dbx_claims_data_lakehouse_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Building a Property Insurance Claims Data Lakehouse with Airflow and Databricks</h4>
+                          <p class="card-text">In this article we build a data lakehouse for property insurance claims management. This allows us to build out a complete claims analysis platform complete with standardized data modeling.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="./building_databricks_insurance_claims_lakehouse.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
 
 
 

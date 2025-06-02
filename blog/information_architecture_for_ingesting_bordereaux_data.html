@@ -538,7 +538,7 @@ The platform should enable flexibility in managing data structures, efficient qu
 
            <p class="fs-lg">
 
-In the diagram below we see the knowledge work architecture abstractions of the knowledge work layer, the information layer, and the infrastructure layer.
+In the diagram below we see the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html">knowledge work architecture</a> abstractions of the knowledge work layer, the information layer, and the infrastructure layer.
           </p>
 
 
@@ -1092,32 +1092,6 @@ a claims database supporting under a billion records is well within the reach of
             </p>
 
 
-
-            <p class="fs-lg todo_edit">
-
-              The holy trinity of data platform storage: blob storage, data tables, and data models --- maps well to medallion data pattern as well
-
-            </p>
-
-            <p class="fs-lg">
-
-            Based on these constraints, we'll start with a RDBMS, postgres, as it gives us logical table concurrency management for reads and writes and also is cheaper to operate than a full cloud data warehouse.
-            </p>
-
-<!--
-            <p class="fs-lg">
-
-            I ran some pricing estimates for both Postgres on AWS and Snowflake, and Postgres can be run for ... [ TODO ]
-            </p>
--->
-
-            <p class="fs-lg">
-
-            It's worth noting that depending on the analytical queries we run on Postgres, and the number of concurrent queries, the database may begin to have query performance degradation over time. You'll need to watch out for this issue as you data platform grows.
-
-            </p>
-
-
             <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4 mb-5 mt-5">
               <div class="card-body position-relative z-2 pb-0">
                 <h3 class="h4 card-title text-primary">But Wait, My Other Dataset has a Ton of Data In It</h3>
@@ -1145,7 +1119,7 @@ a claims database supporting under a billion records is well within the reach of
                 <p class="pb-sm3 pb-md-4 mb-2">
 
                   
-                  To that end, we're writing parallel versions of this series where we are going to use AWS S3-Tables to show off the platform using Apache Iceberg on S3 as the storage system. This opens up our query tool options as well, while still integrating well with our materialized view platform.
+                  To that end, we're writing parallel versions of this series where we are going to use different storage technologies (AWS S3-Tables, Databricks Delta Tables, etc) to show off the platform using different design choices. This opens up our query tool options as well, while still integrating well with our materialized view platform.
 
                 </p>
 
@@ -1153,6 +1127,91 @@ a claims database supporting under a billion records is well within the reach of
             </div>
 
 
+            <p class="fs-lg">
+
+              I also want to call out how there is not a single storage platform for any give data platform; The holy trinity of data platform storage architecture is: 
+
+            </p>
+
+            <ul>
+
+              <li><b>Blob storage:</b> for landing raw files (typically the bronze layer in medallion data pattern)</li>
+              <li><b>Data Tables:</b> for processing incoming data, giving us scale and multi-tenancy (typically the silver nad gold layers in the medallion data pattern)</li>
+              <li><b>Data Models:</b> for providing consistent and complete information to the knowledge work layer (typically the gold layer in the medallion data pattern)</li>
+
+
+            </ul>
+
+
+
+            <p class="fs-lg">
+
+              There's no perfect answer for what you'll need to select for storage, so I am going to walk you through several path choices and let you compare the experience and value yourself.
+
+              This is the point in this blog series where I split the narrative into multiple sub-paths based on your storage architecture:
+
+            </p>
+
+            <ul>
+
+              <li>Path 1: Postgres and local files</li>
+
+              <li>Path 2: <a href="./building_databricks_insurance_claims_lakehouse.html">AWS S3 storage for blob storage, Databricks Data Tables, and Cube Semantic Layer for Data Models</a></li>
+
+              <li>Path 3: AWS S3 Storage for blob storage, AWS S3-Tables for Data Tables, and Cube Semantic Layer for Data Models</li>
+
+            </ul>
+
+<!--
+
+            <p class="fs-lg">
+
+            It's worth noting that depending on the analytical queries we run on Postgres, and the number of concurrent queries, the database may begin to have query performance degradation over time. You'll need to watch out for this issue as you data platform grows.
+
+            </p>
+-->
+
+
+
+
+
+            <p class="fs-lg">
+
+              What we are building towards in a full medallion data architecture pattern for capturing property insurance data and processing it into useable information.
+
+              In the diagram below you can see the 3 layers of the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html">knowledge work architecture</a> framework map to the physical implementation of a data platform supporting the <b>information obligations</b> of the organization.
+            </p>
+
+
+<!-- Image gallery -->
+<div class="gallery mt-4 mb-4">
+  <a href="../assets/img/data_platform_general_arch.png" class="gallery-item d-block card-hover">
+    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
+      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
+      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
+        A generalized data platform architecture
+      </div>
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
+    </div>
+    <img src="../assets/img/data_platform_general_arch.png" class="d-block rounded-1" alt="A generalized data platform architecture">
+  </a>
+</div>
+
+
+           <p class="fs-lg mt-5">
+
+            This generalized platform architecture represents the Patterson Consulting claims information architecture reference design. It not only represents the medallion data architecture design pattern, but also full aligns with the Patterson Consulting <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html">knowledge work architecture</a> design pattern. The knowledge work layer on the far right side represents the 4 core divisions of a property insurance company (underwriting, finance, claims, actuary) and how they should connect to the platform through the information layer in order to maximize efficiency.
+
+
+            </p>
+
+
+
+            <p class="fs-lg mb-5" >
+
+              Now let's move on to the next stage in designing our architecture where we implement the <a href="./capturing_email_attachments_with_airflow.html">data integration for bordereaux data emails with Apache Airflow</a>.
+
+            </p>
 <!--
             <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Landing File Directory Structure</h2>
 
@@ -1205,31 +1264,6 @@ a claims database supporting under a billion records is well within the reach of
                   </div>
                 </div>
 
-            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5 mt-5">A General Platform Architecture for Bordereaux Data Capture</h2>
-
-
-
-            <p class="fs-lg">
-
-              In the diagram below you can see the 3 layers of the knowledge work architecture framework map to the physical implementation of a data platform supporting the <b>information obligations</b> of the organization.
-            </p>
-
-
-<!-- Image gallery -->
-<div class="gallery">
-  <a href="../assets/img/data_platform_general_arch.png" class="gallery-item d-block card-hover">
-    <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 rounded-1 overflow-hidden z-2 opacity-0">
-      <i class="ai-zoom-in fs-2 text-white position-relative z-2"></i>
-      <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fs-sm fw-medium z-2 pb-3">
-        A generalized data platform architecture
-      </div>
-      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-40"></div>
-    </div>
-    <img src="../assets/img/data_platform_general_arch.png" class="d-block rounded-1" alt="A generalized data platform architecture">
-  </a>
-</div>
-
-
 
 
 
@@ -1265,13 +1299,6 @@ a claims database supporting under a billion records is well within the reach of
 
 -->
 
-
-           <p class="fs-lg mt-5 mb-5">
-
-            this architecture exercise represents the Patterson Consulting claims information architecture reference design
-
-
-            </p>
 
 
 

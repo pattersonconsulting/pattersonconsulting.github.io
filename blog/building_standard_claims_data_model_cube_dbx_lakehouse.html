@@ -624,7 +624,7 @@ In the diagram below we see the knowledge work architecture abstractions of the 
 
             
 
-            You can use the visual guide to build a data model (as shown below), but the wasier way will be to just skip this part and use the <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/blob/main/information_architecture/cube_semantic_layer/data_models/claims_summary.yml" target="_blank">data model definition we include as part of this series</a> once your deployment is completely set up. 
+            You can use the visual guide to build a data model (as shown below), but the wasier way will be to just skip this part and use the <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/blob/main/information_architecture/cube_semantic_layer/data_models/" target="_blank">data model definition we include as part of this series</a> once your deployment is completely set up. 
 
           </p>
 
@@ -801,13 +801,13 @@ cubes:
       - name: open_claims
         type: count
         filters:
-          - sql: "{CUBE}.claims_status != 'Closed'"
+          - sql: "{CUBE}.claim_status != 'Closed'"
 
       - name: total_reserves
-        sql: "reserve_acount"
+        sql: "{CUBE.reserve_amount}"
         type: sum
         filters:
-          - sql: "{CUBE}.claims_status != 'Closed'"
+          - sql: "{CUBE}.claim_status != 'Closed'"
 
       - name: total_paid
         sql: "paid_amount"
@@ -818,7 +818,7 @@ cubes:
         type: sum
 
       - name: average_claim_size
-        sql: "{total_incurred} / {total_claims}"
+        sql: "{CUBE.total_incurred_all} / {CUBE.total_claims}"
         type: number        
   </code>
 </pre>
@@ -844,6 +844,50 @@ cubes:
 
 
             </ul>
+
+
+
+           <p class="fs-lg">
+
+            Most BI tools want to work against a Cube "view", so we've <a href="https://github.com/pattersonconsulting/property_insurance_data_platform/tree/main/information_architecture/cube_semantic_layer/data_models/views" target="_blank">provided a simple view</a> of the <code>claims_summary_current</code> data model as well:
+
+            
+
+            
+
+            </p>    
+
+
+<pre class="line-numbers mt-5 mb-5">
+  <code class="lang-html">
+
+views:
+  - name: claims_summary
+
+    cubes:
+      - join_path: claims_summary_current
+        includes:
+          - total_claims
+          - open_claims
+          - total_reserves
+          - total_paid
+          - total_incurred_all
+          - average_claim_size
+  </code>
+</pre>
+
+
+
+           <p class="fs-lg">
+
+            Add the above yaml code to the "views" subfolder in your data model and save it.
+
+            
+
+            
+
+            </p>    
+
 
 
            <p class="fs-lg">

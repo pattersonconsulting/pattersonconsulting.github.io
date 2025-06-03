@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>Blog Index | Patterson Consulting</title>
+    <meta name="description" content="The Patterson Consulting technical blog for data engineering, data platforms, and generative AI.">
+    <meta name="keywords" content="case study, University of michigan, hurricanes, generative ai, llm, large language models, embedded analytics, cube, data modeling, natural language interface">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Blog Index | Patterson Consulting" />
+    <meta property="og:description" content="The Patterson Consulting technical blog for data engineering, data platforms, and generative AI.">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/blog/blog_index.html" />
+    <meta property="og:image" content="https://www.pattersonconsultingtn.com/content/site_redesign_2024/assets/img/um_case_study_header_card_2025.jpg" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+        
+    <!-- Theme switcher (color modes) -->
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->    
+
+
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <!--
+                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
+                -->
+
+
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    
+                    
+                    
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>  
+
+            </nav>
+            
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <!--
+        <div class="jarallax-img" style="background-image: url(../assets/img/um_case_study_header_card_2025.jpg);"></div>
+        -->
+        <div class="jarallax-img" >
+<video autoplay="" loop="" playsinline="" muted=""><source src="../assets/video/hurricane_space.mp4"></video>        
+</div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+
+
+          <!-- Page title -->
+          <div class="d-none d-xxl-block" style="height: 100px;"></div>
+          <div class="d-none d-lg-block d-xxl-none" style="height: 120px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 80px;"></div>
+          <div class="d-md-none" style="height: 40px;"></div>
+          <h4><span class="text-body-secondary">Blog Index /</span> Technical Blog</h4>
+          
+          <h1 class="display-2 mb-4">Platform Engineering, Data Engineering, and Generative AI</h1>
+
+          <p class="text-body mb-0" >Technical examples for data platforms, data pipelines, and large language model applications.</p>
+
+          
+                  
+
+          <!-- Features -->
+          <div class="d-none d-xxl-block" style="height: 10px;"></div>
+
+
+            <div class="d-none d-xxl-block" style="height: 10px;"></div>
+
+          <div class="d-none d-lg-block d-xxl-none" style="height: 10px;"></div>
+          <!--
+          <div class="d-none d-md-block d-lg-none" style="height: 100px;"></div>
+        -->
+          <div class="d-md-none" style="height: 0px;"></div>
+
+    
+        </div>
+      </section>
+
+
+
+
+      <section class="container py-5 my-md-2 my-lg-3 my-xl-4">
+        <div class="row pt-xxl-2">
+          <div class="col-lg-10 col-xl-8 pe-lg-4 pe-xl-0">
+
+            <h2 class="card-title mb-4">2025</h2>
+            <hr class="mb-3"/>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/claims_data_model_cube_dbx_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          
+                          <h4 class="card-title">Building a Standard Claims Data Model With the Cube Semantic Layer and Databricks</h4>
+                          
+
+                          <p class="card-text">Creating standard claims data models for claims knowledge work in property insurance companies.</p>
+                          <!--
+                <a class="btn btn-lg btn-link px-0" href="./building_standard_claims_data_model_cube_dbx_lakehouse.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/dbx_claims_data_lakehouse_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Building a Property Insurance Claims Data Lakehouse with Airflow and Databricks</h4>
+                          <p class="card-text">In this article we build a data lakehouse for property insurance claims management. This allows us to build out a complete claims analysis platform complete with standardized data modeling.</p>
+                        <!--  
+                <a class="btn btn-lg btn-link px-0" href="./building_databricks_insurance_claims_lakehouse.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/capturing_airflow_attachments_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Capturing Email Attachments with Apache Airflow</h4>
+                          <p class="card-text">Automate email attachment capture with Apache Airflow.</p>
+                          <!--
+                <a class="btn btn-lg btn-link px-0" href="./capturing_email_attachments_with_airflow.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+                  <div class="row ">
+                    <div class="col mb-3">
+
+                      <div class="card bg-opacity-100 border-primary h-100 bg-black border-0">
+                        <!--
+                        <div class="card-header text-white border-light">Quantatec's Challenge</div>
+                      -->
+                        <div class="card-body ">
+                          <h4 class="card-title text-white">University of Michigan's Platform Challenge</h4>
+                          <p class="card-text text-white">
+                            <strong>
+
+                              The researchers were struggling to extract granular hurricane geospatial data and integrate it with hospitalization data on per FIPS code resolution.
+
+                            </strong>
+                          </p>
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>    
+
+
+
+
+                  <div class="row ">
+
+                    <div class="col mb-5">
+
+                      <div class="card border-0 bg-gray h-100">
+                        <div class="card-body">
+                          <h4 class="card-title">Patterson Consulting's Solution</h4>
+                          <p class="card-text"><strong>
+                            
+The Patterson Consulting team accelerated the College of Nursing's data platform by:
+
+                  <ul>
+                    <li><b>Platform Architecture:</b> Google Cloud-based data platform architecture</li>
+                    
+
+                    <li><b>Conversational User Interface:</b> Customer conversational user interface for analyzing complex hurricane geospatial data.</li>
+
+
+
+                    <li><b>Faster Insights:</b> Improved delivery of insights for predictive modeling of hospital admissions impact per FIPS code</li>
+
+
+
+                  </ul>
+
+                            </strong>
+                          </p>
+                        </div>
+                      </div>
+                    
+
+                    </div>
+
+                  </div>
+
+
+            <p class="fs-lg">
+The University of Michigan College of Nursing has launched a research initiative aimed at developing predictive models of healthcare usage following major hurricanes. By integrating advanced data analytics and machine learning techniques with demographic, clinical, and storm-related information, this work seeks to identify where and when hospital admissions are most likely to surge, thereby helping healthcare systems plan for and mitigate resource constraints.
+
+            </p>
+
+
+            <p class="fs-lg mb-3 ">
+The University of Michigan College of Nursing is adopting a multifaceted strategy that leverages advanced data analytics and machine learning to forecast healthcare usage following hurricanes. By integrating historical storm paths, demographic factors, and clinical data—including Medicare and Social Vulnerability Index metrics—their models aim to pinpoint areas most vulnerable to admission surges. This data-driven approach enables healthcare providers and city planners to anticipate resource needs, streamline emergency response, and ultimately mitigate the risks associated with catastrophic hurricane events.
+            </p>
+
+
+
+
+
+
+
+              <div class="position-relative mt-5 mb-5">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+                  <a href="https://youtu.be/GkDKqTZZ13Q&t=0s" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                </div>
+                <img src="../assets/img/um_customer_success_20250429.png" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                <img src="../assets/img/um_customer_success_20250429.png" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+              </div>
+
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Data Platform Challenge</h2>       
+
+            <p class="fs-lg">
+
+Initially the College of Nursing research team had multiple raw data sources in different data systems that they were unable to get into one place for analysis. The data was in different formats and in need to cleaning, synchronization, and validation work.
+
+
+            </p>
+
+
+            <p class="fs-lg mb-3 " >
+
+
+There was no processing or analytical infrastructure for the data. These limitations posed challenges to delivering timely, high-quality data crucial for applications such as hurricane geospatial impact analysis or medicare data exploratory data analysis. The research team was struggling to get a handle on what data they had available because they could not easily explore the data to develop an intuition on how to best analyze the hurricane geospatial data and medical data.
+
+            </p>
+
+
+
+
+
+
+
+
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Implementation Journey</h2>       
+
+
+            <p class="fs-lg" >
+
+              
+              The implementation journey for the University of Michigan College of Nursing research team began with a deep <a href="../content/hitchhikers_guide_kw/what_is_knowledge_work.html" target="_blank">knowledge workflow</a> review to understand how they worked. From there we analyzed their project goals, the tools they wanted to use, and the datasets they needed to integrate to reach those goals.
+
+            </p>
+
+            <p class="fs-lg" >
+
+              
+              Once we understood what information was needed for the project, our platform engineering team stood up the appropriate <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">information architecture</a> in Google Cloud Storage to organize the incoming data. Once we had the information architecture ready, we could begin standing up data ingest pipelines to pull in:
+
+            </p>
+
+            <ul>
+
+              <li>hurricane geospatial data</li>
+              <li>FEMA hurricane damage data</li>
+              <li>general geospatial map data</li>
+              <li>medicare data</li>
+
+            </ul>
+
+
+            <p class="fs-lg mb-3 " >
+
+              This <a href="../content/hitchhikers_guide_kw/data_integration.html" target="_blank">external data integration</a> pattern can be seen in the diagram below, where incoming data is being placed in a bronze layer of a medallion data architecture pattern in storage.
+
+            </p>
+
+
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../assets/img/um_data_integration_20250428.png" alt="Image">
+
+
+          </div>  
+
+
+
+            <p class="fs-lg mt-3 " >
+
+              
+              Through a series of python ETL pipelines, the data was transformed into information ("data models") in the Information Layer of our architecture. In this layer, transform engineering tools such as Jupyter noteboks could analyze the data for EDA and further refinement purposes.
+
+            </p>
+
+            <p class="fs-lg mb-3 " >
+
+              
+              These ETL and transform engineering processes produced consolidate usable information for the research team ("Knowledge workers"). The produced information ("data models") were created in a semantic layer for further analysis and usage by the research group via APIs such as ODBC and REST. This allowed for multiple knowledge work tools such as PowerBI, Excel, Google Sheets, and our custom geospatial EDA tool to work on common data models. The architecture can seen in the diagram below.
+
+            </p>
+
+
+
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../assets/img/um_information_layer_20250428.png" alt="Image">
+
+
+          </div>  
+
+
+            <p class="fs-lg mb-3 mt-4 " >
+
+              The Patterson Consulting engineering team also created a custom Streamlit application for geospatial EDA that allowed researchers to quickly map and compare hurricane attributes (location, track, FEMA damage, wind speed, etc) across 50 years of hurricane data, as seen in the diagram below.              
+
+            </p>
+
+
+
+
+          <div class="hotspots mx-auto" style="max-width: 1200px;">
+            <img class="d-block" src="../assets/img/geo_eda_hurricane_season_ux_web.png" alt="Image">
+
+
+          </div>  
+
+
+            <p class="fs-lg mb-3 mt-4" >
+
+              To accelerate the knowledge work of the researchers, a generative AI natural language interface was added over the geospatial EDA tool to allow faster data analysis. It allow analyses such as:
+
+              
+
+            </p>
+
+            <ul>
+
+              <li>show all storms in a specific hurricane season</li>
+              <li>analyze a specific depression forming in the atlantic and compare it to historical storms that formed nearby</li>
+              <li>show the wind speeds per-FIPS code of a specific historical storm and its associated FEMA damage per FIPS code</li>
+
+            </ul>
+
+
+            <p class="fs-lg mb-3 mt-4" >
+
+              These next-generation generative AI-based tools allowed the researchers to work with 50 years of hurricanes faster than they could have with just traditional code and dashboards.
+
+              
+
+            </p>
+
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Project Results</h2>       
+
+            <p class="fs-lg mb-3">
+
+
+To support and accelerate the College of Nursing's <a href="../content/hitchhikers_guide_kw/what_is_a_data_platform.html" target="_blank">data platform</a> challenges, Patterson Consulting engineered and deployed a modernized compute platform centered a cloud data warehouse, data engineering pipelines, and a semantic layer for modernized information analysis. Patterson Consulting also developed a generative AI user interface to quickly navigate decades worth of detailed hurricane geospatial data so researchers could work with the data faster.
+
+          </p>
+
+
+
+          <p class="fs-lg  mt-3">
+
+
+By integrating this data platform with analytical tools, machine learning tooling, and generative AI conversational user interfaces, Patterson enabled a scalable, self-service environment for UM's researchers. The new platform allows seamless access to Jupyter notebooks, source code, and accelerated computing resources. It also supported efficient exploratory data analysis to help the team build unique insights into how hurricane geospatial data correlated with the impact on medicare data.
+          </p>
+
+
+
+          <p class="fs-lg">
+
+This transformation accelerated the College of Nursing's ability to generate timely, high-value insights. <b>This knowledge work acceleration led to the discovery of how hospital admissions spikes occur during hurricanes based on geospatial location.</b>
+
+            </p>
+
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Strategic Impact of the Project</h2>       
+
+            <p class="fs-lg mb-5">
+
+
+By leveraging predictive modeling techniques, the University of Michigan College of Nursing’s research offers urban decision-makers data-driven insights into resource allocation following hurricanes, particularly in densely populated and growing urban areas. The ability to anticipate healthcare surges—especially in historically marginalized and at-risk communities—<b>enables a more proactive deployment of critical resources like medical staff, supplies, and emergency transportation</b>. 
+            </p>
+
+            <div class="card border-0 bg-secondary mb-3">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p>"nice quote here."</p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">Dr. Sue Anne Bell, University of Michigan, FEMA</figcaption>
+                </figure>
+              </div>
+            </div>
+          </p>
+
+
+
+            <p class="fs-lg mt-5">
+This targeted approach helps municipal leaders and healthcare networks mitigate disruptions, safeguard public health, and maintain the essential services that underpin economic and social stability in rapidly expanding urban environments.
+
+            </p>
+
+            <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Patterson Consulting?</h2>
+
+            <p class="fs-lg ">
+
+
+The University of Michigan College of Nursing selected Patterson Consulting for its unique ability to customize a data platform and generative AI tooling to their specific research needs. Patterson Consulting was able to bring together the data platform, information architecture, knowledge work tooling, and custom generative AI methods that lowered operational expenses and delivered the information needed to power complex research. 
+
+            </p>
+
+
+          </div>
+
+
+          <!-- Sidebar -->
+          <aside class="col-lg-2 offset-xl-1 pt-4 pt-lg-0" style="margin-top: -7rem;">
+            <div class="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style="padding-top: 7rem;">
+
+
+              <h4 class="pt-xl-1 mb-4 border-bottom">Blog Years</h4>
+
+              <ul class="list-unstyled mb-0">
+
+                <li class="pb-3 mb-3">
+                  2025
+                </li>
+
+                <li class="pb-3 mb-3">
+                  2024
+                </li>
+
+                <li class="pb-3 mb-3">
+                  2023
+                </li>
+
+                <li class="pb-3 mb-3">
+                  2022
+                </li>
+
+                <li class="pb-3 mb-3">
+                  2021
+                </li>
+
+
+                <li class="pb-3 mb-3">
+                  2020
+                </li>
+
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+
+
+      <section class="border-top border-light ">
+
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+
+                  <div class="card overflow-hidden" style="background-color: #eeeeee;">
+                    <div class="row g-0">
+                      <div class="col-sm-5 bg-repeat-0 bg-size-cover order-sm-2" style="background-image: url(../assets/img/footer_cta_img.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-7 order-sm-1">
+                        <div class="card-body">
+                          <h3 class="card-title">Need help with data platform architecture?</h3>
+                          <p class="card-text">Reach out to start a discussion with our team about your data platform needs.</p>
+                          <a class="btn btn-primary" href="../offerings/platform_engineering/architecture/kw_review.html">Talk to our team</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+
+      </section>
+
+
+
+    </main>
+
+    
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
+                <i class="ai-facebook"></i>
+              </a>
+            -->
+              <!--
+              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
+                <i class="ai-instagram"></i>
+              </a>
+            -->
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../team_publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="../about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>      
+
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>

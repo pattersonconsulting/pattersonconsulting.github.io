@@ -15,14 +15,14 @@
 
     <!-- Facebook and Twitter integration -->
     <meta property="og:title" content="Analyzing Claims Data With the Cube Semantic Layer and Google GSheets"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/claims_data_model_cube_dbx_header_0.jpg"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/gsheets_cube_claims_header_2_1.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/analyzing_claims_data_with_cube_and_google_gsheets.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="In this article I'm going to take you through how to model the bordereaux claims data we've ingested into our Databricks data table with the Cube semantic layer. The advantage here will be that we're providing standardize and complete information in our Information Layer for the knowledge work in the claims division."/>
 
 
     <meta name="twitter:title" content="Analyzing Claims Data With the Cube Semantic Layer and Google GSheets" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/claims_data_model_cube_dbx_header_0.jpg" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/gsheets_cube_claims_header_2_1.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/analyzing_claims_data_with_cube_and_google_gsheets.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -347,7 +347,7 @@
 
       <!-- Post cover image (parallax) -->
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/gsheets_cube_claims_header_2.jpg);"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/gsheets_cube_claims_header_2_1.jpg);"></div>
         <div class="d-none d-xxl-block" style="height: 500px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
@@ -367,7 +367,7 @@
            <p class="fs-lg">
 
 
-The Claims organization plays a critical role in supplying the Finance team with accurate, timely data on reserves, payments, and claims activity. This information underpins key financial processes, including reserve adequacy, cash flow forecasting, and regulatory reporting. Ensuring seamless data integration between Claims and Finance systems is essential for maintaining financial accuracy, managing solvency risk, and supporting enterprise-wide decision-making. From a platform perspective, this highlights the need for robust data pipelines, automated reconciliation workflows, and real-time access to high-quality claims data across systems of record.
+The Claims organization plays a critical role in supplying the Finance team with accurate, timely data on reserves, payments, and claims activity. This information underpins key financial processes, including reserve adequacy, cash flow forecasting, and regulatory reporting. Ensuring seamless data integration between Claims and Finance systems is essential for maintaining financial accuracy, managing solvency risk, and supporting enterprise-wide decision-making. 
 
            </p>
 
@@ -408,16 +408,8 @@ The Claims organization plays a critical role in supplying the Finance team with
 
            <p class="fs-lg">
 
-            Additionally you need to consider that the formulas you are using for your claims analytics calculations may not match what other divisions are using for the same metric in their code. Some effort needs to be spent on some method of metric synchronization between divisions or this creates a situation where calculations may not match when you least can afford or expect it.
+            <b>Additionally you need to consider that the formulas you are using for your claims analytics calculations may not match what other divisions are using for the same metric in their code.</b> Some effort needs to be spent on some method of metric synchronization between divisions or this creates a situation where calculations may not match when you least can afford or expect it.
 
-
-           </p>
-
-
-           
-           <p class="fs-lg todo_segue">
-
-            let's now work on cube stuff...
 
            </p>
 
@@ -427,17 +419,26 @@ The Claims organization plays a critical role in supplying the Finance team with
 
             
 
-             In the last article we built our materialized view of the bordereaux claims data in the Cube semantic layer. This materialized view of the information needed at the knowledge work layer is in a low-latency cached system.
+             In the last article we <a href="building_standard_claims_data_model_cube_dbx_lakehouse.html" target="_blank">built our materialized view of the bordereaux claims data in the Cube semantic layer</a>. This materialized view of the information needed at the knowledge work layer is in a low-latency cached system. Now let's use the work we did with a standard claims data model in Cube in an outside knowledge work end-user application, Google GSheets.
 
           </p>
             
 
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Connecting GSheets to a Cube Data Model</h2>
 
 
-           <p class="fs-lg todo_edit">
+
+           <p class="fs-lg">
 
             
-            stuff
+            To get started first <a href="https://cube.dev/docs/product/configuration/visualization-tools/google-sheets" target="_blank">install the Cube Cloud for Sheets extension</a> inside your Google GSheets interface.
+
+          </p>
+          <p class="fs-lg">
+
+
+
+            Once the extenstion is installed in GSheets, you want to click on <code>Extensions</code> in the top toolbar in Google GSheets and look for the "Cube Cloud for Sheets" entry as seen in the image below.
           </p>
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
@@ -447,12 +448,10 @@ The Claims organization plays a critical role in supplying the Finance team with
 
 
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Connecting GSheets to a Cube Data Model</h2>
-
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
             
-            stuff
+            Once you see the Cube extension sidebar (shown in the image below) look for the data model you created in Cube in the top drop down ("claims_databricks" in the image below).
           </p>
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
@@ -461,17 +460,28 @@ The Claims organization plays a critical role in supplying the Finance team with
           </div>    
 
 
-           <p class="fs-lg todo_edit">
+          
 
-            
-            stuff
-          </p>
 
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/gsheet_cube_data_model_queried_20250613.png" alt="Image">
 
-          </div>    
-  
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Cubes, Views, and Connecting Applications</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  You will need a view created with your metrics included in your Cube data model for the metrics to show up in GSheets. 
+
+
+
+
+
+                </p>
+
+
+              </div>
+            </div>
+
 
 
            <p class="fs-lg">
@@ -504,10 +514,33 @@ views:
 </pre>
 
 
+           <p class="fs-lg">
+
+            Now that we have our Cube claims data model connected to GSheets, we can begin to use our metrics. Click on a cell in your spreadsheet and then a metrics from your data model, and it will be calculated and automatically populated in the spreadsheet cell. If the source data has changed in the data warehouse, the Cube data model will pick up the change and recalculate the metric for you automatically. You can see both "Open Claims" count and the "Total Paid" total in the spreadsheet image below, where both were calculated from the Databricks SQL data warehouse and then cached in the Cube data model caching layer.
+
+            
+            
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/gsheet_cube_data_model_queried_20250613.png" alt="Image">
+
+          </div>    
+  
+
+
+
 
            <p class="fs-lg">
 
-            Add the above yaml code to the "views" subfolder in your data model and save it.
+            Now your knowledge work end-users have fast access to consistent metric calculations across all divisions in the company. 
+
+          </p>
+
+          <p class="fs-lg">
+
+
+            <b>This saves on both computation cost and costs from errors when calculations don't match up between divisions.</b>
 
             
 
@@ -516,17 +549,13 @@ views:
             </p>    
 
 
+          <p class="fs-lg">
 
-           <p class="fs-lg">
+            Building business logic in the cached semantic layer making it easier to get consistent complete claims analytical information for running your property insurance business. It saves your company money on both cloud computing costs and also the cost of inconsistency in business metrics between divisions. Next up we'll work through connecting this same claims data model to Power BI to build a dashboard for your claims team.
 
-            Once you've merged your updates to your Cube.dev claims data model, you are ready to head over to the Cube.dev "Playground" to test out your data model.
+          </p>
 
-            
-
-            
-
-            </p>    
-
+<!--
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration with Knowledge Work Tools</h2>
 
@@ -577,7 +606,7 @@ views:
             
 
           </p>     
-
+-->
 
 
 
@@ -604,8 +633,8 @@ views:
                       <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Connecting to Your Claims Data Model from GSheets with Cube</h4>
-                          <p class="card-text">Quickly using your claims data models in a GSheets spreadsheet with the Cube connector.</p>
+                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
+                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
                           
                 <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
                   Read next article in series

@@ -414,7 +414,7 @@
 
            <p class="fs-lg ">
 
-            As organizations modernize their data platforms to support lakehouse architectures and enterprise-wide governance, understanding the differences between legacy metadata management and modern solutions becomes critical. This comparison highlights the key distinctions between the traditional Hive Metastore — originally designed for Hadoop-era workloads — and Databricks Unity Catalog, which provides centralized, fine-grained, and scalable governance tailored to today’s cloud-native and multi-workspace environments.
+As organizations modernize their data platforms to support lakehouse architectures and enterprise-wide governance, understanding the differences between legacy metadata management and modern solutions becomes critical. This comparison highlights the key distinctions between the traditional Hive Metastore — originally designed for Hadoop-era workloads — and Databricks Unity Catalog, which provides centralized, fine-grained, and scalable governance tailored to today’s cloud-native and multi-workspace environments.
 
 
 
@@ -441,13 +441,16 @@ It stores metadata about databases, tables, partitions, schemas, and locations o
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/hive_metastore_hadoop_definitive_guide.png" alt="Image">
+            <p class="fs-lg mt-3">
+              <i>Image source: O'Reilly's "The Hadoop Definitive Guide", Tom White</i>
+            </p>
 
           </div>    
 
 
 <p class="fs-lg ">
 
-  <strong>Key limitations:</strong>
+  <strong>Key limitations of Apache Hive Metastore:</strong>
 
 </p>
 
@@ -459,101 +462,98 @@ It stores metadata about databases, tables, partitions, schemas, and locations o
     </ul>
   
 
-<p class="fs-lg todo_edit">  
-Apache Iceberg modernizes table metadata management and eliminates many of the limitations of the Hive Metastore.
-  </p>
+<p class="fs-lg">
+In short, the Hive Metastore was never designed for today’s scale or governance needs. Its centralized, mutable metadata and directory-based partition tracking make it brittle, slow, and operationally fragile at enterprise scale. These architectural limits set the stage for the next evolution in data lake design—one that treats tables as first-class, self-describing objects rather than folders of files.
+</p>
+<p class="fs-lg">
+Enter Apache Iceberg.
+</p>
 
-<p class="fs-lg  todo_edit">  
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Apache Iceberg</h2>
 
-Hive Metastore (HMS) was originally designed to track tables and partitions for Hive in a data warehouse-like setting, but it has significant drawbacks at scale — such as slow metadata operations, reliance on a single relational database, and difficulties managing millions of partitions.
-  </p>
+<p class="fs-lg">
+Apache Iceberg is an open table format that fundamentally re-architects how data lake tables are defined, moving beyond the brittle, slow, and limited model of traditional Hive tables and their reliance on the Hive Metastore (HMS).
+</p>
 
-<p class="fs-lg  todo_edit">  
-
-Iceberg replaces the need for HMS as the primary source of truth for table metadata. It stores rich table metadata in files alongside the data itself, in an open, atomic, and versioned format. This allows fast reads/writes, snapshot isolation, time travel, and schema evolution — all without the bottlenecks of HMS.
-  </p>
-
-<p class="fs-lg  todo_edit">  
-
-In practice, many deployments of Iceberg are still integrated with HMS for compatibility, but Iceberg tables don’t depend on HMS beyond optional discovery — they manage their own metadata. Over time, organizations can fully transition away from HMS by letting Iceberg (or a modern catalog like Databricks Unity Catalog) handle both metadata and governance.
-  </p>
-
-<p class="fs-lg  todo_edit">  
-
-In short: Iceberg succeeds HMS by addressing its scalability, consistency, and functionality limitations while remaining compatible for hybrid scenarios.
-  </p>
-
-
-<p class="fs-lg  todo_edit"><strong>Apache Iceberg was designed to replace the legacy metadata and table management approaches used in Hive and traditional data lakes — specifically the combination of Hive tables, Hive Metastore, and directory-based partitioning schemes.</strong></p>
-
-<p class="fs-lg  todo_edit">Hive tables (and formats like Hive/Parquet/ORC) relied on file and directory structures to represent partitions and on the Hive Metastore (HMS) to track metadata. This worked at small scales but became brittle and slow at scale — with problems like:</p>
-
-<ul>
-  <li>Inefficient handling of millions of partitions (since each partition was a directory entry in HMS).</li>
-  <li>Lack of atomic operations, making concurrent writes unsafe.</li>
-  <li>No support for time travel, snapshots, or reliable schema evolution.</li>
-  <li>Poor performance for metadata operations.</li>
-</ul>
-
-<p class="fs-lg  todo_edit">Iceberg was explicitly designed to solve these problems by introducing a proper table format with self-contained, versioned, and scalable metadata — enabling modern data lake capabilities (transactional writes, time travel, schema evolution) without the limitations of Hive-era designs.</p>
-
-<p class="fs-lg  todo_edit"><strong>In short:</strong> <em>Iceberg replaces Hive’s table and partition management model with a scalable, reliable, open table format purpose-built for modern data lakes.</em></p>
-  
-
-
-<p class="fs-lg todo_segue">
-
-  [ how does what was missing inform what was introduced with unity catalog? ]
+<p class="fs-lg">
+Apache Iceberg is a modern open table format that solves the major limitations of traditional Hive tables.
 
 </p>
+
+<p class="fs-lg">
+The previous Hive model relied on the Hive Metastore (HMS) to track every table partition in an external database. This approach was slow at scale and non-atomic. This risked data corruption, data loss, and inconsistent reads.
+</p>
+<p class="fs-lg">
+
+Iceberg solves this by creating self-contained tables. Each table stores its own complete, versioned metadata (schema, partitions, and data file locations) in files directly alongside the data. This design provides high performance by avoiding slow directory listings, guarantees data consistency with atomic transactions, and enables powerful features like time travel (querying the table as it was at a specific time) and schema evolution.
+</p>
+
+<p class="fs-lg">
+While compatible, Iceberg limits the role of HMS to an optional pointer for table discovery, offering a seamless migration path from legacy systems.
+</p>
+
+<p class="fs-lg">
+
+The limitations of the Hive Metastore—such as its lack of centralized governance, fine-grained access controls, data lineage, and comprehensive auditing— informed the introduction of Unity Catalog, which provides these features for a modern data lakehouse. The features introduced with Unity Catalog set up customers to move forward by providing a unified, secure, and scalable governance layer that manages all their data assets, like tables, files, and ML models, consistently across multiple workspaces.
+</p>
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Databricks Unity Catalog</h2>
 
-  <p class="fs-lg ">
 
-  <strong>Unity Catalog</strong> is Databricks’ next-generation data governance and cataloging solution, built for the lakehouse architecture.
-  It’s a <strong>centralized, cross-workspace catalog</strong> that provides unified governance over all your data assets.
-  </p>
-
-<p class="fs-lg ">  
-  <strong>Key capabilities:</strong>
+<p class="fs-lg">
+  Unity Catalog is Databricks’ next-generation data governance and cataloging solution, built for the lakehouse architecture. It’s a centralized, cross-workspace catalog that provides unified governance over all your data assets.
 </p>
-    <ul>
-      <li><strong>Centralized governance:</strong> Single catalog for all Databricks workspaces in an account — no need to duplicate or synchronize metadata.</li>
-      <li><strong>Fine-grained access control:</strong> Supports secure access down to <em>columns, rows, and attributes</em> with SQL-standard GRANT statements.</li>
-      <li><strong>Data lineage:</strong> Automatically captures lineage of tables/views, so you can trace where data came from and how it’s transformed.</li>
-      <li><strong>Audit & compliance:</strong> Logs all access and changes for governance and regulatory compliance.</li>
-      <li><strong>Object types:</strong> Governs more than just tables — includes files, functions, models, etc.</li>
-      <li>Integrated with cloud-native identity & access management (e.g., Azure, AWS IAM).</li>
-    </ul>
 
 
-<p class="fs-lg todo_segue">
+<p class="fs-lg">
+<b>Key capabilities:</b>
+</p>
 
-  [ how does what was what was introduced with unity catalog setup customers to move forward? ]
+<ul>
+  <li class="fs-lg">
+    <strong>Centralized governance:</strong> Single catalog for all Databricks workspaces in an account — no need to duplicate or synchronize metadata.
+  </li>
+  <li class="fs-lg">
+    <strong>Fine-grained access control:</strong> Supports secure access down to columns, rows, and attributes with SQL-standard GRANT statements.
+  </li>
+  <li class="fs-lg">
+    <strong>Data lineage:</strong> Automatically captures lineage of tables/views, so you can trace where data came from and how it’s transformed.
+  </li>
+  <li class="fs-lg">
+    <strong>Audit &amp; compliance:</strong> Logs all access and changes for governance and regulatory compliance.
+  </li>
+  <li class="fs-lg">
+    <strong>Object types:</strong> Governs more than just tables — includes files, functions, models, etc.
+  </li>
+  <li class="fs-lg">
+    <strong>Integrated with cloud-native identity &amp; access management:</strong> (e.g., Azure, AWS IAM).
+  </li>
+</ul>
 
+
+
+
+<p class="fs-lg">
+  Databricks Unity Catalog is a unified governance layer that manages data access, security, and metadata for all your data assets — including tables stored in open formats like Apache Iceberg.
 </p>
 
 <p class="fs-lg">
-Databricks Unity Catalog is a unified governance layer that manages data access, security, and metadata for all your data assets — including tables stored in open formats like Apache Iceberg.
-
+  Apache Iceberg is an open table format that adds features like versioning, schema evolution, and efficient partitioning for large-scale data lakes.
 </p>
 
 <p class="fs-lg">
-Iceberg itself is an open table format that provides advanced features like versioning, schema evolution, and large-scale partitioning for data lakes. 
+  When you use Iceberg tables on Databricks, Unity Catalog acts as the catalog that organizes and secures those Iceberg tables, just as it does for Delta Lake or Parquet.
 </p>
 
 <p class="fs-lg">
-<b>When you use Iceberg tables on Databricks, Unity Catalog acts as the catalog that organizes and secures those Iceberg tables, just as it does for Delta Lake or Parquet. </b>
-</p>
-<p class="fs-lg">
-<b>In essence, Unity Catalog provides the governance and access control on top of Iceberg’s storage and table format capabilities, enabling secure and consistent management of Iceberg data in a Databricks environment.</b>
-
+  In essence, Unity Catalog provides governance and access control on top of Iceberg’s storage and table format capabilities, enabling secure and consistent management of Iceberg data within a Databricks environment.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary Comparison Table</h2>
 
-<table border="1" cellpadding="5" cellspacing="0">
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary Comparison Table</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
   <thead>
     <tr>
       <th>Feature</th>
@@ -563,37 +563,37 @@ Iceberg itself is an open table format that provides advanced features like vers
   </thead>
   <tbody>
     <tr>
-      <td><strong>Scope</strong></td>
+      <td>Scope</td>
       <td>Per workspace</td>
       <td>Cross-workspace (centralized)</td>
     </tr>
     <tr>
-      <td><strong>Granularity of permissions</strong></td>
+      <td>Granularity of permissions</td>
       <td>Database/Table</td>
       <td>Database/Table/Column/Row</td>
     </tr>
     <tr>
-      <td><strong>Lineage tracking</strong></td>
+      <td>Lineage tracking</td>
       <td>❌ No</td>
       <td>✅ Yes</td>
     </tr>
     <tr>
-      <td><strong>Audit logs & compliance</strong></td>
+      <td>Audit logs &amp; compliance</td>
       <td>Limited</td>
       <td>Comprehensive</td>
     </tr>
     <tr>
-      <td><strong>Governed assets</strong></td>
-      <td>Tables & partitions</td>
+      <td>Governed assets</td>
+      <td>Tables &amp; partitions</td>
       <td>Tables, files, ML models, etc.</td>
     </tr>
     <tr>
-      <td><strong>Cloud-native integration</strong></td>
+      <td>Cloud-native integration</td>
       <td>❌ No</td>
       <td>✅ Yes</td>
     </tr>
     <tr>
-      <td><strong>Sharing across workspaces</strong></td>
+      <td>Sharing across workspaces</td>
       <td>Difficult</td>
       <td>Seamless</td>
     </tr>
@@ -602,12 +602,19 @@ Iceberg itself is an open table format that provides advanced features like vers
 
 
 
+
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
 
-<p>
-  <em>Hive Metastore was designed for traditional Hadoop-style big data workloads and is basic & siloed.<br>
-  Unity Catalog is designed for the modern lakehouse, offering centralized, secure, and fine-grained governance at scale.</em>
+<p class="fs-lg">
+  Hive Metastore was built for legacy Hadoop-style big data workloads and offers only basic, siloed metadata management.
 </p>
+
+<p class="fs-lg">
+  Unity Catalog, in contrast, is built for the modern lakehouse — delivering centralized, secure, and fine-grained governance at scale.
+</p>
+
 
 
           </div>

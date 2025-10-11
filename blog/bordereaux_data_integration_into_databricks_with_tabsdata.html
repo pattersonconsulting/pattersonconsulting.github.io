@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Bordereaux Data Integration into Databricks with Tabsdata</title>
+    <meta name="description" content="In this article we create enriched property insurance Databricks Delta Tables with Tabsdata.">
+    <meta name="keywords" content="databricks, insurance, tabsdata, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Josh Patterson">
+
+
+    <meta property="og:title" content="Bordereaux Data Integration into Databricks with Tabsdata"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/bordereaux_data_integration_into_databricks_with_tabsdata.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="In this article we create enriched property insurance Databricks Delta Tables with Tabsdata."/>
+
+
+    <meta name="twitter:title" content="Bordereaux Data Integration into Databricks with Tabsdata" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/bordereaux_data_integration_into_databricks_with_tabsdata.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Bordereaux Data Integration into Databricks with Tabsdata</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Bordereaux Data Integration into Databricks with Tabsdata</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Daniel Adayev
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/building_retail_product_table_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 500px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+            
+
+            <!--
+           
+           <p class="fs-lg">
+
+            Many times when we start out building a new data warehouse there are a lot of decision decisions to be made. To get going quickly with Delta tables on Databricks for slow changing tables we can use <code>CREATE TABLE AS SELECT</code> (CTAS) statements.
+
+           </p>
+
+           <p class="fs-lg">
+            Using a <code>CREATE TABLE AS SELECT</code> (CTAS) statement is a highly efficient way to perform a one-time data load into a Databricks table directly from source files like CSVs. This single-command approach is particularly useful for creating dimension tables or other datasets that do not require frequent updates. In this guide, we'll walk through this method to build a foundational piece of a retail database: the product table. This core table will be created as a <code>Unity Catalog</code> managed <code>Delta table</code>, making it immediately ready to be joined with other data, such as orders and customer information, to generate key business metrics.
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From CSV Files to a Queryable Table</h2>
+           <p class="fs-lg">
+            Our goal is to transform a set of CSV files containing product information into a structured, governed <code>Delta table</code> within <code>Unity Catalog</code>. We will use the CTAS method because it combines simplicity and power, making it ideal for this kind of single-load task. The process involves two main stages. First, we will stage the raw data by creating a <code>Unity Catalog Volume</code> to store our source CSV files. Second, we will write and execute a single SQL statement that reads the files from the Volume and materializes the <code>Delta table</code> in one seamless operation.
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Stage the Product Data in a Volume</h2>
+           <p class="fs-lg">
+            Before we can build our table, we need a centralized location for our raw data files. <code>Unity Catalog Volumes</code> are the perfect tool for this job, as they allow us to store, govern, and access non-tabular data, like our CSVs, from within the Databricks environment.
+           </p>
+           <p class="fs-lg">
+            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>gold</code> schema within the <code>retail_bcd_dev</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_files_upload</code>. 
+
+
+          </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/product_files_staged_volume.png" alt="Image">
+
+          </div>    
+          
+           <p class="fs-lg">
+            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/retail_bcd_dev/gold/product_files_upload/</code>.
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Build the Table with a CTAS Statement</h2>
+           <p class="fs-lg">
+            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
+           </p>
+           <p class="fs-lg">
+            Here is the complete SQL query to accomplish this:
+           </p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE OR REPLACE TABLE retail_bcd_dev.gold.products
+USING DELTA
+AS
+SELECT
+  CAST(sku_sk AS INT) AS sku_sk,
+  CAST(product_id AS STRING) AS product_id,
+  CAST(supplier_id AS INT) AS supplier_id,
+  CAST(category AS STRING) AS category,
+  CAST(brand AS STRING) AS brand,
+  CAST(product_name AS STRING) AS product_name
+FROM read_files(
+  '/Volumes/retail_bcd_dev/gold/product_files_upload/',
+  format => 'csv',
+  header => true,
+  inferSchema => true
+);
+</code>
+</pre>
+           <p class="fs-lg">
+            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>retail_bcd_dev.gold.products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use Product Table</h2>
+           <p class="fs-lg">
+            After running the CTAS statement, our <code>products</code> table is instantly created and available in the <code>gold</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
+
+          </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/final_products_delta_table.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg">
+
+             The table is correctly populated with columns for SKU, product ID, supplier, category, brand, and product name. This table can now serve as the single source of truth for all product information, feeding BI dashboards, downstream data models, and ad-hoc analytics that help drive the business forward.
+           </p>
+
+-->
+
+<p class="fs-lg">
+ Insurance teams depend on timely, accurate claim data to make fast decisions. However, when Third-Party Administrators send claim data as spreadsheets by email—often with mismatched schemas—it creates bottlenecks that slow things down. Engineers end up cleaning and restructuring files instead of building reliable workflows, and business leaders wait longer for insights they need today.
+</p>
+
+<p class="fs-lg">
+ In this post, we’ll show how <code>Tabsdata</code> and <code>Databricks</code> can empower a single engineer to automate an entire insurance claim workflow end-to-end: from collecting claim files straight out of Gmail, to standardizing and enriching them, to publishing clean, versioned data into Databricks for analysis. The result is a workflow that saves time, reduces errors, and gives your claims team the data they need when they need it.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Tabsdata</h2>
+<p class="fs-lg">
+ <code>Tabsdata</code> follows a Pub/Sub approach that makes data integration more scalable and flexible than traditional data integration pipelines. Instead of extracting and loading data directly into your data platform, you <em>publish</em> datasets into tables within the <code>Tabsdata Server</code>. From there, Databricks (or any other platform) can <em>subscribe</em> to those tables.
+</p>
+<p class="fs-lg">
+ Between publishing and subscribing, you can add transformation steps to clean, enrich, or reshape the data as needed. Each step in this workflow is implemented as a <code>Tabsdata Function</code>, which is a simple Python function that either reads from or loads data into <code>Tabsdata Tables</code>. Functions can be triggered manually or automatically when new data needs to be processed. Every run of a function creates a new version of its table, and all versions of all tables are stored in the server—enabling time travel, auditing, and straightforward debugging.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Tabsdata</h2>
+<p class="fs-lg">
+ Tabsdata provides seamless ingestion and transformation capabilities while giving you significant advantages in lineage, governance, and orchestration.
+</p>
+<p class="fs-lg">
+ Every <code>Tabsdata Table</code> is automatically versioned and stores the full history of both its data and schema. When a new version of a table is created, Tabsdata infers the schema directly from the data being written, removing the need to define or enforce a schema in advance. This approach preserves the metadata and semantics of your source data, provides clear visibility into how that data evolves over time, and enables you to address schema drift proactively instead of managing it defensively.
+</p>
+<p class="fs-lg">
+ These versioned tables form the backbone for how work is orchestrated in Tabsdata. Since Tabsdata Functions only interact with Tables—either by reading from them or writing to them—Tabsdata can infer execution order and automatically orchestrate your workflow. When a table gets new data, any functions that depend on that table run automatically. This declarative orchestration removes the need to manually create and maintain fragile DAGs and increases confidence in the reliability of your data.
+</p>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_pubsub_overview.png" alt="Tabsdata Pub/Sub Overview">
+</div>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From Gmail &amp; MySQL to a Governed Lakehouse</h2>
+<p class="fs-lg">
+ To automate TPA claims processing, we’ll implement a simple, reproducible pipeline:
+</p>
+<ul class="fs-lg">
+  <li>Publish raw claims data <em>from Gmail</em> into Tabsdata.</li>
+  <li>Publish policy data <em>from MySQL</em> into Tabsdata.</li>
+  <li>Transform and enrich the claim data with policy data.</li>
+  <li>Subscribe the processed (clean, versioned) data into <code>Databricks</code> for analytics.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Target Schemas</h2>
+<p class="fs-lg">
+ The policy data we ingest will use the following schema:
+</p>
+<div class="table-responsive mb-4">
+  <table class="table table-sm">
+    <thead>
+      <tr><th>Field Name</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>policy_number</td><td>String</td><td>Unique identifier for the policy</td></tr>
+      <tr><td>months_insured</td><td>Integer</td><td>Total number of months the policy has been active</td></tr>
+      <tr><td>has_claims</td><td>Boolean</td><td>Indicates whether the policyholder has filed claims</td></tr>
+      <tr><td>insured_name</td><td>String</td><td>Name of the policyholder</td></tr>
+      <tr><td>policy_start_date</td><td>String</td><td>Date when the policy began</td></tr>
+      <tr><td>reserve_amount</td><td>Float</td><td>Funds reserved for potential claims</td></tr>
+      <tr><td>total_incurred</td><td>Float</td><td>Total claim costs incurred to date</td></tr>
+      <tr><td>claim_propensity</td><td>Float</td><td>Model-predicted likelihood of a claim</td></tr>
+      <tr><td>broker_id</td><td>String</td><td>Identifier for the broker who issued the policy</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="fs-lg">
+ Our claim data files may arrive with non-uniform schemas. We standardize all claim data to this canonical schema:
+</p>
+<div class="table-responsive mb-4">
+  <table class="table table-sm">
+    <thead>
+      <tr><th>Field Name</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>policy_number</td><td>String</td><td>Unique identifier for the policy</td></tr>
+      <tr><td>months_insured</td><td>Integer</td><td>Number of months the policy has been active</td></tr>
+      <tr><td>has_claims</td><td>Boolean</td><td>Whether the policyholder has filed any claims</td></tr>
+      <tr><td>items_insured</td><td>Integer</td><td>Number of items covered under the policy</td></tr>
+      <tr><td>claim_reference</td><td>String</td><td>Unique reference for the claim</td></tr>
+      <tr><td>insured_name</td><td>String</td><td>Name of the policyholder</td></tr>
+      <tr><td>policy_start_date</td><td>String</td><td>Date the policy began (YYYY-MM-DD)</td></tr>
+      <tr><td>date_of_loss</td><td>String</td><td>Date when the loss event occurred</td></tr>
+      <tr><td>date_reported</td><td>String</td><td>Date the claim was reported</td></tr>
+      <tr><td>claim_status</td><td>String</td><td>Current status (e.g., open, closed, pending)</td></tr>
+      <tr><td>loss_type</td><td>String</td><td>Type of loss (e.g., theft, accident, fire)</td></tr>
+      <tr><td>paid_amount</td><td>Float</td><td>Amount already paid on the claim</td></tr>
+      <tr><td>reserve_amount</td><td>Float</td><td>Funds reserved for potential future payments</td></tr>
+      <tr><td>total_incurred</td><td>Float</td><td>Total claim costs (paid + reserved)</td></tr>
+      <tr><td>claim_propensity</td><td>Float</td><td>Model-predicted likelihood of a claim</td></tr>
+      <tr><td>broker_id</td><td>String</td><td>Identifier of the issuing broker</td></tr>
+      <tr><td>date_loaded</td><td>Date</td><td>Date the record was ingested into the system</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Getting Started</h2>
+<p class="fs-lg">
+ Install Tabsdata locally and start the server, then authenticate and create a collection to organize your workflow assets.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-bash">
+pip install tabsdata
+
+# start the local server
+tdserver start
+
+# login to Tabsdata
+td login --server localhost --user admin --role sys_admin --password tabsdata
+
+# create a collection for this workflow
+td collection create --name claim_processing
+</code></pre>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_collection.png" alt="Tabsdata Collection">
+</div>
+
+<p class="fs-lg">
+ Inside this collection, we’ll build six functions: two publishers, three transformers, and one subscriber.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Publisher #1: Policy_dim_pub (MySQL → Tabsdata)</h2>
+<p class="fs-lg">
+ To enrich claims data, we need the latest policy records. This publisher uses the Tabsdata MySQL connector to pull policy data and load it into the <code>policy_dim</code> table.
+</p>
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.publisher(
+    source=td.MySQLSource(
+        uri=os.getenv("MYSQL_URI"),
+        query=["SELECT * FROM `policy_dim`"],
+        credentials=td.UserPasswordCredentials(MYSQL_USERNAME, MYSQL_PASSWORD),
+    ),
+    tables=["policy_dim"],
+    trigger_by=["claims_fact_today"],
+)
+def policy_dim_pub(tf: td.TableFrame):
+    return tf
+</code></pre>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Publisher #2: Claims_fact_pub (Gmail → Tabsdata)</h2>
+<p class="fs-lg">
+ This function connects to Gmail and extracts all unread CSV attachments. It standardizes each file’s schema, unions the results, de-duplicates, and writes to <code>claims_fact_today</code>.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+def standardize_schema(tf: td.TableFrame):
+    target_schema = {
+        "policy_number": td.String,
+        "months_insured": td.Int64,
+        "has_claims": td.Boolean,
+        "items_insured": td.Int64,
+        "claim_reference": td.String,
+        "insured_name": td.String,
+        "policy_start_date": td.String,
+        "date_of_loss": td.String,
+        "date_reported": td.String,
+        "claim_status": td.String,
+        "loss_type": td.String,
+        "paid_amount": td.Float64,
+        "reserve_amount": td.Float64,
+        "total_incurred": td.Float64,
+        "claim_propensity": td.Float64,
+        "broker_id": td.String,
+    }
+    tf = tf.with_columns(
+        *[
+            (td.col(name) if name in tf.columns() else td.lit(None).cast(dtype).alias(name))
+            for name, dtype in target_schema.items()
+        ]
+    )
+    return tf.select(list(target_schema.keys()))
+</code></pre>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.publisher(
+    source=GmailPublisher(),            # Source plugin for Gmail
+    tables="claims_fact_today",         # Output table
+)
+def claim_fact_pub(tf: List[td.TableFrame]):
+    tf = [standardize_schema(tf1) for tf1 in tf]
+    union_tf = functools.reduce(lambda a, b: td.concat([a, b]), tf)
+    union_tf = union_tf.with_columns(td.lit(date.today()).alias("date_loaded"))
+    return union_tf.unique(subset=["policy_number", "claim_reference"], keep="first")
+</code></pre>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/gmail_to_tabsdata.png" alt="Gmail to Tabsdata Publisher">
+</div>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #1: Append Today to Master</h2>
+<p class="fs-lg">
+ The <code>claims_fact_today</code> table holds the latest batch only. This transformer appends that batch into a running <code>claims_fact_master</code>.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.transformer(
+   input_tables=["claims_fact_today","claims_fact_master"],
+   output_tables=["claims_fact_master"],
+)
+def append_claims_today_to_master_trf(claims_fact_today, claims_fact_master):
+   if claims_fact_master is None:
+       claims_fact_master = claims_fact_today.clear()
+   claims_fact_master = td.concat([claims_fact_today, claims_fact_master])
+   return claims_fact_master
+</code></pre>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #2: Master Enrichment (Join with Policy Dim)</h2>
+<p class="fs-lg">
+ Enrich the master fact with policy attributes, coalesce overlapping fields, and ensure only valid claims are kept.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.transformer(
+    input_tables=["policy_dim", "claims_fact_master"],
+    output_tables=["claims_fact_master_enriched"],
+)
+def master_fact_trf(policy_dim: td.TableFrame, claims_fact: td.TableFrame):
+    key = "policy_number"
+    master = claims_fact.join(policy_dim, on=key, how="left")
+    overlapping = list(set(policy_dim.columns()) & set(claims_fact.columns()) - {key})
+    master = master.with_columns(
+        [pl.coalesce(col + "_right", col).alias(col) for col in overlapping]
+    ).select(
+        [col for col in master.columns() if col not in [i + "_right" for i in overlapping]]
+    )
+    return master.filter(td.col("claim_reference").is_not_null())
+</code></pre>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #3: Business-Friendly Slices</h2>
+<p class="fs-lg">
+ Create practical subsets for operations: open/pending, last 90 days, and large payouts (&gt;$10,000).
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.transformer(
+    input_tables=["claims_fact_master_enriched"],
+    output_tables=["open_pending_claims", "claims_last_90_days", "paid_amount_greater_10000"],
+)
+def master_categorize_trf(claims_fact_master: td.TableFrame):
+    open_pending_claims = claims_fact_master.filter(td.col("claim_status") == "Open")
+
+    claims_last_90_days = claims_fact_master.with_columns(
+        (td.lit(dt.date.today()).cast(td.Date) - td.col("date_reported").cast(td.Date))
+        .dt.total_days()
+        .alias("days_since_reported")
+    ).filter(td.col("days_since_reported") &lt;= 90)
+
+    paid_amount_greater_10000 = claims_fact_master.filter(td.col("paid_amount") &gt; 10000)
+
+    return open_pending_claims, claims_last_90_days, paid_amount_greater_10000
+</code></pre>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/claims_subsets.png" alt="Claims Subsets">
+</div>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Subscriber: Databricks (Tabsdata → Lakehouse)</h2>
+<p class="fs-lg">
+ Finally, we push our processed and curated tables into Databricks for analysts and business users. We’ll publish multiple outputs into governed Delta tables.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+@td.subscriber(
+    tables=[
+        "claims_fact_master_enriched",
+        "open_pending_claims",
+        "claims_last_90_days",
+        "paid_amount_greater_10000",
+    ],
+    destination=td.DatabricksDestination(
+        host_url=os.getenv("databricks_host_url"),
+        token=td.EnvironmentSecret("databricks_token"),
+        tables=[
+            "claims_fact_master_enriched",
+            "open_pending_claims",
+            "claims_last_90_days",
+            "paid_amount_greater_10000",
+        ],
+        volume=os.getenv("volume"),
+        catalog=os.getenv("catalog"),
+        schema=os.getenv("schema"),
+        warehouse=os.getenv("warehouse"),
+        if_table_exists="replace",
+        schema_strategy="update",
+    ),
+)
+def databricks_sub(
+    claims_fact_master_enriched: td.TableFrame,
+    open_pending_claims: td.TableFrame,
+    claims_last_90_days: td.TableFrame,
+    paid_amount_greater_10000: td.TableFrame,
+):
+    return (
+        claims_fact_master_enriched,
+        open_pending_claims,
+        claims_last_90_days,
+        paid_amount_greater_10000,
+    )
+</code></pre>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/databricks_delta_tables.png" alt="Databricks Delta Tables">
+</div>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use, Versioned Claims Lakehouse</h2>
+<p class="fs-lg">
+ With just a few concise functions, we created an end-to-end ingestion and transformation workflow for insurance claims. Before any of this data even lands in Databricks, teams can use the Tabsdata UI to browse tables, run ad-hoc SQL, inspect schemas, and—crucially—view historical versions for audits and debugging.
+</p>
+
+<p class="fs-lg">
+ Once subscribed into Databricks as managed <code>Delta</code> tables, your analysts can immediately build dashboards, join to policy and broker dimensions, and compute operational metrics (e.g., open claims aging, paid vs. reserved, loss trends) with confidence in lineage and reproducibility.
+</p>
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/hive_metastore_vs_unity_catalog_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Understanding the Difference Between Unity Catalog and the Hive Metastore</h4>
+                          <p class="card-text">In this article we give a breakdown of the key differences between the legacy hive metastore and the modern Databricks Unity Catalog.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="./understanding_the_difference_between_unity_catalog_and_hive_metastore.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>

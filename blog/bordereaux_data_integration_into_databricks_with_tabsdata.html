@@ -5,21 +5,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Bordereaux Data Integration into Databricks with Tabsdata</title>
+    <title>Bordereaux Data Integration into Databricks Delta Tables with Tabsdata</title>
     <meta name="description" content="In this article we create enriched property insurance Databricks Delta Tables with Tabsdata.">
     <meta name="keywords" content="databricks, insurance, tabsdata, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Josh Patterson">
 
 
-    <meta property="og:title" content="Bordereaux Data Integration into Databricks with Tabsdata"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:title" content="Bordereaux Data Integration into Databricks Delta Tables with Tabsdata"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/dbx_tabsdata_insurance_header_0.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/bordereaux_data_integration_into_databricks_with_tabsdata.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="In this article we create enriched property insurance Databricks Delta Tables with Tabsdata."/>
 
 
     <meta name="twitter:title" content="Bordereaux Data Integration into Databricks with Tabsdata" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/dbx_tabsdata_insurance_header_0.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/bordereaux_data_integration_into_databricks_with_tabsdata.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -278,13 +278,13 @@
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Bordereaux Data Integration into Databricks with Tabsdata</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Bordereaux Data Integration into Databricks Delta Tables with Tabsdata</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Daniel Adayev
+                  Daniel Adayev, Josh Patterson
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
@@ -295,7 +295,7 @@
 
 
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/building_retail_product_table_header_0.jpg);"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/dbx_tabsdata_insurance_header_0.jpg);"></div>
         <div class="d-none d-xxl-block" style="height: 500px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
@@ -309,110 +309,47 @@
           <div class="col-lg-9 col-xl-8">
             
 
-            <!--
-           
-           <p class="fs-lg">
-
-            Many times when we start out building a new data warehouse there are a lot of decision decisions to be made. To get going quickly with Delta tables on Databricks for slow changing tables we can use <code>CREATE TABLE AS SELECT</code> (CTAS) statements.
-
-           </p>
-
-           <p class="fs-lg">
-            Using a <code>CREATE TABLE AS SELECT</code> (CTAS) statement is a highly efficient way to perform a one-time data load into a Databricks table directly from source files like CSVs. This single-command approach is particularly useful for creating dimension tables or other datasets that do not require frequent updates. In this guide, we'll walk through this method to build a foundational piece of a retail database: the product table. This core table will be created as a <code>Unity Catalog</code> managed <code>Delta table</code>, making it immediately ready to be joined with other data, such as orders and customer information, to generate key business metrics.
-           </p>
-
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From CSV Files to a Queryable Table</h2>
-           <p class="fs-lg">
-            Our goal is to transform a set of CSV files containing product information into a structured, governed <code>Delta table</code> within <code>Unity Catalog</code>. We will use the CTAS method because it combines simplicity and power, making it ideal for this kind of single-load task. The process involves two main stages. First, we will stage the raw data by creating a <code>Unity Catalog Volume</code> to store our source CSV files. Second, we will write and execute a single SQL statement that reads the files from the Volume and materializes the <code>Delta table</code> in one seamless operation.
-           </p>
-
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Stage the Product Data in a Volume</h2>
-           <p class="fs-lg">
-            Before we can build our table, we need a centralized location for our raw data files. <code>Unity Catalog Volumes</code> are the perfect tool for this job, as they allow us to store, govern, and access non-tabular data, like our CSVs, from within the Databricks environment.
-           </p>
-           <p class="fs-lg">
-            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>gold</code> schema within the <code>retail_bcd_dev</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_files_upload</code>. 
-
-
-          </p>
-
-
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/product_files_staged_volume.png" alt="Image">
-
-          </div>    
-          
-           <p class="fs-lg">
-            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/retail_bcd_dev/gold/product_files_upload/</code>.
-           </p>
-
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Build the Table with a CTAS Statement</h2>
-           <p class="fs-lg">
-            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
-           </p>
-           <p class="fs-lg">
-            Here is the complete SQL query to accomplish this:
-           </p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE OR REPLACE TABLE retail_bcd_dev.gold.products
-USING DELTA
-AS
-SELECT
-  CAST(sku_sk AS INT) AS sku_sk,
-  CAST(product_id AS STRING) AS product_id,
-  CAST(supplier_id AS INT) AS supplier_id,
-  CAST(category AS STRING) AS category,
-  CAST(brand AS STRING) AS brand,
-  CAST(product_name AS STRING) AS product_name
-FROM read_files(
-  '/Volumes/retail_bcd_dev/gold/product_files_upload/',
-  format => 'csv',
-  header => true,
-  inferSchema => true
-);
-</code>
-</pre>
-           <p class="fs-lg">
-            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>retail_bcd_dev.gold.products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
-           </p>
-
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use Product Table</h2>
-           <p class="fs-lg">
-            After running the CTAS statement, our <code>products</code> table is instantly created and available in the <code>gold</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
-
-          </p>
-
-
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/final_products_delta_table.png" alt="Image">
-
-          </div>    
-
-           <p class="fs-lg">
-
-             The table is correctly populated with columns for SKU, product ID, supplier, category, brand, and product name. This table can now serve as the single source of truth for all product information, feeding BI dashboards, downstream data models, and ad-hoc analytics that help drive the business forward.
-           </p>
-
--->
-
 <p class="fs-lg">
  Insurance teams depend on timely, accurate claim data to make fast decisions. However, when Third-Party Administrators send claim data as spreadsheets by email—often with mismatched schemas—it creates bottlenecks that slow things down. Engineers end up cleaning and restructuring files instead of building reliable workflows, and business leaders wait longer for insights they need today.
 </p>
 
 <p class="fs-lg">
- In this post, we’ll show how <code>Tabsdata</code> and <code>Databricks</code> can empower a single engineer to automate an entire insurance claim workflow end-to-end: from collecting claim files straight out of Gmail, to standardizing and enriching them, to publishing clean, versioned data into Databricks for analysis. The result is a workflow that saves time, reduces errors, and gives your claims team the data they need when they need it.
+ In this post, we’ll show how <code>Tabsdata</code> and <code>Databricks</code> can empower a single engineer to automate an entire insurance claim workflow end-to-end: from collecting claim files straight out of Gmail, to standardizing and enriching them, to publishing clean, versioned data into Databricks for analysis. 
 </p>
 
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_insurance_header.png" alt="Tabsdata Pub/Sub Overview">
+</div>
+
+<p class="fs-lg">
+ The result is a workflow that saves time, reduces errors, and gives your claims team the data they need when they need it.
+</p>
+
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Tabsdata</h2>
+<!--
 <p class="fs-lg">
  <code>Tabsdata</code> follows a Pub/Sub approach that makes data integration more scalable and flexible than traditional data integration pipelines. Instead of extracting and loading data directly into your data platform, you <em>publish</em> datasets into tables within the <code>Tabsdata Server</code>. From there, Databricks (or any other platform) can <em>subscribe</em> to those tables.
 </p>
 <p class="fs-lg">
  Between publishing and subscribing, you can add transformation steps to clean, enrich, or reshape the data as needed. Each step in this workflow is implemented as a <code>Tabsdata Function</code>, which is a simple Python function that either reads from or loads data into <code>Tabsdata Tables</code>. Functions can be triggered manually or automatically when new data needs to be processed. Every run of a function creates a new version of its table, and all versions of all tables are stored in the server—enabling time travel, auditing, and straightforward debugging.
 </p>
+-->
+<p class="fs-lg">
+Tabsdata follows a Pub/Sub approach that makes data integration more scalable and flexible than traditional data integration pipelines. Instead of extracting and loading data directly into your data platform, you publish datasets into tables within the Tabsdata Server. From there, Databricks (or any other platform) can subscribe to those tables.
+</p>
+<p class="fs-lg">
+
+Between publishing and subscribing, you can add transformation steps to clean, enrich, or reshape the data as needed. Each step in this workflow is implemented as a Tabsdata Function, which is a simple Python function that either reads from or loads data into Tabsdata Tables.
+</p>
+<p class="fs-lg">
+
+Functions can be triggered manually or automatically when new data needs to be processed. Every run of a function creates a new version of its table, and all versions of all tables are stored in the server. That means you can sample past versions of your tables at any point in time, making time travel, auditing, and debugging straightforward and easy.
+</p>
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Tabsdata</h2>
+<!--
 <p class="fs-lg">
  Tabsdata provides seamless ingestion and transformation capabilities while giving you significant advantages in lineage, governance, and orchestration.
 </p>
@@ -422,12 +359,23 @@ FROM read_files(
 <p class="fs-lg">
  These versioned tables form the backbone for how work is orchestrated in Tabsdata. Since Tabsdata Functions only interact with Tables—either by reading from them or writing to them—Tabsdata can infer execution order and automatically orchestrate your workflow. When a table gets new data, any functions that depend on that table run automatically. This declarative orchestration removes the need to manually create and maintain fragile DAGs and increases confidence in the reliability of your data.
 </p>
+-->
+<p class="fs-lg">
+Tabsdata provides seamless ingestion and transformation capabilities while giving you significant advantages in lineage, governance, and orchestration.
+</p>
+<p class="fs-lg">
+Every Tabsdata Table is automatically versioned and stores the full history of both its data and schema. When a new version of a table is created, Tabsdata infers the schema directly from the data being written, removing the need to define or enforce a schema in advance. This approach preserves the metadata and semantics of your source data, gives you clear visibility into how that data evolves over time, and enables you to address schema drift proactively instead of managing it defensively. Together these features create a complete, meaningful timeline that shows how your data changes over time, when those changes occur, and what those changes mean.
+</p>
+<p class="fs-lg">
+These versioned tables form the backbone for how work is orchestrated in Tabsdata. Since Tabsdata Functions only interact with Tables, either by reading from them or writing to them, this allows Tabsdata to infer execution order and automatically orchestrate your workflow. When a table gets new data, any functions that depend on that table run automatically. This declarative orchestration removes the need to manually create and maintain fragile DAGs and gives you greater confidence in the reliability of your data.
+</p>
 
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_pubsub_overview.png" alt="Tabsdata Pub/Sub Overview">
-</div>
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From Gmail &amp; MySQL to a Governed Lakehouse</h2>
+
+
 <p class="fs-lg">
  To automate TPA claims processing, we’ll implement a simple, reproducible pipeline:
 </p>
@@ -437,6 +385,11 @@ FROM read_files(
   <li>Transform and enrich the claim data with policy data.</li>
   <li>Subscribe the processed (clean, versioned) data into <code>Databricks</code> for analytics.</li>
 </ul>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_pubsub_overview.png" alt="Tabsdata Pub/Sub Overview">
+</div>
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Target Schemas</h2>
 <p class="fs-lg">
@@ -509,10 +462,11 @@ td login --server localhost --user admin --role sys_admin --password tabsdata
 td collection create --name claim_processing
 </code></pre>
 
+<!--
 <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
   <img class="d-block img-thumbnail rounded-0" src="../assets/img/tabsdata_collection.png" alt="Tabsdata Collection">
 </div>
-
+-->
 <p class="fs-lg">
  Inside this collection, we’ll build six functions: two publishers, three transformers, and one subscriber.
 </p>
@@ -562,17 +516,21 @@ def standardize_schema(tf: td.TableFrame):
     }
     tf = tf.with_columns(
         *[
-            (td.col(name) if name in tf.columns() else td.lit(None).cast(dtype).alias(name))
+            (
+                td.col(name)
+                if name in tf.columns()
+                else td.lit(None).cast(dtype).alias(name)
+            )
             for name, dtype in target_schema.items()
         ]
     )
-    return tf.select(list(target_schema.keys()))
-</code></pre>
+    tf = tf.select(list(target_schema.keys()))
+    return tf
 
-<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+
 @td.publisher(
-    source=GmailPublisher(),            # Source plugin for Gmail
-    tables="claims_fact_today",         # Output table
+    source=GmailPublisher(),  # Initialize the source plugin
+    tables="claims_fact_today",  # Define the output table name
 )
 def claim_fact_pub(tf: List[td.TableFrame]):
     tf = [standardize_schema(tf1) for tf1 in tf]
@@ -581,30 +539,36 @@ def claim_fact_pub(tf: List[td.TableFrame]):
     return union_tf.unique(subset=["policy_number", "claim_reference"], keep="first")
 </code></pre>
 
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/gmail_to_tabsdata.png" alt="Gmail to Tabsdata Publisher">
-</div>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #1: Append Today to Master</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer: append_claims_today_to_master_trf</h2>
 <p class="fs-lg">
- The <code>claims_fact_today</code> table holds the latest batch only. This transformer appends that batch into a running <code>claims_fact_master</code>.
+<!-- The <code>claims_fact_today</code> table holds the latest batch only. This transformer appends that batch into a running <code>claims_fact_master</code>.
+-->
+The <code>claims_fact_today</code> table only holds the latest batch of claim data. This transformer takes the <code>claims_fact_today</code> and <code>claims_fact_master</code> tables as input, appends <code>claims_fact_today</code> to <code>claims_fact_master</code> and returns <code>claims_fact_master</code>.
 </p>
+
+
+
 
 <pre class="line-numbers mt-5 mb-5"><code class="lang-python">
 @td.transformer(
    input_tables=["claims_fact_today","claims_fact_master"],
-   output_tables=["claims_fact_master"],
+   output_tables=[
+      "claims_fact_master"
+   ],
 )
+
 def append_claims_today_to_master_trf(claims_fact_today, claims_fact_master):
    if claims_fact_master is None:
        claims_fact_master = claims_fact_today.clear()
-   claims_fact_master = td.concat([claims_fact_today, claims_fact_master])
+   claims_fact_master = td.concat([claims_fact_today,claims_fact_master])
    return claims_fact_master
+
 </code></pre>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #2: Master Enrichment (Join with Policy Dim)</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer: master_fact_trf</h2>
 <p class="fs-lg">
- Enrich the master fact with policy attributes, coalesce overlapping fields, and ensure only valid claims are kept.
+This transformer takes <code>claims_fact_master</code> and <code>policy_dim</code> as input, joins <code>policy_dim</code> to <code>claims_fact_master</code>, coalesces overlapping fields, and outputs the data into the table <code>claims_fact_master_enriched</code>.
 </p>
 
 <pre class="line-numbers mt-5 mb-5"><code class="lang-python">
@@ -618,21 +582,38 @@ def master_fact_trf(policy_dim: td.TableFrame, claims_fact: td.TableFrame):
     overlapping = list(set(policy_dim.columns()) & set(claims_fact.columns()) - {key})
     master = master.with_columns(
         [pl.coalesce(col + "_right", col).alias(col) for col in overlapping]
-    ).select(
-        [col for col in master.columns() if col not in [i + "_right" for i in overlapping]]
     )
-    return master.filter(td.col("claim_reference").is_not_null())
+    master = master.select(
+        [
+            col
+            for col in master.columns()
+            if col not in [i + "_right" for i in overlapping]
+        ]
+    )
+    master = master.filter(td.col("claim_reference").is_not_null())
+    return master
+
 </code></pre>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer #3: Business-Friendly Slices</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Transformer: master_categorize_trf
+</h2>
 <p class="fs-lg">
- Create practical subsets for operations: open/pending, last 90 days, and large payouts (&gt;$10,000).
+Business units often need tailored claim subsets. This takes claims_fact_master_enriched as input and creates three tables as output:
 </p>
+<ol>
+<li>open_pending_claims – currently open claims</li>
+<li>claims_last_90_days – claims reported within the past 90 days</li>
+<li>paid_amount_greater_10000 – claims with payouts over $10,000</li>
+</ol>
 
 <pre class="line-numbers mt-5 mb-5"><code class="lang-python">
 @td.transformer(
     input_tables=["claims_fact_master_enriched"],
-    output_tables=["open_pending_claims", "claims_last_90_days", "paid_amount_greater_10000"],
+    output_tables=[
+        "open_pending_claims",
+        "claims_last_90_days",
+        "paid_amount_greater_10000",
+    ],
 )
 def master_categorize_trf(claims_fact_master: td.TableFrame):
     open_pending_claims = claims_fact_master.filter(td.col("claim_status") == "Open")
@@ -641,20 +622,20 @@ def master_categorize_trf(claims_fact_master: td.TableFrame):
         (td.lit(dt.date.today()).cast(td.Date) - td.col("date_reported").cast(td.Date))
         .dt.total_days()
         .alias("days_since_reported")
-    ).filter(td.col("days_since_reported") &lt;= 90)
-
-    paid_amount_greater_10000 = claims_fact_master.filter(td.col("paid_amount") &gt; 10000)
+    )
+    claims_last_90_days = claims_last_90_days.filter(
+        td.col("days_since_reported") <= 90
+    )
+    paid_amount_greater_10000 = claims_fact_master.filter(td.col("paid_amount") > 10000)
 
     return open_pending_claims, claims_last_90_days, paid_amount_greater_10000
+
 </code></pre>
 
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/claims_subsets.png" alt="Claims Subsets">
-</div>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Subscriber: Databricks (Tabsdata → Lakehouse)</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Subscriber: Databricks (Tabsdata → Lakehouse Delta Table)</h2>
 <p class="fs-lg">
- Finally, we push our processed and curated tables into Databricks for analysts and business users. We’ll publish multiple outputs into governed Delta tables.
+ Finally, we push our processed and curated tables into Databricks Delta Tables with Unity Catalog for analysts and business users. We’ll publish multiple outputs into governed Delta tables.
 </p>
 
 <pre class="line-numbers mt-5 mb-5"><code class="lang-python">
@@ -694,19 +675,18 @@ def databricks_sub(
         claims_last_90_days,
         paid_amount_greater_10000,
     )
+
 </code></pre>
 
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/databricks_delta_tables.png" alt="Databricks Delta Tables">
-</div>
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use, Versioned Claims Lakehouse</h2>
 <p class="fs-lg">
- With just a few concise functions, we created an end-to-end ingestion and transformation workflow for insurance claims. Before any of this data even lands in Databricks, teams can use the Tabsdata UI to browse tables, run ad-hoc SQL, inspect schemas, and—crucially—view historical versions for audits and debugging.
+With a few lines of code, we were able to create an ingestion and transformation workflow for Insurance teams to use. 
+
 </p>
 
 <p class="fs-lg">
- Once subscribed into Databricks as managed <code>Delta</code> tables, your analysts can immediately build dashboards, join to policy and broker dimensions, and compute operational metrics (e.g., open claims aging, paid vs. reserved, loss trends) with confidence in lineage and reproducibility.
+Before any of this data is even in Databricks, Insurance teams can use the Tabsdata UI to view any of the Tabsdata Tables generated by the execution of our workflow. Within the UI, they can also run SQL queries on the data, view the schema, and view historical versions of the data from previous workflows.
 </p>
 
 

@@ -237,6 +237,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
                   <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
                     <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
                     <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
                     <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
@@ -329,7 +330,7 @@
             Before we can build our table, we need a centralized location for our raw data files. <code>Unity Catalog Volumes</code> are the perfect tool for this job, as they allow us to store, govern, and access non-tabular data, like our CSVs, from within the Databricks environment.
            </p>
            <p class="fs-lg">
-            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>gold</code> schema within the <code>retail_bcd_dev</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_files_upload</code>. 
+            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>silver</code> schema within the <code>big_cloud_dealz_development</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_data_upload</code>. 
 
 
           </p>
@@ -341,19 +342,19 @@
           </div>    
           
            <p class="fs-lg">
-            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/retail_bcd_dev/gold/product_files_upload/</code>.
+            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/big_cloud_dealz_development/silver/product_data_upload/</code>.
            </p>
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Build the Table with a CTAS Statement</h2>
            <p class="fs-lg">
-            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
+            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>dim_products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
            </p>
            <p class="fs-lg">
             Here is the complete SQL query to accomplish this:
            </p>
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-sql">
-CREATE OR REPLACE TABLE retail_bcd_dev.gold.products
+CREATE OR REPLACE TABLE big_cloud_dealz_development.silver.dim_products
 USING DELTA
 AS
 SELECT
@@ -364,7 +365,7 @@ SELECT
   CAST(brand AS STRING) AS brand,
   CAST(product_name AS STRING) AS product_name
 FROM read_files(
-  '/Volumes/retail_bcd_dev/gold/product_files_upload/',
+  '/Volumes/big_cloud_dealz_development/silver/product_data_upload/',
   format => 'csv',
   header => true,
   inferSchema => true
@@ -372,12 +373,12 @@ FROM read_files(
 </code>
 </pre>
            <p class="fs-lg">
-            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>retail_bcd_dev.gold.products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
+            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>big_cloud_dealz_development.silver.dim_products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
            </p>
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use Product Table</h2>
            <p class="fs-lg">
-            After running the CTAS statement, our <code>products</code> table is instantly created and available in the <code>gold</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
+            After running the CTAS statement, our <code>dim_products</code> table is instantly created and available in the <code>silver</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
 
           </p>
 

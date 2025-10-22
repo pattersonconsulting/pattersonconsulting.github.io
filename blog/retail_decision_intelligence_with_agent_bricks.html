@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Building a Retail Product Delta Table with Databricks Unity Catalog</title>
+    <meta name="description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks.">
+    <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Josh Patterson">
+
+
+    <meta property="og:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks."/>
+
+
+    <meta name="twitter:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Accelerating Retail Decision Intelligence with Agent Bricks</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Accelerating Retail Decision Intelligence with Agent Bricks</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Josh Patterson
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_agentbricks_decision_intel_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 600px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+            
+           
+
+           <p class="fs-lg">
+
+            <b>We're inundate with so much data and information today its hard to know what to pay attention to sometimes.</b>
+
+           </p>
+
+           <p class="fs-lg">
+
+            Did you ever wish you had an easy button that you could press and it would tell you "what to focus on today"?
+
+           </p>
+
+           <p class="fs-lg">
+
+            That's exactly what I'm going to help you build in this article. It's an easy button for the COO of retail company (the mythical retailer "Big Cloud Dealz") who is focused on managing a logistics operation. We're going to enable the COO to translate large amounts of incoming information into a list of potential things needing attention. We accelerate this information processing with a method called decision intelligence and we will build it on the Databricks Agent Bricks platform.
+
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Agent Bricks</h2>
+
+           <p class="fs-lg">
+            The technical advantage of Databricks Agent Bricks lies in how it collapses months of complex AI system engineering into a governed, production-ready platform that runs natively in the lakehouse. Traditionally, standing up an enterprise-grade assistant required stitching together multiple components — vector databases, embedding models, chunking logic, role-based access, and feedback systems — all of which demanded deep MLOps expertise and constant tuning. 
+
+           </p>
+           <p class="fs-lg">
+            Agent Bricks abstracts that complexity, allowing organizations to deploy intelligent assistants directly on their structured and unstructured data within hours, not months, while maintaining full governance through Unity Catalog. This means CTOs and COOs can focus engineering resources on business-aligned data quality and workflow integration rather than infrastructure, gaining secure, scalable, and compliant access to enterprise knowledge — with the same lineage, access controls, and auditability that already govern their lakehouse.
+
+           </p>           
+
+
+           <p class="fs-lg">
+
+            In this post I'm going to show you have to accelerate your retail logistics decision intelligence by using LLMs with Agent Bricks to analyze structured infromation from your data lakehouse. This method directly improves your managements' ability to process information faster and get to the right decision more quickly, <a href="../content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html">making the company more competitive within its market</a>.
+
+           </p>           
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Decision Intelligence?</h2>
+           <p class="fs-lg">
+
+            Decision Intelligence is the practice of merging together the right contextual enterprise information with the right business rules applied together to get you to set of decisions you need to overcome obstacles in your organization.
+
+           </p>
+
+           <p class="fs-lg">
+
+            The fallacy of the current AI hype cycle is that it tells you all the answers. 
+
+           </p>
+
+           <p class="fs-lg">
+
+            What "AI" (e.g., LLMs) are good at is helping you reason over the right information with business rules and context and figure out what is important quickly. This is Decision Intelligence. 
+
+           </p>
+
+           <p class="fs-lg">
+
+            Decision Intelligence is about helping your process the series of questions needed to make your own decisions faster, not giving you the final answer.
+
+           </p>
+
+           <p class="fs-lg">
+
+<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, particularly large language models, enables organizations to rapidly simulate complex business scenarios that once required cross-functional teams and extended analysis. These models support swift exploration of strategic options, allowing decision-makers to test contingencies and forecast outcomes with greater agility. By modeling operational dynamics and economic behaviors, LLMs introduce a new level of depth and speed to business strategy, supporting faster, more informed decisions.
+</p>
+<p class="fs-lg">
+Executives can synthesize many complex scenarios and eliminate the bulk of the ones that won't work before focusing on promising strategies. An example of this is how a CFO might ask a system "how much property damage is at risk if a category 4 hurricane hits a specific state?". This allows the CFO to build some ideas around what may be coming before she takes a few of them over to the company meteorologist for deeper validation.            
+           </p>
+
+           <p class="fs-lg">
+
+            In this article I'm going to focus on an agent with Agent Bricks that analyzes the structured information in your data lakehouse and gives direction on how to respond to changing logistics operational conditions based on the business logic of the company and the KPIs for logistics operations.
+
+
+          </p>
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building Agents Faster with AgentBricks</h2>
+
+
+           <p class="fs-lg">
+
+            We start out by clicking on the Agent Bricks button on the left side toolbar as shown in the image below.
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_toolbar_button.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg">
+
+            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Mult-Agent Supervisor</code> project type, as shown in the image below.
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_select_agent_type.png" alt="Image">
+
+          </div>    
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Design Notes for Our Multi-Agent System</h2>
+
+
+           <p class="fs-lg">
+
+            We're using the <code>Mult-Agent Supervisor</code> project type here because we need to do a few steps to pull the information together and then apply our custom business analysis logic. So we need to do some coordination between a few different stages of our agent's internal workflow, which is what the <code>Mult-Agent Supervisor</code>.
+
+           </p>
+
+
+
+           <p class="fs-lg">
+
+            In a previous article we put together a Genie space that was a natural language conversational user interface to query the underlying views and metric views built in our data lakehouse. The interesting thing about Agent Bricks is that we can use these other spaces and agents as "building blocks" in multi-agent systems to compose systems that can complete more complex multi-step problems.
+
+          </p>
+
+
+           <p class="fs-lg">
+
+            The genie space alone is not enough to complete our decision intelligence system, so we need to orchestrate further steps. This is why we need the <code>Mult-Agent Supervisor</code>.
+
+           </p>
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Multi-Agent Basic Info</h2>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_basic_information_conf.png" alt="Image">
+
+          </div>    
+
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Configure Agents</h2>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_add_sub_agents_panel.png" alt="Image">
+
+          </div>    
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Instructions</h2>
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_agent_instructions_conf.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+<!--
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-yaml">
+
+      Answer the question based on only the data available. Be succint and brief
+      in your response.
+
+      Default rule of thumb:
+
+      Stockout exposure % = “today’s lost sales risk.” If it’s high—especially on A-SKUs—this trumps OTIF because the cash register is impacted now.
+
+      OTIF = “tomorrow’s supply risk.” If OTIF is collapsing and your days of cover (DOC) are thin vs lead time (LT), OTIF can trump stockouts because a broader shortage is imminent.
+        
+      Practical thresholds (company-level, then tighter for A-SKUs)
+
+      Stockout Exposure % (forecast demand not covered by ATP):
+
+      Green: <2% (A-SKUs <1%)
+
+      Watch: 2–4% (A-SKUs 1–2%)
+
+      Concerning: 4–8% (A-SKUs 2–3%)
+
+      Critical: >8% (A-SKUs >3%)
+
+      OTIF (on-time, in-full arrivals—vendor→DC and/or DC→store):
+
+      Green: ≥96%
+
+      Watch: 92–96%
+
+      Concerning: 88–92%
+
+      Critical: <88%
+
+      [ ... ]
+
+
+      
+
+</code>
+</pre>
+-->
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Accelerating Retail Logistics Analysis with Agent Bricks</h2>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_agent_answer_detailed.png" alt="Image">
+
+          </div>    
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
+                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>

@@ -5,21 +5,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Building a Retail Product Delta Table with Databricks Unity Catalog</title>
-    <meta name="description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks.">
+    <title>Building a Retail Semantic Layer with Unity Catalog Metric Views</title>
+    <meta name="description" content="...">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Josh Patterson">
 
 
-    <meta property="og:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:title" content="Building a Retail Semantic Layer with Unity Catalog Metric Views"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_semantic_metric_views_header_0.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks."/>
+    <meta property="og:description" content="In this article we ..."/>
 
 
-    <meta name="twitter:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:title" content="Building a Retail Semantic Layer with Unity Catalog Metric Views" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_semantic_metric_views_header_0.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -274,12 +274,12 @@
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
             <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Building a Retail Product Delta Table with Databricks Unity Catalog</li>
+            <li class="breadcrumb-item active" aria-current="page">Building a Retail Semantic Layer with Unity Catalog Metric Views</li>
           </ol>
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Building a Retail Product Delta Table with Databricks Unity Catalog</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Building a Retail Semantic Layer with Unity Catalog Metric Views</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
@@ -296,8 +296,8 @@
 
 
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_retail_product_table_header_0.jpg);"></div>
-        <div class="d-none d-xxl-block" style="height: 600px;"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 500px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
         <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
@@ -309,89 +309,199 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
             
-           
-           <p class="fs-lg">
+<!--
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Driving Retail Excellence with the Databricks Medallion Architecture</h2>
+-->
+<p class="fs-lg">
+[todo: add an open problem/challenge statement]
+</p>
 
-            Many times when we start out building a new data warehouse there are a lot of decision decisions to be made. To get going quickly with Delta tables on Databricks for slow changing tables we can use <code>CREATE TABLE AS SELECT</code> (CTAS) statements.
+<p class="fs-lg">
+The Medallion data architecture can be utilized to convert raw time series retail data into structured tables of transactions, products/inventory, and margins. Then analytical tables can be generated from the structured tables for querying business health, product popularity, profitability, and other KPIs. For modern retail and operations teams, this approach transforms messy, disparate data sources into a streamlined engine for analytics. By systematically curating data through Bronze, Silver, and Gold layers, retailers can build a single source of truth that empowers everyone in the organization, from the C-suite to store managers.
+</p>
 
-           </p>
+<p class="fs-lg">📘 Reference: Medallion Architecture</p>
 
-           <p class="fs-lg">
-            Using a <code>CREATE TABLE AS SELECT</code> (CTAS) statement is a highly efficient way to perform a one-time data load into a Databricks table directly from source files like CSVs. This single-command approach is particularly useful for creating dimension tables or other datasets that do not require frequent updates. In this guide, we'll walk through this method to build a foundational piece of a retail database: the product table. This core table will be created as a <code>Unity Catalog</code> managed <code>Delta table</code>, making it immediately ready to be joined with other data, such as orders and customer information, to generate key business metrics.
-           </p>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Understanding the Layers</h2>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From CSV Files to a Queryable Table</h2>
-           <p class="fs-lg">
-            Our goal is to transform a set of CSV files containing product information into a structured, governed <code>Delta table</code> within <code>Unity Catalog</code>. We will use the CTAS method because it combines simplicity and power, making it ideal for this kind of single-load task. The process involves two main stages. First, we will stage the raw data by creating a <code>Unity Catalog Volume</code> to store our source CSV files. Second, we will write and execute a single SQL statement that reads the files from the Volume and materializes the <code>Delta table</code> in one seamless operation.
-           </p>
+<p class="fs-lg">
+The Medallion pattern organizes data within our <code>big_cloud_dealz_development</code> <code>Databricks</code> environment into three distinct layers, each with a specific purpose. Think of it as refining raw ingredients into a gourmet meal.
+</p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Stage the Product Data in a Volume</h2>
-           <p class="fs-lg">
-            Before we can build our table, we need a centralized location for our raw data files. <code>Unity Catalog Volumes</code> are the perfect tool for this job, as they allow us to store, govern, and access non-tabular data, like our CSVs, from within the Databricks environment.
-           </p>
-           <p class="fs-lg">
-            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>silver</code> schema within the <code>big_cloud_dealz_development</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_data_upload</code>. 
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Bronze Layer (Raw Ingestion) 🥉</h2>
 
+<p class="fs-lg">
+This is the landing zone for all source data in its original, untouched format. For our retail operations, this includes raw JSON feeds from supplier <code>WMS</code> systems, CSV exports from our <code>ERP</code> (containing purchase order data), and <code>EDI</code> logs from carriers. The primary goal for the Bronze layer is to load the data quickly into <code>Delta</code> tables (e.g., <code>bronze.erp_po_export</code>, <code>bronze.wms_shipping_log</code>) and archive it. It's crucial not to place any business logic in this layer, as its only job is to capture the raw data from the source systems.
+</p>
 
-          </p>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Silver Layer (Modeled &amp; Cleansed) 🥈</h2>
 
+<p class="fs-lg">
+Here, the raw Bronze data is transformed into a clean, structured, and queryable data warehouse. Data is deduplicated, conformed to common standards (like aligning timestamps and IDs), and modeled into a robust schema representing the core business entities and events.
+</p>
 
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/product_files_staged_volume.png" alt="Image">
+<p class="fs-lg">
+<strong>Dimension Tables</strong> are created to provide conformed business context. This includes tables like <code>silver.dim_products</code> (storing SKU information, including <code>supplier_id</code> and <code>category</code>), <code>silver.dim_carriers</code> (standardizing carrier names and mode), and <code>silver.dim_locations</code> (a master list of all stores and warehouses).
+</p>
 
-          </div>    
-          
-           <p class="fs-lg">
-            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/big_cloud_dealz_development/silver/product_data_upload/</code>.
-           </p>
+<p class="fs-lg">
+<strong>Fact Tables</strong> capture business events and metrics. This is where we build out core tables like <code>silver.fact_po_header</code> and <code>silver.fact_po_line</code> (tracking all items ordered from vendors), <code>silver.fact_shipments</code> (logging all carrier movements), and atomic inventory tables like <code>silver.fact_inventory</code> (daily on-hand snapshots) and <code>silver.fact_inventory_backorder</code>.
+</p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Build the Table with a CTAS Statement</h2>
-           <p class="fs-lg">
-            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>dim_products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
-           </p>
-           <p class="fs-lg">
-            Here is the complete SQL query to accomplish this:
-           </p>
+<p class="fs-lg">
+<strong>Reference Tables</strong> like <code>silver.ref_lane_sla</code> are also established in this layer to store business rules, such as shipping times, which are vital for downstream analysis.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Gold Layer (Business-Ready &amp; Aggregated) 🥇</h2>
+
+<p class="fs-lg">
+The Gold layer is the final, highly refined layer designed for specific business use cases and reporting. These tables and views are aggregated and optimized for performance, answering specific business questions and powering the dashboards used by our logistics, merchandising, and finance teams.
+</p>
+
+<p class="fs-lg">
+One example is the <code>gold.view_lead_time_variance_days_by_date</code>. This view consumes the cleaned <code>silver.fact_shipments</code> table to calculate a specific, high-level KPI (shipping time variance) used by the COO to monitor carrier consistency.
+</p>
+
+<p class="fs-lg">
+Other Gold assets are built by joining multiple Silver tables to answer complex questions. For instance, an <code>OTIF</code> analysis would be built here by joining <code>silver.fact_po_line</code> (<code>qty_ordered</code>) with <code>silver.fact_shipment_receipts</code> (<code>received_quantity</code>) and <code>silver.fact_shipments</code> (<code>actual_arrival_ts</code>).
+</p>
+
+<p class="fs-lg">
+Similarly, a Stockout Risk report would be created in the Gold layer by comparing inventory levels from <code>silver.fact_inventory</code> against future demand from <code>silver.fact_sales_forecast</code>, enriched with product details from <code>silver.dim_products</code>.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Powering Core Retail Groups with Gold-Layer Analytics</h2>
+
+<p class="fs-lg">
+The true value of the Medallion architecture is realized in the Gold layer, where data is tailored to the specific needs of each business function. By creating curated, aggregated datasets, retailers can directly power the key performance indicators (KPIs) for each department.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sales</h2>
+
+<ul>
+  <li><strong>Net Sales vs Plan</strong>: An aggregated view that compares actual sales figures against forecasted targets, updated on any time interval.</li>
+  <li><strong>Comp Sales %</strong>: A metric view calculating the growth of sales in stores that have been open for a year or more.</li>
+  <li><strong>Gross Margin %</strong>: A summarized table showing profitability by SKU, product category, brand, or store.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Merchandising</h2>
+
+<ul>
+  <li><strong><code>GMROI</code></strong>: A pre-calculated KPI that shows how much gross margin is earned for every dollar invested in inventory.</li>
+  <li><strong>Sell-Through Rate</strong>: A weekly or monthly report that tracks the percentage of inventory sold for specific products or categories.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Marketing</h2>
+
+<ul>
+  <li><strong><code>ROAS</code></strong>: A view that joins marketing campaign spend with sales revenue to calculate ROI on marketing investments and customer acquisition costs (CAC).</li>
+  <li><strong>Predicted Customer Lifetime Value</strong>: A data science model output that scores customers on their potential future value, enabling targeted marketing efforts.</li>
+  <li><strong>Retention &amp; Repeat-Purchase Health</strong>: Dashboards showing customer cohort behavior and repeat purchase rates over time.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Operations and Logistics</h2>
+
+<p class="fs-lg">
+The Chief Operating Officer oversees the entire supply chain. The Gold layer provides critical visibility into operational efficiency and potential disruptions. The example tables for the architecture focus on this area and are referenced.
+</p>
+
+<ul>
+  <li><strong>Stockout Exposure</strong>: An alert-driven table that identifies products at risk of going out of stock based on current sales velocity and inventory levels. This Gold table would join real-time inventory counts against the <code>silver.dim_products</code> table to provide details on at-risk SKUs, brands, or suppliers.</li>
+  <li><strong>On-Time In-Full (<code>OTIF</code>)</strong>: An aggregated view of supplier and carrier performance. This KPI would be calculated by joining shipment facts against <code>silver.dim_carriers</code> (to measure carrier performance by mode or <code>carrier_name</code>) and <code>silver.dim_products</code> (to measure supplier performance via <code>supplier_id</code>).</li>
+  <li><strong>Carrier Delays</strong>: A dashboard monitoring the performance of shipping partners to identify and mitigate delivery bottlenecks. The <code>gold.view_lead_time_variance_days_by_date</code> view is a prime example of this, as it directly calculates the statistical variance in carrier lead times, allowing the COO to spot inconsistent partners.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Practical Design Guide for Retail Data Warehousing</h2>
+
+<p class="fs-lg">
+A successful Medallion architecture relies on strong governance and consistent design patterns. Following a clear naming convention is one of the most effective ways to ensure the data warehouse is easy to navigate, maintain, and use.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example Data Flow: From Bronze to Gold</h2>
+
+<p class="fs-lg">Let's walk through a tangible example of raw data being promoted through the layers.</p>
+
+<p class="fs-lg"><strong>1. Bronze Layer: Raw Ingestion</strong> — First, we land the raw, unaltered data feeds into Bronze tables.</p>
+
+<p class="fs-lg"><strong>2. Silver Layer: Modeled &amp; Cleansed</strong> — Next, we clean the data and model it into a star schema with dimension and fact tables. Note the use of <code>dim_</code> and <code>fact_</code> prefixes.</p>
+
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-sql">
-CREATE OR REPLACE TABLE big_cloud_dealz_development.silver.dim_products
-USING DELTA
-AS
-SELECT
-  CAST(sku_sk AS INT) AS sku_sk,
-  CAST(product_id AS STRING) AS product_id,
-  CAST(supplier_id AS INT) AS supplier_id,
-  CAST(category AS STRING) AS category,
-  CAST(brand AS STRING) AS brand,
-  CAST(product_name AS STRING) AS product_name
-FROM read_files(
-  '/Volumes/big_cloud_dealz_development/silver/product_data_upload/',
-  format => 'csv',
-  header => true,
-  inferSchema => true
-);
+CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_products (
+  sku_sk                BIGINT    GENERATED BY DEFAULT AS IDENTITY,
+  product_id            STRING    NOT NULL,
+  supplier_id           STRING    NOT NULL,
+  category              STRING,
+  brand                 STRING,
+  product_name          STRING,
+  product_type          STRING,
+  target_audience       STRING,
+  
+  unit_cost     DECIMAL(18,2) DEFAULT 0,
+  unit_price    DECIMAL(18,2) DEFAULT 0,
+  weight_lbs    DECIMAL(18,2) DEFAULT 0
+) USING DELTA;
 </code>
 </pre>
-           <p class="fs-lg">
-            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>big_cloud_dealz_development.silver.dim_products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
-           </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use Product Table</h2>
-           <p class="fs-lg">
-            After running the CTAS statement, our <code>dim_products</code> table is instantly created and available in the <code>silver</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_carriers (
+  carrier_sk    BIGINT   GENERATED BY DEFAULT AS IDENTITY,
+  carrier_id    STRING   NOT NULL,              -- business key (e.g., SCAC or vendor id)
+  carrier_name  STRING,
+  scac          STRING,
+  mode          STRING,                          -- PARCEL/LTL/FTL/INTERMODAL
+  is_active     BOOLEAN  NOT NULL DEFAULT TRUE,
+  valid_from    TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+  valid_to      TIMESTAMP,
+  is_current    BOOLEAN   NOT NULL DEFAULT TRUE
+) USING DELTA;
+</code>
+</pre>
 
-          </p>
+<p class="fs-lg">
+<strong>3. Gold Layer: Aggregated for BI</strong> — The Gold Layer is the consumer-facing storefront of the data warehouse. This is where the data completes its journey from raw material to a high-value business asset. While the Silver layer provides a clean, queryable foundation, the Gold layer is crafted for end-user consumption. It consists of aggregated, optimized tables and views designed to power specific analytics, answer critical business questions, and drive strategic decisions. These Gold assets serve as the direct, trusted source for BI tools, dashboards, and KPI reports used by every retail department.
+</p>
+
+<p class="fs-lg">
+A key innovation in the modern Gold layer is the use of <code>Unity Catalog Metric Views</code>. Instead of creating dozens of rigid, pre-aggregated tables for every possible business query, Metric Views allow you to define a core business KPI—like Gross Margin % or Return on Ad Spend—just once. Business users can then slice and dice this governed metric by any dimension (e.g., region, product category, marketing channel) at query time, ensuring both flexibility and consistency without building new summary tables for every request.
+</p>
+
+<p class="fs-lg">📘 Reference: Databricks Metric Views</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE OR REPLACE VIEW big_cloud_dealz_development.gold.view_lead_time_variance_days_by_date AS
+WITH base AS (
+  SELECT
+    DATE(depart_ts) AS date,
+    /* lead_time_days = (actual_arrival_ts - depart_ts) in days */
+    (to_unix_timestamp(actual_arrival_ts) - to_unix_timestamp(depart_ts)) / 86400.0 AS lead_time_days
+  FROM big_cloud_dealz_development.silver.fact_shipments
+  WHERE depart_ts IS NOT NULL
+    AND actual_arrival_ts IS NOT NULL
+)
+SELECT
+  date,
+  /* sample variance (ddof = 1), matching pandas .var(ddof=1) */
+  var_samp(lead_time_days) AS lead_time_variance_days
+FROM base
+GROUP BY date;
+</code>
+</pre>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Governance Rules: Dos and Don'ts</h2>
+
+<ul>
+  <li>✅ <strong>Do</strong> align fiscal calendars and currency definitions before publishing KPIs to ensure consistency across all reports.</li>
+  <li>❌ <strong>Don't</strong> join fact tables on natural keys (like a product SKU) in BI tools. Always use surrogate keys (<code>_sk</code>) for stable and performant joins.</li>
+  <li>✅ <strong>Do</strong> version plans and forecasts. Incorporate fields like <code>scenario</code> or <code>version_ts</code> to track changes and perform predictive analysis.</li>
+  <li>❌ <strong>Don't</strong> ever put complex transformation or business logic in the Bronze layer. It should remain an unaltered archive of the source data.</li>
+</ul>
 
 
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/final_products_delta_table.png" alt="Image">
 
-          </div>    
-
-           <p class="fs-lg">
-
-             The table is correctly populated with columns for SKU, product ID, supplier, category, brand, and product name. This table can now serve as the single source of truth for all product information, feeding BI dashboards, downstream data models, and ad-hoc analytics that help drive the business forward.
-           </p>
 
           </div>
         </div>
@@ -535,3 +645,4 @@ FROM read_files(
     <script src="../assets/js/theme.min.js"></script>
   </body>
 </html>
+

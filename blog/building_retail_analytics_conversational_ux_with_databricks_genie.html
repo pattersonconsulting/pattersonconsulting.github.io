@@ -5,21 +5,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Building a Retail Product Delta Table with Databricks Unity Catalog</title>
+    <title>Building a Retail Analytics Conversational UX with Databricks Genie</title>
     <meta name="description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks.">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Josh Patterson">
 
 
-    <meta property="og:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:title" content="Building a Retail Analytics Conversational UX with Databricks Genie"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_genie_conv_ux_header_0.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks."/>
 
 
-    <meta name="twitter:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:title" content="Building a Retail Analytics Conversational UX with Databricks Genie" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_genie_conv_ux_header_0.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -274,18 +274,18 @@
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
             <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Building a Retail Product Delta Table with Databricks Unity Catalog</li>
+            <li class="breadcrumb-item active" aria-current="page">Building a Retail Analytics Conversational UX with Databricks Genie</li>
           </ol>
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Building a Retail Product Delta Table with Databricks Unity Catalog</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Building a Retail Analytics Conversational UX with Databricks Genie</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Nikhil Karnik
+                  Josh Patterson
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
@@ -296,8 +296,8 @@
 
 
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_retail_product_table_header_0.jpg);"></div>
-        <div class="d-none d-xxl-block" style="height: 600px;"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_genie_conv_ux_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 700px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
         <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
@@ -310,87 +310,328 @@
           <div class="col-lg-9 col-xl-8">
             
            
+
            <p class="fs-lg">
 
-            Many times when we start out building a new data warehouse there are a lot of decision decisions to be made. To get going quickly with Delta tables on Databricks for slow changing tables we can use <code>CREATE TABLE AS SELECT</code> (CTAS) statements.
+Retail success depends on precision and speed across the supply network. When suppliers lack daily, store-level visibility into sales and inventory, they’re left guessing—resulting in empty shelves and missed revenue. Manual reporting and spreadsheet wrangling delay decisions, while outdated ordering processes introduce costly errors. 
+
+          </p>
+
+
+           <p class="fs-lg">
+
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Databricks Genie?</h2>
+
+
+           <p class="fs-lg">
+Databricks Genie is an AI assistant built into the Databricks Lakehouse that lets business leaders and analysts ask natural-language questions about their company’s data — and get instant, trustworthy answers. It draws directly from governed data and metrics in Unity Catalog, so insights are accurate, secure, and consistent across teams. For a COO, Genie turns the Lakehouse into an on-demand operations analyst — surfacing KPIs like OTIF, stockout exposure, or fulfillment efficiency in seconds, without waiting on data teams.
+ 
+
+           </p>
+           <p class="fs-lg">
+...
+           </p>           
+
+
+           <p class="fs-lg">
+
+           </p>           
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Decision Intelligence?</h2>
+           <p class="fs-lg">
+
+            Decision Intelligence is the practice of merging together the right contextual enterprise information with the right business rules applied together to get you to set of decisions you need to overcome obstacles in your organization.
 
            </p>
 
            <p class="fs-lg">
-            Using a <code>CREATE TABLE AS SELECT</code> (CTAS) statement is a highly efficient way to perform a one-time data load into a Databricks table directly from source files like CSVs. This single-command approach is particularly useful for creating dimension tables or other datasets that do not require frequent updates. In this guide, we'll walk through this method to build a foundational piece of a retail database: the product table. This core table will be created as a <code>Unity Catalog</code> managed <code>Delta table</code>, making it immediately ready to be joined with other data, such as orders and customer information, to generate key business metrics.
+
+            The fallacy of the current AI hype cycle is that it tells you all the answers. 
+
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Plan: From CSV Files to a Queryable Table</h2>
            <p class="fs-lg">
-            Our goal is to transform a set of CSV files containing product information into a structured, governed <code>Delta table</code> within <code>Unity Catalog</code>. We will use the CTAS method because it combines simplicity and power, making it ideal for this kind of single-load task. The process involves two main stages. First, we will stage the raw data by creating a <code>Unity Catalog Volume</code> to store our source CSV files. Second, we will write and execute a single SQL statement that reads the files from the Volume and materializes the <code>Delta table</code> in one seamless operation.
+
+            What "AI" (e.g., LLMs) are good at is helping you reason over the right information with business rules and context and figure out what is important quickly. This is Decision Intelligence. 
+
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1: Stage the Product Data in a Volume</h2>
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Generative AI and Decision Intelligence</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, particularly large language models, enables organizations to rapidly simulate complex business scenarios that once required cross-functional teams and extended analysis. These models support swift exploration of strategic options, allowing decision-makers to test contingencies and forecast outcomes with greater agility. By modeling operational dynamics and economic behaviors, LLMs introduce a new level of depth and speed to business strategy, supporting faster, more informed decisions.
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Executives can synthesize many complex scenarios and eliminate the bulk of the ones that won't work before focusing on promising strategies. An example of this is how a CFO might ask a system "how much property damage is at risk if a category 4 hurricane hits a specific state?". This allows the CFO to build some ideas around what may be coming before she takes a few of them over to the company meteorologist for deeper validation.
+                </p>
+
+
+              </div>
+            </div>
+
+
+
            <p class="fs-lg">
-            Before we can build our table, we need a centralized location for our raw data files. <code>Unity Catalog Volumes</code> are the perfect tool for this job, as they allow us to store, govern, and access non-tabular data, like our CSVs, from within the Databricks environment.
+
+            Decision Intelligence is about helping you work through the series of questions needed to make your own decisions faster, not giving you the final answer.
+
            </p>
+
+
            <p class="fs-lg">
-            To begin, we navigate to our desired location in the Catalog Explorer—for this project, the <code>silver</code> schema within the <code>big_cloud_dealz_development</code> catalog. Creating a volume is straightforward: simply click the "Create" button, select "Volume" from the dropdown, and assign it a name, such as <code>product_data_upload</code>. 
+
+            In this article I'm going to focus on an agent with Agent Bricks that analyzes the structured information in your data lakehouse and gives direction on how to respond to changing logistics operational conditions based on the business logic of the company and the KPIs for logistics operations.
 
 
           </p>
 
 
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building Agents Faster with AgentBricks</h2>
+
+
+           <p class="fs-lg">
+
+            We start out by clicking on the Agent Bricks button on the left side toolbar as shown in the image below.
+
+           </p>
+
+
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/product_files_staged_volume.png" alt="Image">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_toolbar_button.png" alt="Image">
 
           </div>    
-          
+
            <p class="fs-lg">
-            With the volume created, we can upload our product CSV files using the Databricks UI. By selecting our volume and clicking "Upload to this volume," we can drag and drop the files directly. Once uploaded, the files are staged and ready for use. The UI conveniently provides the exact path to the volume, which we will need for our SQL query: <code>/Volumes/big_cloud_dealz_development/silver/product_data_upload/</code>.
+
+            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Multi-Agent Supervisor</code> project type, as shown in the image below.
+
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2: Build the Table with a CTAS Statement</h2>
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_select_agent_type.png" alt="Image">
+
+          </div>    
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Design Notes for Our Multi-Agent System</h2>
+
+
            <p class="fs-lg">
-            Now we arrive at the main event: creating the table. The <code>CREATE TABLE AS SELECT</code> (CTAS) statement will read the data directly from our staged CSV files and load it into a new <code>Delta table</code> named <code>dim_products</code>. This powerful, single statement handles table definition, schema inference, and data insertion all at once.
+
+            We're using the <code>Multi-Agent Supervisor</code> project type here because we need to do a few steps to pull the information together and then apply our custom business analysis logic. So we need to do some coordination between a few different stages of our agent's internal workflow, which is what the <code>Multi-Agent Supervisor</code>.
+
            </p>
+
+
+
            <p class="fs-lg">
-            Here is the complete SQL query to accomplish this:
+
+            In a previous article we put together a Genie space that was a natural language conversational user interface to query the underlying views and metric views built in our data lakehouse. 
+
+          </p>
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Retail and Conversational User Interfaces</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+<!--
+<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, 
+-->
+Conversational user interfaces (CUIs) built on top of a data lakehouse give retail COOs a direct, intelligent pathway from question to action—without the delays of traditional dashboards or manual report requests. By connecting seamlessly across OMS, WMS, TMS, ERP, and analytics layers, a CUI allows executives to ask complex operational questions in natural language, receive data-driven answers with full lineage and source citations, and, when appropriate, trigger workflows or corrective actions instantly. This turns the lakehouse into a real-time decision cockpit—streamlining daily operations, improving responsiveness to disruptions, and empowering leadership to move from insight to execution with unprecedented speed and confidence.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Databricks Genie spaces are a foundational building blocks on the Databricks platform for building conversational user interfaces.
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+
+          <p class="fs-lg">
+
+<b>
+</b>
+          </p>
+
+           <p class="fs-lg">
+
+The interesting thing about Agent Bricks is that we can use these other spaces and agents as "building blocks" in multi-agent systems to compose systems that can complete more complex multi-step problems.            
+
+            The genie space alone is not enough to complete our decision intelligence system, so we need to orchestrate further steps. This is why we need the <code>Multi-Agent Supervisor</code>.
+
            </p>
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Multi-Agent Basic Info</h2>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_basic_information_conf.png" alt="Image">
+
+          </div>    
+
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Configure Agents</h2>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_add_sub_agents_panel.png" alt="Image">
+
+          </div>    
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Instructions</h2>
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_agent_instructions_conf.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Expressing Business Rules in Prompts</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Expressing logic in prompts—rather than hard-coded rules—unlocks speed, adaptability, and intelligence across retail operations. By defining behavior in editable text templates, business teams can adjust policies or decision flows instantly without waiting for code deployments or feature flags. Large language models handle the messy, ambiguous, and multilingual data that break traditional rules engines, interpreting intent and context from natural language instead of rigid logic trees. 
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+This approach replaces brittle, bespoke NLP pipelines with generalizable reasoning, allowing COOs to encode strategic intent—such as “apply refund policy with empathy” or “escalate fraud-like cases”—and let the model execute intelligently. The result is a more agile, domain-driven enterprise where business logic evolves at the speed of change.
+
+                </p>
+
+
+              </div>
+            </div>
+
+
+
+
+
+<!--
 <pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE OR REPLACE TABLE big_cloud_dealz_development.silver.dim_products
-USING DELTA
-AS
-SELECT
-  CAST(sku_sk AS INT) AS sku_sk,
-  CAST(product_id AS STRING) AS product_id,
-  CAST(supplier_id AS INT) AS supplier_id,
-  CAST(category AS STRING) AS category,
-  CAST(brand AS STRING) AS brand,
-  CAST(product_name AS STRING) AS product_name
-FROM read_files(
-  '/Volumes/big_cloud_dealz_development/silver/product_data_upload/',
-  format => 'csv',
-  header => true,
-  inferSchema => true
-);
+<code class="lang-yaml">
+
+      Answer the question based on only the data available. Be succint and brief
+      in your response.
+
+      Default rule of thumb:
+
+      Stockout exposure % = “today’s lost sales risk.” If it’s high—especially on A-SKUs—this trumps OTIF because the cash register is impacted now.
+
+      OTIF = “tomorrow’s supply risk.” If OTIF is collapsing and your days of cover (DOC) are thin vs lead time (LT), OTIF can trump stockouts because a broader shortage is imminent.
+        
+      Practical thresholds (company-level, then tighter for A-SKUs)
+
+      Stockout Exposure % (forecast demand not covered by ATP):
+
+      Green: <2% (A-SKUs <1%)
+
+      Watch: 2–4% (A-SKUs 1–2%)
+
+      Concerning: 4–8% (A-SKUs 2–3%)
+
+      Critical: >8% (A-SKUs >3%)
+
+      OTIF (on-time, in-full arrivals—vendor→DC and/or DC→store):
+
+      Green: ≥96%
+
+      Watch: 92–96%
+
+      Concerning: 88–92%
+
+      Critical: <88%
+
+      [ ... ]
+
+
+      
+
 </code>
 </pre>
+-->
+
+
            <p class="fs-lg">
-            This command elegantly performs several actions. The <code>CREATE OR REPLACE TABLE</code> clause defines our table's name, <code>big_cloud_dealz_development.silver.dim_products</code>, and the <code>OR REPLACE</code> option ensures the query is idempotent, meaning it can be re-run without errors. <code>USING DELTA</code> specifies that we are creating a table in the default and recommended Delta Lake format. The core of the statement is the <code>AS SELECT</code> clause, where the results of the query populate the new table. Inside, we use the <code>read_files</code> function to access the data in our Volume, specifying the format is <code>csv</code>, that the files contain a header row, and that <code>inferSchema</code> should be used to automatically detect column types. Finally, while schema inference is convenient, it is a best practice to explicitly <code>CAST</code> columns to their desired data types to ensure data quality and prevent unexpected errors.
+
+            todo
+
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Result: A Ready-to-Use Product Table</h2>
-           <p class="fs-lg">
-            After running the CTAS statement, our <code>dim_products</code> table is instantly created and available in the <code>silver</code> schema. As a <code>Unity Catalog</code> managed table, it is fully governed and immediately ready for querying.
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Accelerating Retail Logistics Analysis with Agent Bricks</h2>
 
-          </p>
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
+
+
+           <p class="fs-lg">
+
+            todo
+
+           </p>
 
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/final_products_delta_table.png" alt="Image">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_agent_answer_detailed.png" alt="Image">
 
           </div>    
-
            <p class="fs-lg">
 
-             The table is correctly populated with columns for SKU, product ID, supplier, category, brand, and product name. This table can now serve as the single source of truth for all product information, feeding BI dashboards, downstream data models, and ad-hoc analytics that help drive the business forward.
+            todo
+
            </p>
 
           </div>

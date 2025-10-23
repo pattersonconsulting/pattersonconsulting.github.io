@@ -313,9 +313,16 @@
 
            <p class="fs-lg">
 
+Retail success depends on precision and speed across the supply network. When suppliers lack daily, store-level visibility into sales and inventory, they’re left guessing—resulting in empty shelves and missed revenue. Manual reporting and spreadsheet wrangling delay decisions, while outdated ordering processes introduce costly errors. 
+
+          </p>
+
+
+           <p class="fs-lg">
+
             <b>We're inundate with so much data and information today its hard to know what to pay attention to sometimes.</b>
 
-           </p>
+           </p>          
 
            <p class="fs-lg">
 
@@ -331,6 +338,7 @@
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Agent Bricks</h2>
 
+
            <p class="fs-lg">
             The technical advantage of Databricks Agent Bricks lies in how it collapses months of complex AI system engineering into a governed, production-ready platform that runs natively in the lakehouse. Traditionally, standing up an enterprise-grade assistant required stitching together multiple components — vector databases, embedding models, chunking logic, role-based access, and feedback systems — all of which demanded deep MLOps expertise and constant tuning. 
 
@@ -343,7 +351,7 @@
 
            <p class="fs-lg">
 
-            In this post I'm going to show you have to accelerate your retail logistics decision intelligence by using LLMs with Agent Bricks to analyze structured infromation from your data lakehouse. This method directly improves your managements' ability to process information faster and get to the right decision more quickly, <a href="../content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html">making the company more competitive within its market</a>.
+            In this post I'm going to show you how to accelerate your retail logistics decision intelligence by using LLMs with Agent Bricks to analyze structured infromation from your data lakehouse. This method directly improves your managements' ability to process information faster and get to the right decision more quickly, <a href="../content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html">making the company more competitive within its market</a>.
 
            </p>           
 
@@ -366,19 +374,32 @@
 
            </p>
 
-           <p class="fs-lg">
 
-            Decision Intelligence is about helping your process the series of questions needed to make your own decisions faster, not giving you the final answer.
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Generative AI and Decision Intelligence</h3>
 
-           </p>
-
-           <p class="fs-lg">
+                <p class="pb-sm3 pb-md-4 mb-2">
 
 <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, particularly large language models, enables organizations to rapidly simulate complex business scenarios that once required cross-functional teams and extended analysis. These models support swift exploration of strategic options, allowing decision-makers to test contingencies and forecast outcomes with greater agility. By modeling operational dynamics and economic behaviors, LLMs introduce a new level of depth and speed to business strategy, supporting faster, more informed decisions.
-</p>
-<p class="fs-lg">
-Executives can synthesize many complex scenarios and eliminate the bulk of the ones that won't work before focusing on promising strategies. An example of this is how a CFO might ask a system "how much property damage is at risk if a category 4 hurricane hits a specific state?". This allows the CFO to build some ideas around what may be coming before she takes a few of them over to the company meteorologist for deeper validation.            
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Executives can synthesize many complex scenarios and eliminate the bulk of the ones that won't work before focusing on promising strategies. An example of this is how a CFO might ask a system "how much property damage is at risk if a category 4 hurricane hits a specific state?". This allows the CFO to build some ideas around what may be coming before she takes a few of them over to the company meteorologist for deeper validation.
+                </p>
+
+
+              </div>
+            </div>
+
+
+
+           <p class="fs-lg">
+
+            Decision Intelligence is about helping you work through the series of questions needed to make your own decisions faster, not giving you the final answer.
+
            </p>
+
 
            <p class="fs-lg">
 
@@ -405,7 +426,7 @@ Executives can synthesize many complex scenarios and eliminate the bulk of the o
 
            <p class="fs-lg">
 
-            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Mult-Agent Supervisor</code> project type, as shown in the image below.
+            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Multi-Agent Supervisor</code> project type, as shown in the image below.
 
            </p>
 
@@ -419,7 +440,7 @@ Executives can synthesize many complex scenarios and eliminate the bulk of the o
 
            <p class="fs-lg">
 
-            We're using the <code>Mult-Agent Supervisor</code> project type here because we need to do a few steps to pull the information together and then apply our custom business analysis logic. So we need to do some coordination between a few different stages of our agent's internal workflow, which is what the <code>Mult-Agent Supervisor</code>.
+            We're using the <code>Multi-Agent Supervisor</code> project type here because we need to do a few steps to pull the information together and then apply our custom business analysis logic. So we need to do some coordination between a few different stages of our agent's internal workflow, which is what the <code>Multi-Agent Supervisor</code>.
 
            </p>
 
@@ -427,14 +448,51 @@ Executives can synthesize many complex scenarios and eliminate the bulk of the o
 
            <p class="fs-lg">
 
-            In a previous article we put together a Genie space that was a natural language conversational user interface to query the underlying views and metric views built in our data lakehouse. The interesting thing about Agent Bricks is that we can use these other spaces and agents as "building blocks" in multi-agent systems to compose systems that can complete more complex multi-step problems.
+            In a previous article we put together a Genie space that was a natural language conversational user interface to query the underlying views and metric views built in our data lakehouse. 
 
           </p>
 
 
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Retail and Conversational User Interfaces</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+<!--
+<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, 
+-->
+Conversational user interfaces (CUIs) built on top of a data lakehouse give retail COOs a direct, intelligent pathway from question to action—without the delays of traditional dashboards or manual report requests. By connecting seamlessly across OMS, WMS, TMS, ERP, and analytics layers, a CUI allows executives to ask complex operational questions in natural language, receive data-driven answers with full lineage and source citations, and, when appropriate, trigger workflows or corrective actions instantly. This turns the lakehouse into a real-time decision cockpit—streamlining daily operations, improving responsiveness to disruptions, and empowering leadership to move from insight to execution with unprecedented speed and confidence.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Databricks Genie spaces are a foundational building blocks on the Databricks platform for building conversational user interfaces.
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+
+          <p class="fs-lg">
+
+<b>
+</b>
+          </p>
+
            <p class="fs-lg">
 
-            The genie space alone is not enough to complete our decision intelligence system, so we need to orchestrate further steps. This is why we need the <code>Mult-Agent Supervisor</code>.
+The interesting thing about Agent Bricks is that we can use these other spaces and agents as "building blocks" in multi-agent systems to compose systems that can complete more complex multi-step problems.            
+
+            The genie space alone is not enough to complete our decision intelligence system, so we need to orchestrate further steps. This is why we need the <code>Multi-Agent Supervisor</code>.
 
            </p>
 
@@ -487,6 +545,31 @@ Executives can synthesize many complex scenarios and eliminate the bulk of the o
             todo
 
            </p>
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Expressing Business Rules in Prompts</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Expressing logic in prompts—rather than hard-coded rules—unlocks speed, adaptability, and intelligence across retail operations. By defining behavior in editable text templates, business teams can adjust policies or decision flows instantly without waiting for code deployments or feature flags. Large language models handle the messy, ambiguous, and multilingual data that break traditional rules engines, interpreting intent and context from natural language instead of rigid logic trees. 
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+This approach replaces brittle, bespoke NLP pipelines with generalizable reasoning, allowing COOs to encode strategic intent—such as “apply refund policy with empathy” or “escalate fraud-like cases”—and let the model execute intelligently. The result is a more agile, domain-driven enterprise where business logic evolves at the speed of change.
+
+                </p>
+
+
+              </div>
+            </div>
+
+
+
 
 
 <!--

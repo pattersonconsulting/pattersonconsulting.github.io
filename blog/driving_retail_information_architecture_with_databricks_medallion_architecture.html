@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Building a Retail Product Delta Table with Databricks Unity Catalog</title>
+    <meta name="description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks.">
+    <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Josh Patterson">
+
+
+    <meta property="og:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="In this article we get you going quickly building Delta Tables with CTAS statements and Unity Catalog on Databricks."/>
+
+
+    <meta name="twitter:title" content="Building a Retail Product Delta Table with Databricks Unity Catalog" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/building_retail_product_table_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Driving Retail Information Architecture with the Databricks Medallion Architecture</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Driving Retail Information Architecture with the Databricks Medallion Architecture</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Nikhil Karnik
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_medallion_architecture_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 500px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+            
+<!--
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Driving Retail Excellence with the Databricks Medallion Architecture</h2>
+-->
+<p class="fs-lg">
+[todo: add an open problem/challenge statement]
+</p>
+
+<p class="fs-lg">
+The Medallion data architecture can be utilized to convert raw time series retail data into structured tables of transactions, products/inventory, and margins. Then analytical tables can be generated from the structured tables for querying business health, product popularity, profitability, and other KPIs. For modern retail and operations teams, this approach transforms messy, disparate data sources into a streamlined engine for analytics. By systematically curating data through Bronze, Silver, and Gold layers, retailers can build a single source of truth that empowers everyone in the organization, from the C-suite to store managers.
+</p>
+
+<p class="fs-lg">📘 Reference: Medallion Architecture</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Understanding the Layers</h2>
+
+<p class="fs-lg">
+The Medallion pattern organizes data within our <code>big_cloud_dealz_development</code> <code>Databricks</code> environment into three distinct layers, each with a specific purpose. Think of it as refining raw ingredients into a gourmet meal.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Bronze Layer (Raw Ingestion) 🥉</h2>
+
+<p class="fs-lg">
+This is the landing zone for all source data in its original, untouched format. For our retail operations, this includes raw JSON feeds from supplier <code>WMS</code> systems, CSV exports from our <code>ERP</code> (containing purchase order data), and <code>EDI</code> logs from carriers. The primary goal for the Bronze layer is to load the data quickly into <code>Delta</code> tables (e.g., <code>bronze.erp_po_export</code>, <code>bronze.wms_shipping_log</code>) and archive it. It's crucial not to place any business logic in this layer, as its only job is to capture the raw data from the source systems.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Silver Layer (Modeled &amp; Cleansed) 🥈</h2>
+
+<p class="fs-lg">
+Here, the raw Bronze data is transformed into a clean, structured, and queryable data warehouse. Data is deduplicated, conformed to common standards (like aligning timestamps and IDs), and modeled into a robust schema representing the core business entities and events.
+</p>
+
+<p class="fs-lg">
+<strong>Dimension Tables</strong> are created to provide conformed business context. This includes tables like <code>silver.dim_products</code> (storing SKU information, including <code>supplier_id</code> and <code>category</code>), <code>silver.dim_carriers</code> (standardizing carrier names and mode), and <code>silver.dim_locations</code> (a master list of all stores and warehouses).
+</p>
+
+<p class="fs-lg">
+<strong>Fact Tables</strong> capture business events and metrics. This is where we build out core tables like <code>silver.fact_po_header</code> and <code>silver.fact_po_line</code> (tracking all items ordered from vendors), <code>silver.fact_shipments</code> (logging all carrier movements), and atomic inventory tables like <code>silver.fact_inventory</code> (daily on-hand snapshots) and <code>silver.fact_inventory_backorder</code>.
+</p>
+
+<p class="fs-lg">
+<strong>Reference Tables</strong> like <code>silver.ref_lane_sla</code> are also established in this layer to store business rules, such as shipping times, which are vital for downstream analysis.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Gold Layer (Business-Ready &amp; Aggregated) 🥇</h2>
+
+<p class="fs-lg">
+The Gold layer is the final, highly refined layer designed for specific business use cases and reporting. These tables and views are aggregated and optimized for performance, answering specific business questions and powering the dashboards used by our logistics, merchandising, and finance teams.
+</p>
+
+<p class="fs-lg">
+One example is the <code>gold.view_lead_time_variance_days_by_date</code>. This view consumes the cleaned <code>silver.fact_shipments</code> table to calculate a specific, high-level KPI (shipping time variance) used by the COO to monitor carrier consistency.
+</p>
+
+<p class="fs-lg">
+Other Gold assets are built by joining multiple Silver tables to answer complex questions. For instance, an <code>OTIF</code> analysis would be built here by joining <code>silver.fact_po_line</code> (<code>qty_ordered</code>) with <code>silver.fact_shipment_receipts</code> (<code>received_quantity</code>) and <code>silver.fact_shipments</code> (<code>actual_arrival_ts</code>).
+</p>
+
+<p class="fs-lg">
+Similarly, a Stockout Risk report would be created in the Gold layer by comparing inventory levels from <code>silver.fact_inventory</code> against future demand from <code>silver.fact_sales_forecast</code>, enriched with product details from <code>silver.dim_products</code>.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Powering Core Retail Groups with Gold-Layer Analytics</h2>
+
+<p class="fs-lg">
+The true value of the Medallion architecture is realized in the Gold layer, where data is tailored to the specific needs of each business function. By creating curated, aggregated datasets, retailers can directly power the key performance indicators (KPIs) for each department.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sales</h2>
+
+<ul>
+  <li><strong>Net Sales vs Plan</strong>: An aggregated view that compares actual sales figures against forecasted targets, updated on any time interval.</li>
+  <li><strong>Comp Sales %</strong>: A metric view calculating the growth of sales in stores that have been open for a year or more.</li>
+  <li><strong>Gross Margin %</strong>: A summarized table showing profitability by SKU, product category, brand, or store.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Merchandising</h2>
+
+<ul>
+  <li><strong><code>GMROI</code></strong>: A pre-calculated KPI that shows how much gross margin is earned for every dollar invested in inventory.</li>
+  <li><strong>Sell-Through Rate</strong>: A weekly or monthly report that tracks the percentage of inventory sold for specific products or categories.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Marketing</h2>
+
+<ul>
+  <li><strong><code>ROAS</code></strong>: A view that joins marketing campaign spend with sales revenue to calculate ROI on marketing investments and customer acquisition costs (CAC).</li>
+  <li><strong>Predicted Customer Lifetime Value</strong>: A data science model output that scores customers on their potential future value, enabling targeted marketing efforts.</li>
+  <li><strong>Retention &amp; Repeat-Purchase Health</strong>: Dashboards showing customer cohort behavior and repeat purchase rates over time.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Operations and Logistics</h2>
+
+<p class="fs-lg">
+The Chief Operating Officer oversees the entire supply chain. The Gold layer provides critical visibility into operational efficiency and potential disruptions. The example tables for the architecture focus on this area and are referenced.
+</p>
+
+<ul>
+  <li><strong>Stockout Exposure</strong>: An alert-driven table that identifies products at risk of going out of stock based on current sales velocity and inventory levels. This Gold table would join real-time inventory counts against the <code>silver.dim_products</code> table to provide details on at-risk SKUs, brands, or suppliers.</li>
+  <li><strong>On-Time In-Full (<code>OTIF</code>)</strong>: An aggregated view of supplier and carrier performance. This KPI would be calculated by joining shipment facts against <code>silver.dim_carriers</code> (to measure carrier performance by mode or <code>carrier_name</code>) and <code>silver.dim_products</code> (to measure supplier performance via <code>supplier_id</code>).</li>
+  <li><strong>Carrier Delays</strong>: A dashboard monitoring the performance of shipping partners to identify and mitigate delivery bottlenecks. The <code>gold.view_lead_time_variance_days_by_date</code> view is a prime example of this, as it directly calculates the statistical variance in carrier lead times, allowing the COO to spot inconsistent partners.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Practical Design Guide for Retail Data Warehousing</h2>
+
+<p class="fs-lg">
+A successful Medallion architecture relies on strong governance and consistent design patterns. Following a clear naming convention is one of the most effective ways to ensure the data warehouse is easy to navigate, maintain, and use.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example Data Flow: From Bronze to Gold</h2>
+
+<p class="fs-lg">Let's walk through a tangible example of raw data being promoted through the layers.</p>
+
+<p class="fs-lg"><strong>1. Bronze Layer: Raw Ingestion</strong> — First, we land the raw, unaltered data feeds into Bronze tables.</p>
+
+<p class="fs-lg"><strong>2. Silver Layer: Modeled &amp; Cleansed</strong> — Next, we clean the data and model it into a star schema with dimension and fact tables. Note the use of <code>dim_</code> and <code>fact_</code> prefixes.</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_products (
+  sku_sk                BIGINT    GENERATED BY DEFAULT AS IDENTITY,
+  product_id            STRING    NOT NULL,
+  supplier_id           STRING    NOT NULL,
+  category              STRING,
+  brand                 STRING,
+  product_name          STRING,
+  product_type          STRING,
+  target_audience       STRING,
+  
+  unit_cost     DECIMAL(18,2) DEFAULT 0,
+  unit_price    DECIMAL(18,2) DEFAULT 0,
+  weight_lbs    DECIMAL(18,2) DEFAULT 0
+) USING DELTA;
+</code>
+</pre>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_carriers (
+  carrier_sk    BIGINT   GENERATED BY DEFAULT AS IDENTITY,
+  carrier_id    STRING   NOT NULL,              -- business key (e.g., SCAC or vendor id)
+  carrier_name  STRING,
+  scac          STRING,
+  mode          STRING,                          -- PARCEL/LTL/FTL/INTERMODAL
+  is_active     BOOLEAN  NOT NULL DEFAULT TRUE,
+  valid_from    TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+  valid_to      TIMESTAMP,
+  is_current    BOOLEAN   NOT NULL DEFAULT TRUE
+) USING DELTA;
+</code>
+</pre>
+
+<p class="fs-lg">
+<strong>3. Gold Layer: Aggregated for BI</strong> — The Gold Layer is the consumer-facing storefront of the data warehouse. This is where the data completes its journey from raw material to a high-value business asset. While the Silver layer provides a clean, queryable foundation, the Gold layer is crafted for end-user consumption. It consists of aggregated, optimized tables and views designed to power specific analytics, answer critical business questions, and drive strategic decisions. These Gold assets serve as the direct, trusted source for BI tools, dashboards, and KPI reports used by every retail department.
+</p>
+
+<p class="fs-lg">
+A key innovation in the modern Gold layer is the use of <code>Unity Catalog Metric Views</code>. Instead of creating dozens of rigid, pre-aggregated tables for every possible business query, Metric Views allow you to define a core business KPI—like Gross Margin % or Return on Ad Spend—just once. Business users can then slice and dice this governed metric by any dimension (e.g., region, product category, marketing channel) at query time, ensuring both flexibility and consistency without building new summary tables for every request.
+</p>
+
+<p class="fs-lg">📘 Reference: Databricks Metric Views</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+CREATE OR REPLACE VIEW big_cloud_dealz_development.gold.view_lead_time_variance_days_by_date AS
+WITH base AS (
+  SELECT
+    DATE(depart_ts) AS date,
+    /* lead_time_days = (actual_arrival_ts - depart_ts) in days */
+    (to_unix_timestamp(actual_arrival_ts) - to_unix_timestamp(depart_ts)) / 86400.0 AS lead_time_days
+  FROM big_cloud_dealz_development.silver.fact_shipments
+  WHERE depart_ts IS NOT NULL
+    AND actual_arrival_ts IS NOT NULL
+)
+SELECT
+  date,
+  /* sample variance (ddof = 1), matching pandas .var(ddof=1) */
+  var_samp(lead_time_days) AS lead_time_variance_days
+FROM base
+GROUP BY date;
+</code>
+</pre>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Governance Rules: Dos and Don'ts</h2>
+
+<ul>
+  <li>✅ <strong>Do</strong> align fiscal calendars and currency definitions before publishing KPIs to ensure consistency across all reports.</li>
+  <li>❌ <strong>Don't</strong> join fact tables on natural keys (like a product SKU) in BI tools. Always use surrogate keys (<code>_sk</code>) for stable and performant joins.</li>
+  <li>✅ <strong>Do</strong> version plans and forecasts. Incorporate fields like <code>scenario</code> or <code>version_ts</code> to track changes and perform predictive analysis.</li>
+  <li>❌ <strong>Don't</strong> ever put complex transformation or business logic in the Bronze layer. It should remain an unaltered archive of the source data.</li>
+</ul>
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
+                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>
+

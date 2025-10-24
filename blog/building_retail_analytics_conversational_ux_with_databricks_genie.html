@@ -312,27 +312,45 @@
            
 
            <p class="fs-lg">
-
+<!--
 Retail success depends on precision and speed across the supply network. When suppliers lack daily, store-level visibility into sales and inventory, they’re left guessing—resulting in empty shelves and missed revenue. Manual reporting and spreadsheet wrangling delay decisions, while outdated ordering processes introduce costly errors. 
-
-          </p>
-
-
-           <p class="fs-lg">
-
-           </p>
+-->
+Retail success depends on precision and speed across the supply chain, yet many suppliers still operate with limited visibility into daily, store-level sales and inventory data. Databricks Genie changes that. As an AI assistant built directly into the Databricks Lakehouse, Genie allows COOs and business leaders to ask natural-language questions and receive instant, accurate answers grounded in governed data from Unity Catalog. 
+</p>
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Databricks Genie?</h2>
 
 
            <p class="fs-lg">
-Databricks Genie is an AI assistant built into the Databricks Lakehouse that lets business leaders and analysts ask natural-language questions about their company’s data — and get instant, trustworthy answers. It draws directly from governed data and metrics in Unity Catalog, so insights are accurate, secure, and consistent across teams. For a COO, Genie turns the Lakehouse into an on-demand operations analyst — surfacing KPIs like OTIF, stockout exposure, or fulfillment efficiency in seconds, without waiting on data teams.
+Databricks Genie is an AI assistant built into the Databricks Lakehouse that lets business leaders and analysts ask natural-language questions about their company’s data — and get instant, trustworthy answers. It draws directly from governed data and <a href="building_retail_semantic_layer_with_unity_catalog_metric_views.html" target="_blank">metrics in Unity Catalog</a>, so insights are accurate, secure, and consistent across teams. For a COO, Genie turns the Lakehouse into an on-demand operations analyst — surfacing KPIs like OTIF, stockout exposure, or fulfillment efficiency in seconds, without waiting on data teams.
  
 
            </p>
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How is Databricks Genie Useful in Retail?</h2>
+
            <p class="fs-lg">
-...
-           </p>           
+
+When used in a retail organization, Genie acts as a conversational user interfaces (CUIs) that connect across OMS, WMS, TMS, and ERP systems.
+</p>
+
+           <p class="fs-lg">
+ Genie transforms the Lakehouse into a real-time operations cockpit—surfacing metrics like OTIF or stockout exposure on demand and enabling retail executives to move from question to action with speed, confidence, and consistency.
+
+
+          </p>
+
+
+            
+
+
+           <p class="fs-lg">
+
+In this article I use Genie to build a conversational analytics interface on top of our Databricks <a href="driving_retail_information_architecture_with_databricks_medallion_architecture.html" target="_blank">retail medallion architecture for logistics</a>. 
+
+
+
+</p>
 
 
 
@@ -360,10 +378,31 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
               </div>
             </div>
 
+            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Data Lakehouse Discipline</h2>
+
 
            <p class="fs-lg">
 
-            todo
+We use the data lakehouse foundation we built previously in this series. It includes a <a href="building_retail_semantic_layer_with_unity_catalog_metric_views.html" target="_blank">metric view for OTIF (On Time, In Full)</a> within Databricks, which standardizes how delivery performance is calculated and reported. 
+
+
+This ensures that when executives, analysts, or suppliers ask about OTIF performance, they are referencing a single, consistent definition across the organization—eliminating confusion and enabling faster, more aligned decisions.
+
+            </p>
+
+           <p class="fs-lg">
+
+To make this work, we deliberately map only the relevant datasets and metrics into the conversational layer rather than exposing the entire data estate. This focused approach allows the underlying language models (LLMs) to operate within well-defined boundaries, delivering more accurate and reliable answers. Databricks Genie strengthens this by linking natural language to metric views and query patterns, ensuring every request for a key KPI like OTIF uses the same trusted formula. The result is a consistent, intelligent data experience that drives operational precision across retail logistics.
+
+           </p>
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Genie Space for Retail Logistics KPI Analysis</h2>
+
+
+           <p class="fs-lg">
+
+            If you click on the "Genie" button on the left hand toolbar in your main Databricks platform dashboard, you should see a screen similar to the image below.
 
            </p>
 
@@ -378,7 +417,7 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
 
            <p class="fs-lg">
 
-            click new, now connect data sources
+            Click the "New" button in the upper right-hand corner of the Genie dashboard and you will be presented with a "Connect your data" modal popup as seen below. 
 
            </p>
 
@@ -392,7 +431,7 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
 
            <p class="fs-lg">
 
-            now we have a new genie space
+            Since we've already done the hard work in <a href="building_retail_semantic_layer_with_unity_catalog_metric_views.html" target="_blank">modeling our data in a semantic view with metric views</a>, click the <code>Metric Views</code> filter and select <code>metric_view_otif</code> and <code>metric_view_stockout_exposure</code> from the list and click next. You should see a Genie new space dashboard as seen in the image below.
 
            </p>
 
@@ -408,7 +447,7 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
 
            <p class="fs-lg">
 
-            now check out dbx_agentbricks_conf_panel_data
+            Before we move on, let's quickly check out the configuration panel on the right side as seen in the image below.
 
            </p>
 
@@ -423,21 +462,79 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
 
            <p class="fs-lg">
 
-            also point out instructions
+            This is where we can continue to refine the configuration of our Genie space as we test the response in the chat area playground. Further, we can add specific text instructions for how the LLM some think about writing queries for our metric views. Many times questions will be asked in ways that the LLM will have to reason about the best way to customize the SQL query to answer the question, and this is where the power of metric views shines because they are useful for calculating multiple variations of similar answers.
 
            </p>
 
 
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">It's Always About Focus</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  One great trick for reducing unintentional answers (e.g., "hallucinations") is to constraint down the options and variations for the LLM to consider when reasoning over your question and your contextual data.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Databricks is already doing some of this for you by providing you with constructs (e.g., "Genie") to use software to constrain an LLM to a specific task with specific data. 
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  So if you use a well-modeled data lakehouse with metric views, you have consistency in formulas already. When you use Genie spaces, it further maps a set of queries to a set of metric views so when the LLM finally gets routed a specific type of question, the system is able to format the <code>prompt</code> in a tight, focused, and efficient way. This raises consistency in the answers generated in the AI / BI applications, supporting end users better.
+
+                </p>
+
+
+              </div>
+            </div>
+
+
+
+           <p class="fs-lg">
+
+            To add specific text instructions you can click on the <code>instructions</code> tab and write out how you want the system to focus on generating answers, as you can see below.
+
+           </p>
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_conf_panel_instructions.png" alt="Image">
 
           </div>   
 
+           <p class="fs-lg">
+
+            Basically we're reminding the system to only focus on these specific fields when asked about OTIF and stockout exposure. The nice thing about building Genie spaces is because we've done so much work on the Unity Catalog and metric view side of organizing the data, building LLM-based conversational user interfaces for our data lakehouse is not that hard with Databricks Genie.
+
+           </p>
+
+
+            <div class="card border-0 bg-secondary mb-4 mt-4">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+"The dirty secret of AI is that the hardest part is the data.”                    
+                      
+                    </i></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer"><a href="https://www.fivetran.com/podcast/fivetran-and-databricks-ceos-reveal-the-secret-to-ai" target="_blank">Ali Ghodsi</a>, CEO of Databricks </figcaption>
+                </figure>
+              </div>
+            </div>    
+
+
 
            <p class="fs-lg">
 
-            Let's do a quick test with the query "What is the stockout exposure for the last week?"
+            Ok, enough exposition. Let's do a quick test with the query "What is the stockout exposure for the last week?"
 
            </p>
 
@@ -447,7 +544,6 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_query_logistics_stockout_last_week.png" alt="Image">
 
           </div>   
-
 
 
            <p class="fs-lg">
@@ -461,7 +557,40 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_logistics_query_latest_kpis.png" alt="Image">
 
-          </div>   
+          </div>  
+
+
+
+
+           <p class="fs-lg">
+
+            And that's all there is to it. We did all the hard work by getting our metric views put together and then the text metadata mapping in Genie configuration does the rest with LLMs.
+
+           </p>
+
+
+
+
+
+          <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary and Next Steps</h2>
+
+
+           <p class="fs-lg">
+
+            Databricks Genie spaces make it easy to build quick, accurate, and consistent conversational user interfaces for your data lakehouse tables, views, and metric views. However, its mostly meant for use by analysts and business leaders. 
+
+           </p>
+
+
+
+
+
+           <p class="fs-lg">
+
+            What if we want to take the next step and automate the analysis of multiple KPIs at once to accelerate decision making with custom business rules? For more on that, check out the next article on <a href="retail_decision_intelligence_with_agent_bricks.html">"Accelerating Retail Decision Intelligence with Agent Bricks"</a>.
+
+           </p>
+
 
 
 

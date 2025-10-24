@@ -308,197 +308,209 @@
       <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
-            
-<!--
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Driving Retail Excellence with the Databricks Medallion Architecture</h2>
--->
+
+
 <p class="fs-lg">
-[todo: add an open problem/challenge statement]
+[ todo: cold open intro ]
+</p>
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is a Semantic Layer?</h2>
+
+<p class="fs-lg">
+A semantic layer is a business-friendly translation layer. It sits between complex, raw data tables and the end-users who need to consume that data, such as an analyst using a BI tool. (Learn more at the Databricks Glossary: What is a Semantic Layer?).
 </p>
 
 <p class="fs-lg">
-The Medallion data architecture can be utilized to convert raw time series retail data into structured tables of transactions, products/inventory, and margins. Then analytical tables can be generated from the structured tables for querying business health, product popularity, profitability, and other KPIs. For modern retail and operations teams, this approach transforms messy, disparate data sources into a streamlined engine for analytics. By systematically curating data through Bronze, Silver, and Gold layers, retailers can build a single source of truth that empowers everyone in the organization, from the C-suite to store managers.
-</p>
-
-<p class="fs-lg">📘 Reference: Medallion Architecture</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Understanding the Layers</h2>
-
-<p class="fs-lg">
-The Medallion pattern organizes data within our <code>big_cloud_dealz_development</code> <code>Databricks</code> environment into three distinct layers, each with a specific purpose. Think of it as refining raw ingredients into a gourmet meal.
-</p>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Bronze Layer (Raw Ingestion) 🥉</h2>
-
-<p class="fs-lg">
-This is the landing zone for all source data in its original, untouched format. For our retail operations, this includes raw JSON feeds from supplier <code>WMS</code> systems, CSV exports from our <code>ERP</code> (containing purchase order data), and <code>EDI</code> logs from carriers. The primary goal for the Bronze layer is to load the data quickly into <code>Delta</code> tables (e.g., <code>bronze.erp_po_export</code>, <code>bronze.wms_shipping_log</code>) and archive it. It's crucial not to place any business logic in this layer, as its only job is to capture the raw data from the source systems.
-</p>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Silver Layer (Modeled &amp; Cleansed) 🥈</h2>
-
-<p class="fs-lg">
-Here, the raw Bronze data is transformed into a clean, structured, and queryable data warehouse. Data is deduplicated, conformed to common standards (like aligning timestamps and IDs), and modeled into a robust schema representing the core business entities and events.
+Think of it as a "data menu" for a restaurant. The kitchen (your data platform) has complex recipes (<code>fct_sales</code>, <code>dim_customer</code>). The customer just wants to order "Total Sales for the Midwest." The semantic layer is the menu that defines "Total Sales" with a specific recipe, allowing the user to get what they need by name.
 </p>
 
 <p class="fs-lg">
-<strong>Dimension Tables</strong> are created to provide conformed business context. This includes tables like <code>silver.dim_products</code> (storing SKU information, including <code>supplier_id</code> and <code>category</code>), <code>silver.dim_carriers</code> (standardizing carrier names and mode), and <code>silver.dim_locations</code> (a master list of all stores and warehouses).
+As Databricks defines it, a semantic layer "creates a unified business view of data across an organization, regardless of where the data resides or how it’s structured.”
 </p>
 
 <p class="fs-lg">
-<strong>Fact Tables</strong> capture business events and metrics. This is where we build out core tables like <code>silver.fact_po_header</code> and <code>silver.fact_po_line</code> (tracking all items ordered from vendors), <code>silver.fact_shipments</code> (logging all carrier movements), and atomic inventory tables like <code>silver.fact_inventory</code> (daily on-hand snapshots) and <code>silver.fact_inventory_backorder</code>.
-</p>
-
-<p class="fs-lg">
-<strong>Reference Tables</strong> like <code>silver.ref_lane_sla</code> are also established in this layer to store business rules, such as shipping times, which are vital for downstream analysis.
-</p>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Gold Layer (Business-Ready &amp; Aggregated) 🥇</h2>
-
-<p class="fs-lg">
-The Gold layer is the final, highly refined layer designed for specific business use cases and reporting. These tables and views are aggregated and optimized for performance, answering specific business questions and powering the dashboards used by our logistics, merchandising, and finance teams.
-</p>
-
-<p class="fs-lg">
-One example is the <code>gold.view_lead_time_variance_days_by_date</code>. This view consumes the cleaned <code>silver.fact_shipments</code> table to calculate a specific, high-level KPI (shipping time variance) used by the COO to monitor carrier consistency.
-</p>
-
-<p class="fs-lg">
-Other Gold assets are built by joining multiple Silver tables to answer complex questions. For instance, an <code>OTIF</code> analysis would be built here by joining <code>silver.fact_po_line</code> (<code>qty_ordered</code>) with <code>silver.fact_shipment_receipts</code> (<code>received_quantity</code>) and <code>silver.fact_shipments</code> (<code>actual_arrival_ts</code>).
-</p>
-
-<p class="fs-lg">
-Similarly, a Stockout Risk report would be created in the Gold layer by comparing inventory levels from <code>silver.fact_inventory</code> against future demand from <code>silver.fact_sales_forecast</code>, enriched with product details from <code>silver.dim_products</code>.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Powering Core Retail Groups with Gold-Layer Analytics</h2>
-
-<p class="fs-lg">
-The true value of the Medallion architecture is realized in the Gold layer, where data is tailored to the specific needs of each business function. By creating curated, aggregated datasets, retailers can directly power the key performance indicators (KPIs) for each department.
-</p>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sales</h2>
-
-<ul>
-  <li><strong>Net Sales vs Plan</strong>: An aggregated view that compares actual sales figures against forecasted targets, updated on any time interval.</li>
-  <li><strong>Comp Sales %</strong>: A metric view calculating the growth of sales in stores that have been open for a year or more.</li>
-  <li><strong>Gross Margin %</strong>: A summarized table showing profitability by SKU, product category, brand, or store.</li>
-</ul>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Merchandising</h2>
-
-<ul>
-  <li><strong><code>GMROI</code></strong>: A pre-calculated KPI that shows how much gross margin is earned for every dollar invested in inventory.</li>
-  <li><strong>Sell-Through Rate</strong>: A weekly or monthly report that tracks the percentage of inventory sold for specific products or categories.</li>
-</ul>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Marketing</h2>
-
-<ul>
-  <li><strong><code>ROAS</code></strong>: A view that joins marketing campaign spend with sales revenue to calculate ROI on marketing investments and customer acquisition costs (CAC).</li>
-  <li><strong>Predicted Customer Lifetime Value</strong>: A data science model output that scores customers on their potential future value, enabling targeted marketing efforts.</li>
-  <li><strong>Retention &amp; Repeat-Purchase Health</strong>: Dashboards showing customer cohort behavior and repeat purchase rates over time.</li>
-</ul>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Operations and Logistics</h2>
-
-<p class="fs-lg">
-The Chief Operating Officer oversees the entire supply chain. The Gold layer provides critical visibility into operational efficiency and potential disruptions. The example tables for the architecture focus on this area and are referenced.
+This layer is crucial because it:
 </p>
 
 <ul>
-  <li><strong>Stockout Exposure</strong>: An alert-driven table that identifies products at risk of going out of stock based on current sales velocity and inventory levels. This Gold table would join real-time inventory counts against the <code>silver.dim_products</code> table to provide details on at-risk SKUs, brands, or suppliers.</li>
-  <li><strong>On-Time In-Full (<code>OTIF</code>)</strong>: An aggregated view of supplier and carrier performance. This KPI would be calculated by joining shipment facts against <code>silver.dim_carriers</code> (to measure carrier performance by mode or <code>carrier_name</code>) and <code>silver.dim_products</code> (to measure supplier performance via <code>supplier_id</code>).</li>
-  <li><strong>Carrier Delays</strong>: A dashboard monitoring the performance of shipping partners to identify and mitigate delivery bottlenecks. The <code>gold.view_lead_time_variance_days_by_date</code> view is a prime example of this, as it directly calculates the statistical variance in carrier lead times, allowing the COO to spot inconsistent partners.</li>
+  <li>Abstracts Complexity: Hides complex joins and technical table names, presenting users with familiar terms like "Revenue" or "Region."</li>
+  <li>Ensures Consistency: Provides a single source of truth. The definition of "Active Users" is defined once, ensuring all departments use the same calculation.</li>
+  <li>Enables Self-Service: Empowers business users to build their own reports without needing a data engineer for every new question.</li>
 </ul>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Practical Design Guide for Retail Data Warehousing</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Databricks Metric Views &amp; Unity Catalog</h2>
 
 <p class="fs-lg">
-A successful Medallion architecture relies on strong governance and consistent design patterns. Following a clear naming convention is one of the most effective ways to ensure the data warehouse is easy to navigate, maintain, and use.
+In Databricks, the <code>Metric View</code> is the specific object you create to build your semantic layer. It’s a tangible metadata object where you formally define your key metrics (like "Total Sales") and dimensions (like "Product Category") on top of your Lakehouse tables. (See the documentation: <code>Unity Catalog Metric Views</code>).
 </p>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example Data Flow: From Bronze to Gold</h2>
+<p class="fs-lg">
+This feature is built directly into <code>Unity Catalog</code>, which is the foundation for governance and metadata for your data and AI assets on the Lakehouse. (See the product page: <code>Databricks Unity Catalog</code>).
+</p>
 
-<p class="fs-lg">Let's walk through a tangible example of raw data being promoted through the layers.</p>
+<p class="fs-lg">
+This integration is the key. Because Metric Views live within Unity Catalog, all your data governance is applied automatically. UC manages the fine-grained access control, so you can decide who is allowed to see sensitive metrics (like "Employee Salaries") or data from specific regions.
+</p>
 
-<p class="fs-lg"><strong>1. Bronze Layer: Raw Ingestion</strong> — First, we land the raw, unaltered data feeds into Bronze tables.</p>
+<p class="fs-lg">
+In summary: <code>Unity Catalog</code> provides the single, governed foundation, and <code>Metric Views</code> build the unified semantic layer on top of it.
+</p>
 
-<p class="fs-lg"><strong>2. Silver Layer: Modeled &amp; Cleansed</strong> — Next, we clean the data and model it into a star schema with dimension and fact tables. Note the use of <code>dim_</code> and <code>fact_</code> prefixes.</p>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Are Metric Views So Useful?</h2>
+
+<p class="fs-lg">
+The primary value of a Metric View is that it separates the definition of a metric from how an end-user queries it. This solves one of the biggest challenges in analytics: inconsistent logic and report sprawl.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Problem with Standard Views</h2>
+
+<p class="fs-lg">
+Without a metric view, you'd use a standard SQL <code>VIEW</code>. You might create <code>v_sales_by_quarter</code>. But when the business needs "sales by region," you have to create another view, <code>v_sales_by_region</code>. This grows into hundreds of views, each with slightly different logic, making the data difficult to manage.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Solution: Flexible, Centralized Logic</h2>
+
+<p class="fs-lg">
+Metric Views fix this by letting you define your "building blocks" one time:
+</p>
+
+<ul>
+  <li>Measure: <code>Total Revenue</code> (defined as <code>SUM(fct_sales.amount)</code>)</li>
+  <li>Dimension: <code>Region</code> (from <code>dim_customer.region</code>)</li>
+  <li>Dimension: <code>Time</code> (from <code>dim_date.calendar_date</code>)</li>
+</ul>
+
+<p class="fs-lg">
+Now, a BI tool can ask for any combination. When a user requests "Total Revenue by Region," the system is smart enough to "generate the correct query based on the user’s selection, while preserving consistent, centralized metric logic.”
+</p>
+
+<p class="fs-lg">
+You define the logic once, and it can answer hundreds of questions.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Benefits</h2>
+
+<ul>
+  <li>Powers Truly Self-Service Dashboards: A BI tool (like Tableau or Power BI) can connect to a single Metric View and see a clean list of measures and dimensions. An analyst can drag-and-drop "Total Revenue" and "Region" to build a report without writing any SQL.</li>
+  <li>Creates a "Storefront" for Your Gold Layer: In a Medallion Architecture, your Gold tables are your ultimate source of truth. A Metric View is the consumption layer, or "storefront," that sits on top of those tables. It translates your clean data into interactive, easy-to-use assets for the entire organization.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Practical Example: The "OTIF" Metric View</h2>
+
+<p class="fs-lg">
+Let's imagine a retail company, "Big Cloud Dealz," running on a Databricks Medallion Architecture.
+</p>
+
+<p class="fs-lg">
+The logistics team needs to track a complex KPI: On-Time In-Full (<code>OTIF</code>). This metric requires joining shipment data (was it on time?) with purchase order data (was it in full?) and enriching it with carrier and location details. This is a perfect use case for a Metric View.
+</p>
+
+<p class="fs-lg">
+1. <strong>Defining the Metric (The "How")</strong>
+</p>
+
+<p class="fs-lg">
+We create a single Metric View, <code>big_cloud_dealz_development.gold.metric_view_otif</code>, in YAML. Here’s what it does:
+</p>
+
+<p class="fs-lg">
+<code>source</code>: A SQL query that pulls from Silver-layer tables. It joins <code>fact_shipments</code> with <code>fact_po_header</code> to calculate an <code>on_time</code> flag. It also joins <code>fact_po_line</code> with <code>fact_shipment_receipts</code> to calculate an <code>in_full</code> flag. This is where all the complex business logic lives, hidden from the user.
+</p>
+
+<p class="fs-lg">
+<code>joins</code>: This section defines how to link IDs from the source query (like <code>carrier_id</code> or <code>location_id</code>) to the full dimension tables (<code>dim_carriers</code>, <code>dim_locations</code>).
+</p>
+
+<p class="fs-lg">
+<code>dimensions</code>: This lists all the "slice and dice" fields for the user, like <code>date</code>, <code>week</code>, <code>month</code>, <code>carrier_name</code>, <code>from_region</code>, and <code>to_region</code>. We can even add synonyms, so a user asking for "origin" gets the <code>from_location_name</code> column.
+</p>
+
+<p class="fs-lg">
+<code>measures</code>: These are the final calculations. The logic is now simple:
+</p>
 
 <pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_products (
-  sku_sk                BIGINT    GENERATED BY DEFAULT AS IDENTITY,
-  product_id            STRING    NOT NULL,
-  supplier_id           STRING    NOT NULL,
-  category              STRING,
-  brand                 STRING,
-  product_name          STRING,
-  product_type          STRING,
-  target_audience       STRING,
-  
-  unit_cost     DECIMAL(18,2) DEFAULT 0,
-  unit_price    DECIMAL(18,2) DEFAULT 0,
-  weight_lbs    DECIMAL(18,2) DEFAULT 0
-) USING DELTA;
-</code>
-</pre>
-
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_carriers (
-  carrier_sk    BIGINT   GENERATED BY DEFAULT AS IDENTITY,
-  carrier_id    STRING   NOT NULL,              -- business key (e.g., SCAC or vendor id)
-  carrier_name  STRING,
-  scac          STRING,
-  mode          STRING,                          -- PARCEL/LTL/FTL/INTERMODAL
-  is_active     BOOLEAN  NOT NULL DEFAULT TRUE,
-  valid_from    TIMESTAMP NOT NULL DEFAULT current_timestamp(),
-  valid_to      TIMESTAMP,
-  is_current    BOOLEAN   NOT NULL DEFAULT TRUE
-) USING DELTA;
-</code>
+<code class="lang-sql">otif_rate: AVG(otif_flag)
+on_time_rate: AVG(on_time)
+in_full_rate: AVG(in_full)</code>
 </pre>
 
 <p class="fs-lg">
-<strong>3. Gold Layer: Aggregated for BI</strong> — The Gold Layer is the consumer-facing storefront of the data warehouse. This is where the data completes its journey from raw material to a high-value business asset. While the Silver layer provides a clean, queryable foundation, the Gold layer is crafted for end-user consumption. It consists of aggregated, optimized tables and views designed to power specific analytics, answer critical business questions, and drive strategic decisions. These Gold assets serve as the direct, trusted source for BI tools, dashboards, and KPI reports used by every retail department.
+2. <strong>Querying the Metric (The "Payoff")</strong>
 </p>
 
 <p class="fs-lg">
-A key innovation in the modern Gold layer is the use of <code>Unity Catalog Metric Views</code>. Instead of creating dozens of rigid, pre-aggregated tables for every possible business query, Metric Views allow you to define a core business KPI—like Gross Margin % or Return on Ad Spend—just once. Business users can then slice and dice this governed metric by any dimension (e.g., region, product category, marketing channel) at query time, ensuring both flexibility and consistency without building new summary tables for every request.
+With our Metric View created, the payoff is in the simplicity of the queries. An analyst just uses standard SQL with the <code>MEASURE()</code> function.
 </p>
 
-<p class="fs-lg">📘 Reference: Databricks Metric Views</p>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example 1: Monthly OTIF Trend by Carrier</h2>
+
+<p class="fs-lg">
+Business Question: "Which carriers are consistently meeting their delivery promises?"
+</p>
 
 <pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE OR REPLACE VIEW big_cloud_dealz_development.gold.view_lead_time_variance_days_by_date AS
-WITH base AS (
-  SELECT
-    DATE(depart_ts) AS date,
-    /* lead_time_days = (actual_arrival_ts - depart_ts) in days */
-    (to_unix_timestamp(actual_arrival_ts) - to_unix_timestamp(depart_ts)) / 86400.0 AS lead_time_days
-  FROM big_cloud_dealz_development.silver.fact_shipments
-  WHERE depart_ts IS NOT NULL
-    AND actual_arrival_ts IS NOT NULL
-)
+<code class="lang-sql">SELECT
+  month,
+  carrier_name,
+  MEASURE(otif_rate) AS otif_rate,
+  MEASURE(on_time_rate) AS on_time_rate,
+  MEASURE(in_full_rate) AS in_full_rate
+FROM big_cloud_dealz_development.gold.metric_view_otif
+GROUP BY month, carrier_name
+ORDER BY month ASC, otif_rate DESC;</code>
+</pre>
+
+<p class="fs-lg">
+Why it's simple: The analyst just listed the dimensions and measures they wanted. The Metric View automatically generates the complex SQL to join all tables, calculate all three flags, and aggregate the results.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example 2: Regional OTIF Comparison by Transport Mode</h2>
+
+<p class="fs-lg">
+Business Question: "How do our different transportation modes perform across our destination regions?"
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">SELECT
+  to_region,
+  mode,
+  MEASURE(otif_rate) AS otif_rate,
+  MEASURE(shipment_rows) AS shipments
+FROM big_cloud_dealz_development.gold.metric_view_otif
+WHERE date &gt;= DATE '2025-01-01'
+GROUP BY to_region, mode
+ORDER BY otif_rate DESC;</code>
+</pre>
+
+<p class="fs-lg">
+Why it's simple: The user is combining dimensions from two different joined tables (<code>dim_locations</code> and <code>dim_carriers</code>), and the Metric View handles these "fan-out" joins automatically.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example 3: Daily OTIF Diagnostics</h2>
+
+<p class="fs-lg">
+Business Question: "Which destination regions had the worst OTIF performance last month?"
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">-- Find the 50 worst-performing region-days last month
 SELECT
   date,
-  /* sample variance (ddof = 1), matching pandas .var(ddof=1) */
-  var_samp(lead_time_days) AS lead_time_variance_days
-FROM base
-GROUP BY date;
-</code>
+  to_region,
+  MEASURE(otif_rate),
+  MEASURE(otif_count)
+FROM big_cloud_dealz_development.gold.metric_view_otif
+WHERE date BETWEEN DATE '2025-09-01' AND DATE '2025-09-30'
+GROUP BY date, to_region
+ORDER BY MEASURE(otif_rate) ASC
+LIMIT 50;</code>
 </pre>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Governance Rules: Dos and Don'ts</h2>
-
-<ul>
-  <li>✅ <strong>Do</strong> align fiscal calendars and currency definitions before publishing KPIs to ensure consistency across all reports.</li>
-  <li>❌ <strong>Don't</strong> join fact tables on natural keys (like a product SKU) in BI tools. Always use surrogate keys (<code>_sk</code>) for stable and performant joins.</li>
-  <li>✅ <strong>Do</strong> version plans and forecasts. Incorporate fields like <code>scenario</code> or <code>version_ts</code> to track changes and perform predictive analysis.</li>
-  <li>❌ <strong>Don't</strong> ever put complex transformation or business logic in the Bronze layer. It should remain an unaltered archive of the source data.</li>
-</ul>
+<p class="fs-lg">
+Why it's simple: This ad-hoc query is easy to write. The user can filter, group, and order by any combination of metrics without needing to know anything about the underlying tables or logic.
+</p>
 
 
 

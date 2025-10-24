@@ -455,15 +455,13 @@ Executives can synthesize many complex scenarios and eliminate the bulk of the o
 
 
 
-
+<!--
             <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
               <div class="card-body position-relative z-2 pb-0">
                 <h3 class="h4 card-title text-primary">Retail and Conversational User Interfaces</h3>
 
                 <p class="pb-sm3 pb-md-4 mb-2">
-<!--
-<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html">Generative AI</a>, 
--->
+
 Conversational user interfaces (CUIs) built on top of a data lakehouse give retail COOs a direct, intelligent pathway from question to action—without the delays of traditional dashboards or manual report requests. By connecting seamlessly across OMS, WMS, TMS, ERP, and analytics layers, a CUI allows executives to ask complex operational questions in natural language, receive data-driven answers with full lineage and source citations, and, when appropriate, trigger workflows or corrective actions instantly. This turns the lakehouse into a real-time decision cockpit—streamlining daily operations, improving responsiveness to disruptions, and empowering leadership to move from insight to execution with unprecedented speed and confidence.
 
 
@@ -479,7 +477,7 @@ Conversational user interfaces (CUIs) built on top of a data lakehouse give reta
 
               </div>
             </div>
-
+-->
 
 
           <p class="fs-lg">
@@ -501,7 +499,23 @@ The interesting thing about Agent Bricks is that we can use these other spaces a
 
            <p class="fs-lg">
 
-            todo
+            LLM-based systems use text labels to make a decision between N different options as what to use next in a chain of steps. Agent Bricks uses LLMs under the hood to examine your configurations decorated with metadata to reason about how to use the resources provided in an efficient way to solve the problem.
+
+           </p>
+
+           <p class="fs-lg">
+
+            This means that filling in metadata is a key step in configuring any LLM-based system.
+
+
+
+           </p>
+
+           <p class="fs-lg">
+
+            In the screenshot below you can see how to name the application (<code>LogisticsDecisionIntelligenceAnalyst</code>) and then provide a description about where and how (e.g., the situation) the agent should be used. 
+
+
 
            </p>
 
@@ -511,12 +525,48 @@ The interesting thing about Agent Bricks is that we can use these other spaces a
           </div>    
 
 
+           <p class="fs-lg">
+
+          You should be verbose here, but you don't need to put all instructions as there are other configuration fields to tell your system how to act and respond to data and context. Let's move on to adding sub-agents that do the actual steps of your workflow.
+
+          </p>
+
+
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Configure Agents</h2>
 
 
            <p class="fs-lg">
 
-            todo
+            A good mental model of how Agent Bricks works is to think of the <code>Multi-Agent Supervisor</code> as a workflow controller and the sub-agents as workers that do specific tasks.
+
+           </p>
+
+
+
+
+           <p class="fs-lg">
+
+            There are 3 types of agents you can currently use in a <code>Multi-Agent Supervisor</code> system, as seen below:
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_agent_type_list.png" alt="Image">
+
+          </div>    
+
+          <ul>
+            <li>Genie Space</li>
+            <li>Agent Endpoint</li>
+            <li>Unity Catalog Function</li>
+
+          </ul>
+
+
+           <p class="fs-lg">
+
+            For this retail decision intelligence use case we're going to <a href="building_retail_product_delta_table_with_databricks_unity_catalog.html" target="_blank">leverage the Genie space we created in the last article</a> as the semantic query engine to pull our core logistics KPIs we'll combine with some business rules logic later in this article. In the image below you can see how we configure the sub-agent to use the Genie space.
 
            </p>
 
@@ -526,11 +576,42 @@ The interesting thing about Agent Bricks is that we can use these other spaces a
 
           </div>    
 
+
+
+
+           <p class="fs-lg">
+
+            Now, if you remember from our last article, this Genie space supports the query "What are the latest OTIF rates and stockout exposure?" as shown below.
+
+           </p>
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_logistics_query_latest_kpis.png" alt="Image">
+
+          </div>   
+
+
+
+           <p class="fs-lg">
+
+            <b>The mental model that I want you to understand here is that Genie spaces are building blocks more complex questions that you can put together like lego bricks, aka "Agent Bricks".</b>
+
+           </p>
+
+
+           <p class="fs-lg">
+
+            Now that we can reliably pull the correct information from our data lakehouse metric views (calculated with the correct metric formulas, consistently) we can express custom business logic on how to interpret the logistic KPIs that were generated.
+
+           </p>           
+
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Instructions</h2>
 
            <p class="fs-lg">
 
-            todo
+            The intructions panel is directly below the agent configuration in the "Optional" section. Here you will enter you custom business rules on how to relate the different KPIs we pulled from the metric views and how they should be interpreted in different situations.
 
            </p>
 
@@ -542,7 +623,7 @@ The interesting thing about Agent Bricks is that we can use these other spaces a
 
            <p class="fs-lg">
 
-            todo
+            These text instructions give us an organic expression space to describe how we want to accelerate the interpretation of business conditions.
 
            </p>
 
@@ -572,73 +653,32 @@ This approach replaces brittle, bespoke NLP pipelines with generalizable reasoni
 
 
 
-<!--
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-yaml">
+           <p class="fs-lg">
 
-      Answer the question based on only the data available. Be succint and brief
-      in your response.
+            Now let's test our Agent Bricks application.
 
-      Default rule of thumb:
+           </p>
 
-      Stockout exposure % = “today’s lost sales risk.” If it’s high—especially on A-SKUs—this trumps OTIF because the cash register is impacted now.
-
-      OTIF = “tomorrow’s supply risk.” If OTIF is collapsing and your days of cover (DOC) are thin vs lead time (LT), OTIF can trump stockouts because a broader shortage is imminent.
-        
-      Practical thresholds (company-level, then tighter for A-SKUs)
-
-      Stockout Exposure % (forecast demand not covered by ATP):
-
-      Green: <2% (A-SKUs <1%)
-
-      Watch: 2–4% (A-SKUs 1–2%)
-
-      Concerning: 4–8% (A-SKUs 2–3%)
-
-      Critical: >8% (A-SKUs >3%)
-
-      OTIF (on-time, in-full arrivals—vendor→DC and/or DC→store):
-
-      Green: ≥96%
-
-      Watch: 92–96%
-
-      Concerning: 88–92%
-
-      Critical: <88%
-
-      [ ... ]
-
-
-      
-
-</code>
-</pre>
--->
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Accelerating Retail Logistics Decision Intelligence with Agent Bricks</h2>
 
 
            <p class="fs-lg">
 
-            todo
+            On the right panel we can test our new logistics analyst agent by typing "What should we focus on today?" as you can see in the image below.
 
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Accelerating Retail Logistics Analysis with Agent Bricks</h2>
 
 
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agentbricks_query_logistics_thinking_focus.png" alt="Image">
+
+          </div>    
            <p class="fs-lg">
 
-            todo
+            As you can see above, the system is sending the text query to the correct sub-agent (our Genie space that knows how to get the correct structured information from the data lakehouse delta tables via the metric views). It's not wasting time guessing at where to look for the information or trying to cook up some random SQL statement that may get the OTIF calculation incorrect and mess up the entire response of the system. In the image below we can see the data returned and then the response after the <code>instructions</code> were applied to the correct structured data and generated dynamic business intelligence analysis as a result.
 
            </p>
-
-
-           <p class="fs-lg">
-
-            todo
-
-           </p>
-
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_agent_answer_detailed.png" alt="Image">
@@ -646,9 +686,21 @@ This approach replaces brittle, bespoke NLP pipelines with generalizable reasoni
           </div>    
            <p class="fs-lg">
 
-            todo
+            The response is drawing from live data lakehouse information that is consistently calculated with common formulas defined in our metric views and extracted with our genie space agent. This gives us the ability to expose complex business analysis (e.g., "decision intelligenc") to decision makers to more effectively empower them in operating the core line of business.
 
            </p>
+
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
+
+
+           <p class="fs-lg">
+
+            Over the course of this series of articles we have been putting together the bricks of this application such that at the end we are able to create a complex decision intelligence application. In the next article we'll take a look at the ways we can wire this <code>Multi-Agent Supervisor</code> system into other applications to integrate decision intelligence across our retail organization.
+
+
+
 
           </div>
         </div>

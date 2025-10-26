@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
     <title>Building a Retail Semantic Layer with Unity Catalog Metric Views</title>
-    <meta name="description" content="...">
+    <meta name="description" content="This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Josh Patterson">
 
@@ -15,7 +15,7 @@
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_semantic_metric_views_header_0.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="In this article we ..."/>
+    <meta property="og:description" content="This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence."/>
 
 
     <meta name="twitter:title" content="Building a Retail Semantic Layer with Unity Catalog Metric Views" />
@@ -45,6 +45,9 @@
     <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
 
     <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <link href="../assets/css/prism.css" rel="stylesheet" />
+
 
     <style>
       .page-loading {
@@ -311,7 +314,11 @@
 
 
 <p class="fs-lg">
-[ todo: cold open intro ]
+In today’s retail environment, knowledge work depends on fast, consistent access to trusted information—and that’s exactly what a semantic layer powered by Databricks Unity Catalog Metric Views delivers. By translating complex data models into business-friendly concepts like “Total Sales” or “On-Time In-Full,” Metric Views eliminate the reporting chaos of hundreds of one-off SQL views and ensure every team works from the same, governed definitions of key metrics. 
+</p>
+<p class="fs-lg">
+This architecture abstracts away technical complexity, allowing business leaders and analysts to focus on insights, not data plumbing. Because Metric Views live within Unity Catalog, they inherit fine-grained governance and access control automatically, creating a single, trusted information layer across the enterprise. The result is a self-service analytics environment that accelerates decision-making, improves coordination across merchandising, logistics, and operations, and transforms raw retail data into revenue-driving knowledge work—at scale and without dependency on data engineers for every new question.
+
 </p>
 
 
@@ -363,13 +370,11 @@ In summary: <code>Unity Catalog</code> provides the single, governed foundation,
 The primary value of a Metric View is that it separates the definition of a metric from how an end-user queries it. This solves one of the biggest challenges in analytics: inconsistent logic and report sprawl.
 </p>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Problem with Standard Views</h2>
 
 <p class="fs-lg">
 Without a metric view, you'd use a standard SQL <code>VIEW</code>. You might create <code>v_sales_by_quarter</code>. But when the business needs "sales by region," you have to create another view, <code>v_sales_by_region</code>. This grows into hundreds of views, each with slightly different logic, making the data difficult to manage.
 </p>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Solution: Flexible, Centralized Logic</h2>
 
 <p class="fs-lg">
 Metric Views fix this by letting you define your "building blocks" one time:
@@ -389,30 +394,280 @@ Now, a BI tool can ask for any combination. When a user requests "Total Revenue 
 You define the logic once, and it can answer hundreds of questions.
 </p>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Benefits</h2>
+<h2 class="h5 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Benefits</h2>
 
 <ul>
-  <li>Powers Truly Self-Service Dashboards: A BI tool (like Tableau or Power BI) can connect to a single Metric View and see a clean list of measures and dimensions. An analyst can drag-and-drop "Total Revenue" and "Region" to build a report without writing any SQL.</li>
-  <li>Creates a "Storefront" for Your Gold Layer: In a Medallion Architecture, your Gold tables are your ultimate source of truth. A Metric View is the consumption layer, or "storefront," that sits on top of those tables. It translates your clean data into interactive, easy-to-use assets for the entire organization.</li>
+  <li><b>Powers Truly Self-Service Dashboards:</b> A BI tool (like Tableau or Power BI) can connect to a single Metric View and see a clean list of measures and dimensions. An analyst can drag-and-drop "Total Revenue" and "Region" to build a report without writing any SQL.</li>
+  <li><b>Creates a "Storefront" for Your Gold Layer:</b> In a Medallion Data Architecture, your Gold tables are your ultimate source of truth. A Metric View is the consumption layer, or "storefront," that sits on top of those tables. It translates your clean data into interactive, easy-to-use assets for the entire organization.</li>
 </ul>
+
+
+
+
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Practical Example: The "OTIF" Metric View</h2>
 
 <p class="fs-lg">
-Let's imagine a retail company, "Big Cloud Dealz," running on a Databricks Medallion Architecture.
+Let's continue building out a data lakehouse for the mythical retail company, "Big Cloud Dealz," running on the <a href="building_retail_product_delta_table_with_databricks_unity_catalog.html" target="_blank">Medallion Data Architecture we started in the previous article</a>.
 </p>
 
 <p class="fs-lg">
 The logistics team needs to track a complex KPI: On-Time In-Full (<code>OTIF</code>). This metric requires joining shipment data (was it on time?) with purchase order data (was it in full?) and enriching it with carrier and location details. This is a perfect use case for a Metric View.
 </p>
 
-<p class="fs-lg">
-1. <strong>Defining the Metric (The "How")</strong>
-</p>
+
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Defining the Metric (The "How")</h2>
+
 
 <p class="fs-lg">
 We create a single Metric View, <code>big_cloud_dealz_development.gold.metric_view_otif</code>, in YAML. Here’s what it does:
 </p>
+
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-yaml">
+version: 1.1
+source: |
+  WITH shipments AS (
+    SELECT
+      s.po_id,
+      s.appt_ts,
+      s.actual_arrival_ts,
+      s.from_location_id,
+      s.to_location_id,
+      s.service_level,
+      s.carrier_id
+    FROM big_cloud_dealz_development.silver.fact_shipments s
+  ), po_promises AS (
+    SELECT
+      h.po_id,
+      h.promised_arrival_end
+    FROM big_cloud_dealz_development.silver.fact_po_header h
+  ), merged AS (
+    SELECT
+      sh.po_id,
+      sh.appt_ts,
+      CASE
+        WHEN sh.actual_arrival_ts IS NOT NULL
+         AND pr.promised_arrival_end IS NOT NULL
+         AND sh.actual_arrival_ts <= pr.promised_arrival_end
+        THEN 1 ELSE 0
+      END AS on_time,
+      sh.from_location_id,
+      sh.to_location_id,
+      sh.service_level,
+      sh.carrier_id
+    FROM shipments sh
+    LEFT JOIN po_promises pr
+      ON sh.po_id = pr.po_id
+  ), po_line_sums AS (
+    SELECT po_id, SUM(qty_ordered) AS qty_ordered
+    FROM big_cloud_dealz_development.silver.fact_po_line
+    GROUP BY po_id
+  ), receipt_sums AS (
+    SELECT po_id, SUM(received_quantity) AS received_quantity
+    FROM big_cloud_dealz_development.silver.fact_shipment_receipts
+    GROUP BY po_id
+  ), in_full_po AS (
+    SELECT
+      pl.po_id,
+      pl.qty_ordered,
+      COALESCE(rc.received_quantity, 0) AS received_quantity,
+      CASE WHEN COALESCE(rc.received_quantity, 0) >= pl.qty_ordered THEN 1 ELSE 0 END AS in_full
+    FROM po_line_sums pl
+    LEFT JOIN receipt_sums rc USING (po_id)
+  ) SELECT
+    CAST(m.appt_ts AS DATE) AS metric_date,
+    m.po_id,
+    m.on_time,
+    f.in_full,
+    CASE WHEN m.on_time = 1 AND f.in_full = 1 THEN 1 ELSE 0 END AS otif_flag,
+    m.from_location_id,
+    m.to_location_id,
+    m.service_level,
+    m.carrier_id
+  FROM merged m LEFT JOIN in_full_po f
+    ON m.po_id = f.po_id
+joins:
+  - name: from_loc
+    source: big_cloud_dealz_development.silver.dim_locations
+    "on": from_loc.location_id = source.from_location_id AND from_loc.is_current =
+      TRUE
+  - name: to_loc
+    source: big_cloud_dealz_development.silver.dim_locations
+    "on": to_loc.location_id = source.to_location_id AND to_loc.is_current = TRUE
+  - name: carriers
+    source: big_cloud_dealz_development.silver.dim_carriers
+    "on": carriers.carrier_id = CAST(source.carrier_id AS STRING) AND carriers.is_current
+      = TRUE
+comment: |
+  OTIF (On Time In Full) KPI with shipment-level flags, aligned to appointment date. Dimensions include multiple time grains and both origin/destination locations. Source logic mirrors Python compute_otif and the SQL view flags used in gold.view_otif_by_date.
+dimensions:
+  - name: date
+    expr: metric_date
+    display_name: Date
+    format:
+      type: date
+      date_format: year_month_day
+      leading_zeros: true
+    synonyms:
+      - day
+      - appointment date
+      - appt date
+  - name: week
+    expr: "DATE_TRUNC('week', metric_date)"
+    display_name: Week
+    synonyms:
+      - iso week
+      - week start
+  - name: month
+    expr: "DATE_TRUNC('month', metric_date)"
+    display_name: Month
+    synonyms:
+      - calendar month
+      - order month
+  - name: quarter
+    expr: "DATE_TRUNC('quarter', metric_date)"
+    display_name: Quarter
+  - name: year
+    expr: "DATE_TRUNC('year', metric_date)"
+    display_name: Year
+  - name: from_location_id
+    expr: from_location_id
+    display_name: From Location ID
+    synonyms:
+      - origin id
+      - ship-from id
+  - name: from_location_name
+    expr: from_loc.name
+    display_name: From Location
+    synonyms:
+      - origin
+      - ship-from
+  - name: from_location_type
+    expr: from_loc.location_type
+    display_name: From Location Type
+    synonyms:
+      - origin type
+  - name: from_region
+    expr: from_loc.region
+    display_name: From Region
+  - name: from_state
+    expr: from_loc.state
+    display_name: From State
+  - name: to_location_id
+    expr: to_location_id
+    display_name: To Location ID
+    synonyms:
+      - destination id
+      - ship-to id
+  - name: to_location_name
+    expr: to_loc.name
+    display_name: To Location
+    synonyms:
+      - destination
+      - ship-to
+  - name: to_location_type
+    expr: to_loc.location_type
+    display_name: To Location Type
+    synonyms:
+      - destination type
+  - name: to_region
+    expr: to_loc.region
+    display_name: To Region
+  - name: to_state
+    expr: to_loc.state
+    display_name: To State
+  - name: carrier_id
+    expr: carrier_id
+    display_name: Carrier ID
+  - name: carrier_name
+    expr: carriers.carrier_name
+    display_name: Carrier
+  - name: mode
+    expr: carriers.mode
+    display_name: Transport Mode
+    synonyms:
+      - ship mode
+      - freight mode
+  - name: service_level
+    expr: service_level
+    display_name: Service Level
+    synonyms:
+      - svc level
+      - promise tier
+measures:
+  - name: otif_rate
+    expr: AVG(otif_flag)
+    display_name: OTIF %
+    format:
+      type: percentage
+      decimal_places:
+        type: exact
+        places: 2
+    synonyms:
+      - on-time in full
+      - otif percent
+      - otif rate
+  - name: otif_count
+    expr: SUM(otif_flag)
+    display_name: OTIF Count
+    format:
+      type: number
+      decimal_places:
+        type: all
+      hide_group_separator: false
+    synonyms:
+      - count otif
+      - num otif
+  - name: shipment_rows
+    expr: COUNT(1)
+    display_name: Shipment Rows
+    format:
+      type: number
+      decimal_places:
+        type: all
+  - name: on_time_rate
+    expr: AVG(on_time)
+    display_name: On-time %
+    format:
+      type: percentage
+      decimal_places:
+        type: exact
+        places: 2
+    synonyms:
+      - on-time rate
+      - punctuality %
+  - name: in_full_rate
+    expr: AVG(in_full)
+    display_name: In-full %
+    format:
+      type: percentage
+      decimal_places:
+        type: exact
+        places: 2
+    synonyms:
+      - fill rate
+      - in full percent
+  - name: po_count
+    expr: COUNT(DISTINCT po_id)
+    display_name: PO Count (distinct)
+    format:
+      type: number
+      decimal_places:
+        type: all
+    synonyms:
+      - unique pos
+      - distinct po
+</code>
+</pre>
+
+
+
+
 
 <p class="fs-lg">
 <code>source</code>: A SQL query that pulls from Silver-layer tables. It joins <code>fact_shipments</code> with <code>fact_po_header</code> to calculate an <code>on_time</code> flag. It also joins <code>fact_po_line</code> with <code>fact_shipment_receipts</code> to calculate an <code>in_full</code> flag. This is where all the complex business logic lives, hidden from the user.
@@ -436,9 +691,13 @@ on_time_rate: AVG(on_time)
 in_full_rate: AVG(in_full)</code>
 </pre>
 
-<p class="fs-lg">
-2. <strong>Querying the Metric (The "Payoff")</strong>
-</p>
+
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Querying the Metric (The "Payoff")</h2>
+
+
 
 <p class="fs-lg">
 With our Metric View created, the payoff is in the simplicity of the queries. An analyst just uses standard SQL with the <code>MEASURE()</code> function.
@@ -451,7 +710,7 @@ Business Question: "Which carriers are consistently meeting their delivery promi
 </p>
 
 <pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">SELECT
+<code class="language-sql">SELECT
   month,
   carrier_name,
   MEASURE(otif_rate) AS otif_rate,
@@ -513,6 +772,21 @@ Why it's simple: This ad-hoc query is easy to write. The user can filter, group,
 </p>
 
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
+
+<p class="fs-lg">
+
+  In this article I showed how to build metric views for our semantic layer to power retail logistics knowledge work.
+
+</p>
+
+<p class="fs-lg">
+
+  In the next article in this series we'll show how to start putting these information building blocks to work by integrating them into AI / BI Dashboards for management in a retail logistics division.
+
+</p>
+
+
 
 
           </div>
@@ -537,9 +811,9 @@ Why it's simple: This ad-hoc query is easy to write. The user can filter, group,
                       <div class="col-sm-8">
                         <div class="card-body">
                           <h4 class="card-title">Next-Generation Retail Logistics Analytics with Databricks AI / BI Dashboards</h4>
-                          <p class="card-text">...</p>
+                          <p class="card-text">By surfacing key performance indicators like On-Time In-Full (OTIF) and Stockout Exposure through dynamic visualizations and natural-language insights, the dashboard transforms complex warehouse, carrier, and inventory data into actionable intelligence for the COO, logistics leads, and merchandising teams alike.</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_product_delta_table_with_databricks_unity_catalog.html">
+                <a class="btn btn-lg btn-link px-0" href="next_generation_retail_logistics_analytics_with_databricks_ai_bi_dashboards.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>
@@ -636,6 +910,9 @@ Why it's simple: This ad-hoc query is easy to write. The user can filter, group,
       </svg>
       <i class="ai-arrow-up"></i>
     </a>
+
+  <script src="../assets/js/prism.js"></script>
+
 
 
     <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>

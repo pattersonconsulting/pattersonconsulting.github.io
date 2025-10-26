@@ -313,19 +313,106 @@
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Driving Retail Excellence with the Databricks Medallion Architecture</h2>
 -->
 <p class="fs-lg">
-[todo: add an open problem/challenge statement]
+Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">Information Layer</a> ensures that every team—from operations to finance to marketing—works from the same version of the truth. This eliminates costly data silos and reconciliation cycles, enabling faster, more confident decision-making. Instead of spending time finding or cleaning data, knowledge workers can focus on using it to capture revenue, optimize performance, and respond to market shifts in real time.
+
 </p>
 
 <p class="fs-lg">
-The Medallion data architecture can be utilized to convert raw time series retail data into structured tables of transactions, products/inventory, and margins. Then analytical tables can be generated from the structured tables for querying business health, product popularity, profitability, and other KPIs. For modern retail and operations teams, this approach transforms messy, disparate data sources into a streamlined engine for analytics. By systematically curating data through Bronze, Silver, and Gold layers, retailers can build a single source of truth that empowers everyone in the organization, from the C-suite to store managers.
+For next-generation data platforms, strong information architecture is the linchpin between cloud-scale infrastructure and AI-driven business productivity. As reasoning systems like large language models (LLMs) become standard tools, their accuracy and usefulness depend entirely on the structure and clarity of the underlying data they consume. A well-designed Information Layer provides the semantic and contextual backbone that allows these systems to reason effectively over enterprise data, enabling conversational analytics, automated insights, and intelligent workflows. In short, it converts technical investment into tangible business value by ensuring that every byte of data serves a strategic purpose in advancing <a href="" target="_blank">knowledge work</a> and organizational growth.
+
 </p>
 
-<p class="fs-lg">📘 Reference: Medallion Architecture</p>
+<p class="fs-lg">
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Understanding the Layers</h2>
+	To provide the knowledge work layer (e.g., "BI tools", "LLM-based applications", "Agents") with the correct information (not raw data), we need a strategy to organize the data. This is where the Medallion Data Architecture enters the picture.
+
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Medallion Data Architecture</h2>
 
 <p class="fs-lg">
-The Medallion pattern organizes data within our <code>big_cloud_dealz_development</code> <code>Databricks</code> environment into three distinct layers, each with a specific purpose. Think of it as refining raw ingredients into a gourmet meal.
+The Medallion data architecture can be utilized to convert raw time series retail data into structured tables of transactions, products/inventory, and margins. Then analytical tables can be generated from the structured tables for querying business health, product popularity, profitability, and other KPIs. For modern retail and operations teams, this approach transforms messy, disparate data sources into a streamlined engine for analytics. By systematically curating data through Bronze, Silver, and Gold layers, retailers can build a single source of truth that empowers everyone in the organization, from the C-suite to store managers., as seen in the diagram below.
+</p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="https://www.databricks.com/sites/default/files/inline-images/building-data-pipelines-with-delta-lake-120823.png" alt="Image">
+
+            <p class="fs-lg">📘 Reference: Medallion Architecture, <i><a href="https://www.databricks.com/glossary/medallion-architecture" target="_blank">Source: databricks.com</a></i></p>
+
+          </div>  
+
+
+
+
+
+
+<p class="fs-lg">
+The Medallion pattern organizes data within our <code>big_cloud_dealz_development</code> Databricks environment into three distinct layers, each with a specific purpose. 
+</p>
+
+<ul>
+	<li>Bronze</li>
+	<li>Silver</li>
+	<li>Gold</li>
+
+</ul>
+
+
+<p class="fs-lg">
+
+	Note that on the Databricks <a href="understanding_the_difference_between_unity_catalog_and_hive_metastore.html" target="_blank">Unity Catalog</a> system our catalog would be <code>big_cloud_dealz_development</code> and each layer would be mapped to a different schema (e.g., <code>silver</code>) inside the catalog, each schema containing a set of Delta tables.
+
+</p>
+
+
+<p class="fs-lg">
+Think of this organization strategy for data layers as refining raw ingredients into a gourmet meal. To make the medallion data architecture more real, let's consider what a mythical retail named "Big Cloud Dealz" might do when building out a data lakehouse on the Databricks platform with Delta tables. For the sake of brevity we're going to only consider the logistics division of the retail company for this exercise.
+</p>
+
+<p class="fs-lg">
+	The bronze layer would contain tables that meant to land incoming log data from outside systems such as ERP systems, or from multiple systems of the same type (e.g., "point of sale systems") that need to be aggregated.
+</p>
+<p class="fs-lg">
+
+The silver layer contains the following tables for the logistics division:
+
+</p>
+
+<ul>
+	<li>dim_locations</li>
+	<li>dim_suppliers</li>
+	<li>dim_products</li>
+	<li>dim_carriers</li>
+	<li>ref_lane_sla</li>
+	<li>fact_shipments</li>
+	<li>fact_shipment_receipts</li>
+	<li>fact_sales_forecast</li>
+	<li>fact_inventory</li>
+	<li>fact_inventory_backorder</li>
+	<li>fact_po_header</li>
+	<li>fact_po_line</li>
+
+</ul>
+
+<p class="fs-lg">
+
+	And then in the gold layer, they would have:
+
+</p>
+
+<ul>
+	<li>metric_view_transit_sla_percent</li>
+	<li>metric_view_carrier_delay_hours</li>
+	<li>metric_view_lead_time_variance</li>
+	<li>metric_view_stockout_exposure</li>
+
+</ul>
+
+<p class="fs-lg">
+
+Now, these tables are views are not exhaustive of what a logistics division would need, but its a good place to start to talk through the Medallion Data Architecture in retail.
+Let's take a look at each layer and how its used.
 </p>
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Bronze Layer (Raw Ingestion) 🥉</h2>
@@ -352,11 +439,16 @@ Here, the raw Bronze data is transformed into a clean, structured, and queryable
 <strong>Reference Tables</strong> like <code>silver.ref_lane_sla</code> are also established in this layer to store business rules, such as shipping times, which are vital for downstream analysis.
 </p>
 
+
+
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Gold Layer (Business-Ready &amp; Aggregated) 🥇</h2>
 
 <p class="fs-lg">
 The Gold layer is the final, highly refined layer designed for specific business use cases and reporting. These tables and views are aggregated and optimized for performance, answering specific business questions and powering the dashboards used by our logistics, merchandising, and finance teams.
 </p>
+
+
+
 
 <p class="fs-lg">
 One example is the <code>gold.view_lead_time_variance_days_by_date</code>. This view consumes the cleaned <code>silver.fact_shipments</code> table to calculate a specific, high-level KPI (shipping time variance) used by the COO to monitor carrier consistency.
@@ -370,52 +462,30 @@ Other Gold assets are built by joining multiple Silver tables to answer complex 
 Similarly, a Stockout Risk report would be created in the Gold layer by comparing inventory levels from <code>silver.fact_inventory</code> against future demand from <code>silver.fact_sales_forecast</code>, enriched with product details from <code>silver.dim_products</code>.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Powering Core Retail Groups with Gold-Layer Analytics</h2>
 
-<p class="fs-lg">
-The true value of the Medallion architecture is realized in the Gold layer, where data is tailored to the specific needs of each business function. By creating curated, aggregated datasets, retailers can directly power the key performance indicators (KPIs) for each department.
-</p>
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">The Gold Layer is the Information Layer for Knowledge Work</h3>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sales</h2>
+                <p class="pb-sm3 pb-md-4 mb-2">
 
-<ul>
-  <li><strong>Net Sales vs Plan</strong>: An aggregated view that compares actual sales figures against forecasted targets, updated on any time interval.</li>
-  <li><strong>Comp Sales %</strong>: A metric view calculating the growth of sales in stores that have been open for a year or more.</li>
-  <li><strong>Gross Margin %</strong>: A summarized table showing profitability by SKU, product category, brand, or store.</li>
-</ul>
+                	In an era of knowledge work, the gold layer is the information (not raw data) that is actually usable to the people performing cognitive labor in an organization.
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Merchandising</h2>
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
 
-<ul>
-  <li><strong><code>GMROI</code></strong>: A pre-calculated KPI that shows how much gross margin is earned for every dollar invested in inventory.</li>
-  <li><strong>Sell-Through Rate</strong>: A weekly or monthly report that tracks the percentage of inventory sold for specific products or categories.</li>
-</ul>
+                	The gold layer is an implementation of our abstract "information layer" in our <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">Knowledge Work Architecture</a> model. 
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Marketing</h2>
 
-<ul>
-  <li><strong><code>ROAS</code></strong>: A view that joins marketing campaign spend with sales revenue to calculate ROI on marketing investments and customer acquisition costs (CAC).</li>
-  <li><strong>Predicted Customer Lifetime Value</strong>: A data science model output that scores customers on their potential future value, enabling targeted marketing efforts.</li>
-  <li><strong>Retention &amp; Repeat-Purchase Health</strong>: Dashboards showing customer cohort behavior and repeat purchase rates over time.</li>
-</ul>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Operations and Logistics</h2>
+                </p>
 
-<p class="fs-lg">
-The Chief Operating Officer oversees the entire supply chain. The Gold layer provides critical visibility into operational efficiency and potential disruptions. The example tables for the architecture focus on this area and are referenced.
-</p>
 
-<ul>
-  <li><strong>Stockout Exposure</strong>: An alert-driven table that identifies products at risk of going out of stock based on current sales velocity and inventory levels. This Gold table would join real-time inventory counts against the <code>silver.dim_products</code> table to provide details on at-risk SKUs, brands, or suppliers.</li>
-  <li><strong>On-Time In-Full (<code>OTIF</code>)</strong>: An aggregated view of supplier and carrier performance. This KPI would be calculated by joining shipment facts against <code>silver.dim_carriers</code> (to measure carrier performance by mode or <code>carrier_name</code>) and <code>silver.dim_products</code> (to measure supplier performance via <code>supplier_id</code>).</li>
-  <li><strong>Carrier Delays</strong>: A dashboard monitoring the performance of shipping partners to identify and mitigate delivery bottlenecks. The <code>gold.view_lead_time_variance_days_by_date</code> view is a prime example of this, as it directly calculates the statistical variance in carrier lead times, allowing the COO to spot inconsistent partners.</li>
-</ul>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Practical Design Guide for Retail Data Warehousing</h2>
+              </div>
+            </div>
 
-<p class="fs-lg">
-A successful Medallion architecture relies on strong governance and consistent design patterns. Following a clear naming convention is one of the most effective ways to ensure the data warehouse is easy to navigate, maintain, and use.
-</p>
+
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example Data Flow: From Bronze to Gold</h2>
 
@@ -423,7 +493,7 @@ A successful Medallion architecture relies on strong governance and consistent d
 
 <p class="fs-lg"><strong>1. Bronze Layer: Raw Ingestion</strong> — First, we land the raw, unaltered data feeds into Bronze tables.</p>
 
-<p class="fs-lg"><strong>2. Silver Layer: Modeled &amp; Cleansed</strong> — Next, we clean the data and model it into a star schema with dimension and fact tables. Note the use of <code>dim_</code> and <code>fact_</code> prefixes.</p>
+<p class="fs-lg"><strong>2. Silver Layer: Modeled &amp; Cleansed</strong> — Next, we clean the data and model it into a star schema with dimension and fact tables. Note the use of <code>dim_</code> and <code>fact_</code> prefixes. In the SQL code examples below we give the table creation statements for 2 of the tables in our the <code>silver</code> schema, <code>dim_products</code> and <code>dim_carriers</code>.</p>
 
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-sql">
@@ -464,35 +534,87 @@ CREATE TABLE IF NOT EXISTS big_cloud_dealz_development.silver.dim_carriers (
 <strong>3. Gold Layer: Aggregated for BI</strong> — The Gold Layer is the consumer-facing storefront of the data warehouse. This is where the data completes its journey from raw material to a high-value business asset. While the Silver layer provides a clean, queryable foundation, the Gold layer is crafted for end-user consumption. It consists of aggregated, optimized tables and views designed to power specific analytics, answer critical business questions, and drive strategic decisions. These Gold assets serve as the direct, trusted source for BI tools, dashboards, and KPI reports used by every retail department.
 </p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Powering Core Retail Groups with Gold-Layer Analytics</h2>
+
 <p class="fs-lg">
-A key innovation in the modern Gold layer is the use of <code>Unity Catalog Metric Views</code>. Instead of creating dozens of rigid, pre-aggregated tables for every possible business query, Metric Views allow you to define a core business KPI—like Gross Margin % or Return on Ad Spend—just once. Business users can then slice and dice this governed metric by any dimension (e.g., region, product category, marketing channel) at query time, ensuring both flexibility and consistency without building new summary tables for every request.
+The true value of the Medallion architecture is realized in the Gold layer, where data is tailored to the specific needs of each business function. Curating an efficient and complete set of views and metric views in the gold layer is critical to empowering modern knowledge work. By creating curated, aggregated datasets, retailers can directly power the key performance indicators (KPIs) for each department.
 </p>
 
-<p class="fs-lg">📘 Reference: Databricks Metric Views</p>
 
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-sql">
-CREATE OR REPLACE VIEW big_cloud_dealz_development.gold.view_lead_time_variance_days_by_date AS
-WITH base AS (
-  SELECT
-    DATE(depart_ts) AS date,
-    /* lead_time_days = (actual_arrival_ts - depart_ts) in days */
-    (to_unix_timestamp(actual_arrival_ts) - to_unix_timestamp(depart_ts)) / 86400.0 AS lead_time_days
-  FROM big_cloud_dealz_development.silver.fact_shipments
-  WHERE depart_ts IS NOT NULL
-    AND actual_arrival_ts IS NOT NULL
-)
-SELECT
-  date,
-  /* sample variance (ddof = 1), matching pandas .var(ddof=1) */
-  var_samp(lead_time_days) AS lead_time_variance_days
-FROM base
-GROUP BY date;
-</code>
-</pre>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Governance Rules: Dos and Don'ts</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Operations and Logistics</h2>
 
+<p class="fs-lg">
+The Chief Operating Officer oversees the entire supply chain. The Gold layer provides critical visibility into operational efficiency and potential disruptions. The example tables for the architecture focus on this area and are referenced.
+</p>
+
+<ul>
+  <li><strong>Stockout Exposure</strong>: An alert-driven table that identifies products at risk of going out of stock based on current sales velocity and inventory levels. This Gold table would join real-time inventory counts against the <code>silver.dim_products</code> table to provide details on at-risk SKUs, brands, or suppliers.</li>
+  <li><strong>On-Time In-Full (<code>OTIF</code>)</strong>: An aggregated view of supplier and carrier performance. This KPI would be calculated by joining shipment facts against <code>silver.dim_carriers</code> (to measure carrier performance by mode or <code>carrier_name</code>) and <code>silver.dim_products</code> (to measure supplier performance via <code>supplier_id</code>).</li>
+  <li><strong>Carrier Delays</strong>: A dashboard monitoring the performance of shipping partners to identify and mitigate delivery bottlenecks. The <code>gold.view_lead_time_variance_days_by_date</code> view is a prime example of this, as it directly calculates the statistical variance in carrier lead times, allowing the COO to spot inconsistent partners.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Sales</h2>
+
+<p class="fs-lg">
+
+	The head of sales will be looking at their KPI metrics in their sales BI dashboard each day to make adjustments to day-to-day sales motions. Some of the key metrics they would want produced in the gold layer would be:
+
+</p>
+
+<ul>
+  <li><strong>Net Sales vs Plan</strong>: An aggregated view that compares actual sales figures against forecasted targets, updated on any time interval.</li>
+  <li><strong>Comp Sales %</strong>: A <a href="building_retail_product_delta_table_with_databricks_unity_catalog.html">metric view</a> calculating the growth of sales in stores that have been open for a year or more.</li>
+  <li><strong>Gross Margin %</strong>: A summarized table showing profitability by SKU, product category, brand, or store.</li>
+</ul>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Merchandising</h2>
+
+<p class="fs-lg">
+
+	The head of merchandising will be constantly trying to understand what is being sold and where so they can choose the best product mix to meet future needs. Some of the key metrics they would want produced in the gold layer would be:
+
+</p>
+
+<ul>
+  <li><strong>GMROI</strong>: A pre-calculated KPI that shows how much gross margin is earned for every dollar invested in inventory.</li>
+  <li><strong>Sell-Through Rate</strong>: A weekly or monthly report that tracks the percentage of inventory sold for specific products or categories.</li>
+</ul>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Marketing</h2>
+
+<p class="fs-lg">
+
+	Our Chief Marketing Officer knows the value of low-latency information so they are keen to get the latest KPIs generated from the Databricks data lakehouse. Some of the KPIs they will want in the gold layer include:
+
+</p>
+
+<ul>
+  <li><strong>ROAS</strong>: A view that joins marketing campaign spend with sales revenue to calculate ROI on marketing investments and customer acquisition costs (CAC).</li>
+  <li><strong>Predicted Customer Lifetime Value</strong>: A data science model output that scores customers on their potential future value, enabling targeted marketing efforts.</li>
+  <li><strong>Retention &amp; Repeat-Purchase Health</strong>: Dashboards showing customer cohort behavior and repeat purchase rates over time.</li>
+</ul>
+
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Practical Design Tips for Retail Data Warehousing</h2>
+
+<p class="fs-lg">
+A successful Medallion architecture relies on strong governance and consistent design patterns. Following a clear naming convention is one of the most effective ways to ensure the data warehouse is easy to navigate, maintain, and use.
+</p>
+
+
+<p class="fs-lg">
+<strong class="mb-3">Key Governance Rules: Dos and Don'ts</strong>
+</p>
 <ul>
   <li>✅ <strong>Do</strong> align fiscal calendars and currency definitions before publishing KPIs to ensure consistency across all reports.</li>
   <li>❌ <strong>Don't</strong> join fact tables on natural keys (like a product SKU) in BI tools. Always use surrogate keys (<code>_sk</code>) for stable and performant joins.</li>
@@ -500,6 +622,11 @@ GROUP BY date;
   <li>❌ <strong>Don't</strong> ever put complex transformation or business logic in the Bronze layer. It should remain an unaltered archive of the source data.</li>
 </ul>
 
+
+<p class="fs-lg">
+	In the <a href="building_retail_product_delta_table_with_databricks_unity_catalog.html">next article</a> I'll further develop out the <code>gold</code> layer for this retail Medallion Data Architecture with examples of how to build metric views.
+
+</p>
 
 
 
@@ -521,13 +648,13 @@ GROUP BY date;
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
-                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
+                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
+                          <p class="card-text">A semantic layer is a business-friendly translation layer. It sits between complex, raw data tables and the end-users who need to consume that data, such as an analyst using a BI tool.</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
+                <a class="btn btn-lg btn-link px-0" href="building_retail_product_delta_table_with_databricks_unity_catalog.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>

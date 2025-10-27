@@ -13,14 +13,14 @@
 
     <meta property="og:title" content="Building a Retail Semantic Layer with Unity Catalog Metric Views"/>
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_semantic_metric_views_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_semantic_layer_with_unity_catalog_metric_views.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence."/>
 
 
     <meta name="twitter:title" content="Building a Retail Semantic Layer with Unity Catalog Metric Views" />
     <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_semantic_metric_views_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_semantic_layer_with_unity_catalog_metric_views.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
@@ -415,11 +415,11 @@ You define the logic once, and it can answer hundreds of questions.
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Practical Example: The "OTIF" Metric View</h2>
 
 <p class="fs-lg">
-Let's continue building out a data lakehouse for the mythical retail company, "Big Cloud Dealz," running on the <a href="building_retail_product_delta_table_with_databricks_unity_catalog.html" target="_blank">Medallion Data Architecture we started in the previous article</a>.
+Let's continue building out a data lakehouse for the mythical retail company, "Big Cloud Dealz," running on the <a href="driving_retail_information_architecture_with_databricks_medallion_architecture.html" target="_blank">Medallion Data Architecture we started in the previous article</a>.
 </p>
 
 <p class="fs-lg">
-The logistics team needs to track a complex KPI: On-Time In-Full (<code>OTIF</code>). This metric requires joining shipment data (was it on time?) with purchase order data (was it in full?) and enriching it with carrier and location details. This is a perfect use case for a Metric View.
+The logistics team needs to track a complex KPI: On-Time In-Full (<code>OTIF</code>). This metric requires joining shipment data (was it on time?) with purchase order data (was it in full?) and enriching it with carrier and location details. This is a perfect use case for a <b>metric view</b>.
 </p>
 
 
@@ -430,7 +430,7 @@ The logistics team needs to track a complex KPI: On-Time In-Full (<code>OTIF</co
 
 
 <p class="fs-lg">
-We create a single Metric View, <code>big_cloud_dealz_development.gold.metric_view_otif</code>, in YAML. Here’s what it does:
+Let's create a single metric view, <code>big_cloud_dealz_development.gold.metric_view_otif</code>, in YAML. Here's the text YAML definition:
 </p>
 
 
@@ -681,25 +681,35 @@ measures:
 
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">source</h2>
 <p class="fs-lg">
-<code>source</code>: A SQL query that pulls from Silver-layer tables. It joins <code>fact_shipments</code> with <code>fact_po_header</code> to calculate an <code>on_time</code> flag. It also joins <code>fact_po_line</code> with <code>fact_shipment_receipts</code> to calculate an <code>in_full</code> flag. This is where all the complex business logic lives, hidden from the user.
+This section is defined by a SQL query that pulls from Silver-layer tables. It joins <code>fact_shipments</code> with <code>fact_po_header</code> to calculate an <code>on_time</code> flag. It also joins <code>fact_po_line</code> with <code>fact_shipment_receipts</code> to calculate an <code>in_full</code> flag. This is where all the complex business logic lives, hidden from the user.
 </p>
 
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">joins</h2>
 
 <p class="fs-lg">
-<code>joins</code>: This section defines how to link IDs from the source query (like <code>carrier_id</code> or <code>location_id</code>) to the full dimension tables (<code>dim_carriers</code>, <code>dim_locations</code>).
+  <!--
+This section defines how to link IDs from the source query (like <code>carrier_id</code> or <code>location_id</code>) to the full dimension tables (<code>dim_carriers</code>, <code>dim_locations</code>).
+-->
+
+The <code>joins</code> section defines how the core OTIF metric logic connects to related dimension tables—such as locations and carriers—so the metric view can enrich shipment data with descriptive business context. For example, it links each shipment’s origin and destination IDs to <code>dim_locations</code> to retrieve region, state, and location type, and joins carrier IDs to <code>dim_carriers</code> for names and transport modes. These joins ensure that every OTIF record is not just a numerical flag but a fully described business event, enabling users to analyze performance by carrier, route, or region without manually writing complex SQL joins.
+
 </p>
 
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">dimensions</h2>
 
 <p class="fs-lg">
-<code>dimensions</code>: This lists all the "slice and dice" fields for the user, like <code>date</code>, <code>week</code>, <code>month</code>, <code>carrier_name</code>, <code>from_region</code>, and <code>to_region</code>. We can even add synonyms, so a user asking for "origin" gets the <code>from_location_name</code> column.
+  <!--
+This lists all the "slice and dice" fields for the user, like <code>date</code>, <code>week</code>, <code>month</code>, <code>carrier_name</code>, <code>from_region</code>, and <code>to_region</code>. We can even add synonyms, so a user asking for "origin" gets the <code>from_location_name</code> column.
+-->
+The <code>dimensions</code> section defines the contextual attributes—such as date, week, month, locations, carrier, and service level—that allow the OTIF metric to be sliced, filtered, and analyzed across different business perspectives. Each dimension maps to a specific column or derived expression in the underlying data (for example, <code>DATE_TRUNC('month', metric_date)</code> for month-level rollups), and includes user-friendly display names and synonyms so that AI/BI tools and conversational interfaces like Genie can understand natural language queries (“show OTIF by carrier” or “OTIF by region last quarter”). In short, dimensions turn raw data fields into <b>business-intuitive handles</b> for exploring performance and driving insight.
+
 </p>
 
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">measures</h2>
 
+<!--
 <p class="fs-lg">
-<code>measures</code>: These are the final calculations. The logic is now simple:
+These are the final calculations. The logic is now simple:
 </p>
 
 <pre class="line-numbers mt-5 mb-5">
@@ -707,18 +717,143 @@ measures:
 on_time_rate: AVG(on_time)
 in_full_rate: AVG(in_full)</code>
 </pre>
+-->
+
+<p class="fs-lg">
+In the <code>measures</code> section of this Databricks metric view, each entry defines a quantitative KPI that the platform can automatically compute, aggregate, and visualize for business users—essentially translating raw operational data into trusted performance metrics. For example, <code>otif_rate</code> calculates the percentage of purchase orders that were delivered both <b>on time</b> and <b>in full</b>, serving as the core KPI for logistics reliability. Supporting metrics like <code>on_time_rate</code> and <code>in_full_rate</code> break that down further, showing punctuality and fulfillment quality separately. Meanwhile, <code>otif_count</code> and <code>po_count</code> give absolute counts of compliant shipments and unique purchase orders, and <code>shipment_rows</code> provides a baseline measure of total records available for analysis.
+</p>
+
+<p class="fs-lg">
+This section formalizes logic that would otherwise live in ad hoc SQL or spreadsheet formulas. Each measure is not just a calculation but a <b>governed, reusable semantic definition</b> that’s enforced across AI/BI dashboards, Genie queries, and analytics layers. By centralizing these in the metric view YAML, Databricks ensures every tool and user—from engineers to executives—references the same logic for OTIF and related KPIs, dramatically improving consistency, data governance, and time-to-insight across the enterprise.
+</p>
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Querying Metric Views</h2>
+
+<p class="fs-lg">
+When querying a <code>metric view</code> in Databricks, think of it as querying a <b>business-ready semantic layer</b>, not a raw table. Each metric view already contains the necessary joins, calculations, and metadata to produce accurate, consistent KPIs—so analysts or AI/BI tools can simply <code>SELECT</code> dimensions (like region, carrier, or month) and measures (like <code>otif_rate</code> or <code>on_time_rate</code>) without rebuilding logic. 
+</p>
+
+<p class="fs-lg">
+  In practice, this means you query it the same way as any SQL view, but the results come pre-governed and semantically enriched, making it ideal for dashboards, Genie prompts, and executive reporting.
+
+</p>
+
+<p class="fs-lg">
+When querying <b>measures</b> from a Databricks metric view, you need to use an <b>aggregate function</b> — such as <code>SUM()</code>, <code>AVG()</code>, <code>COUNT()</code>, or similar — because measures are designed to be aggregated across the chosen dimensions. For example:
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-sql">
+SELECT
+  DATE_TRUNC('month', date) AS month,
+  AVG(otif_rate) AS avg_otif
+FROM big_cloud_dealz_development.gold.metric_view_otif
+GROUP BY month;
+</code>
+</pre>
+
+<p class="fs-lg">
+If you want to just use the default measure logic with no aggregation function, then <b>measures must be wrapped in <a href="https://docs.databricks.com/aws/en/sql/language-manual/functions/measure" target="_blank"><code>MEASURE()</code> aggregate functions</a></b> when queried, since they represent numeric KPIs summarized over groups of dimension values.
+</p>
 
 
 
 
 
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Querying the Metric (The "Payoff")</h2>
 
+<!--
+
+<p class="fs-lg todo_edit">
+
+Additionally, in Databricks, when working with <b>metric views</b>, the <code>MEASURE()</code> function is used to <b>reference defined measures</b> directly by name, instead of re-typing their SQL expressions. This makes queries simpler, more readable, and consistent with the semantic definitions stored in the metric view YAML.
+</p>
+
+<p class="fs-lg todo_edit">
+For example, instead of writing out the full <code>AVG(otif_flag)</code> expression, you can write:
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-sql">
+SELECT
+  date,
+  MEASURE(otif_rate) AS otif_percentage,
+  MEASURE(on_time_rate),
+  MEASURE(in_full_rate)
+FROM big_cloud_dealz_development.gold.metric_view_otif
+GROUP BY date;
+</code>
+</pre>
+-->
+<!--
+<p class="fs-lg">
+The <code>MEASURE()</code> function tells Databricks to **resolve the measure’s expression** (defined in the YAML) and apply it correctly in the context of the query. It’s a way to query governed business metrics safely and consistently—ensuring everyone uses the same underlying logic for KPIs like OTIF, On-Time %, or In-Full %.
+</p>
+-->
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">How the MEASURE Function Differs from AVG() and SUM() in Databricks SQL</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+When you write <code>SUM(column)</code> or <code>AVG(column)</code> in a conventional SQL query, you are explicitly telling the query engine how to aggregate a column — either by summing or averaging all values. You must decide what metric to calculate and include the correct <code>GROUP BY</code> clause if you’re slicing by dimensions. These functions operate directly on the data and require you to define the aggregation logic manually each time you query.
+                </p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+By contrast, in a Databricks <strong>metric view</strong>, the <code>MEASURE()</code> function is used to reference pre-defined business metrics without redefining their aggregation logic. Each measure is already defined in the YAML configuration with its own expression (for example, <code>AVG(otif_flag)</code> or <code>SUM(otif_flag)</code>). When you query the metric view, calling <code>MEASURE(otif_rate)</code> tells Databricks to automatically apply that governed definition. This means you’re consuming a standardized KPI rather than recreating it, ensuring consistency across dashboards, BI tools, and Genie queries.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+This abstraction allows teams to separate <em>metric definition</em> from <em>metric consumption</em>. Analysts and AI systems can safely use <code>MEASURE()</code> to retrieve accurate, governed results without worrying about how the measure is calculated internally — dramatically reducing risk, duplication, and inconsistency across the analytics stack.
+
+                </p>
+
+
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">
+-- Traditional SQL with explicit aggregation
+SELECT
+  DATE_TRUNC('month', date) AS month,
+  AVG(otif_flag) AS otif_rate
+FROM big_cloud_dealz_development.gold.metric_view_otif
+GROUP BY month;
+
+-- Databricks metric view query using MEASURE()
+SELECT
+  DATE_TRUNC('month', date) AS month,
+  MEASURE(otif_rate) AS otif_percentage
+FROM big_cloud_dealz_development.gold.metric_view_otif
+GROUP BY month;
+</code>
+</pre>
+
+
+
+              </div>
+            </div>
 
 
 <p class="fs-lg">
-With our Metric View created, the payoff is in the simplicity of the queries. An analyst just uses standard SQL with the <code>MEASURE()</code> function.
+Ok, with all that explanation out of the way, let's get down to some example use cases of this handy OTIF metric view.
 </p>
+
+
+
+
+
+
+
+
+
+
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Example 1: Monthly OTIF Trend by Carrier</h2>
 
@@ -799,7 +934,7 @@ Why it's simple: This ad-hoc query is easy to write. The user can filter, group,
 
 <p class="fs-lg">
 
-  In the next article in this series we'll show how to start putting these information building blocks to work by integrating them into AI / BI Dashboards for management in a retail logistics division.
+  In the next article in this series we'll show how to start putting these information building blocks to work by <a href="next_generation_retail_logistics_analytics_with_databricks_ai_bi_dashboards.html" target="_blank">integrating them into AI / BI Dashboards</a> for management in a retail logistics division.
 
 </p>
 

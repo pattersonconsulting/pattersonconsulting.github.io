@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
 
+    <link href="../assets/css/prism.css" rel="stylesheet" />
+
     <style>
       .page-loading {
         position: fixed;
@@ -136,6 +138,44 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
     </style>
 
     <script>
@@ -313,13 +353,41 @@
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Driving Retail Excellence with the Databricks Medallion Architecture</h2>
 -->
 <p class="fs-lg">
-In modern retail logistics, speed and precision define success. Executives need real-time visibility into how reliably products move through their supply network — and where risks are emerging before they impact the customer. A Databricks AI / BI Dashboard built on the Medallion Architecture provides exactly that: a single, trusted view of operational health powered by governed data and intelligent analytics. By surfacing key performance indicators like *On-Time In-Full (OTIF)* and *Stockout Exposure* through dynamic visualizations and natural-language insights, the dashboard transforms complex warehouse, carrier, and inventory data into actionable intelligence for the COO, logistics leads, and merchandising teams alike.
+In modern retail logistics, speed and precision define success. Executives need real-time visibility into how reliably products move through their supply network — and where risks are emerging before they impact the customer. 
+
+</p>
+
+<p class="fs-lg">
+
+  We live in world where the <i>latency</i> of <b>cognitive labor</b> is a <a href="../content/hitchhikers_guide_kw/how_technology_investment_enables_growth.html" target="_blank">key differentiator</a> in competitive retail markets. 
+
+</p>
+
+<p class="fs-lg">
+
+  The speed of your information transformation, from disparate raw sources, to information synthesized into decision-making form, is critical in the <a href="../content/hitchhikers_guide_kw/the_evolution_of_knowledge_work.html"  target="_blank">art of retail knowledge work.</a>
+
+</p>
+
+<p class="fs-lg">
+
+  In the retail landscape a major challenge is integrating legacy systems into a cohesive information view that can allow business leaders to make accurate decisions faster than the competition. To do that, retail leaders need to build reports and dashboards to synthesize information from the vast ocean of raw data we drown in today.
+
+</p>
+
+<p class="fs-lg">
+
+A Databricks AI / BI Dashboard built on the <a href="./driving_retail_information_architecture_with_databricks_medallion_architecture.html" target="_blank">Medallion Data Architecture</a> provides exactly that: a single, trusted view of operational health powered by governed data and intelligent analytics. By surfacing key performance indicators like <b>On-Time In-Full (OTIF)</b> through dynamic visualizations and natural-language insights, the dashboard transforms complex warehouse, carrier, and inventory data into actionable intelligence for the COO, logistics leads, and merchandising teams alike.
 
 </p>
 
 
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Visualizing the Retail Data Lakehouse</h2>
 
+<p class="fs-lg">
+Databricks’ <b>AI/BI Dashboards</b> (formerly known as Lakeview Dashboards) represent the company’s native visualization layer within the Unity Catalog ecosystem. Unlike tools such as Power BI or Tableau, <i>these dashboards are not meant to connect to external data sources or serve as a feature-rich BI platform</i>. 
+</p>
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
             <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_retail_logistics_overview.png" alt="Image">
 
@@ -327,118 +395,232 @@ In modern retail logistics, speed and precision define success. Executives need 
 
 
 <p class="fs-lg">
-Databricks’ **AI/BI Dashboards**—formerly known as Lakeview Dashboards—represent the company’s native visualization layer within the Unity Catalog ecosystem. Unlike tools such as Power BI or Tableau, these dashboards are not meant to connect to external data sources or serve as a feature-rich BI platform. Instead, their value lies in being tightly integrated with the Databricks Lakehouse, providing cost efficiency (no extra licenses), secure live connections to governed data, and accelerated dashboard creation through **AI-assisted “text-to-chart”** capabilities. This combination allows teams to quickly turn trusted, cataloged data into visual insights without leaving the Databricks environment.
+Instead, their value lies in being tightly integrated with the Databricks Lakehouse, providing cost efficiency (no extra licenses), secure live connections to governed data, and accelerated dashboard creation through <b>AI-assisted “text-to-chart”</b> capabilities. This combination allows teams to quickly turn trusted, cataloged data into visual insights without leaving the Databricks environment.
 </p>
 
 <p class="fs-lg">
-While the product is now generally available, it’s still maturing. Current limitations include less flexibility in chart formatting and a developing user interface compared to established BI tools. However, Databricks’ roadmap suggests rapid progress—making these dashboards increasingly viable for **mid-management and executive reporting** within the next year. For organizations seeking leaner stacks and integrated reporting directly in their data platform, AI/BI Dashboards offer a strategic path forward without additional vendors or integration overhead.
-</p>
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Leveraging the Medallion Architecture in the Data Lakehouse</h2>
-
-<p class="fs-lg">
-The architectural foundation of the dashboard relies on the Medallion data flow, which transforms raw retail and logistics data into clean, governed insights across three layers. In the **Bronze layer**, source data from systems like ERP, WMS, and carrier EDI feeds is ingested in its raw form. The **Silver layer** then refines and models this data into conformed dimension and fact tables—standardizing IDs, timestamps, and formats for consistency. Finally, the **Gold layer** aggregates these curated datasets into business-ready metric views, such as OTIF and Stockout Exposure, designed for fast, accurate querying and executive reporting. This structured flow ensures data quality, consistency, and traceability from ingestion to decision-making.
-</p>
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building Stockout Exposure Analytics</h2>
-
-<p class="fs-lg">
-The **Stockout Exposure** metric view gives us a single, governed source of truth for product availability risk across time and location. In the dashboard, we use it to surface headline KPIs (today’s % exposure, week-to-date trend) and to let leaders slice instantly by region, market, store format, or SKU—without re-writing queries or maintaining one-off summaries. Because the logic for forecast, on-hand, and backorders is centralized in Unity Catalog, every chart and table—whether it’s a trend line, a top/bottom locations list, or a heatmap—tells the same story with consistent math.
-
+While the product is now generally available, it’s still maturing. Current limitations include less flexibility in chart formatting and a developing user interface compared to established BI tools. However, Databricks’ roadmap suggests rapid progress—making these dashboards increasingly viable for <b>mid-management and executive reporting</b> within the next year. For organizations seeking leaner stacks and integrated reporting directly in their data platform, AI/BI Dashboards offer a strategic path forward without additional vendors or integration overhead.
 </p>
 
 <p class="fs-lg">
-Operationally, the dashboard turns that metric into action. COOs and logistics leaders can rank locations by exposure, drill into problem SKUs, and track whether remediation (expedites, rebalancing, PO changes) is lowering risk. Alerts and narratives can be added via Genie so an exec can ask, “Where did exposure spike yesterday and why?” and receive an explanation with the exact stores, categories, and lanes involved. The result is faster prioritization and fewer lost sales.
+
+  For the remainder of this article, I'm going to show you how to build out two key visualization components on a retail logistics dashboard based on the <a href="building_retail_semantic_layer_with_unity_catalog_metric_views.html" target="_blank">OTIF metric view we developed in the last article</a>.
+
 </p>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Visually Implementing OTIF Analytics in Our Retail Dashboard</h2>
+
+<p class="fs-lg">
+
+Here’s how we’ll put the new OTIF metric view to work on the dashboard. We're going to display:
+</p>
+
+<ol>
+
+ <li>the 7-day average of the latest OTIF metric</li>
+ <li>a line chart that shows a comparison of the OTIF by carrier over time</li>
+</ol>
+
+<p class="fs-lg">
+Given that we've done all of the hard work by defining the core data model in the metric views and the data lakehouse gives us the next-generation performance of the Spark engine, we can re-calculate metrics from raw data and give management decision-enabling information with low latency.
+</p>
+
+
+<p class="fs-lg">
+To get going navigate to the Dashboard section of your Databricks workspace and click on the "Create Dashboard" button in the upper right corner, as shown below.
+</p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_create_dashboard_button.png" alt="Image">
+
+          </div>  
+
+
+<p class="fs-lg">
+
+This should give you a new Dashboard canvas workspace as shown below.
+
+</p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_canvas_new_dashboard.png" alt="Image">
+
+          </div>  
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Adding a Counter Visualization for Company-Wide OTIF</h2>
+
+
+<p class="fs-lg">
+
+We'll start by adding a new "counter" visualization widget (read: it takes a calculation from the data lakehouse and puts it in a small box beside a label) to represent the company-wide OTIF metric, as seen below.
+
+</p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 300px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_card_otif.png" alt="Image">
+
+          </div>  
+
+
+<p class="fs-lg">
+
+You do that by clicking on the "add visualization" button on the blue toolbar at the bottom of the workspace canvas. Drag that new counter-widget-thing around until you get it where you want it, and then look at the right-hand side panel. You should see a list of configuration options, as shown below.
+
+</p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 600px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_card_otif_configure.png" alt="Image">
+
+          </div>  
+
+
+<p class="fs-lg">
+
+Now you need some data from the ol' data lakehouse. The drop down for "dataset" at the top is empty currently, so we'll need to start bringing in information from our metric layer (because it has all the business logic already constructed there). To do that you will click on the "data"-button in the upper left-hand corner of the workspace, which will bring up a dialog shown below.
+</p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 800px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_add_data_sources.png" alt="Image">
+
+          </div>  
+
+
+<p class="fs-lg">
+Click on the "Create from SQL" button under "Datasets" 
+and add the SQL below in the right hand pane and test it with the "Run" button. 
+</p>          
 
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-sql">
--- Latest Stockout Exposure (overall)
-WITH last_date AS (
-  SELECT MAX(date) AS d
-  FROM big_cloud_dealz_development.gold.metric_view_stockout_exposure
-)
 SELECT
-  d AS latest_date,
-  MEASURE(stockout_exposure_percent) AS stockout_exposure_pct
-FROM big_cloud_dealz_development.gold.metric_view_stockout_exposure mv
-CROSS JOIN last_date
-WHERE mv.date = d;
+  date,
+  AVG(otif_rate) OVER (
+    ORDER BY date
+    ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+  ) AS avg_otif_rate_7d
+FROM view_otif_by_date
+ORDER BY date DESC;
 </code>
 </pre>
 
-<p class="fs-lg">
-
-[ todo: talk about adding this as a data source ]
-
-</p>
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building OTIF Analytics</h2>
 
 <p class="fs-lg">
 
-Here’s how we’ll put the new OTIF metric view to work on the dashboard. First, the view bakes in a single, governed definition of OTIF—exactly matching our Python and SQL logic—so every tile, alert, and drill-down uses the same truth. That means the KPI on the landing screen, the weekly trend, and the “by-location” deep dive will never disagree. Because it’s a Unity Catalog metric view, AI/BI and Genie can read the semantic metadata (display names, formats, and synonyms) to answer plain-English questions like “show OTIF by region last month” without custom SQL.
+  Once you've confirmed your metric-view query above runs successfully, save the dataset as "Latest OTIF for company" (or something similar). Now it should show up in the "data" drop down for the configuration of our OTIF widget. Select "counter" as the visualization and <code>avg_otif_rate_7d</code> as the value for counter widget. Once you go back to the preview area, you should see the metric view calculated OTIF value showing up in your dashboard.
 
 </p>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Adding a Line Visualization for Deeper Comparison of Carrier's OTIF</h2>
+
 
 <p class="fs-lg">
-Second, we’ll give COOs fast context. The headline card will show the latest network-wide OTIF, with companion tiles for On-time %, In-full %, and total shipments so you can immediately separate punctuality issues from fill-rate gaps. From there, you can pivot by time grain (day, week, month) and slice by destination or origin (region, state, location) to isolate where performance slipped and when. Because the metric view already joins carriers, modes, and service levels, you can jump straight to “which carrier and service tier drove the dip.”
+
+  Now that you know the process, let's add a mult-line visualization to do more complex analysis of how different Carrier's perform with respect to the OTIF metric. Go ahead and add another metric view-based dataset as defined by the SQL below.
 
 </p>
-
-<p class="fs-lg">
-Finally, we’ll wire this into action. The same metric view powers threshold-based alerts (e.g., “OTIF < 93% for any region this week”), WoW change tiles, and “Top 10 underperforming destinations” lists—no duplicate pipelines or shadow logic. When operations improves a lane or swaps carriers, the improvement shows up everywhere at once, and Genie can narrate the “what changed” story directly from the governed measures and dimensions.
-
-
-</p>
-
 
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-sql">
-
-# Example: latest OTIF for the dashboard widget
-
-
--- Returns the most recent date’s OTIF (and helpful context) for the headline KPI
-WITH daily AS (
+-- OTIF by Carrier, last 13 weeks, with 4-week rolling average and top-6 carriers by volume
+WITH weekly AS (
   SELECT
-    date,
-    MEASURE(otif_rate)      AS otif_rate,       -- formatted as % in AI/BI
-    MEASURE(on_time_rate)   AS on_time_rate,    -- % arriving by promise
-    MEASURE(in_full_rate)   AS in_full_rate,    -- % received in full
-    MEASURE(shipment_rows)  AS shipments        -- contributing rows
+    week,
+    carrier_name,
+    MEASURE(otif_rate)        AS otif_pct,
+    MEASURE(shipment_rows)    AS shipments
   FROM big_cloud_dealz_development.gold.metric_view_otif
-  GROUP BY date
+  WHERE week >= DATE_TRUNC('week', CURRENT_DATE() - INTERVAL 13 WEEKS)
+  GROUP BY week, carrier_name
+),
+top_carriers AS (
+  SELECT
+    carrier_name,
+    SUM(shipments) AS total_shipments_13w,
+    DENSE_RANK() OVER (ORDER BY SUM(shipments) DESC) AS rnk
+  FROM weekly
+  GROUP BY carrier_name
+),
+smoothed AS (
+  SELECT
+    w.week,
+    w.carrier_name,
+    w.otif_pct,
+    AVG(w.otif_pct) OVER (
+      PARTITION BY w.carrier_name
+      ORDER BY w.week
+      ROWS BETWEEN 3 PRECEDING AND CURRENT ROW
+    ) AS otif_4w_ma
+  FROM weekly w
+  JOIN top_carriers t
+    ON w.carrier_name = t.carrier_name
+   AND t.rnk <= 6
 )
 SELECT *
-FROM daily
-ORDER BY date DESC
-LIMIT 1;
-
-
--- If you want the headline scoped to a region, just add a WHERE and keep the GROUP BY:
-
-
-WITH daily AS (
-  SELECT
-    date,
-    MEASURE(otif_rate) AS otif_rate
-  FROM big_cloud_dealz_development.gold.metric_view_otif
-  WHERE to_region = 'Southeast'
-  GROUP BY date
-)
-SELECT * FROM daily ORDER BY date DESC LIMIT 1;
+FROM smoothed
+ORDER BY week, carrier_name;
 </code>
 </pre>
 
 
 <p class="fs-lg">
 
-[ todo: talk about adding this as a data source ]
+  One the widget blue toolbar, select visualization and drag it onto the canvas. Select the dataset you just created in the "dataset" drop down. From there, we'll select the "line" visualization, and configure the <code>x-axis</code>, <code>y-axis</code>, and <code>Color</code> parameters as shown below.
 
 </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 300px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_widget_otif_per_carrier_conf.png" alt="Image">
+
+          </div>  
+
+
+
+<p class="fs-lg">
+
+  This gives us a "OTIF over time per carrier"-visualization as shown below.
+
+</p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_dashboard_widget_otif_per_carrier.png" alt="Image">
+
+          </div>  
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary and Next Steps</h2>
+
+
+<p class="fs-lg">
+
+  In this article we built a management dashboard and reporting system on our data lakehouse for retail logistics.
+
+</p>
+
+<p class="fs-lg">
+
+  While we've done some quality data engineering so far and dashboards are foundationally useful in retail, we haven't jumped into the generative AI game just yet.
+
+</p>
+
+<p class="fs-lg">
+
+  That changes now.
+
+</p>
+
+<p class="fs-lg">
+
+  In the next two articles, we continue to climb the generative AI ladder building first a conversational user interface over our metric views, and then building a decision intelligence agent to help analyze metric view trends with Agent Bricks.
+
+</p>
+
+
 
 
           </div>
@@ -463,9 +645,9 @@ SELECT * FROM daily ORDER BY date DESC LIMIT 1;
                       <div class="col-sm-8">
                         <div class="card-body">
                           <h4 class="card-title">Building a Retail Analytics Conversational UX with Databricks Genie</h4>
-                          <p class="card-text">...</p>
+                          <p class="card-text">Databricks Genie transforms the Lakehouse into a conversational analytics layer—allowing retail leaders to ask natural-language questions about key KPIs like OTIF or stockout exposure and get consistent, real-time answers grounded in governed data from Unity Catalog.</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_product_delta_table_with_databricks_unity_catalog.html">
+                <a class="btn btn-lg btn-link px-0" href="building_retail_analytics_conversational_ux_with_databricks_genie.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>
@@ -562,6 +744,8 @@ SELECT * FROM daily ORDER BY date DESC LIMIT 1;
       </svg>
       <i class="ai-arrow-up"></i>
     </a>
+
+    <script src="../assets/js/prism.js"></script>
 
 
     <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>

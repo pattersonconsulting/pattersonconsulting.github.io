@@ -394,6 +394,13 @@ Now, a BI tool can ask for any combination. When a user requests "Total Revenue 
 You define the logic once, and it can answer hundreds of questions.
 </p>
 
+<p class="fs-lg">
+
+  A metric view is like the "swiss army knife" of views.
+
+</p>
+
+
 <h2 class="h5 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Benefits</h2>
 
 <ul>
@@ -666,20 +673,30 @@ measures:
 </pre>
 
 
+<p class="fs-lg">
 
+  Let's break down the major sections of the yaml definition of the metric view above.
 
+</p>
 
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">source</h2>
 <p class="fs-lg">
 <code>source</code>: A SQL query that pulls from Silver-layer tables. It joins <code>fact_shipments</code> with <code>fact_po_header</code> to calculate an <code>on_time</code> flag. It also joins <code>fact_po_line</code> with <code>fact_shipment_receipts</code> to calculate an <code>in_full</code> flag. This is where all the complex business logic lives, hidden from the user.
 </p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">joins</h2>
 
 <p class="fs-lg">
 <code>joins</code>: This section defines how to link IDs from the source query (like <code>carrier_id</code> or <code>location_id</code>) to the full dimension tables (<code>dim_carriers</code>, <code>dim_locations</code>).
 </p>
 
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">dimensions</h2>
+
 <p class="fs-lg">
 <code>dimensions</code>: This lists all the "slice and dice" fields for the user, like <code>date</code>, <code>week</code>, <code>month</code>, <code>carrier_name</code>, <code>from_region</code>, and <code>to_region</code>. We can even add synonyms, so a user asking for "origin" gets the <code>from_location_name</code> column.
 </p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">measures</h2>
 
 <p class="fs-lg">
 <code>measures</code>: These are the final calculations. The logic is now simple:

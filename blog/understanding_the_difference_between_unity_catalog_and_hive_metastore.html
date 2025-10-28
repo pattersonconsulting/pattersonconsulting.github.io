@@ -493,6 +493,9 @@ The previous Hive model relied on the Hive Metastore (HMS) to track every table 
 Iceberg solves this by creating self-contained tables. Each table stores its own complete, versioned metadata (schema, partitions, and data file locations) in files directly alongside the data. This design provides high performance by avoiding slow directory listings, guarantees data consistency with atomic transactions, and enables powerful features like time travel (querying the table as it was at a specific time) and schema evolution.
 </p>
 
+
+
+
 <p class="fs-lg">
 While compatible, Iceberg limits the role of HMS to an optional pointer for table discovery, offering a seamless migration path from legacy systems.
 </p>
@@ -501,6 +504,22 @@ While compatible, Iceberg limits the role of HMS to an optional pointer for tabl
 
 The limitations of the Hive Metastore—such as its lack of centralized governance, fine-grained access controls, data lineage, and comprehensive auditing— informed the introduction of Unity Catalog, which provides these features for a modern data lakehouse. The features introduced with Unity Catalog set up customers to move forward by providing a unified, secure, and scalable governance layer that manages all their data assets, like tables, files, and ML models, consistently across multiple workspaces.
 </p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">From Iceberg to Delta Tables</h2>
+
+<p class="fs-lg">
+While Apache Iceberg reimagined how tables are structured on the data lake, Databricks took these same principles further with Delta Lake — its default open table format.
+</p>
+
+<p class="fs-lg">
+Delta Lake builds on similar ideas of versioned, self-describing tables but integrates deeply into the Databricks runtime, providing ACID transactions, schema enforcement, time travel, and scalable metadata management optimized for large-scale analytics and machine learning. Like Iceberg, Delta Lake eliminates the fragility of directory-based tables from the Hive Metastore, but it also adds performance optimizations and native compatibility with Databricks’ Lakehouse engine.
+</p>
+
+<p class="fs-lg">
+With open formats like Delta Lake (and now Apache Iceberg supported natively as well), the focus shifts from how data is stored to how it’s governed. This is where Databricks Unity Catalog enters the picture — delivering a unified governance layer that secures, catalogs, and manages all your open-format data, whether in Delta, Iceberg, or Parquet, across every workspace and cloud environment.
+</p>
+
+
 
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Databricks Unity Catalog</h2>
@@ -542,7 +561,7 @@ The limitations of the Hive Metastore—such as its lack of centralized governan
 <p class="fs-lg">
   Databricks Unity Catalog is a unified governance layer that manages data access, security, and metadata for all your data assets — including tables stored in open formats like Apache Iceberg.
 </p>
-
+<!--
 <p class="fs-lg">
   Apache Iceberg is an open table format that adds features like versioning, schema evolution, and efficient partitioning for large-scale data lakes.
 </p>
@@ -554,7 +573,7 @@ The limitations of the Hive Metastore—such as its lack of centralized governan
 <p class="fs-lg">
   In essence, Unity Catalog provides governance and access control on top of Iceberg’s storage and table format capabilities, enabling secure and consistent management of Iceberg data within a Databricks environment.
 </p>
-
+-->
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary Comparison Table</h2>
 
@@ -617,7 +636,7 @@ The limitations of the Hive Metastore—such as its lack of centralized governan
 </p>
 
 <p class="fs-lg">
-  Unity Catalog, in contrast, is built for the modern lakehouse — delivering centralized, secure, and fine-grained governance at scale.
+  Unity Catalog, in contrast, with Delta Tables is built for the modern lakehouse — delivering centralized, secure, and fine-grained governance at scale. In the next article we will dig further into <a href="./building_retail_product_delta_table_with_databricks_unity_catalog.html" target="_blank">how Delta Tables can be used in the retail industry for product management</a>.
 </p>
 
 

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Retail Supplier Logistics Contract Delivery SLA Information Extraction with Agent Bricks</title>
+    <meta name="description" content="This article demonstrates how to build and deploy a Databricks Agent Bricks knowledge assistant that uses Retrieval Augmented Generation (RAG) to answer complex, real-time product questions from plain text documents, enabling faster, more confident retail customer interactions.">
+    <meta name="keywords" content="agent bricks, knowledge assistant, databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Josh Patterson">
+
+
+    <meta property="og:title" content="Retail Supplier Logistics Contract Delivery SLA Information Extraction with Agent Bricks"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/dbx_ab_retail_logistics_info_extraction_header_0.jpg.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/retail_logistics_supplier_sla_information_extraction_with_agent_bricks.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="This article demonstrates how to build and deploy a Databricks Agent Bricks knowledge assistant that uses Retrieval Augmented Generation (RAG) to answer complex, real-time product questions from plain text documents, enabling faster, more confident retail customer interactions."/>
+
+
+    <meta name="twitter:title" content="Retail Supplier Logistics Contract Delivery SLA Information Extraction with Agent Bricks" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/dbx_ab_retail_logistics_info_extraction_header_0.jpg.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/retail_logistics_supplier_sla_information_extraction_with_agent_bricks.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <!--
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+    -->
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/app-icons/pct_box_logo_32x32.png">
+    
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Retail Supplier Logistics Contract Delivery SLA Information Extraction with Agent Bricks</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Retail Supplier Logistics Contract Delivery SLA Information Extraction with Agent Bricks</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Josh Patterson
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/dbx_ab_retail_logistics_info_extraction_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 600px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+            <p class="fs-lg todo_edit">
+
+              much of the worlds information is locked up in spreadsheets, pdfs, and text documents
+
+              contracts
+
+              many times there is not a tight information schema
+
+              this has made information extraction difficult because of the nuance per document
+
+              enter: LLMs
+
+            </p>
+            
+     
+           <p class="fs-lg">
+
+
+
+
+           </p>
+
+           <p class="fs-lg todo_edit">
+
+            In this article I show you how to deploy an Agent Bricks ...
+
+
+           </p>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Information Extraction?</h2>
+           <p class="fs-lg todo_edit">
+
+Retrieval Augmented Generation (RAG) is an approach that gives large language models access to live, external knowledge so they can deliver more accurate, current, and business-specific answers. Instead of relying only on what a model learned during training, RAG retrieves the most relevant data from trusted sources—such as internal systems, reports, or market feeds—and injects that information into the model’s reasoning process. This “retrieval” step is what transforms a static model into a dynamic decision-support tool: it can pull the latest sales figures, policy data, or customer interactions before generating a response.
+
+
+
+           </p>
+
+           <p class="fs-lg">
+
+...
+           </p>
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Going from Plain Text to Structured Information</h2>
+
+
+           <p class="fs-lg todo_edit">
+
+            In our previous Agent Bricks article, its worth noting how we <a href="retail_decision_intelligence_with_agent_bricks.html" target="_blank">used a Genie space as our knowledge source</a>. In this project we're building an agent similar to that Genie space but this time instead of querying Delta tables this agent is querying a volume of files' contents to find the correct text information.
+
+           </p>
+
+           <p class="fs-lg">
+
+            The data this time is contained in raw text flat files where each file contains a product description, warranty, and usage guidelines per file. An example file contents are shown below.
+
+
+
+           </p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-json">
+{
+  "service_expectations": {
+    "on_time_delivery": {
+      "target_percent": 95,
+      "tolerance_days": 1 
+    },
+    "in_full_delivery": {
+      "target_percent": 95,
+      "tolerance_days": 1 
+    },
+
+    "otif": {
+      "target_percent": 95,
+      "tolerance_notes": "rolling 3 month average" 
+    },
+
+    "average_lead_time": {
+      "target_calendar_days": 7,
+      "tolerance_days": 1
+    },
+
+    "asn_accuracy": {
+      "target_percent": 99,
+      "tolerance": "n/a"
+    },
+
+    "damage_rate": {
+      "target_percent": 0.4,
+      "tolerance_note": "per shipment"
+    }
+
+
+  }
+}
+</code>
+</pre>
+
+           <p class="fs-lg todo_edit">
+
+            The challenge here is that the documents that contain this information from the supplier are in some variation of the following contract document:
+
+           </p>
+
+
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-json">
+
+---
+
+## **Shipping Service Level Agreement (SLA)**
+
+**Between:**
+**Big Cloud Dealz, Inc.** (“Retailer”)
+and
+**Georgia-Pacific LLC** (“Supplier”)
+
+**Effective Date:** May 1, 2026
+**Agreement Term:** 12 months with annual review
+
+---
+
+### **1. Policy Statement**
+
+Big Cloud Dealz and Georgia-Pacific mutually commit to maintaining a consistent, efficient, and transparent supply relationship that ensures uninterrupted flow of packaging, paper, and cleaning products to Retailer’s distribution centers and retail stores.
+This agreement establishes measurable service standards that define the expectations for **delivery accuracy, timeliness, data integrity, and logistics quality**.
+
+---
+
+### **2. Objectives**
+
+* Guarantee that all products are delivered **on time, in full, and damage-free**.
+* Ensure **data synchronization** between Retailer and Supplier systems through accurate EDI transactions.
+* Minimize downstream supply chain costs through improved visibility and proactive communication.
+* Create a **continuous improvement framework** with transparent KPI tracking.
+
+---
+
+### **3. Scope of Agreement**
+
+This SLA covers all goods shipped from Georgia-Pacific manufacturing facilities and distribution centers to Big Cloud Dealz facilities within the United States and Canada.
+Applies to:
+
+* Corrugated packaging, paper goods, janitorial supplies, and tissue products.
+* Both **regular replenishment** and **promotional shipments**.
+* Shipments under LTL, FTL, and small parcel modes.
+* Transactions conducted under Big Cloud Dealz’ approved EDI standards (850, 855, 856, 810).
+
+---
+
+### **4. Service Expectations**
+
+#### **4.1 Delivery and Fulfillment Standards**
+
+| KPI                        | Target          | Tolerance               | Description                                           |
+| -------------------------- | --------------- | ----------------------- | ----------------------------------------------------- |
+| **On-Time Delivery (OTD)** | ≥ 96%           | ±1 day                  | Orders delivered within the confirmed delivery window |
+| **In-Full Delivery (IFD)** | ≥ 99%           | N/A                     | Ordered quantity vs. received quantity                |
+| **OTIF (On-Time In-Full)** | ≥ 95%           | Rolling 3-month average | Combined OTD and IFD rate                             |
+| **Average Lead Time**      | 7 calendar days | ±1 day                  | PO acknowledgment to delivery date                    |
+| **ASN Accuracy**           | ≥ 99%           | N/A                     | EDI data matches receiving data                       |
+| **Damage Rate**            | ≤ 0.4%          | Per shipment            | Damaged goods ÷ total goods received                  |
+
+---
+
+### **5. Operational Obligations**
+
+#### **5.1 Supplier Responsibilities**
+
+* Transmit **ASN (EDI 856)** at least **4 hours before carrier departure**.
+* Provide valid **PO, SKU, lot, and case-level details** on all shipping documentation.
+* Use **Retailer-approved carriers** or submit alternative carrier requests 48 hours before shipment.
+* Package all goods to Retailer **Packaging Standard P-7.3**, including pallet height ≤ 72”, corner protection, and stretch-wrap containment.
+* Manage and fund expedited freight in cases where Supplier-caused delay impacts Retailer inventory.
+
+#### **5.2 Retailer Responsibilities**
+
+* Provide accurate and timely purchase order data.
+* Acknowledge ASN receipt within 2 hours of system transmission.
+* Provide performance feedback monthly and participate in quarterly performance reviews.
+
+---
+
+### **6. Performance Measurement and Reporting**
+
+* Georgia-Pacific shall provide **monthly KPI summaries** for OTIF, ASN accuracy, and damage rate.
+* Big Cloud Dealz will review supplier performance using **Databricks Vendor Metrics Dashboard**, integrating SLA data from Unity Catalog.
+* **Quarterly Performance Review Meetings** will evaluate:
+
+  * KPI compliance
+  * Corrective action follow-ups
+  * Continuous improvement initiatives (e.g., packaging optimization, load efficiency)
+
+---
+
+### **7. Issue Escalation and Resolution**
+
+| Issue Type                   | Response Time   | Escalation Contact             |
+| ---------------------------- | --------------- | ------------------------------ |
+| ASN Transmission Failure     | 4 hours         | Supplier EDI Lead              |
+| Missed Delivery or Late Load | 24 hours        | Supplier Logistics Coordinator |
+| Product Damage or Shortage   | 48 hours        | Retailer DC Operations Manager |
+| KPI Deviation >5%            | 5 business days | Joint Supply Chain Council     |
+
+If unresolved, issues are escalated to the **Supply Chain Governance Committee** for mediation and action planning.
+
+---
+
+### **8. Compliance and Corrective Actions**
+
+* Persistent KPI underperformance (two consecutive quarters below SLA thresholds) triggers a **Corrective Action Plan (CAP)**.
+* CAPs must define root causes, timelines, and preventive measures, reviewed jointly by both parties.
+* Failure to implement CAPs within 90 days may result in financial penalties or contract suspension.
+
+---
+
+### **9. Financial Adjustments**
+
+#### **9.1 Penalties**
+
+* $250 per late delivery outside tolerance window.
+* Freight reimbursement for Supplier-caused expedited shipments.
+* Cost recovery for product loss or damage due to Supplier handling errors.
+
+#### **9.2 Incentives**
+
+* 0.5% quarterly credit on total invoice value for achieving OTIF ≥ 98%.
+* Recognition in Big Cloud Dealz’ **Preferred Partner Tier**, granting priority order scheduling and expanded volume allocations.
+
+---
+
+### **10. Review, Renewal, and Termination**
+
+* This SLA shall be reviewed annually, with KPI targets adjusted based on network performance and capacity.
+* Either party may terminate this agreement with **60 days’ written notice** for cause or material breach.
+* Absent termination, the agreement **automatically renews** under the same terms each May.
+
+---
+
+### **11. Signatures**
+
+**For Big Cloud Dealz, Inc.**
+Name: ___________________________
+Title: Vice President, Supply Chain Strategy
+Signature: _______________________
+Date: ___________________________
+
+**For Georgia-Pacific LLC**
+Name: ___________________________
+Title: Director, Customer Supply Chain Operations
+Signature: _______________________
+Date: ___________________________
+
+---
+
+</code>
+</pre>
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction with Agent Bricks</h2>
+
+
+           <p class="fs-lg">
+            The technical advantage of Databricks Agent Bricks lies in how it collapses months of complex AI system engineering into a governed, production-ready platform that runs natively in the lakehouse. Traditionally, standing up an enterprise-grade assistant required stitching together multiple components — vector databases, embedding models, chunking logic, role-based access, and feedback systems — all of which demanded deep MLOps expertise and constant tuning. 
+
+           </p>
+           <p class="fs-lg">
+            Agent Bricks abstracts that complexity, allowing organizations to deploy intelligent assistants directly on their structured and unstructured data within hours, not months, while maintaining full governance through Unity Catalog. This means CTOs and COOs can focus engineering resources on business-aligned data quality and workflow integration rather than infrastructure, gaining secure, scalable, and compliant access to enterprise knowledge — with the same lineage, access controls, and auditability that already govern their lakehouse.
+
+           </p>           
+
+           <p class="fs-lg">
+The Databricks Agent platform gives enterprises a unified way to build and manage AI assistants directly on their governed data. Because it runs within the Databricks Lakehouse, every agent has secure access to accurate, up-to-date information across departments — from sales to operations — without data silos or duplication. Business users can simply ask questions in natural language and get reliable answers backed by enterprise governance, lineage, and audit controls. For management, this means faster insights, more consistent decisions, and an AI platform that scales safely across the organization.
+</p>
+
+
+
+           <p class="fs-lg">
+
+            We start out by clicking on the Agent Bricks button on the left side toolbar as shown in the image below.
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_toolbar_button.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg">
+
+            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Information Extraction</code> project type, as shown in the image below.
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_type_information_extraction.png" alt="Image">
+
+          </div>    
+
+          
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How to Think About Information Extraction</h2>
+
+
+           <p class="fs-lg todo_edit">
+
+            We're using the <code>Information Extraction</code> project type here because we want to map metadata terms to types of data sources and then allow the agent to select the right data source and then use an embedding to query for the correct document or document fragment in the data source. Once the agent has the relevent text information, it can then inject this text passage into a final prompt to answer the original question asked.
+
+           </p>
+
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Generative AI and Workflow Automation</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+...
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+...
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+
+           <p class="fs-lg">
+
+
+
+           </p>
+
+
+          <p class="fs-lg">
+
+            With that in mind, let's get down to building out our <code>Information Extraction</code> agent.
+
+
+          </p>
+
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction Basic Info</h2>
+
+
+           <p class="fs-lg">
+
+            LLM-based systems ...
+
+           </p>
+
+           <p class="fs-lg">
+
+            This means that ...
+
+
+
+           </p>
+
+           <p class="fs-lg">
+
+            In the screenshot below you can see how to name the application (<code>BigCloudDealz_LogisticsSupplierSLA_InformationExtractionAgent_v1</code>).
+
+
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_create_information_extraction_agent.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg todo_edit">
+
+          You should be verbose here, but you don't need to put all instructions as there are other configuration fields to tell your system how to act and respond to data and context. Let's move on to adding sub-agents that do the actual steps of your workflow.
+
+          </p>
+
+
+
+
+
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Training the Information Extraction Agent</h2>
+
+
+           <p class="fs-lg todo_edit">
+
+            A good mental model of how the <code>knowledge assistant</code> project type in Agent Bricks works is to think of the <code>knowledge assistant</code> as a domain expect that can quickly and semantically search through large amounts of textual information and retrieve only the relevant portions of information. The <code>knowledge assistant</code> then injects this relevant text information into a prompt with the original question and the large language model reasons over it, <b>producing an answer to the original question that is grounded in the correct facts</b>.
+           </p>
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">LLMs, One-Shot Learning, and Prompts</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+"Training" in the context of pre-trained LLMs means something different than in the context of traditional machine learning training.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  ..
+
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+           <p class="fs-lg">
+
+...
+           </p>
+
+           <p class="fs-lg">
+
+            Upload contracts to volume
+
+
+          </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_catalog_volume_contract_files.png" alt="Image">
+
+          </div>    
+
+
+
+
+           <p class="fs-lg">
+
+            select the volume in the 
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 500px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_create_agent_select_volume_folder.png" alt="Image">
+
+          </div>    
+
+
+
+
+           <p class="fs-lg">
+
+            Select the parent directory of the files, and now we have our first knowledge source configured and ready to go.
+
+           </p>
+
+           <p class="fs-lg">
+
+            Now we need to show the agent a template of how we want the extracted data to look when it comes back to us for a given input contract text document. In the image below you can see the JSON structure from earlier in this article in the configuration area for the "Sample JSON Output".
+
+
+           </p>
+
+
+           
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_sample_json_output_configuration.png" alt="Image">
+
+          </div>   
+
+
+
+           <p class="fs-lg">
+
+            This is how we tell the agent "hey, when you read a given document, semantically find these fields and extract their values".
+
+
+           </p>
+
+
+           <p class="fs-lg">
+
+              Now that we have a handy retail product sales assistant, let's run some tests and see how it does.
+           </p>           
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Testing the Information Extraction Configuration</h2>
+
+           <p class="fs-lg">
+
+            Once the agent has been created, you should see a document mapping review page that let's you see how the agent extracted the structured information per document. You can see the list of the tested document mappings in the image below.
+
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_info_extract_conf_perf_review.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg">
+
+            Clicking on one of the document example mappings in the user interface will give us a document mapping detail screen as shown in the image below.
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_extraction_agent_validate_output.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg todo_edit">
+
+            We also have the option of editing the per-extracted-field intructions in the configuration panel on the right side, as seen in the image below.
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 500px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_configuration_per_output_field.png" alt="Image">
+
+          </div>    
+
+
+
+
+
+
+
+           <p class="fs-lg todo_edit">
+
+            Looks interesting --- so now let's check out the final answer, as shown below.
+
+           </p>
+
+
+
+
+
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Free Text Contracts Become Part of the Data Warehouse</h2>
+
+
+           <p class="fs-lg todo_edit">
+
+            In this article we showed you how to build a ...
+
+          </p>
+
+          <p class="fs-lg">
+
+            This enhances the Big Cloud Dealz ...
+
+          </p>
+
+          <p class="fs-lg todo_edit">
+
+            This is another building block of the <b>workflow automation</b> system that Big Cloud Dealz is putting together, as we'll see in future Agent Bricks posts in this series.
+
+          </p>
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
+                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>

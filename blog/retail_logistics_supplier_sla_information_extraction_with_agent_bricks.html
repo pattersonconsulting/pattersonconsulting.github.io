@@ -52,6 +52,8 @@
 
     <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
 
+    <link href="../assets/css/prism.css" rel="stylesheet" />
+
     <style>
       .page-loading {
         position: fixed;
@@ -315,6 +317,7 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
+            <!--
             <p class="fs-lg todo_edit">
 
               much of the worlds information is locked up in spreadsheets, pdfs, and text documents
@@ -327,6 +330,10 @@
 
               enter: LLMs
 
+              information extraction from raw text is one of the greatest opportunities for LLMs and companies to build real new use cases. 
+
+              its a type of workflow automation
+
             </p>
             
      
@@ -336,44 +343,126 @@
 
 
            </p>
+-->
+           <p class="fs-lg ">
 
-           <p class="fs-lg todo_edit">
 
-            In this article I show you how to deploy an Agent Bricks ...
+Much of the world’s most valuable information remains locked inside spreadsheets, PDFs, and text documents—especially contracts that lack a consistent structure or schema. For decades, this made it difficult to automatically extract key facts or metrics, as every document had its own quirks and formatting. Enter large language models (LLMs). With their ability to understand context and nuance, LLMs make it possible to transform unstructured text into structured, machine-readable data. This shift marks one of the most powerful new frontiers in workflow automation—where organizations can finally convert raw text into operational insights. In this article, we’ll explore how Databricks Agent Bricks enables companies like Big Cloud Dealz to build governed information-extraction agents that turn retail logistics contracts into structured JSON data, ready for analysis in the lakehouse.  
+
+
+
+
+           </p>
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Information Extraction?</h2>
+
+           <p class="fs-lg">
+
+            <b>Information extraction</b> is the process of using large language models (LLMs) to automatically identify and structure key facts, entities, and relationships from unstructured text—transforming free-form documents into machine-readable data such as tables, JSON, or database records. Information extraction using LLMs falls under into the emerging set of use cases in Generative AI as a sub-type of "workflow automation".
 
 
            </p>
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is Information Extraction?</h2>
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
-Retrieval Augmented Generation (RAG) is an approach that gives large language models access to live, external knowledge so they can deliver more accurate, current, and business-specific answers. Instead of relying only on what a model learned during training, RAG retrieves the most relevant data from trusted sources—such as internal systems, reports, or market feeds—and injects that information into the model’s reasoning process. This “retrieval” step is what transforms a static model into a dynamic decision-support tool: it can pull the latest sales figures, policy data, or customer interactions before generating a response.
+Generative AI is redefining workflow automation by adding cognitive decision-making and adaptability to traditional robotic process automation (RPA). While RPA handles structured, repetitive tasks, generative AI expands the scope to include unstructured data and complex judgments. This fusion allows organizations to automate not just routine operations, but also tasks requiring contextual understanding—such as processing customer requests, analyzing claims data, or interpreting technical diagnostics—making automation more flexible, accurate, and scalable.
+
 
 
 
            </p>
 
            <p class="fs-lg">
+
+              This article will take you through how to extract structured JSON data from a retail supplier logistics text contract in markdown format.
+           </p>
+
+
+
+           <p class="fs-lg">
+
+            In our previous Agent Bricks article, we <a href="deploying_rag_retail_knowledge_assistant_for_product_sales_support_with_agent_bricks.html" target="_blank">designed and deployed a <code>knowledge assistant</code> (RAG) agent</a> that queried a set of documents with embeddings and then used that information to answer questions with LLMs. used a Genie space as our knowledge source</a>. In this project we're building an agent that processes text contracts into structured information with LLMs that can be operationalized in the data lakehouse.
+
+           </p>
+
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction with Agent Bricks</h2>
+
+
+           <p class="fs-lg">
+Databricks Agent Bricks simplifies enterprise AI deployment by collapsing months of complex system engineering into a governed, lakehouse-native platform. It lets organizations quickly build and manage intelligent assistants directly on their structured and unstructured data, with full governance through Unity Catalog. Running securely within the Databricks Lakehouse, Agent Bricks ensures accurate, compliant, and scalable access to enterprise knowledge—giving business users instant, reliable insights while freeing engineering teams to focus on data quality and workflow integration.
+          </p>
+
+
+           <p class="fs-lg">
+
+            We start out by clicking on the Agent Bricks button on the left side toolbar as shown in the image below.
+
+           </p>
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_toolbar_button.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg">
+
+            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Information Extraction</code> project type, as shown in the image below.
+
+           </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_type_information_extraction.png" alt="Image">
+
+          </div>    
+
+
+
+
+
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How to Think About Information Extraction in Practice</h2>
+
+
+           <p class="fs-lg">
+
+            We're using the <code>Information Extraction</code> project type here because we want to describe the fields we want to extract from the raw text document and provide a specific place in our output json data structure where the data should go.
+
+           </p>
+
+           <p class="fs-lg">
+
+            Let's start with the end in mind, and build up the json data structure we want from any given retail logistics SLA contract. Below you can see a json document that has the 6 types of information we need from each contract along with the two sub-fields for each type.
+
+           </p>
+
+
+
+<!--
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Generative AI and Workflow Automation</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+...
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
 
 ...
-           </p>
-
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Going from Plain Text to Structured Information</h2>
-
-
-           <p class="fs-lg todo_edit">
-
-            In our previous Agent Bricks article, its worth noting how we <a href="retail_decision_intelligence_with_agent_bricks.html" target="_blank">used a Genie space as our knowledge source</a>. In this project we're building an agent similar to that Genie space but this time instead of querying Delta tables this agent is querying a volume of files' contents to find the correct text information.
-
-           </p>
-
-           <p class="fs-lg">
-
-            The data this time is contained in raw text flat files where each file contains a product description, warranty, and usage guidelines per file. An example file contents are shown below.
+                </p>
 
 
 
-           </p>
+              </div>
+            </div>
+-->
+
 
 <pre class="line-numbers mt-5 mb-5">
 <code class="language-json">
@@ -414,12 +503,23 @@ Retrieval Augmented Generation (RAG) is an approach that gives large language mo
 </code>
 </pre>
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
-            The challenge here is that the documents that contain this information from the supplier are in some variation of the following contract document:
+            The trick is, for any of us who have ever had to do manual information extraction from documents, that few vendors will have the exact same word, excel, or text document format or structure, so it makes it a game of "hunt and peck" to find what you need. This is incredibly tedious in practice for a person to do manually and has historically been difficult for NLP-methods or if-then statements to try and automate extraction.
 
            </p>
 
+           <p class="fs-lg">
+
+            Enter LLMs.
+
+           </p>
+
+           <p class="fs-lg">
+
+            The crazy thing about LLMs is that they can do the "hunt and peck"-thing fairly well, especially with some prompt magic, and are much better than people at being consistently good at extracting information from raw text documents. Below you can see an example retail logistics shipping contract that defines SLA terms.
+
+           </p>
 
 
 <pre class="line-numbers mt-5 mb-5">
@@ -576,55 +676,15 @@ Date: ___________________________
 </pre>
 
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction with Agent Bricks</h2>
-
-
-           <p class="fs-lg">
-            The technical advantage of Databricks Agent Bricks lies in how it collapses months of complex AI system engineering into a governed, production-ready platform that runs natively in the lakehouse. Traditionally, standing up an enterprise-grade assistant required stitching together multiple components — vector databases, embedding models, chunking logic, role-based access, and feedback systems — all of which demanded deep MLOps expertise and constant tuning. 
-
-           </p>
-           <p class="fs-lg">
-            Agent Bricks abstracts that complexity, allowing organizations to deploy intelligent assistants directly on their structured and unstructured data within hours, not months, while maintaining full governance through Unity Catalog. This means CTOs and COOs can focus engineering resources on business-aligned data quality and workflow integration rather than infrastructure, gaining secure, scalable, and compliant access to enterprise knowledge — with the same lineage, access controls, and auditability that already govern their lakehouse.
-
-           </p>           
-
-           <p class="fs-lg">
-The Databricks Agent platform gives enterprises a unified way to build and manage AI assistants directly on their governed data. Because it runs within the Databricks Lakehouse, every agent has secure access to accurate, up-to-date information across departments — from sales to operations — without data silos or duplication. Business users can simply ask questions in natural language and get reliable answers backed by enterprise governance, lineage, and audit controls. For management, this means faster insights, more consistent decisions, and an AI platform that scales safely across the organization.
-</p>
-
-
-
            <p class="fs-lg">
 
-            We start out by clicking on the Agent Bricks button on the left side toolbar as shown in the image below.
+            We have 5 of these contracts in this retail logistics demo and each one is slightly different to make it fun and somewhat realistic.
 
            </p>
 
-
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/agentbricks_toolbar_button.png" alt="Image">
-
-          </div>    
-
            <p class="fs-lg">
 
-            From there we'll be presented with a list of Agent Bricks templates for different types of projects. For this project we are going to select the <code>Information Extraction</code> project type, as shown in the image below.
-
-           </p>
-
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 400px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_agent_type_information_extraction.png" alt="Image">
-
-          </div>    
-
-          
-
-          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How to Think About Information Extraction</h2>
-
-
-           <p class="fs-lg todo_edit">
-
-            We're using the <code>Information Extraction</code> project type here because we want to map metadata terms to types of data sources and then allow the agent to select the right data source and then use an embedding to query for the correct document or document fragment in the data source. Once the agent has the relevent text information, it can then inject this text passage into a final prompt to answer the original question asked.
+            In this article we're going to use Agent Brick's <code>Information Extraction</code> agent type to extract the above general text contract form into the consistent json data structure above. 
 
            </p>
 
@@ -632,64 +692,32 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
 
 
 
-
-            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
-              <div class="card-body position-relative z-2 pb-0">
-                <h3 class="h4 card-title text-primary">Generative AI and Workflow Automation</h3>
-
-                <p class="pb-sm3 pb-md-4 mb-2">
-...
-
-
-                </p>
-
-                <p class="pb-sm3 pb-md-4 mb-2">
-
-...
-                </p>
-
-
-
-              </div>
-            </div>
-
-
-
            <p class="fs-lg">
 
-
-
-           </p>
-
-
-          <p class="fs-lg">
-
-            With that in mind, let's get down to building out our <code>Information Extraction</code> agent.
+            We've provided 5 contracts to test this agent with, and you need to upload these markdown documents to a volume named something meaninfuly, similar to the image below.
 
 
           </p>
 
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_catalog_volume_contract_files.png" alt="Image">
 
-           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction Basic Info</h2>
+          </div>    
 
+          
+           <p class="fs-lg ">
 
-           <p class="fs-lg">
+So now let's get going with filling out the core information of the agent configuration.
 
-            LLM-based systems ...
-
-           </p>
-
-           <p class="fs-lg">
-
-            This means that ...
+          </p>
 
 
 
-           </p>
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information Extraction Agent Initial Setup</h2>
 
            <p class="fs-lg">
 
-            In the screenshot below you can see how to name the application (<code>BigCloudDealz_LogisticsSupplierSLA_InformationExtractionAgent_v1</code>).
+            In the screenshot below you can see how to name the application (<code>BigCloudDealz_LogisticsSupplierSLA_ExtractionAgent_v1</code>).
 
 
 
@@ -701,26 +729,31 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
           </div>    
 
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg ">
 
-          You should be verbose here, but you don't need to put all instructions as there are other configuration fields to tell your system how to act and respond to data and context. Let's move on to adding sub-agents that do the actual steps of your workflow.
-
+            For the "source data" here we are going to provide the example contracts that will show the agent examples (that we will later hand validate in an evaluation screen) on how to map the raw text into a structured json output. Click on "Browse text data" area as shown in the image below.
           </p>
 
 
 
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_conf_source_data_unlabeled.png" alt="Image">
+
+          </div>    
 
 
+
+           <p class="fs-lg">
+
+            You should see a modal dialog that is similar to the one shown below in the image, find the volume or subdirectory where you uploaded the example contract markdown documents and select it.
+          </p>
+
+<!--
            <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Training the Information Extraction Agent</h2>
+-->
 
 
-           <p class="fs-lg todo_edit">
-
-            A good mental model of how the <code>knowledge assistant</code> project type in Agent Bricks works is to think of the <code>knowledge assistant</code> as a domain expect that can quickly and semantically search through large amounts of textual information and retrieve only the relevant portions of information. The <code>knowledge assistant</code> then injects this relevant text information into a prompt with the original question and the large language model reasons over it, <b>producing an answer to the original question that is grounded in the correct facts</b>.
-           </p>
-
-
-
+<!--
 
             <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
               <div class="card-body position-relative z-2 pb-0">
@@ -743,33 +776,10 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
 
               </div>
             </div>
-
-
-           <p class="fs-lg">
-
-...
-           </p>
-
-           <p class="fs-lg">
-
-            Upload contracts to volume
-
-
-          </p>
-
-          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_catalog_volume_contract_files.png" alt="Image">
-
-          </div>    
+-->
 
 
 
-
-           <p class="fs-lg">
-
-            select the volume in the 
-
-           </p>
 
 
           <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 500px;">
@@ -778,17 +788,13 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
           </div>    
 
 
+           <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Entering the JSON Data Structure</h2>
 
 
-           <p class="fs-lg">
-
-            Select the parent directory of the files, and now we have our first knowledge source configured and ready to go.
-
-           </p>
 
            <p class="fs-lg">
 
-            Now we need to show the agent a template of how we want the extracted data to look when it comes back to us for a given input contract text document. In the image below you can see the JSON structure from earlier in this article in the configuration area for the "Sample JSON Output".
+            Now we need to show the agent a template of how we want the extracted data to look when it comes back to us for a given input contract text document. In the image below you can see the JSON structure from earlier in this article in the configuration area for the "Sample JSON Output". In your own agent, copy and paste the json above into your json text area as well (Don't worry if the values in the json don't exacly match the 5 documents, they are just examples of valid values for the LLM to learn from).
 
 
            </p>
@@ -812,10 +818,16 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
 
            </p>
 
+           <p class="fs-lg">
+
+            Click on <code>Create Agent</code> at the bottom right of the screen and we now have our agent.
+
+           </p>
+
 
            <p class="fs-lg">
 
-              Now that we have a handy retail product sales assistant, let's run some tests and see how it does.
+              Now that we a testable logistics contract information extraction agent, let's see how it does against our 5 contracts.
            </p>           
 
            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Testing the Information Extraction Configuration</h2>
@@ -843,8 +855,13 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
 
           </div>    
 
+           <p class="fs-lg">
 
-           <p class="fs-lg todo_edit">
+            This allows us to hand validate that the agent is indeed extracting the correct information regardless of the structure of the text contract. We can give the system feedback per document and per field by updating incorrect extracting fields and having the system re-run the extraction.
+
+           </p>
+
+           <p class="fs-lg ">
 
             We also have the option of editing the per-extracted-field intructions in the configuration panel on the right side, as seen in the image below.
            </p>
@@ -856,41 +873,207 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
           </div>    
 
 
+           <p class="fs-lg ">
 
-
-
-
-
-           <p class="fs-lg todo_edit">
-
-            Looks interesting --- so now let's check out the final answer, as shown below.
-
+            This gives us the ability to "hand train" the agent in a natural and relatable way. We can just say "hey, you got this one document wrong, but let's tweak things a little and then try again". This is more of a natural learning mindset towards "agent training" than what we did back in the traditional machine learning days.
            </p>
 
 
 
 
 
+           <p class="fs-lg ">
+
+            Ok, once you have your agent working just the way you want it, let's put it in the water and try out different wants we can do information extraction in automation workflows on our Databricks lakehouse platform.
+
+           </p>
 
 
-           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Free Text Contracts Become Part of the Data Warehouse</h2>
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Testing Our New Deployed Contract Information Extraction Model Endpoint</h2>
 
 
-           <p class="fs-lg todo_edit">
+           <p class="fs-lg">
 
-            In this article we showed you how to build a ...
+            To close this article out, we're going to work through 3 ways that this information extraction agent can be used on the Databricks lakehouse platform.
+
+          </p>
+
+          <ol>
+
+            <li>Using the deployed model from the Playground UX</li>
+            <li>Using the deployed model from the Python API</li>
+            <li>Using the deployed model from SQL </li>
+
+
+
+          </ol>
+
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Using the REST API Endpoint from the Playground UX</h2>
+
+           <p class="fs-lg">
+
+            The absolute quickest and easist way to try out your new information extraction deployed model is to click on the <code>Use</code> button in the top right hand corner of the model page. This will give you the modal dialog as seen below.
+
+          </p>
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 600px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_use_your_agent_modal.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg">
+
+            From there select "open in playground" under the "Test your agent" box. This will give you the model playground interface as shown in the image below.
+          </p>
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_endpoint_api_test_ux.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg ">
+
+            The super easy thing now is all that you have to do to test this model is to <code>copy</code> and <code>paste</code> the contents of one of the contracts into the text bar at the bottom and hit enter. The model will then analyze the document and return back the json generated to you in the chat playground interface for you to evaluate, as shown in the image below.
+
+          </p>
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_endpoint_api_test_results.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg ">
+
+            Naturally once you are confident the model is working correctly your next question may be "so how do I wire this into a python application?". For that, read on into the next section.
+
+          </p>
+
+
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Using the REST API Endpoint from Python</h2>
+
+           <p class="fs-lg ">
+
+            To quickly get the code you'll need to call this deployed model from your own python application remotely, click on the <code>Get code</code> button at the top of the Model Playground screen and select <code>Python API</code>, as shown in the image below.
+
+          </p>
+
+
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_get_code_python_api.png" alt="Image">
+
+          </div>   
+
+
+           <p class="fs-lg ">
+
+            The generated code will be similar to the example code the example below.
+
+          </p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="language-python">
+
+from openai import OpenAI
+import os
+
+# How to get your Databricks token: https://docs.databricks.com/en/dev-tools/auth/pat.html
+DATABRICKS_TOKEN = os.environ.get('DATABRICKS_TOKEN')
+# Alternatively in a Databricks notebook you can use this:
+# DATABRICKS_TOKEN = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
+
+client = OpenAI(
+    api_key=DATABRICKS_TOKEN,
+    base_url="https://dbc-aaaaa111-b111.cloud.databricks.com/serving-endpoints"
+)
+
+response = client.chat.completions.create(
+    model="kie-1a1a1a1a-endpoint",
+    messages=[
+        {
+            "role": "user",
+            "content": "[ document content here ]"
+        }
+    ]
+)
+
+print(response.choices[0].message.content)
+</code>
+</pre>
+
+           <p class="fs-lg ">
+
+            Of course you'd need to put your document raw text in the <code>content</code> field above, replacing "[ document content here ]". Now let's move on to how we can scan a Delta table full of raw text documents and extract the information into json all from SQL.
+
+          </p>
+
+          <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Using the API Endpoint from SQL</h2>
+
+           <p class="fs-lg ">
+
+            If you go back to the "Use your agent" dialog above, there is another option called "extract data for all documents". If you click on that, you'll see the SQL Editor come up with a pre-generated SQL query similar to the one you see in the image below.
+
+          </p>
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_endpoint_sql_test_query.png" alt="Image">
+
+          </div>    
+
+
+           <p class="fs-lg ">
+
+            If you hit the run button, the SQL statement should execute and run "out of the box" on the 5 configuration contract documents in your Unity Catalog volume. The results should look similar to what you see in the image below.
+
+          </p>
+
+
+
+          <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+            <img class="d-block img-thumbnail rounded-0" src="../assets/img/dbx_ab_info_extract_endpoint_sql_test_results.png" alt="Image">
+
+          </div>    
+
+           <p class="fs-lg ">
+
+            At this point you should have a decent grasp on how to get going with structured information extraction for most any type of basic contract. There will be variations to tune for, and more tweaks to do in complex situations, but this article gives you the foundations to go for more down the road.
+
+          </p>
+
+
+
+
+           <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Text Documents Become Part of the Data Lakehouse</h2>
+
+
+           <p class="fs-lg ">
+
+            In this article we showed you how to build a foundational information extraction Agent Bricks agent that can pull structured json data from raw text markdown contracts.
 
           </p>
 
           <p class="fs-lg">
 
-            This enhances the Big Cloud Dealz ...
+            This technique enhances the Big Cloud Dealz logistics team's ability to quickly integrate SLA information into their AI/BI dashboards, and also improving the ability of their Decision Intelligence systems to analyze KPIs against SLAs to better direct next actions with the management team.
 
           </p>
 
-          <p class="fs-lg todo_edit">
+          <p class="fs-lg">
 
-            This is another building block of the <b>workflow automation</b> system that Big Cloud Dealz is putting together, as we'll see in future Agent Bricks posts in this series.
+            This is another way Big Cloud Dealz is using Databricks and Generative AI <b>workflow automation</b> to become the next generation retailer of choice.
 
           </p>
 
@@ -1019,6 +1202,8 @@ The Databricks Agent platform gives enterprises a unified way to build and manag
       <i class="ai-arrow-up"></i>
     </a>
 
+
+  <script src="../assets/js/prism.js"></script>
 
     <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
     <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>

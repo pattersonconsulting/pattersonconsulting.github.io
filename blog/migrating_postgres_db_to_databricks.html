@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Migrating PostgreSQL Databases to the Databricks Platform</title>
+    <meta name="description" content="...">
+    <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Josh Patterson">
+
+
+    <meta property="og:title" content="Migrating PostgreSQL Databases to the Databricks Platform"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_postgres_migration_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="In this article we ..."/>
+
+
+    <meta name="twitter:title" content="Migrating PostgreSQL Databases to the Databricks Platform" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_postgres_migration_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_retail_product_delta_table_with_databricks_unity_catalog.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Migrating PostgreSQL Databases to the Databricks Data Intelligence Platform</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Migrating PostgreSQL Databases to the Databricks Data Intelligence Platform</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Nikhil Karnik
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_postgres_migration_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 500px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+<p class="fs-lg">
+[ todo: cold open intro ]
+</p>
+
+
+
+
+
+<!--
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Migrating PostgreSQL to the Databricks Data Intelligence Platform</h2>
+-->
+<p class="fs-lg">
+Migrating from a traditional <code>PostgreSQL</code> database to the <code>Databricks Data Intelligence Platform</code> is a critical step towards designing a modern, AI-ready data architecture. The goal is to move from legacy ETL scripts to an automated, governed lakehouse, typically using <code>Lakeflow</code> declarative pipelines and <code>Unity Catalog</code>.
+</p>
+
+<p class="fs-lg">
+However, the “best” ingestion method for <code>PostgreSQL</code> data depends on your specific needs (one-time vs. ongoing sync) and which tools are available in your <code>Databricks</code> workspace. This guide provides a blueprint, breaking down the migration into four phases and detailing the different execution paths you can take.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Four-Phase Migration Blueprint</h2>
+
+<p class="fs-lg">
+A smooth <code>PostgreSQL</code>-to-<code>Databricks</code> migration follows four well-defined phases:
+</p>
+
+<ul>
+  <li>Discovery &amp; Planning: Catalog your source and design your target.</li>
+  <li>Execution (Data &amp; Logic Migration): Choose the right ingestion method and transform the data.</li>
+  <li>Operationalization &amp; Governance: Automate, monitor, and secure your new pipelines.</li>
+  <li>Validation &amp; Decommissioning: Verify parity, cut over, and deprecate the legacy system.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Phase 1: Discovery &amp; Planning</h2>
+
+<p class="fs-lg">
+Before any data is transferred, you must map your existing <code>PostgreSQL</code> assets and design your target lakehouse structure.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1.1: Catalog and Analyze Your PostgreSQL Environment</h2>
+
+<p class="fs-lg">
+First, export your database schema to understand all tables, views, and functions.
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">pg_dump -h &lt;host&gt; -U &lt;user&gt; -d &lt;database&gt; --schema-only &gt; postgres_schema.sql
+</code>
+</pre>
+
+<p class="fs-lg">
+This DDL file is your map. Analyze it to identify data types that need translation, dependencies between tables, and any procedural logic (like functions or triggers) that will need to be re-implemented in <code>Databricks</code>.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 1.2: Design Your Target Lakehouse Schema</h2>
+
+<p class="fs-lg">
+Define your <code>Databricks Medallion Architecture</code>. This standard pattern ensures data quality and isolation:
+</p>
+
+<ul>
+  <li><strong>Bronze:</strong> Raw data from <code>PostgreSQL</code>, mirroring the source as closely as possible.</li>
+  <li><strong>Silver:</strong> Cleaned, validated, and conformed data (e.g., standardized date formats, joined tables).</li>
+  <li><strong>Gold:</strong> Business-level aggregates ready for BI, reporting, or ML.</li>
+</ul>
+
+<p class="fs-lg">
+Plan how your <code>PostgreSQL</code> schemas will map into <code>Unity Catalog</code> namespaces (<code>catalog.schema.table</code>).
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Phase 2: Execution — Ingesting and Transforming Data</h2>
+
+<p class="fs-lg">
+This is the most critical phase, where you choose how to move the data. The right choice depends on your requirements.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2.1: Decision Checklist — Choose Your Ingestion Path</h2>
+
+<p class="fs-lg">
+First, answer these key questions:
+</p>
+
+<ul>
+  <li><strong>Latency Requirement:</strong> Do you need a one-time bulk migration (e.g., for a proof-of-concept), or do you need continuous, near-real-time synchronization (<code>Change Data Capture</code>, or <code>CDC</code>)?</li>
+  <li><strong>Connector Availability:</strong> Is the native “<code>Postgres</code>” connector visible in your <code>Databricks</code> UI under <code>Data Engineering → Data Ingestion</code>?</li>
+  <li><strong>Note (October 2025):</strong> The managed <code>Lakeflow</code> connector for <code>PostgreSQL</code> is in preview/on the roadmap and may not be generally available (GA) in all workspaces or regions. <code>Databricks</code> recommends starting with the most managed layer (like <code>Lakeflow Connect</code>) and dropping down to DIY methods only as needed.</li>
+</ul>
+
+<p class="fs-lg">
+Based on your answers, follow the appropriate scenario below.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Scenario A: One-Time / Bulk Migration (No CDC Needed)</h2>
+
+<p class="fs-lg">
+<strong>Recommended Method:</strong> Export to Cloud Storage + <code>Auto Loader</code>. This is the fastest and simplest method for one-time loads.
+</p>
+
+<ul>
+  <li><strong>Export:</strong> Use <code>pg_dump</code> or <code>COPY</code> to export your <code>PostgreSQL</code> tables to a staging area in your cloud storage (<code>S3</code>, <code>ADLS Gen2</code>, or <code>GCS</code>) in an open format like <code>CSV</code> or <code>Parquet</code>.</li>
+  <li><strong>Ingest:</strong> Use a <code>Lakeflow</code> declarative pipeline with <code>Auto Loader</code>. <code>Auto Loader</code> incrementally and efficiently processes new files as they land in cloud storage and loads them into your Bronze <code>Unity Catalog</code> tables.</li>
+</ul>
+
+<p class="fs-lg">
+<strong>Alternative Method:</strong> <code>Spark JDBC Connector</code>. You can also read directly from <code>PostgreSQL</code> using the classic Spark JDBC driver in a notebook or pipeline. This gives you fine-grained control but requires you to manually manage parallelism (e.g., <code>numPartitions</code>, <code>partitionColumn</code>), predicates, and connection details.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Scenario B: Ongoing Sync / Change Data Capture (CDC)</h2>
+
+<p class="fs-lg">
+<strong>Option 1 (Most Managed):</strong> <code>Lakeflow Connect</code> (Native Connector). If the <code>PostgreSQL</code> connector is available in your workspace’s “Data Ingestion” UI, this is the simplest path.
+</p>
+
+<ul>
+  <li>In the <code>Databricks</code> sidebar, go to <code>Data Engineering → Data Ingestion → Add Data</code>.</li>
+  <li>Search for and select “<code>Postgres</code>” (or “<code>Postgres RDS</code>,” “<code>Azure PostgreSQL</code>,” etc.).</li>
+  <li>Enter your host, port (<code>5432</code>), database, username, and password.</li>
+  <li>Choose your destination <code>Unity Catalog</code> and schema (e.g., <code>main.bronze</code>).</li>
+  <li>Save the connection.</li>
+  <li><code>Databricks</code> will create a managed ingestion pipeline (powered by <code>Lakeflow Connect</code>) that handles both the initial historical load and ongoing <code>CDC</code> for continuous freshness.</li>
+</ul>
+
+<p class="fs-lg">
+<strong>Option 2 (Partner Tools):</strong> Managed CDC. Use a third-party CDC tool (like <code>Fivetran</code>, <code>Hevo</code>, <code>Estuary</code>, or <code>Streamkap</code>) to manage the capture and delivery process.
+</p>
+
+<ul>
+  <li>Configure the partner tool to read from <code>PostgreSQL</code>.</li>
+  <li>Set the tool’s destination to your cloud storage (<code>S3</code>/<code>ADLS</code>/<code>GCS</code>).</li>
+  <li>Use <code>Auto Loader</code> and a <code>Lakeflow</code> streaming table (as in Scenario A) to ingest the change data files as they land.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 2.2: Define a Lakeflow Declarative Transformation Pipeline (Silver/Gold)</h2>
+
+<p class="fs-lg">
+Regardless of how you ingested your data into the <code>main.bronze</code> schema (<code>Auto Loader</code>, <code>Lakeflow Connect</code>, or <code>Debezium</code>), the next step is to transform it using <code>Lakeflow</code>.
+</p>
+
+<p class="fs-lg">
+Create a declarative SQL pipeline using <code>Streaming Live Tables</code> to automatically process data from Bronze to Silver (cleaned) and Gold (aggregated).
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">-- Example Lakeflow pipeline
+-- This Bronze table is the target from your ingestion step (Auto Loader, etc.)
+CREATE OR REFRESH STREAMING LIVE TABLE orders_bronze
+COMMENT "Raw orders from PostgreSQL, populated by ingestion pipeline"
+AS SELECT * FROM main.bronze.orders;
+
+CREATE OR REFRESH STREAMING LIVE TABLE orders_silver
+  (CONSTRAINT valid_order_id EXPECT (order_id IS NOT NULL) ON VIOLATION DROP ROW)
+COMMENT "Cleaned orders data with enforced data quality"
+AS
+SELECT
+  CAST(order_id AS BIGINT) AS order_id,
+  CAST(order_date AS TIMESTAMP) AS order_date,
+  CAST(customer_id AS STRING) AS customer_id,
+  CAST(amount AS DECIMAL(10,2)) AS amount
+FROM STREAM(LIVE.orders_bronze);
+
+CREATE OR REFRESH LIVE TABLE daily_sales_summary_gold
+COMMENT "Daily aggregated sales totals"
+AS
+SELECT
+  DATE_TRUNC('day', order_date) AS sales_date,
+  SUM(amount) AS total_sales
+FROM LIVE.orders_silver
+GROUP BY sales_date;
+</code>
+</pre>
+
+<p class="fs-lg">
+<code>Lakeflow</code> automatically manages the dependency graph (DAG), data freshness, retries, and compute scaling for this entire flow.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Phase 3: Operationalization &amp; Governance</h2>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3.1: Automate with Databricks Workflows</h2>
+
+<p class="fs-lg">
+In the <code>Lakeflow</code> pipeline UI, click <code>Schedule</code> to create a <code>Databricks Workflows</code> Job. You can run it on a fixed cadence (e.g., hourly) or continuously (for real-time <code>CDC</code>). We recommend using Photon-enabled clusters for the best performance and autoscaling to optimize costs.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3.2: Govern Data with Unity Catalog</h2>
+
+<p class="fs-lg">
+Because your pipelines read from and write to <code>Unity Catalog</code>, governance is centralized and automatic.
+</p>
+
+<p class="fs-lg">
+<strong>Security:</strong> Grant access to your new Gold tables using standard SQL:
+</p>
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-sql">GRANT SELECT ON TABLE main.gold.daily_sales_summary_gold TO bi_readers;
+</code>
+</pre>
+
+<p class="fs-lg">
+<strong>Lineage:</strong> <code>Unity Catalog</code> automatically captures and visualizes column-level lineage, showing you exactly how data flows from your Bronze tables to your Gold BI tables.
+</p>
+
+<p class="fs-lg">
+<strong>Auditing:</strong> All access is centrally audited for compliance.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Phase 4: Validation &amp; Decommissioning</h2>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4.1: Query Migration &amp; Parallel Validation</h2>
+
+<p class="fs-lg">
+<strong>Translate &amp; Re-point:</strong> Migrate all existing BI dashboard queries, application queries, and ad-hoc reports from <code>PostgreSQL</code> syntax (e.g., <code>NOW()</code>) to <code>Databricks</code> Spark SQL (e.g., <code>current_timestamp()</code>).
+</p>
+
+<p class="fs-lg">
+<strong>Run Parallel Tests:</strong> Run the newly migrated queries against your <code>Databricks</code> Gold tables.
+</p>
+
+<p class="fs-lg">
+<strong>Verify Parity:</strong> Simultaneously, run the original queries against the legacy <code>PostgreSQL</code> database. Verify that key business metrics and numeric totals are identical to ensure 100% data parity.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4.2: Cutover &amp; Deprecation</h2>
+
+<ul>
+  <li><strong>Update Connections:</strong> Update all BI tools (<code>Tableau</code>, <code>Power BI</code>) and applications to point to your new <code>Databricks SQL Warehouse</code> endpoint.</li>
+  <li><strong>Migrate Jobs:</strong> Port any external scheduled jobs (e.g., in <code>Airflow</code> or <code>cron</code>) to query <code>Databricks</code> instead of <code>PostgreSQL</code>.</li>
+  <li><strong>Deprecate:</strong> Remove all production read dependencies from the <code>PostgreSQL</code> database.</li>
+</ul>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 4.3: Decommission PostgreSQL</h2>
+
+<ul>
+  <li>Disable writes to <code>PostgreSQL</code>.</li>
+  <li>Archive final backups for long-term retention.</li>
+  <li>Decommission the <code>PostgreSQL</code> infrastructure and reallocate resources.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion</h2>
+
+<p class="fs-lg">
+Migrating from <code>PostgreSQL</code> to <code>Databricks</code> involves a strategic choice of ingestion tools. By following these four structured phases, you can confidently select the right path for your needs.
+</p>
+
+<p class="fs-lg">
+Whether you use a simple bulk export with <code>Auto Loader</code> or implement a real-time <code>CDC</code> stream with <code>Debezium</code> or <code>Lakeflow Connect</code>, the end goal is the same: a modern data architecture. By pairing your chosen ingestion method with <code>Lakeflow</code> declarative pipelines and <code>Unity Catalog</code>, you transform your data stack from procedural ETL to a governed, automated, and AI-ready lakehouse.
+</p>
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/data_platform_migration_nov_2024.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Connecting to Your Claims Data Model from Azure PowerBI</h4>
+                          <p class="card-text">Quickly using your claims data models in a Power BI dashboard with the Cube connector.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="javascript:alert('coming soon');">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>
+

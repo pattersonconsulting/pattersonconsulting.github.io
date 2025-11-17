@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Driving Retail Information Architecture with the Databricks Medallion Architecture</title>
+    <meta name="description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth.">
+    <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Nikhil Karnik and Josh Patterson">
+
+
+    <meta property="og:title" content="Driving Retail Information Architecture with the Databricks Medallion Architecture"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth."/>
+
+
+    <meta name="twitter:title" content="Driving Retail Information Architecture with the Databricks Medallion Architecture" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/app-icons/pct_box_logo_32x32.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <link href="../assets/css/prism.css" rel="stylesheet" />
+
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Driving Retail Information Architecture with the Databricks Medallion Architecture</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Accessing Unity Catalog Resources from Databricks Framework Agents</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Nikhil Karnik and Josh Patterson
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/databricks_medallion_architecture_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 500px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+<p class="fs-lg">
+A Databricks agent <em>never</em> just “sprays SQL at Unity Catalog.” It reaches Unity Catalog tables and metric views through <strong>tools</strong> that are implemented as <strong>Unity Catalog functions whose bodies run SQL</strong> (plus, optionally, Genie for free-form SQL). Here’s how that actually works end-to-end.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. The pattern: SQL lives inside Unity Catalog functions, not in the prompt</h2>
+
+<p class="fs-lg">
+The structured-retrieval docs call out two main ways to let an agent query structured data:
+</p>
+
+<ol class="fs-lg">
+<li><strong>Unity Catalog SQL functions as tools</strong><br>
+You define a SQL (or Python) function in Unity Catalog. The function body contains the <code>SELECT</code> against your <strong>tables</strong> or <strong>metric views</strong>. The function’s signature and docstring/COMMENT become the <strong>tool description</strong> the LLM sees. The agent fills in the parameters; Databricks runs the function on serverless compute.</li>
+
+<li><strong>Genie multi-agent systems (SQL generation)</strong><br>
+You add a Genie agent that’s allowed to see certain catalogs/schemas. Genie reasons in natural language and auto-generates SQL over those tables/metric views.</li>
+</ol>
+
+<p class="fs-lg">
+In both cases, the LLM is <em>choosing and parameterizing tools</em>, not writing raw SQL inline.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. Accessing Unity Catalog tables via SQL functions</h2>
+
+<h3 class="h3 pt-4">Step 1: Create a UC function whose body runs SQL</h3>
+
+<p class="fs-lg">
+From the docs example, you create a function that selects from a UC table:
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-sql">
+CREATE OR REPLACE FUNCTION main.default.lookup_customer_info(
+  customer_name STRING COMMENT 'Name of the customer whose info to look up'
+)
+RETURNS STRING
+COMMENT 'Returns metadata about a particular customer, including email and ID.'
+RETURN SELECT CONCAT(
+    'Customer ID: ', customer_id, ', ',
+    'Customer Email: ', customer_email
+  )
+  FROM main.default.customer_data
+  WHERE customer_name = customer_name
+  LIMIT 1;
+</code></pre>
+
+<p class="fs-lg">
+Key points:
+</p>
+
+<ul class="fs-lg">
+<li>The <strong>SQL body</strong> (<code>SELECT ... FROM main.default.customer_data</code>) is what actually hits the <strong>Unity Catalog table</strong>.</li>
+<li>The function is <strong>fully qualified</strong> in UC (<code>main.default.lookup_customer_info</code>), so governance, lineage, permissions, etc. all apply.</li>
+<li>SQL here can aggregate, join, or shape results specifically for the LLM.</li>
+</ul>
+
+<h3 class="h3 pt-4">Step 2: Wrap the UC function as an agent tool</h3>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+from unitycatalog.ai.core.databricks import DatabricksFunctionClient
+from databricks_langchain import UCFunctionToolkit
+
+client = DatabricksFunctionClient()
+
+CATALOG = "main"
+SCHEMA = "default"
+
+# (Assume lookup_customer_info already created via SQL or Python)
+
+func_name = f"{CATALOG}.{SCHEMA}.lookup_customer_info"
+toolkit = UCFunctionToolkit(function_names=[func_name])
+
+tools = toolkit.tools  # these are the tools the LLM sees
+</code></pre>
+
+<p class="fs-lg">
+UCFunctionToolkit:
+</p>
+
+<ul class="fs-lg">
+<li>Reads the function metadata & comments.</li>
+<li>Builds a <strong>tool schema</strong> that matches tool-calling LLM expectations.</li>
+<li>Adds optional tracing and instrumentation.</li>
+</ul>
+
+<h3 class="h3 pt-4">Step 3: Plug tools into your agent</h3>
+
+<p class="fs-lg">
+Then you pass <code>tools</code> into your agent framework (LangChain, MLflow ResponsesAgent, OpenAI/Anthropic tool-calling, etc.).
+</p>
+
+<p class="fs-lg">
+At runtime:
+</p>
+
+<ol class="fs-lg">
+<li>User: <em>"What is the email for customer Jane Doe?"</em></li>
+<li>LLM sees tool <code>lookup_customer_info(customer_name: string)</code>.</li>
+<li>LLM emits a tool call:
+<pre><code>{
+  "tool": "lookup_customer_info",
+  "arguments": {"customer_name": "Jane Doe"}
+}
+</code></pre></li>
+<li>Databricks executes the UC function server-side.</li>
+<li>Function runs SQL and returns a value.</li>
+<li>LLM responds using the result.</li>
+</ol>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">3. Accessing Unity Catalog metric views via SQL</h2>
+
+<p class="fs-lg">
+Metric views are first-class SQL objects that define reusable metrics on top of tables. They’re queried with SQL, but <strong>measures must be referenced via <code>MEASURE()</code></strong> and <strong><code>SELECT *</code> is not allowed</strong>.
+</p>
+
+<p class="fs-lg">
+Example UC function that queries a metric view:
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-sql">
+CREATE OR REPLACE FUNCTION retail_analytics.tools.get_otif_for_supplier(
+  supplier_id STRING COMMENT 'The supplier to analyze',
+  start_date  DATE   COMMENT 'Start date (inclusive)',
+  end_date    DATE   COMMENT 'End date (inclusive)'
+)
+RETURNS STRING
+COMMENT 'Returns daily OTIF percentages for a supplier over a date range, as CSV.'
+RETURN
+  SELECT to_csv(named_struct(
+           'order_date', order_date,
+           'otif_rate',  MEASURE(otif_rate)
+         ))
+  FROM retail_analytics.gold.mv_otif
+  WHERE supplier_id = supplier_id
+    AND order_date BETWEEN start_date AND end_date;
+</code></pre>
+
+<p class="fs-lg">
+This enables questions like:
+<em>"What was OTIF for Supplier X last quarter?"</em>
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">4. Governance & execution path (why this matters)</h2>
+
+<p class="fs-lg">
+Because these tools are UC functions:
+</p>
+
+<ul class="fs-lg">
+<li><strong>Unity Catalog permissions and data policies apply</strong> automatically.</li>
+<li>Execution runs on <strong>Databricks serverless compute</strong>.</li>
+<li>The LLM sees only <strong>function inputs and outputs</strong>, limiting data-leak risk.</li>
+<li>Auditing & lineage track data usage.</li>
+</ul>
+
+<p class="fs-lg">
+For metric views you also inherit:
+</p>
+
+<ul class="fs-lg">
+<li>Consistent KPI definitions across BI, SQL, and AI.</li>
+<li>Centralized YAML metric logic.</li>
+<li>No need to modify agent code when metric logic changes.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">5. Where Genie fits</h2>
+
+<p class="fs-lg">
+If you don’t want to predefine every function, you can use <strong>Genie multi-agent systems</strong>:
+</p>
+
+<ul class="fs-lg">
+<li>Grant Genie access to catalogs/schemas.</li>
+<li>Genie inspects schema metadata.</li>
+<li>Generates SQL and retrieves results.</li>
+</ul>
+
+<p class="fs-lg">
+So:
+<br><strong>UC functions as tools</strong> → curated, governed workflows
+<br><strong>Genie</strong> → ad-hoc flexible SQL reasoning
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Quick mental model</h2>
+
+<p class="fs-lg">
+<strong>Databricks agent → UC function tools → SQL → Unity Catalog tables/metric views</strong>
+</p>
+
+<p class="fs-lg">
+You put the SQL into Unity Catalog functions. You wrap those functions as tools. The agent calls tools, not raw SQL. The SQL runs against governed Unity Catalog data.
+</p>
+
+<p class="fs-lg">
+If you want, I can next sketch a concrete Python <code>ResponsesAgent</code> example that wires in a couple of UC functions—one against a fact table, one against a metric view—so you’ve got a ready pattern for your retail OTIF/stockout stack.
+</p>
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
+                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+
+  <script src="../assets/js/prism.js"></script>
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>
+

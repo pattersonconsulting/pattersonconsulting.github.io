@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <title>Using Tools with Databricks Framework Agents</title>
+    <meta name="description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth.">
+    <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
+    <meta name="author" content="Nikhil Karnik and Josh Patterson">
+
+
+    <meta property="og:title" content="Using Tools with Databricks Framework Agents"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth."/>
+
+
+    <meta name="twitter:title" content="Using Tools with Databricks Framework Agents" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/app-icons/pct_box_logo_32x32.png">
+        
+    
+    <script src="../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/vendor/aos/dist/aos.css">
+
+    <link rel="stylesheet" href="../assets/icons/around-icons.min.css">
+
+    <link rel="stylesheet" media="screen" href="../assets/css/theme.pct.v2.css">
+
+    <link href="../assets/css/prism.css" rel="stylesheet" />
+
+
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit { 
+        color: #ff0000;
+       }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+          
+
+        }
+      })()
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    </head>
+
+
+  <body>
+
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    
+                    <li><a class="dropdown-item" href="../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../municipal_industry.html">Smart City</a></li>
+
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../generative_ai.html">GenAI Services</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <nav aria-label="breadcrumb">
+          
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Building ResponsesAgent-Based LLM Agents on MLflow</li>
+          </ol>
+          
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Building ResponsesAgent-Based LLM Agents on MLflow</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Engineering Team
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+
+            </div>
+
+      </section>
+
+
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/mlflow_responseagent_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 800px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+<p class="fs-lg">
+  Large language models (LLMs) are rapidly evolving from single-prompt utilities into full <em>agentic systems</em> capable of using tools, retrieving structured information, managing memory, and performing multi-step reasoning. But building these agents at an enterprise level remains difficult. To address this challenge, organizations are increasingly turning to <code>MLflow</code> as the runtime for production-grade generative systems. 
+</p>
+
+<p class="fs-lg">
+  In this guide, we’ll walk through why MLflow is becoming the enterprise standard for agentic workloads, how <code>ResponsesAgent</code> offers a clean and typed development interface, why packaging agents as MLflow models unlocks significant governance and deployment benefits, and finally how to log and deploy a simple agent on Databricks.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Build Agents in the First Place?</h2>
+<p class="fs-lg">
+  The objective of agentic systems is not simply to be “agentic”—the real goal is accelerating the transformation of information into decisions. Organizations improve through only three mechanisms: automating work, improving information flow, and improving decision-making. Agents live directly next to enterprise data, enhancing both information flow and decision quality.
+</p>
+
+<p class="fs-lg">
+  When agents run inside a governed platform like <code>Unity Catalog</code>, their access to data, tools, and execution context becomes safer and more reliable. This is where MLflow becomes essential: it provides consistent packaging, lineage, permissions, and deployment guarantees that enterprises require before allowing agents to operate on sensitive data.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Building Agents Is Hard</h2>
+<p class="fs-lg">
+  Building production agents introduces challenges across three dimensions: quality, control, and cost. First, high quality is difficult to enforce—LLMs can hallucinate, drift in behavior, or generate inconsistent structured outputs. Many enterprise workflows require domain experts to validate and shape behavior, meaning evaluation must go beyond prompt engineering.
+</p>
+
+<p class="fs-lg">
+  Second, enterprises cannot operate agents without strong governance. Without proper guardrails, agents risk leaking sensitive data, violating compliance rules, or producing opaque reasoning paths. Compliance frameworks like HIPAA and SOC2 require traceability, permissions, and visibility into reasoning steps, tool calls, and lineage. Finally, cost management is unavoidable: high-performing models are expensive, tool calls add latency, and the lack of centralized monitoring can lead to runaway spend. MLflow directly addresses these issues with standardized packaging, tracing, evaluation, and deployment infrastructure.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why MLflow Is the Right Abstraction for Agents</h2>
+<p class="fs-lg">
+  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
+</p>
+
+<p class="fs-lg">
+  This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Introducing ResponsesAgent</h2>
+<p class="fs-lg">
+  <code>ResponsesAgent</code> is MLflow’s purpose-built model interface for building generative and tool-using agents. It standardizes conversational output, tool-calling semantics, long-running tool operations, streaming, tracing, and automatic model signature inference. It also guarantees compatibility with Databricks AI Playground and AI Gateway telemetry.
+</p>
+
+<p class="fs-lg">
+  With ResponsesAgent, developers write clean Python classes that encapsulate agent behavior while MLflow handles packaging, reproducibility, deployment, and governance. This creates a powerful separation of concerns: developers focus on agent logic while MLflow ensures safe, consistent, and scalable operation.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Simple ResponsesAgent</h2>
+<p class="fs-lg">
+  Below is a minimal example of an agent that uses tool-calling to perform math operations. This example demonstrates the core structure of a <code>ResponsesAgent</code> and how MLflow manages typing and signatures.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+from mlflow import MlflowClient
+from mlflow.agents import ResponsesAgent
+from openai import OpenAI
+
+client = OpenAI()   # or DatabricksOpenAI()
+
+class MathAgent(ResponsesAgent):
+
+    def __init__(self):
+        super().__init__()
+
+    def predict(self, messages, tools):
+        """
+        Basic agent with tool-calling.
+        """
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            tools=tools,
+            tool_choice="auto"
+        )
+        return response
+</code></pre>
+
+<p class="fs-lg">
+  MLflow automatically infers the typed signature: messages → messages. No manual schema definition is required.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3: Log the Agent with MLflow</h2>
+<p class="fs-lg">
+  Logging the agent converts your in-memory Python object into a fully packaged, versioned, reproducible MLflow model. This is critical—MLflow captures source code, dependencies, tools, and signatures, ensuring the agent can be reloaded and reproduced across machines, workspaces, and future releases.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+import mlflow
+
+with mlflow.start_run():
+    mlflow.agents.log_model(
+        agent=MathAgent(),
+        artifact_path="math_agent",
+        registered_model_name="main.ai.tools.math_agent"
+    )
+</code></pre>
+
+<p class="fs-lg">
+  Once logged, the agent becomes a governed MLflow model that can be registered in Unity Catalog, promoted through staging/production, evaluated, and deployed to Mosaic AI Model Serving. Logging gives MLflow something concrete to govern, lineage-track, and deploy.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Running Agents on MLflow Is a Competitive Advantage</h2>
+<p class="fs-lg">
+  Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
+</p>
+
+<p class="fs-lg">
+  Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion</h2>
+<p class="fs-lg">
+  LLMs alone do not deliver enterprise impact. Agents—governed, tool-using, multi-step reasoning systems—are what convert enterprise information into decisions. MLflow provides the standardized runtime these systems need: a normalized agent interface, full model lifecycle governance, automated evaluation, serverless deployment, and consistent interoperability across teams.
+</p>
+
+<p class="fs-lg">
+  By building agents with <code>ResponsesAgent</code> and registering them in MLflow, organizations gain the reliability, structure, safety, and scalability required for real production workloads. Agents are quickly becoming core business infrastructure—and MLflow is the platform that makes them dependable.
+</p>
+
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
+                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          
+                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+   
+
+
+
+
+    </main>
+
+    
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>    
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>    
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+
+  <script src="../assets/js/prism.js"></script>
+
+    <script src="../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    
+
+
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
+
+
+    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="../assets/vendor/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+
+
+    <script src="../assets/js/theme.min.js"></script>
+  </body>
+</html>
+

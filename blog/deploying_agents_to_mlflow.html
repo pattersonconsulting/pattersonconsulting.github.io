@@ -140,6 +140,60 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+
+       .gpt-copy {
+        color: #eb34db;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }   
     </style>
 
     <script>
@@ -328,64 +382,175 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
-<p class="fs-lg todo_edit">
-  Large language models (LLMs) are rapidly evolving from single-prompt utilities into full <em>agentic systems</em> capable of using tools, retrieving structured information, managing memory, and performing multi-step reasoning. But building these agents at an enterprise level remains difficult. To address this challenge, organizations are increasingly turning to <code>MLflow</code> as the runtime for production-grade generative systems. 
-</p>
-
-<p class="fs-lg todo_edit">
-  In this guide, we’ll walk through why MLflow is becoming the enterprise standard for agentic workloads, how <code>ResponsesAgent</code> offers a clean and typed development interface, why packaging agents as MLflow models unlocks significant governance and deployment benefits, and finally how to log and deploy a simple agent on Databricks.
-</p>
-
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why MLflow Is the Right Abstraction for Agents</h2>
 <p class="fs-lg">
-  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
+  <strong>What does <code>mlflow.start_run()</code> do in MLflow 3.6?</strong><br><br>
+  <code>mlflow.start_run()</code> creates (or resumes) a run context—a structured container where MLflow logs everything associated with an execution, such as:
 </p>
+
+<ul class="fs-lg">
+  <li>Parameters</li>
+  <li>Metrics</li>
+  <li>Artifacts (files, code, prompt assets, knowledge bases, etc.)</li>
+  <li>Logged models and agents</li>
+  <li>Run metadata (timestamps, status, user, environment, etc.)</li>
+</ul>
 
 <p class="fs-lg">
-  This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
+  It’s like pressing the “Record” button: everything you log inside this context is versioned and attached to that run.
 </p>
 
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logging Deployed Models with MLflow</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is a “run” in MLflow?</h2>
 <p class="fs-lg">
-  Logging the agent converts your in-memory Python object into a fully packaged, versioned, reproducible MLflow model. This is critical—MLflow captures source code, dependencies, tools, and signatures, ensuring the agent can be reloaded and reproduced across machines, workspaces, and future releases.
+  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type:
 </p>
 
-<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
-import mlflow
-
-with mlflow.start_run():
-    mlflow.agents.log_model(
-        agent=MathAgent(),
-        artifact_path="math_agent",
-        registered_model_name="main.ai.tools.math_agent"
-    )
-</code></pre>
-
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for Traditional ML Models</h2>
 <p class="fs-lg">
-  Once logged, the agent becomes a governed MLflow model that can be registered in Unity Catalog, promoted through staging/production, evaluated, and deployed to Mosaic AI Model Serving. Logging gives MLflow something concrete to govern, lineage-track, and deploy.
+  A run represents a training lifecycle event, such as:
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Should I Run Models and Agents on MLflow?</h2>
+<ul class="fs-lg">
+  <li>Training a regression model</li>
+  <li>Fine-tuning a neural network</li>
+  <li>Running feature experiments</li>
+</ul>
+
 <p class="fs-lg">
-  Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
+  It captures the full lineage of the model including inputs, outputs, and lifecycle. So if you retrain tomorrow you get a new run.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for MLflow ResponsesAgent Models</h2>
+<p class="fs-lg">
+  A run represents the packaging and publishing event: defining agent behavior (system prompt, tools, routing logic), bundling assets (text files, embeddings, yaml configs), and versioning the code and prompt instructions.
 </p>
 
 <p class="fs-lg">
-  Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
+  Agents aren’t trained—they’re versioned and governed like other MLflow models. A ResponsesAgent run is basically: “I am capturing how this agent works at this moment in time and what it depends on.”
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why use <code>mlflow.start_run()</code> when logging a ResponsesAgent?</h2>
 <p class="fs-lg">
-  LLMs alone do not deliver enterprise impact. Agents—governed, tool-using, multi-step reasoning systems—are what convert enterprise information into decisions. MLflow provides the standardized runtime these systems need: a normalized agent interface, full model lifecycle governance, automated evaluation, serverless deployment, and consistent interoperability across teams.
+  Because MLflow must persist tools, prompts, and code; assign a unique version ID; enable deployment via Model Registry; track changes over time (audit/compliance); and capture traces and cost metrics later on.
 </p>
 
 <p class="fs-lg">
-  By building agents with <code>ResponsesAgent</code> and registering them in MLflow, organizations gain the reliability, structure, safety, and scalability required for real production workloads. Agents are quickly becoming core business infrastructure—and MLflow is the platform that makes them dependable.
+  Even though no training occurs, the run is still critical for governance, lineage, observability, deployment & rollback, and side-by-side evaluation.
 </p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Final Summary</h2>
+
+<table class="table table-bordered table-striped fs-lg mt-3 mb-4">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Traditional Model</th>
+      <th>MLflow ResponsesAgent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>What is a run?</td>
+      <td>A training execution</td>
+      <td>A packaging + versioning execution</td>
+    </tr>
+    <tr>
+      <td>Why does it exist?</td>
+      <td>Track data → model performance lifecycle</td>
+      <td>Track agent reasoning behavior + tools lifecycle</td>
+    </tr>
+    <tr>
+      <td>What does it log?</td>
+      <td>Params, metrics, weights</td>
+      <td>Prompt, tools, artifacts, code</td>
+    </tr>
+    <tr>
+      <td>What changes between versions?</td>
+      <td>Model parameters</td>
+      <td>Agent logic or instructions</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Deploying HTTP Microservice Using <code>mlflow models serve</code></h2>
+<p class="fs-lg">
+  Serve the agent as a standalone HTTP endpoint accessible from any programming language.
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-bash">
+mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
+</code>
+</pre>
+<p class="fs-lg">
+  Then call the REST API from your backend:
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+import requests
+
+def call_agent(prompt):
+    url = "http://localhost:5000/invocations"
+    payload = {
+        "inputs": {
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        }
+    }
+    return requests.post(url, json=payload).json()
+</code>
+</pre>
+<p class="fs-lg">
+  This allows completely decoupled deployment so the model can scale and update independently of the app.
+</p>
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How MLflow Model Serving Handles Authentication and Authorization</h2>
+
+<p class="fs-lg">
+  By default, MLflow model serving does <strong>not</strong> enforce a strong, built-in authentication/authorization layer — you need to add external or surrounding infrastructure for production-grade security. ([protectai.com](https://protectai.com/blog/hacking-ai-steal-models-from-mlflow-no-exploit-needed?utm_source=chatgpt.com))  
+</p>
+
+<p class="fs-lg">
+  Here’s a breakdown of how MLflow handles auth/authorization (or doesn’t), what features exist, and what you need to do if you care about security.  
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What MLflow can (optionally) do</h2>
+
+<ul class="fs-lg">
+  <li>MLflow offers a basic HTTP authentication mechanism, which can be enabled to restrict access to the tracking server, model registry, and registered models. ([mlflow.org](https://mlflow.org/docs/latest/self-hosting/security/basic-http-auth/?utm_source=chatgpt.com))</li>
+  <li>When this basic auth is enabled, only authenticated users can list experiments, retrieve model metadata, or perform registry operations — that helps protect model artifacts and metadata. ([mlflow.org](https://www.mlflow.org/docs/3.3.0/ml/auth/?utm_source=chatgpt.com))</li>
+  <li>MLflow’s “custom serving applications” feature documentation mentions “built-in authentication and authorization” support. ([mlflow.org](https://mlflow.org/docs/3.3.1/genai/serving/custom-apps/?utm_source=chatgpt.com))</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What you should know: defaults &amp; limitations</h2>
+
+<ul class="fs-lg">
+  <li>By default, a standard MLflow model server (e.g. via <code>mlflow models serve</code>) comes with <strong>no authentication or authorization</strong>. If you just run it “out-of-the-box,” anyone who can reach the endpoint can invoke predictions. ([protectai.com](https://protectai.com/blog/hacking-ai-steal-models-from-mlflow-no-exploit-needed?utm_source=chatgpt.com))</li>
+  <li>The basic auth feature applies to MLflow’s tracking server / registry — but depending on your deployment (especially serving endpoints), it may not automatically gate the inference API. In other words: permissions that protect model metadata do not necessarily protect the runtime inference endpoint.</li>
+  <li>Basic HTTP auth is fairly rudimentary: it doesn’t provide fine-grained permissions (e.g. “user A can read models, user B can’t”) with anything like role-based ACLs out-of-the-box. ([community-charts.github.io](https://community-charts.github.io/docs/charts/mlflow/authentication-configuration?utm_source=chatgpt.com))</li>
+  <li>For many production uses, relying solely on MLflow’s auth is unsafe — especially if the model server is reachable beyond a private network or inside a shared environment. This is echoed in warnings that simply placing the MLflow server behind a firewall isn’t sufficient security. ([protectai.com](https://protectai.com/blog/hacking-ai-steal-models-from-mlflow-no-exploit-needed?utm_source=chatgpt.com))</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What you should do to secure MLflow model serving in production</h2>
+
+<ul class="fs-lg">
+  <li>Place the model-serving endpoint behind a reverse proxy / API gateway (e.g., NGINX, Traefik, AWS ALB, Kong) that enforces <strong>authentication (OAuth, API tokens)</strong> and <strong>authorization</strong> (who can call what).</li>
+  <li>Use network-level controls (e.g. VPC, firewall rules) to restrict access to the serving endpoint — ideally make it accessible only from internal services or VPN.</li>
+  <li>If you’re using the basic auth for the tracking/registry server, keep credentials in a secure store (avoid hardcoding), use HTTPS to avoid leaking credentials, and limit default permissions as strictly as possible.</li>
+  <li>Audit / log requests: wrap serving calls via a layer that does authentication + logging + rate limiting to prevent misuse.</li>
+</ul>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why this matters (especially for production / sensitive models)</h2>
+
+<p class="fs-lg">
+  Because MLflow’s serving is designed for convenience and rapid deployment, it's easy to spin up a model serving endpoint quickly — but that comes with tradeoffs in security. If a model server is exposed unchecked, anyone could call it, possibly abuse resources, or extract proprietary models/data. Because of that risk, many teams treat MLflow’s built-in features as minimal baseline and rely on external infrastructure for hardened deployment.
+</p>
 
 
           </div>

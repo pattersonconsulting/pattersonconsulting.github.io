@@ -140,6 +140,60 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+
+       .gpt-copy {
+        color: #eb34db;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }     
     </style>
 
     <script>
@@ -277,7 +331,7 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
             <li class="breadcrumb-item active" aria-current="page">What is MLflow?</li>
           </ol>
           
@@ -289,12 +343,20 @@
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Patteron Consulting Engineering Team
+                  Patterson Consulting Engineering Team
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
+
+                
               </div>
+              
+
+              
+                
+                
 
             </div>
+
 
       </section>
 
@@ -328,6 +390,7 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
+<!--
 <p class="fs-lg todo_edit">
   Large language models (LLMs) are rapidly evolving from single-prompt utilities into full <em>agentic systems</em> capable of using tools, retrieving structured information, managing memory, and performing multi-step reasoning. But building these agents at an enterprise level remains difficult. To address this challenge, organizations are increasingly turning to <code>MLflow</code> as the runtime for production-grade generative systems. 
 </p>
@@ -336,39 +399,27 @@
   In this guide, we’ll walk through why MLflow is becoming the enterprise standard for agentic workloads, how <code>ResponsesAgent</code> offers a clean and typed development interface, why packaging agents as MLflow models unlocks significant governance and deployment benefits, and finally how to log and deploy a simple agent on Databricks.
 </p>
 
+-->
 
+<p class="fs-lg narrative">
+  This article is focused on what is MLflow and how it can help you deploy and integrate agents into applications.
+</p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why MLflow Is the Right Abstraction for Agents</h2>
-<p class="fs-lg">
-  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
+<p class="fs-lg todo_edit">
+
+  what IS mlflow?
+
 </p>
 
 <p class="fs-lg">
-  This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
+MLflow provides a unified framework to manage the entire lifecycle of both traditional ML models and modern LLM agents — from experiment tracking and versioning to packaging, deployment, and governance. It ensures every step is reproducible, auditable, and easy to operationalize, so teams can iterate quickly during development and still maintain high standards of reliability and control in production.
+
 </p>
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logging Deployed Models with MLflow</h2>
-<p class="fs-lg">
-  Logging the agent converts your in-memory Python object into a fully packaged, versioned, reproducible MLflow model. This is critical—MLflow captures source code, dependencies, tools, and signatures, ensuring the agent can be reloaded and reproduced across machines, workspaces, and future releases.
-</p>
 
-<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
-import mlflow
 
-with mlflow.start_run():
-    mlflow.agents.log_model(
-        agent=MathAgent(),
-        artifact_path="math_agent",
-        registered_model_name="main.ai.tools.math_agent"
-    )
-</code></pre>
-
-<p class="fs-lg">
-  Once logged, the agent becomes a governed MLflow model that can be registered in Unity Catalog, promoted through staging/production, evaluated, and deployed to Mosaic AI Model Serving. Logging gives MLflow something concrete to govern, lineage-track, and deploy.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Should I Run Models and Agents on MLflow?</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Benefits of Using MLflow</h2>
 <p class="fs-lg">
   Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
 </p>
@@ -377,7 +428,128 @@ with mlflow.start_run():
   Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion</h2>
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The 4 Core Pillars of Enterprise ML and AI</h2>
+
+<p class="fs-lg todo_edit">
+  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
+</p>
+
+<p class="fs-lg todo_edit">
+  This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
+</p>
+
+
+<p class="fs-lg">
+  MLflow is organized around <strong>four core pillars</strong> that support the end-to-end machine learning lifecycle — plus a rapidly growing <strong>fifth emerging component</strong> focused on real-time production impact.
+</p>
+
+
+<table class="table table-bordered table-striped mt-4 mb-5">
+  <thead class="table-light">
+    <tr>
+      <th>Pillar</th>
+      <th>Purpose</th>
+      <th>Keyword</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tracking</td>
+      <td>Record experiments (metrics, parameters, artifacts)</td>
+      <td><strong>Observe</strong></td>
+    </tr>
+    <tr>
+      <td>Models</td>
+      <td>Standard packaging for easy loading and deployment</td>
+      <td><strong>Package</strong></td>
+    </tr>
+    <tr>
+      <td>Model Registry</td>
+      <td>Governance, approval workflow, version management</td>
+      <td><strong>Manage</strong></td>
+    </tr>
+    <tr>
+      <td>Projects</td>
+      <td>Reproducible execution with consistent environments</td>
+      <td><strong>Reproduce</strong></td>
+    </tr>
+    <tr>
+      <td>Deployments (Emerging)</td>
+      <td>Integrated serving for real-time inference and telemetry</td>
+      <td><strong>Serve</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tracking</h2>
+<p class="fs-lg">
+  <code>MLflow Tracking</code> allows teams to log, compare, and visualize all the artifacts that matter:
+</p>
+<p class="fs-lg">
+  Parameters, metrics, model versions, datasets, and other outputs are easily compared — enabling highly collaborative and reproducible experimentation.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Packaging</h2>
+<p class="fs-lg">
+  <code>MLflow Models</code> standardize how models are packaged so they can be used anywhere. By defining a consistent format, MLflow allows models to be deployed to a wide range of environments — from notebooks to production services — without code changes.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry</h2>
+<p class="fs-lg">
+  The <code>Model Registry</code> is the system of record for all production models. It manages versioning, approvals, stages (Staging → Production), and governance. This ensures the right model is always running with full auditability and lineage.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Projects</h2>
+<p class="fs-lg">
+  <code>MLflow Projects</code> enable reproducible execution of training or batch inference workflows by packaging code and dependencies consistently. This ensures anyone — or any system — can reliably re-run the same job.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Deployments (Emerging)</h2>
+<p class="fs-lg">
+  The newest area of expansion in MLflow is integrated <code>Deployments</code> / <code>Model Serving</code>. This simplifies the operational footprint required to deliver real-time inference — directly from the MLflow platform — while capturing cost, telemetry, and performance data for continuous improvement.
+</p>
+
+<p class="fs-lg">
+  Together, these components enable a complete lifecycle — from experimentation and packaging to governance and production-grade serving — making MLflow a powerful foundation for enterprise AI delivery.
+</p>
+
+
+
+<p class="fs-lg">
+TODO
+</p>
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Flexible Architecture for Deployed Agents</h2>
+
+
+<p class="fs-lg">
+  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building Agents With the ResponsesAgent Abstraction</h2>
 <p class="fs-lg">
   LLMs alone do not deliver enterprise impact. Agents—governed, tool-using, multi-step reasoning systems—are what convert enterprise information into decisions. MLflow provides the standardized runtime these systems need: a normalized agent interface, full model lifecycle governance, automated evaluation, serverless deployment, and consistent interoperability across teams.
 </p>

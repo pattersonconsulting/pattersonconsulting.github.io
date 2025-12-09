@@ -5,22 +5,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Using Tools with Databricks Framework Agents</title>
-    <meta name="description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth.">
+    <title>Building ResponsesAgent-Based LLM Agents on MLflow</title>
+    <meta name="description" content="...">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Nikhil Karnik and Josh Patterson">
 
 
-    <meta property="og:title" content="Using Tools with Databricks Framework Agents"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html"/>
+    <meta property="og:title" content="Building ResponsesAgent-Based LLM Agents on MLflow"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/mlflow_responseagent_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/building_mlflow_responseagent_agents.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth."/>
+    <meta property="og:description" content="..."/>
 
 
     <meta name="twitter:title" content="Using Tools with Databricks Framework Agents" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/databricks_medallion_architecture_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/mlflow_responseagent_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/building_mlflow_responseagent_agents.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
@@ -140,6 +140,60 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+
+       .gpt-copy {
+        color: #eb34db;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }   
     </style>
 
     <script>
@@ -277,7 +331,7 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
             <li class="breadcrumb-item active" aria-current="page">Building ResponsesAgent-Based LLM Agents on MLflow</li>
           </ol>
           
@@ -328,17 +382,25 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
-<p class="fs-lg">
-  Large language models (LLMs) are rapidly evolving from single-prompt utilities into full <em>agentic systems</em> capable of using tools, retrieving structured information, managing memory, and performing multi-step reasoning. But building these agents at an enterprise level remains difficult. To address this challenge, organizations are increasingly turning to <code>MLflow</code> as the runtime for production-grade generative systems. 
-</p>
 
 <p class="fs-lg">
   In this guide, we’ll walk through why MLflow is becoming the enterprise standard for agentic workloads, how <code>ResponsesAgent</code> offers a clean and typed development interface, why packaging agents as MLflow models unlocks significant governance and deployment benefits, and finally how to log and deploy a simple agent on Databricks.
 </p>
 
+
+<p class="fs-lg narrative">
+  define: what do you come away from this article understanding?
+</p>
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Build Agents in the First Place?</h2>
 <p class="fs-lg">
   The objective of agentic systems is not simply to be “agentic”—the real goal is accelerating the transformation of information into decisions. Organizations improve through only three mechanisms: automating work, improving information flow, and improving decision-making. Agents live directly next to enterprise data, enhancing both information flow and decision quality.
+</p>
+
+
+<p class="fs-lg">
+  Large language models (LLMs) are rapidly evolving from single-prompt utilities into full <em>agentic systems</em> capable of using tools, retrieving structured information, managing memory, and performing multi-step reasoning. But building these agents at an enterprise level remains difficult. To address this challenge, organizations are increasingly turning to <code>MLflow</code> as the runtime for production-grade generative systems. 
 </p>
 
 <p class="fs-lg">
@@ -363,6 +425,15 @@
   This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
 </p>
 
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Use Your Own Framework, ResponsesAgent as the Wrapper</h2>
+<p class="fs-lg">
+
+</p>
+
+
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Introducing ResponsesAgent</h2>
 <p class="fs-lg">
   <code>ResponsesAgent</code> is MLflow’s purpose-built model interface for building generative and tool-using agents. It standardizes conversational output, tool-calling semantics, long-running tool operations, streaming, tracing, and automatic model signature inference. It also guarantees compatibility with Databricks AI Playground and AI Gateway telemetry.
@@ -371,6 +442,35 @@
 <p class="fs-lg">
   With ResponsesAgent, developers write clean Python classes that encapsulate agent behavior while MLflow handles packaging, reproducibility, deployment, and governance. This creates a powerful separation of concerns: developers focus on agent logic while MLflow ensures safe, consistent, and scalable operation.
 </p>
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is MLflow’s ResponsesAgent?</h2>
+<p class="fs-lg">
+  The <code>ResponsesAgent</code> in <code>MLflow 3.6</code> is a specialized model interface designed for modern conversational AI applications. It extends the traditional <code>PyFunc</code> abstraction to support multi-turn dialogue, tool-calling workflows, agent-to-agent communication, and structured OpenAI-style requests and responses. This makes it a strong foundation for chatbots, decision assistants, and automated knowledge-work applications needing governance, traceability, and repeatable behavior.
+</p>
+<p class="fs-lg">
+  Because the <code>ResponsesAgent</code> is fully integrated into MLflow’s lifecycle — including tracking, lineage, registry, and serving — teams can deploy advanced generative AI solutions with the same operational rigor used for traditional ML models. It enables rapid prototyping while supporting safe and scalable production deployments.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Features of ResponsesAgent</h2>
+<p class="fs-lg">
+  <code>ResponsesAgent</code> provides all the capabilities required to build intelligent, tool-aware chat applications without custom infrastructure. It manages the entire conversational workflow — including role-based messaging, memory, metadata, and execution of external functions — while tracking performance and token usage for cost and efficiency monitoring.
+</p>
+<p class="fs-lg">
+  Its compatibility with the <code>OpenAI Responses API</code> enables drop-in integration with existing applications that already use OpenAI endpoints. Combined with MLflow’s experiment management, auditability, and deployment integrations, these features provide a reliable way to evolve prototypes into production-grade conversational agents.
+</p>
+<ul class="fs-lg">
+  <li>Structured message and chat history handling</li>
+  <li>Tool and function calling with intermediate outputs</li>
+  <li>Multi-agent orchestration support</li>
+  <li>OpenAI API-compatible input/output schema</li>
+  <li>Token and performance usage tracking</li>
+  <li>Full MLflow tracking, versioning, and serving capabilities</li>
+</ul>
+
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Building a Simple ResponsesAgent</h2>
 <p class="fs-lg">

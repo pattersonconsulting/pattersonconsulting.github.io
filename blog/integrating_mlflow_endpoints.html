@@ -5,22 +5,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Accessing Unity Catalog Resources from Databricks Framework Agents</title>
-    <meta name="description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth.">
+    <title>Integrating with Deployed MLflow Endpoints</title>
+    <meta name="description" content="...">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
-    <meta name="author" content="Nikhil Karnik and Josh Patterson">
+    <meta name="author" content="Patterson Consulting Engineering Team">
 
 
-    <meta property="og:title" content="Accessing Unity Catalog Resources from Databricks Framework Agents"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/dbx_agents_uc_resources_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html"/>
+    <meta property="og:title" content="Integrating with Deployed MLflow Endpoints"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="Information architecture within the Information Layer is what transforms a company’s raw data into a single, trusted system of record that fuels knowledge work across every business function. By organizing and governing how data is modeled, related, and exposed through APIs, the Information Layer ensures that every team—from operations to finance to marketing—works from the same version of the truth."/>
+    <meta property="og:description" content="..."/>
 
 
-    <meta name="twitter:title" content="Accessing Unity Catalog Resources from Databricks Framework Agents" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/dbx_agents_uc_resources_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/driving_retail_information_architecture_with_databricks_medallion_architecture.html" />
+    <meta name="twitter:title" content="Integrating with Deployed MLflow Endpoints" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
@@ -140,6 +140,60 @@
       .todo_edit { 
         color: #ff0000;
        }
+
+      .todo_consider { 
+        color: #dddddd;
+       }
+
+
+      .working_outline { 
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+
+       .gpt-copy {
+        color: #eb34db;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+        
+        font-style: italic;
+
+       }
+
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          
+          white-space: pre;
+      }   
     </style>
 
     <script>
@@ -277,19 +331,19 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Accessing Unity Catalog Resources from Databricks Framework Agents</li>
+            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Integrating with Deployed MLflow Endpoints</li>
           </ol>
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Accessing Unity Catalog Resources from Databricks Framework Agents</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Integrating with Deployed MLflow Endpoints</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Nikhil Karnik and Josh Patterson
+                  Patterson Consulting Engineering Team
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
@@ -300,8 +354,8 @@
 
 
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/dbx_agents_uc_resources_header_0.jpg);"></div>
-        <div class="d-none d-xxl-block" style="height: 500px;"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/integrating_mlflow_endpoints_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 700px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
         <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
@@ -328,203 +382,92 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ways to Integrate a MLflow 3.6 ResponsesAgent into Your Application</h2>
+
 <p class="fs-lg">
-A Databricks agent <em>never</em> just “sprays SQL at Unity Catalog.” It reaches Unity Catalog tables and metric views through <strong>tools</strong> that are implemented as <strong>Unity Catalog functions whose bodies run SQL</strong> (plus, optionally, Genie for free-form SQL). Here’s how that actually works end-to-end.
+  You can integrate a deployed <code>ResponsesAgent</code> from MLflow 3.6 into your application using either direct local inference or by exposing it as a microservice. The two primary patterns are <strong>direct Python integration</strong> using <code>mlflow.pyfunc.load_model()</code> and <strong>HTTP-based integration</strong> using <code>mlflow models serve</code>. Both allow you to plug the agent into chat apps, backend services, workflow tools, or batch pipelines.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. The pattern: SQL lives inside Unity Catalog functions, not in the prompt</h2>
-
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 1: Direct Python Integration (pyfunc)</h2>
 <p class="fs-lg">
-The structured-retrieval docs call out two main ways to let an agent query structured data:
+  Load the agent directly into your backend (e.g., FastAPI, Flask, Django) for the lowest latency. This lets you call the agent inside your service’s process without a network hop.
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+import mlflow.pyfunc
+
+model = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+
+def ask_agent(messages):
+    return model.predict({"messages": messages})
+</code>
+</pre>
+<p class="fs-lg">
+  This method is ideal for embedding the agent into microservices, scheduled jobs, and evaluation pipelines.
 </p>
 
-<ol class="fs-lg">
-<li><strong>Unity Catalog SQL functions as tools</strong><br>
-You define a SQL (or Python) function in Unity Catalog. The function body contains the <code>SELECT</code> against your <strong>tables</strong> or <strong>metric views</strong>. The function’s signature and docstring/COMMENT become the <strong>tool description</strong> the LLM sees. The agent fills in the parameters; Databricks runs the function on serverless compute.</li>
-
-<li><strong>Genie multi-agent systems (SQL generation)</strong><br>
-You add a Genie agent that’s allowed to see certain catalogs/schemas. Genie reasons in natural language and auto-generates SQL over those tables/metric views.</li>
-</ol>
-
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 2: HTTP Microservice Using <code>mlflow models serve</code></h2>
 <p class="fs-lg">
-In both cases, the LLM is <em>choosing and parameterizing tools</em>, not writing raw SQL inline.
+  Serve the agent as a standalone HTTP endpoint accessible from any programming language.
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-bash">
+mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
+</code>
+</pre>
+<p class="fs-lg">
+  Then call the REST API from your backend:
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+import requests
+
+def call_agent(prompt):
+    url = "http://localhost:5000/invocations"
+    payload = {
+        "inputs": {
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        }
+    }
+    return requests.post(url, json=payload).json()
+</code>
+</pre>
+<p class="fs-lg">
+  This allows completely decoupled deployment so the model can scale and update independently of the app.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. Accessing Unity Catalog tables via SQL functions</h2>
-
-<h3 class="h3 pt-4">Step 1: Create a UC function whose body runs SQL</h3>
-
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration Use Cases</h2>
 <p class="fs-lg">
-From the docs example, you create a function that selects from a UC table:
-</p>
-
-<pre class="line-numbers mt-5 mb-5"><code class="lang-sql">
-CREATE OR REPLACE FUNCTION main.default.lookup_customer_info(
-  customer_name STRING COMMENT 'Name of the customer whose info to look up'
-)
-RETURNS STRING
-COMMENT 'Returns metadata about a particular customer, including email and ID.'
-RETURN SELECT CONCAT(
-    'Customer ID: ', customer_id, ', ',
-    'Customer Email: ', customer_email
-  )
-  FROM main.default.customer_data
-  WHERE customer_name = customer_name
-  LIMIT 1;
-</code></pre>
-
-<p class="fs-lg">
-Key points:
-</p>
-
-<ul class="fs-lg">
-<li>The <strong>SQL body</strong> (<code>SELECT ... FROM main.default.customer_data</code>) is what actually hits the <strong>Unity Catalog table</strong>.</li>
-<li>The function is <strong>fully qualified</strong> in UC (<code>main.default.lookup_customer_info</code>), so governance, lineage, permissions, etc. all apply.</li>
-<li>SQL here can aggregate, join, or shape results specifically for the LLM.</li>
-</ul>
-
-<h3 class="h3 pt-4">Step 2: Wrap the UC function as an agent tool</h3>
-
-<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
-from unitycatalog.ai.core.databricks import DatabricksFunctionClient
-from databricks_langchain import UCFunctionToolkit
-
-client = DatabricksFunctionClient()
-
-CATALOG = "main"
-SCHEMA = "default"
-
-# (Assume lookup_customer_info already created via SQL or Python)
-
-func_name = f"{CATALOG}.{SCHEMA}.lookup_customer_info"
-toolkit = UCFunctionToolkit(function_names=[func_name])
-
-tools = toolkit.tools  # these are the tools the LLM sees
-</code></pre>
-
-<p class="fs-lg">
-UCFunctionToolkit:
+  Once served, the agent can power a variety of intelligent features:
 </p>
 
 <ul class="fs-lg">
-<li>Reads the function metadata & comments.</li>
-<li>Builds a <strong>tool schema</strong> that matches tool-calling LLM expectations.</li>
-<li>Adds optional tracing and instrumentation.</li>
+  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
+  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
+  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
+  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
 </ul>
 
-<h3 class="h3 pt-4">Step 3: Plug tools into your agent</h3>
-
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry Integration</h2>
 <p class="fs-lg">
-Then you pass <code>tools</code> into your agent framework (LangChain, MLflow ResponsesAgent, OpenAI/Anthropic tool-calling, etc.).
+  Use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+</code>
+</pre>
+<p class="fs-lg">
+  This makes upgrades seamless—no code changes required when new versions are deployed.
 </p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
 <p class="fs-lg">
-At runtime:
+  MLflow offers flexible deployment strategies for <code>ResponsesAgent</code> models. Whether embedded directly in a Python service or deployed as a scalable HTTP microservice, MLflow ensures consistent agent lifecycle management, versioning, and reliability across all environments.
 </p>
-
-<ol class="fs-lg">
-<li>User: <em>"What is the email for customer Jane Doe?"</em></li>
-<li>LLM sees tool <code>lookup_customer_info(customer_name: string)</code>.</li>
-<li>LLM emits a tool call:
-<pre><code>{
-  "tool": "lookup_customer_info",
-  "arguments": {"customer_name": "Jane Doe"}
-}
-</code></pre></li>
-<li>Databricks executes the UC function server-side.</li>
-<li>Function runs SQL and returns a value.</li>
-<li>LLM responds using the result.</li>
-</ol>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">3. Accessing Unity Catalog metric views via SQL</h2>
-
-<p class="fs-lg">
-Metric views are first-class SQL objects that define reusable metrics on top of tables. They’re queried with SQL, but <strong>measures must be referenced via <code>MEASURE()</code></strong> and <strong><code>SELECT *</code> is not allowed</strong>.
-</p>
-
-<p class="fs-lg">
-Example UC function that queries a metric view:
-</p>
-
-<pre class="line-numbers mt-5 mb-5"><code class="lang-sql">
-CREATE OR REPLACE FUNCTION retail_analytics.tools.get_otif_for_supplier(
-  supplier_id STRING COMMENT 'The supplier to analyze',
-  start_date  DATE   COMMENT 'Start date (inclusive)',
-  end_date    DATE   COMMENT 'End date (inclusive)'
-)
-RETURNS STRING
-COMMENT 'Returns daily OTIF percentages for a supplier over a date range, as CSV.'
-RETURN
-  SELECT to_csv(named_struct(
-           'order_date', order_date,
-           'otif_rate',  MEASURE(otif_rate)
-         ))
-  FROM retail_analytics.gold.mv_otif
-  WHERE supplier_id = supplier_id
-    AND order_date BETWEEN start_date AND end_date;
-</code></pre>
-
-<p class="fs-lg">
-This enables questions like:
-<em>"What was OTIF for Supplier X last quarter?"</em>
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">4. Governance & execution path (why this matters)</h2>
-
-<p class="fs-lg">
-Because these tools are UC functions:
-</p>
-
-<ul class="fs-lg">
-<li><strong>Unity Catalog permissions and data policies apply</strong> automatically.</li>
-<li>Execution runs on <strong>Databricks serverless compute</strong>.</li>
-<li>The LLM sees only <strong>function inputs and outputs</strong>, limiting data-leak risk.</li>
-<li>Auditing & lineage track data usage.</li>
-</ul>
-
-<p class="fs-lg">
-For metric views you also inherit:
-</p>
-
-<ul class="fs-lg">
-<li>Consistent KPI definitions across BI, SQL, and AI.</li>
-<li>Centralized YAML metric logic.</li>
-<li>No need to modify agent code when metric logic changes.</li>
-</ul>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">5. Where Genie fits</h2>
-
-<p class="fs-lg">
-If you don’t want to predefine every function, you can use <strong>Genie multi-agent systems</strong>:
-</p>
-
-<ul class="fs-lg">
-<li>Grant Genie access to catalogs/schemas.</li>
-<li>Genie inspects schema metadata.</li>
-<li>Generates SQL and retrieves results.</li>
-</ul>
-
-<p class="fs-lg">
-So:
-<br><strong>UC functions as tools</strong> → curated, governed workflows
-<br><strong>Genie</strong> → ad-hoc flexible SQL reasoning
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Quick mental model</h2>
-
-<p class="fs-lg">
-<strong>Databricks agent → UC function tools → SQL → Unity Catalog tables/metric views</strong>
-</p>
-
-<p class="fs-lg">
-You put the SQL into Unity Catalog functions. You wrap those functions as tools. The agent calls tools, not raw SQL. The SQL runs against governed Unity Catalog data.
-</p>
-
-<p class="fs-lg">
-If you want, I can next sketch a concrete Python <code>ResponsesAgent</code> example that wires in a couple of UC functions—one against a fact table, one against a metric view—so you’ve got a ready pattern for your retail OTIF/stockout stack.
-</p>
-
-
 
 
           </div>

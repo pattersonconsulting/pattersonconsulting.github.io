@@ -383,11 +383,128 @@
           <div class="col-lg-9 col-xl-8">
 
 
+
+
+<p class="fs-lg">
+  narrative: whats the challenge / what does this article offer?
+</p>
+
+
+
+
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Application Integration Patterns for Agents</h2>
+<p class="fs-lg">
+  How you deploy and integrate your Agent functionality should depend on what type of application is integrating with the agent.
+</p>
+
+
+<p class="fs-lg">
+To accelerate knowledge work with LLMs we have to integrate automated reasoning over data <b>directly into the applications where the knowledge work occurs.</b>
+</p>
+
+<p class="fs-lg">
+  <b>The next wave of GenAI applications will move the analysis out of ChatGPT and Claude Code and directly embed the analysis into applications, reports, and dashboards directly.</b>
+</p>
+
+<p class="fs-lg">
+Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">genAI consuming applications</a> include
+</p>
+
+<ul class="fs-lg">
+  <li><strong>Conversational User Interfaces</strong>
+    <ul class="fs-lg">
+      <li>Web Chat User Interfaces</li>
+      <li>Slackbots</li>
+      <li>Text Message interfaces via cell phones</li>
+    </ul>
+
+  </li>
+  <li><strong>Automation Workflow</strong>
+    <ul class="fs-lg">
+      <li>Structured Information Extraction</li>
+      <li>Industry specific task workflows (e.g., "root cause of OTIF issues in logistics")</li>
+      <li>Batch jobs</li>
+    </ul>
+  </li>
+  <li><strong>Decision Intelligence</strong>
+    <ul class="fs-lg">
+      <li>Automated Insights</li>
+      <li>Next Action</li>
+      <li>Root Cause Analysis</li>
+    </ul>
+  </li>
+</ul>
+
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+</div>
+
+
+
+<!--
+<ul class="fs-lg">
+  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
+  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
+  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
+  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
+</ul>
+-->
+
+<p class="fs-lg">
+the whole "secret sauce" of any use case is 
+</p>
+
+
+<ol>
+<li>prompt instructions</li>
+<li>the right contextual data to analyze</li>
+<li>a LLM with enough "reasoning horsepower"</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ways to Integrate a MLflow 3.6 ResponsesAgent into Your Application</h2>
 
 <p class="fs-lg">
   You can integrate a deployed <code>ResponsesAgent</code> from MLflow 3.6 into your application using either direct local inference or by exposing it as a microservice. The two primary patterns are <strong>direct Python integration</strong> using <code>mlflow.pyfunc.load_model()</code> and <strong>HTTP-based integration</strong> using <code>mlflow models serve</code>. Both allow you to plug the agent into chat apps, backend services, workflow tools, or batch pipelines.
 </p>
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry Integration</h2>
+<p class="fs-lg">
+  Use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+</code>
+</pre>
+<p class="fs-lg">
+  This makes upgrades seamless—no code changes required when new versions are deployed.
+</p>
+
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 1: Direct Python Integration (pyfunc)</h2>
 <p class="fs-lg">
@@ -439,30 +556,19 @@ def call_agent(prompt):
   This allows completely decoupled deployment so the model can scale and update independently of the app.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration Use Cases</h2>
-<p class="fs-lg">
-  Once served, the agent can power a variety of intelligent features:
-</p>
 
-<ul class="fs-lg">
-  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
-  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
-  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
-  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
-</ul>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry Integration</h2>
-<p class="fs-lg">
-  Use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
-</code>
-</pre>
-<p class="fs-lg">
-  This makes upgrades seamless—no code changes required when new versions are deployed.
-</p>
+
+
+
+
+
+
+
+
+
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
 <p class="fs-lg">

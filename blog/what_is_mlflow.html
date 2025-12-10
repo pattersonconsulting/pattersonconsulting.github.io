@@ -429,6 +429,24 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 </p>
 
 
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Packaging, deployment & portability</h2>
+
+<p class="fs-lg">
+ The module defines a self-contained filesystem format: a directory with metadata (MLmodel), code, data, and environment descriptor.
+</p>
+<p class="fs-lg">
+This enables models to be versioned, moved across environments (dev → test → prod), and deployed consistently with dependencies captured (via Conda or pip). For your smart-city / retail-supply-chain use-cases this means models trained in one team can be reliably consumed by another (ops, IoT, etc.) without “it runs in my notebook” risk.
+</p>
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Support for custom logic / framework-agnostic models</h2>
+
+<p class="fs-lg">
+ The flavour allows you to wrap arbitrary inference logic — including preprocessing, post-processing, branching, or non-standard frameworks — by implementing either a function or class (via PythonModel) and then logging it via mlflow.pyfunc. MLflow
+
+</p>
+<p class="fs-lg">
+ In practical terms: if you have a bespoke demand-forecasting engine, or a composite model that spans deep-learning + deterministic logic + business-rules (e.g., OTIF prediction + inventory allocation), you can embed all that and still give the business a standard “load → predict” interface.
+</p>
 
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The 4 Core Pillars of Enterprise ML and AI</h2>
@@ -489,8 +507,17 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tracking</h2>
 <p class="fs-lg">
-  <code>MLflow Tracking</code> allows teams to log, compare, and visualize all the artifacts that matter:
+  <code>MLflow Tracking</code> allows teams to log, compare, and visualize all the artifacts that matter.
 </p>
+
+
+<p class="fs-lg">
+An <code>artifact</code> is any file or directory that you log alongside a run or a model—such as data files, configuration files, prompts, source code, images, or serialized model assets—so that MLflow can store, version, and later retrieve them as part of the model’s reproducible package.
+</p>
+<p class="fs-lg">
+Artifacts are not parameters or metrics; they are actual files that MLflow saves in the run’s artifact store or inside an MLflow model’s artifact directory.
+</p>
+
 <p class="fs-lg">
   Parameters, metrics, model versions, datasets, and other outputs are easily compared — enabling highly collaborative and reproducible experimentation.
 </p>
@@ -815,8 +842,15 @@ These two components operate independently:
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Concepts</h2>
 
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Artifact</h2>
+
 <p class="fs-lg">
-TODO
+An artifact is any file or directory that you log alongside a run or a model—such as data files, configuration files, prompts, source code, images, or serialized model assets—so that MLflow can store, version, and later retrieve them as part of the model’s reproducible package.
+</p>
+<p class="fs-lg">
+Artifacts are not parameters or metrics; they are actual files that MLflow saves in the run’s artifact store or inside an MLflow model’s artifact directory.
 </p>
 
 

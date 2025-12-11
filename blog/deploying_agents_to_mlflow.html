@@ -763,7 +763,7 @@ with mlflow.start_run():
 
 
 
-<!--
+
 
 <p class="fs-lg">
   <strong>What does <code>mlflow.start_run()</code> do in MLflow 3.6?</strong><br><br>
@@ -785,12 +785,21 @@ with mlflow.start_run():
 
 
 
+
+
+
+
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is a “run” in MLflow?</h2>
 <p class="fs-lg">
-  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type:
+  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for Traditional ML Models</h2>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for Traditional ML Models</h2>
 <p class="fs-lg">
   A run represents a training lifecycle event, such as:
 </p>
@@ -805,7 +814,11 @@ with mlflow.start_run():
   It captures the full lineage of the model including inputs, outputs, and lifecycle. So if you retrain tomorrow you get a new run.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for MLflow ResponsesAgent Models</h2>
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs for MLflow ResponsesAgent Models</h2>
 <p class="fs-lg">
   A run represents the packaging and publishing event: defining agent behavior (system prompt, tools, routing logic), bundling assets (text files, embeddings, yaml configs), and versioning the code and prompt instructions.
 </p>
@@ -813,6 +826,8 @@ with mlflow.start_run():
 <p class="fs-lg">
   Agents aren’t trained—they’re versioned and governed like other MLflow models. A ResponsesAgent run is basically: “I am capturing how this agent works at this moment in time and what it depends on.”
 </p>
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why use <code>mlflow.start_run()</code> when logging a ResponsesAgent?</h2>
 <p class="fs-lg">
@@ -822,6 +837,58 @@ with mlflow.start_run():
 <p class="fs-lg">
   Even though no training occurs, the run is still critical for governance, lineage, observability, deployment & rollback, and side-by-side evaluation.
 </p>
+
+
+
+<hr/>
+
+
+<p class="fs-lg">
+  <strong>Short, precise answer:</strong><br>
+  A <strong>run represents the calling of the <code>predict()</code> method</strong>, <em>not</em> the deployment of a ResponsesAgent.
+</p>
+
+<p class="fs-lg">
+  Here is the clear breakdown:
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. Deployment does NOT create a run</h2>
+<p class="fs-lg">
+  Deploying a ResponsesAgent (e.g., via MLflow Model Serving or Databricks Model Serving) is an <strong>infrastructure event</strong>, not an experiment.
+  MLflow <strong>does not log a run</strong> when you:
+</p>
+<p class="fs-lg">
+  – register the agent<br>
+  – deploy it to a serving endpoint<br>
+  – update its stage (Staging → Production)<br>
+  – start or restart a model server
+</p>
+<p class="fs-lg">
+  Deployment is a lifecycle operation in the <strong>model registry / serving system</strong>, not an execution, so it does not produce runs.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. A run is created when you CALL the agent (predict/inference) IF logging is enabled</h2>
+<p class="fs-lg">
+  MLflow 3.6’s <strong>ResponsesAgent</strong> creates runs when you <strong>invoke its <code>predict()</code> method</strong>, <em>if</em> the agent is configured to log interactions.
+</p>
+<p class="fs-lg">
+  A prediction call may log:
+</p>
+<p class="fs-lg">
+  – input messages<br>
+  – output responses<br>
+  – tool call traces<br>
+  – metrics<br>
+  – artifacts (transcripts, JSON traces, reasoning logs)
+</p>
+<p class="fs-lg">
+  Each call to <code>predict()</code> is <strong>one execution</strong>, and therefore <strong>one run</strong>.
+
+
+
+
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Final Summary</h2>
 
@@ -857,7 +924,7 @@ with mlflow.start_run():
   </tbody>
 </table>
 
--->
+
 
 
 

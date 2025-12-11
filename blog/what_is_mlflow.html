@@ -843,6 +843,148 @@ These two components operate independently:
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Concepts</h2>
 
 
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Models from Code</h2>
+
+<p class="fs-lg">
+  In the context of building and deploying ResponsesAgents in MLflow, “<strong>Models from Code</strong>” refers to an approach for defining, storing, and loading models or agent logic directly from a Python script instead of relying on binary serialization like pickling. This means you write your agent’s class and behavior in a Python file, and MLflow logs that script as the model itself. When the model is deployed later, MLflow executes the script to reconstruct and run the agent. This makes the model code readable, easier to debug, and more portable across environments, which is particularly useful for custom logic like <code>ResponsesAgents</code> that do not have traditional trained weights.
+</p>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. How “Models from Code” fits into MLflow’s model packaging</h2>
+<p class="fs-lg">
+  “<strong>Models from Code</strong>” means that MLflow stores your agent’s implementation <strong>as source code files</strong>, not as a pickled Python object.
+  When you log a ResponsesAgent, MLflow captures:
+</p>
+<p class="fs-lg">
+  – the Python module(s) that define the agent<br>
+  – the model signature<br>
+  – the model configuration
+</p>
+<p class="fs-lg">
+  These files become part of the model’s <strong>artifact directory</strong>.
+</p>
+<p class="fs-lg"> 
+  The important point: <strong>The model code becomes artifacts.</strong> MLflow will later re-import and execute this code when serving the agent.
+</p>
+
+
+
+<p class="fs-lg narrative">
+This plays into the narrative of how agents can be framed as web apps or web methods, code that runs and spits out text back to the client. The "agent" is really python files in a directory that are executed when the endpoint is called and produces text output.
+</p>
+
+<p class="fs-lg todo_edit">
+a model server is w a REST interface... is just a stripped down HTTP server
+here a "model" is not really a "ml model", its just ... a python class mapped to a REST endpoint
+if you are just executing a specific python code when a HTTP URI is accessed..... that is just a "web app"
+and that had been my gut feeling all along; that "agents" were just web apps, once you deconstruct them
+</p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. Relationship to Artifacts</h2>
+<p class="fs-lg">
+  Artifacts represent <strong>all files logged during a run</strong>, including the model itself.
+  When using “Models from Code,” the following go into the artifact store:
+</p>
+<p class="fs-lg">
+  – your agent’s <code>.py</code> files (via <code>code_paths</code>)<br>
+  – configuration files<br>
+  – any additional required resources<br>
+  – MLmodel metadata that tells MLflow how to load the agent
+</p>
+<p class="fs-lg">
+  Thus: <strong>Models from Code = a structured set of artifacts that describe how to recreate the agent logic at serving time.</strong>
+</p>
+<p class="fs-lg">
+  Artifacts therefore become the <strong>deployment bundle</strong> for your agent.
+</p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">3. Relationship to Runs</h2>
+<p class="fs-lg">
+  A <strong>run</strong> is created when you log the agent or when you call the agent (if logging is enabled).
+</p>
+<p class="fs-lg">
+  – When you <strong>log</strong> a ResponsesAgent using “Models from Code,” MLflow opens a run, and inside that run it stores the artifacts described above.<br>
+  – When the agent is <strong>executed in prediction mode</strong>, additional runs may be created to log:
+</p>
+<p class="fs-lg">
+  – request / response traces<br>
+  – reasoning artifacts<br>
+  – metrics<br>
+  – tool call logs
+</p>
+<p class="fs-lg">
+  Thus: <strong>Runs record the events; artifacts store the files. Models from Code is the mechanism by which agent code becomes artifacts during a run.</strong>
+</p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">4. Putting It All Together</h2>
+<table class="table table-bordered fs-lg">
+  <tr>
+    <th>Concept</th>
+    <th>What It Represents</th>
+    <th>How It Relates</th>
+  </tr>
+  <tr>
+    <td><strong>Models from Code</strong></td>
+    <td>A way of packaging ResponsesAgent logic as source-code artifacts</td>
+    <td>Produces the artifact set that defines the agent</td>
+  </tr>
+  <tr>
+    <td><strong>Artifacts</strong></td>
+    <td>Files stored during a run (code, config, model files)</td>
+    <td>The agent’s code and dependencies become artifacts</td>
+  </tr>
+  <tr>
+    <td><strong>Runs</strong></td>
+    <td>Execution metadata (logging the model or calling predict)</td>
+    <td>The container that owns the artifacts produced during logging or inference</td>
+  </tr>
+</table>
+
+<p class="fs-lg">
+  <strong>One-sentence summary:</strong> Models from Code packages your ResponsesAgent as source-code artifacts inside a run, while runs record the logging and inference events and artifacts hold the actual files that MLflow uses to recreate and serve the agent.
+</p>
+
+
+
+
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs</h2>
+
+<p class="fs-lg">
+  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type.
+</p>
+
+<p class="fs-lg">
+  The conceptual difference between <strong>artifacts</strong> and <strong>runs</strong> in MLflow 3.6:
+</p>
+
+<p class="fs-lg">
+  A <strong>run</strong> is the container for a single execution of something you are tracking in MLflow.
+</p>
+<p class="fs-lg">
+  Think of a run as the record or envelope that captures:
+</p>
+<p class="fs-lg">
+  – parameters used<br>
+  – metrics produced<br>
+  – tags<br>
+  – the execution context<br>
+  – and any artifacts logged during that execution
+</p>
+<p class="fs-lg">
+  A run is essentially the metadata log for one experiment attempt.
+</p>
+<p class="fs-lg">
+  If you did an experiment, executed a script, trained a model, or invoked an agent, that execution is represented as a run.
+</p>
+
+
+
+
+
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Artifact</h2>
 
@@ -854,10 +996,31 @@ Artifacts are not parameters or metrics; they are actual files that MLflow saves
 </p>
 
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Run</h2>
-
 <p class="fs-lg">
-TODO
+  <strong>Artifacts</strong> are the files produced during a run.
+</p>
+<p class="fs-lg">
+  Examples:
+</p>
+<p class="fs-lg">
+  – model files<br>
+  – prompt templates<br>
+  – Python source code snapshots<br>
+  – plots, images<br>
+  – datasets<br>
+  – configuration files
+</p>
+<p class="fs-lg">
+  Artifacts are outputs stored in MLflow’s artifact store. A run owns artifacts, and MLflow tracks exactly which artifacts were generated by which run.
+</p>
+<p class="fs-lg">
+  Think of artifacts as the stuff you produced, and a run as the record of the attempt that produced them.
+</p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Relating Runs and Artifacts</h2>
+<p class="fs-lg">
+  – <strong>Run</strong> = a folder labeled with the metadata about an experiment attempt.<br>
+  – <strong>Artifacts</strong> = the files inside that folder.
 </p>
 
 

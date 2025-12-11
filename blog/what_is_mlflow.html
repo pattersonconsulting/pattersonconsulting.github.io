@@ -758,6 +758,19 @@ Regardless of how smart or simple the agent is.
 </p>
 
 
+
+
+<p class="fs-lg">
+Key Benefits of the Model Registry
+</p>
+
+<ul>
+<li>Centralized Store: A single place to manage all your models.</li>
+<li>Versioning: Tracks new versions automatically (e.g., Model-1, Model-2).</li>
+<li>Lifecycle Stages: Transition models to Staging, Production, or Archived.</li>
+<li>Discovery: Helps teams find and use models across projects. </li>
+</ul>
+
 <h3 class="h4 mt-4 mb-3">Model Registry Capabilities</h3>
 
 <p class="fs-lg">
@@ -868,6 +881,24 @@ These two components operate independently:
 </p>
 
 
+<p class="fs-lg"> 
+Other notes: given that a model is defined as artifacts, and the main class is defined in the 
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+    with mlflow.start_run(run_name=run_name):
+        logged = mlflow.pyfunc.log_model(
+            artifact_path="AnalystToolAgent",
+            python_model="agents/general.py",  # points to the file with set_model(...)
+            code_paths=["augmented_reasoning", "agents"],
+            artifacts={"analysis_intelligence_directory": analysis_intelligence_DIR},     # <-- your entire text directory
+
+        )
+</code></pre>
+
+<p class="fs-lg todo_edit">
+todo: differentiate start_model() vs log_model() 
+</p>
 
 <p class="fs-lg narrative">
 This plays into the narrative of how agents can be framed as web apps or web methods, code that runs and spits out text back to the client. The "agent" is really python files in a directory that are executed when the endpoint is called and produces text output.
@@ -986,7 +1017,69 @@ and that had been my gut feeling all along; that "agents" were just web apps, on
 
 
 
+
+
+
+
+
+<hr/>
+
+<p class="fs-lg">
+  In the context of deploying and calling the <code>predict</code> method on an MLflow 3.6 <strong>ResponsesAgent</strong>, a <strong>Run</strong> is the formal MLflow tracking record that represents a single execution of the agent’s logic. It captures the input, output, metadata, and any artifacts produced during that specific invocation.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Run Represents</h2>
+<p class="fs-lg">
+  A <strong>Run</strong> is created when the agent’s <code>predict()</code> method is called (assuming logging is enabled). This run becomes the container for all information related to that individual inference event. It does <em>not</em> represent deployment, model registration, or serving infrastructure changes—only the execution itself.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Run Records</h2>
+<p class="fs-lg">
+  During a <code>predict()</code> call, a run may contain:
+</p>
+<p class="fs-lg">
+  – the user input messages<br>
+  – the agent’s generated outputs<br>
+  – reasoning traces (if enabled)<br>
+  – tool call logs<br>
+  – metrics or timing information<br>
+  – any artifacts produced during the interaction
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Runs Relate to Predict Calls</h2>
+<p class="fs-lg">
+  Each call to <code>predict()</code> is treated as <strong>one run</strong> because MLflow considers each invocation of the agent to be an independently loggable execution. Runs provide the audit trail, observability, and reproducibility for every inference.
+</p>
+
+<p class="fs-lg">
+  <strong>Summary:</strong> In MLflow 3.6, a <strong>Run</strong> represents a single, logged execution of a <code>ResponsesAgent.predict()</code> call, capturing everything that happened during that inference event.
+</p>
+
+
+
+
+<hr/>
+
+
+
+
+
+
+
+
+
+
+
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Artifact</h2>
+
+<p class="fs-lg">
+Artifacts are files produced by a run (models, plots, metrics, configs).
+</p>
+
+
+<p class="fs-lg">
+MLflow Artifacts are any files (models, plots, data, configs) generated during an ML experiment run, stored separately from metadata, accessible via URIs (like runs:/<run_id>/path), and crucial for reproducibility, allowing you to log, retrieve, and manage outputs like model files (pickle, PyTorch), visualizations (plots), and preprocessing data, with storage configured locally (mlruns) or remotely (S3, Databricks)
+</run_id>
 
 <p class="fs-lg">
 An artifact is any file or directory that you log alongside a run or a model—such as data files, configuration files, prompts, source code, images, or serialized model assets—so that MLflow can store, version, and later retrieve them as part of the model’s reproducible package.
@@ -1019,16 +1112,59 @@ Artifacts are not parameters or metrics; they are actual files that MLflow saves
 
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Relating Runs and Artifacts</h2>
 <p class="fs-lg">
-  – <strong>Run</strong> = a folder labeled with the metadata about an experiment attempt.<br>
+  – <strong>Run</strong> = a folder labeled with the metadata about an experiment attempt. (where a run is a call of the <code>.predict()</code> ResponsesAgent method)<br>
   – <strong>Artifacts</strong> = the files inside that folder.
 </p>
 
 
+
+
+
+
+
+
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Traces</h2>
+<p class="fs-lg">
+  In the context of deploying and calling the <code>predict</code> method on an MLflow 3.6 <strong>ResponsesAgent</strong>, a <strong>Trace</strong> is the detailed, structured record of the internal steps the agent takes while generating a response. It captures the reasoning process, tool interactions, intermediate states, and decision paths executed during a single prediction call.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Trace Represents</h2>
+<p class="fs-lg">
+  A trace is not the same as a run. A <strong>run</strong> represents the overall execution event, whereas a <strong>trace</strong> represents the internal workflow the agent follows within that event. The trace provides visibility into how the agent arrived at its final answer.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Trace Records</h2>
+<p class="fs-lg">
+  A trace may include:
+</p>
+<p class="fs-lg">
+  – the sequence of steps taken by the agent<br>
+  – calls to tools or external functions<br>
+  – intermediate messages and decisions<br>
+  – reasoning metadata (when enabled)<br>
+  – timing information for each step<br>
+  – outputs generated at each stage of the process
+</p>
+<p class="fs-lg">
+  The trace essentially exposes the chain of thought <em>structure</em> without revealing any private or disallowed reasoning content.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Traces Relate to Predict Calls</h2>
+<p class="fs-lg">
+  Each call to <code>predict()</code> may generate a <strong>trace</strong> if tracing is enabled. The trace becomes part of the run’s logged artifacts, making it possible to debug, audit, or analyze how the agent behaved during execution.
+</p>
 
 <p class="fs-lg">
-TODO
+  <strong>Summary:</strong> In MLflow 3.6, a <strong>Trace</strong> is the internal step-by-step execution record of a <code>ResponsesAgent.predict()</code> call, capturing the sequence of tool calls, intermediate decisions, and reasoning metadata that led to the final output.
 </p>
+
+
+
+
+
+
+
+
 
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logging a Model</h2>

@@ -385,13 +385,20 @@
 
 
 
+
 <p class="fs-lg">
-  narrative: whats the challenge / what does this article offer?
+  For organizations to get any value out of LLMs or agents they need to be integrated into applications at the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">knowledge work layer</a> of a business. 
 </p>
 
+<p class="fs-lg">
+  The logic of their analysis involves business rules, internal data from the information layer, and enough LLM "reasoning horsepower" to do the knowledge work task assigned. Then the output needs to be integrated back into existing knowledge work workflows (e.g., PowerBI, Excel, etc) in the line of business.
+</p>
 
+<p class="fs-lg">
 
+  In this article we take a look at some key ways to integrate agents into existing Knowledge Work Layer applications and the architecture considerations you'll need to make. Let's start out by taking a look at some application integration patterns for agents in the enterprise.
 
+</p>
 
 
 
@@ -428,7 +435,7 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
   <li><strong>Automation Workflow</strong>
     <ul class="fs-lg">
       <li>Structured Information Extraction</li>
-      <li>Industry specific task workflows (e.g., "root cause of OTIF issues in logistics")</li>
+      <li>Industry specific task workflows (e.g., "report generation for distribution center analysis")</li>
       <li>Batch jobs</li>
     </ul>
   </li>
@@ -449,6 +456,8 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
 
 
 
+
+
 <!--
 <ul class="fs-lg">
   <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
@@ -457,6 +466,28 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
   <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
 </ul>
 -->
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Contraints of Integrating Agents</h2>
+
+<p class="fs-lg">
+
+It's one thing to stand up a REST endpoint with some python code and a LLM call behind it. It's entirely enought thing to stand up an agent that is fully integrated into your core business logic and enterprise data models. Key considerations:
+
+
+</p>
+
+<ol>
+
+<li>Secure access to private enterprise data warehouse</li>
+<li>consideration for exposure customer data in external LLM logs through prompts</li>
+<li></li>
+
+
+</ol>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Secret Sauce of Agents</h2>
 
 <p class="fs-lg">
 the whole "secret sauce" of any use case is 

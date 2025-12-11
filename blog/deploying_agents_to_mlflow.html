@@ -396,6 +396,59 @@ the whole "secret sauce" of any use case is
 </ol>
 
 
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Packaging the Agent</h2>
+
+<p class="fs-lg">
+TODO
+</p>
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Registering the Agent with the MLflow Model Registry</h2>
+
+<p class="fs-lg">
+two methods:
+</p>
+
+<ol>
+  <li>New Agent</li>
+  <li>Existing Agent: </li>
+</ol>
+
+<p class="fs-lg">
+Use this when you're logging a model for the first time to automatically add it to the registry.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+import mlflow
+import mlflow.sklearn # Or your specific flavor
+
+# Assuming you have a trained model 'model' and a tokenizer 'tokenizer'
+with mlflow.start_run() as run:
+    # Log model (e.g., scikit-learn, PyTorch, TensorFlow)
+    mlflow.sklearn.log_model(
+        sk_model=model,
+        artifact_path="model", # Path within the run's artifacts
+        registered_model_name="MyNewModelName" # The name for the Model Registry
+    )
+</code></pre>
+
+
+<p class="fs-lg">
+Use this for models already logged to a tracking server but not yet in the registry.
+</p>
+
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
+import mlflow
+
+# Get the model URI (e.g., from a previous run's artifact)
+model_uri = "runs:/<run_id>/model" # Replace <run_id> with your actual run ID
+
+# Register the model
+mlflow.register_model(model_uri, "MyExistingModelName")
+</code></pre>
+
+
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">ResponsesAgent Code vs Packaging the Agent</h2>
 
 <p class="fs-lg">
@@ -755,11 +808,106 @@ with mlflow.start_run():
 
 
 
+<hr/>
+<p class="fs-lg todo_edit">
+The code files for the ResponsesAgent are stored once — in the model artifact directory
+
+When you log a ResponsesAgent using Models from Code, MLflow places your:<br/>
+
+- Python module(s)<br/>
+- MLmodel file<br/>
+- configuration files<br/>
+- code_paths content<br/>
+
+into the model’s artifact directory.<br/>
+This happens once, at model logging time.
+</p>
+<hr/>
 
 
+<hr/>
+<p class="fs-lg">
+  <strong>Short answer:</strong><br>
+  <strong>No.</strong> Each time a REST endpoint for a deployed MLflow ResponsesAgent is invoked, MLflow does <strong>not</strong> generate a new run containing a new copy of your agent’s Python code files. The code files are <strong>not duplicated per inference</strong>.
+</p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. The code files for the ResponsesAgent are stored once — in the model artifact directory</h2>
+<p class="fs-lg">
+  When you log a ResponsesAgent using <em>Models from Code</em>, MLflow stores:
+</p>
+<p class="fs-lg">
+  – Python module(s)<br>
+  – the MLmodel file<br>
+  – configuration files<br>
+  – any <code>code_paths</code> directories
+</p>
+<p class="fs-lg">
+  These are saved <strong>one time</strong> in the <strong>model’s artifact directory</strong> at logging time.  
+  They are <strong>not</strong> copied again for each run or prediction.
+</p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. Each REST inference call may generate a run — but runs only store logs, metadata, and traces</h2>
+<p class="fs-lg">
+  When the REST endpoint is invoked, MLflow may create a <strong>new run</strong>, but the run contains only:
+</p>
+<p class="fs-lg">
+  – input messages<br>
+  – output text<br>
+  – traces<br>
+  – reasoning metadata (if enabled)<br>
+  – tool call logs<br>
+  – metrics
+</p>
+<p class="fs-lg">
+  A run <strong>does not</strong> contain the Python source code or any model code files.  
+  Runs do <strong>not</strong> duplicate artifacts.
+</p>
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">3. The model server loads the code from the artifact directory — not from run directories</h2>
+<p class="fs-lg">
+  When MLflow Model Serving starts, it loads the agent code from:
+</p>
+<pre class="mt-3 mb-3"><code>artifacts/&lt;model_version_number&gt;/...</code></pre>
+<p class="fs-lg">
+  The serving environment is reused for all prediction requests.  
+  Each inference <strong>does not</strong> reload or recopy the code.
+</p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">4. Summary</h2>
+<table class="table table-bordered fs-lg">
+  <tr>
+    <th>Behavior</th>
+    <th>Happens?</th>
+    <th>Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>New run for each REST prediction</strong></td>
+    <td>Yes (if logging enabled)</td>
+    <td>Captures inference metadata</td>
+  </tr>
+  <tr>
+    <td><strong>New copy of code for each run</strong></td>
+    <td>No</td>
+    <td>Code lives only in the model artifact directory</td>
+  </tr>
+  <tr>
+    <td><strong>Model reloaded on each inference</strong></td>
+    <td>No</td>
+    <td>Serving runtime reuses the loaded environment</td>
+  </tr>
+  <tr>
+    <td><strong>Runs contain code files</strong></td>
+    <td>No</td>
+    <td>Runs only store logs, traces, inputs, outputs</td>
+  </tr>
+</table>
+
+<p class="fs-lg">
+  <strong>Final Answer:</strong><br>
+  A new inference call may create a new <strong>run</strong>, but it does <strong>not</strong> include a new copy of the ResponsesAgent code.  
+  The code exists only once in the model artifact directory created at logging time.
+</p>
+<hr/>
 
 
 

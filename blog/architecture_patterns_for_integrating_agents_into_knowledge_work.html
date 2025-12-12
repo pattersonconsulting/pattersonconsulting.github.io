@@ -5,22 +5,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Integrating with Deployed MLflow Endpoints</title>
+    <title>Architecture Patterns for Integrating Agents into Knowledge Work</title>
     <meta name="description" content="...">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Patterson Consulting Engineering Team">
 
 
     <meta property="og:title" content="Integrating with Deployed MLflow Endpoints"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/architecture_patterns_for_integrating_agents_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/blog/architecture_patterns_for_integrating_agents_into_knowledge_work.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="..."/>
 
 
     <meta name="twitter:title" content="Integrating with Deployed MLflow Endpoints" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/architecture_patterns_for_integrating_agents_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/architecture_patterns_for_integrating_agents_into_knowledge_work.html" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
@@ -331,13 +331,13 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Integrating with Deployed MLflow Endpoints</li>
+            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Architecture Patterns for Integrating Agents into Knowledge Work</li>
           </ol>
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Integrating with Deployed MLflow Endpoints</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Architecture Patterns for Integrating Agents into Knowledge Work</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
@@ -354,7 +354,7 @@
 
 
       <section class="jarallax" data-jarallax data-speed=".65">
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/integrating_mlflow_endpoints_header_0.jpg);"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../assets/img/architecture_patterns_for_integrating_agents_header_0.jpg);"></div>
         <div class="d-none d-xxl-block" style="height: 700px;"></div>
         <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
         <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
@@ -382,7 +382,22 @@
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
 
+<p class="fs-lg narrative pre">
+Notes
 
+- games of materialized views
+- focus on knowledge work workflows (or "why analysis can't live in chatgpt")
+- what is knoweldge work? knowledge work architecture?
+- AI is just productivity you dont understand yet (you can't just run around saying "im using AI")
+- no magic robots
+- notes from books, models, mlops
+- llm inference likely goes whereever SQL queries go in enterprise
+- /content/hitchhikers_guide_kw/the_3_ways_a_business_uses_technology.html
+- complete: "evaluating new AI products"
+
+
+
+</p>
 
 
 
@@ -406,6 +421,7 @@
 
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Application Integration Patterns for Agents</h2>
+
 <p class="fs-lg">
   How you deploy and integrate your Agent functionality should depend on what type of application is integrating with the agent.
 </p>
@@ -418,6 +434,8 @@ To accelerate knowledge work with LLMs we have to integrate automated reasoning 
 <p class="fs-lg">
   <b>The next wave of GenAI applications will move the analysis out of ChatGPT and Claude Code and directly embed the analysis into applications, reports, and dashboards directly.</b>
 </p>
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The 3 Types of GenAI Applications</h2>
 
 <p class="fs-lg">
 Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">genAI consuming applications</a> include
@@ -449,24 +467,6 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
 </ul>
 
 
-
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
-</div>
-
-
-
-
-
-<!--
-<ul class="fs-lg">
-  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
-  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
-  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
-  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
-</ul>
--->
-
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Contraints of Integrating Agents</h2>
 
 <p class="fs-lg">
@@ -480,7 +480,7 @@ It's one thing to stand up a REST endpoint with some python code and a LLM call 
 
 <li>Secure access to private enterprise data warehouse</li>
 <li>consideration for exposure customer data in external LLM logs through prompts</li>
-<li></li>
+<li>Consider if the dashboard and the agent server are on the same private network</li>
 
 
 </ol>
@@ -504,16 +504,39 @@ the whole "secret sauce" of any use case is
 
 
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Architecture Patterns for Agent Integration</h2>
 
-
-
-
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ways to Integrate a MLflow 3.6 ResponsesAgent into Your Application</h2>
 
 <p class="fs-lg">
-  You can integrate a deployed <code>ResponsesAgent</code> from MLflow 3.6 into your application using either direct local inference or by exposing it as a microservice. The two primary patterns are <strong>direct Python integration</strong> using <code>mlflow.pyfunc.load_model()</code> and <strong>HTTP-based integration</strong> using <code>mlflow models serve</code>. Both allow you to plug the agent into chat apps, backend services, workflow tools, or batch pipelines.
+
+...
+
+</p>
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conversational User Interfaces</h2>
+
+
+
+<p class="fs-lg">
+
+...
+
+</p>
+
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+</div>
+
+
+<p class="fs-lg">
+
+...
+
 </p>
 
 
@@ -521,70 +544,27 @@ the whole "secret sauce" of any use case is
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry Integration</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Workflow Automation</h2>
+
+
+
 <p class="fs-lg">
-  Use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
-</code>
-</pre>
-<p class="fs-lg">
-  This makes upgrades seamless—no code changes required when new versions are deployed.
+
+...
+
 </p>
 
 
 
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+</div>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 1: Direct Python Integration (pyfunc)</h2>
-<p class="fs-lg">
-  Load the agent directly into your backend (e.g., FastAPI, Flask, Django) for the lowest latency. This lets you call the agent inside your service’s process without a network hop.
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-import mlflow.pyfunc
 
-model = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+<p class="fs-lg">
 
-def ask_agent(messages):
-    return model.predict({"messages": messages})
-</code>
-</pre>
-<p class="fs-lg">
-  This method is ideal for embedding the agent into microservices, scheduled jobs, and evaluation pipelines.
-</p>
+...
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 2: HTTP Microservice Using <code>mlflow models serve</code></h2>
-<p class="fs-lg">
-  Serve the agent as a standalone HTTP endpoint accessible from any programming language.
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-bash">
-mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
-</code>
-</pre>
-<p class="fs-lg">
-  Then call the REST API from your backend:
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-import requests
-
-def call_agent(prompt):
-    url = "http://localhost:5000/invocations"
-    payload = {
-        "inputs": {
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    }
-    return requests.post(url, json=payload).json()
-</code>
-</pre>
-<p class="fs-lg">
-  This allows completely decoupled deployment so the model can scale and update independently of the app.
 </p>
 
 
@@ -592,6 +572,41 @@ def call_agent(prompt):
 
 
 
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Decision Intelligence</h2>
+
+
+
+<p class="fs-lg">
+
+...
+
+</p>
+
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+</div>
+
+
+<p class="fs-lg">
+
+...
+
+</p>
+
+
+
+
+
+<!--
+<ul class="fs-lg">
+  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
+  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
+  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
+  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
+</ul>
+-->
 
 
 
@@ -603,7 +618,7 @@ def call_agent(prompt):
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
 <p class="fs-lg">
-  MLflow offers flexible deployment strategies for <code>ResponsesAgent</code> models. Whether embedded directly in a Python service or deployed as a scalable HTTP microservice, MLflow ensures consistent agent lifecycle management, versioning, and reliability across all environments.
+  ...
 </p>
 
 

@@ -381,11 +381,20 @@
       <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
+<!--
+<p class="fs-lg narrative pre">
+Viewpoint:
+- im a Databricks Retail customer who is trying to map out an AI strategy
+
+</p>
 
 <p class="fs-lg narrative pre">
 Notes
 
 - games of materialized views
+
+In terms of computer science design decisions, it boils down to “Games of Materialized Views” (ref: https://mitpress.mit.edu/books/materialized-views ).
+
 - focus on knowledge work workflows (or "why analysis can't live in chatgpt")
 - what is knoweldge work? knowledge work architecture?
 - AI is just productivity you dont understand yet (you can't just run around saying "im using AI")
@@ -397,8 +406,35 @@ Notes
 
 
 
+<a href="../content/hitchhikers_guide_kw/what_is_knowledge_work.html" target="_blank">knowledge work</a>
+
+<a href="../content/hitchhikers_guide_kw/the_red_queens_game.html" target="_blank">The Red Queen's Game</a>
+
+<a href="../content/hitchhikers_guide_kw/ai_is_just_productivity_you_dont_understand_yet.html" target="_blank">AI is just productivity you don't understand yet</a>
+
+<a href="../content/hitchhikers_guide_kw/the_evolution_of_knowledge_work.html" target="_blank">The Evolution of Knowledge Work</a>
+
+<a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">What is Generative AI?</a>
+
+
+
+</p>
+-->
+
+<p class="fs-lg">
+  <strong>
+There's only so long you can run around inside an organization saying <i>"I will use the AI"</i> before someone starts eventually questioning <a href="../content/hitchhikers_guide_kw/ai_is_just_productivity_you_dont_understand_yet.html" target="_blank">just what hell you actually mean.</a>
+</strong>
 </p>
 
+<p class="fs-lg">
+In this article I'm going to put together a framework for you to work through to frame how you will integrate large language model functionality into your existing business' workflows.
+</p>
+
+
+<p class="fs-lg">
+<a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">Knowledge work architecture</a> is the discipline of structuring a data platform so that it converts raw information—orders, claims, payments—into revenue-generating insight with maximum efficiency. It recognizes that companies don’t buy technology for its own sake; they buy productivity, achieved by either speeding up individual workflows or enabling teams to coordinate more smoothly.
+</p>
 
 
 <p class="fs-lg">
@@ -423,7 +459,7 @@ Notes
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Application Integration Patterns for Agents</h2>
 
 <p class="fs-lg">
-  How you deploy and integrate your Agent functionality should depend on what type of application is integrating with the agent.
+  How you deploy and integrate your agent functionality should depend on what type of application is integrating with the agent.
 </p>
 
 
@@ -435,10 +471,20 @@ To accelerate knowledge work with LLMs we have to integrate automated reasoning 
   <b>The next wave of GenAI applications will move the analysis out of ChatGPT and Claude Code and directly embed the analysis into applications, reports, and dashboards directly.</b>
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The 3 Types of GenAI Applications</h2>
 
 <p class="fs-lg">
-Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">genAI consuming applications</a> include
+My gut says, based on customer discussions, past architecture trends, and the unique ability to leverage LLM reasoning, is <b>that LLM inference likely ends up integrating wherever SQL rows go in enterprise.</b>
+</p>
+
+<p class="fs-lg">
+To frame your thinking let's start with 3 major ways we use information in an organization and then work to build out general architectures for each.
+</p>
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The 3 Types of Generative AI Applications</h2>
+
+<p class="fs-lg">
+Today there are 3 major types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">generative AI applications</a> (with 3 examples of each type below):
 </p>
 
 <ul class="fs-lg">
@@ -450,7 +496,7 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
     </ul>
 
   </li>
-  <li><strong>Automation Workflow</strong>
+  <li><strong>Workflow Automation</strong>
     <ul class="fs-lg">
       <li>Structured Information Extraction</li>
       <li>Industry specific task workflows (e.g., "report generation for distribution center analysis")</li>
@@ -467,30 +513,89 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
 </ul>
 
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Contraints of Integrating Agents</h2>
-
 <p class="fs-lg">
 
-It's one thing to stand up a REST endpoint with some python code and a LLM call behind it. It's entirely enought thing to stand up an agent that is fully integrated into your core business logic and enterprise data models. Key considerations:
+  For our framework we want to classify our use case into one of these buckets and then start working through the end-user goals and performance attributes we need to deliver information to our knowledge workers. In enterprise software you always in the business of delivering "materialized views".
 
 
 </p>
 
-<ol>
-
-<li>Secure access to private enterprise data warehouse</li>
-<li>consideration for exposure customer data in external LLM logs through prompts</li>
-<li>Consider if the dashboard and the agent server are on the same private network</li>
 
 
-</ol>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Games of Materialized Views</h2>
 
 
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Secret Sauce of Agents</h2>
 
 <p class="fs-lg">
-the whole "secret sauce" of any use case is 
+In terms of architecture design decisions, most (if not all) enterprise platform architectures boil down to “<a href="https://mitpress.mit.edu/books/materialized-views" target="_blank">Games of Materialized Views</a>”.
+</p>
+
+<p class="fs-lg">
+Modern enterprise software can be understood as a vast ecosystem of <b>materialized-view generators</b>. Nearly every application—ERP, CRM, BI dashboards, supply-chain tools, financial systems—exists to transform raw operational data into precomputed, structured representations that knowledge workers can use without recomputing anything themselves. Every screen, KPI, dashboard, and workflow is effectively a materialized view: a stored, continuously refreshed snapshot of underlying tables, events, and relationships. Enterprise architecture is therefore the discipline of maintaining thousands of these views across systems, ensuring they stay synchronized, consistent, and performant as data changes.
+</p>
+
+<p class="fs-lg">
+In this framing, traditional data warehouses, semantic layers, and BI tools are simply explicit implementations of the same idea—hierarchies of materialized views built to optimize complex, repetitive analytical computation. Generative AI extends this paradigm by enabling <b>dynamic, personalized materialized views</b>, synthesizing structured answers or analyses on demand from underlying data and documents. Taken together, the entire enterprise knowledge-work stack becomes a multi-layered materialized-view machine, designed to precompute and deliver the information workers need to think, plan, and act efficiently.
+</p>
+
+
+<p class="fs-lg">
+The other consideration is the latency at which we produce the materialized view. Invariably when you ask someone if they want "real time information" they will answer "of course" --- even if that information is used once a day.
+</p>
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">There's No Such Thing as Real Time</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+"Real Time" is a relative and subject idea around how fast you can pull together the raw data into usable information for your line of business knowledge work.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  <b>Do not</b> buy into the marketing hype around real time, there is no such thing. "Real time data" to a marketing company is different from "real time data" for a high-frequenecy trading company.
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  <b>Do</b> develop a real understanding on how frequently you need to make decisions on data and invest in data integration technologies as appropriate --- because as view materialization latency approaches "zero", the cost to produce the view materialization approaches ... infinity.
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+<p class="fs-lg">
+
+  Now that we've established the core 3 types of generative AI applications (<i>and I've gone on a rant about "materialized views"</i>), let's define the 3 general architectures for integrating agents into these applications.
+
+
+</p>
+
+
+
+
+
+
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Architecture Patterns for Agent Integration</h2>
+
+
+<p class="fs-lg">
+In this section I introduce 3 variations of a common knowledge work architecture pattern that match up to the requirements for each type of generative AI application.
+</p>
+
+
+
+<p class="fs-lg">
+Most generative AI use cases have the following components for the agent part of the system:
 </p>
 
 
@@ -501,19 +606,37 @@ the whole "secret sauce" of any use case is
 </ol>
 
 
+<p class="fs-lg">
+However, that just covers the logic part of the agent. There is a larger application architecture to consider and we want to define where the agent should live, what systems it has access to, and what kind of security is needed.
+</p>
 
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Architecture Patterns for Agent Integration</h2>
-
-
+<!--
 <p class="fs-lg">
 
-...
+It's one thing to stand up a REST endpoint with some python code and a LLM call behind it. It's entirely enought thing to stand up an agent that is fully integrated into your core business logic and enterprise data models. 
+
+</p>
+-->
+<p class="fs-lg">
+
+  We need to keep in mind some key considerations when layout out our agent-based architecture:
 
 </p>
 
+<ol>
 
+<li>Does the agent need secure access to private enterprise data warehouse?</li>
+<li>Are we injecting customer information into prompts, exposing customer data to external systems?</li>
+<li>Is the application user interface (e.g., "dashboard") running inside our network or exposed to external customers?</li>
+
+
+</ol>
+
+<p class="fs-lg">
+
+  With this in mind let's define the 3 architectures.
+
+</p>
 
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conversational User Interfaces</h2>
@@ -522,20 +645,46 @@ the whole "secret sauce" of any use case is
 
 <p class="fs-lg">
 
-...
+  Conversational user intefaces are what most folks are using today (e.g., "ChatGPT", "Anthropic's Claude Code", etc) and that involves pulling your instructions and data into their platform to peform reasoning with LLMs in the course of your conversation and instructions.
+
+</p>
+
+<p class="fs-lg">
+
+  The advantage of using these external conversational user interfaces is that they are already put together and can easily pull your data into them. The downside is that its hard to "share your ChatGPT to customers in a professional and brand-controlled way". Application integration with external systems is a large and complex subject and has many caveats to consider.
+
+</p>
+
+<p class="fs-lg">
+
+As we move forward with integrating conversational user interfaces beyond ChatGPT (and upgrading legacy text interfaces), there are 3 sub-areas where conversational user interfaces are emerging today:
+
+</p>
+
+
+  <ul class="fs-lg">
+    <li>Web Chat User Interfaces</li>
+    <li>Slackbots</li>
+    <li>Text Message interfaces via cell phones</li>
+  </ul>
+
+
+<p class="fs-lg">
+
+In the architecture diagram below I show a general architecture pattern for integrating an agent into your conversational user interfaces that use your enterprise data models to provide a customer-specific experience in your own branded applications. It's worth noting in the case of text-message applicaitons that you wouldn't be using a traditional "web browser", but many of the core concepts stay the same for the conversational part.
 
 </p>
 
 
 
 <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_agent_conv_ux.png" alt="Conversational UX Architecture">
 </div>
 
 
 <p class="fs-lg">
 
-...
+Let's now shift gears from conversational user interfaces to accelerating business workflows with generative AI architectures.
 
 </p>
 
@@ -547,27 +696,123 @@ the whole "secret sauce" of any use case is
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Workflow Automation</h2>
 
 
+<p class="fs-lg">
+
+Generative-AI workflow automation is the integration of cognitive, context-aware decision-making into traditional automation so that organizations can handle both structured and free-text tasks end-to-end, bridge legacy systems, and improve operational execution.
+
+</p>
 
 <p class="fs-lg">
 
-...
+Examples of workflow automation include:
+
+</p>
+
+    <ul class="fs-lg">
+      <li>Structured Information Extraction</li>
+      <li>Industry specific task workflows (e.g., "report generation for distribution center analysis")</li>
+      <li>Batch jobs, SQL Tables Scans</li>
+    </ul>
+
+
+<p class="fs-lg">
+
+Additionally, workflow automation may or may not be a user interface component to the system, depending on if you want a human to review the work before its committed back into the information processing stream. In cases such as "structured information extraction from free text" you generally would not have a human in the loop, but someone may want to spot check the results to make sure no errors are creeping into the system. This gives us two variations of workflow automation:
 
 </p>
 
 
+    <ol class="fs-lg">
+      <li>Batch Jobs</li>
+      <li>User Interface-based Knowledge Work Workflow Automation</li>
+    </ol>
 
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Batch Jobs Workflow Automation</h2>
+
+<p class="fs-lg">
+
+The architecture below shows an example of an agent server scanning a silver layer table, enriching the records, and writing the records back to a new table in the data warehouse.
+</p>
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 600px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_agent_workflow_no_human.png" alt="Workflow Automation Architecture">
 </div>
 
 
 <p class="fs-lg">
 
-...
+Another architectural consideration here is how the LLM API is accessed from the agent server; if you are scanning millions of records (or files), you may need to consider batching strategies for sending input to the LLM server.
+
+</p>
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Lower Latency, (Potentially) Higher Engineering Effort</h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Some situations of large batch scans may require a different integration strategy between the application, agent, and the LLM server.
+
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  In these cases its worth exploring ways to load the agent code directly into the application you are building and using batching strategies when calling the LLM server.
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Some data platforms, such as Databricks, allow you to even host LLMs on their platforms and call them from SQL such that you can do a direct scan of tables without setting up a full custom architecture. Without an integrated platform such as Databricks, you may end up owning more of the integration strategy and that's something to consider in your "build vs buy" analysis. We'll talk about this more in future articles in this series.
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">User Interface-based Knowledge Work Workflow Automation</h2>
+
+
+<p class="fs-lg">
+
+Knowledge work is the primary focus of modern businesses built on processing information (think "financial services", "insurance companies", etc). There are many workflows that involve people looking at screens performing cognitive labor (as opposed to physical labor) and producing more information (or clicking "ok" a lot).
 
 </p>
 
 
+<p class="fs-lg">
+
+The opportunity for this type of workflow automation involves performing the bulk of the cognitive labor in the agent server itself, presenting the results back to the human in the loop for review. Once the human verifies the work, they press ok to move onto the next record or unit of work. An example of this would be how a TPA in property insurance reviews claims before deciding how to classify them. 
+
+</p>
+
+
+<p class="fs-lg">
+
+In this case the agent-integration strategy is going to look more like our first architecture for conversational user interfaces, as seen again below.
+
+</p>
+
+
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_agent_conv_ux.png" alt="Knowledge Work Workflow Automation Architecture">
+</div>
+
+
+
+<p class="fs-lg">
+
+Let's now move on to decision intelligence where our goal is focused on making better quality decision faster.
+
+</p>
 
 
 
@@ -576,26 +821,59 @@ the whole "secret sauce" of any use case is
 
 
 
+
 <p class="fs-lg">
 
-...
+Decision intelligence is the organizational capability to use generative-AI models to rapidly simulate, evaluate, and narrow complex strategic and operational scenarios so leaders can focus attention on the most promising decisions before committing deeper analytical resources.
+
+</p>
+
+
+<p class="fs-lg">
+
+Three sub-types of decision intelligence analysis are:
+</p>
+
+    <ul class="fs-lg">
+      <li><strong>Automated Insights</strong>: look at KPIs for specific areas of the business and automatically apply business logic and rules</li>
+      <li><strong>Next Action</strong>: look at KPIs for specific areas of the business, apply analysis, and then recommend a next action</li>
+      <li><strong>Root Cause Analysis</strong>: allow a user to ask questions about the condition of KPIs and why they are high/low/good/bad</li>
+    </ul>
+
+<p class="fs-lg">
+
+In the architecture diagram below I show a generalized architecture that allows an agent server to combined automated reasoning over business rules/instruction over private enterprise data to deliver accelerated analysis.
 
 </p>
 
 
 
 <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_agent_dashboard.png" alt="Decision Intelligence Architecture">
 </div>
 
 
 <p class="fs-lg">
 
-...
+Why is Decision Intelligence this useful in practice? It lowers the time to critical decisions in organizations and allows them to make more efficient actions in how they respond to a changing market.
 
 </p>
 
+<p class="fs-lg">
 
+In most cases the user of decision intelligence will be looking at a dashboard (or handheld terminal screen) and will need the most concise and analyzed information possible to make that next critical move.
+
+</p>
+
+<p class="fs-lg">
+
+The underlying processes we can automate will be automated, but ultimately the decisions we care about most are the ones we are most responsible for;
+
+</p>
+
+<p class="fs-lg">
+<b>Key decisions are the primary expression of organizational agency</b>, and decision intelligence amplifies that agency by expanding the organization’s ability to understand, anticipate, and intentionally shape its future.
+</p>
 
 
 
@@ -616,9 +894,23 @@ the whole "secret sauce" of any use case is
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Robots Have Always Been With Us</h2>
+
 <p class="fs-lg">
-  ...
+  They have just traditionally been called "tools".
+</p>
+
+<p class="fs-lg">
+  Robots aren't coming to take your job (unless you don't evolve with tooling, and then that's your fault).
+</p>
+
+<p class="fs-lg"> 
+  Robots also aren't going to give you every answer --- but they do make the decisions you have to make all the more critical. Leverage generative AI to make better decisions and own your organizational agency.
+</p>
+
+
+<p class="fs-lg">
+  In the next article we dig into <a target="_blank" href="what_is_mlflow.html">MLflow</a> and how it can be the agent server that powers your generative AI application architectures.
 </p>
 
 
@@ -647,13 +939,13 @@ the whole "secret sauce" of any use case is
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/what_is_mlflow_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
-                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          <h4 class="card-title">What is MLflow?</h4>
+                          <p class="card-text">MLflow provides a unified framework to manage the entire lifecycle of both traditional ML models and modern LLM agents, which we dig into in detail in this article.</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                <a class="btn btn-lg btn-link px-0" href="what_is_mlflow.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>

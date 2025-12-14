@@ -5,20 +5,20 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
     
-    <title>Integrating with Deployed MLflow Endpoints</title>
+    <title>Integrating Applications with Deployed MLflow Agent Endpoints</title>
     <meta name="description" content="...">
     <meta name="keywords" content="databricks, retail, lakeflow connect, CTAS, python, data pipeline, ETL, workflow automation">
     <meta name="author" content="Patterson Consulting Engineering Team">
 
 
-    <meta property="og:title" content="Integrating with Deployed MLflow Endpoints"/>
+    <meta property="og:title" content="Integrating Applications with Deployed MLflow Agent Endpoints"/>
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg"/>
     <meta property="og:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
     <meta property="og:description" content="..."/>
 
 
-    <meta name="twitter:title" content="Integrating with Deployed MLflow Endpoints" />
+    <meta name="twitter:title" content="Integrating Applications with Deployed MLflow Agent Endpoints" />
     <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/deploying_agents_to_mlflow_header_0.jpg" />
     <meta name="twitter:url" content="https://pattersonconsultingtn.com/blog/integrating_mlflow_endpoints.html" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -331,13 +331,13 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Integrating with Deployed MLflow Endpoints</li>
+            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Integrating Applications with Deployed MLflow Agent Endpoints</li>
           </ol>
           
         </nav>
 
-        <h1 class="display-4 text-left pb-2 pb-lg-3">Integrating with Deployed MLflow Endpoints</h1>
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Integrating Applications with Deployed MLflow Agent Endpoints</h1>
 
         <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
               <div class="d-flex align-items-center mb-4 me-4">
@@ -383,8 +383,17 @@
           <div class="col-lg-9 col-xl-8">
 
 
+<p class="fs-lg">
+Organizations accelerating knowledge work with large language models increasingly recognize that the real leverage comes not from standalone chat interfaces, but from embedding automated reasoning directly into the applications where work actually happens. MLflow ResponsesAgents enable this shift by providing a standardized, production-grade mechanism to package, deploy, and serve analytical intelligence across diverse application surfaces. 
+</p>
+
+<p class="fs-lg">
+As the next wave of GenAI systems moves analysis out of tools like ChatGPT and Claude Code and into operational software, we must integrate agent-driven reasoning into conversational interfaces, web and Slack chat experiences, automation workflows, structured information-extraction pipelines, industry-specific processes such as distribution-center reporting, batch data jobs, SQL table scans, and higher-order capabilities like decision intelligence, automated insights, next-action guidance, and root-cause analysis. 
+</p>
 
 
+
+<!--
 
 <p class="fs-lg">
   For organizations to get any value out of LLMs or agents they need to be integrated into applications at the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">knowledge work layer</a> of a business. 
@@ -448,12 +457,13 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
   </li>
 </ul>
 
+-->
 
-
+<!--
 <div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
   <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
 </div>
-
+-->
 
 
 
@@ -467,6 +477,7 @@ Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" ta
 </ul>
 -->
 
+<!--
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Contraints of Integrating Agents</h2>
 
 <p class="fs-lg">
@@ -499,6 +510,7 @@ the whole "secret sauce" of any use case is
 <li>the right contextual data to analyze</li>
 <li>a LLM with enough "reasoning horsepower"</li>
 </ol>
+-->
 
 
 
@@ -509,21 +521,224 @@ the whole "secret sauce" of any use case is
 
 
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ways to Integrate a MLflow ResponsesAgent into Your Application</h2>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ways to Integrate a MLflow 3.6 ResponsesAgent into Your Application</h2>
 
 <p class="fs-lg">
-  You can integrate a deployed <code>ResponsesAgent</code> from MLflow 3.6 into your application using either direct local inference or by exposing it as a microservice. The two primary patterns are <strong>direct Python integration</strong> using <code>mlflow.pyfunc.load_model()</code> and <strong>HTTP-based integration</strong> using <code>mlflow models serve</code>. Both allow you to plug the agent into chat apps, backend services, workflow tools, or batch pipelines.
+Integrating MLflow ResponsesAgents into these application patterns creates a foundation for scalable, embedded intelligence that transforms how organizations process information and make decisions.
+</p>
+
+
+<p class="fs-lg">
+  You can integrate a deployed <code>ResponsesAgent</code> from MLflow 3.6 into your application using either direct local inference or by exposing it as a microservice. The two primary patterns are:
+</p>
+
+<ol>
+   <li><strong>direct Python integration</strong> using the python code with <code>mlflow.pyfunc.load_model()</code></li>
+   <li><strong>HTTP-based integration</strong> using a standalone MLflow model server (<code>mlflow models serve</code>) for REST API access</li>
+</ol>
+
+<p class="fs-lg">
+   Both allow you to plug the agent into chat apps, backend services, workflow tools, or batch pipelines. 
+</p>
+
+
+<p class="fs-lg">
+  Now that we've established how we'll do the integration, let's see how this works out per generative AI application type.
 </p>
 
 
 
 
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Integration Strategies per Application Architecture</h2>
 
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry Integration</h2>
 <p class="fs-lg">
-  Use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
+   In this section we'll work through how each method works best for the <a href="architecture_patterns_for_integrating_agents_into_knowledge_work.html" target="_blank">3 major generative AI application architectures</a>:
+</p>
+
+<ul>
+  <li>Conversational User Interfaces</li>
+  <li>Workflow Automation</li>
+  <li>Decision Intelligence</li>
+</ul>
+
+<p class="fs-lg">
+
+  We'll start out with a strategy on how to integrate our deployed MLflow ResponsesAgent with a conversational user interface.
+
+</p>
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conversational User Interface Agent Integration</h2>
+
+<p class="fs-lg">
+
+Conversational user interfaces can take on multiple forms, but many times they are attempting to answer a user question by using specific data injected into a prompt coupled with specific instructions for this type of answer. One common form of this pattern is retrieval augmented generation (RAG).
+
+</p>
+
+<p class="fs-lg">
+
+  Retrieval Augmented Generation (RAG) is an approach that gives large language models access to live, external knowledge so they can deliver more accurate, current, and business-specific answers. Instead of relying only on what a model learned during training, RAG retrieves the most relevant data from trusted sources—such as internal systems, reports, or market feeds—and injects that information into the model’s reasoning process.
+
+</p>
+
+<p class="fs-lg">
+
+  These type of applications involve a single input query from the end user that is analyzed and then an agent decides what information it needs to answer the question. This is an ad-hoc style of queries (non-batch oriented) so we can use an Agent server-style of architecture here.
+
+</p>
+
+<p class="fs-lg">
+
+
+
+</p>
+
+
+<!--
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 2: HTTP Microservice Using <code>mlflow models serve</code></h2>
+-->
+<p class="fs-lg">
+  For conversational user interface applications we want to serve the agent as a standalone HTTP endpoint accessible from any programming language with a MLflow 3.6 model server.
+</p>
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">The <strong>MLflow Model Server</strong></h3>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+  The <strong>MLflow Model Server</strong> is a lightweight HTTP server that lets you serve any MLflow-packaged model or agent (including MLflow 3.6 <code>ResponsesAgent</code> models) as a REST endpoint without needing to build custom application code. It loads a model from a run or registry location, handles request and response formatting, and exposes a predictable API for inference.
+
+                </p>
+
+                <p class="pb-sm1 pb-md-1 mb-1">
+
+<strong>What it can do:</strong>
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+
+
+<ul >
+  <li><strong>Host models locally or in production</strong> using a simple CLI (<code>mlflow models serve</code>) or via Docker.</li>
+  <li><strong>Expose a standardized REST interface</strong> for prediction, including JSON input/output schemas enforced by MLflow.</li>
+  <li><strong>Serve multiple model flavors</strong>, including pyfunc, LLM/agent flavors, transformers, sklearn, and more.</li>
+  <li><strong>Handle request validation, batching, and logging</strong> depending on the model flavor.</li>
+  <li><strong>Integrate easily with downstream applications</strong> so dashboards, workflows, services, or automations can call the endpoint through HTTP.</li>
+</ul>
+
+
+                </p>
+
+
+
+              </div>
+            </div>
+
+
+<p class="fs-lg">
+  (Note: in the previous article we talked about how to get an agent registered in the MLflow Model Registry.)
+  
+</p>
+
+
+<p class="fs-lg">
+  To crank up a model server from the command line we'd use the command:
+  
+</p>
+
+
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-bash">
+mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
+</code>
+</pre>
+<p class="fs-lg">
+  Then call the REST API from your your HTTP application; a sample REST call from a python application is below.
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+import requests
+
+def call_agent(prompt):
+    url = "http://localhost:5000/invocations"
+    payload = {
+        "inputs": {
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        }
+    }
+    return requests.post(url, json=payload).json()
+</code>
+</pre>
+<p class="fs-lg">
+  Serving agent output with MLflow model server allows completely decoupled deployment so the agent can scale and update independently of the app.
+</p>
+
+
+
+
+<p class="fs-lg">
+
+  ...
+
+</p>
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Workflow Automation Agent Integration</h2>
+
+<p class="fs-lg">
+
+Generative AI is redefining workflow automation by adding cognitive decision-making and adaptability to traditional robotic process automation (RPA). While RPA handles structured, repetitive tasks, generative AI expands the scope to include unstructured data and complex judgments. 
+</p>
+
+<p class="fs-lg">
+This fusion allows organizations to automate not just routine operations, but also tasks requiring contextual understanding—such as processing customer requests, analyzing claims data, or interpreting technical diagnostics—making automation more flexible, accurate, and scalable.
+</p>
+
+<p class="fs-lg">
+
+Workflow automation may or may not be a user interface component to the system, depending on if you want a human to review the work before its committed back into the information processing stream. In cases such as <a href="retail_logistics_supplier_sla_information_extraction_with_agent_bricks.html" target="_blank">"structured information extraction from free text"</a> you generally would not have a human in the loop, but someone may want to spot check the results to make sure no errors are creeping into the system. This gives us two variations of workflow automation:
+
+</p>
+
+
+    <ol class="fs-lg">
+      <li>Batch Jobs</li>
+      <li>User Interface-based Knowledge Work Workflow Automation</li>
+    </ol>
+
+
+
+<p class="fs-lg">
+
+We'll start with batch jobs first because they have a more rightly integrated style due to the higher number of rows they typically process compared to ad-hoc knowledge work jobs.
+
+</p>
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Batch Job-Style Integration</h2>
+
+
+<p class="fs-lg">
+
+When we want to process large amounts of data (typically for a table row-scan operation) we want to eliminate as much latency as possible, so moving a copy of the latest agent locally to your batch application is a smart design stategy. The challenge is going to be getting the correct version of the latest agent, and that's where MLflow can help us again. We can use the MLflow Model Registry with the python MLflow api to get a copy of the correct agent version inside our application and be able to reliably access the agent logic.
+
+</p>
+
+
+<p class="fs-lg">
+  We can use the MLflow Model Registry to track stages (<code>Staging</code>, <code>Production</code>), enable rollbacks, and manage agent lifecycles. Your application always loads the live version by referencing:
 </p>
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-python">
@@ -536,11 +751,24 @@ agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
 
 
 
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 1: Direct Python Integration (pyfunc)</h2>
 <p class="fs-lg">
-  Load the agent directly into your backend (e.g., FastAPI, Flask, Django) for the lowest latency. This lets you call the agent inside your service’s process without a network hop.
+
+One of the most expensive things we can do in system-design is a network round trip.
+
 </p>
+
+<p class="fs-lg">
+  Load the agent directly into your batch job application (e.g., FastAPI, Flask, Django) for the lowest latency. This lets you call the agent inside your service’s process without a network hop.
+</p>
+
+
+<p class="fs-lg">
+
+  Inside our batch job application accessing model might looking something like the python example code below.
+
+</p>
+
+
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-python">
 import mlflow.pyfunc
@@ -555,18 +783,30 @@ def ask_agent(messages):
   This method is ideal for embedding the agent into microservices, scheduled jobs, and evaluation pipelines.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Option 2: HTTP Microservice Using <code>mlflow models serve</code></h2>
+
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Ad-Hoc Agent Query Integration</h2>
+
+
 <p class="fs-lg">
-  Serve the agent as a standalone HTTP endpoint accessible from any programming language.
+In cases where your agent is working with one record at a time, processing the record, and then updating the record in a table (for example) --- then the standard REST interface should work fine for agent deployment.
+</p>
+
+<p class="fs-lg">
+  Again we'd serve the agent as a standalone HTTP endpoint accessible from any programming language via the MLflow model server as shown in the command example below.
 </p>
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-bash">
 mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
 </code>
 </pre>
+
 <p class="fs-lg">
-  Then call the REST API from your backend:
+  Once we have the workflow agent deployed, then we can call the REST API from your workflow automation application similar to the example below.
 </p>
+
+
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-python">
 import requests
@@ -593,7 +833,56 @@ def call_agent(prompt):
 
 
 
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Decision Intelligence Agent Integration</h2>
 
+<p class="fs-lg">
+
+Decision Intelligence is the practice of merging together the right contextual enterprise information with the right business rules applied together to get you to set of decisions you need to overcome obstacles in your organization.
+
+</p>
+
+<p class="fs-lg">
+
+  The consuming application of generative AI decision intelligence applications is often dashboard or custom application. This makes it architecturally similar to conversational user interface applications, and so we will follow that design pattern here as well.
+
+</p>
+
+
+
+<p class="fs-lg">
+  Again, we'll serve the agent as a standalone HTTP endpoint accessible from any programming language with the MLflow model server. The command line example below shows an example of a model server being started and referencing (<code>serve -m "models:/my_agent_model/Production"</code>) a model registered with the MLflow model registry.
+</p>
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-bash">
+mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
+</code>
+</pre>
+
+
+<p class="fs-lg">
+  And then, from your dashboard logic, make a REST API call in python (as shown below) or any other language that supports REST queries via HTTP.
+</p>
+
+
+<pre class="line-numbers mt-5 mb-5">
+<code class="lang-python">
+import requests
+
+def call_agent(prompt):
+    url = "http://localhost:5000/invocations"
+    payload = {
+        "inputs": {
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        }
+    }
+    return requests.post(url, json=payload).json()
+</code>
+</pre>
+<p class="fs-lg">
+  Typically the output of the analysis will be shown in a card on the dashboard with labels or beside other KPIs, etc.
+</p>
 
 
 
@@ -603,7 +892,7 @@ def call_agent(prompt):
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary</h2>
 <p class="fs-lg">
-  MLflow offers flexible deployment strategies for <code>ResponsesAgent</code> models. Whether embedded directly in a Python service or deployed as a scalable HTTP microservice, MLflow ensures consistent agent lifecycle management, versioning, and reliability across all environments.
+  MLflow offers flexible deployment strategies for <code>ResponsesAgent</code> model integration. Whether embedded directly in a Python service or deployed as a scalable HTTP microservice, MLflow ensures consistent agent lifecycle management, versioning, and reliability across all environments.
 </p>
 
 

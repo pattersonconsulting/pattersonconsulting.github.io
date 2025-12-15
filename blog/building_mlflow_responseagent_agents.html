@@ -343,7 +343,7 @@
               <div class="d-flex align-items-center mb-4 me-4">
                 <span class="fs-sm me-2">By:</span>
                 <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Engineering Team
+                  Patterson Consulting Engineering Team
                   <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
                 </a>
               </div>
@@ -393,11 +393,41 @@
 </p>
 
 
+<p class="fs-lg">
 
 
+The top three reasons to build and deploy LLM agents using MLflow’s <code>ResponsesAgents</code> are:
+</p>
+ 
+<ol>
+ <li>standardization</li>
+ <li>operational reliability</li>
+ <li>application-grade integration</li>
+</ol>
+
+<p class="fs-lg">
+ First, MLflow provides a unified packaging and logging standard (“models from code”) that cleanly captures an agent’s instructions, tools, Python environment, and dependencies, ensuring every deployment is reproducible across development, staging, and production. 
+</p>
+
+<p class="fs-lg">
+ Second, MLflow delivers enterprise-ready governance through model versioning, registry workflows, access controls, observability, and trace-level telemetry—capabilities that conventional prompt-based workflows cannot provide at scale. 
+</p>
+
+<p class="fs-lg">
+
+Finally, ResponsesAgents turn LLM reasoning into a callable, production-safe service that can be invoked via REST, batch jobs, workflow automation, dashboards, or decision-intelligence applications, allowing organizations to embed automated reasoning directly into business systems rather than relying on ad-hoc chat interfaces.
+
+</p>
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Build Agents in the First Place?</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is ResponsesAgent?</h2>
+
+<p class="fs-lg">
+...
+</p>
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Build Agents in the First Place?</h2>
 <p class="fs-lg">
   The objective of agentic systems is not simply to be “agentic”—the real goal is accelerating the transformation of information into decisions. Organizations improve through only three mechanisms: automating work, improving information flow, and improving decision-making. Agents live directly next to enterprise data, enhancing both information flow and decision quality.
 </p>
@@ -415,7 +445,7 @@
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Building Agents Is Hard</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Building Agents Is Hard</h2>
 <p class="fs-lg">
   Building production agents introduces challenges across three dimensions: quality, control, and cost. First, high quality is difficult to enforce—LLMs can hallucinate, drift in behavior, or generate inconsistent structured outputs. Many enterprise workflows require domain experts to validate and shape behavior, meaning evaluation must go beyond prompt engineering.
 </p>
@@ -427,7 +457,7 @@
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why MLflow Is the Right Abstraction for Agents</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why MLflow Is the Right Abstraction for Agents</h2>
 <p class="fs-lg">
   MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
 </p>
@@ -461,7 +491,7 @@ ResponsesAgent lets you create agents with any third-party framework (LangChain,
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Introducing ResponsesAgent</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Introducing ResponsesAgent</h2>
 <p class="fs-lg">
   <code>ResponsesAgent</code> is MLflow’s purpose-built model interface for building generative and tool-using agents. It standardizes conversational output, tool-calling semantics, long-running tool operations, streaming, tracing, and automatic model signature inference. It also guarantees compatibility with Databricks AI Playground and AI Gateway telemetry.
 </p>
@@ -472,7 +502,7 @@ ResponsesAgent lets you create agents with any third-party framework (LangChain,
 
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is MLflow’s ResponsesAgent?</h2>
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What is MLflow’s ResponsesAgent?</h2>
 <p class="fs-lg">
   The <code>ResponsesAgent</code> in <code>MLflow 3.6</code> is a specialized model interface designed for modern conversational AI applications. It extends the traditional <code>PyFunc</code> abstraction to support multi-turn dialogue, tool-calling workflows, agent-to-agent communication, and structured OpenAI-style requests and responses. This makes it a strong foundation for chatbots, decision assistants, and automated knowledge-work applications needing governance, traceability, and repeatable behavior.
 </p>
@@ -480,7 +510,20 @@ ResponsesAgent lets you create agents with any third-party framework (LangChain,
   Because the <code>ResponsesAgent</code> is fully integrated into MLflow’s lifecycle — including tracking, lineage, registry, and serving — teams can deploy advanced generative AI solutions with the same operational rigor used for traditional ML models. It enables rapid prototyping while supporting safe and scalable production deployments.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Features of ResponsesAgent</h2>
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Running Agents on MLflow Is a Competitive Advantage</h2>
+<p class="fs-lg">
+  Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
+</p>
+
+<p class="fs-lg">
+  Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
+</p>
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Features of ResponsesAgent</h2>
 <p class="fs-lg">
   <code>ResponsesAgent</code> provides all the capabilities required to build intelligent, tool-aware chat applications without custom infrastructure. It manages the entire conversational workflow — including role-based messaging, memory, metadata, and execution of external functions — while tracking performance and token usage for cost and efficiency monitoring.
 </p>
@@ -497,27 +540,8 @@ ResponsesAgent lets you create agents with any third-party framework (LangChain,
 </ul>
 
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Features</h2>
 
-<p class="fs-lg todo_edit">
-  The <code>ResponsesAgent</code> introduces a powerful and standardized approach to orchestrating LLM-driven workflows with structured inputs and outputs.
-</p>
 
-<h3 class="h3 mt-4 mb-3">Structured Response Handling</h3>
-<p class="fs-lg todo_edit">
-  The <code>ResponsesAgent</code> processes well-defined interaction data that aligns with modern chat completion standards:
-</p>
-<ul class="fs-lg">
-  <li><strong>Messages:</strong> Handles full conversation context with system, user, and assistant roles</li>
-  <li><strong>Tool Calls:</strong> Supports structured function execution with validated parameters</li>
-  <li><strong>Usage Tracking:</strong> Monitors token consumption and runtime performance</li>
-  <li><strong>Metadata:</strong> Captures configuration details and contextual state for observability</li>
-</ul>
-
-<h3 class="h3 mt-4 mb-3">OpenAI API Compatibility</h3>
-<p class="fs-lg todo_edit">
-  <code>ResponsesAgent</code> is fully compatible with OpenAI’s Chat Completions API — ensuring seamless integration with existing applications and tools. This includes aligned request formats, response schemas, endpoints, and behavior expectations.
-</p>
 
 <h3 class="h3 mt-4 mb-3">MLflow Integration</h3>
 <p class="fs-lg todo_edit">
@@ -571,34 +595,59 @@ class MathAgent(ResponsesAgent):
   MLflow automatically infers the typed signature: messages → messages. No manual schema definition is required.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Step 3: Log the Agent with MLflow</h2>
-<p class="fs-lg">
-  Logging the agent converts your in-memory Python object into a fully packaged, versioned, reproducible MLflow model. This is critical—MLflow captures source code, dependencies, tools, and signatures, ensuring the agent can be reloaded and reproduced across machines, workspaces, and future releases.
+
+
+<p class="fs-lg todo_edit">
+  The <code>ResponsesAgent</code> introduces a powerful and standardized approach to orchestrating LLM-driven workflows with structured inputs and outputs.
 </p>
 
-<pre class="line-numbers mt-5 mb-5"><code class="lang-python">
-import mlflow
+<h3 class="h3 mt-4 mb-3">Structured Response Handling</h3>
+<p class="fs-lg todo_edit">
+  The <code>ResponsesAgent</code> processes well-defined interaction data that aligns with modern chat completion standards:
+</p>
+<ul class="fs-lg">
+  <li><strong>Messages:</strong> Handles full conversation context with system, user, and assistant roles</li>
+  <li><strong>Tool Calls:</strong> Supports structured function execution with validated parameters</li>
+  <li><strong>Usage Tracking:</strong> Monitors token consumption and runtime performance</li>
+  <li><strong>Metadata:</strong> Captures configuration details and contextual state for observability</li>
+</ul>
 
-with mlflow.start_run():
-    mlflow.agents.log_model(
-        agent=MathAgent(),
-        artifact_path="math_agent",
-        registered_model_name="main.ai.tools.math_agent"
-    )
-</code></pre>
-
-<p class="fs-lg">
-  Once logged, the agent becomes a governed MLflow model that can be registered in Unity Catalog, promoted through staging/production, evaluated, and deployed to Mosaic AI Model Serving. Logging gives MLflow something concrete to govern, lineage-track, and deploy.
+<h3 class="h3 mt-4 mb-3">OpenAI API Compatibility</h3>
+<p class="fs-lg todo_edit">
+  <code>ResponsesAgent</code> is fully compatible with OpenAI’s Chat Completions API — ensuring seamless integration with existing applications and tools. This includes aligned request formats, response schemas, endpoints, and behavior expectations.
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Running Agents on MLflow Is a Competitive Advantage</h2>
-<p class="fs-lg">
-  Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
-</p>
 
-<p class="fs-lg">
-  Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
-</p>
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">OpenAI's Chat Completions API</h3>
+
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+
+OpenAI’s <b>Chat Completions API</b> is a hosted service that lets applications send a structured list of messages—system, user, and assistant—to a large language model and receive a generated response. It is the API behind most modern conversational and reasoning-style interactions with OpenAI models. Developers use it to run instruction following, multi-turn dialogues, tool-calling, and structured output generation. In short, it is the primary interface for invoking OpenAI models to produce conversational, analytical, or task-oriented responses in applications.
+
+                </p>
+
+
+
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Conclusion</h2>
 <p class="fs-lg">
@@ -636,13 +685,13 @@ with mlflow.start_run():
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/deploying_agents_to_mlflow_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
-                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          <h4 class="card-title">Deploying Agents to MLflow</h4>
+                          <p class="card-text">This article explains how ...</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                <a class="btn btn-lg btn-link px-0" href="deploying_agents_to_mlflow.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>

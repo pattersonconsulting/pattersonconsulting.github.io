@@ -331,7 +331,7 @@
           
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">Home</a></li>
-            <li class="breadcrumb-item"><a href="../">Blog Index</a></li>
+            <li class="breadcrumb-item"><a href="./blog_index.html">Blog Index</a></li>
             <li class="breadcrumb-item active" aria-current="page">Deploying Agents to MLflow</li>
           </ol>
           
@@ -619,6 +619,104 @@ You can also provide a python file that contains a <code>ResponsesAgent</code> s
 Once we have our model URI from MLflow, we want to register the agent in the MLFlow Model Registry to manage its lifecycle.
 
 </p>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">What Does <code>mlflow.start_run()</code> Do?</h3>
+
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+  <strong>What does <code>mlflow.start_run()</code> do in MLflow 3.6?</strong><br><br>
+  <code>mlflow.start_run()</code> creates (or resumes) a run context—a structured container where MLflow logs everything associated with an execution, such as:
+
+                </p>
+
+
+
+
+              <ul class="fs-lg">
+                <li>Parameters</li>
+                <li>Metrics</li>
+                <li>Artifacts (files, code, prompt assets, knowledge bases, etc.)</li>
+                <li>Logged models and agents</li>
+                <li>Run metadata (timestamps, status, user, environment, etc.)</li>
+              </ul>
+
+              <p class="pb-sm3 pb-md-4 mb-2">
+                It’s like pressing the “Record” button: everything you log inside this context is versioned and attached to that run.
+              </p>
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type.
+</p>
+
+
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+
+  A run represents a training lifecycle event, such as:
+</p>
+
+<ul class="fs-lg">
+  <li>Training a regression model</li>
+  <li>Fine-tuning a neural network</li>
+  <li>Running feature experiments</li>
+</ul>
+
+<p class="pb-sm3 pb-md-4 mb-2">
+  It captures the full lineage of the model including inputs, outputs, and lifecycle. So if you retrain tomorrow you get a new run.
+</p>
+
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+<storng>Ok, but how does this relate to agents?</storng>
+</p>
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+  A run represents the packaging and publishing event: defining agent behavior (system prompt, tools, routing logic), bundling assets (text files, embeddings, yaml configs), and versioning the code and prompt instructions.
+</p>
+
+<p class="pb-sm3 pb-md-4 mb-2">
+  Agents aren’t trained—they’re versioned and governed like other MLflow models. A ResponsesAgent run is basically: “I am capturing how this agent works at this moment in time and what it depends on.”
+</p>
+
+
+
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1252,6 +1350,8 @@ This happens once, at model logging time.
   They are <strong>not</strong> copied again for each run or prediction.
 </p>
 -->
+
+<!--
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. Each REST inference call may generate a run — but runs only store logs, metadata, and traces</h2>
 <p class="fs-lg">
   When the REST endpoint is invoked, MLflow may create a <strong>new run</strong>, but the run contains only:
@@ -1478,7 +1578,7 @@ This happens once, at model logging time.
   </tbody>
 </table>
 
-
+-->
 
 
 
@@ -1488,38 +1588,6 @@ This happens once, at model logging time.
 </p>
 
 
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Deploying HTTP Microservice Using <code>mlflow models serve</code></h2>
-<p class="fs-lg">
-  Serve the agent as a standalone HTTP endpoint accessible from any programming language.
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-bash">
-mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
-</code>
-</pre>
-<p class="fs-lg">
-  Then call the REST API from your backend:
-</p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-import requests
-
-def call_agent(prompt):
-    url = "http://localhost:5000/invocations"
-    payload = {
-        "inputs": {
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    }
-    return requests.post(url, json=payload).json()
-</code>
-</pre>
-<p class="fs-lg">
-  This allows completely decoupled deployment so the model can scale and update independently of the app.
-</p>
 
 
 <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How MLflow Model Serving Handles Authentication and Authorization</h2>
@@ -1590,13 +1658,13 @@ def call_agent(prompt):
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/integrating_mlflow_endpoints_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
-                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          <h4 class="card-title">Integrating Applications with Deployed MLflow Agent Endpoints</h4>
+                          <p class="card-text">...</p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                <a class="btn btn-lg btn-link px-0" href="integrating_mlflow_endpoints.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>

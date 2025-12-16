@@ -401,24 +401,21 @@
 
 -->
 
-<p class="fs-lg narrative">
-  This article is focused on what is MLflow and how it can help you deploy and integrate agents into applications.
+<p class="fs-lg ">
+  In this guide, we’ll walk through why MLflow is becoming the enterprise standard for agentic workloads, how <a href="https://mlflow.org/docs/3.6.0/genai/serving/responses-agent/" target="_blank"><code>ResponsesAgent</code></a> offers a clean and typed development interface. In future articles we'll walk you through how to build a <code>ResponsesAgent</code> agent on MLflow, deploy it, and then integtrate it into an application architecture from the previous article.
 </p>
 
-<p class="fs-lg todo_edit">
-
-  what IS mlflow?
-
-</p>
-
-
+<!--
 <p class="fs-lg">
 MLflow provides a unified framework to manage the entire lifecycle of both traditional ML models and modern LLM agents — from experiment tracking and versioning to packaging, deployment, and governance. It ensures every step is reproducible, auditable, and easy to operationalize, so teams can iterate quickly during development and still maintain high standards of reliability and control in production.
 
 </p>
+-->
 
 
-
+<p class="fs-lg">
+MLflow provides the operational foundation required to transform agent logic—prompts, contextual data access, and LLM reasoning—into a governed, production-grade service that can be embedded directly into enterprise knowledge-work applications. Just as data platforms manage the lifecycle of tables and materialized views, MLflow manages the lifecycle of agents by packaging their code and instructions, capturing execution environments, versioning them, and exposing them through standardized REST endpoints. 
+</p>
 
 
 
@@ -426,29 +423,25 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 
 
 <p class="fs-lg">
-  Running agents on MLflow standardizes how teams build, package, and operate agentic systems. Every agent follows the same interface and deployment lifecycle, dramatically improving operational consistency and reducing friction across teams. Unity Catalog adds enterprise-grade governance, ensuring agent code, tool access, data permissions, and deployment states are all fully auditable.
+MLflow unifies agent functionality under a consistent, reproducible deployment model, allowing conversational interfaces, workflow automation systems, dashboards, and batch processes to rely on agents with predictable semantics, controlled data access, and trace-level observability. <b>MLflow effectively becomes the enterprise “agent server” layer</b>, enabling secure access to private data, deterministic execution, and lineage-rich transparency wherever knowledge work occurs.
+</p>
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_agent_dashboard.png" alt="Decision Intelligence Architecture">
+</div>
+
+
+<p class="fs-lg">
+Running agents on MLflow standardizes how teams build, operate, and iterate on agentic systems. By providing the four pillars of enterprise ML—Tracking, Models, Registry, and Serving—MLflow allows agents to inherit the same lifecycle and governance model as any other enterprise ML asset. With features such as environment capture, shadow deployments, rollbacks, version aliasing, and MLflow Tracing, teams gain deep visibility into agent behavior and the ability to evolve configurations safely. 
+</p>
+<p class="fs-lg">
+For Databricks users, Unity Catalog strengthens this foundation with enterprise-grade governance across code, tools, and data permissions as it natively integrates with MLflow functionality across the Databricks platform.
 </p>
 
 <p class="fs-lg">
-  Beyond governance, MLflow delivers deep observability and repeatability. MLflow Tracing captures messages, tool calls, intermediate reasoning, latency, and cost—giving teams end-to-end visibility into behavior. With versioning, shadow deployments, rollbacks, and side-by-side evaluations, MLflow allows rapid iteration while maintaining production safety and stability.
+Because MLflow is already embedded in most enterprise MLOps stacks, integrating <code>ResponsesAgents</code> becomes straightforward: they can be deployed, evaluated, traced, and governed through the same unified infrastructure that enterprises already trust.
 </p>
-
-
-<p class="fs-lg">
-
-  ... 4 pillars
-
-</p>
-
-
-<p class="fs-lg todo_edit">
-  MLflow provides the four core pillars of enterprise ML—Tracking, Models, Registry, and Serving. These abstractions standardize how code, environments, metrics, and deployments move through a pipeline. Agents fit naturally into this system because MLflow now treats them as <em>first-class generative models</em> with typed signatures.
-</p>
-
-<p class="fs-lg todo_edit">
-  This makes agents operationally simple: they inherit the same lifecycle as any other MLflow model. They can be versioned, governed, permissioned, traced, and deployed to Mosaic AI Model Serving in a single command. They integrate seamlessly with AI Playground, agent evaluation workflows, and MLflow lineage, tying together code → data → outputs → deployed behavior. Since MLflow is already embedded in most enterprise MLOps stacks, adopting agents becomes almost frictionless.
-</p>
-
 
 <p class="fs-lg">
   MLflow is organized around <strong>four core pillars</strong> that support the end-to-end machine learning lifecycle — plus a rapidly growing <strong>fifth emerging component</strong> focused on real-time production impact.
@@ -500,10 +493,22 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 
 <p class="fs-lg">
 
-  ... ResponsesAgent abstracton
-
+In the MLflow api <code>ResponsesAgent</code> acts as a unifying wrapper that cleanly embeds agents built with LangChain, DSPy, custom Python classes, or other tool-orchestration frameworks into the MLflow runtime. 
 </p>
 
+<p class="fs-lg">
+<b>Rather than rewriting agent logic, developers encapsulate their code within the ResponsesAgent class, allowing MLflow to standardize the agent’s inputs, outputs, tool-call semantics, and conversational behavior.</b>
+</p>
+
+<p class="fs-lg">
+This wrapper ensures agents remain compatible with Databricks AI Playground, Mosaic AI Model Serving, and MLflow’s evaluation and tracing infrastructure without altering the underlying framework-specific implementation.
+</p>
+<p class="fs-lg">
+This abstraction also enables teams to build multi-agent systems with heterogeneous frameworks while maintaining a uniform operational surface area. Every agent—regardless of how it was built—exposes a consistent schema, supports OpenAI-compatible request formatting, and inherits MLflow’s packaging and governance capabilities.
+
+
+</p>
+<!--
 <p class="fs-lg">
  The flavour allows you to wrap arbitrary inference logic — including preprocessing, post-processing, branching, or non-standard frameworks — by implementing either a function or class (via PythonModel) and then logging it via mlflow.pyfunc. MLflow
 
@@ -511,7 +516,7 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 <p class="fs-lg">
  In practical terms: if you have a bespoke demand-forecasting engine, or a composite model that spans deep-learning + deterministic logic + business-rules (e.g., OTIF prediction + inventory allocation), you can embed all that and still give the business a standard “load → predict” interface.
 </p>
-
+-->
 
 
 
@@ -523,7 +528,7 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 
 <p class="fs-lg">
 
-  ... breakdown key parts
+  Once you have your agent wrapped in the <code>ResponsesAgent</code> wrapper, deploying to MLflow becomes simpler once you understand the services available to you. These services all support the functionality needed to operate models in a modern generative AI application architecture. Let's start by looking at how MLflow represents models and agents during deployment.
 
 </p>
 
@@ -534,7 +539,51 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 
 <p class="fs-lg">
 
-  ... 
+Agents in MLflow 3.6 are packaged using the standard MLflow model format, which bundles an agent’s Python code, prompt instructions, configuration files, tool definitions, and environment specification into a single immutable model artifact. Packaging converts a Python-defined ResponsesAgent into a deployable snapshot stored in the MLflow tracking server’s artifact store, ensuring that the model server can reconstruct the exact agent implementation—its code, dependencies, and resources—without relying on the developer’s environment. 
+</p>
+
+<p class="fs-lg">
+In MLflow, these packaged assets are called artifacts: versioned files attached to a run that record everything needed to reproduce or serve the agent, including the MLmodel definition file, Python code directories, YAML configuration, dependency manifests, and any additional resources such as embeddings or retrieval indices. Artifacts serve as the durable, serialized representation of the agent’s logic and supporting assets, enabling consistent behavior across development, staging, and production deployments.
+
+</p>
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Models from Code</h3>
+
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Databricks recommends using <a href="https://mlflow.org/docs/latest/ml/model/models-from-code/" target="_blank">MLflow's Models from Code</a> capability for deploying code agents. Under this approach, the agent’s implementation is stored as a Python file, and its execution environment is recorded as a set of required packages. When the agent is deployed, MLflow reconstructs the environment and executes the Python file to load the agent into memory so it can serve inference requests reliably and consistently across deployments.
+
+                </p>
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+This enables models to be versioned, moved across environments (dev → test → prod), and deployed consistently with dependencies captured (via Conda or pip). 
+</p>
+
+
+
+
+
+              </div>
+            </div>
+
+
+<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs</h2>
+
+<p class="fs-lg">
+
+Runs are the foundational execution records in MLflow—the system’s mechanism for capturing exactly what happened during a single attempt to execute code, train a model, or invoke an agent. Each run serves as a structured envelope of metadata: the parameters used, the metrics generated, the tags applied, the execution context, and any artifacts produced during that event. In other words, a run is not the model itself, nor the deployment environment; it is the authoritative log of one discrete execution within the MLflow tracking system.
+</p>
+
+<p class="fs-lg">
+
+In the context of MLflow 3.6 and ResponsesAgents, a run is created each time the agent’s `predict()` method is invoked (when logging is enabled). This run captures the full inference record: user inputs, agent outputs, reasoning traces, tool calls, timing information, and any produced artifacts. It provides observability and auditability for every agent execution and decouples inference events from deployment or model registration workflows. Put simply, a run in MLflow is the formal, immutable record of a single execution of agent logic—an essential building block for traceability, quality control, and reproducible decision automation.
+
 
 </p>
 
@@ -542,29 +591,37 @@ MLflow provides a unified framework to manage the entire lifecycle of both tradi
 <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Traces</h2>
 
 <p class="fs-lg">
-
-  ... 
-
+  In the context of operating an agent logged with <code>mlflow.pyfunc.log_model()</code>, a <strong>trace</strong> is the structured record of the agent’s internal reasoning steps and tool interactions during a single inference call. While a run captures the overall execution, a trace reveals the detailed workflow the agent followed to produce its output.
 </p>
-
-
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs</h2>
 
 <p class="fs-lg">
-
-  ... 
-
+  A trace may include:
 </p>
 
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Agent Tracking</h2>
+<ul class="fs-lg">
+  <li>the sequence of reasoning steps taken by the agent</li>
+  <li>intermediate thoughts or chain-of-thought style signals (when enabled)</li>
+  <li>tool calls and their inputs/outputs</li>
+  <li>intermediate results used to form the final response</li>
+  <li>timing information for each internal step</li>
+</ul>
 
 <p class="fs-lg">
-
-  ... 
-
+  Traces provide the fine-grained observability needed for debugging, validation, and improving agent behavior by showing <em>how</em> the agent arrived at its answer, not just the final output.
 </p>
+
+
+
+
+
+
+<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Tracking</h2>
+
+
+<p class="fs-lg">
+MLflow model tracking provides a structured and governed mechanism for managing LLM-based agents packaged with <code>mlflow.pyfunc.log_model()</code>. When an agent is logged, MLflow creates a run that captures a complete snapshot of the agent’s code, prompts, configuration files, tools, and Python environment. This run becomes the authoritative lineage record for the agent’s behavior at that moment in time, enabling reproducibility and consistent deployment. The pyfunc wrapper standardizes inference through a uniform <code>predict()</code> interface, allowing MLflow’s model server to reliably reconstruct and serve the agent across development, staging, and production environments.
+</p>
+
 
 
 
@@ -603,37 +660,13 @@ It’s important to distinguish between <strong>logging</strong> a model and <st
               </div>
             </div>
 
-<!--
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Logging a Model</h2>
-
-
-<p class="fs-lg">
-  It’s important to distinguish between <strong>logging</strong> a model and <strong>registering</strong> a model:
-</p>
-
-<ul class="fs-lg">
-  <li>
-    <strong>Logging a Model:</strong> Saves a model artifact to the MLflow Tracking Server as part of an experiment run.
-  </li>
-  <li>
-    <strong>Registering a Model:</strong> Adds the saved model to the centralized Model Registry for lifecycle governance and deployment workflows.
-  </li>
-</ul>
-
-<p class="fs-lg">
-  Together, these capabilities provide a robust foundation for promoting stable, traceable models into production environments.
-</p>
--->
 
 
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Registry</h2>
 
 <p class="fs-lg">
-
-  ... 
-
+Once logged in the Tracking Server, the agent can be registered in the MLflow Model Registry, where it gains lifecycle management capabilities such as versioning, promotion, rollback, and alias-based deployment (e.g., <code>models:/agent_name/Production</code>). This integration ensures that downstream applications remain stable while new agent versions are iterated and deployed behind the scenes. By tracking agents as MLflow models, organizations gain operational reliability, governance, and observability—transforming a Python-defined agent into a production-ready, version-controlled intelligence service.
 </p>
-
 
 
 
@@ -666,54 +699,40 @@ It’s important to distinguish between <strong>logging</strong> a model and <st
 
 
 
-<p class="fs-lg">
-Key Benefits of the Model Registry
+
+
+
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Options for Operating MLflow</h3>
+
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+  The <code>MLflow Model Registry</code> (and Tracking Server) are both supported in both open-source (OSS) MLflow and managed enterprise platforms such as Databricks. The functionality remains consistent, but managed platforms extend governance, collaboration, and security capabilities for production-scale operations.
+
+                </p>
+
+
+
+<p class="pb-sm3 pb-md-4 mb-2">
+  In the OSS version of MLflow, users can manage the full lifecycle of machine learning models through both a UI and rich APIs. This includes registering models, tracking version history, applying tags and descriptions, and promoting models between stages such as <code>Staging</code> and <code>Production</code>. Additionally, you'll have to self manage the MLFflow services either on local hardware or in the cloud.
 </p>
 
-<ul>
-<li>Centralized Store: A single place to manage all your models.</li>
-<li>Versioning: Tracks new versions automatically (e.g., Model-1, Model-2).</li>
-<li>Lifecycle Stages: Transition models to Staging, Production, or Archived.</li>
-<li>Discovery: Helps teams find and use models across projects. </li>
-</ul>
+<p class="pb-sm3 pb-md-4 mb-2">
 
-<!--
-<h3 class="h4 mt-4 mb-3">Model Registry Capabilities</h3>
+  The latest version of the Databricks cloud platform (with Unity Catalog) includes these services integrated. If you are a Databricks platform user you can configure the services with the UX or with its python APIs.
 
-<p class="fs-lg">
-  The <code>MLflow Model Registry</code> includes several important features that streamline model development, collaboration, and deployment.
 </p>
 
-<ul class="fs-lg">
-  <li>
-    <strong>Model Versioning:</strong> Each iteration of a model is logged as a new version, enabling side-by-side comparisons and controlled promotion to serving environments. Versions are automatically assigned increasing IDs, and can also be associated with human-friendly aliases.
-  </li>
-  <li>
-    <strong>Model Aliasing:</strong> Provides mutable, named references (e.g., <code>Production</code>, <code>Champion</code>) that allow teams to swap deployed models without updating downstream systems.
-  </li>
-  <li>
-    <strong>Model Tagging:</strong> Supports custom key-value metadata for organizing, filtering, and documenting model artifacts across the registry.
-  </li>
-  <li>
-    <strong>Model Annotations:</strong> Allows scientists and engineers to attach descriptive notes, improving context, auditability, and collaboration.
-  </li>
-</ul>
 
-<p class="fs-lg">
-  These capabilities help ensure that every model managed in MLflow remains trackable, well-documented, and production-ready.
-</p>
--->
+              </div>
+            </div>
 
 
-<h3 class="h3 mt-4 mb-3">Options for Running the Model Registry</h3>
 
-<p class="fs-lg">
-  The <code>MLflow Model Registry</code> is supported in both open-source (OSS) MLflow and managed enterprise platforms such as Databricks. The functionality remains consistent, but managed platforms extend governance, collaboration, and security capabilities for production-scale operations.
-</p>
-
-<p class="fs-lg">
-  In the OSS version of MLflow, users can manage the full lifecycle of machine learning models through both a UI and rich APIs. This includes registering models, tracking version history, applying tags and descriptions, and promoting models between stages such as <code>Staging</code> and <code>Production</code>.
-</p>
 
 
 
@@ -723,8 +742,17 @@ Key Benefits of the Model Registry
   The newest area of expansion in MLflow is integrated <code>Deployments</code> / <code>Model Serving</code>. This simplifies the operational footprint required to deliver real-time inference — directly from the MLflow platform — while capturing cost, telemetry, and performance data for continuous improvement.
 </p>
 
+<p class="fs-lg">
+  Once we work through putting together our first <code>ResponsesAgent</code> in the <a href="building_mlflow_responseagent_agents.html">next article</a>, we'll then work through starting a MLflow Model Server and deploying our agent to the server for application integration.
+</p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Standard Interface for Agent Design: ResposesAgent</h2>
+<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Summary and Building with ResposesAgent</h2>
+
+<p class="fs-lg">
+
+  In this article we explained why and how MLflow is a great option for your "agent server" in your generative AI applications.
+
+</p>
 
 <p class="fs-lg">
 
@@ -732,406 +760,12 @@ Key Benefits of the Model Registry
 
 </p>
 
-
-
-
-<br/>
-
-<hr/>
-<div>older code</div>
-<hr/>
-
-<br/>
-<br/>
-<br/>
-
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Packaging, deployment & portability</h2>
-
 <p class="fs-lg">
- The module defines a self-contained filesystem format: a directory with metadata (MLmodel), code, data, and environment descriptor.
-</p>
-<p class="fs-lg">
-This enables models to be versioned, moved across environments (dev → test → prod), and deployed consistently with dependencies captured (via Conda or pip). For your smart-city / retail-supply-chain use-cases this means models trained in one team can be reliably consumed by another (ops, IoT, etc.) without “it runs in my notebook” risk.
+In the <a href="building_mlflow_responseagent_agents.html">next article</a>, we’ll walk through how <code>ResponsesAgent</code> offers a clean and typed development interface and why packaging agents as MLflow models unlocks significant governance and deployment benefits. We'll also put together a "hello world" <code>ResponsesAgent</code> so you can walk through the process before we move on to deploying the agent.
 </p>
 
 
 
-
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tracking</h2>
-<p class="fs-lg">
-  <code>MLflow Tracking</code> allows teams to log, compare, and visualize all the artifacts that matter.
-</p>
-
-
-<p class="fs-lg">
-An <code>artifact</code> is any file or directory that you log alongside a run or a model—such as data files, configuration files, prompts, source code, images, or serialized model assets—so that MLflow can store, version, and later retrieve them as part of the model’s reproducible package.
-</p>
-<p class="fs-lg">
-Artifacts are not parameters or metrics; they are actual files that MLflow saves in the run’s artifact store or inside an MLflow model’s artifact directory.
-</p>
-
-<p class="fs-lg">
-  Parameters, metrics, model versions, datasets, and other outputs are easily compared — enabling highly collaborative and reproducible experimentation.
-</p>
-
-
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tracking an Agent</h2>
-
-
-
-<p class="fs-lg">
-MLflow Tracking and <code>ResponsesAgent</code> work together closely in MLflow 3.6, but each serves a different role. Tracking and Tracing act as the “flight recorder,” while the agent itself — your logic, tools, and model calls — is the “thing that flies.” When you run an agent packaged and deployed through MLflow, every prediction call can generate a trace of the conversation, tool calls, and intermediate steps, which is automatically captured by MLflow Tracking if a tracking server is configured.
-</p>
-
-<p class="fs-lg">
-The interaction happens across three layers. First, the <code>ResponsesAgent</code> defines the system instructions, tool usage, and behavior routing. Second, you package and deploy the agent as an MLflow Model using <code>mlflow.agents.log_model</code>, which wraps your agent in a standardized <code>predict()</code> interface. Finally, when that model is run — locally via <code>mlflow.pyfunc.load_model()</code> or through a model serving endpoint — MLflow Tracking and Tracing automatically record the entire execution: inputs, outputs, intermediate messages, performance metrics, and any custom logging you add. In the MLflow UI, this information appears both as traditional experiment runs and in the “Traces” view for step-by-step agent behavior.
-</p>
-
-<p class="fs-lg">
-This means you gain observability, governance, repeatability, and lineage for agents just as you would for more traditional ML models. Agents evolve rapidly, so capturing these details is essential for debugging and comparing versions. By logging the agent as a model and running it through MLflow’s interfaces, you get tracking “for free,” helping you understand how prompts perform, which tools get invoked, and how costs and latency behave. If running in Databricks, Unity Catalog further provides access controls and lineage over data and tools your agent uses.
-</p>
-
-<p class="fs-lg todo_edit">
-once the agent is packaged as an MLflow model and run through MLflow’s predict interface, you get tracking for free, provided your tracking server is configured.
-</p>
-
-
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">1. Where Tracking Shows Up With ResponsesAgent</h2>
-<p class="fs-lg">
-When you run an agent that’s packaged and deployed via MLflow 3.6:
-</p>
-<p class="fs-lg">
-– The <strong>agent call itself</strong> is treated as an MLflow “generation” (or series of generations).  
-– Each call can generate:
-<ul class="fs-lg">
-  <li>A <strong>trace</strong>: tree/graph of messages, tool calls, sub-agents, etc.</li>
-  <li>One or more <strong>runs / logged artifacts</strong> attached to that trace.</li>
-</ul>
-</p>
-<p class="fs-lg">
-In other words:
-</p>
-<p class="fs-lg">
-<em>You call <code>agent.predict()</code> (or hit the model’s REST endpoint) → MLflow Tracking automatically records the conversation, parameters, tools used, and outputs as structured telemetry.</em>
-</p>
-<p class="fs-lg">
-Depending on how you configure it, this shows up in:
-<ul class="fs-lg">
-  <li>The <strong>MLflow UI “Traces”</strong> view (for step-by-step agent behavior).</li>
-  <li>The <strong>usual runs/artifacts</strong> view (for parameters, metrics, and artifacts you explicitly log yourself).</li>
-</ul>
-</p>
-
-
-
-
-<!--
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">2. The Three Layers: Agent, Model, and Tracking</h2>
-<p class="fs-lg">
-You can think of the interaction across three layers:
-</p>
-<ol class="fs-lg">
-  <li>
-    <strong>Agent layer (<code>ResponsesAgent</code> subclass)</strong><br>
-    – Your Python class defines:  
-    • System instructions  
-    • Tools / functions  
-    • Routing, guardrails, etc.  
-    – When you call it (locally or via a model server), it orchestrates the conversation and tools.
-  </li>
-  <br>
-  <li>
-    <strong>Model packaging &amp; serving (MLflow Models)</strong><br>
-    – You “log” the agent as a model (e.g., <code>mlflow.agents.log_model(agent=..., ...)</code>).  
-    – MLflow wraps your agent in a standardized model interface:  
-    • A <code>predict()</code> method with a well-defined input schema (messages, parameters, etc.).  
-    – When deployed, that model exposes an HTTP endpoint or can be loaded with <code>mlflow.pyfunc.load_model()</code>.
-  </li>
-  <br>
-  <li>
-    <strong>Tracking &amp; Tracing</strong><br>
-    – When the model’s <code>predict()</code> is invoked:  
-    • MLflow’s <strong>tracing hooks</strong> capture messages, tool calls, latencies, and outputs.  
-    • If you have a tracking server configured, this data is persisted and visible in the UI.  
-    – You can also <strong>manually log extra metrics and artifacts</strong> inside the agent’s code using the normal tracking API (<code>mlflow.log_metric</code>, <code>mlflow.log_params</code>, etc.) if you want.
-  </li>
-</ol>
-<p class="fs-lg">
-So: <strong>the agent runs through the MLflow Model interface; that interface is instrumented by MLflow Tracking / Tracing.</strong>
-</p>
-
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">3. What Exactly Gets Tracked During an Agent Run?</h2>
-<p class="fs-lg">
-With a <code>ResponsesAgent</code>-based model in 3.6, MLflow tracking can capture things like:
-</p>
-<ul class="fs-lg">
-  <li><strong>Input/Output messages</strong><br>
-    – User queries<br>
-    – System prompts<br>
-    – Final responses</li>
-  <br>
-  <li><strong>Intermediate reasoning</strong><br>
-    – Tool calls (which tool was invoked, with what args)<br>
-    – Tool results<br>
-    – Sub-agent calls, if you’re composing agents</li>
-  <br>
-  <li><strong>Performance &amp; Cost</strong><br>
-    – Latency per step<br>
-    – Overall latency<br>
-    – Token counts / cost (when supported by the underlying LLM provider)</li>
-  <br>
-  <li><strong>Metadata</strong><br>
-    – Which agent version / model URI was used<br>
-    – Any tags or labels you attach (e.g., <code>environment=staging</code>, <code>tenant_id=X</code>)</li>
-</ul>
-<p class="fs-lg">
-All this shows up in the <strong>Traces UI</strong> and can be queried via the MLflow APIs for evaluation, debugging, or analytics.
-</p>
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Model Packaging</h2>
-<p class="fs-lg">
-  <code>MLflow Models</code> standardize how models are packaged so they can be used anywhere. By defining a consistent format, MLflow allows models to be deployed to a wide range of environments — from notebooks to production services — without code changes.
-</p>
-
-
-
-
-
-
-
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Projects</h2>
-<p class="fs-lg">
-  <code>MLflow Projects</code> enable reproducible execution of training or batch inference workflows by packaging code and dependencies consistently. This ensures anyone — or any system — can reliably re-run the same job.
-</p>
--->
-
-
-
-
-
-<!--
-<p class="fs-lg">
-  Together, these components enable a complete lifecycle — from experimentation and packaging to governance and production-grade serving — making MLflow a powerful foundation for enterprise AI delivery.
-</p>
--->
-
-
-
-<p class="fs-lg">
-The <strong>tracking server</strong> is responsible for recording and organizing experiments — including runs, parameters, metrics, artifacts, and model versions. It acts as the central system of record for experimentation and model lifecycle history.
-</p>
-
-<p class="fs-lg">
-The <strong>model server</strong>, on the other hand, is where trained or authored models are deployed and made available for real-time or batch inference. It provides a standardized API to call a model’s <code>predict()</code> function.
-</p>
-
-<p class="fs-lg">
-These two components operate independently:
-</p>
-
-<ul class="fs-lg">
-  <li>You can serve a model locally without ever running an MLflow tracking server.</li>
-  <li>You can use a tracking server to log experiments and models without deploying any model for inference.</li>
-</ul>
-
-
-
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Key Concepts</h2>
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Runs</h2>
-
-<p class="fs-lg">
-  A run is the atomic tracked execution in MLflow—it represents a single attempt to create or update a model or agent. But its purpose differs slightly depending on the asset type.
-</p>
-
-<p class="fs-lg">
-  The conceptual difference between <strong>artifacts</strong> and <strong>runs</strong> in MLflow 3.6:
-</p>
-
-<p class="fs-lg">
-  A <strong>run</strong> is the container for a single execution of something you are tracking in MLflow.
-</p>
-<p class="fs-lg">
-  Think of a run as the record or envelope that captures:
-</p>
-<p class="fs-lg">
-  – parameters used<br>
-  – metrics produced<br>
-  – tags<br>
-  – the execution context<br>
-  – and any artifacts logged during that execution
-</p>
-<p class="fs-lg">
-  A run is essentially the metadata log for one experiment attempt.
-</p>
-<p class="fs-lg">
-  If you did an experiment, executed a script, trained a model, or invoked an agent, that execution is represented as a run.
-</p>
-
-
-
-
-
-
-
-
-
-
-
-<hr/>
-
-<p class="fs-lg">
-  In the context of deploying and calling the <code>predict</code> method on an MLflow 3.6 <strong>ResponsesAgent</strong>, a <strong>Run</strong> is the formal MLflow tracking record that represents a single execution of the agent’s logic. It captures the input, output, metadata, and any artifacts produced during that specific invocation.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Run Represents</h2>
-<p class="fs-lg">
-  A <strong>Run</strong> is created when the agent’s <code>predict()</code> method is called (assuming logging is enabled). This run becomes the container for all information related to that individual inference event. It does <em>not</em> represent deployment, model registration, or serving infrastructure changes—only the execution itself.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Run Records</h2>
-<p class="fs-lg">
-  During a <code>predict()</code> call, a run may contain:
-</p>
-<p class="fs-lg">
-  – the user input messages<br>
-  – the agent’s generated outputs<br>
-  – reasoning traces (if enabled)<br>
-  – tool call logs<br>
-  – metrics or timing information<br>
-  – any artifacts produced during the interaction
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Runs Relate to Predict Calls</h2>
-<p class="fs-lg">
-  Each call to <code>predict()</code> is treated as <strong>one run</strong> because MLflow considers each invocation of the agent to be an independently loggable execution. Runs provide the audit trail, observability, and reproducibility for every inference.
-</p>
-
-<p class="fs-lg">
-  <strong>Summary:</strong> In MLflow 3.6, a <strong>Run</strong> represents a single, logged execution of a <code>ResponsesAgent.predict()</code> call, capturing everything that happened during that inference event.
-</p>
-
-
-
-
-<hr/>
-
-
-
-
-
-
-
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Artifact</h2>
-
-<p class="fs-lg">
-Artifacts are files produced by a run (models, plots, metrics, configs).
-</p>
-
-
-<p class="fs-lg">
-MLflow Artifacts are any files (models, plots, data, configs) generated during an ML experiment run, stored separately from metadata, accessible via URIs (like runs:/<run_id>/path), and crucial for reproducibility, allowing you to log, retrieve, and manage outputs like model files (pickle, PyTorch), visualizations (plots), and preprocessing data, with storage configured locally (mlruns) or remotely (S3, Databricks)
-</run_id>
-
-<p class="fs-lg">
-An artifact is any file or directory that you log alongside a run or a model—such as data files, configuration files, prompts, source code, images, or serialized model assets—so that MLflow can store, version, and later retrieve them as part of the model’s reproducible package.
-</p>
-<p class="fs-lg">
-Artifacts are not parameters or metrics; they are actual files that MLflow saves in the run’s artifact store or inside an MLflow model’s artifact directory.
-</p>
-
-
-<p class="fs-lg">
-  <strong>Artifacts</strong> are the files produced during a run.
-</p>
-<p class="fs-lg">
-  Examples:
-</p>
-<p class="fs-lg">
-  – model files<br>
-  – prompt templates<br>
-  – Python source code snapshots<br>
-  – plots, images<br>
-  – datasets<br>
-  – configuration files
-</p>
-<p class="fs-lg">
-  Artifacts are outputs stored in MLflow’s artifact store. A run owns artifacts, and MLflow tracks exactly which artifacts were generated by which run.
-</p>
-<p class="fs-lg">
-  Think of artifacts as the stuff you produced, and a run as the record of the attempt that produced them.
-</p>
-
-<h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Relating Runs and Artifacts</h2>
-<p class="fs-lg">
-  – <strong>Run</strong> = a folder labeled with the metadata about an experiment attempt. (where a run is a call of the <code>.predict()</code> ResponsesAgent method)<br>
-  – <strong>Artifacts</strong> = the files inside that folder.
-</p>
-
-
-
-
-
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Traces</h2>
-<p class="fs-lg">
-  In the context of deploying and calling the <code>predict</code> method on an MLflow 3.6 <strong>ResponsesAgent</strong>, a <strong>Trace</strong> is the detailed, structured record of the internal steps the agent takes while generating a response. It captures the reasoning process, tool interactions, intermediate states, and decision paths executed during a single prediction call.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Trace Represents</h2>
-<p class="fs-lg">
-  A trace is not the same as a run. A <strong>run</strong> represents the overall execution event, whereas a <strong>trace</strong> represents the internal workflow the agent follows within that event. The trace provides visibility into how the agent arrived at its final answer.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What a Trace Records</h2>
-<p class="fs-lg">
-  A trace may include:
-</p>
-<p class="fs-lg">
-  – the sequence of steps taken by the agent<br>
-  – calls to tools or external functions<br>
-  – intermediate messages and decisions<br>
-  – reasoning metadata (when enabled)<br>
-  – timing information for each step<br>
-  – outputs generated at each stage of the process
-</p>
-<p class="fs-lg">
-  The trace essentially exposes the chain of thought <em>structure</em> without revealing any private or disallowed reasoning content.
-</p>
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Traces Relate to Predict Calls</h2>
-<p class="fs-lg">
-  Each call to <code>predict()</code> may generate a <strong>trace</strong> if tracing is enabled. The trace becomes part of the run’s logged artifacts, making it possible to debug, audit, or analyze how the agent behaved during execution.
-</p>
-
-<p class="fs-lg">
-  <strong>Summary:</strong> In MLflow 3.6, a <strong>Trace</strong> is the internal step-by-step execution record of a <code>ResponsesAgent.predict()</code> call, capturing the sequence of tool calls, intermediate decisions, and reasoning metadata that led to the final output.
-</p>
 
 
 
@@ -1168,13 +802,13 @@ Artifacts are not parameters or metrics; they are actual files that MLflow saves
 
                   <div class="card overflow-hidden mb-4">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/databricks_semantic_metric_views_header_0.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/mlflow_responseagent_header_0.jpg); min-height: 14rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h4 class="card-title">Building a Retail Semantic Layer with Unity Catalog Metric Views</h4>
-                          <p class="card-text">This article explains how Databricks Unity Catalog Metric Views create a governed semantic layer that transforms complex retail data into consistent, business-ready insights—empowering teams to accelerate knowledge work and make revenue-driving decisions with confidence.</p>
+                          <h4 class="card-title">Building ResponsesAgent-Based LLM Agents on MLflow</h4>
+                          <p class="card-text">  In this guide, we’ll walk through how <code>ResponsesAgent</code> offers a clean and typed development interface and why packaging agents as MLflow models unlocks significant governance and deployment benefits. </p>
                           
-                <a class="btn btn-lg btn-link px-0" href="building_retail_semantic_layer_with_unity_catalog_metric_views.html">
+                <a class="btn btn-lg btn-link px-0" href="building_mlflow_responseagent_agents.html">
                   Read next article in series
                   <i class="ai-arrow-right ms-2"></i>
                 </a>

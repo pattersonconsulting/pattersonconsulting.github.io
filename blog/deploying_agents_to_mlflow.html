@@ -383,27 +383,6 @@
           <div class="col-lg-9 col-xl-8">
 
 
-<!--
-<p class="fs-lg narrative pre">
-
-- [segue in]: where did we come in from in the last article? We built a ResponsesAgent agent
-
-- package the agent
-  - what does packaging mean?
-  - what physical assets are produced?
-  - how do we send the package to the model server?
-
-- register the agent with the registry
-   - work with the different versions of a model in the registry
-
-  - confirm the model is operational in mlflow
-
-- [segue out]: need to connect to integration
-
-
-</p>
--->
-
 
 
 <p class="fs-lg">
@@ -455,15 +434,21 @@ Packaging is the process of turning your agent’s Python implementation into a 
 Packaging takes your in-code ResponsesAgent definition:
 </p>
 
-<pre class="line-numbers"><code class="language-python">
+<pre class="line-numbers mt-5 mb-5"><code class="lang-python">import mlflow
 from mlflow.agents import ResponsesAgent
 
-class SupplyChainAgent(ResponsesAgent):
-    def __init__(self, llm, tools):
-        super().__init__(llm=llm, tools=tools)
+class MyMinimalAgent(ResponsesAgent):
 
-    def respond(self, messages):
-        return super().respond(messages)
+    def load_context(self, context):
+        pass
+
+    def predict(self, model_input):
+        return {
+            "output": [{
+                "type": "message",
+                "message": {"role": "assistant", "content": "Hello world"}
+            }]
+        }
 </code></pre>
 
 <p class="fs-lg pt-3">
@@ -519,7 +504,7 @@ The <strong>code/ directory</strong> contains exactly the agent source code you 
 <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Add the Model to the MLflow Tracking Server by Logging the Model</h3>
 
 <p class="fs-lg">
-You send the package by <strong>logging the model</strong>. Logging is the act of serializing the agent into the MLflow tracking server’s artifact store.
+You send the package by <strong>logging the model</strong> with the call <code>mlflow.pyfunc.log_model(...)</code>. Logging is the act of serializing the agent into the MLflow tracking server’s artifact store.
 </p>
 
 <p class="fs-lg ">
@@ -549,71 +534,47 @@ Databricks recommends using <a href="https://mlflow.org/docs/latest/ml/model/mod
               </div>
             </div>
 
-<!--
-<p class="fs-lg todo_edit">
 
-Databricks recommends using <a href="https://mlflow.org/docs/latest/ml/model/models-from-code/" target="_blank">MLflow's Models from Code</a> functionality when logging agents.
-</p>
-
-<p class="fs-lg todo_edit">
-In this approach, the agent's code is captured as a Python file, and the Python environment is captured as a list of packages. When the agent is deployed, the Python environment is restored, and the agent's code is run to load the agent into memory so it can be invoked when the endpoint is called.
-</p>
--->
-
-<!--
-<h4 class="h4 mb-lg-2 pt-2">Example: Logging a new agent and registering it automatically</h4>
-
-<pre class="line-numbers"><code class="language-python">
-import mlflow
-from my_project.agents import SupplyChainAgent
-
-agent = SupplyChainAgent(llm=my_llm_client, tools=my_tools)
-
-with mlflow.start_run():
-    mlflow.agents.log_model(
-        agent=agent,
-        artifact_path="supply_chain_agent",
-        registered_model_name="retail.ai.supply_chain_agent",
-        code_paths=["./my_project"],
-        pip_requirements="requirements.txt"
-    )
-</code></pre>
+<h4 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Models from Code Approach: Packaging via PyFunc</h4>
 
 <p class="fs-lg">
-MLflow now has everything needed to serve the agent.
-</p>
--->
-
-<h4 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Models from Code Approach: Packaging via custom PyFunc</h4>
-
-<p class="fs-lg">
-If you need full control over inputs/outputs:
+Once you have your ResponsesAgent defined, then you'll need to log it with the tracking server to get started with your deployment as seen in the code below.
 </p>
 
 <pre class="line-numbers mb-3"><code class="language-python">
-from mlflow.pyfunc import PythonModel
-
-class AgentWrapper(PythonModel):
-    def load_context(self, context):
-        from my_project.agents import SupplyChainAgent
-        self.agent = SupplyChainAgent(llm=my_llm, tools=my_tools)
-
-    def predict(self, context, model_input):
-        return self.agent.respond(model_input["messages"])
 
 with mlflow.start_run():
     mlflow.pyfunc.log_model(
-        artifact_path="supply_chain_agent",
-        python_model=AgentWrapper(),
+        artifact_path="hello_world_agent",
+        python_model=MyMinimalAgent(),
         code_paths=["./my_project"]
     )
 </code></pre>
+
+<p class="fs-lg">
+Note: <code>artifact_path</code> defines the directory inside the MLflow Run’s artifact store where the model will be logged.
+</p>
+
+<p class="fs-lg">
+When you call <code>mlflow.pyfunc.log_model()</code>, MLflow must place the serialized model (its MLmodel file, code assets, environment spec, and dependencies) somewhere within the run’s artifact hierarchy. The <code>artifact_path</code> value becomes the subdirectory name under that run.
+</p>
 
 <p class="fs-lg">
 You can also provide a python file that contains a <code>ResponsesAgent</code> subclassed agent definition as well for the <code>python_model</code>.
 
 </p>
 
+<p class="fs-lg">
+  <strong>In that case, inside the python file you'll need to provide a <code>mlflow.models.set_model()</code> call.</strong>
+</p>
+
+<p class="fs-lg">
+The <code>mlflow.models.set_model()</code> API is a fluent interface used with the "Models from Code" feature in MLflow, which programmatically defines an MLflow model within a Python script. 
+
+<code>mlflow.models.set_model()</code> is a packaging-time hook used with Models from Code to tell MLflow “this is the actual ResponsesAgent object to package in this file.”
+
+It tells MLflow which Python object in the script is the model to be logged. 
+</p>
 
 <p class="fs-lg">
 Once we have our model URI from MLflow, we want to register the agent in the MLFlow Model Registry to manage its lifecycle.
@@ -689,7 +650,7 @@ Once we have our model URI from MLflow, we want to register the agent in the MLF
 
 
 <p class="pb-sm3 pb-md-4 mb-2">
-  A run represents the packaging and publishing event: defining agent behavior (system prompt, tools, routing logic), bundling assets (text files, embeddings, yaml configs), and versioning the code and prompt instructions.
+  <strong>A run represents the packaging and publishing event: defining agent behavior (system prompt, tools, routing logic), bundling assets (text files, embeddings, yaml configs), and versioning the code and prompt instructions.</strong>
 </p>
 
 <p class="pb-sm3 pb-md-4 mb-2">
@@ -738,24 +699,51 @@ Once packaged, the agent must be <strong>registered</strong> in the Model Regist
 If you logged the agent with <code>registered_model_name=...</code>, MLflow automatically created a model version. If not, you can manually register:
 </p>
 
+
 <pre class="line-numbers"><code class="language-python">
-model_uri = "runs:/&lt;RUN_ID&gt;/supply_chain_agent"
-mlflow.register_model(model_uri, "retail.ai.supply_chain_agent")
+registered_model_name = "MyMinimalAgent_Registered"
+registered_model_stage = "candidate"
+
+mv = mlflow.register_model(register_full_model_uri, registered_model_name)
 </code></pre>
+<!--
+<pre class="line-numbers"><code class="language-python">
+model_uri = "runs:/&lt;RUN_ID&gt;/hello_world_agent"
+mlflow.register_model(model_uri, "retail.ai.hello_world_agent")
+</code></pre>
+-->
+<p class="fs-lg mt-3">
+This creates <strong>Version 1</strong> of the model.
+</p>
 
 <p class="fs-lg">
-This creates <strong>Version 1</strong> of the model.
+  Just to be clear in how the lifecycle works and how its different from the packaging phase above, I want again state:
+</p>
+
+<ul>
+  <li>
+<code>mlflow.models.set_model()</code> is a packaging-time hook used with Models from Code to tell MLflow “this is the actual ResponsesAgent object to package in this file.”
+</li>
+  <li>
+<code>mlflow.register_model()</code> is a lifecycle/registry API used after logging to create a named, versioned entry for that agent in the Model Registry (Unity Catalog or workspace).
+</li>
+</ul>
+
+<p class="fs-lg">
+They solve completely different problems in the deployment pipeline.
 </p>
 
 <h4 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Managing the Agent Lifecycle</h4>
 
 <p class="fs-lg">
-As you refine the agent—improved prompts, updated tools, different reasoning logic—new versions are created. The code listing below shows how to programmatically get a list of the versions of your model.
+As you refine the agent—improved prompts, updated tools, different reasoning logic—new versions are created. The code listing below shows how to programmatically get the latest version number of your model.
 </p>
 
 <pre class="line-numbers mt-3 mb-3"><code class="language-python">
-client = mlflow.MlflowClient()
-client.get_latest_versions("retail.ai.supply_chain_agent")
+client.get_model_version_by_alias(
+    name="MyModel",
+    alias="prod"
+)
 </code></pre>
 
 
@@ -765,14 +753,69 @@ client.get_latest_versions("retail.ai.supply_chain_agent")
 Once you are satisfied with the performance of your agent, you can promote it to a <code>staging</code> or <code>production</code> status in the model registry, as shown in the python code listing below.
 
 </p>
-
+<!--
 <pre class="line-numbers"><code class="language-python">
 client.transition_model_version_stage(
-    name="retail.ai.supply_chain_agent",
+    name="retail.ai.hello_world_agent",
     version=3,
     stage="Production"
 )
 </code></pre>
+-->
+
+<pre class="line-numbers"><code class="language-python">
+client.set_registered_model_alias(
+    name="MyModel",
+    alias="prod",
+    version="7"
+)
+</code></pre>
+
+
+<p class="fs-lg">
+Additionally the URI format to load a ResponseAgent registered agent is shown in the example below.
+
+</p>
+
+<pre class="line-numbers"><code class="language-python">
+mlflow.pyfunc.load_model("models:/MyModel@prod")
+</code></pre>
+
+
+            <div class="card bg-primary bg-opacity-10 border-0 overflow-hidden pt-1 pt-xl-2 px-lg-2 px-xl-4 mb-5 mt-5">
+              <div class="card-body position-relative z-2 pb-0">
+                <h3 class="h4 card-title text-primary">Aliases Replace Stages in MLflow 3.x</h3>
+
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Stages are being removed and how aliases replace them in MLflow 3.x.
+
+
+                </p>
+
+                <p class="pb-sm3 pb-md-4 mb-2">
+Why?
+
+</p>
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+Model stages encoded a global, mutually exclusive lifecycle state that proved too rigid for modern CI/CD, multi-environment deployments, and parallel serving patterns. Model aliases replace stages with explicit, versioned routing pointers that enable safe promotion, instant rollback, and concurrent deployments without ambiguity.
+
+
+                </p>
+
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
 
 
 <p class="fs-lg">
@@ -785,10 +828,10 @@ A best practice is that applications should reference the alias, not a specific 
 </p>
 
 <pre class="line-numbers"><code>
-models:/retail.ai.supply_chain_agent/Production
+models:/retail.ai.hello_world_agent/Production
 </code></pre>
 
-<p class="fs-lg">
+<p class="fs-lg mt-4">
 This allows version 3 → version 4 promotion without breaking downstream systems.
 </p>
 
@@ -800,48 +843,96 @@ This allows version 3 → version 4 promotion without breaking downstream system
 <p class="fs-lg">
 You can load and test the deployed agent locally:
 </p>
-
+<!--
 <pre class="line-numbers"><code class="language-python">
 import mlflow
 
-model = mlflow.pyfunc.load_model("models:/retail.ai.supply_chain_agent/Production")
+model = mlflow.pyfunc.load_model("models:/retail.ai.hello_world_agent/Production")
 
 result = model.predict({
-    "messages": [
+    "input": [
         {"role": "user", "content": "Why is OTIF down this week?"}
     ]
 })
 
 print(result)
 </code></pre>
+-->
 
-<p class="fs-lg">
-Or test the HTTP-serving endpoint:
+<pre class="line-numbers"><code class="language-python">
+load_full_model_uri = "models:/" + registered_model_name + "@" + registered_model_stage
+
+print("now test the model inference: " + load_full_model_uri)
+
+model = mlflow.pyfunc.load_model(load_full_model_uri)
+
+result = model.predict({
+    "input": [
+        {"role": "user", "content": "Why is OTIF down this week?"}
+    ]
+})
+
+print(result)   
+</code></pre>
+
+<p class="fs-lg mt-5">
+Or test the HTTP-serving endpoint --- start by taking the registered model alias and starting a dedicated model server:
 </p>
 
 <pre class="line-numbers"><code class="language-python">
+mlflow models serve \
+  --model-uri models:/MyMinimalAgent_Registered_2@prod \
+  --host 0.0.0.0 \
+  --port 5000
+  --no-conda
+</code></pre>
+
+
+<p class="fs-lg mt-5">
+Once the server is running, the REST inference endpoint is:
+</p>
+
+<pre class="line-numbers"><code class="language-python">
+POST http://localhost:5000/invocations
+</code></pre>
+
+<p class="fs-lg mt-5">
+This endpoint is <strong>always /invocations for the MLflow model server.</strong>
+</p>
+
+<p class="fs-lg">
+Once we have our model server running we can test it with a python program such as:
+</p>
+
+<pre class="line-numbers"><code class="language-python">
+
 import requests
 
 payload = {
-    "inputs": {
-        "messages": [
-            {"role": "user", "content": "Summarize stockout risks for next week."}
-        ]
-    }
+    "input": [
+        {"role": "user", "content": "Why is OTIF down this week?"}
+    ]
 }
 
 response = requests.post(
-    "http://localhost:5000/invocations",
+    "http://localhost:5001/invocations",
     json=payload
 )
 
+print("Testing hello world registered mlflow ResonsesAgent:")
 print(response.json())
+
 </code></pre>
 
 <p class="fs-lg">
-If you receive a valid structured response, the agent is successfully deployed.
+Your response should look similar to:
 </p>
 
+<pre class="line-numbers"><code class="language-python">
+python test_hello_world_model_server.py
+Testing hello world registered mlflow ResonsesAgent:
+{'object': 'response', 'output': [{'type': 'message', 'id': 'msg_1', 'content': [{'text': 'hello world', 'type': 'output_text'}], 'role': 'assistant'}]}
+</code></pre>
 
 
 

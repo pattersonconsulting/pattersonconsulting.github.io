@@ -619,6 +619,13 @@ The <code>ResponsesAgent</code> wrapper ensures agents remain compatible with <s
 
                 </p>
 
+                <p class="pb-sm3 pb-md-4 mb-2">
+
+                  Additionally the <code>ResponsesAgent</code> wrapper allows a custom code agent deployed on Databricks to be used with their <a href="retail_decision_intelligence_with_agent_bricks.html" target="_blank">multi-agent supervisor</a> system.
+
+                </p>
+
+
 
 
               </div>
@@ -636,7 +643,7 @@ This abstraction also enables teams to build <strong>multi-agent systems</strong
 <ul class="fs-lg">
   <li>Structured message and chat history handling</li>
   <li>Tool and function calling with intermediate outputs</li>
-  <li>Multi-agent orchestration support</li>
+  <li><a href="retail_decision_intelligence_with_agent_bricks.html" target="_blank">Multi-agent orchestration</a> support</li>
   <li>OpenAI API-compatible input/output schema</li>
   <li>Token and performance usage tracking</li>
   <li>Full MLflow tracking, versioning, and serving capabilities</li>
@@ -698,12 +705,17 @@ class RetailLogisticsKPIAgent(ResponsesAgent):
 
 
 <p class="fs-lg">
-The simplest possible MLflow 3.6 <code>ResponsesAgent</code> must implement only two required methods: <code>load_context()</code> and <code>predict()</code>. These two methods form the minimal contract that MLflow expects when packaging and deploying an agent using the Responses flavor.
+The simplest possible MLflow 3.6 <code>ResponsesAgent</code> must implement only two required methods: <code>load_context()</code> and <code>predict()</code>. 
 </p>
 
-<h2 class="h2 mb-lg-4 pt-3">Required Methods</h2>
+<p class="fs-lg">
 
-<p class="fs-lg"><strong>1. <code>load_context(self, context)</code></strong></p>
+Together these two methods form the minimal contract that MLflow expects when packaging and deploying an agent using the Responses flavor. We start with the first method <code>load_context()</code>:
+</p>
+
+
+
+<p class="fs-lg"><strong><code>load_context(self, context)</code></strong></p>
 <p class="fs-lg">
 This method is executed once when the agent is loaded by the MLflow model server. It receives a <code>ModelContext</code> containing artifacts, configuration files, and metadata. In the simplest implementation, it performs no operation.
 </p>
@@ -712,7 +724,11 @@ This method is executed once when the agent is loaded by the MLflow model server
     pass  # no-op for the minimal agent
 </code></pre>
 
-<p class="fs-lg"><strong>2. <code>predict(self, model_input)</code></strong></p>
+<p class="fs-lg">
+ Then we have the main "workhorse" method of the class, <code>predict()</code>:
+</p>
+
+<p class="fs-lg"><strong><code>predict(self, model_input)</code></strong></p>
 <p class="fs-lg">
 This method is invoked each time the deployed agent endpoint receives a request. It must return a response matching MLflow’s Responses API format (OpenAI-style semantics). Even a static literal response is valid for the simplest implementation.
 </p>

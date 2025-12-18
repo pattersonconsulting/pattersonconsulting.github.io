@@ -390,7 +390,7 @@
 </p>
 
 <p class="fs-lg">
-In the previous article, we built a <strong>ResponsesAgent</strong>—a Python-defined agent containing instructions, contextual data access, reasoning logic, and an LLM backend with enough “horsepower” to support generative AI applicaitions. Building an agent is only the first milestone. 
+In the <a href="building_mlflow_responseagent_agents.html" target="_blank">previous article</a>, we built a <strong>ResponsesAgent</strong>—a Python-defined agent containing instructions, contextual data access, reasoning logic, and an LLM backend with enough “horsepower” to support generative AI applicaitions. Building an agent is only the first milestone. 
 
 To make it usable in real applications, the agent must be <strong>packaged</strong>, <strong>registered</strong>, <strong>versioned</strong>, and <strong>served</strong> through MLflow’s model ecosystem.
 </p>
@@ -402,6 +402,15 @@ The next step is to turn that agent into something deployable. That requires pac
 This artifact contains the agent implementation once—its Python modules, configuration, and supporting resources—so that a model server can load it consistently without recreating or copying these assets on every inference call.
 </p>
 -->
+
+<p class="fs-lg">
+In the <a href="architecture_patterns_for_integrating_agents_into_knowledge_work.html" target="_blank">first article in our series on MLflow</a> we discussed 3 generalized architecture for building generative AI application. In the image below you can see the decision intelligence architecture that is a great example to keep in mind while we deploy our agent in this article.
+</p>
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_mlflow_agent_server.png" alt="MLflow as Agent Server">
+</div>
 
 <p class="fs-lg">
 This article focuses on the two major steps after authoring an agent:
@@ -882,7 +891,7 @@ Or test the HTTP-serving endpoint --- start by taking the registered model alias
 mlflow models serve \
   --model-uri models:/MyMinimalAgent_Registered_2@prod \
   --host 0.0.0.0 \
-  --port 5000
+  --port 5000 \
   --no-conda
 </code></pre>
 
@@ -904,7 +913,6 @@ Once we have our model server running we can test it with a python program such 
 </p>
 
 <pre class="line-numbers"><code class="language-python">
-
 import requests
 
 payload = {

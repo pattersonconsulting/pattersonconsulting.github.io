@@ -593,9 +593,13 @@ Conversational user interfaces can take on multiple forms, but many times they a
 
 <p class="fs-lg">
 
-
-
+In the image (from the <a href="architecture_patterns_for_integrating_agents_into_knowledge_work.html" target="_blank">first article in our series on MLflow</a>) below you can see the base MLflow agent server architecture that is a great example to keep in mind while we deploy our agent in this article.
 </p>
+
+
+<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
+  <img class="d-block img-thumbnail rounded-0" src="../assets/img/arch_pattern_integration_mlflow_agent_server.png" alt="MLflow as Agent Server">
+</div>
 
 
 <!--
@@ -644,7 +648,7 @@ Conversational user interfaces can take on multiple forms, but many times they a
 
 
 <p class="fs-lg">
-  (Note: in the previous article we talked about how to get an agent registered in the MLflow Model Registry.)
+  <i>(Note: in the <a href="deploying_agents_to_mlflow.html" target="_blank">previous article</a> we talked about how to get an agent registered in the MLflow Model Registry.)</i>
   
 </p>
 
@@ -655,15 +659,25 @@ Conversational user interfaces can take on multiple forms, but many times they a
 </p>
 
 
-
+<!--
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-bash">
 mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
 </code>
 </pre>
+-->
+
+<pre class="line-numbers"><code class="language-python">
+mlflow models serve \
+  --model-uri models:/MyMinimalAgent_Registered_2@prod \
+  --host 0.0.0.0 \
+  --port 5000 \
+  --no-conda
+</code></pre>
 <p class="fs-lg">
   Then call the REST API from your your HTTP application; a sample REST call from a python application is below.
 </p>
+<!--
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-python">
 import requests
@@ -680,18 +694,29 @@ def call_agent(prompt):
     return requests.post(url, json=payload).json()
 </code>
 </pre>
+-->
+<pre class="line-numbers"><code class="language-python">
+import requests
+
+payload = {
+    "input": [
+        {"role": "user", "content": "hello"}
+    ]
+}
+
+response = requests.post(
+    "http://localhost:5000/invocations",
+    json=payload
+)
+
+print("Testing hello world registered mlflow ResonsesAgent:")
+print(response.json())
+</code></pre>
+
 <p class="fs-lg">
   Serving agent output with MLflow model server allows completely decoupled deployment so the agent can scale and update independently of the app.
 </p>
 
-
-
-
-<p class="fs-lg">
-
-  ...
-
-</p>
 
 
 
@@ -742,7 +767,8 @@ When we want to process large amounts of data (typically for a table row-scan op
 </p>
 <pre class="line-numbers mt-5 mb-5">
 <code class="lang-python">
-agent = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+load_full_model_uri = "models:/" + registered_model_name + "@" + registered_model_stage
+model = mlflow.pyfunc.load_model(load_full_model_uri)
 </code>
 </pre>
 <p class="fs-lg">
@@ -773,10 +799,16 @@ One of the most expensive things we can do in system-design is a network round t
 <code class="lang-python">
 import mlflow.pyfunc
 
-model = mlflow.pyfunc.load_model("models:/my_agent_model/Production")
+load_full_model_uri = "models:/" + registered_model_name + "@" + registered_model_stage
+model = mlflow.pyfunc.load_model(load_full_model_uri)
 
-def ask_agent(messages):
-    return model.predict({"messages": messages})
+result = model.predict({
+    "input": [
+        {"role": "user", "content": "Why is OTIF down this week?"}
+    ]
+})
+
+print(result)   
 </code>
 </pre>
 <p class="fs-lg">
@@ -796,33 +828,39 @@ In cases where your agent is working with one record at a time, processing the r
 <p class="fs-lg">
   Again we'd serve the agent as a standalone HTTP endpoint accessible from any programming language via the MLflow model server as shown in the command example below.
 </p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-bash">
-mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
-</code>
-</pre>
+
+
+<pre class="line-numbers"><code class="language-python">
+mlflow models serve \
+  --model-uri models:/MyMinimalAgent_Registered_2@prod \
+  --host 0.0.0.0 \
+  --port 5000 \
+  --no-conda
+</code></pre>
 
 <p class="fs-lg">
   Once we have the workflow agent deployed, then we can call the REST API from your workflow automation application similar to the example below.
 </p>
 
 
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
+<pre class="line-numbers"><code class="language-python">
 import requests
 
-def call_agent(prompt):
-    url = "http://localhost:5000/invocations"
-    payload = {
-        "inputs": {
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    }
-    return requests.post(url, json=payload).json()
-</code>
-</pre>
+payload = {
+    "input": [
+        {"role": "user", "content": "hello"}
+    ]
+}
+
+response = requests.post(
+    "http://localhost:5000/invocations",
+    json=payload
+)
+
+print("Testing hello world registered mlflow ResonsesAgent:")
+print(response.json())
+</code></pre>
+
 <p class="fs-lg">
   This allows completely decoupled deployment so the model can scale and update independently of the app.
 </p>
@@ -852,34 +890,37 @@ Decision Intelligence is the practice of merging together the right contextual e
 <p class="fs-lg">
   Again, we'll serve the agent as a standalone HTTP endpoint accessible from any programming language with the MLflow model server. The command line example below shows an example of a model server being started and referencing (<code>serve -m "models:/my_agent_model/Production"</code>) a model registered with the MLflow model registry.
 </p>
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-bash">
-mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
-</code>
-</pre>
 
+<pre class="line-numbers"><code class="language-python">
+mlflow models serve \
+  --model-uri models:/MyMinimalAgent_Registered_2@prod \
+  --host 0.0.0.0 \
+  --port 5000 \
+  --no-conda
+</code></pre>
 
 <p class="fs-lg">
   And then, from your dashboard logic, make a REST API call in python (as shown below) or any other language that supports REST queries via HTTP.
 </p>
 
 
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
+<pre class="line-numbers"><code class="language-python">
 import requests
 
-def call_agent(prompt):
-    url = "http://localhost:5000/invocations"
-    payload = {
-        "inputs": {
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    }
-    return requests.post(url, json=payload).json()
-</code>
-</pre>
+payload = {
+    "input": [
+        {"role": "user", "content": "hello"}
+    ]
+}
+
+response = requests.post(
+    "http://localhost:5000/invocations",
+    json=payload
+)
+
+print("Testing hello world registered mlflow ResonsesAgent:")
+print(response.json())
+</code></pre>
 <p class="fs-lg">
   Typically the output of the analysis will be shown in a card on the dashboard with labels or beside other KPIs, etc.
 </p>

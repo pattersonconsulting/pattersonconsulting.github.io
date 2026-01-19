@@ -393,130 +393,6 @@ As the next wave of GenAI systems moves analysis out of tools like ChatGPT and C
 
 
 
-<!--
-
-<p class="fs-lg">
-  For organizations to get any value out of LLMs or agents they need to be integrated into applications at the <a href="../content/hitchhikers_guide_kw/knowledge_work_architecture.html" target="_blank">knowledge work layer</a> of a business. 
-</p>
-
-<p class="fs-lg">
-  The logic of their analysis involves business rules, internal data from the information layer, and enough LLM "reasoning horsepower" to do the knowledge work task assigned. Then the output needs to be integrated back into existing knowledge work workflows (e.g., PowerBI, Excel, etc) in the line of business.
-</p>
-
-<p class="fs-lg">
-
-  In this article we take a look at some key ways to integrate agents into existing Knowledge Work Layer applications and the architecture considerations you'll need to make. Let's start out by taking a look at some application integration patterns for agents in the enterprise.
-
-</p>
-
-
-
-
-
-
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Application Integration Patterns for Agents</h2>
-<p class="fs-lg">
-  How you deploy and integrate your Agent functionality should depend on what type of application is integrating with the agent.
-</p>
-
-
-<p class="fs-lg">
-To accelerate knowledge work with LLMs we have to integrate automated reasoning over data <b>directly into the applications where the knowledge work occurs.</b>
-</p>
-
-<p class="fs-lg">
-  <b>The next wave of GenAI applications will move the analysis out of ChatGPT and Claude Code and directly embed the analysis into applications, reports, and dashboards directly.</b>
-</p>
-
-<p class="fs-lg">
-Types of <a href="../content/hitchhikers_guide_kw/what_is_generative_ai.html" target="_blank">genAI consuming applications</a> include
-</p>
-
-<ul class="fs-lg">
-  <li><strong>Conversational User Interfaces</strong>
-    <ul class="fs-lg">
-      <li>Web Chat User Interfaces</li>
-      <li>Slackbots</li>
-      <li>Text Message interfaces via cell phones</li>
-    </ul>
-
-  </li>
-  <li><strong>Automation Workflow</strong>
-    <ul class="fs-lg">
-      <li>Structured Information Extraction</li>
-      <li>Industry specific task workflows (e.g., "report generation for distribution center analysis")</li>
-      <li>Batch jobs, SQL Tables Scans</li>
-    </ul>
-  </li>
-  <li><strong>Decision Intelligence</strong>
-    <ul class="fs-lg">
-      <li>Automated Insights</li>
-      <li>Next Action</li>
-      <li>Root Cause Analysis</li>
-    </ul>
-  </li>
-</ul>
-
--->
-
-<!--
-<div class="hotspots mx-auto mt-5 mb-5" style="max-width: 1200px;">
-  <img class="d-block img-thumbnail rounded-0" src="../assets/img/mlflow_automated_analysis_architecture_v1.png" alt="Automated Analysis Architecture">
-</div>
--->
-
-
-
-
-<!--
-<ul class="fs-lg">
-  <li><strong>Web Chat UI</strong> – connect the agent to a frontend like a chat interface</li>
-  <li><strong>Slack / Teams Bots</strong> – generate responses to user messages</li>
-  <li><strong>Backend Decision API</strong> – return recommendations to internal systems</li>
-  <li><strong>Batch Jobs</strong> – perform content generation or analysis at scale</li>
-</ul>
--->
-
-<!--
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Contraints of Integrating Agents</h2>
-
-<p class="fs-lg">
-
-It's one thing to stand up a REST endpoint with some python code and a LLM call behind it. It's entirely enought thing to stand up an agent that is fully integrated into your core business logic and enterprise data models. Key considerations:
-
-
-</p>
-
-<ol>
-
-<li>Secure access to private enterprise data warehouse</li>
-<li>consideration for exposure customer data in external LLM logs through prompts</li>
-<li></li>
-
-
-</ol>
-
-
-
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Secret Sauce of Agents</h2>
-
-<p class="fs-lg">
-the whole "secret sauce" of any use case is 
-</p>
-
-
-<ol>
-<li>prompt instructions</li>
-<li>the right contextual data to analyze</li>
-<li>a LLM with enough "reasoning horsepower"</li>
-</ol>
--->
-
-
-
-
-
-
 
 
 
@@ -659,13 +535,6 @@ In the image (from the <a href="architecture_patterns_for_integrating_agents_int
 </p>
 
 
-<!--
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-bash">
-mlflow models serve -m "models:/my_agent_model/Production" -p 5000 --env-manager local
-</code>
-</pre>
--->
 
 <pre class="line-numbers"><code class="language-python">
 mlflow models serve \
@@ -677,24 +546,8 @@ mlflow models serve \
 <p class="fs-lg">
   Then call the REST API from your your HTTP application; a sample REST call from a python application is below.
 </p>
-<!--
-<pre class="line-numbers mt-5 mb-5">
-<code class="lang-python">
-import requests
 
-def call_agent(prompt):
-    url = "http://localhost:5000/invocations"
-    payload = {
-        "inputs": {
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    }
-    return requests.post(url, json=payload).json()
-</code>
-</pre>
--->
+
 <pre class="line-numbers"><code class="language-python">
 import requests
 
@@ -867,10 +720,6 @@ print(response.json())
 
 
 
-
-
-
-
 <h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Decision Intelligence Agent Integration</h2>
 
 <p class="fs-lg">
@@ -928,6 +777,37 @@ print(response.json())
 
 
 
+
+
+<br/></br/>
+
+
+                  <div class="card overflow-hidden mb-4 mt-4 bg-dark" data-bs-theme="dark">
+                    <div class="row g-0">
+                      
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../assets/img/mlflow_responseagent_header_0.jpg); min-height: 14rem;background-position: center center;" ></div>
+                      
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h2 class="h2 card-title" ><a href="../accelerated_agents_for_databricks.html" style="color: #FFFFFF;">Agent Accelerator</a></h2>
+                          <h4 class="h3 card-title"><a href="../accelerated_agents_for_databricks.html"  style="color: #cccccc;">For the <span style="color: rgb(255, 149, 0);">Databricks</span> Platform</a></h4>
+
+
+                          <p class="card-text">
+A 4-week engagement that delivers a custom Decision Intelligence agent on Databricks—grounded in a clear decision owner, explicit business rules, and governed Unity Catalog data models—then deployed to a Databricks Agent Endpoint for testing and production rollout.
+</p>
+
+
+                <a class="btn btn-lg btn-link px-0" href="../accelerated_agents_for_databricks.html">
+                  Learn More
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+                          
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
 
 

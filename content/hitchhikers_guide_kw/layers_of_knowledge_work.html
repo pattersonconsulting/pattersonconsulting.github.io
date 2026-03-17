@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Three Layers of Knowledge Work | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Every knowledge work role divides into three layers — execution, judgment, and strategic — each with a different relationship between labor cost and business value. This framework is the foundation for modeling how cognitive labor automation changes the economics of a role.">
+    <meta name="keywords" content="knowledge work, cognitive labor, automation, execution layer, judgment layer, strategic layer, value model, labor economics, AI, business value">
+    <meta name="author" content="Josh Patterson">
+
+
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Three Layers of Knowledge Work | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/modern_aqueduct_header_3.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/layers_of_knowledge_work_20260311_v3.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Every knowledge work role divides into three layers — execution, judgment, and strategic — each with a different relationship between labor cost and business value. This framework is the foundation for modeling how cognitive labor automation changes the economics of a role."/>
+
+
+
+
+    <meta name="twitter:title" content="The Three Layers of Knowledge Work | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/modern_aqueduct_header_3.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/layers_of_knowledge_work_20260311_v3.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+
+      .todo_edit {
+        color: #ff0000;
+       }
+
+      .todo_consider {
+        color: #dddddd;
+       }
+
+
+      .working_outline {
+        color: #aaaaaa;
+       }
+
+       .todo_segue {
+        color: #0000dd;
+       }
+
+
+       .todo_blue {
+        color: #0000ff;
+       }
+
+       .narrative {
+        color: #fc9003;
+        font-weight: bold;
+        font-style: italic;
+       }
+
+       .core_thesis {
+        color: #777777;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 50px;
+        margin-left: 50px;
+       }
+       .narrative_scaffolding {
+
+        color: #cccccc;
+
+        font-style: italic;
+
+       }
+
+      .pre {
+          display: block;
+          unicode-bidi: embed;
+          font-family: monospace;
+          white-space: pre;
+      }
+
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+
+
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Three Layers of Knowledge Work</li>
+          </ol>
+
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Three Layers of Knowledge Work</h1>
+
+
+            <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+              <div class="d-flex align-items-center mb-4 me-4">
+                <span class="fs-sm me-2">By:</span>
+                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+                  Josh Patterson
+                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+                </a>
+              </div>
+            </div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/header_layers_kw_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 460px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+                      Every knowledge work role divides into three distinct layers — execution, judgment, and strategic — each with a different relationship between labor cost and business value. Understanding these layers, and how automation changes the value concentration in each, is the foundation for modeling how cognitive labor automation affects the economics of a role.
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Background</h2>
+
+            <p class="fs-lg">
+              The underwriter's workflow, examined in a prior article in this series, divides into three distinct layers: a transaction layer of routine processing, an exception layer of judgment under ambiguity, and a portfolio layer of strategic, aggregate thinking. That analysis arrived at the three-layer structure through detailed examination of one specific role — mapping what underwriters actually do against the standard routine/non-routine taxonomy in labor economics, then observing that the non-routine work in that role divides meaningfully into two levels that differ in time horizon, abstraction, and organizational scope.
+            </p>
+
+            <p class="fs-lg">
+              This article proposes that the same three-layer structure applies broadly across roles that involve meaningful cognitive labor — and even across roles where cognitive work sits alongside physical work. That generalization is offered as an analytical framework for estimating where automation value concentrates within a role, not as a conclusion from a systematic cross-occupational study. Understanding these layers, and the different relationships between labor cost and business value that characterize each one, is the foundation for modeling how automation changes the economics of knowledge work.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Codifying the Three Layers</h2>
+
+            <p class="fs-lg">
+              The three-layer model presented here extends the standard two-tier routine/non-routine taxonomy in labor economics into a more granular structure suited for role-level value analysis. The existing literature establishes two tiers: routine tasks (which automation substitutes for) and non-routine tasks (which automation complements). Simon (1960) drew the same line using different language — "programmed decisions" versus "unprogrammed decisions."<sup><a href="#ref_1">[1]</a></sup> Autor, Levy, and Murnane (2003) formalized it empirically as the routine/non-routine boundary and documented its relationship to computerization across four decades of employment data.<sup><a href="#ref_2">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              This article extends that binary by splitting the non-routine tier into two distinct levels. The two boundaries in the three-layer model each have independent grounding. The execution/judgment boundary is where Simon's "programmed decisions" end — where rule-following breaks down and pattern recognition under ambiguity takes over. The judgment/strategic boundary is where individual case decisions give way to aggregate, organizational thinking operating at time horizons too long for case-by-case analysis — the domain Drucker (1959) was describing when he coined "knowledge worker."<sup><a href="#ref_5">[5]</a></sup>
+            </p>
+
+            <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-4">Layer 1: The Execution Layer</h3>
+
+            <p class="fs-lg">
+              The execution layer contains all knowledge work that follows established, rule-codifiable logic. Tasks here are defensible — they must be done correctly — but they are not differentiating. The decision rules are known, the inputs are structured, and the outputs are predictable. In underwriting, this is pulling third-party reports, checking eligibility criteria, applying rating algorithms, and processing standard renewals. In financial analysis, it is populating a model, running standard calculations, and generating routine reports. In nursing, it is documenting vitals, entering standard orders, and completing regulatory checklists.
+            </p>
+
+            <p class="fs-lg">
+              The defining characteristic: a well-specified workflow can execute execution-layer tasks reliably, because the variation in inputs maps to a finite set of known responses. Herbert Simon called these "programmed decisions" — responses to situations that are sufficiently common and well-understood to be handled by pre-established procedures.<sup><a href="#ref_1">[1]</a></sup> In labor economics, the same category is described as "routine cognitive tasks," defined by Autor, Levy, and Murnane as tasks that "follow explicit rules that can be accomplished by executing a series of instructions."<sup><a href="#ref_2">[2]</a></sup>
+            </p>
+
+            <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-4">Layer 2: The Judgment Layer</h3>
+
+            <p class="fs-lg">
+              The judgment layer contains work that requires pattern recognition under ambiguity — cases that don't fit the standard model, where the decision rules are incomplete, conflicting, or context-dependent. The underwriter handling a coastal property with a complex loss history and missing inspection data is operating here. The financial analyst who recognizes that a model is producing plausible-but-wrong numbers is operating here. The nurse who triages a patient whose presentation doesn't match a standard protocol is operating here.
+            </p>
+
+            <p class="fs-lg">
+              This work cannot be fully codified because the variation space is too large, the relevant signals are too subtle, or the cost of a wrong automated decision is too high to accept without human review. Judgment work is where expertise becomes visible and where errors become expensive. Michael Polanyi's observation that "we can know more than we can tell" captures the structural barrier to automating this layer: experienced practitioners apply judgment they cannot fully articulate, drawing on pattern libraries that resist explicit specification.<sup><a href="#ref_3">[3]</a></sup> David Autor has described this as "Polanyi's Paradox" — a core reason why non-routine cognitive tasks resist automation even as computing power grows.<sup><a href="#ref_4">[4]</a></sup>
+            </p>
+
+            <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-4">Layer 3: The Strategic Layer</h3>
+
+            <p class="fs-lg">
+              The strategic layer contains the highest-value cognitive work: aggregate thinking, systemic pattern recognition, and relationship management. In underwriting, this is monitoring concentration exposure across a portfolio, recognizing emerging trends in a book of business, and managing the producer relationships that drive volume. In financial analysis, it is identifying structural risk in a business, advising on capital allocation, and communicating judgment to decision-makers. In nursing leadership, it is coordinating care across complex patients, providing input on protocols, and mentoring clinical staff.
+            </p>
+
+            <p class="fs-lg">
+              This layer operates at a different time horizon and level of abstraction than the other two. It is the least automatable because it requires integrating diffuse, often qualitative signals across a wide field — and because its outputs are organizational decisions, not individual transactions. Peter Drucker identified this kind of work as the defining category of the emerging economy as early as 1959, coining the term "knowledge worker" to describe those whose primary productive contribution is applying specialized knowledge to non-routine problems rather than performing repeatable tasks.<sup><a href="#ref_5">[5]</a></sup>
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Generalizing Across Roles, Including Hybrid Physical-Cognitive Work</h2>
+
+            <p class="fs-lg">
+              The three-layer structure applies to any role with meaningful knowledge work, regardless of whether physical labor is also present.
+            </p>
+
+            <p class="fs-lg">
+              A construction foreman has physical tasks (site inspection, equipment operation) alongside cognitive tasks. Their cognitive work still divides into execution (scheduling standard crews, processing permits), judgment (diagnosing a structural anomaly, managing an unexpected subcontractor conflict), and strategic (managing client relationships, sequencing a complex multi-phase project). Automating their execution-layer cognitive tasks frees capacity for judgment and strategic work — it does not automate their physical presence on site.
+            </p>
+
+            <p class="fs-lg">
+              The same logic applies to a logistics manager, a hospital administrator, a commercial lender, or a manufacturing plant manager. The proportion of time allocated to each layer differs significantly by role — a senior portfolio manager may spend 80% of their time in the strategic layer, while a junior processing analyst may spend 80% in the execution layer — but the structure itself is consistent. Autor and Handel (2013), using direct worker surveys on task content, confirm that abstract and non-routine task intensity varies substantially across occupations and correlates with both seniority and compensation — consistent with the hypothesis that the judgment and strategic layers carry systematically higher value than the execution layer.<sup><a href="#ref_7">[7]</a></sup>
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Productivity Changes Between Layers</h2>
+
+            <p class="fs-lg">
+              Productivity per unit of cognitive labor is not uniform across the three layers. The execution layer produces high throughput at low per-unit cognitive cost. It is the most scalable layer and the most directly subject to volume-productivity measurement. Doubling execution-layer throughput is meaningful and measurable.
+            </p>
+
+            <p class="fs-lg">
+              The judgment layer produces lower throughput but higher per-unit value. A standard renewal may take 15 minutes; a complex coastal account with a disputed loss history may take four hours — but that four-hour judgment decision may involve $2M of premium and risk outcomes that dwarf the routine case in financial consequence. Productivity here is better measured in decision quality than in transaction volume.
+            </p>
+
+            <p class="fs-lg">
+              The strategic layer resists throughput measurement almost entirely. A senior underwriter who manages the top 10 producer relationships in a region may produce relatively few discrete outputs in any given week, but the value of those relationships to the firm's premium volume may be the largest single source of business value in their entire portfolio.
+            </p>
+
+            <p class="fs-lg">
+              When automation compresses the execution layer, the productivity freed is not equivalent to the productivity that remains. Time shifts upward in value density — each hour of the remaining human role carries more cognitive weight, on average, than the overall role did before automation. This is why automating 30% of a role does not typically reduce compensation by 30%. The 30% being automated is disproportionately the low-value portion; what remains is disproportionately the high-value portion. The labor economics literature describes this dynamic as automation complementing non-routine tasks while substituting for routine ones — raising the marginal productivity of the judgment and strategic layers even as it depresses the value of execution-layer labor.<sup><a href="#ref_8">[8]</a></sup>
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Modeling the Cost of Labor by Layer</h2>
+
+            <p class="fs-lg">
+              For any given role, labor cost can be allocated across layers through time-study or structured estimation. The approach:
+            </p>
+
+            <ol>
+              <li class="fs-lg">Estimate the percentage of total working time spent in each layer (execution, judgment, strategic).</li>
+              <li class="fs-lg">Multiply each percentage by the role's fully loaded annual cost (salary plus benefits, overhead, management).</li>
+            </ol>
+
+            <p class="fs-lg"><strong>Example — commercial underwriter at $150K fully loaded:</strong></p>
+
+            <div class="table-responsive my-4">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr><th>Layer</th><th>Time Share</th><th>Allocated Cost</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Execution</td><td>50%</td><td>$75,000</td></tr>
+                  <tr><td>Judgment</td><td>35%</td><td>$52,500</td></tr>
+                  <tr><td>Strategic</td><td>15%</td><td>$22,500</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              A cognitive labor workflow that reliably automates execution-layer tasks eliminates up to $75,000 of labor cost per underwriter, or redirects that capacity toward judgment and strategic work. If execution-layer automation allows one underwriter to handle 40% more accounts, the labor cost per account drops proportionally while the headcount remains flat.
+            </p>
+
+            <p class="fs-lg">
+              For hybrid physical-cognitive roles, the same method applies, but only the cognitive portion is included. Physical labor time is excluded; only the knowledge-work component is modeled.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Grounding the Value Multipliers</h2>
+
+            <p class="fs-lg">
+              Labor cost allocation is not the same as business value allocation. Each layer contributes value through a different mechanism. The ratios between business value generated and labor cost incurred — the value productivity multipliers — differ substantially across layers.
+            </p>
+
+            <p class="fs-lg">
+              Establishing credible multipliers is important because they are the basis for the business case for cognitive labor automation. The ranges used here are intentionally conservative — chosen to be defensible from first principles rather than optimistic in the direction of a strong result.
+            </p>
+
+            <p class="fs-lg">
+              <strong>Execution layer: ~1&times; ("replacement cost" basis)</strong>
+            </p>
+
+            <p class="fs-lg">
+              Execution-layer work generates value approximately equal to its cost. The correct test: could a capable external provider perform the same work at a similar price? For well-defined, rule-following tasks — pulling reports, applying standard algorithms, generating routine documentation — the answer is yes. The work must be done correctly to keep the business operating, but correct execution is not differentiating. Value ≈ cost.
+            </p>
+
+            <p class="fs-lg">
+              <strong>Judgment layer: 2–5&times; ("error-cost protection" basis)</strong>
+            </p>
+
+            <p class="fs-lg">
+              Judgment-layer work generates value primarily by preventing costly errors. The mechanism: each judgment decision carries an associated labor cost (the worker's time) and an associated error exposure (the loss that occurs if the judgment is poor). For professional knowledge workers, the error costs on non-routine decisions routinely exceed the labor cost of making the decision.
+            </p>
+
+            <p class="fs-lg">
+              The conservative lower bound (2&times;) requires only that a modest fraction of judgment decisions carry stakes meaningfully higher than their labor cost. Consider an underwriter handling 40 non-standard accounts per year. Their judgment labor cost per account is roughly $1,300 ($52,500 ÷ 40). If poor judgment on even 8 of those accounts produces an average adverse outcome of $15,000 per account, the expected error-avoidance value is $120,000 — approximately 2.3&times; the $52,500 judgment layer cost. The 5&times; upper end reflects roles where judgment decisions routinely involve higher-stakes outcomes.
+            </p>
+
+            <p class="fs-lg">
+              <strong>Strategic layer: 5–15&times; ("organizational scope" basis)</strong>
+            </p>
+
+            <p class="fs-lg">
+              Strategic-layer work generates value through organizational outcomes — revenue retention, portfolio composition, process improvement — that operate at a scale exceeding individual transactions. The leverage comes from scope: one relationship decision or portfolio adjustment can affect outcomes across many accounts simultaneously.
+            </p>
+
+            <p class="fs-lg">
+              The conservative lower bound (5&times;) requires only that the strategic worker's attention contributes to revenue retention or generation that exceeds 5&times; their strategic labor cost — a modest threshold for any worker whose work influences key relationships or organizational processes.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Value by Layer: Two Worked Examples</h2>
+
+            <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-4">Example A — Commercial Underwriter ($150K fully loaded)</h3>
+
+            <p class="fs-lg">Time allocation: 50% execution, 35% judgment, 15% strategic.</p>
+
+            <div class="table-responsive my-4">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr><th>Layer</th><th>Cost</th><th>Multiplier</th><th>Value</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Execution</td><td>$75,000</td><td>1&times;</td><td>$75,000</td></tr>
+                  <tr><td>Judgment</td><td>$52,500</td><td>3&times;</td><td>$157,500</td></tr>
+                  <tr><td>Strategic</td><td>$22,500</td><td>7&times;</td><td>$157,500</td></tr>
+                  <tr><td><strong>Total</strong></td><td><strong>$150,000</strong></td><td>—</td><td><strong>$390,000</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              The judgment multiplier of 3&times; reflects an underwriter handling 40 non-standard accounts per year where correct judgment prevents losses averaging $4,000 per account in expected value ($160,000 total on $52,500 labor). The strategic multiplier of 7&times; reflects management of 8 producer relationships collectively writing $4M in premium, where relationship quality contributes conservatively to $100,000–$150,000 in annual retention value against $22,500 of strategic labor.
+            </p>
+
+            <p class="fs-lg">
+              Overall estimated value-to-cost: <strong>2.6&times;</strong> using conservative multipliers. The role costs $150K and generates approximately $390K in business value under these assumptions.
+            </p>
+
+            <hr/>
+
+            <h3 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-4">Example B — Commercial Relationship Banker ($175K fully loaded)</h3>
+
+            <p class="fs-lg">
+              A senior commercial banker managing 15 credit relationships totaling $25M in outstanding loans.
+            </p>
+
+            <p class="fs-lg">Time allocation: 45% execution, 40% judgment, 15% strategic.</p>
+
+            <div class="table-responsive my-4">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr><th>Layer</th><th>Cost</th><th>Multiplier</th><th>Value</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Execution</td><td>$78,750</td><td>1&times;</td><td>$78,750</td></tr>
+                  <tr><td>Judgment</td><td>$70,000</td><td>3&times;</td><td>$210,000</td></tr>
+                  <tr><td>Strategic</td><td>$26,250</td><td>6&times;</td><td>$157,500</td></tr>
+                  <tr><td><strong>Total</strong></td><td><strong>$175,000</strong></td><td>—</td><td><strong>$446,250</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              The judgment multiplier of 3&times; reflects credit underwriting and covenant monitoring on $25M of loans. The strategic multiplier of 6&times; reflects client relationship management across a portfolio generating roughly $1.5M in annual revenue (net interest income plus fees), where the banker's attention to relationship health contributes conservatively to $150,000 of retention and cross-sell value against $26,250 of strategic labor.
+            </p>
+
+            <p class="fs-lg">
+              Overall estimated value-to-cost: <strong>2.6&times;</strong> — consistent with the underwriter example despite the different industry and role.
+            </p>
+
+            <p class="fs-lg">
+              The consistency of the overall ratio across these two examples is not coincidental. The underlying logic — that execution work is commodity, judgment work protects against error costs that exceed the labor invested, and strategic work operates at organizational scale — produces similar overall value ratios across knowledge work roles with similar layer distributions.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Modeling Business Value Impact of Automation</h2>
+
+            <p class="fs-lg">
+              When automation compresses the execution layer, the value model shifts. Time freed from execution does not disappear — it migrates upward into judgment and strategic work. The value of that migration is the difference between what the freed time was worth at execution-layer rates (1&times;) and what it generates when redirected to judgment or strategic work (3–7&times;).
+            </p>
+
+            <p class="fs-lg"><strong>Continuing with Example A — commercial underwriter:</strong></p>
+
+            <p class="fs-lg">
+              Assume a cognitive labor workflow automates 70% of execution-layer tasks (&Delta; = 50% &times; 0.7 = 35% of total time freed). Freed time is split 60% to judgment, 40% to strategic.
+            </p>
+
+            <div class="table-responsive my-4">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr><th>Layer</th><th>Pre-Automation</th><th>Post-Automation</th><th>Value Pre</th><th>Value Post</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Execution</td><td>50%</td><td>15%</td><td>$75,000</td><td>$22,500</td></tr>
+                  <tr><td>Judgment</td><td>35%</td><td>56%</td><td>$157,500</td><td>$252,000</td></tr>
+                  <tr><td>Strategic</td><td>15%</td><td>29%</td><td>$157,500</td><td>$304,500</td></tr>
+                  <tr><td><strong>Total</strong></td><td></td><td></td><td><strong>$390,000</strong></td><td><strong>$579,000</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              Value gain from reallocation: <strong>$189,000</strong> — an additional $189K of business value generated by the same person at the same salary, with no change in headcount. If the automation workflow costs $25,000 per year (fully loaded), the net benefit is $164,000 and the ROI is 6.6&times; on the tool investment.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Practical Implication</h2>
+
+            <p class="fs-lg">
+              Any automation investment should be evaluated not just by the labor cost of the layer being automated, but by the value of what freed capacity can be redirected toward. Automating $75,000 of execution-layer work in a $150K role is not a $75,000 benefit — it is a $75,000 cost reduction <em>plus</em> the option value of redirecting 35% of that person's capacity toward higher-value judgment and strategic work. The full economic case includes both, and under conservative assumptions, the reallocation value substantially exceeds the direct cost savings.
+            </p>
+
+            <p class="fs-lg">
+              The conservative multipliers used here are intended to make this case as a floor, not a ceiling. Business leaders who review this framework with their own roles in mind will typically find the actual value ratios in their context to be higher — particularly in the judgment and strategic layers of senior professional roles.
+            </p>
+
+            <hr/>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">References &amp; Notes</h2>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_1">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[1] <strong>Programmed vs. unprogrammed decisions.</strong> Simon, H.A. (1960). <em>The New Science of Management Decision</em>. Harper &amp; Row. Simon distinguished "programmed" decisions — handled by pre-established procedures — from "unprogrammed" decisions requiring novel judgment. The execution layer maps directly onto Simon's "programmed" category.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_2">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[2] <strong>Routine vs. non-routine cognitive tasks.</strong> Autor, D.H., Levy, F., &amp; Murnane, R.J. (2003). "The Skill Content of Recent Technological Change: An Empirical Exploration." <em>Quarterly Journal of Economics</em>, 118(4), 1279–1333. The foundational empirical support for the execution layer definition.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_3">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[3] <strong>Tacit knowledge / "we can know more than we can tell."</strong> Polanyi, M. (1966). <em>The Tacit Dimension</em>. Doubleday. The philosophical foundation for why judgment-layer work resists codification.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_4">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[4] <strong>Polanyi's Paradox applied to automation.</strong> Autor, D.H. (2015). "Why Are There Still So Many Jobs? The History and Future of Workplace Automation." <em>Journal of Economic Perspectives</em>, 29(3), 3–30. Autor explicitly frames Polanyi's Paradox as the structural barrier to automating non-routine cognitive tasks.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_5">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[5] <strong>Knowledge workers.</strong> Drucker, P.F. (1959). <em>The Landmarks of Tomorrow</em>. Harper &amp; Row. Drucker's concept of the "knowledge worker" characterizes the type of high-level, non-routine cognitive work that defines the strategic layer.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_6">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[6] <strong>The task approach to labor markets.</strong> Autor, D.H. (2013). "The 'Task Approach' to Labor Markets: An Overview." <em>Journal for Labour Market Research</em>, 46(3), 185–199. Autor's own synthesis of the task-based framework.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_7">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[7] <strong>Empirical task content measurement across occupations.</strong> Autor, D.H., &amp; Handel, M.J. (2013). "Putting Tasks to the Test: Human Capital, Job Tasks, and Wages." <em>Journal of Labor Economics</em>, 31(S1), S59–S96. Using direct worker surveys, confirms that abstract and non-routine task content independently predicts wages above what education and experience explain.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_8">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[8] <strong>Automation complementing non-routine tasks while substituting for routine ones.</strong> Autor, D.H., Levy, F., &amp; Murnane, R.J. (2003), cited above; and Autor, D.H. (2015), cited above. The complement/substitute mechanism is the empirical foundation for the "upward value shift" argument.</p>
+                </figure>
+              </div>
+            </div>
+
+            <div class="card border-0 bg-secondary mb-2" id="ref_9">
+              <div class="card-body">
+                <figure>
+                  <p class="fs-sm">[9] <strong>Task-displacement and upward migration of human labor.</strong> Acemoglu, D., &amp; Restrepo, P. (2019). "Automation and New Tasks: How Technology Displaces and Reinstates Labor." <em>Journal of Economic Perspectives</em>, 33(2), 3–30. Formalizes how automation moves the task boundary upward, concentrating human labor in areas of comparative advantage.</p>
+                </figure>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Next in Series -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+
+            <!-- Tags -->
+            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+            </div>
+
+
+
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row g-0">
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/modern_aqueduct_header_3.jpg); min-height: 14rem;"></div>
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h4 class="card-title">A Value Model for the Structural Transformation of Knowledge Work</h4>
+                          <p class="card-text">When a business invests in cognitive labor automation, the standard framing — "we will save X hours of labor" — understates the return. This article builds a model for answering the right question with numbers an executive can evaluate.</p>
+
+                <a class="btn btn-lg btn-link px-0" href="./value_model_for_structural_transformation_of_knowledge_work_20260311_v2.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+      </section>
+
+
+
+
+    </main>
+
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="../../assets/vendor/chart.js/dist/chart.umd.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

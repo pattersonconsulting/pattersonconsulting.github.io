@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Contract of Decision Intelligence | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Every natural language interface carries an implicit contract with the user. Understanding that contract — and why most AI tools break it — is the design requirement for Decision Intelligence.">
+    <meta name="keywords" content="decision intelligence, natural language interface, knowledge work, cognitive labor, AI, UX design, LOB leaders, enterprise AI, conversational AI">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Contract of Decision Intelligence | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/decision_intelligence_contract_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/contract_of_decision_intelligence.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Every natural language interface carries an implicit contract with the user. Understanding that contract — and why most AI tools break it — is the design requirement for Decision Intelligence."/>
+
+    <meta name="twitter:title" content="The Contract of Decision Intelligence | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/decision_intelligence_contract_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/contract_of_decision_intelligence.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Contract of Decision Intelligence</li>
+          </ol>
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Contract of Decision Intelligence</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">April 2026</div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/decision_intelligence_contract_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+            <p class="fs-lg">
+              When you hand someone a new interface, you are handing them a set of expectations they did not ask for.
+            </p>
+
+            <p class="fs-lg">
+              A dashboard says: <em>navigate me, filter me, interpret what I show you.</em> The user is in the driver's seat. The system delivers data; the user is responsible for making sense of it. The implicit contract is clear — and as I wrote in the previous article in this series, <a href="./information_for_line_of_business.html">that contract is the wrong one for line-of-business leaders</a>. They were not hired to do data assembly. They were hired to make decisions.
+            </p>
+
+            <p class="fs-lg">
+              A natural language interface implies something fundamentally different. When a regional VP types <em>"what happened to margins in the northeast?"</em> — in plain English, the way she would ask a colleague — she is not activating a search engine. She is entering a conversation. And conversations carry a specific set of expectations that the system must honor, or break her trust immediately.
+            </p>
+
+            <p class="fs-lg">
+              Understanding that contract is not a UX detail. It is the core design requirement.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Every Interface Makes a Promise</h2>
+
+            <p class="fs-lg">
+              Think about what happens when you call a knowledgeable colleague with a question. You do not expect to be handed a spreadsheet. You do not expect to be told "please specify the time range and metric ID." You expect that person to understand what you meant, answer in plain language, account for who you are and what you're responsible for, and give you something you can act on.
+            </p>
+
+            <p class="fs-lg">
+              That is the promise a natural language interface makes the moment it appears. The form of the interaction — plain English in, plain English out — sets an expectation that the system will behave like an informed, context-aware colleague, not like a query tool with a friendlier front end.
+            </p>
+
+            <p class="fs-lg">
+              Most enterprise AI tools do not honor this promise. They look like a conversational interface on the surface, but they break the contract in ways that matter — sometimes immediately, sometimes subtly enough that users do not notice until they have already acted on a wrong answer.
+            </p>
+
+            <p class="fs-lg">
+              The contract has five specific terms. A Decision Intelligence system either honors all five, or it is not a Decision Intelligence system — regardless of how it looks.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Term 1: My Intent Will Be Understood, Not Just My Phrasing</h2>
+
+            <p class="fs-lg">
+              When a line-of-business leader asks <em>"what happened to margins in the northeast?"</em> they are not expecting a parsing error because they did not specify a time range or metric ID. They expect the system to interpret what they <em>meant</em> — a variance analysis, probably versus prior period, for their region, for the metrics that matter in their role.
+            </p>
+
+            <p class="fs-lg">
+              The natural language contract requires the system to absorb the translation burden. The user does not learn the system's language. The system learns the user's.
+            </p>
+
+            <p class="fs-lg">
+              This is a higher bar than it sounds. It requires the system to have encoded real knowledge about the domain — what "margins" means in this business, what "the northeast" refers to in this data model, what the relevant comparison period should be. A system that just passes the question to a language model and hopes for a reasonable answer is not absorbing the translation burden. It is outsourcing it to inference, which is not the same thing.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Term 2: The Answer Will Come Back in My Language</h2>
+
+            <p class="fs-lg">
+              If the question arrives in plain English, the answer must arrive in plain English — synthesized, interpreted, and framed for action.
+            </p>
+
+            <p class="fs-lg">
+              Not a table of numbers with a header. Not a chart that requires the leader to do their own interpretation. A confident narrative that tells them what happened, why it happened, and what — if anything — they should do about it.
+            </p>
+
+            <p class="fs-lg">
+              In the series on <a href="./cognitive_labor.html">cognitive labor</a>, I described the core operation of knowledge work as <em>mental synthesis</em> — assembling noisy inputs into a coherent model that supports a defensible narrative and actionable next steps. The purpose of a Decision Intelligence interface is to perform that synthesis on behalf of the LOB leader, not to hand them the raw materials and expect them to do it themselves. When the answer comes back as a table, the system has transferred the synthesis work back to the person who was supposed to be freed from it.
+            </p>
+
+            <div class="card border-0 bg-secondary mb-3">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p><i>The format of the input sets the expectation for the format of the output. Plain English in, plain English out — that is the contract.</i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Term 3: The System Knows Who I Am and What I Care About</h2>
+
+            <p class="fs-lg">
+              When a regional VP asks <em>"how are we tracking?"</em> she is not asking for a global overview. She is asking about her region, her metrics, her accountability. Conversational interaction implies contextual awareness — the system understands the role and focus of the person asking, and frames answers accordingly.
+            </p>
+
+            <p class="fs-lg">
+              A system that responds to every question as if it is the first question from an anonymous user breaks this term immediately. And it breaks it in a way that LOB leaders recognize instantly — because that is not how a knowledgeable colleague behaves.
+            </p>
+
+            <p class="fs-lg">
+              This is where generic AI tools most visibly fail. A general-purpose chatbot has no durable awareness of who it is talking to or what that person is responsible for. It responds to the literal question without the contextual framing that makes the answer useful. The VP receives a company-wide summary when she needed a northeast-focused analysis. The answer is not wrong, exactly — but it is not hers, either.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Term 4: The Answer Is Reliable, Not Just Plausible</h2>
+
+            <p class="fs-lg">
+              This is the term that has the highest stakes — and the one that most AI deployments underinvest in.
+            </p>
+
+            <p class="fs-lg">
+              Natural language answers carry more implicit credibility than charts and tables. When a person explains something in plain English, the social expectation is that they are telling you something true. A wrong number in a chart can be questioned. A wrong narrative delivered with confidence may be believed, forwarded to stakeholders, and acted on — before anyone realizes the analysis was faulty.
+            </p>
+
+            <p class="fs-lg">
+              This means the architecture behind the natural language interface matters as much as the interface itself — and in most cases, it matters more. A Decision Intelligence system built on pre-compiled Insight Workflows — where each analysis step is defined, sequenced, and encoded with business-specific logic before any question is asked — can honor this term of the contract. The answer is the product of a known, auditable process. It will be the same answer the next time someone asks the same question under the same conditions. The narrative is not plausible-sounding inference. It is the output of a structured analysis.
+            </p>
+
+            <p class="fs-lg">
+              A generic loop-and-tool agent that reasons its way to an answer at runtime cannot provide this guarantee. It may produce a correct answer. It may produce a different correct answer next time. It may produce a confident-sounding incorrect answer either time. When the output is a narrative — the form that carries the most implicit trust — that variability is not acceptable.
+            </p>
+
+            <p class="fs-lg">
+              This is not an argument against large language models. It is an argument about where in the system they belong. The language model produces the narrative. The Insight Workflow provides the analysis the narrative is built on. Those are different layers, and confusing them is how well-intentioned AI deployments end up with systems that feel powerful but cannot be trusted at decision time.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Term 5: I Can Follow Up</h2>
+
+            <p class="fs-lg">
+              Conversation implies a thread. After receiving an answer, the LOB user expects to say <em>"drill into Q3 specifically"</em> or <em>"how does that compare to last year at this point?"</em> and have the system understand what "that" refers to.
+            </p>
+
+            <p class="fs-lg">
+              A system that treats every query as stateless is not a conversational interface. It is a search box with better phrasing. The ability to follow up — and to have the system hold the context of the prior exchange — is not a nice-to-have. It is what makes a natural language interface feel like a conversation rather than a series of disconnected lookups.
+            </p>
+
+            <p class="fs-lg">
+              This matters especially for the way LOB leaders actually think. Decisions rarely emerge from a single question. They emerge from a progression: first understanding what happened, then understanding why, then understanding what the options are, then stress-testing a specific direction. Each step assumes the previous one. A stateless interface forces the leader to restart that progression from scratch with each query, which eliminates most of the value.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Generic Chatbots Fail This Contract</h2>
+
+            <p class="fs-lg">
+              A general-purpose language model can produce natural language output. It can handle follow-up questions. It can even sound authoritative and specific. What it cannot reliably do is honor terms 3 and 4 — it does not have durable awareness of the user's role and business context, and it cannot guarantee that its narrative is built from consistent, auditable analysis of governed data.
+            </p>
+
+            <p class="fs-lg">
+              The contract a line-of-business leader brings to a natural language Decision Intelligence interface is not just <em>"please respond in English."</em> It is: <em>understand my context, give me an accurate answer built from my company's actual data and logic, expressed consistently every time I ask.</em>
+            </p>
+
+            <p class="fs-lg">
+              That is a higher bar than conversation. It is the bar that Decision Intelligence, properly architected, is designed to meet — and that most tools currently on the market quietly sidestep.
+            </p>
+
+            <p class="fs-lg">
+              As I described in the earlier piece on <a href="./the_3_ways_a_business_uses_technology.html">how businesses use technology</a>, the critical failure mode in every wave of enterprise tooling is requiring the human to adapt to the machine's interface rather than the machine adapting to the human's work mode. A chatbot that looks like a natural language interface but fails the five terms of the contract is the same failure in a new disguise — it looks like it is meeting the user where they are, but it is still asking the user to compensate for what the system cannot do.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Honoring the Contract Actually Requires</h2>
+
+            <p class="fs-lg">
+              Honoring all five terms of the contract is an architectural commitment, not a prompt engineering exercise.
+            </p>
+
+            <p class="fs-lg">
+              It requires that the business domain be encoded up front — the metrics that matter, the comparisons that are meaningful, the role-specific framing that makes an answer useful to a specific person. It requires that the analysis workflows be pre-defined and pre-tested, so that the narrative the language model produces is built on a foundation that has been verified to be correct. It requires that user context be maintained, so that follow-up questions are understood as continuations of a conversation rather than new requests from a stranger.
+            </p>
+
+            <p class="fs-lg">
+              None of this is impossible. But none of it is automatic, either. It is the work that distinguishes a Decision Intelligence deployment from a demo that happens to use natural language.
+            </p>
+
+            <p class="fs-lg">
+              The LOB leader who types <em>"what happened to margins in the northeast?"</em> is not asking for a language model. She is asking for a colleague who knows her business, knows her role, and can be trusted to tell her something true. The contract she is implicitly offering is the same contract she would offer any person she turns to for analysis. The question for any Decision Intelligence system is simple: can it sign that contract, or can't it?
+            </p>
+
+            <div class="card border-0 bg-secondary mb-3">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p><i>The question for any Decision Intelligence system is simple: can it sign the contract, or can't it?</i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Continue Reading -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+        <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+          <h3 class="h3 py-1 mb-0 me-4">Continue Reading</h3>
+        </div>
+
+        <div class="card overflow-hidden mb-4">
+          <div class="row g-0">
+            <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/header_cognitive_labor_1.jpg); min-height: 14rem;"></div>
+            <div class="col-sm-8">
+              <div class="card-body">
+                <h4 class="card-title">Built for the Wrong Audience: What Line-of-Business Leaders Actually Need from AI</h4>
+                <p class="card-text">Engineers and line-of-business leaders have fundamentally different relationships with information. Understanding that difference changes how you deploy Decision Intelligence.</p>
+                <a class="btn btn-lg btn-link px-0" href="./information_for_line_of_business.html">
+                  Read article
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+    </main>
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

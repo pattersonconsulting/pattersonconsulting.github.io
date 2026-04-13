@@ -143,14 +143,10 @@
       }
       .step-detail-close:hover { color: #374151; background: #f3f4f6; }
       .step-detail-sections {
-        display: flex; flex-direction: column; gap: 1.25rem;
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
       }
-      .step-detail-top-row {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-      }
-      .step-detail-output-row { }
       @media (max-width: 768px) {
-        .step-detail-top-row { grid-template-columns: 1fr; }
+        .step-detail-sections { grid-template-columns: 1fr; }
       }
       .step-detail-section { }
       .step-detail-section-label {
@@ -384,6 +380,7 @@
         }
         .agent-step { border-radius: 0.5rem; background: #f8f9fa; }
         .pg-example-prompt { white-space: normal; }
+        .step-detail-sections { grid-template-columns: 1fr; }
       }
     </style>
 
@@ -497,10 +494,7 @@
 
           <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb" style="font-size: 0.78rem; opacity: 0.7;">
-              <!--
               <li class="breadcrumb-item"><a href="../../../../augmented_reasoning_20260311_v5.html" class="text-light text-decoration-none">Augmented Reasoning</a></li>
-              -->
-              <li class="breadcrumb-item text-light">Decision Intelligence</li>
               <li class="breadcrumb-item text-light">Retail</li>
               <li class="breadcrumb-item text-light">Logistics &amp; Warehouse Operations</li>
             </ol>
@@ -640,12 +634,12 @@
             <!-- Deploy CTA -->
             <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background: #f8f9fa; border: 1px solid #e5e7eb;">
               <div class="flex-grow-1">
-                <div style="font-size: 0.875rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem;">Want to see this workflow configured for your operation?</div>
-                <div style="font-size: 0.82rem; color: #6b7280; line-height: 1.5;">In a 60-minute working session, we'll demo the workflow against data modeled on your environment, walk through the KWF configuration with your team, and map your warehouse systems, SLA thresholds, and business logic to the design. You'll leave with a clear picture of what a full deployment would require — and which customizations matter most for your operation.</div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem;">Ready to run this Decision Intelligence workflow on your warehouse data?</div>
+                <div style="font-size: 0.82rem; color: #6b7280; line-height: 1.5;">Request a live session — we'll configure the workflow for your WMS, labor schedule, and order data, customize SLA thresholds, and deploy it to your Databricks environment before the session ends.</div>
               </div>
               <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html" target="_blank" rel="noopener"
                  class="btn btn-primary flex-shrink-0" style="white-space: nowrap;">
-                Schedule a Working Session
+                Deploy on Databricks
               </a>
             </div>
 
@@ -668,19 +662,6 @@
               <p class="text-muted mb-4" style="font-size: 0.875rem;">
                 <strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.
               </p>
-
-              <!-- KWF pre-computed logic note -->
-              <div style="background: rgba(255,149,0,0.06); border: 1px solid rgba(255,149,0,0.28); border-radius: 0.625rem; padding: 0.875rem 1.125rem; margin-bottom: 1.5rem; font-size: 0.875rem; color: #374151; line-height: 1.65; display: flex; gap: 0.75rem; align-items: flex-start;">
-                <span style="flex-shrink: 0; margin-top: 0.15rem;">
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/>
-                    <path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                <div>
-                  <strong style="color: #111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly: looping through different approaches, evaluating their own outputs, and trying to converge on a useful answer at runtime. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked and attributed, and what the output artifact should contain. That analysis happens once, during the KWF phase. By the time the workflow runs, there is nothing left to figure out. The result is a workflow that executes the same way every time, produces consistent and auditable output, and requires no self-correction loops or evaluation guardrails to stay on track. For a line-of-business leader, that distinction matters: it is the difference between a tool you can stake your name on in an incident review and one you can only use to explore.
-                </div>
-              </div>
 
               <!-- Interactive pipeline card -->
               <div class="card border-0 shadow-sm rounded-4 mb-4">
@@ -723,17 +704,15 @@
                     <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
                   </div>
                   <div class="step-detail-sections">
-                    <div class="step-detail-top-row">
-                      <div class="step-detail-section">
-                        <div class="step-detail-section-label">Business Logic</div>
-                        <div class="step-detail-logic" id="sd-logic"></div>
-                      </div>
-                      <div class="step-detail-section">
-                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
-                        <pre class="step-detail-query" id="sd-query"></pre>
-                      </div>
+                    <div class="step-detail-section">
+                      <div class="step-detail-section-label">Business Logic</div>
+                      <div class="step-detail-logic" id="sd-logic"></div>
                     </div>
-                    <div class="step-detail-output-row">
+                    <div class="step-detail-section">
+                      <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
+                      <pre class="step-detail-query" id="sd-query"></pre>
+                    </div>
+                    <div class="step-detail-section">
                       <div class="step-detail-section-label">Sample Output</div>
                       <div class="step-detail-output" id="sd-output"></div>
                     </div>

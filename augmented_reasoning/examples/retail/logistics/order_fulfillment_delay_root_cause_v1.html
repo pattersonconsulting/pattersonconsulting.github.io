@@ -2,31 +2,42 @@
 <html lang="en" data-bs-theme="light">
   <head>
     <meta charset="utf-8">
+
+    <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
 
-    <title>Order Fulfillment Delay Root Cause | Decision Intelligence Demo | Patterson Consulting</title>
-    <meta name="description" content="A Decision Intelligence workflow that identifies and ranks the root causes of order fulfillment SLA misses — synthesizing labor, system, and order data into a defensible narrative for line-of-business leaders.">
-    <meta name="keywords" content="decision intelligence, order fulfillment delay, SLA root cause, warehouse operations, logistics AI, cognitive labor automation, knowledge work foundry, augmented reasoning, databricks, line of business">
+    <!-- SEO meta tags -->
+    <title>Order Fulfillment Delay Root Cause On-Demand | Augmented Reasoning Demo | Patterson Consulting</title>
+    <meta name="description" content="See a Decision Intelligence Agent identify and rank the root causes of order fulfillment SLA misses — synthesizing labor, system, and order data into a defensible narrative for executive leadership and customer communications.">
+    <meta name="keywords" content="decision intelligence agent, order fulfillment delay, SLA root cause, warehouse operations, logistics AI, cognitive labor automation, knowledge work foundry, augmented reasoning, databricks">
     <meta name="author" content="Patterson Consulting">
 
-    <meta property="og:title" content="Order Fulfillment Delay Root Cause | Decision Intelligence Demo | Patterson Consulting" />
-    <meta property="og:description" content="When SLA compliance drops, someone has to explain why — to leadership, and to customers. See the Decision Intelligence workflow that synthesizes labor schedules, system downtime logs, and order records into a consistent, defensible narrative in seconds." />
+    <meta property="og:title" content="Order Fulfillment Delay Root Cause On-Demand | Patterson Consulting" />
+    <meta property="og:description" content="When SLA compliance drops, someone has to explain why — to leadership, and to customers. See the agent that synthesizes labor schedules, system downtime logs, and order records into a consistent, defensible narrative in seconds." />
     <meta property="og:type" content="article" />
     <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/ar_example_header_0.jpg"/>
-    <meta property="og:url" content="https://www.pattersonconsultingtn.com/augmented_reasoning/examples/retail/logistics/order_fulfillment_delay_root_cause_v2.html" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/augmented_reasoning/examples/retail/logistics/order_fulfillment_delay_root_cause.html" />
 
+    <!-- Webmanifest + Favicon -->
     <link rel="manifest" href="../../../../alpha_manifest.json">
     <link rel="icon" type="image/png" sizes="16x16" href="../../../../assets/app-icons/pct_box_logo_16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../../../assets/app-icons/pct_box_logo_32x32.png">
 
+    <!-- Theme switcher -->
     <script src="../../../../assets/js/theme-switcher.js"></script>
 
+    <!-- Google font (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
 
+    <!-- Vendor styles -->
     <link rel="stylesheet" media="screen" href="../../../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
     <link rel="stylesheet" href="../../../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
     <link rel="stylesheet" media="screen" href="../../../../assets/css/theme.pct.v2.css">
 
     <style>
@@ -85,94 +96,24 @@
       .result-metric.highlight .metric-value { color: var(--bs-primary); }
 
       /* ── Step flow ── */
-      .agent-pipeline { display: flex; gap: 0; align-items: stretch; margin: 0; }
+      .agent-pipeline { display: flex; gap: 0; align-items: stretch; margin: 1.5rem 0; }
       .agent-step {
         flex: 1; text-align: center; position: relative;
         padding: 1.25rem 0.75rem; display: flex; flex-direction: column; align-items: center;
-        cursor: pointer; border-radius: 0.5rem;
-        transition: background 0.15s, box-shadow 0.15s;
-      }
-      .agent-step:hover { background: rgba(79,127,255,0.07); }
-      .agent-step.step-active {
-        background: rgba(79,127,255,0.1);
-        box-shadow: inset 0 0 0 2px rgba(79,127,255,0.5);
       }
       .agent-step:not(:last-child)::after {
         content: '›';
         position: absolute; right: -10px; top: 50%;
         transform: translateY(-50%);
         font-size: 1.5rem; color: #adb5bd; z-index: 1; line-height: 1;
-        pointer-events: none;
       }
       .agent-step-num {
         width: 40px; height: 40px; border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
         font-size: 0.9rem; font-weight: 800; margin-bottom: 0.6rem; flex-shrink: 0;
-        transition: transform 0.15s;
       }
-      .agent-step.step-active .agent-step-num { transform: scale(1.1); }
       .agent-step-title { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; }
       .agent-step-body  { font-size: 0.75rem; color: #6f788b; line-height: 1.4; }
-      .step-click-hint {
-        font-size: 0.7rem; color: #adb5bd; font-style: italic;
-        text-align: center; margin-top: 0.5rem;
-      }
-
-      /* ── Step detail panel ── */
-      .step-detail-panel {
-        border-top: 1px solid #e5e7eb;
-        padding: 1.5rem 1.5rem 1.25rem;
-        display: none;
-      }
-      .step-detail-panel.visible { display: block; }
-      .step-detail-header {
-        display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;
-      }
-      .step-detail-num {
-        width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 0.85rem; font-weight: 800;
-      }
-      .step-detail-title {
-        font-size: 1rem; font-weight: 700; color: #111827;
-      }
-      .step-detail-close {
-        margin-left: auto; background: none; border: none; padding: 0.25rem 0.5rem;
-        color: #9ca3af; cursor: pointer; font-size: 0.8rem; border-radius: 4px;
-        transition: color 0.12s, background 0.12s;
-      }
-      .step-detail-close:hover { color: #374151; background: #f3f4f6; }
-      .step-detail-sections {
-        display: flex; flex-direction: column; gap: 1.25rem;
-      }
-      .step-detail-top-row {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-      }
-      .step-detail-output-row { }
-      @media (max-width: 768px) {
-        .step-detail-top-row { grid-template-columns: 1fr; }
-      }
-      .step-detail-section { }
-      .step-detail-section-label {
-        font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-        letter-spacing: 0.1em; color: #6b7280; margin-bottom: 0.5rem;
-        border-bottom: 1px solid #e5e7eb; padding-bottom: 0.35rem;
-      }
-      .step-detail-logic {
-        font-size: 0.82rem; color: #374151; line-height: 1.6;
-      }
-      .step-detail-output {
-        font-size: 0.82rem; color: #374151; line-height: 1.6;
-      }
-      .step-detail-query {
-        background: #0f1117; color: #e2e8f0;
-        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-        font-size: 0.72rem; line-height: 1.65;
-        border-radius: 0.375rem; padding: 0.875rem 1rem;
-        overflow-x: auto; white-space: pre;
-        border: 1px solid #1e2333; margin: 0; height: 100%;
-        box-sizing: border-box;
-      }
 
       /* ── Code blocks ── */
       .code-block {
@@ -190,7 +131,9 @@
       .code-number   { color: #fbbf24; }
       .code-type     { color: #c4b5fd; }
 
-      /* ── KWF Agent Playground ── */
+      /* ════════════════════════════════════════════════════════════
+         KWF Agent Playground — Light Theme
+      ════════════════════════════════════════════════════════════ */
       .pg-shell {
         background: #ffffff; border: 1px solid #e5e7eb;
         border-radius: 0.75rem; overflow: hidden;
@@ -273,6 +216,7 @@
       }
       @keyframes pgSpin { to { transform: rotate(360deg); } }
 
+      /* Narrative answer styles */
       .pg-narrative-summary    { margin-bottom: 0.75rem; font-size: 0.875rem; color: #111827; line-height: 1.6; }
       .pg-narrative-deviation  { color: #b45309; font-weight: 700; }
       .pg-narrative-normal     { color: #15803d; font-weight: 700; }
@@ -298,6 +242,7 @@
         background: #fffbeb; border: 1px solid #fde68a;
         border-radius: 0.4rem; font-size: 0.82rem; color: #92400e; line-height: 1.55;
       }
+      /* Customer comms template — teal/blue tint to distinguish from ops narrative */
       .pg-narrative-comms {
         margin-top: 0.625rem; padding: 0.625rem 0.875rem;
         background: #f0f9ff; border: 1px solid #bae6fd;
@@ -313,6 +258,8 @@
         display: block; margin-top: 0.5rem;
         font-size: 0.72rem; color: #9ca3af; font-style: italic;
       }
+
+      /* Footer */
       .pg-footer {
         border-top: 1px solid #f3f4f6; padding: 0.625rem 1.25rem;
         background: #fafafa; display: flex; align-items: center; gap: 0.75rem;
@@ -325,18 +272,6 @@
         margin-left: auto; display: none;
       }
       .pg-reset-btn:hover { color: #1d4ed8; }
-
-      /* ── LOB callout ── */
-      .lob-callout {
-        background: linear-gradient(135deg, rgba(37,99,235,0.05), rgba(37,99,235,0.02));
-        border: 1px solid rgba(37,99,235,0.18); border-radius: 0.625rem;
-        padding: 0.875rem 1.125rem; margin-bottom: 1.5rem;
-        font-size: 0.875rem; color: #374151; line-height: 1.6;
-        display: flex; gap: 0.75rem; align-items: flex-start;
-      }
-      .lob-callout-icon {
-        flex-shrink: 0; font-size: 1rem; margin-top: 0.1rem;
-      }
 
       /* ── Value hero card ── */
       .value-hero-card {
@@ -367,13 +302,6 @@
         border-radius: 999px; padding: 0.25rem 0.75rem;
         font-size: 0.72rem; font-weight: 600; color: #ff9500; letter-spacing: 0.04em;
       }
-
-      /* ── Schema tab ── */
-      .schema-meta {
-        background: #f8f9fa; border-radius: 0.5rem; padding: 0.875rem 1rem;
-        margin-bottom: 1rem; font-size: 0.82rem; line-height: 1.6; color: #374151;
-      }
-      .schema-meta strong { color: #111827; }
 
       /* ── Mobile pipeline fallback ── */
       @media (max-width: 575px) {
@@ -413,6 +341,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+    <!-- Page loading spinner -->
     <div class="page-loading active">
       <div class="page-loading-inner">
         <div class="page-spinner"></div>
@@ -420,6 +349,7 @@
       </div>
     </div>
 
+    <!-- Page wrapper -->
     <main class="page-wrapper">
 
       <!-- ═══ NAVBAR ═══════════════════════════════════════════════════════════ -->
@@ -495,12 +425,10 @@
           <div class="d-none d-lg-block" style="height: 80px;"></div>
           <div class="d-lg-none" style="height: 40px;"></div>
 
+          <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb" style="font-size: 0.78rem; opacity: 0.7;">
-              <!--
               <li class="breadcrumb-item"><a href="../../../../augmented_reasoning_20260311_v5.html" class="text-light text-decoration-none">Augmented Reasoning</a></li>
-              -->
-              <li class="breadcrumb-item text-light">Decision Intelligence</li>
               <li class="breadcrumb-item text-light">Retail</li>
               <li class="breadcrumb-item text-light">Logistics &amp; Warehouse Operations</li>
             </ol>
@@ -514,7 +442,7 @@
               When SLA compliance drops, someone has to explain why — to executive leadership, to the incident review dashboard, and to customers who received a delayed order. That explanation requires pulling from four separate systems: order records, labor rosters, WMS downtime logs, and order priority queues. Every manager pulls it differently. Every explanation carries the risk of being incomplete, inconsistent, or defensively framed.
             </p>
             <p class="text-body fs-lg mb-4">
-              This is a <strong>Decision Intelligence workflow</strong> designed for the Warehouse Operations Manager — a line-of-business leader who needs a defensible narrative in front of them before the incident review, not a set of dashboards to navigate through. A manager spending <strong>three hours per delay incident</strong> manually correlating labor shortfalls, system outages, and priority order surges is not doing warehouse management. They are doing data assembly. The KWF analysis puts <strong>45% of this task in the execution layer</strong> — cross-domain querying, compliance calculation, signal ranking, and narrative formatting. None of that requires a manager's judgment. All of it currently gets one.
+              A Warehouse Operations Manager spending <strong>three hours per delay incident</strong> manually correlating labor shortfalls, system outages, and priority order surges into a narrative for leadership is not doing warehouse management. They are doing data assembly. The KWF analysis for this workflow puts <strong>45% of the task in the execution layer</strong>: querying four tables, calculating SLA compliance, ranking signal contributions, and formatting the output as an incident narrative. None of that requires a manager's judgment. All of it currently gets one.
             </p>
             <div class="d-flex flex-wrap gap-3 mt-3">
               <a class="btn btn-outline-light btn-lg" href="#value">See the Value Model</a>
@@ -527,29 +455,18 @@
       </section>
 
 
-      <!-- ═══ DECISION INTELLIGENCE PLAYGROUND ════════════════════════════════ -->
+      <!-- ═══ AGENT PLAYGROUND ══════════════════════════════════════════════════ -->
       <section class="container py-5" id="playground">
         <div class="row justify-content-center">
           <div class="col-lg-9">
 
             <div class="section-eyebrow">Interactive Demo</div>
-            <h2 class="h1 mb-2">See the Decision Intelligence Workflow in Action</h2>
-            <p class="text-muted mb-3">
-              Select a preset query. Each response synthesizes SLA compliance data, labor schedules, system downtime logs, and order priority records — and produces a ranked narrative with recommended actions and a customer communication template.
+            <h2 class="h1 mb-2">Try the Agent</h2>
+            <p class="text-muted mb-4">
+              Select a preset query to run the agent. Each response synthesizes SLA compliance data, labor schedules, system downtime logs, and order priority records — and produces a ranked narrative with recommended actions and a customer communication template.
             </p>
 
-            <!-- LOB framing callout -->
-            <div class="lob-callout">
-              <span class="lob-callout-icon">&#128100;</span>
-              <div>
-                <strong>Designed for line-of-business leaders</strong> — specifically the Warehouse Operations Manager who needs an answer in plain English, not a set of filter panels to navigate. No SQL, no dashboards, no data engineering background required. The workflow handles the data assembly; the manager handles the judgment.
-                <span style="display:block; margin-top:0.3rem; font-size:0.8rem; color:#6b7280;">
-                  Why this matters: <a href="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/information_for_line_of_business.html" target="_blank" rel="noopener" style="color:#2563eb;">What line-of-business leaders actually need from AI &rarr;</a>
-                </span>
-              </div>
-            </div>
-
-            <!-- Playground shell -->
+            <!-- KWF Agent Playground (light theme) -->
             <div class="pg-shell">
 
               <div class="pg-header">
@@ -558,7 +475,7 @@
                     <path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/>
                   </svg>
                 </div>
-                <span class="pg-header-title">Decision Intelligence Playground</span>
+                <span class="pg-header-title">Agent Playground</span>
                 <span class="pg-header-sep">·</span>
                 <span class="pg-agent-tag">Order Fulfillment Delay Root Cause</span>
                 <div class="pg-header-actions">
@@ -630,7 +547,7 @@
               <div class="pg-footer">
                 <span>Simulated output — KWF agent configuration + sample data. No live database.</span>
                 <button class="pg-reset-btn" id="pg-reset-btn" onclick="resetPlayground()">
-                  &#8592; Run another query
+                  ← Run another query
                 </button>
               </div>
 
@@ -640,12 +557,12 @@
             <!-- Deploy CTA -->
             <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background: #f8f9fa; border: 1px solid #e5e7eb;">
               <div class="flex-grow-1">
-                <div style="font-size: 0.875rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem;">Want to see this workflow configured for your operation?</div>
-                <div style="font-size: 0.82rem; color: #6b7280; line-height: 1.5;">In a 60-minute working session, we'll demo the workflow against data modeled on your environment, walk through the KWF configuration with your team, and map your warehouse systems, SLA thresholds, and business logic to the design. You'll leave with a clear picture of what a full deployment would require — and which customizations matter most for your operation.</div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem;">Ready to run this agent on your warehouse data?</div>
+                <div style="font-size: 0.82rem; color: #6b7280; line-height: 1.5;">Request a live session — we'll configure the agent for your WMS, labor schedule, and order data, customize SLA thresholds, and deploy it to your Databricks environment before the session ends.</div>
               </div>
               <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html" target="_blank" rel="noopener"
                  class="btn btn-primary flex-shrink-0" style="white-space: nowrap;">
-                Schedule a Working Session
+                Deploy this Agent on Databricks
               </a>
             </div>
 
@@ -654,100 +571,57 @@
       </section>
 
 
-      <!-- ═══ HOW THIS WORKFLOW WORKS ══════════════════════════════════════════ -->
+      <!-- ═══ WHAT THE AGENT DOES ════════════════════════════════════════════════ -->
       <section class="bg-secondary py-5">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-9">
 
-              <div class="section-eyebrow">How It Works</div>
-              <h2 class="h1 mb-3">What the Decision Intelligence Workflow Does</h2>
+              <div class="section-eyebrow">Agent Behavior</div>
+              <h2 class="h1 mb-3">What the Agent Does</h2>
               <p class="text-muted mb-4">
-                This workflow handles one compound cognitive task at the execution layer: detect a material SLA compliance drop, rank the contributing signals across four data sources, and produce a consistent, defensible narrative for internal incident review and — uniquely — a customer communication template. It is a cross-domain synthesis workflow drawing from operations, HR, IT, and demand planning. That breadth is exactly why it consumes so much manual time per incident without automation.
-              </p>
-              <p class="text-muted mb-4" style="font-size: 0.875rem;">
-                <strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.
+                The agent handles one compound workflow at the execution layer: detect a material SLA compliance drop, rank the contributing signals across four data sources, and produce a consistent, defensible narrative for internal incident review and — uniquely — a customer communication template. This is a cross-domain synthesis workflow that draws from operations, HR, IT, and demand planning. That breadth is exactly why it consumes so much manual time per incident without automation.
               </p>
 
-              <!-- KWF pre-computed logic note -->
-              <div style="background: rgba(255,149,0,0.06); border: 1px solid rgba(255,149,0,0.28); border-radius: 0.625rem; padding: 0.875rem 1.125rem; margin-bottom: 1.5rem; font-size: 0.875rem; color: #374151; line-height: 1.65; display: flex; gap: 0.75rem; align-items: flex-start;">
-                <span style="flex-shrink: 0; margin-top: 0.15rem;">
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/>
-                    <path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                <div>
-                  <strong style="color: #111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly: looping through different approaches, evaluating their own outputs, and trying to converge on a useful answer at runtime. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked and attributed, and what the output artifact should contain. That analysis happens once, during the KWF phase. By the time the workflow runs, there is nothing left to figure out. The result is a workflow that executes the same way every time, produces consistent and auditable output, and requires no self-correction loops or evaluation guardrails to stay on track. For a line-of-business leader, that distinction matters: it is the difference between a tool you can stake your name on in an incident review and one you can only use to explore.
-                </div>
-              </div>
-
-              <!-- Interactive pipeline card -->
+              <!-- Step flow -->
               <div class="card border-0 shadow-sm rounded-4 mb-4">
-                <div class="card-body p-4 pb-3">
+                <div class="card-body p-4">
                   <div class="agent-pipeline">
 
-                    <div class="agent-step" id="wf-step-0" onclick="showStepDetail(0)">
+                    <div class="agent-step">
                       <div class="agent-step-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
                       <div class="agent-step-title">Input</div>
                       <div class="agent-step-body">Receive warehouse ID and time window. Resolve to explicit date range.</div>
                     </div>
 
-                    <div class="agent-step" id="wf-step-1" onclick="showStepDetail(1)">
+                    <div class="agent-step">
                       <div class="agent-step-num" style="background: rgba(107,122,255,0.12); color: #6b7aff;">2</div>
                       <div class="agent-step-title">Detect</div>
                       <div class="agent-step-body">Query <code>order_fulfillment</code>. Compute SLA compliance rate. If drop &gt;2% from target, flag as material breach.</div>
                     </div>
 
-                    <div class="agent-step" id="wf-step-2" onclick="showStepDetail(2)">
+                    <div class="agent-step">
                       <div class="agent-step-num" style="background: rgba(124,92,252,0.12); color: #7c5cfc;">3</div>
                       <div class="agent-step-title">Rank Signals</div>
-                      <div class="agent-step-body">Query <code>labor_roster</code>, <code>system_downtime</code>, and <code>order_priority</code>. Calculate each signal's share of delays. Rank by impact.</div>
+                      <div class="agent-step-body">Query <code>labor_roster</code>, <code>system_downtime</code>, and <code>order_priority</code>. Calculate each signal's share of total delayed orders. Rank by impact.</div>
                     </div>
 
-                    <div class="agent-step" id="wf-step-3" onclick="showStepDetail(3)">
+                    <div class="agent-step">
                       <div class="agent-step-num" style="background: rgba(52,211,153,0.12); color: #34d399;">4</div>
                       <div class="agent-step-title">Narrate</div>
-                      <div class="agent-step-body">Produce ranked executive narrative with recommendations, plus a customer communication template.</div>
+                      <div class="agent-step-body">Produce a ranked executive narrative with recommended actions, plus a customer communication template for affected orders.</div>
                     </div>
 
-                  </div>
-                  <div class="step-click-hint" id="step-click-hint">&#8593; click a step to explore the logic, query, and output</div>
-                </div>
-
-                <!-- Step detail panel (revealed on step click) -->
-                <div class="step-detail-panel" id="step-detail-panel">
-                  <div class="step-detail-header">
-                    <div class="step-detail-num" id="sd-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
-                    <div class="step-detail-title" id="sd-title">Step Detail</div>
-                    <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
-                  </div>
-                  <div class="step-detail-sections">
-                    <div class="step-detail-top-row">
-                      <div class="step-detail-section">
-                        <div class="step-detail-section-label">Business Logic</div>
-                        <div class="step-detail-logic" id="sd-logic"></div>
-                      </div>
-                      <div class="step-detail-section">
-                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
-                        <pre class="step-detail-query" id="sd-query"></pre>
-                      </div>
-                    </div>
-                    <div class="step-detail-output-row">
-                      <div class="step-detail-section-label">Sample Output</div>
-                      <div class="step-detail-output" id="sd-output"></div>
-                    </div>
                   </div>
                 </div>
-
               </div>
 
               <p class="text-muted mb-3">
-                The output is two artifacts, not one. The first is the incident narrative for leadership and the incident review dashboard — a ranked, evidence-based explanation with specific recommendations for each driver. The second is a customer communication template — a pre-drafted explanation of the delay formatted for customer-facing use. Both are produced from the same query run. Without this workflow, the manager writes one manually and the customer communication often doesn't get written at all.
+                The output is two artifacts, not one. The first is the incident narrative for leadership and the incident review dashboard — a ranked, evidence-based explanation with specific recommendations for each driver. The second is a customer communication template — a pre-drafted explanation of the delay formatted for customer-facing use. Both are produced from the same query run. Without the agent, the manager writes one manually and the customer communication often doesn't get written at all.
               </p>
 
               <div class="workflow-callout">
-                <strong>What this workflow does NOT do:</strong> It does not decide whether to escalate the SLA breach to a vendor contract review. It does not adjust staffing schedules. It does not prioritize which delayed customers to contact first. It does not determine whether a recurring pattern represents a structural operational failure requiring capital investment. Those are judgment and strategic decisions — explicitly out of scope. The workflow's job is to get the manager into the conversation with leadership already holding a consistent, defensible explanation, not still building one.
+                <strong>What this agent does NOT do:</strong> It does not decide whether to escalate the SLA breach to a vendor contract review. It does not adjust staffing schedules. It does not prioritize which delayed customers to contact first. It does not determine whether a recurring pattern represents a structural operational failure requiring capital investment. Those are judgment and strategic decisions — explicitly out of scope. The agent's job is to get the manager into the conversation with leadership already holding a consistent, defensible explanation, not still building one.
               </div>
 
             </div>
@@ -756,98 +630,48 @@
       </section>
 
 
-      <!-- ═══ DATA WAREHOUSE INTEGRATION ═══════════════════════════════════════ -->
+      <!-- ═══ AGENT CONFIGURATION AND DATA ══════════════════════════════════════ -->
       <section class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-9">
 
             <div class="section-eyebrow">Under the Hood</div>
-            <h2 class="h1 mb-2">Data Warehouse Integration</h2>
+            <h2 class="h1 mb-2">Agent Configuration &amp; Data</h2>
             <p class="text-muted mb-4">
-              This workflow integrates four tables across three operational domains — WMS output, HR/scheduling, IT incident tracking, and demand planning. No single system holds all of the data needed to answer the question. That cross-domain nature is what makes this a high-friction manual task today, and what makes it a strong automation candidate: the coordination work is repeatable and rule-based, even if the source systems are diverse.
-            </p>
-            <p class="text-muted mb-4" style="font-size: 0.875rem;">
-              Each tab below shows the schema, the source system context, and the specific query this workflow runs against that table.
+              The KWF output for this candidate spans four tables across three domains — operations (order_fulfillment), HR/scheduling (labor_roster), IT (system_downtime), and demand planning (order_priority). The cross-domain nature of this query is what makes it a high-friction manual task: no single system holds all the data.
             </p>
 
-            <!-- Per-table tabs -->
-            <ul class="nav nav-tabs mb-0" id="schemaTabs" role="tablist">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-0" id="configTabs" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab-fulfillment" data-bs-toggle="tab" data-bs-target="#panel-fulfillment" type="button" role="tab">
-                  <code style="font-size:0.8rem;">order_fulfillment</code>
-                </button>
+                <button class="nav-link active" id="tab-query" data-bs-toggle="tab" data-bs-target="#panel-query" type="button" role="tab">Agent Queries</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-labor" data-bs-toggle="tab" data-bs-target="#panel-labor" type="button" role="tab">
-                  <code style="font-size:0.8rem;">labor_roster</code>
-                </button>
+                <button class="nav-link" id="tab-schema" data-bs-toggle="tab" data-bs-target="#panel-schema" type="button" role="tab">Table Schemas</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-downtime" data-bs-toggle="tab" data-bs-target="#panel-downtime" type="button" role="tab">
-                  <code style="font-size:0.8rem;">system_downtime</code>
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-priority" data-bs-toggle="tab" data-bs-target="#panel-priority" type="button" role="tab">
-                  <code style="font-size:0.8rem;">order_priority</code>
-                </button>
+                <button class="nav-link" id="tab-sample" data-bs-toggle="tab" data-bs-target="#panel-sample" type="button" role="tab">Sample Output</button>
               </li>
             </ul>
 
             <div class="tab-content border border-top-0 rounded-bottom-4 p-0 mb-4">
 
-              <!-- Tab: order_fulfillment -->
-              <div class="tab-pane fade show active" id="panel-fulfillment" role="tabpanel">
-                <div class="p-4 pb-0">
-                  <div class="schema-meta">
-                    <strong>Source system:</strong> Warehouse Management System (WMS) output &nbsp;·&nbsp; <strong>Domain:</strong> Operations<br>
-                    <strong>Role in this workflow:</strong> Primary detection table. SLA compliance is computed here — fulfilled_date vs. promised_date determines whether an order was late. This is the entry gate: if compliance is above threshold, the workflow produces no output. The total delayed-order count from this table is also the denominator for all signal attribution percentages in Step 3.
-                  </div>
-                </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- Schema: order_fulfillment (WMS output)</span>
-<span class="code-keyword">CREATE TABLE</span> order_fulfillment (
-  warehouse_id    <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,   <span class="code-comment">-- e.g., 'W1', 'W2'</span>
-  order_id        <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
-  fulfilled_date  <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,   <span class="code-comment">-- actual fulfillment date</span>
-  promised_date   <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,   <span class="code-comment">-- SLA commitment date</span>
-  priority        <span class="code-type">STRING</span>           <span class="code-comment">-- Normal | High | Critical</span>
-) <span class="code-keyword">USING DELTA</span>;
+              <!-- Tab 1: Agent Queries -->
+              <div class="tab-pane fade show active" id="panel-query" role="tabpanel">
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- KWF Agent Query Step 1: Detect material SLA compliance drop
+-- Parameters: {warehouse_id}, {start_date}, {end_date}
+-- Trigger root-cause analysis only if compliance < (target - 0.02)</span>
 
-<span class="code-comment">-- Workflow query (Step 2 — SLA detection)
--- Trigger root-cause analysis only if compliance &lt; (target - 0.02)</span>
 <span class="code-keyword">SELECT</span>
-  <span class="code-function">COUNT</span>(*)                                                                             <span class="code-keyword">AS</span> total_orders,
-  <span class="code-function">SUM</span>(<span class="code-keyword">CASE WHEN</span> fulfilled_date &gt; promised_date <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>)              <span class="code-keyword">AS</span> delayed_orders,
-  <span class="code-function">ROUND</span>((<span class="code-function">COUNT</span>(*) - <span class="code-function">SUM</span>(<span class="code-keyword">CASE WHEN</span> fulfilled_date &gt; promised_date <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>))
-        * <span class="code-number">1.0</span> / <span class="code-function">COUNT</span>(*), <span class="code-number">4</span>)                                                          <span class="code-keyword">AS</span> sla_compliance
+  <span class="code-function">COUNT</span>(*)                                                        <span class="code-keyword">AS</span> total_orders,
+  <span class="code-function">SUM</span>(<span class="code-keyword">CASE WHEN</span> fulfilled_date &gt; promised_date <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> delayed_orders,
+  <span class="code-function">ROUND</span>((<span class="code-function">COUNT</span>(*) - <span class="code-function">SUM</span>(<span class="code-keyword">CASE WHEN</span> fulfilled_date &gt; promised_date <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>)) * <span class="code-number">1.0</span> / <span class="code-function">COUNT</span>(*), <span class="code-number">4</span>) <span class="code-keyword">AS</span> sla_compliance
 <span class="code-keyword">FROM</span>  order_fulfillment
 <span class="code-keyword">WHERE</span> warehouse_id  = <span class="code-string">'{warehouse_id}'</span>
   <span class="code-keyword">AND</span>   fulfilled_date <span class="code-keyword">BETWEEN</span> <span class="code-string">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-string">'{end_date}'</span>;
 
-<span class="code-comment">-- Sample result (W1, 14-day window):
--- total_orders: 2,000 | delayed_orders: 140 | sla_compliance: 0.9300
--- → 93.0% vs 98.0% target → breach threshold exceeded (drop > 2pp) → root-cause triggered</span></code></pre>
-              </div>
-
-              <!-- Tab: labor_roster -->
-              <div class="tab-pane fade" id="panel-labor" role="tabpanel">
-                <div class="p-4 pb-0">
-                  <div class="schema-meta">
-                    <strong>Source system:</strong> HR / workforce scheduling system &nbsp;·&nbsp; <strong>Domain:</strong> People Operations<br>
-                    <strong>Role in this workflow:</strong> Labor shortfall detection. The staffing_ratio (present_staff ÷ scheduled_staff) identifies days where throughput capacity was reduced below operational baseline. Any day where that ratio falls below 0.85 is attributed as a contributing factor. Historically the primary driver of weekend SLA breaches in retail warehouse operations — weekend shifts have lower scheduled headcount and higher absenteeism.
-                  </div>
-                </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- Schema: labor_roster (HR / scheduling system)</span>
-<span class="code-keyword">CREATE TABLE</span> labor_roster (
-  warehouse_id      <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
-  date              <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
-  shift             <span class="code-type">STRING</span>,               <span class="code-comment">-- Weekday | Weekend | Night</span>
-  scheduled_staff   <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>,   <span class="code-comment">-- headcount planned for shift</span>
-  present_staff     <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>    <span class="code-comment">-- headcount who actually showed</span>
-) <span class="code-keyword">USING DELTA</span>;
-
-<span class="code-comment">-- Workflow query (Step 3a — labor shortfall signal)
--- Flag: any day where present_staff / scheduled_staff &lt; 0.85</span>
+<span class="code-comment">-- Step 2a: Labor shortages — staffing deficit by date
+-- Signals: any day where present_staff / scheduled_staff &lt; 0.85</span>
 <span class="code-keyword">SELECT</span>
   date, shift, scheduled_staff, present_staff,
   <span class="code-function">ROUND</span>(present_staff * <span class="code-number">1.0</span> / scheduled_staff, <span class="code-number">3</span>) <span class="code-keyword">AS</span> staffing_ratio
@@ -856,29 +680,7 @@
   <span class="code-keyword">AND</span>   date <span class="code-keyword">BETWEEN</span> <span class="code-string">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-string">'{end_date}'</span>
 <span class="code-keyword">ORDER BY</span> staffing_ratio <span class="code-keyword">ASC</span>;
 
-<span class="code-comment">-- Attribution logic:
--- Correlate shortfall dates with delayed_orders in overlapping date windows.
--- Calculate % of total delayed orders that occurred on shortfall days.
--- Sample result (W1, 14-day): 3 weekends at avg 75% staffing → ~55% of delayed orders</span></code></pre>
-              </div>
-
-              <!-- Tab: system_downtime -->
-              <div class="tab-pane fade" id="panel-downtime" role="tabpanel">
-                <div class="p-4 pb-0">
-                  <div class="schema-meta">
-                    <strong>Source system:</strong> IT incident tracking / WMS operations log &nbsp;·&nbsp; <strong>Domain:</strong> IT / Infrastructure<br>
-                    <strong>Role in this workflow:</strong> System outage attribution. Total downtime_minutes in the window is the signal — if the aggregate exceeds 120 minutes, the workflow flags it as a contributing factor and calculates its share of delayed orders by correlating downtime windows with order delays. Typically a secondary driver; elevated in environments with aging WMS infrastructure or high transaction volumes that strain throughput under load.
-                  </div>
-                </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- Schema: system_downtime (IT incident tracking / WMS ops log)</span>
-<span class="code-keyword">CREATE TABLE</span> system_downtime (
-  warehouse_id       <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
-  downtime_date      <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
-  duration_minutes   <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>    <span class="code-comment">-- length of outage event</span>
-) <span class="code-keyword">USING DELTA</span>;
-
-<span class="code-comment">-- Workflow query (Step 3b — system downtime signal)
--- Flag: total downtime &gt; 120 min in window</span>
+<span class="code-comment">-- Step 2b: WMS system downtime — total outage hours in window</span>
 <span class="code-keyword">SELECT</span>
   <span class="code-function">SUM</span>(duration_minutes) <span class="code-keyword">AS</span> total_downtime_minutes,
   <span class="code-function">COUNT</span>(*) <span class="code-keyword">AS</span> downtime_events
@@ -886,30 +688,8 @@
 <span class="code-keyword">WHERE</span> warehouse_id   = <span class="code-string">'{warehouse_id}'</span>
   <span class="code-keyword">AND</span>   downtime_date <span class="code-keyword">BETWEEN</span> <span class="code-string">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-string">'{end_date}'</span>;
 
-<span class="code-comment">-- Attribution logic:
--- Map downtime windows to affected order processing periods.
--- Calculate % of delayed orders whose promised_date fell within a downtime window.
--- Sample result (W1, 14-day): 3 events, 180 min total → ~20% of delayed orders</span></code></pre>
-              </div>
-
-              <!-- Tab: order_priority -->
-              <div class="tab-pane fade" id="panel-priority" role="tabpanel">
-                <div class="p-4 pb-0">
-                  <div class="schema-meta">
-                    <strong>Source system:</strong> Order Management System (OMS) / demand planning &nbsp;·&nbsp; <strong>Domain:</strong> Demand Planning<br>
-                    <strong>Role in this workflow:</strong> Demand mix attribution. When high-priority orders exceed 15% of total volume, the elevated demand mix is flagged as a contributing factor — high-priority orders require different routing and handling that can overwhelm standard throughput capacity without corresponding staffing authorization. This signal is the most commonly overlooked driver in manual incident reviews because it involves a different system and a less obvious causal link.
-                  </div>
-                </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- Schema: order_priority (OMS / demand planning)</span>
-<span class="code-keyword">CREATE TABLE</span> order_priority (
-  warehouse_id  <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
-  order_id      <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
-  order_date    <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
-  priority      <span class="code-type">STRING</span>           <span class="code-comment">-- Normal | High | Critical</span>
-) <span class="code-keyword">USING DELTA</span>;
-
-<span class="code-comment">-- Workflow query (Step 3c — high-priority order surge signal)
--- Flag: high-priority orders &gt; 15% of total volume in window</span>
+<span class="code-comment">-- Step 2c: High-priority order volume — flag if elevated vs. baseline
+-- Signals: high-priority orders > 15% of total order volume</span>
 <span class="code-keyword">SELECT</span>
   <span class="code-function">COUNT</span>(*) <span class="code-keyword">AS</span> high_priority_orders,
   <span class="code-function">ROUND</span>(<span class="code-function">COUNT</span>(*) * <span class="code-number">1.0</span> / total_orders, <span class="code-number">3</span>) <span class="code-keyword">AS</span> hp_pct_of_total
@@ -918,10 +698,84 @@
   <span class="code-keyword">AND</span>   order_date <span class="code-keyword">BETWEEN</span> <span class="code-string">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-string">'{end_date}'</span>
   <span class="code-keyword">AND</span>   priority = <span class="code-string">'High'</span>;
 
-<span class="code-comment">-- Attribution logic:
--- If hp_pct_of_total > 0.15: flag as contributing signal.
--- Correlate high-priority order dates with delayed order windows.
--- Sample result (W1, 14-day): 45 high-priority orders, +22% vs. baseline → ~15% of delays</span></code></pre>
+<span class="code-comment">-- Business logic:
+-- Rank: labor_shortage_pct, system_downtime_pct, high_priority_pct of delayed orders.
+-- If compliance < (target - 0.02): escalation narrative + customer comms template.
+-- If compliance < (target - 0.005) AND >= (target - 0.02): watch narrative, no escalation.
+-- Narrative cites ranked drivers with evidence and recommended action per driver.</span></code></pre>
+              </div>
+
+              <!-- Tab 2: Table Schemas -->
+              <div class="tab-pane fade" id="panel-schema" role="tabpanel">
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-comment">-- Table 1: Order fulfillment records (WMS output)</span>
+<span class="code-keyword">CREATE TABLE</span> order_fulfillment (
+  warehouse_id    <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  order_id        <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  fulfilled_date  <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
+  promised_date   <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
+  priority        <span class="code-type">STRING</span>           <span class="code-comment">-- Normal | High | Critical</span>
+) <span class="code-keyword">USING DELTA</span>;
+
+<span class="code-comment">-- Table 2: Labor roster (HR / scheduling system)</span>
+<span class="code-keyword">CREATE TABLE</span> labor_roster (
+  warehouse_id      <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  date              <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
+  shift             <span class="code-type">STRING</span>,              <span class="code-comment">-- Weekday | Weekend | Night</span>
+  scheduled_staff   <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>,
+  present_staff     <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>
+) <span class="code-keyword">USING DELTA</span>;
+
+<span class="code-comment">-- Table 3: WMS system downtime log (IT incident tracking)</span>
+<span class="code-keyword">CREATE TABLE</span> system_downtime (
+  warehouse_id       <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  downtime_date      <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
+  duration_minutes   <span class="code-type">INT</span>     <span class="code-keyword">NOT NULL</span>
+) <span class="code-keyword">USING DELTA</span>;
+
+<span class="code-comment">-- Table 4: Order priority queue (demand planning / OMS)</span>
+<span class="code-keyword">CREATE TABLE</span> order_priority (
+  warehouse_id  <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  order_id      <span class="code-type">STRING</span>  <span class="code-keyword">NOT NULL</span>,
+  order_date    <span class="code-type">DATE</span>    <span class="code-keyword">NOT NULL</span>,
+  priority      <span class="code-type">STRING</span>           <span class="code-comment">-- Normal | High | Critical</span>
+) <span class="code-keyword">USING DELTA</span>;</code></pre>
+              </div>
+
+              <!-- Tab 3: Sample Output -->
+              <div class="tab-pane fade" id="panel-sample" role="tabpanel">
+                <div class="p-4">
+                  <p class="text-muted mb-3" style="font-size: 0.875rem;">
+                    Sample query results for Warehouse W1, 14-day window — the four data points the agent synthesizes before producing the narrative.
+                  </p>
+                  <p class="fw-semibold mb-2" style="font-size: 0.82rem;">Step 1 — SLA compliance</p>
+                  <div class="table-responsive mb-3">
+                    <table class="table table-sm table-bordered" style="font-family: monospace; font-size: 0.85rem;">
+                      <thead class="table-dark"><tr><th class="text-end">total_orders</th><th class="text-end">delayed_orders</th><th class="text-end">sla_compliance</th><th>flag</th></tr></thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-end">2,000</td><td class="text-end">140</td>
+                          <td class="text-end"><strong>93.0%</strong></td>
+                          <td><span style="color: #dc2626; font-weight: 600;">✗ breach (target 98%, drop 5%)</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="fw-semibold mb-2" style="font-size: 0.82rem;">Step 2 — Contributing signals ranked</p>
+                  <div class="table-responsive mb-3">
+                    <table class="table table-sm table-bordered" style="font-family: monospace; font-size: 0.85rem;">
+                      <thead class="table-dark"><tr><th>Signal</th><th>Source</th><th class="text-end">Evidence</th><th class="text-end">% of delays</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>Weekend labor shortage</strong></td><td>labor_roster</td><td class="text-end">3 weekends, avg 75% staffing</td><td class="text-end" style="color:#dc2626;font-weight:600;">55%</td></tr>
+                        <tr><td>WMS system downtime</td><td>system_downtime</td><td class="text-end">3 events, 180 min total</td><td class="text-end">20%</td></tr>
+                        <tr><td>High-priority order surge</td><td>order_priority</td><td class="text-end">45 high-priority orders (+22% vs. baseline)</td><td class="text-end">15%</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="mt-3 p-3 rounded-3" style="background: #f8f9fa; font-size: 0.82rem; color: #374151; line-height: 1.6;">
+                    <strong>Agent narrative output (excerpt):</strong><br>
+                    "SLA compliance for W1 dropped to 93.0% in the past 14 days (target: 98%). Three contributing factors: (1) Weekend labor shortage — staffing at 75% on 3 weekends, contributing ~55% of delayed orders. (2) WMS system downtime — 3 outage events totaling 3 hours, contributing ~20%. (3) High-priority order surge — 45 high-priority orders (22% above baseline), contributing ~15%. Recommended: [...]"
+                  </div>
+                </div>
               </div>
 
             </div><!-- /tab-content -->
@@ -951,9 +805,6 @@
             <p class="text-muted mb-4">
               The KWF analyzes every workflow candidate across three layers of cognitive labor. For this workflow, note two things: the judgment allocation is elevated (40%) because ranking and contextualizing cross-domain signals requires more interpretation than single-source analysis; and the strategic layer has an unusually concrete downstream dimension — the manager's strategic decisions here include customer retention calls that have direct revenue consequences.
             </p>
-            <p class="text-muted mb-4" style="font-size:0.875rem;">
-              Decision Intelligence workflows are optimized for the execution layer — the repeatable, data-intensive cognitive work that does not require a manager's judgment but currently receives it anyway. The goal is not to replace the manager. It is to redirect their attention from data assembly to the judgment and strategic decisions that only they can make.
-            </p>
 
             <div class="layer-bar-track mb-2" style="height: 32px;">
               <div class="layer-bar-exec"      style="width: 45%;"></div>
@@ -982,7 +833,7 @@
                     <th style="width: 18%;">Layer</th>
                     <th style="width: 14%;">Share</th>
                     <th>What It Is</th>
-                    <th style="width: 25%;">Who Does It</th>
+                    <th style="width: 22%;">Automated?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -990,19 +841,19 @@
                     <td><span class="layer-legend-dot me-1" style="background: #adb5bd;"></span> Execution</td>
                     <td><strong>45%</strong></td>
                     <td>Querying four systems, calculating SLA compliance rate, ranking signals by contribution to delayed orders, and formatting the output as a ranked incident narrative and customer communication template</td>
-                    <td><span class="badge bg-success">Decision Intelligence workflow</span></td>
+                    <td><span class="badge bg-success">Fully automated</span></td>
                   </tr>
                   <tr>
                     <td><span class="layer-legend-dot me-1" style="background: #ff9500;"></span> Judgment</td>
                     <td><strong>40%</strong></td>
                     <td>Contextualizing the narrative for the specific audience — leadership needs different framing than a customer SLA explanation; deciding which findings warrant immediate escalation vs. monitoring; determining whether the pattern is novel or recurring</td>
-                    <td><span class="badge bg-warning text-dark">Warehouse Ops Manager</span></td>
+                    <td><span class="badge bg-warning text-dark">Elevated to human</span></td>
                   </tr>
                   <tr>
                     <td><span class="layer-legend-dot me-1" style="background: #198754;"></span> Strategic</td>
                     <td><strong>15%</strong></td>
                     <td>Deciding whether to adjust weekend staffing contracts, escalate WMS reliability issues to IT leadership, revise high-priority order acceptance policies, or flag the SLA pattern in customer contract reviews</td>
-                    <td><span class="badge" style="background: #198754;">Warehouse Ops Manager</span></td>
+                    <td><span class="badge" style="background: #198754;">Human-only</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -1012,7 +863,7 @@
               The execution layer is cross-domain querying: WMS, HR, IT, and demand planning are four separate systems. A manager pulling this manually has to context-switch between four tools, normalize date windows across systems, and manually calculate attribution percentages. It takes 3 hours because it takes 3 hours — not because it requires judgment.
             </p>
             <p class="text-muted mb-0">
-              The judgment layer is where the manager's experience matters: is a 75% weekend staffing ratio recoverable with a schedule adjustment, or is it a sign of systemic turnover? Is the WMS downtime a one-time IT incident or a sign of deferred infrastructure investment? The workflow produces the data that makes those questions answerable. It does not answer them.
+              The judgment layer is where the manager's experience matters: is a 75% weekend staffing ratio recoverable with a schedule adjustment, or is it a sign of systemic turnover? Is the WMS downtime a one-time IT incident or a sign of deferred infrastructure investment? The agent produces the data that makes those questions answerable. It does not answer them.
             </p>
 
             <div class="mt-4">
@@ -1038,7 +889,7 @@
             <div class="section-eyebrow">Value Model</div>
             <h2 class="h1 mb-3">Business Value Translation</h2>
             <p class="text-muted mb-4">
-              The KWF value model does not count hours per incident. It models what happens to the Operations Manager's time allocation across the entire role when the execution layer of this workflow is redirected to the Decision Intelligence system. At two incidents per month, the direct time savings are modest. The compounding value is that the manager arrives at the incident review with the narrative already in hand — and uses the meeting to make decisions about the pattern, not to present the analysis they assembled the night before.
+              The KWF value model does not count hours per incident. It models what happens to the Operations Manager's time allocation across the entire role when the execution layer of this workflow is redirected to the agent. At two incidents per month, the direct time savings are modest. The compounding value is that the manager arrives at the incident review with the narrative already in hand — and uses the meeting to make decisions about the pattern, not to present the analysis they assembled the night before.
             </p>
 
             <div class="value-hero-card mb-4">
@@ -1115,6 +966,7 @@
               </div>
             </div>
 
+            <!-- Strategic upside callout -->
             <div class="strategic-callout mb-4">
               <h6 class="mb-2" style="color: #1d4ed8;">Strategic upside not captured in the direct model</h6>
               <p class="mb-2" style="font-size: 0.875rem; color: #374151;">
@@ -1171,13 +1023,13 @@
                 </span>
                 <span class="fs-5 fw-semibold">Patterson Consulting</span>
               </a>
-              <p class="text-muted" style="font-size: 0.875rem;">Cognitive labor automation as a managed service. Decision Intelligence workflows deployed in your cloud, managed by us, owned by you.</p>
+              <p class="text-muted" style="font-size: 0.875rem;">Cognitive labor automation as a managed service. Decision Intelligence Agents deployed in your cloud, managed by us, owned by you.</p>
             </div>
 
             <div class="col-sm-6 col-lg-2 offset-lg-2">
               <h6 class="mb-3">Solutions</h6>
               <ul class="list-unstyled mb-0" style="font-size: 0.875rem;">
-                <li class="mb-2"><a class="text-muted text-decoration-none" href="#">Decision Intelligence</a></li>
+                <li class="mb-2"><a class="text-muted text-decoration-none" href="#">Decision Intelligence Agents</a></li>
                 <li class="mb-2"><a class="text-muted text-decoration-none" href="../../../../offerings/migrations_to_databricks.html">Databricks Migration</a></li>
                 <li class="mb-2"><a class="text-muted text-decoration-none" href="../../../../generative_ai.html">GenAI Services</a></li>
               </ul>
@@ -1244,203 +1096,7 @@
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════ -->
-    <!-- STEP DETAIL CONFIG                                                       -->
-    <!-- ═══════════════════════════════════════════════════════════════════════ -->
-    <script>
-      const STEP_DETAILS = [
-        {
-          num:   "1",
-          title: "Step 1: Input Resolution",
-          color: "#4f7fff",
-          bg:    "rgba(79,127,255,0.12)",
-          logic: "Receive <code>warehouse_id</code> and <code>time_window_days</code> as parameters. Resolve the time window to explicit <code>start_date</code> / <code>end_date</code> by subtracting from the current date. This step is input normalization only — no database query is executed. The workflow will not proceed if <code>warehouse_id</code> is unrecognized or if the requested window exceeds the configured maximum (default: 90 days).",
-          query_label: "No SQL — input normalization",
-          query: `-- Step 1: Input resolution (no query executed)
---
--- Parameters received:
---   warehouse_id     = '{warehouse_id}'   e.g. 'W1'
---   time_window_days = {days}             e.g. 14
---
--- Resolved:
---   start_date = DATE_SUB(current_date(), time_window_days)
---   end_date   = current_date()
---
--- Validation:
---   warehouse_id must be in the known warehouse registry
---   time_window_days must be between 1 and 90`,
-          output: `<div style="font-family:monospace; font-size:0.82rem; background:#f8f9fa; border-radius:0.375rem; padding:0.875rem; line-height:1.7;">
-<strong>Resolved parameters:</strong><br>
-warehouse_id &nbsp;&nbsp;= <span style="color:#16a34a;">'W1'</span><br>
-start_date &nbsp;&nbsp;&nbsp;= <span style="color:#16a34a;">'2024-04-29'</span><br>
-end_date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span style="color:#16a34a;">'2024-05-12'</span><br>
-window_days &nbsp;&nbsp;= <span style="color:#16a34a;">14</span><br><br>
-<span style="color:#6b7280; font-style:italic;">→ Proceed to Step 2</span>
-</div>`
-        },
-        {
-          num:   "2",
-          title: "Step 2: Detect SLA Breach",
-          color: "#6b7aff",
-          bg:    "rgba(107,122,255,0.12)",
-          logic: "Query <code>order_fulfillment</code> to compute SLA compliance rate for the warehouse and date window. Compare against target (98%). <strong>Breach:</strong> drop &gt; 2pp → trigger full root-cause and customer comms. <strong>Watch:</strong> drop 0.5–2pp → abbreviated narrative, no escalation. <strong>Within target:</strong> no output generated. The total delayed-order count also becomes the denominator for all signal attribution percentages in Step 3.",
-          query_label: "SQL — SLA compliance detection",
-          query: `SELECT
-  COUNT(*) AS total_orders,
-  SUM(CASE WHEN fulfilled_date > promised_date
-       THEN 1 ELSE 0 END)                     AS delayed_orders,
-  ROUND(
-    (COUNT(*) - SUM(CASE WHEN fulfilled_date > promised_date
-                    THEN 1 ELSE 0 END))
-    * 1.0 / COUNT(*), 4)                      AS sla_compliance
-FROM  order_fulfillment
-WHERE warehouse_id  = '{warehouse_id}'
-  AND fulfilled_date BETWEEN '{start_date}'
-                         AND '{end_date}';
-
--- IF sla_compliance < 0.96  → breach  (full root-cause)
--- IF sla_compliance < 0.975 → watch   (abbreviated)
--- ELSE                      → within target, no output`,
-          output: `<div class="table-responsive">
-<table class="table table-sm table-bordered mb-2" style="font-family:monospace;font-size:0.8rem;">
-<thead class="table-dark"><tr><th class="text-end">total_orders</th><th class="text-end">delayed_orders</th><th class="text-end">sla_compliance</th></tr></thead>
-<tbody><tr><td class="text-end">2,000</td><td class="text-end">140</td><td class="text-end"><strong>0.9300</strong></td></tr></tbody>
-</table>
-</div>
-<div style="font-size:0.78rem; padding:0.4rem 0.6rem; background:#fff1f2; border:1px solid #fca5a5; border-radius:0.375rem; color:#991b1b; font-weight:600;">
-✗ Breach — 93.0% vs 98.0% target (−5.0pp) → root-cause triggered
-</div>`
-        },
-        {
-          num:   "3",
-          title: "Step 3: Rank Contributing Signals",
-          color: "#7c5cfc",
-          bg:    "rgba(124,92,252,0.12)",
-          logic: "Run three parallel signal queries against <code>labor_roster</code>, <code>system_downtime</code>, and <code>order_priority</code>. For each signal, calculate its % contribution to total delayed orders. Rank by contribution descending. Thresholds applied: labor staffing ratio &lt; 0.85; system downtime &gt; 120 min total; high-priority orders &gt; 15% of total volume. Signals below threshold are marked as non-contributing and included in the narrative as clear signals.",
-          query_label: "SQL — three parallel signal queries",
-          query: `-- 3a: Labor shortfalls
-SELECT date, shift, scheduled_staff, present_staff,
-  ROUND(present_staff * 1.0 / scheduled_staff, 3)
-    AS staffing_ratio
-FROM   labor_roster
-WHERE  warehouse_id = '{warehouse_id}'
-  AND  date BETWEEN '{start_date}' AND '{end_date}'
-ORDER BY staffing_ratio ASC;
-
--- 3b: WMS system downtime
-SELECT SUM(duration_minutes) AS total_downtime_minutes,
-       COUNT(*) AS downtime_events
-FROM   system_downtime
-WHERE  warehouse_id = '{warehouse_id}'
-  AND  downtime_date BETWEEN '{start_date}' AND '{end_date}';
-
--- 3c: High-priority order volume
-SELECT COUNT(*) AS high_priority_orders,
-  ROUND(COUNT(*) * 1.0 / total_orders, 3) AS hp_pct
-FROM   order_priority
-WHERE  warehouse_id = '{warehouse_id}'
-  AND  order_date BETWEEN '{start_date}' AND '{end_date}'
-  AND  priority = 'High';`,
-          output: `<div class="table-responsive">
-<table class="table table-sm table-bordered" style="font-family:monospace;font-size:0.78rem;">
-<thead class="table-dark"><tr><th>Signal</th><th class="text-end">% of delays</th></tr></thead>
-<tbody>
-<tr><td><strong>Weekend labor shortage</strong><br><span style="color:#6b7280;font-size:0.72rem;">3 weekends, avg 75% staffing</span></td><td class="text-end" style="color:#dc2626;font-weight:700;">55%</td></tr>
-<tr><td>WMS system downtime<br><span style="color:#6b7280;font-size:0.72rem;">3 events, 180 min total</span></td><td class="text-end">20%</td></tr>
-<tr><td>High-priority order surge<br><span style="color:#6b7280;font-size:0.72rem;">45 orders, +22% vs. baseline</span></td><td class="text-end">15%</td></tr>
-</tbody>
-</table>
-</div>`
-        },
-        {
-          num:   "4",
-          title: "Step 4: Produce Decision Intelligence Narrative",
-          color: "#34d399",
-          bg:    "rgba(52,211,153,0.12)",
-          logic: "Synthesize ranked signal outputs into two artifacts: (1) an executive incident narrative with evidence-cited drivers, recommended actions, and escalation framing calibrated to severity; (2) a customer communication template for affected orders. Breach triggers escalation language and customer comms. Watch level triggers monitoring language only. The workflow does not infer causes not present in the data and does not recommend actions outside the defined operational scope.",
-          query_label: "Synthesis instructions — no SQL",
-          query: `-- Step 4: LLM synthesis (no additional SQL)
---
--- Given:
---   sla_compliance = 0.9300
---   severity       = breach
---   ranked_signals = [labor_shortage 55%,
---                     system_downtime 20%,
---                     hp_order_surge 15%]
---
--- Instructions:
---   1. Lead with SLA drop magnitude + severity flag
---   2. For each signal: driver, source table, % attribution
---   3. Add recommended action per driver
---   4. If severity=breach: include customer comms template
---
---   Calibrate language:
---     breach → "escalation recommended"
---     watch  → "monitor", no customer comms
---
---   Do not infer causes absent from the data.
---   Do not recommend actions outside operational scope.`,
-          output: `<div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:0.375rem; padding:0.75rem; font-size:0.78rem; line-height:1.6; color:#15803d;">
-<strong style="display:block; margin-bottom:0.4rem; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em;">Narrative output excerpt</strong>
-"SLA compliance for W1 dropped to 93.0% (target: 98.0%). Three contributing factors: (1) Weekend labor shortage — 75% staffing on 3 weekends, ~55% of delays. (2) WMS downtime — 3 events, 180 min, ~20%. (3) High-priority order surge — +22% above baseline, ~15%."
-</div>
-<div style="margin-top:0.5rem; background:#f0f9ff; border:1px solid #bae6fd; border-radius:0.375rem; padding:0.75rem; font-size:0.78rem; line-height:1.6; color:#0369a1; font-style:italic;">
-<strong style="display:block; font-style:normal; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.3rem;">Customer comms template</strong>
-"We experienced fulfillment delays at W1 due to weekend staffing shortfalls and brief system interruptions. We are implementing improvements and will provide updated delivery estimates within 24 hours."
-</div>`
-        }
-      ]
-
-      let activeStep = null
-
-      function showStepDetail(index) {
-        const detail = STEP_DETAILS[index]
-        if (!detail) return
-
-        // Update active step highlight
-        for (let i = 0; i < 4; i++) {
-          const el = document.getElementById('wf-step-' + i)
-          if (el) el.classList.toggle('step-active', i === index)
-        }
-
-        // Populate panel
-        document.getElementById('sd-num').textContent   = detail.num
-        document.getElementById('sd-num').style.background = detail.bg
-        document.getElementById('sd-num').style.color      = detail.color
-        document.getElementById('sd-title').textContent = detail.title
-        document.getElementById('sd-logic').innerHTML   = detail.logic
-        document.getElementById('sd-query-label').textContent = detail.query_label
-        document.getElementById('sd-query').textContent = detail.query
-        document.getElementById('sd-output').innerHTML  = detail.output
-
-        const panel = document.getElementById('step-detail-panel')
-        panel.classList.add('visible')
-
-        const hint = document.getElementById('step-click-hint')
-        if (hint) hint.style.display = 'none'
-
-        activeStep = index
-
-        // Smooth scroll to panel on mobile
-        if (window.innerWidth < 768) {
-          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-        }
-      }
-
-      function closeStepDetail() {
-        document.getElementById('step-detail-panel').classList.remove('visible')
-        for (let i = 0; i < 4; i++) {
-          const el = document.getElementById('wf-step-' + i)
-          if (el) el.classList.remove('step-active')
-        }
-        const hint = document.getElementById('step-click-hint')
-        if (hint) hint.style.display = 'block'
-        activeStep = null
-      }
-    </script>
-
-
-    <!-- ═══════════════════════════════════════════════════════════════════════ -->
-    <!-- AGENT PLAYGROUND LOGIC                                                   -->
+    <!-- AGENT PLAYGROUND LOGIC (light-theme, narrative output version)          -->
     <!-- ═══════════════════════════════════════════════════════════════════════ -->
     <script>
       let playgroundState  = 'idle'
@@ -1491,7 +1147,7 @@ WHERE  warehouse_id = '{warehouse_id}'
       function loadingMessageHtml() {
         return '<div class="pg-status-loading" id="pg-loading-status">' +
           '<div class="pg-spinner"></div>' +
-          'Analyzing order_fulfillment, labor_roster, system_downtime, order_priority\u2026' +
+          'Agent querying order_fulfillment, labor_roster, system_downtime, order_priority…' +
         '</div>'
       }
 
@@ -1503,7 +1159,7 @@ WHERE  warehouse_id = '{warehouse_id}'
                 '<path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/>' +
               '</svg>' +
             '</div>' +
-            '<span>Decision Intelligence</span>' +
+            '<span>Agent</span>' +
           '</div>' +
           '<div class="pg-message-bubble agent" id="pg-agent-bubble" style="white-space: pre-line;"></div>' +
         '</div>'
@@ -1532,7 +1188,7 @@ WHERE  warehouse_id = '{warehouse_id}'
           appendMessage(agentMessageHtml())
           playgroundState = 'typing'
           typewriteAnswer(query)
-        }, 1200)
+        }, 1200)  // slightly longer — 4-table cross-domain query
       }
 
       function typewriteAnswer(query) {
@@ -1555,7 +1211,7 @@ WHERE  warehouse_id = '{warehouse_id}'
             playgroundState    = 'done'
             el('pg-reset-btn').style.display = 'block'
           }
-        }, 16)
+        }, 16)  // fast interval for longer narrative text
       }
 
     </script>

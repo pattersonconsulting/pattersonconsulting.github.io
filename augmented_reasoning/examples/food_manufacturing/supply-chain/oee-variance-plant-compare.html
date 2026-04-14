@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <title>OEE Variance Attribution for Plants | Decision Intelligence Demo | Patterson Consulting</title>
+    <meta name="description" content="Continuous Improvement managers in food manufacturing spend monthly review time reconciling OEE numbers across MES dashboards, BI scorecards, and spreadsheets before they can explain what changed. This Decision Intelligence workflow generates a standardized month-over-month OEE variance table and identifies whether Availability, Performance, or Quality drove the change.">
+    <meta name="keywords" content="food manufacturing, continuous improvement manager, process excellence, plant operations, OEE variance, availability performance quality, month-over-month analysis, KPI reconciliation, plant benchmarking, governance scorecard">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="OEE Variance Attribution for Plants | Decision Intelligence Demo | Patterson Consulting" />
+    <meta property="og:description" content="Monthly plant governance reviews often stall when OEE numbers differ across operations, supply chain, and finance views. This workflow assembles the period comparison, calculates the OEE component variances, and produces a consistent explanation of the primary driver." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/ar_example_header_0.jpg"/>
+
+    <!-- KWF traceability -->
+    <meta name="kwf:workspace"      content="pura-vida">
+    <meta name="kwf:candidate-path" content="cognitive_labor_workspaces/pura-vida/cognitive_labor_candidates/continuous-improvement-operations/continuous-improvement-process-excellence-manager/candidate_001_oee-variance-plant-compare.md">
+    <meta name="kwf:agent-config"   content="supply-chain_continuous-improvement-operations_continuous-improvement-process-excellence-manager_candidate-001-oee-variance-plant-compare">
+    <meta name="kwf:fa-slug"        content="supply-chain">
+    <meta name="kwf:division-slug"  content="continuous-improvement-operations">
+    <meta name="kwf:role-slug"      content="continuous-improvement-process-excellence-manager">
+    <meta name="kwf:generated-at"   content="2026-04-14T21:40:37.683535+00:00">
+
+    <link rel="manifest" href="../../../../alpha_manifest.json">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <script src="../../../../assets/js/theme-switcher.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
+
+    <link rel="stylesheet" media="screen" href="../../../../assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="../../../../assets/icons/around-icons.min.css">
+    <link rel="stylesheet" media="screen" href="../../../../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading { position:fixed; top:0; right:0; bottom:0; left:0; width:100%; height:100%; transition:all .4s .2s ease-in-out; background-color:#fff; opacity:0; visibility:hidden; z-index:9999; }
+      [data-bs-theme="dark"] .page-loading { background-color:#121519; }
+      .page-loading.active { opacity:1; visibility:visible; }
+      .page-loading-inner { position:absolute; top:50%; left:0; width:100%; text-align:center; transform:translateY(-50%); transition:opacity .2s ease-in-out; opacity:0; }
+      .page-loading.active > .page-loading-inner { opacity:1; }
+      .page-loading-inner > span { display:block; font-family:"Inter",sans-serif; font-size:1rem; font-weight:normal; color:#6f788b; }
+      .page-spinner { display:inline-block; width:2.75rem; height:2.75rem; margin-bottom:.75rem; vertical-align:text-bottom; background-color:#d7dde2; border-radius:50%; opacity:0; animation:spinner .75s linear infinite; }
+      @keyframes spinner { 0% { transform:scale(0); } 50% { opacity:1; transform:none; } }
+      .layer-bar-track { height:28px; border-radius:6px; overflow:hidden; display:flex; margin:0.4rem 0; }
+      .layer-bar-exec { background-color:#adb5bd; }
+      .layer-bar-judgment { background-color:#ff9500; }
+      .layer-bar-strategic { background-color:#198754; }
+      .layer-legend-dot { display:inline-block; width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+      .result-metric { border-left:4px solid var(--bs-primary); padding-left:1.25rem; }
+      .result-metric .metric-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#6f788b; margin-bottom:0.25rem; }
+      .result-metric .metric-value { font-size:2.2rem; font-weight:800; line-height:1.1; color:#121519; }
+      .result-metric .metric-sub { font-size:0.875rem; color:#6f788b; margin-top:0.2rem; }
+      .result-metric.positive .metric-value { color:#198754; }
+      .result-metric.highlight .metric-value { color:var(--bs-primary); }
+      .agent-pipeline { display:flex; gap:0; align-items:stretch; margin:0; }
+      .agent-step { flex:1; text-align:center; position:relative; padding:1.25rem 0.75rem; display:flex; flex-direction:column; align-items:center; cursor:pointer; border-radius:0.5rem; transition:background 0.15s, box-shadow 0.15s; }
+      .agent-step:hover { background:rgba(79,127,255,0.07); }
+      .agent-step.step-active { background:rgba(79,127,255,0.1); box-shadow:inset 0 0 0 2px rgba(79,127,255,0.5); }
+      .agent-step:not(:last-child)::after { content:'›'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:1.5rem; color:#adb5bd; z-index:1; line-height:1; pointer-events:none; }
+      .agent-step-num { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; margin-bottom:0.6rem; flex-shrink:0; transition:transform 0.15s; }
+      .agent-step.step-active .agent-step-num { transform:scale(1.1); }
+      .agent-step-title { font-size:0.82rem; font-weight:700; margin-bottom:0.35rem; }
+      .agent-step-body { font-size:0.75rem; color:#6f788b; line-height:1.4; }
+      .step-click-hint { font-size:0.7rem; color:#adb5bd; font-style:italic; text-align:center; margin-top:0.5rem; }
+      .step-detail-panel { border-top:1px solid #e5e7eb; padding:1.5rem 1.5rem 1.25rem; display:none; }
+      .step-detail-panel.visible { display:block; }
+      .step-detail-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; }
+      .step-detail-num { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; }
+      .step-detail-title { font-size:1rem; font-weight:700; color:#111827; }
+      .step-detail-close { margin-left:auto; background:none; border:none; padding:0.25rem 0.5rem; color:#9ca3af; cursor:pointer; font-size:0.8rem; border-radius:4px; transition:color 0.12s,background 0.12s; }
+      .step-detail-close:hover { color:#374151; background:#f3f4f6; }
+      .step-detail-sections { display:flex; flex-direction:column; gap:1.25rem; }
+      .step-detail-top-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      @media (max-width:768px) { .step-detail-top-row { grid-template-columns:1fr; } }
+      .step-detail-section-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#6b7280; margin-bottom:0.5rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.35rem; }
+      .step-detail-logic { font-size:0.82rem; color:#374151; line-height:1.6; }
+      .step-detail-output { overflow-x:auto; }
+      .sd-result-wrap { border:1px solid #3c3c3c; border-radius:0.375rem; overflow:hidden; background:#1e1e1e; }
+      .sd-result-scroll { overflow-x:auto; }
+      .sd-result-table { border-collapse:collapse; width:100%; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; background:#1e1e1e; color:#d4d4d4; white-space:nowrap; }
+      .sd-result-table th { background:#2d2d2d; color:#569cd6; font-weight:600; padding:0.3rem 0.75rem; text-align:left; border-bottom:1px solid #3c3c3c; border-right:1px solid #333; }
+      .sd-result-table th:last-child { border-right:none; }
+      .sd-result-table td { padding:0.28rem 0.75rem; border-bottom:1px solid #252526; border-right:1px solid #282828; vertical-align:top; }
+      .sd-result-table td:last-child { border-right:none; }
+      .sd-result-table tr:last-child td { border-bottom:none; }
+      .sd-result-table tbody tr:nth-child(even) td { background:#252526; }
+      .sd-result-footer { font-size:0.66rem; color:#6a9955; padding:0.28rem 0.75rem; border-top:1px solid #3c3c3c; background:#1a1a1a; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; }
+      .sd-result-pre { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .step-detail-query { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; height:100%; box-sizing:border-box; }
+      .step-detail-analysis { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; overflow-y:auto; max-height:240px; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .amd-heading { color:#dcdcaa; font-weight:700; } .amd-bold { color:#9cdcfe; font-weight:600; } .amd-bullet { color:#569cd6; }
+      .code-block { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.82rem; line-height:1.7; border-radius:0.5rem; padding:1.25rem 1.5rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; }
+      .code-keyword { color:#569cd6; } .code-function { color:#dcdcaa; } .code-string { color:#ce9178; }
+      .code-comment { color:#6a9955; font-style:italic; } .code-number { color:#b5cea8; } .code-type { color:#4ec9b0; }
+      .pg-shell { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.07); font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      .pg-header { background:#ffffff; border-bottom:1px solid #e5e7eb; padding:0.75rem 1.25rem; display:flex; align-items:center; gap:0.625rem; }
+      .pg-header-icon { width:28px; height:28px; border-radius:6px; background:#ede9fe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-header-icon svg { width:14px; height:14px; }
+      .pg-header-title { font-size:0.875rem; font-weight:600; color:#111827; }
+      .pg-header-sep { color:#d1d5db; margin:0 0.125rem; font-size:0.875rem; }
+      .pg-agent-tag { font-size:0.72rem; font-weight:600; color:#6b7280; letter-spacing:0.02em; }
+      .pg-header-actions { margin-left:auto; display:flex; align-items:center; gap:0.5rem; }
+      .pg-kwf-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.2rem 0.625rem; font-size:0.68rem; font-weight:600; color:#b45309; letter-spacing:0.04em; }
+      .pg-conversation { padding:1.25rem; min-height:200px; }
+      .pg-examples-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin-bottom:0.75rem; }
+      .pg-example-card { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.625rem; padding:0.875rem 1rem; display:flex; align-items:center; gap:0.875rem; cursor:pointer; transition:box-shadow 0.15s,border-color 0.15s; margin-bottom:0.625rem; text-align:left; width:100%; }
+      .pg-example-card:hover { box-shadow:0 4px 8px rgba(0,0,0,0.07); border-color:#d1d5db; }
+      .pg-example-icon { width:32px; height:32px; border-radius:8px; background:#eff6ff; border:1px solid #dbeafe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-example-content { flex:1; min-width:0; }
+      .pg-example-title { font-size:0.82rem; font-weight:600; color:#111827; margin-bottom:0.2rem; }
+      .pg-example-prompt { font-size:0.78rem; color:#6b7280; line-height:1.45; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .pg-try-btn { flex-shrink:0; padding:0.35rem 0.875rem; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; font-size:0.78rem; font-weight:500; color:#374151; cursor:pointer; transition:background 0.12s,border-color 0.12s; white-space:nowrap; }
+      .pg-try-btn:hover { background:#f3f4f6; border-color:#d1d5db; }
+      .pg-messages { display:flex; flex-direction:column; gap:1rem; }
+      .pg-message { display:flex; flex-direction:column; gap:0.5rem; }
+      .pg-message-header { display:flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; color:#374151; }
+      .pg-message-icon { width:22px; height:22px; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; }
+      .pg-message-icon.user { background:#dbeafe; color:#1d4ed8; } .pg-message-icon.agent { background:#ede9fe; color:#7c3aed; }
+      .pg-message-bubble { border-radius:0.625rem; padding:0.75rem 1rem; font-size:0.875rem; line-height:1.6; color:#111827; }
+      .pg-message-bubble.user { background:#f0f9ff; border:1px solid #bfdbfe; } .pg-message-bubble.agent { background:#ffffff; border:1px solid #e5e7eb; }
+      .pg-status-loading { background:#fffbeb; border:1px solid #fde68a; border-radius:0.5rem; padding:0.625rem 1rem; font-size:0.82rem; color:#92400e; display:flex; align-items:center; gap:0.5rem; }
+      .pg-spinner { width:13px; height:13px; border:2px solid rgba(146,64,14,0.2); border-top-color:#92400e; border-radius:50%; animation:pgSpin 0.75s linear infinite; flex-shrink:0; }
+      @keyframes pgSpin { to { transform:rotate(360deg); } }
+      .pg-narrative-summary { margin-bottom:0.75rem; font-size:0.875rem; color:#111827; line-height:1.6; }
+      .pg-narrative-deviation { color:#b45309; font-weight:700; } .pg-narrative-normal { color:#15803d; font-weight:700; } .pg-narrative-ok { color:#15803d; font-weight:700; }
+      .pg-narrative-factors-label { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#6b7280; margin:0.625rem 0 0.5rem; }
+      .pg-narrative-item { display:flex; gap:0.625rem; align-items:flex-start; margin-bottom:0.4rem; font-size:0.875rem; line-height:1.55; color:#374151; }
+      .pg-narrative-item-num { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:#eff6ff; border:1px solid #bfdbfe; font-size:0.68rem; font-weight:800; color:#1d4ed8; display:flex; align-items:center; justify-content:center; margin-top:0.15rem; }
+      .pg-narrative-item-station { font-weight:700; color:#111827; } .pg-narrative-item-pct { color:#dc2626; font-weight:700; }
+      .pg-narrative-action { margin-top:0.75rem; padding:0.5rem 0.75rem; background:#fffbeb; border:1px solid #fde68a; border-radius:0.4rem; font-size:0.82rem; color:#92400e; line-height:1.55; }
+      .pg-narrative-comms { margin-top:0.625rem; padding:0.625rem 0.875rem; background:#f0f9ff; border:1px solid #bae6fd; border-radius:0.4rem; font-size:0.82rem; color:#0369a1; line-height:1.55; font-style:italic; }
+      .pg-narrative-comms-label { font-style:normal; font-weight:700; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:#0369a1; margin-bottom:0.2rem; }
+      .pg-footer { border-top:1px solid #f3f4f6; padding:0.625rem 1.25rem; background:#fafafa; display:flex; align-items:center; gap:0.75rem; font-size:0.72rem; color:#9ca3af; }
+      .pg-reset-btn { background:none; border:none; padding:0; color:#2563eb; font-size:0.78rem; cursor:pointer; text-decoration:underline; white-space:nowrap; margin-left:auto; display:none; }
+      .pg-reset-btn:hover { color:#1d4ed8; }
+      .lob-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.18); border-radius:0.625rem; padding:0.875rem 1.125rem; margin-bottom:1.5rem; font-size:0.875rem; color:#374151; line-height:1.6; display:flex; gap:0.75rem; align-items:flex-start; }
+      .lob-callout-icon { flex-shrink:0; font-size:1rem; margin-top:0.1rem; }
+      .value-hero-card { background:linear-gradient(135deg,rgba(25,135,84,0.08),rgba(25,135,84,0.03)); border:1.5px solid rgba(25,135,84,0.25); border-radius:0.75rem; padding:1.5rem 2rem; }
+      .workflow-callout { background:linear-gradient(135deg,rgba(var(--bs-primary-rgb),0.07),rgba(var(--bs-primary-rgb),0.03)); border-radius:0.75rem; padding:1.25rem 1.5rem; border-left:4px solid var(--bs-primary); }
+      .strategic-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.15); border-radius:0.75rem; padding:1.25rem 1.5rem; }
+      .section-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#ff9500; margin-bottom:0.5rem; }
+      .kwf-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; color:#ff9500; letter-spacing:0.04em; }
+      .schema-meta { background:#f8f9fa; border-radius:0.5rem; padding:0.875rem 1rem; margin-bottom:1rem; font-size:0.82rem; line-height:1.6; color:#374151; }
+      .schema-meta strong { color:#111827; }
+      @media (max-width:575px) { .agent-pipeline { flex-direction:column; gap:0.75rem; } .agent-step:not(:last-child)::after { content:'↓'; position:static; transform:none; display:block; margin-top:0.25rem; font-size:1.2rem; } .agent-step { border-radius:0.5rem; background:#f8f9fa; } .pg-example-prompt { white-space:normal; } }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+  </head>
+
+  <body>
+    <noscript><iframe src='https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9' height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript>
+
+    <div class="page-loading active">
+      <div class="page-loading-inner"><div class="page-spinner"></div><span>Loading...</span></div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- NAVBAR -->
+      <header data-bs-theme="dark">
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+            <a class="navbar-brand pe-sm-3" href="../../../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459,0,0,-0.00433,-8154.369629,-2022.807495)" fill="#000000" stroke="none" style="transform-origin:8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill:rgb(255,149,0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill:rgb(255,149,0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../../../contact_us.html" target="_blank" rel="noopener">Contact Us</a>
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height:520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image:url(../../../../assets/img/ar_example_header_0.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+          <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb" style="font-size:0.78rem;opacity:0.7;"><li class="breadcrumb-item text-light">Decision Intelligence</li><li class="breadcrumb-item text-light">Food Manufacturing</li><li class="breadcrumb-item text-light">Supply Chain</li></ol>
+          </nav>
+          <div class="col-lg-8">
+            <h1 class="display-4 mb-3">Explain OEE Changes Faster</h1>
+            <p class="text-body fs-lg mb-4">When the monthly plant governance review comes up, the Continuous Improvement / Process Excellence Manager has to pull OEE component data from MES or BI OEE reporting, reconcile it in spreadsheets, compare the current month to the prior month, and then defend which component actually drove the change. In the candidate value model, about 50% of the role is spent on execution work such as data pulls and scorecard preparation, and this workflow automates roughly 65% of that standardized variance-table work. That means the manager is still spending meaningful time each month assembling KPI evidence instead of using the review to diagnose the problem and direct corrective action.</p>
+            <p class="text-body fs-lg mb-4">OEE Variance Attribution is a Decision Intelligence workflow designed for the Continuous Improvement / Process Excellence Manager. Its execution layer handles cross-period KPI retrieval, OEE and component variance calculation, primary-driver identification, and executive-ready table formatting—about 32.5% of total role time recovered based on the candidate's automation model. The manager gets back time to frame the issue correctly, challenge plant assumptions, and route the right improvement workstream.</p>
+            <div class="d-flex flex-wrap gap-3 mt-3">
+              <a class="btn btn-outline-light btn-lg" href="#value">See the Value Model</a>
+            </div>
+          </div>
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+        </div>
+      </section>
+
+      <!-- PLAYGROUND -->
+      <section class="container py-5" id="playground">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Interactive Demo</div>
+            <h2 class="h1 mb-2">See the Decision Intelligence Workflow in Action</h2>
+            <p class="text-muted mb-3">This workflow handles a recurring comparative analysis task: calculate plant OEE for the current and prior periods, decompose the change into Availability, Performance, and Quality, and identify the largest negative component variance. The compound task is not the math by itself; it is the repeated work of pulling the same KPI inputs, aligning period definitions, checking consistency, and packaging the result in a form stakeholders will accept.</p>
+            <div class="lob-callout">
+              <span class="lob-callout-icon">&#128100;</span>
+              <div>
+                Designed for line-of-business leaders — specifically the Continuous Improvement / Process Excellence Manager who is accountable for KPI governance across plant operations, supply chain, and finance. This workflow removes repetitive scorecard assembly so monthly reviews can focus on cause, accountability, and action.
+                <span style="display:block;margin-top:0.3rem;font-size:0.8rem;color:#6b7280;">
+                  Why this matters: <a href="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/information_for_line_of_business.html" target="_blank" rel="noopener" style="color:#2563eb;">What line-of-business leaders actually need from automation &rarr;</a>
+                </span>
+              </div>
+            </div>
+            <div class="pg-shell">
+              <div class="pg-header">
+                <div class="pg-header-icon">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="pg-header-title">Decision Intelligence Playground</span>
+                <span class="pg-header-sep">·</span>
+                <span class="pg-agent-tag">OEE Variance Attribution for Plants</span>
+                <div class="pg-header-actions">
+                  <span class="pg-kwf-badge">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5.5" stroke="#b45309"/><path d="M4 6l1.5 1.5L8 4" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    KWF Runtime
+                  </span>
+                </div>
+              </div>
+              <div class="pg-conversation" id="pg-conversation">
+                <div id="pg-examples">
+                  <div class="pg-examples-label">Start with an example</div>
+                  
+                  <button class="pg-example-card" onclick="runQuery(0)" id="ex-0">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(220,38,38)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">PLANT_017 — March 2026 vs February 2026 — OEE down 5.3%</div>
+                      <div class="pg-example-prompt">For plant PLANT_017, compare OEE for 2026-03-01 to 2026-03-31 against the prior period 2026-02-01 to 2026-02-28 and identify which component drove the variance.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(1)" id="ex-1">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(37,99,235)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">PLANT_017 — Component check — Availability is the largest gap</div>
+                      <div class="pg-example-prompt">Show the current and prior OEE components for PLANT_017 for 2026-03-01 through 2026-03-31 versus 2026-02-01 through 2026-02-28, and rank the component variances from largest negative to smallest.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(2)" id="ex-2">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(5,150,105)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">PLANT_017 — Monthly governance readout — mixed component movement</div>
+                      <div class="pg-example-prompt">Prepare a governance-ready summary for PLANT_017 comparing March 2026 with February 2026 using the sample OEE values: prior Availability 0.84, current Availability 0.80, prior Performance 0.915, current Performance 0.895, prior Quality 0.94, current Quality 0.955, prior OEE 0.722, current OEE 0.684.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                </div>
+                <div class="pg-messages" id="pg-messages" style="display:none;"></div>
+              </div>
+              <div class="pg-footer">
+                <span>Simulated output — KWF agent configuration + sample data. No live database.</span>
+                <button class="pg-reset-btn" id="pg-reset-btn" onclick="resetPlayground()">&#8592; Run another query</button>
+              </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+              <div class="flex-grow-1">
+                <div style="font-size:0.875rem;font-weight:700;color:#111827;margin-bottom:0.2rem;">See how your plant KPI review workflow would run in practice.</div>
+                <div style="font-size:0.82rem;color:#6b7280;line-height:1.5;">In a working session, we map your current OEE review process, identify where managers are still doing manual KPI reconciliation, and show the variance-attribution workflow against your plant data model. We'll also show you this workflow running on your Databricks environment and outline what is required to publish the output into scorecards, slide templates, or team channels.</div>
+              </div>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_001_oee-variance-plant-compare&amp;kwf_ws=pura-vida" target="_blank" rel="noopener" class="btn btn-primary flex-shrink-0" style="white-space:nowrap;">Schedule a Databricks Session</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">How It Works</div>
+              <h2 class="h1 mb-3">What the Decision Intelligence Workflow Does</h2>
+              <p class="text-muted mb-4">This workflow handles a recurring comparative analysis task: calculate plant OEE for the current and prior periods, decompose the change into Availability, Performance, and Quality, and identify the largest negative component variance. The compound task is not the math by itself; it is the repeated work of pulling the same KPI inputs, aligning period definitions, checking consistency, and packaging the result in a form stakeholders will accept.</p>
+              <p class="text-muted mb-4" style="font-size:0.875rem;"><strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.</p>
+              <div style="background:rgba(255,149,0,0.06);border:1px solid rgba(255,149,0,0.28);border-radius:0.625rem;padding:0.875rem 1.125rem;margin-bottom:1.5rem;font-size:0.875rem;color:#374151;line-height:1.65;display:flex;gap:0.75rem;align-items:flex-start;">
+                <span style="flex-shrink:0;margin-top:0.15rem;">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/><path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><strong style="color:#111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked, and what the output artifact should contain. That analysis happens once. By the time the workflow runs, there is nothing left to figure out.</div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 pb-3">
+                  <div class="agent-pipeline">
+                    <div class="agent-step" id="wf-step-0" onclick="showStepDetail(0)">
+                      <div class="agent-step-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
+                      <div class="agent-step-title">Pull KPIs</div>
+                      <div class="agent-step-body">Retrieves prior-period and current-period Availability, Performance, and Quality averages for the selected plant and date ranges.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-1" onclick="showStepDetail(1)">
+                      <div class="agent-step-num" style="background: rgba(107,122,255,0.12); color: #6b7aff;">2</div>
+                      <div class="agent-step-title">Compute OEE</div>
+                      <div class="agent-step-body">Calculates overall OEE for each period from the three component rates.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-2" onclick="showStepDetail(2)">
+                      <div class="agent-step-num" style="background: rgba(124,92,252,0.12); color: #7c5cfc;">3</div>
+                      <div class="agent-step-title">Measure Variance</div>
+                      <div class="agent-step-body">Calculates absolute and percentage change for OEE and each component month over month.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-3" onclick="showStepDetail(3)">
+                      <div class="agent-step-num" style="background: rgba(52,211,153,0.12); color: #34d399;">4</div>
+                      <div class="agent-step-title">Rank Driver</div>
+                      <div class="agent-step-body">Identifies the largest negative component variance as the primary driver of the OEE change.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-4" onclick="showStepDetail(4)">
+                      <div class="agent-step-num" style="background: rgba(251,191,36,0.12); color: #f59e0b;">5</div>
+                      <div class="agent-step-title">Format Output</div>
+                      <div class="agent-step-body">Packages the result as a governance-ready variance table and one-line directional statement.</div>
+                    </div>
+                  </div>
+                  <div class="step-click-hint" id="step-click-hint">&#8593; click a step to explore the logic, query, and output</div>
+                </div>
+                <div class="step-detail-panel" id="step-detail-panel">
+                  <div class="step-detail-header">
+                    <div class="step-detail-num" id="sd-num" style="background:rgba(79,127,255,0.12);color:#4f7fff;">1</div>
+                    <div class="step-detail-title" id="sd-title">Step Detail</div>
+                    <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
+                  </div>
+                  <div class="step-detail-sections">
+                    <div class="step-detail-top-row">
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label">Business Logic</div>
+                        <div class="step-detail-logic" id="sd-logic"></div>
+                      </div>
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
+                        <pre class="step-detail-query" id="sd-query"></pre>
+                      </div>
+                    </div>
+                    <div class="step-detail-output-row">
+                      <div class="step-detail-section-label">Sample Data Query Results</div>
+                      <div class="step-detail-output" id="sd-output"></div>
+                    </div>
+                    <div class="step-detail-analysis-row">
+                      <div class="step-detail-section-label">Step Business Logic</div>
+                      <pre class="step-detail-analysis" id="sd-analysis"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted mb-3">The workflow produces a standardized variance table showing prior period, current period, absolute variance, and percent variance for OEE and each component, plus a one-line directional statement naming the primary driver. That output can be inserted into a governance scorecard, monthly plant slide, or team channel update.</p>
+              <div class="workflow-callout">
+                <strong>What this workflow does NOT do:</strong> It does not decide whether the plant should launch a maintenance, throughput, or quality improvement initiative; determine whether an Availability loss reflects downtime coding issues versus a real equipment reliability problem; set staffing or production schedules; choose which plant receives limited CI resources first; or decide whether a KPI dispute should trigger a broader finance or governance policy change.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA WAREHOUSE INTEGRATION -->
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Under the Hood</div>
+            <h2 class="h1 mb-2">Data Warehouse Integration</h2>
+            <p class="text-muted mb-4">The workflow runs against a manufacturing KPI mart where daily plant-level Availability, Performance, and Quality measures are already stored and standardized. It uses those records to compute month-over-month OEE comparisons consistently, without relying on manually maintained spreadsheet logic.</p>
+            <p class="text-muted mb-4" style="font-size:0.875rem;">That matters because the review itself is cross-functional: Operations, Supply Chain, and Finance all need the same period comparison and driver attribution from a common data foundation.</p>
+            <ul class="nav nav-tabs mb-0" id="schemaTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-mart_manufacturing_oee_daily" data-bs-toggle="tab"
+                  data-bs-target="#panel-mart_manufacturing_oee_daily" type="button" role="tab">
+                  <code style="font-size:0.8rem;">mart_manufacturing_oee_daily</code>
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom-4 p-0 mb-4">
+              <div class="tab-pane fade show active" id="panel-mart_manufacturing_oee_daily" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> MES/BI aggregated manufacturing KPI mart &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Operations<br>
+                    <strong>Role in this workflow:</strong> This table provides the daily plant-level Availability, Performance, and Quality rates used to compute OEE for each comparison period. In this workflow, it is the single source for assembling a standardized month-over-month variance view so the CI manager can explain where the KPI moved without manually reconciling dashboard exports or spreadsheet versions.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.manufacturing_mart.mart_manufacturing_oee_daily (
+  plant_id <span class="code-type">STRING</span>,
+  work_date <span class="code-type">DATE</span>,
+  availability <span class="code-type">DOUBLE</span>,
+  performance <span class="code-type">DOUBLE</span>,
+  quality <span class="code-type">DOUBLE</span>
+);
+
+<span class="code-keyword">WITH</span> cur <span class="code-keyword">AS</span> (
+  <span class="code-keyword">SELECT</span>
+    plant_id,
+    <span class="code-keyword">AVG</span>(availability) <span class="code-keyword">AS</span> availability,
+    <span class="code-keyword">AVG</span>(performance)  <span class="code-keyword">AS</span> performance,
+    <span class="code-keyword">AVG</span>(quality)      <span class="code-keyword">AS</span> quality
+  <span class="code-keyword">FROM</span> pura_vida_foods_dev.manufacturing_mart.mart_manufacturing_oee_daily
+  <span class="code-keyword">WHERE</span> plant_id = <span class="code-<span class="code-type">string</span>">'{plant_id}'</span>
+    <span class="code-keyword">AND</span> work_date <span class="code-keyword">BETWEEN</span> <span class="code-<span class="code-type">string</span>">'{current_start_date}'</span> <span class="code-keyword">AND</span> <span class="code-<span class="code-type">string</span>">'{current_end_date}'</span>
+  <span class="code-keyword">GROUP BY</span> plant_id
+),
+prior <span class="code-keyword">AS</span> (
+  <span class="code-keyword">SELECT</span>
+    plant_id,
+    <span class="code-keyword">AVG</span>(availability) <span class="code-keyword">AS</span> availability,
+    <span class="code-keyword">AVG</span>(performance)  <span class="code-keyword">AS</span> performance,
+    <span class="code-keyword">AVG</span>(quality)      <span class="code-keyword">AS</span> quality
+  <span class="code-keyword">FROM</span> pura_vida_foods_dev.manufacturing_mart.mart_manufacturing_oee_daily
+  <span class="code-keyword">WHERE</span> plant_id = <span class="code-<span class="code-type">string</span>">'{plant_id}'</span>
+    <span class="code-keyword">AND</span> work_date <span class="code-keyword">BETWEEN</span> <span class="code-<span class="code-type">string</span>">'{prior_start_date}'</span> <span class="code-keyword">AND</span> <span class="code-<span class="code-type">string</span>">'{prior_end_date}'</span>
+  <span class="code-keyword">GROUP BY</span> plant_id
+)
+<span class="code-keyword">SELECT</span>
+  cur.plant_id,
+  prior.availability <span class="code-keyword">AS</span> prior_availability,
+  cur.availability   <span class="code-keyword">AS</span> cur_availability,
+  prior.performance  <span class="code-keyword">AS</span> prior_performance,
+  cur.performance    <span class="code-keyword">AS</span> cur_performance,
+  prior.quality      <span class="code-keyword">AS</span> prior_quality,
+  cur.quality        <span class="code-keyword">AS</span> cur_quality,
+  (prior.availability * prior.performance * prior.quality) <span class="code-keyword">AS</span> prior_oee,
+  (cur.availability   * cur.performance   * cur.quality)   <span class="code-keyword">AS</span> cur_oee
+<span class="code-keyword">FROM</span> cur
+<span class="code-keyword">JOIN</span> prior <span class="code-keyword">USING</span> (plant_id);</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COGNITIVE LABOR LAYER ANALYSIS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">Cognitive Labor Analysis</div>
+              <h2 class="h1 mb-3">Where the Work Sits in the Labor Stack</h2>
+              <p class="text-muted mb-4">Not all cognitive labor is equally automatable. The KWF analysis breaks the workflow into three layers — execution, judgment, and strategic — and maps each step to the layer it belongs to. Execution-layer work is automatable. Judgment and strategic work stays with the manager.</p>
+              
+              <div class="layer-bar-track">
+                <div class="layer-bar-exec" style="width:33%;" title="Execution 33%"></div>
+                <div class="layer-bar-judgment" style="width:52%;" title="Judgment 52%"></div>
+                <div class="layer-bar-strategic" style="width:15%;" title="Strategic 15%"></div>
+              </div>
+              <div style="display:flex; gap:1.5rem; font-size:0.8rem; margin-top:0.5rem; flex-wrap:wrap;">
+                <span><span class="layer-legend-dot" style="background:#adb5bd;"></span> Execution 33%</span>
+                <span><span class="layer-legend-dot" style="background:#ff9500;"></span> Judgment 52%</span>
+                <span><span class="layer-legend-dot" style="background:#198754;"></span> Strategic 15%</span>
+              </div>
+              <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#adb5bd;margin-bottom:0.5rem;">Execution Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#adb5bd;">33%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The execution layer retrieves plant-period KPI data, calculates OEE and component variances, identifies the largest negative driver, and formats the review-ready output.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#fff8f0;border:1px solid rgba(255,149,0,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#ff9500;margin-bottom:0.5rem;">Judgment Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#ff9500;">52%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The manager still has to interpret whether the variance reflects a real operating issue, decide what follow-up analysis is needed, and communicate the implication to plant and finance stakeholders.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f0faf4;border:1px solid rgba(25,135,84,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#198754;margin-bottom:0.5rem;">Strategic Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#198754;">15%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">Strategic decisions such as cross-plant resource allocation, KPI governance standards, and broader improvement portfolio priorities remain with leadership.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE MODEL -->
+      <section class="container py-5" id="value">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Value Model</div>
+            <h2 class="h1 mb-3">The Business Case for Automation</h2>
+            <div class="value-hero-card mb-4">
+              <div class="row g-4">
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Time Recovered</div>
+                    <div class="metric-value">32.5% role time recovered</div>
+                    <div class="metric-sub">Based on the candidate model, automating 65% of execution work frees time previously spent on KPI pulls, reconciliation, and scorecard assembly for monthly plant reviews.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Annual Savings</div>
+                    <div class="metric-value">~$280k net benefit</div>
+                    <div class="metric-sub">The planning model for a two-manager team estimates about $315k in annual value uplift and roughly $280k net benefit after annual workflow cost assumptions.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric highlight">
+                    <div class="metric-label">Strategic Upside</div>
+                    <div class="metric-value">Faster governance alignment</div>
+                    <div class="metric-sub">The main upside is reducing misattribution in OEE reviews so the team can route the right improvement workstream sooner and avoid wasting Kaizen cycles on the wrong problem.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="strategic-callout mb-4">
+              <strong>Kill Question:</strong> Without this workflow, the manager explains month-over-month OEE changes by manually pulling plant KPI numbers from dashboards or spreadsheets, rebuilding the comparison table by hand, and arguing through inconsistent component interpretations during the governance meeting.
+            </div>
+            <p class="text-muted" style="font-size:0.875rem;"><strong>Primary Valuation Metric:</strong> Percent of monthly plant KPI reviews using the standardized OEE variance table, with a target adoption rate of at least 80%.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT STEP CTA -->
+      <section class="bg-primary py-5" data-bs-theme="dark">
+        <div class="container py-2 text-center">
+          <div class="col-lg-7 mx-auto">
+            <p class="fw-semibold mb-2 fs-sm text-uppercase letter-spacing-wider" style="color:rgba(255,255,255,0.6);">Next Step</p>
+            <h2 class="h1 text-light mb-3">Run your own value estimate for OEE variance reporting — or talk to us about your continuous improvement team.</h2>
+            <p class="text-light mb-4" style="opacity:0.85;">The Cognitive Labor Value Calculator models team size, role cost, and automation coverage so you can estimate the impact of standardizing OEE variance attribution work. It takes under two minutes to complete.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+              <a href="../../../../campaigns/ar/cpn_clc_d_2026/calculator.html?kwf_src=candidate_001_oee-variance-plant-compare&amp;kwf_ws=pura-vida" class="btn btn-light btn-lg">
+                Calculate Your Team&#8217;s Value
+              </a>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_001_oee-variance-plant-compare&amp;kwf_ws=pura-vida" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
+                Request a Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <span class="text-muted" style="font-size:0.82rem;">&copy; 2026 Patterson Consulting. All rights reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <a href="../../../../augmented_reasoning_20260311_v5.html" class="text-muted text-decoration-none" style="font-size:0.82rem;">Augmented Reasoning Platform</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <script src="../../../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../../../assets/vendor/aos/dist/aos.js"></script>
+    <script src="../../../../assets/js/theme.min.js"></script>
+
+    <script>
+      // ── Step detail data ──────────────────────────────────────────────────
+      const STEPS = [
+  {
+    num: 1, title: "Pull KPIs", colorBg: "rgba(79,127,255,0.12)", colorFg: "#4f7fff",
+    logic: "The workflow starts by pulling the standardized OEE component rates for one plant across two comparable time windows. This removes the manual work of opening MES dashboards or spreadsheet extracts, checking date filters, and reconciling which numbers should be used in the review.",
+    query: `WITH cur AS (
+  SELECT
+    plant_id,
+    AVG(availability) AS availability,
+    AVG(performance)  AS performance,
+    AVG(quality)      AS quality
+  FROM pura_vida_foods_dev.manufacturing_mart.mart_manufacturing_oee_daily
+  WHERE plant_id = '{plant_id}'
+    AND work_date BETWEEN '{current_start_date}' AND '{current_end_date}'
+  GROUP BY plant_id
+),
+prior AS (
+  SELECT
+    plant_id,
+    AVG(availability) AS availability,
+    AVG(performance)  AS performance,
+    AVG(quality)      AS quality
+  FROM pura_vida_foods_dev.manufacturing_mart.mart_manufacturing_oee_daily
+  WHERE plant_id = '{plant_id}'
+    AND work_date BETWEEN '{prior_start_date}' AND '{prior_end_date}'
+  GROUP BY plant_id
+)
+SELECT
+  cur.plant_id,
+  prior.availability AS prior_availability,
+  cur.availability   AS cur_availability,
+  prior.performance  AS prior_performance,
+  cur.performance    AS cur_performance,
+  prior.quality      AS prior_quality,
+  cur.quality        AS cur_quality,
+  (prior.availability * prior.performance * prior.quality) AS prior_oee,
+  (cur.availability   * cur.performance   * cur.quality)   AS cur_oee
+FROM cur
+JOIN prior USING (plant_id);`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>plant_id</th><th>prior_availability</th><th>cur_availability</th><th>prior_performance</th><th>cur_performance</th><th>prior_quality</th><th>cur_quality</th><th>prior_oee</th><th>cur_oee</th></tr></thead><tbody><tr><td>PLANT_017</td><td>0.84</td><td>0.80</td><td>0.915</td><td>0.895</td><td>0.94</td><td>0.955</td><td>0.722</td><td>0.684</td></tr></tbody></table></div><div class=\"sd-result-footer\">1 row</div></div>",
+    analysis: `<span class="amd-heading"># Compute OEE and component variance (current vs prior period)</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Compares a plant's current-period vs prior-period OEE components (Availability, Performance, Quality) and derives the implied OEE for each period. Produces an OEE variance table and identifies the primary (largest negative) component driver.
+
+<span class="amd-heading">## Interpret the Result Columns (Business Meaning)</span>
+<span class="amd-bullet">-</span> The dataset should contain a single row for the requested \`plant_id\`.
+<span class="amd-bullet">-</span> \`prior_availability\`, \`prior_performance\`, \`prior_quality\` represent prior-period average component rates (0–1).
+<span class="amd-bullet">-</span> \`cur_availability\`, \`cur_performance\`, \`cur_quality\` represent current-period average component rates (0–1).
+<span class="amd-bullet">-</span> \`prior_oee\` and \`cur_oee\` represent overall OEE for each period (0–1).
+<span class="amd-bullet">-</span> Treat all values as proportions; present them as percentages for readability (e.g., 0.684 → 68.4%) and keep formatting consistent across the entire output.
+
+<span class="amd-heading">## Build the Variance View (From the Provided Values)</span>
+Create a variance table with rows:
+<span class="amd-bullet">-</span> <span class="amd-bold">OEE</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Availability</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Performance</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Quality</span>
+
+Columns:
+<span class="amd-bullet">-</span> <span class="amd-bold">Prior Period</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Current Period</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Abs Var</span> = Current − Prior (express as percentage points if you present rates as %)
+<span class="amd-bullet">-</span> <span class="amd-bold">% Var</span> = (Current / Prior − 1)
+
+Rounding / display rules (choose one style and apply everywhere):
+<span class="amd-bullet">-</span> If displaying as <span class="amd-bold">percentages</span>: show Prior/Current as <span class="amd-bold">1 decimal</span> (e.g., 72.2%), Abs Var as <span class="amd-bold">1 decimal pp</span>, % Var as <span class="amd-bold">1 decimal</span>.
+<span class="amd-bullet">-</span> If displaying as <span class="amd-bold">rates (0–1)</span>: show Prior/Current as <span class="amd-bold">2 decimals</span>, Abs Var as <span class="amd-bold">2 decimals</span>, % Var as <span class="amd-bold">1 decimal</span>.
+
+<span class="amd-heading">## Identify the Primary Driver (Component Attribution)</span>
+Determine which component best explains the OEE movement:
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">Abs Var</span> for Availability, Performance, and Quality.
+<span class="amd-bullet">-</span> If <span class="amd-bold">OEE decreased</span> (cur_oee &lt; prior_oee): pick the component with the <span class="amd-bold">most negative</span> Abs Var.
+<span class="amd-bullet">-</span> If <span class="amd-bold">OEE increased</span> (cur_oee &gt; prior_oee): pick the component with the <span class="amd-bold">most positive</span> Abs Var.
+<span class="amd-bullet">-</span> If the top components are within an absolute tolerance of <span class="amd-bold">0.005</span> (≈0.5 pp if expressed as a rate), label as <span class="amd-bold">“mixed drivers”</span> and list the tied components.
+
+<span class="amd-heading">## Edge Cases &amp; Data Quality Flags (Based on Result Values)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Empty / missing row</span>: Output: *“No OEE data found for this plant in one or both periods; cannot compute variance.”* Do not fabricate numbers.
+<span class="amd-bullet">-</span> <span class="amd-bold">Any Prior value = 0</span> for a metric: show <span class="amd-bold">% Var = “n/a”</span> for that row (avoid division); still show Abs Var.
+<span class="amd-bullet">-</span> <span class="amd-bold">Any component or OEE outside [0, 1]</span>: flag <span class="amd-bold">“data quality issue”</span> and <span class="amd-bold">do not</span> assert a driver conclusion (still show the table if values are present).
+<span class="amd-bullet">-</span> <span class="amd-bold">Materiality</span>: if \\|Abs Var (OEE)\\| &lt; <span class="amd-bold">0.01</span> (≈1 pp), label the OEE change as <span class="amd-bold">“roughly flat / not material”</span>; still provide the table, but avoid strong driver claims.
+
+<span class="amd-heading">## Output Formatting (Audience-Ready)</span>
+Return exactly:
+1) <span class="amd-bold">Variance table</span> (OEE + three components).
+2) <span class="amd-bold">One-line directional statement</span>:
+   <span class="amd-bullet">-</span> If material change: *“OEE increased/decreased vs prior period, driven primarily by {component}.”*
+   <span class="amd-bullet">-</span> If roughly flat: *“OEE was roughly flat vs prior period; no single component driver stands out.”*
+   <span class="amd-bullet">-</span> If mixed drivers: *“OEE increased/decreased vs prior period, with mixed drivers across {components}.”*
+`
+  }
+];
+
+      let activeStep = null;
+
+      function showStepDetail(idx) {
+        const s = STEPS[idx];
+        if (!s) return;
+        document.querySelectorAll('.agent-step').forEach((el, i) => {
+          el.classList.toggle('step-active', i === idx);
+        });
+        document.getElementById('sd-num').textContent   = s.num;
+        document.getElementById('sd-num').style.background = s.colorBg;
+        document.getElementById('sd-num').style.color      = s.colorFg;
+        document.getElementById('sd-title').textContent = s.title;
+        document.getElementById('sd-logic').innerHTML    = s.logic;
+        document.getElementById('sd-query').textContent  = s.query;
+        document.getElementById('sd-output').innerHTML = s.output;
+        document.getElementById('sd-analysis').innerHTML = s.analysis;
+        const panel = document.getElementById('step-detail-panel');
+        panel.classList.add('visible');
+        document.getElementById('step-click-hint').style.display = 'none';
+        activeStep = idx;
+      }
+
+      function closeStepDetail() {
+        document.getElementById('step-detail-panel').classList.remove('visible');
+        document.getElementById('step-click-hint').style.display = '';
+        document.querySelectorAll('.agent-step').forEach(el => el.classList.remove('step-active'));
+        activeStep = null;
+      }
+
+      // ── Playground data ───────────────────────────────────────────────────
+      const EXAMPLES = [
+  {
+    prompt: "For plant PLANT_017, compare OEE for 2026-03-01 to 2026-03-31 against the prior period 2026-02-01 to 2026-02-28 and identify which component drove the variance.",
+    responseHtml: `<div class="pg-narrative-summary">PLANT_017 OEE decreased from <span class="pg-narrative-normal">0.722</span> to <span class="pg-narrative-deviation">0.684</span> month over month, a decline of 0.038 or 5.3%, driven primarily by lower Availability.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Availability</span>
+        — attributed <span class="pg-narrative-item-pct">80%</span>
+        of delayed orders. Availability fell from 0.84 to 0.80, the largest negative component change and the main contributor to the OEE drop.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Performance</span>
+        — attributed <span class="pg-narrative-item-pct">20%</span>
+        of delayed orders. Performance declined from 0.915 to 0.895, adding a smaller secondary drag on OEE.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Quality</span>
+        — attributed <span class="pg-narrative-item-pct">-10%</span>
+        of delayed orders. Quality improved from 0.94 to 0.955, partially offsetting the losses in the other two components.</div>
+      </div><div class="pg-narrative-action">&#9658; Route the issue first to uptime and downtime-code review for PLANT_017, then confirm whether maintenance or stop-pattern changes explain the Availability loss before launching broader improvement work.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        In the March plant KPI review, PLANT_017 OEE decreased from 0.722 to 0.684 versus February. The primary driver was Availability, which declined from 0.84 to 0.80; Performance was slightly lower, while Quality improved and was not the source of the loss.
+      </div>`
+  },
+  {
+    prompt: "Show the current and prior OEE components for PLANT_017 for 2026-03-01 through 2026-03-31 versus 2026-02-01 through 2026-02-28, and rank the component variances from largest negative to smallest.",
+    responseHtml: `<div class="pg-narrative-summary">For PLANT_017, the largest negative month-over-month component deviation is Availability at <span class="pg-narrative-deviation">-0.04</span>, compared with Performance at -0.02 and Quality at +0.015.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Availability</span>
+        — attributed <span class="pg-narrative-item-pct">53%</span>
+        of delayed orders. Availability dropped by 0.04 from 0.84 to 0.80, making it the clearest execution-level explanation for the OEE decline.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Performance</span>
+        — attributed <span class="pg-narrative-item-pct">27%</span>
+        of delayed orders. Performance declined by 0.02 from 0.915 to 0.895 and should be treated as a secondary contributor.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Quality</span>
+        — attributed <span class="pg-narrative-item-pct">-20%</span>
+        of delayed orders. Quality improved by 0.015 from 0.94 to 0.955, offsetting part of the deterioration in the other components.</div>
+      </div><div class="pg-narrative-action">&#9658; Use Availability as the lead problem statement in the governance meeting, and assign follow-up analysis on downtime categories before discussing speed-loss or scrap countermeasures.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        The month-over-month component ranking for PLANT_017 shows Availability as the primary variance driver. We should focus the next review on uptime loss causes first, with Performance as a secondary check and no immediate Quality escalation.
+      </div>`
+  },
+  {
+    prompt: "Prepare a governance-ready summary for PLANT_017 comparing March 2026 with February 2026 using the sample OEE values: prior Availability 0.84, current Availability 0.80, prior Performance 0.915, current Performance 0.895, prior Quality 0.94, current Quality 0.955, prior OEE 0.722, current OEE 0.684.",
+    responseHtml: `<div class="pg-narrative-summary">PLANT_017 posted a month-over-month OEE decline to 0.684 from 0.722, with Availability deterioration outweighing a modest Quality improvement.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Availability loss</span>
+        — attributed <span class="pg-narrative-item-pct">70%</span>
+        of delayed orders. The decline from 0.84 to 0.80 is the dominant negative movement in the component stack.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Performance loss</span>
+        — attributed <span class="pg-narrative-item-pct">25%</span>
+        of delayed orders. The drop from 0.915 to 0.895 contributed additional pressure on OEE, but less than Availability.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Quality gain</span>
+        — attributed <span class="pg-narrative-item-pct">-5%</span>
+        of delayed orders. The rise from 0.94 to 0.955 softened the overall OEE decline rather than causing it.</div>
+      </div><div class="pg-narrative-action">&#9658; Present the standardized variance table in the monthly plant review, classify the issue as uptime-led, and move the team directly into root-cause discussion instead of spending meeting time reconciling KPI sources.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        March OEE for PLANT_017 came in below February, falling from 0.722 to 0.684. The decline was primarily uptime-related: Availability and Performance were both lower, while Quality improved and did not drive the variance.
+      </div>`
+  }
+];
+
+      let pgActive = false;
+
+      let _pgTypewriteTimer = null;
+
+      function _pgTypewrite(el, fullHtml, onDone) {
+        // Extract plain text from the HTML for character animation
+        const tmp = document.createElement('div');
+        tmp.innerHTML = fullHtml;
+        const plainText = tmp.textContent || tmp.innerText || '';
+        let i = 0;
+        el.textContent = '';
+        _pgTypewriteTimer = setInterval(() => {
+          el.textContent += plainText[i];
+          i++;
+          if (i >= plainText.length) {
+            clearInterval(_pgTypewriteTimer);
+            _pgTypewriteTimer = null;
+            // Restore full HTML (with highlight spans etc.) after typing
+            el.innerHTML = fullHtml;
+            if (onDone) onDone();
+          }
+        }, 26);
+      }
+
+      function runQuery(idx) {
+        const ex = EXAMPLES[idx];
+        if (!ex) return;
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = true;
+        document.getElementById('pg-examples').style.display = 'none';
+        const msgs = document.getElementById('pg-messages');
+        msgs.style.display = 'flex';
+        msgs.innerHTML = `
+          <div class="pg-message">
+            <div class="pg-message-header"><div class="pg-message-icon user">U</div> You</div>
+            <div class="pg-message-bubble user">${ex.prompt}</div>
+          </div>
+          <div class="pg-message" id="pg-loading">
+            <div class="pg-status-loading"><div class="pg-spinner"></div> Running workflow&hellip;</div>
+          </div>`;
+        document.getElementById('pg-reset-btn').style.display = 'inline';
+
+        setTimeout(() => {
+          const loading = document.getElementById('pg-loading');
+          if (loading) loading.remove();
+
+          // Build the agent message container
+          const agentMsg = document.createElement('div');
+          agentMsg.className = 'pg-message';
+          agentMsg.innerHTML = `
+            <div class="pg-message-header"><div class="pg-message-icon agent">A</div> Agent</div>
+            <div class="pg-message-bubble agent" id="pg-resp-bubble"></div>`;
+          msgs.appendChild(agentMsg);
+
+          const bubble = document.getElementById('pg-resp-bubble');
+
+          // Parse response HTML into child blocks
+          const tmp = document.createElement('div');
+          tmp.innerHTML = ex.responseHtml;
+          const blocks = Array.from(tmp.children);
+
+          if (!blocks.length) {
+            bubble.innerHTML = ex.responseHtml;
+            return;
+          }
+
+          // First block: typewrite plain-text, then restore HTML
+          const firstEl = blocks[0].cloneNode(true);
+          bubble.appendChild(firstEl);
+          _pgTypewrite(firstEl, blocks[0].innerHTML, () => {
+            // Fade in remaining blocks with stagger
+            blocks.slice(1).forEach((block, i) => {
+              const el = block.cloneNode(true);
+              el.style.opacity = '0';
+              el.style.transition = 'opacity 0.35s ease';
+              bubble.appendChild(el);
+              setTimeout(() => { el.style.opacity = '1'; }, 160 * (i + 1));
+            });
+          });
+        }, 900);
+      }
+
+      function resetPlayground() {
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = false;
+        document.getElementById('pg-examples').style.display = '';
+        document.getElementById('pg-messages').style.display = 'none';
+        document.getElementById('pg-messages').innerHTML = '';
+        document.getElementById('pg-reset-btn').style.display = 'none';
+      }
+
+      // AOS init
+      AOS.init({ duration: 600, once: true });
+    </script>
+  </body>
+</html>

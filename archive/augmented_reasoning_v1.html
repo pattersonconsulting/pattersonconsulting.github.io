@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Patterson Consulting - Decision Intelligence Agents | Cognitive Labor Automation</title>
+    <meta name="description" content="Patterson Consulting designs, deploys, and operates Decision Intelligence Agents that automate the recurring cognitive labor your teams can't afford to get wrong. Deployed in your cloud. Owned by you.">
+    <meta name="keywords" content="cognitive labor automation, decision intelligence agents, AI managed service, operational analytics automation, Databricks AI agents managed service">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Decision Intelligence Agents | Cognitive Labor Automation" />
+    <meta property="og:description" content="Patterson Consulting designs, deploys, and operates Decision Intelligence Agents that automate recurring cognitive labor for enterprise and mid-market operations teams." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/offerings/augmented_reasoning.html" />
+    <meta property="og:image" content="https://www.pattersonconsultingtn.com/assets/img/mlflow_responseagent_header_0.jpg" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      .ownership-table th { background-color: #f8f9fa; font-weight: 600; }
+      .ownership-table td { vertical-align: top; }
+      .diff-icon-wrap {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .diff-icon {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(var(--bs-primary-rgb), 0.1);
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () { preloader.remove() }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+  <!-- Body -->
+  <body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
+        <!-- Navbar -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="./index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="./contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="./insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="./municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="./platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="./data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="./generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="./publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="./index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./about.html">About</a>
+                </li>
+
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image: url(assets/img/ar_site_header_3.jpg);"></div>
+
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+
+          <div class="d-none d-xxl-block" style="height: 150px;"></div>
+          <div class="d-none d-lg-block d-xxl-none" style="height: 120px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 80px;"></div>
+          <div class="d-md-none" style="height: 40px;"></div>
+
+          <div class="col-lg-7">
+            <h3 class="display-3">Automate the execution layer. Elevate everything above it.</h3>
+            <p class="text-body mb-5" style="font-size: 1.15rem;">
+              Patterson Consulting deploys Decision Intelligence Agents that compress the execution layer of your knowledge work roles — freeing your teams to spend more time in the judgment and strategic work that actually drives your business.
+            </p>
+
+            <a class="btn btn-primary btn-lg me-3" href="./contact_us.html">Request a Live Demo</a>
+            <a class="btn btn-outline-light btn-lg" href="./campaigns/ar/cpn_clc_d_2026/calculator.html">Estimate your role's value</a>
+          </div>
+
+          <div class="d-none d-lg-block d-xxl-none" style="height: 160px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 100px;"></div>
+          <div class="d-md-none" style="height: 50px;"></div>
+
+        </div>
+      </section>
+
+
+      <!-- Stats Strip -->
+      <section class="bg-dark py-3" data-bs-theme="dark">
+        <div class="container">
+          <div class="row text-center justify-content-center">
+            <div class="col-sm-4 py-2">
+              <h3 class="text-primary mb-1">2–15×</h3>
+              <p class="fs-sm text-light opacity-75 mb-0">value-to-cost ratio in knowledge work roles</p>
+            </div>
+            <div class="col-sm-4 py-2">
+              <h3 class="text-primary mb-1">$189K</h3>
+              <p class="fs-sm text-light opacity-75 mb-0">additional value per role (conservative estimate)</p>
+            </div>
+            <div class="col-sm-4 py-2">
+              <h3 class="text-primary mb-1">6.6×</h3>
+              <p class="fs-sm text-light opacity-75 mb-0">ROI on automation investment (single role, $25K tool cost)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- The Problem -->
+      <section class="container pt-3 mt-5 pt-sm-4 pb-5 mb-lg-3 mb-xl-4 mb-xxl-5">
+        <h2 class="h1 text-center pb-3 pb-lg-4">Recurring decisions that must be correct need support</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+
+          <!-- Problem 1 -->
+          <div class="col" data-aos="fade-up" data-aos-delay="0">
+            <div class="card bg-primary border-0 h-100 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-3">
+                <h4 class="card-title text-light">Decision latency kills momentum.</h4>
+                <p class="card-text text-light">
+                  Monthly variance reports. Weekly operational reviews. Profitability narratives for executive decks. These take days because skilled analysts must gather, synthesize, and interpret data from scratch every time — even when the question never changes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 2 -->
+          <div class="col" data-aos="fade-up" data-aos-delay="150">
+            <div class="card bg-primary border-0 h-100 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-3">
+                <h4 class="card-title text-light">Inconsistency creates risk.</h4>
+                <p class="card-text text-light">
+                  Different analysts reach different conclusions from the same data. The quality of a critical decision depends on who's available that week — not on what the numbers actually say. Institutional knowledge lives in spreadsheets and individual memory, not in auditable systems.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 3 -->
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card bg-primary bg-opacity-10 border-0 h-100 overflow-hidden pt-3 pt-xl-4 px-lg-3 px-xl-4">
+              <div class="card-body position-relative z-2 pb-3">
+                <h4 class="card-title text-primary">Most automation efforts start in the wrong layer.</h4>
+                <p class="card-text text-primary">
+                  Companies deploy AI tools targeting the highest-visibility work — executive decks, complex analysis, strategic planning. But that is the strategic layer, where human judgment is hardest to replace. The highest-leverage automation target is the execution layer: the routine, rule-following work consuming 40–60% of your team's time at the lowest value per hour. Starting there produces measurable ROI; starting at the top produces expensive pilots that don't scale.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Three-Layer Value Model -->
+      <section class="container py-4 pt-sm-5 pb-md-5 my-2 my-lg-3 my-xxl-4">
+        <h2 class="h1 text-center pb-3">The three layers of cognitive labor — and where automation ROI actually comes from</h2>
+        <p class="fs-lg text-body-secondary text-center col-lg-8 mx-auto pb-2">
+          Every knowledge work role operates across three layers that generate fundamentally different amounts of business value per hour worked. Understanding this structure is the foundation for estimating what cognitive labor automation is actually worth.
+        </p>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+
+          <!-- Layer 1: Execution -->
+          <div class="col" data-aos="fade-up" data-aos-delay="0">
+            <div class="card border h-100">
+              <div class="card-header text-center py-3">
+                <span class="badge bg-secondary fs-5 px-3 py-2">1×</span>
+              </div>
+              <div class="card-body p-4">
+                <h4 class="card-title">Execution Layer</h4>
+                <p class="card-text">Rule-following, routine processing — pulling reports, applying standard algorithms, generating documentation, processing renewals. This work must be done correctly, but it is not differentiating. Value ≈ labor cost. This layer consumes 40–60% of most knowledge work roles.</p>
+              </div>
+              <div class="card-footer text-muted fs-sm">
+                Primary automation target
+              </div>
+            </div>
+          </div>
+
+          <!-- Layer 2: Judgment -->
+          <div class="col" data-aos="fade-up" data-aos-delay="150">
+            <div class="card border border-primary h-100">
+              <div class="card-header text-center py-3 bg-primary m-0 w-100">
+                <span class="badge bg-white text-primary fs-5 px-3 py-2">2–5×</span>
+              </div>
+              <div class="card-body p-4">
+                <h4 class="card-title">Judgment Layer</h4>
+                <p class="card-text">Pattern recognition under ambiguity — handling cases that don't fit the standard model, where decision rules are incomplete or context-dependent. Errors here are expensive. Value substantially exceeds labor cost, because correct judgment prevents losses far larger than the time invested.</p>
+              </div>
+              <div class="card-footer text-muted fs-sm">
+                Value unlocked by execution automation
+              </div>
+            </div>
+          </div>
+
+          <!-- Layer 3: Strategic -->
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card border h-100">
+              <div class="card-header text-center py-3 bg-primary m-0 w-100">
+                <span class="badge bg-white text-primary fs-5 px-3 py-2">5–15×</span>
+              </div>
+              <div class="card-body p-4">
+                <h4 class="card-title">Strategic Layer</h4>
+                <p class="card-text">Aggregate thinking, relationships, systemic decisions. Operates at a different time horizon and organizational scope than the other two layers. One strategic decision influences outcomes across many accounts simultaneously. The highest-leverage, least automatable layer.</p>
+              </div>
+              <div class="card-footer text-muted fs-sm">
+                Highest value per hour
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Worked Example -->
+        <div class="card border-0 bg-secondary mt-5" data-aos="fade-up" data-aos-delay="0">
+          <div class="card-body p-4 p-lg-5">
+            <h4 class="mb-4">Worked example: commercial underwriter at $150K fully loaded</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered mb-3">
+                <thead>
+                  <tr>
+                    <th>Layer</th>
+                    <th>Time Share</th>
+                    <th>Value Multiplier</th>
+                    <th>Annual Value Generated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Execution</td>
+                    <td>50%</td>
+                    <td>1×</td>
+                    <td>$75,000</td>
+                  </tr>
+                  <tr>
+                    <td>Judgment</td>
+                    <td>35%</td>
+                    <td>3×</td>
+                    <td>$157,500</td>
+                  </tr>
+                  <tr>
+                    <td>Strategic</td>
+                    <td>15%</td>
+                    <td>7×</td>
+                    <td>$157,500</td>
+                  </tr>
+                  <tr class="table-active fw-bold">
+                    <td><strong>Total</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>$390,000</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="fst-italic text-body-secondary mb-4">Same person after automation redirecting 35% freed capacity to judgment and strategic work: $579,000 in estimated annual value — a $189,000 gain from one role. Using conservative multipliers throughout.</p>
+            <a class="btn btn-outline-primary" href="./campaigns/ar/cpn_clc_d_2026/calculator.html">Run this calculation for your roles &rarr;</a>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- The Offering -->
+      <section class="bg-secondary position-relative py-md-3 pt-5 pb-5">
+        <div class="container mt-xxl-3 pb-5">
+
+          <h2 class="h1 text-center pb-2">Decision Intelligence Agents: cognitive labor automation as a managed service</h2>
+          <p class="fs-lg text-center pb-lg-3 col-lg-8 mx-auto">
+            We design, deploy, and operate AI agents that automate the recurring analytical work inside your operational roles — variance attribution, root cause analysis, narrative generation, forecasting, and next-action recommendations. Agents run in your cloud environment and deliver consistent, audit-friendly outputs to your teams on demand.
+          </p>
+
+          <!-- Ownership Table -->
+          <div class="row pt-3 mt-2">
+            <div class="col-12">
+              <div class="card border-0">
+                <div class="card-body p-4">
+                  <table class="table ownership-table table-bordered mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center py-3">You Own Forever</th>
+                        <th class="text-center py-3">You License (Annual)</th>
+                        <th class="text-center py-3">We Manage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="p-3">
+                          <ul class="mb-0">
+                            <li>Agent configuration files encoding your business logic, decision rules, and workflows</li>
+                            <li>Every output: reports, narratives, analyses, and audit trails</li>
+                            <li>Workflow documentation and business logic specifications</li>
+                          </ul>
+                        </td>
+                        <td class="p-3">
+                          <ul class="mb-0">
+                            <li>Proprietary runtime engine deployed in your cloud</li>
+                            <li>Runtime updates, security patches, platform compatibility maintenance</li>
+                            <li>Right to execute configurations during subscription term</li>
+                          </ul>
+                        </td>
+                        <td class="p-3">
+                          <ul class="mb-0">
+                            <li>24/7 monitoring, incident response, and performance tuning</li>
+                            <li>Configuration change management and quarterly reviews</li>
+                            <li>Evaluation and quality assurance harness</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analogy callout -->
+          <div class="row pt-4 mt-2">
+            <div class="col-lg-8 mx-auto">
+              <div class="card border-0 bg-primary bg-opacity-10">
+                <div class="card-body p-4 text-center">
+                  <p class="fs-lg mb-0 fst-italic">
+                    "You own your data and SQL queries but license the database engine. <br/><br/>Same model: you own your decision logic — you license the execution platform."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+
+      <!-- Video -->
+      <section class="position-relative py-1">
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none" style="background: linear-gradient(360deg, #cccccc 5.39%, #f6f9fc 78.66%);"></span>
+        <span class="position-absolute top-0 start-0 w-100 h-100 d-none d-dark-mode-block" style="background: linear-gradient(360deg, #121519 5.39%, rgba(255, 255, 255, .03) 78.66%);"></span>
+        <div class="container position-relative z-2 py-2 py-sm-3 py-sm-4 py-md-5">
+          <div class="row align-items-center py-lg-2 py-xl-3 my-xl-1 my-xxl-3">
+            <div class="col-md-5 col-xl-4">
+              <h5>Example Use Case: </h5>
+              <h2 class="h1 pb-2 pb-sm-3 mb-md-0">See how agents can improve the guest experience in hospitality</h2>
+              <p class="card-text pb-sm3 pb-md-4 mb-2">At a major hotel property, the General Manager is accountable for guest experience—every stay, every interaction, every review. Learn how they can synthesize information faster to improve the quality of decisions.</p>
+            </div>
+            <div class="col-md-7 offset-xl-1 ">
+              <div class="position-relative">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center z-5">
+
+                  <a href="https://youtu.be/h33CSZZPwPE?si=PjlfA2EjDtCi5mg5" class="btn btn-icon btn-xl  btn-danger rounded-circle" data-bs-toggle="video" aria-label="Play video">
+                    <i class="ai-play-filled"></i>
+                  </a>
+                </div>
+                <img src="assets/img/video_preview_cover_hospitality_guest_exp_0.png" class="d-dark-mode-none rounded-3 " alt="Video cover">
+                <img src="assets/img/video_preview_cover_hospitality_guest_exp_0.png" class="d-none d-dark-mode-block rounded-3" alt="Video cover">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="position-relative py-5" id="how-it-works">
+        <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 d-dark-mode-none"></div>
+        <div class="container position-relative z-2 py-2 py-sm-3 py-md-4 py-lg-5 mb-sm-2 mb-md-3 mb-xxl-5 my-xl-4">
+
+          <h2 class="h1 text-center pb-3 mb-lg-4 mx-auto" style="max-width: 850px;">From your operating model to production agents in 6–8 weeks</h2>
+
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 pb-3">
+
+            <!-- Step 01 -->
+            <div class="col" data-aos="fade-up" data-aos-delay="0">
+              <div class="card h-100 border-0 rounded-4">
+                <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-dark-mode-block"></div>
+                <div class="card-body position-relative z-2">
+                  <div class="fs-4 fw-bold text-primary mb-3">01</div>
+                  <h3 class="h5 mb-2">Discovery</h3>
+                  <p class="mb-0">We map your functional areas, roles, and recurring decision workflows — surfacing the highest-leverage automation opportunities in your actual operating model, not a generic use-case catalog.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="col" data-aos="fade-up" data-aos-delay="100">
+              <div class="card h-100 border-0 rounded-4">
+                <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-dark-mode-block"></div>
+                <div class="card-body position-relative z-2">
+                  <div class="fs-4 fw-bold text-primary mb-3">02</div>
+                  <h3 class="h5 mb-2">Cognitive Labor Analysis</h3>
+                  <p class="mb-0">We decompose the cognitive work inside each target role into discrete, repeatable components — identifying what data is required, what decisions are made, and where manual bottlenecks slow your teams down.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 03 -->
+            <div class="col" data-aos="fade-up" data-aos-delay="200">
+              <div class="card h-100 border-0 rounded-4">
+                <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-dark-mode-block"></div>
+                <div class="card-body position-relative z-2">
+                  <div class="fs-4 fw-bold text-primary mb-3">03</div>
+                  <h3 class="h5 mb-2">Agent Configuration</h3>
+                  <p class="mb-0">We generate production-ready agent configurations encoding your business logic, KPIs, and decision rules. You review and approve before anything is deployed. The configuration files are yours permanently.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 04 -->
+            <div class="col" data-aos="fade-up" data-aos-delay="300">
+              <div class="card h-100 border-0 rounded-4">
+                <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-dark-mode-block"></div>
+                <div class="card-body position-relative z-2">
+                  <div class="fs-4 fw-bold text-primary mb-3">04</div>
+                  <h3 class="h5 mb-2">Deployment</h3>
+                  <p class="mb-0">We deploy our runtime into your cloud environment — Databricks, AWS, or GCP. Your data never leaves your environment. We validate accuracy against your historical scenarios before go-live.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 05 -->
+            <div class="col" data-aos="fade-up" data-aos-delay="400">
+              <div class="card h-100 border-0 rounded-4">
+                <div class="bg-secondary position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-dark-mode-block"></div>
+                <div class="card-body position-relative z-2">
+                  <div class="fs-4 fw-bold text-primary mb-3">05</div>
+                  <h3 class="h5 mb-2">Managed Operations</h3>
+                  <p class="mb-0">We monitor, maintain, and improve agents on an ongoing basis. Your team accesses consistent outputs — we handle the operational complexity, model updates, and configuration changes.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="text-center pt-4 mt-2">
+            <p class="fs-lg text-body-secondary">Average time from kickoff to first live output: <strong>6–8 weeks.</strong> No AI expertise required from your team.</p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Use Cases -->
+      <section class="container py-4 pt-sm-5 pb-md-5 my-2 my-lg-3 my-xxl-4">
+        <div class="row align-items-center py-3 py-sm-4 py-lg-5 mb-3 my-sm-2 my-md-3 my-lg-0 my-xl-2 my-xxl-4">
+
+          <!-- Image: right side on md+ -->
+          <div class="col-md-6 col-lg-7 col-xl-6 offset-xl-1 order-md-2 pb-1 pb-sm-2 pb-md-0 mb-4 mb-md-0">
+            <img class="d-block rounded-5 h-100" src="assets/img/ar_site_sidebar_1.jpg" alt="Decision Intelligence Agent workflows">
+          </div>
+
+          <!-- Text + numbered items: left side on md+ -->
+          <div class="col-md-6 col-lg-5 order-md-1">
+            <div class="pe-md-4 pe-lg-0">
+              <h2 class="h1 pb-3 mb-2 mb-lg-3 mb-xl-4">Where Decision Intelligence Agents deliver value</h2>
+              <div class="row row-cols-1 row-cols-sm-2 g-4">
+
+                <div class="col">
+                  <div class="text-body-secondary mb-2">01</div>
+                  <h3 class="h5">Revenue &amp; Profitability Analysis</h3>
+                  <p class="mb-1">Automate monthly variance reporting, customer segment profitability narratives, and margin attribution — reducing prep time from days to under an hour, with full audit trail on every output.</p>
+                </div>
+
+                <div class="col">
+                  <div class="text-body-secondary mb-2">02</div>
+                  <h3 class="h5">Operational Review Automation</h3>
+                  <p class="mb-1">Replace manually assembled weekly review packages with agent-generated summaries that synthesize performance data, flag anomalies, and surface recommended actions — consistently, on schedule.</p>
+                </div>
+
+                <div class="col">
+                  <div class="text-body-secondary mb-2">03</div>
+                  <h3 class="h5">Forecasting &amp; Scenario Narrative</h3>
+                  <p class="mb-1">Automate forecast variance explanations and scenario narratives for executive and board presentations, drawing directly from your governed data sources to produce defensible outputs in minutes.</p>
+                </div>
+
+                <div class="col">
+                  <div class="text-body-secondary mb-2">04</div>
+                  <h3 class="h5">Root Cause &amp; Anomaly Investigation</h3>
+                  <p class="mb-1">Identify why a metric moved, which segments drove the change, and what the likely causal factors are — without waiting for an analyst to work through the data manually after the fact.</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Why Patterson -->
+      <section class="bg-secondary position-relative py-md-3 pt-5 pb-5">
+        <div class="container mt-xxl-3 pb-5">
+          <h2 class="h1 text-center pb-3 pb-lg-4">Why operational leaders choose Patterson Consulting</h2>
+
+          <div class="row g-4 mt-2">
+
+            <!-- Differentiator 1 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+              <div class="card border-0 h-100">
+                <div class="card-body p-4">
+                  <div class="diff-icon-wrap mb-3">
+                    <div class="diff-icon">
+                      <i class="ai-search text-primary fs-3"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">Systematic Discovery, Not Guesswork</h4>
+                  <p class="card-text">Most AI implementations start with "let's build an agent for X" — and X is rarely the highest-leverage place to start. Our patent-pending methodology maps your operating roles across the three cognitive labor layers, identifies where execution work is consuming capacity that should be in judgment and strategic work, and surfaces the highest-ROI automation targets in your actual operating model before a single line of configuration is written.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Differentiator 2 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+              <div class="card border-0 h-100">
+                <div class="card-body p-4">
+                  <div class="diff-icon-wrap mb-3">
+                    <div class="diff-icon">
+                      <i class="ai-shield text-primary fs-3"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">Your Environment. Your Data. Your Control.</h4>
+                  <p class="card-text">We deploy inside your cloud account. Your data never touches our infrastructure. Agent configurations encode your business logic and belong to you permanently. We operate the platform — you retain ownership and full visibility of everything it produces. No black box, no lock-in, no surprises at renewal.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Differentiator 3 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="card border-0 h-100">
+                <div class="card-body p-4">
+                  <div class="diff-icon-wrap mb-3">
+                    <div class="diff-icon">
+                      <i class="ai-settings text-primary fs-3"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">A Managed Service, Not a Tool</h4>
+                  <p class="card-text">We don't hand you a platform and a user manual. We design, configure, deploy, and operate agents on your behalf. Your team accesses outputs — not prompts, not configuration files, not a support queue. If something breaks or your data model changes, we handle it.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Platform logos -->
+          <div class="row pt-5 mt-3">
+            <div class="col-12 text-center">
+              <p class="text-body-secondary fs-sm mb-3">Deployed on your existing platform</p>
+              <div class="d-flex align-items-center justify-content-center gap-5 flex-wrap">
+                <img src="assets/img/databricks_logo.png" alt="Databricks" style="height: 40px; opacity: 0.7;">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Calculator CTA -->
+      <section class="bg-secondary position-relative py-md-3 pt-5 pb-5">
+        <div class="container mt-xxl-3 pb-5">
+          <div class="row align-items-center">
+
+            <div class="col-lg-5 mb-4 mb-lg-0">
+              <h2 class="display-5">What is the execution layer in your roles actually costing you?</h2>
+              <p class="fs-lg">The Cognitive Labor Value Calculator estimates the annual value generated across all three layers of a knowledge work role — and models what happens to that value when the execution layer is automated. Built on the same conservative value model used in executive engagements.</p>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1">
+              <div class="card border-0">
+                <div class="card-body p-4 p-lg-5">
+                  <h5 class="mb-3">The calculator shows you:</h5>
+                  <ul class="mb-4">
+                    <li>Pre-automation value breakdown by layer (execution, judgment, strategic)</li>
+                    <li>Post-automation value and value gain (&Delta;V)</li>
+                    <li>ROI on automation investment at your actual team size and cost</li>
+                    <li>Conservative planning-level estimates designed for executive conversations</li>
+                  </ul>
+                  <a class="btn btn-primary btn-lg w-100" href="./campaigns/ar/cpn_clc_d_2026/calculator.html">Estimate Your Cognitive Labor Value</a>
+                  <p class="text-muted text-center mt-2 mb-0 fs-sm">Free &middot; No account required &middot; Results emailed to you</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Investment Signal -->
+      <section class="border-top border-light py-2 py-sm-3 py-md-4 py-lg-5">
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+          <div class="row align-items-center">
+
+            <div class="col-lg-5 mb-4 mb-lg-0">
+              <h2 class="h1 pb-2">What to expect</h2>
+              <p class="fs-lg text-body-secondary">Engagements are scoped to deliver measurable value on a defined timeline — starting with a low-risk discovery phase. ROI estimates use the conservative three-layer value model.</p>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1">
+
+              <div class="row g-3">
+
+                <div class="col-sm-6" data-aos="fade-up" data-aos-delay="0">
+                  <div class="card border-0 bg-secondary h-100">
+                    <div class="card-body p-4">
+                      <p class="text-body-secondary mb-1 fs-sm">Starting point</p>
+                      <h4 class="mb-1">$15K</h4>
+                      <p class="card-text mb-0">Discovery phase — validate use cases, assess data readiness, and define the full implementation plan</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                  <div class="card border-0 bg-secondary h-100">
+                    <div class="card-body p-4">
+                      <p class="text-body-secondary mb-1 fs-sm">Year 1 total</p>
+                      <h4 class="mb-1">$75K–$125K</h4>
+                      <p class="card-text mb-0">Implementation services + first-year subscription for a deployed Decision Intelligence Agent</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                  <div class="card border-0 bg-secondary h-100">
+                    <div class="card-body p-4">
+                      <p class="text-body-secondary mb-1 fs-sm">Annual subscription</p>
+                      <h4 class="mb-1">$20K–$50K/year</h4>
+                      <p class="card-text mb-0">Per deployed workflow — includes runtime license, managed operations, and ongoing support</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                  <div class="card border-0 bg-secondary h-100">
+                    <div class="card-body p-4">
+                      <p class="text-body-secondary mb-1 fs-sm">Typical ROI on subscription</p>
+                      <h4 class="mb-1">3–13×</h4>
+                      <p class="card-text mb-0">Annual return on subscription investment after Year 1, based on conservative layer-elevation estimates across 1–5 deployed roles</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- CTA -->
+      <section class="bg-secondary position-relative py-md-1">
+        <div class="container mt-xxl-5 pb-5">
+          <div class="row pt-1 pt-sm-1 pt-md-4 pt-lg-1 mt-xl-1">
+            <div class="col-lg-5">
+              <h4 class="display-5">See a working agent built on your business context — in 30 minutes.</h4>
+            </div>
+            <div class="col-lg-7 pt-5 pl-5">
+              <p class="fs-lg">
+                We don't do slide decks. In a 30-minute call, we'll demonstrate a live Decision Intelligence Agent prototype built from a role and workflow relevant to your business. You'll see what the output looks like, how the configuration works, and what a deployment engagement would involve.
+              </p>
+              <a class="btn btn-primary btn-lg me-3" href="./contact_us.html">Request a Live Demo</a>
+              <span class="text-body-secondary ms-3 me-2">or</span><a class="btn btn-outline-primary btn-lg" href="./campaigns/ar/cpn_clc_d_2026/calculator.html">Estimate Your Role's Value First</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Blog resources -->
+      <section class="border-top border-light py-2 py-sm-3 py-md-4 py-lg-5">
+        <div class="container py-5 my-lg-3 my-xl-4 my-xxl-5">
+          <h2 class="h1 text-center pb-1 mb-2">Our latest resources</h2>
+          <p class="fs-lg text-center pb-lg-2">Articles on decision intelligence and AI agents from the Patterson Consulting team</p>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+
+            <div class="col">
+              <div class="card">
+                <img src="./assets/img/header_layers_kw_0.jpg" class="card-img-top" alt="Three Layers of Knowledge Work">
+                <div class="card-body">
+                  <h4 class="card-title">The Three Layers of Knowledge Work</h4>
+                  <p class="card-text">How execution, judgment, and strategic work differ in automation potential and business value — with conservative value multipliers grounded in labor economics.</p>
+                  <a href="./content/hitchhikers_guide_kw/layers_of_knowledge_work.html" class="btn btn-primary">Read</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="./assets/img/header_layers_kw_2.jpg" class="card-img-top" alt="Value Model for Knowledge Work">
+                <div class="card-body">
+                  <h4 class="card-title">A Value Model for the Structural Transformation of Knowledge Work</h4>
+                  <p class="card-text">The complete economic model for estimating what a cognitive labor automation investment is worth — with worked examples for commercial underwriting and relationship banking.</p>
+                  <a href="#" class="btn btn-primary">Read</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="./assets/img/databricks_agentbricks_decision_intel_header_0.jpg" class="card-img-top" alt="Architecture Patterns for Integrating Agents">
+                <div class="card-body">
+                  <h4 class="card-title">Architecture Patterns for Integrating Agents into Knowledge Work</h4>
+                  <p class="card-text">A practical framework for how to integrate large language model functionality into your existing business workflows.</p>
+                  <a href="./blog/architecture_patterns_for_integrating_agents_into_knowledge_work.html" class="btn btn-primary">Read</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+    </main>
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0"></div>
+              <div class="col mb-4 mb-md-0"></div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+    <!-- Vendor scripts -->
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="assets/vendor/aos/dist/aos.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <title>Planogram Compliance Driver Attribution | Decision Intelligence Demo | Patterson Consulting</title>
+    <meta name="description" content="Planogram and visual merchandising specialists spend hours reconciling audit results, planogram expectations, and inventory signals when compliance drops. This Decision Intelligence workflow identifies the likely drivers, ranks affected stores, and produces a store action list for follow-up.">
+    <meta name="keywords" content="retail merchandising, planogram compliance, visual merchandising, store audits, inventory attribution, execution diagnostics, store action list, retail operations, compliance variance, driver ranking">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Planogram Compliance Driver Attribution | Decision Intelligence Demo | Patterson Consulting" />
+    <meta property="og:description" content="When planogram compliance falls, merchandising teams have to prove whether the problem is inventory, store execution, or planogram fit. This workflow assembles the evidence, ranks the drivers, and produces a store-level remediation list." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/ar_example_header_0.jpg"/>
+
+    <!-- KWF traceability -->
+    <meta name="kwf:workspace"      content="home-depot">
+    <meta name="kwf:candidate-path" content="cognitive_labor_workspaces/home-depot/cognitive_labor_candidates/merchandising/planogram-visual-merchandiser-specialist/candidate_001_planogram-compliance-drop-driver-brief.md">
+    <meta name="kwf:agent-config"   content="instore-operations_merchandising_planogram-visual-merchandiser-specialist_candidate-001-planogram-compliance-drop-driver-brief">
+    <meta name="kwf:fa-slug"        content="instore-operations">
+    <meta name="kwf:division-slug"  content="merchandising">
+    <meta name="kwf:role-slug"      content="planogram-visual-merchandiser-specialist">
+    <meta name="kwf:generated-at"   content="2026-04-20T00:15:53.420943+00:00">
+
+    <link rel='manifest' href='../../../../alpha_manifest.json'>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <script src="../../../../assets/js/theme-switcher.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
+
+    <link rel="stylesheet" media="screen" href="../../../../assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="../../../../assets/icons/around-icons.min.css">
+    <link rel="stylesheet" media="screen" href="../../../../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading { position:fixed; top:0; right:0; bottom:0; left:0; width:100%; height:100%; transition:all .4s .2s ease-in-out; background-color:#fff; opacity:0; visibility:hidden; z-index:9999; }
+      [data-bs-theme="dark"] .page-loading { background-color:#121519; }
+      .page-loading.active { opacity:1; visibility:visible; }
+      .page-loading-inner { position:absolute; top:50%; left:0; width:100%; text-align:center; transform:translateY(-50%); transition:opacity .2s ease-in-out; opacity:0; }
+      .page-loading.active > .page-loading-inner { opacity:1; }
+      .page-loading-inner > span { display:block; font-family:"Inter",sans-serif; font-size:1rem; font-weight:normal; color:#6f788b; }
+      .page-spinner { display:inline-block; width:2.75rem; height:2.75rem; margin-bottom:.75rem; vertical-align:text-bottom; background-color:#d7dde2; border-radius:50%; opacity:0; animation:spinner .75s linear infinite; }
+      @keyframes spinner { 0% { transform:scale(0); } 50% { opacity:1; transform:none; } }
+      .layer-bar-track { height:28px; border-radius:6px; overflow:hidden; display:flex; margin:0.4rem 0; }
+      .layer-bar-exec { background-color:#adb5bd; }
+      .layer-bar-judgment { background-color:#ff9500; }
+      .layer-bar-strategic { background-color:#198754; }
+      .layer-legend-dot { display:inline-block; width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+      .result-metric { border-left:4px solid var(--bs-primary); padding-left:1.25rem; }
+      .result-metric .metric-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#6f788b; margin-bottom:0.25rem; }
+      .result-metric .metric-value { font-size:2.2rem; font-weight:800; line-height:1.1; color:#121519; }
+      .result-metric .metric-sub { font-size:0.875rem; color:#6f788b; margin-top:0.2rem; }
+      .result-metric.positive .metric-value { color:#198754; }
+      .result-metric.highlight .metric-value { color:var(--bs-primary); }
+      .agent-pipeline { display:flex; gap:0; align-items:stretch; margin:0; }
+      .agent-step { flex:1; text-align:center; position:relative; padding:1.25rem 0.75rem; display:flex; flex-direction:column; align-items:center; cursor:pointer; border-radius:0.5rem; transition:background 0.15s, box-shadow 0.15s; }
+      .agent-step:hover { background:rgba(79,127,255,0.07); }
+      .agent-step.step-active { background:rgba(79,127,255,0.1); box-shadow:inset 0 0 0 2px rgba(79,127,255,0.5); }
+      .agent-step:not(:last-child)::after { content:'›'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:1.5rem; color:#adb5bd; z-index:1; line-height:1; pointer-events:none; }
+      .agent-step-num { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; margin-bottom:0.6rem; flex-shrink:0; transition:transform 0.15s; }
+      .agent-step.step-active .agent-step-num { transform:scale(1.1); }
+      .agent-step-title { font-size:0.82rem; font-weight:700; margin-bottom:0.35rem; }
+      .agent-step-body { font-size:0.75rem; color:#6f788b; line-height:1.4; }
+      .step-click-hint { font-size:0.7rem; color:#adb5bd; font-style:italic; text-align:center; margin-top:0.5rem; }
+      .step-detail-panel { border-top:1px solid #e5e7eb; padding:1.5rem 1.5rem 1.25rem; display:none; }
+      .step-detail-panel.visible { display:block; }
+      .step-detail-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; }
+      .step-detail-num { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; }
+      .step-detail-title { font-size:1rem; font-weight:700; color:#111827; }
+      .step-detail-close { margin-left:auto; background:none; border:none; padding:0.25rem 0.5rem; color:#9ca3af; cursor:pointer; font-size:0.8rem; border-radius:4px; transition:color 0.12s,background 0.12s; }
+      .step-detail-close:hover { color:#374151; background:#f3f4f6; }
+      .step-detail-sections { display:flex; flex-direction:column; gap:1.25rem; }
+      .step-detail-top-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      @media (max-width:768px) { .step-detail-top-row { grid-template-columns:1fr; } }
+      .step-detail-section-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#6b7280; margin-bottom:0.5rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.35rem; }
+      .step-detail-logic { font-size:0.82rem; color:#374151; line-height:1.6; }
+      .step-detail-output { overflow-x:auto; }
+      .sd-result-wrap { border:1px solid #3c3c3c; border-radius:0.375rem; overflow:hidden; background:#1e1e1e; }
+      .sd-result-scroll { overflow-x:auto; }
+      .sd-result-table { border-collapse:collapse; width:100%; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; background:#1e1e1e; color:#d4d4d4; white-space:nowrap; }
+      .sd-result-table th { background:#2d2d2d; color:#569cd6; font-weight:600; padding:0.3rem 0.75rem; text-align:left; border-bottom:1px solid #3c3c3c; border-right:1px solid #333; }
+      .sd-result-table th:last-child { border-right:none; }
+      .sd-result-table td { padding:0.28rem 0.75rem; border-bottom:1px solid #252526; border-right:1px solid #282828; vertical-align:top; }
+      .sd-result-table td:last-child { border-right:none; }
+      .sd-result-table tr:last-child td { border-bottom:none; }
+      .sd-result-table tbody tr:nth-child(even) td { background:#252526; }
+      .sd-result-footer { font-size:0.66rem; color:#6a9955; padding:0.28rem 0.75rem; border-top:1px solid #3c3c3c; background:#1a1a1a; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; }
+      .sd-result-pre { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .step-detail-query { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; height:100%; box-sizing:border-box; }
+      .step-detail-analysis { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; overflow-y:auto; max-height:240px; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .amd-heading { color:#dcdcaa; font-weight:700; } .amd-bold { color:#9cdcfe; font-weight:600; } .amd-bullet { color:#569cd6; }
+      .code-block { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.82rem; line-height:1.7; border-radius:0.5rem; padding:1.25rem 1.5rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; }
+      .code-keyword { color:#569cd6; } .code-function { color:#dcdcaa; } .code-string { color:#ce9178; }
+      .code-comment { color:#6a9955; font-style:italic; } .code-number { color:#b5cea8; } .code-type { color:#4ec9b0; }
+      .pg-shell { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.07); font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      .pg-header { background:#ffffff; border-bottom:1px solid #e5e7eb; padding:0.75rem 1.25rem; display:flex; align-items:center; gap:0.625rem; }
+      .pg-header-icon { width:28px; height:28px; border-radius:6px; background:#ede9fe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-header-icon svg { width:14px; height:14px; }
+      .pg-header-title { font-size:0.875rem; font-weight:600; color:#111827; }
+      .pg-header-sep { color:#d1d5db; margin:0 0.125rem; font-size:0.875rem; }
+      .pg-agent-tag { font-size:0.72rem; font-weight:600; color:#6b7280; letter-spacing:0.02em; }
+      .pg-header-actions { margin-left:auto; display:flex; align-items:center; gap:0.5rem; }
+      .pg-kwf-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.2rem 0.625rem; font-size:0.68rem; font-weight:600; color:#b45309; letter-spacing:0.04em; }
+      .pg-conversation { padding:1.25rem; min-height:200px; }
+      .pg-examples-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin-bottom:0.75rem; }
+      .pg-example-card { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.625rem; padding:0.875rem 1rem; display:flex; align-items:center; gap:0.875rem; cursor:pointer; transition:box-shadow 0.15s,border-color 0.15s; margin-bottom:0.625rem; text-align:left; width:100%; }
+      .pg-example-card:hover { box-shadow:0 4px 8px rgba(0,0,0,0.07); border-color:#d1d5db; }
+      .pg-example-icon { width:32px; height:32px; border-radius:8px; background:#eff6ff; border:1px solid #dbeafe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-example-content { flex:1; min-width:0; }
+      .pg-example-title { font-size:0.82rem; font-weight:600; color:#111827; margin-bottom:0.2rem; }
+      .pg-example-prompt { font-size:0.78rem; color:#6b7280; line-height:1.45; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .pg-try-btn { flex-shrink:0; padding:0.35rem 0.875rem; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; font-size:0.78rem; font-weight:500; color:#374151; cursor:pointer; transition:background 0.12s,border-color 0.12s; white-space:nowrap; }
+      .pg-try-btn:hover { background:#f3f4f6; border-color:#d1d5db; }
+      .pg-messages { display:flex; flex-direction:column; gap:1rem; }
+      .pg-message { display:flex; flex-direction:column; gap:0.5rem; }
+      .pg-message-header { display:flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; color:#374151; }
+      .pg-message-icon { width:22px; height:22px; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; }
+      .pg-message-icon.user { background:#dbeafe; color:#1d4ed8; } .pg-message-icon.agent { background:#ede9fe; color:#7c3aed; }
+      .pg-message-bubble { border-radius:0.625rem; padding:0.75rem 1rem; font-size:0.875rem; line-height:1.6; color:#111827; }
+      .pg-message-bubble.user { background:#f0f9ff; border:1px solid #bfdbfe; } .pg-message-bubble.agent { background:#ffffff; border:1px solid #e5e7eb; }
+      .pg-status-loading { background:#fffbeb; border:1px solid #fde68a; border-radius:0.5rem; padding:0.625rem 1rem; font-size:0.82rem; color:#92400e; display:flex; align-items:center; gap:0.5rem; }
+      .pg-spinner { width:13px; height:13px; border:2px solid rgba(146,64,14,0.2); border-top-color:#92400e; border-radius:50%; animation:pgSpin 0.75s linear infinite; flex-shrink:0; }
+      @keyframes pgSpin { to { transform:rotate(360deg); } }
+      .pg-narrative-summary { margin-bottom:0.75rem; font-size:0.875rem; color:#111827; line-height:1.6; }
+      .pg-narrative-deviation { color:#b45309; font-weight:700; } .pg-narrative-normal { color:#15803d; font-weight:700; } .pg-narrative-ok { color:#15803d; font-weight:700; }
+      .pg-narrative-factors-label { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#6b7280; margin:0.625rem 0 0.5rem; }
+      .pg-narrative-item { display:flex; gap:0.625rem; align-items:flex-start; margin-bottom:0.4rem; font-size:0.875rem; line-height:1.55; color:#374151; }
+      .pg-narrative-item-num { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:#eff6ff; border:1px solid #bfdbfe; font-size:0.68rem; font-weight:800; color:#1d4ed8; display:flex; align-items:center; justify-content:center; margin-top:0.15rem; }
+      .pg-narrative-item-station { font-weight:700; color:#111827; } .pg-narrative-item-pct { color:#dc2626; font-weight:700; }
+      .pg-narrative-action { margin-top:0.75rem; padding:0.5rem 0.75rem; background:#fffbeb; border:1px solid #fde68a; border-radius:0.4rem; font-size:0.82rem; color:#92400e; line-height:1.55; }
+      .pg-narrative-comms { margin-top:0.625rem; padding:0.625rem 0.875rem; background:#f0f9ff; border:1px solid #bae6fd; border-radius:0.4rem; font-size:0.82rem; color:#0369a1; line-height:1.55; font-style:italic; }
+      .pg-narrative-comms-label { font-style:normal; font-weight:700; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:#0369a1; margin-bottom:0.2rem; }
+      .pg-footer { border-top:1px solid #f3f4f6; padding:0.625rem 1.25rem; background:#fafafa; display:flex; align-items:center; gap:0.75rem; font-size:0.72rem; color:#9ca3af; }
+      .pg-reset-btn { background:none; border:none; padding:0; color:#2563eb; font-size:0.78rem; cursor:pointer; text-decoration:underline; white-space:nowrap; margin-left:auto; display:none; }
+      .pg-reset-btn:hover { color:#1d4ed8; }
+      .lob-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.18); border-radius:0.625rem; padding:0.875rem 1.125rem; margin-bottom:1.5rem; font-size:0.875rem; color:#374151; line-height:1.6; display:flex; gap:0.75rem; align-items:flex-start; }
+      .lob-callout-icon { flex-shrink:0; font-size:1rem; margin-top:0.1rem; }
+      .value-hero-card { background:linear-gradient(135deg,rgba(25,135,84,0.08),rgba(25,135,84,0.03)); border:1.5px solid rgba(25,135,84,0.25); border-radius:0.75rem; padding:1.5rem 2rem; }
+      .workflow-callout { background:linear-gradient(135deg,rgba(var(--bs-primary-rgb),0.07),rgba(var(--bs-primary-rgb),0.03)); border-radius:0.75rem; padding:1.25rem 1.5rem; border-left:4px solid var(--bs-primary); }
+      .strategic-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.15); border-radius:0.75rem; padding:1.25rem 1.5rem; }
+      .section-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#ff9500; margin-bottom:0.5rem; }
+      .kwf-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; color:#ff9500; letter-spacing:0.04em; }
+      .schema-meta { background:#f8f9fa; border-radius:0.5rem; padding:0.875rem 1rem; margin-bottom:1rem; font-size:0.82rem; line-height:1.6; color:#374151; }
+      .schema-meta strong { color:#111827; }
+      /* ── Mobile: pipeline stack (raised from 575px to cover all phone viewports) ── */
+      @media (max-width:767px) {
+        .agent-pipeline { flex-direction:column; gap:0.75rem; }
+        .agent-step:not(:last-child)::after { content:'↓'; position:static; transform:none; display:block; margin-top:0.25rem; font-size:1.2rem; }
+        .agent-step { border-radius:0.5rem; background:#f8f9fa; }
+        .step-detail-query { white-space:pre-wrap; word-break:break-all; height:auto; }
+        .code-block { white-space:pre-wrap; word-break:break-all; font-size:0.68rem; }
+      }
+      /* ── Mobile: playground card + header ── */
+      .pg-header { flex-wrap:wrap; }
+      @media (max-width:575px) {
+        .pg-example-prompt { white-space:normal; }
+        .pg-try-btn { display:none; }
+        .pg-header-actions { width:100%; margin-top:0.375rem; }
+        .display-4 { font-size:2.2rem !important; }
+        .value-hero-card { padding:1.25rem; }
+      }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+  </head>
+
+  <body>
+    <noscript><iframe src='https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9' height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript>
+
+    <div class="page-loading active">
+      <div class="page-loading-inner"><div class="page-spinner"></div><span>Loading...</span></div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- NAVBAR -->
+      <header data-bs-theme="dark">
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+            <a class="navbar-brand pe-sm-3" href="../../../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459,0,0,-0.00433,-8154.369629,-2022.807495)" fill="#000000" stroke="none" style="transform-origin:8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill:rgb(255,149,0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill:rgb(255,149,0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../../../contact_us.html" target="_blank" rel="noopener">Contact Us</a>
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height:520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image:url(../../../../assets/img/ar_example_header_0.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+          <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb" style="font-size:0.78rem;opacity:0.7;"><li class="breadcrumb-item text-light">Decision Intelligence</li><li class="breadcrumb-item text-light">Retail</li><li class="breadcrumb-item text-light">In-Store Operations</li></ol>
+          </nav>
+          <div class="col-lg-8">
+            <h1 class="display-4 mb-3">Explain Compliance Drops Faster</h1>
+            <p class="text-body fs-lg mb-4">When regional compliance drops and a review meeting is coming up, the Planogram / Visual Merchandiser Specialist has to reconcile audits, expected shelf conditions, and inventory reality across affected stores. This workflow assembles the evidence, ranks the likely drivers, and produces a briefing plus prioritized store action list.</p>
+            <p class="text-body fs-lg mb-4">The specialist still decides whether to push reface, reset, exception, or replenishment escalation; the workflow removes the retrieval, calculation, segmentation, and formatting work. The estimated impact is a 65% shift in role time from execution-layer work to higher-value decision making.</p>
+            <div class="d-flex flex-wrap gap-3 mt-3">
+              <a class="btn btn-outline-light btn-lg" href="#value">See the Value Model</a>
+            </div>
+          </div>
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+        </div>
+      </section>
+
+      <!-- PLAYGROUND -->
+      <section class="container py-5" id="playground">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Interactive Demo</div>
+            <h2 class="h1 mb-2">See the Decision Intelligence Workflow in Action</h2>
+            <p class="text-muted mb-3">This workflow handles a recurring diagnostic task: determining whether a category compliance decline is primarily caused by inventory shortages, execution drift in stores, or a mismatch between the planogram and the physical store setup. It compares current and prior compliance periods, isolates affected stores, applies attribution rules, and turns the result into a usable operating brief. The manual burden is not the decision itself; it is the repeated cross-domain querying, compliance calculation, store bucketing, and action-list formatting required before judgment can begin.</p>
+            <div class="lob-callout">
+              <span class="lob-callout-icon">&#128100;</span>
+              <div>
+                Designed for line-of-business leaders — specifically the Planogram / Visual Merchandiser Specialist and regional merchandising operations teams responsible for explaining compliance drops and assigning store remediation. It focuses on the recurring work of assembling defensible evidence before the first review meeting.
+                <span style="display:block;margin-top:0.3rem;font-size:0.8rem;color:#6b7280;">
+                  Why this matters: <a href="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/information_for_line_of_business.html" target="_blank" rel="noopener" style="color:#2563eb;">What line-of-business leaders actually need from AI &rarr;</a>
+                </span>
+              </div>
+            </div>
+            <div class="pg-shell">
+              <div class="pg-header">
+                <div class="pg-header-icon">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="pg-header-title">Decision Intelligence Playground</span>
+                <span class="pg-header-sep">·</span>
+                <span class="pg-agent-tag">Planogram Compliance Driver Attribution</span>
+                <div class="pg-header-actions">
+                  <span class="pg-kwf-badge">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5.5" stroke="#b45309"/><path d="M4 6l1.5 1.5L8 4" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    KWF Runtime
+                  </span>
+                </div>
+              </div>
+              <div class="pg-conversation" id="pg-conversation">
+                <div id="pg-examples">
+                  <div class="pg-examples-label">Start with an example</div>
+                  
+                  <button class="pg-example-card" onclick="runQuery(0)" id="ex-0">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(220,38,38)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Region R-NE — March 1-31, 2026 — BEVERAGES — 5 point threshold</div>
+                      <div class="pg-example-prompt">For region R-NE from 2026-03-01 to 2026-03-31, what are the ranked drivers of the planogram compliance drop for category BEVERAGES, and what store-level actions should we take next given a 5 point compliance drop threshold and 2 affected stores?</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(1)" id="ex-1">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(37,99,235)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Store S003 — March 1-31, 2026 — execution-led decline</div>
+                      <div class="pg-example-prompt">Explain the planogram compliance drop for store S003 in region R-NE for category BEVERAGES from 2026-03-01 to 2026-03-31, using a 5 point drop threshold.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(2)" id="ex-2">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(22,163,74)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(22,163,74)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(22,163,74)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Store S001 — March 1-31, 2026 — inventory-led decline</div>
+                      <div class="pg-example-prompt">Explain the planogram compliance drop for store S001 in region R-NE for category BEVERAGES from 2026-03-01 to 2026-03-31, using a 10 point drop threshold.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                </div>
+                <div class="pg-messages" id="pg-messages" style="display:none;"></div>
+              </div>
+              <div class="pg-footer">
+                <span>Simulated output — KWF agent configuration + sample data. No live database.</span>
+                <button class="pg-reset-btn" id="pg-reset-btn" onclick="resetPlayground()">&#8592; Run another query</button>
+              </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+              <div class="flex-grow-1">
+                <div style="font-size:0.875rem;font-weight:700;color:#111827;margin-bottom:0.2rem;">Want to review your own compliance-drop workflow in a working session?</div>
+                <div style="font-size:0.82rem;color:#6b7280;line-height:1.5;">We will walk through the data sources, attribution rules, action-list logic, and the operating outputs your merchandising team would actually use. We will also show you this workflow running on your Google Cloud Platform environment, using your store, audit, and inventory structure as the reference point.</div>
+              </div>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_001_planogram-compliance-drop-driver-brief&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-primary flex-shrink-0" style="white-space:nowrap;">Schedule a GCP Session</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">How It Works</div>
+              <h2 class="h1 mb-3">What the Decision Intelligence Workflow Does</h2>
+              <p class="text-muted mb-4">This workflow handles a recurring diagnostic task: determining whether a category compliance decline is primarily caused by inventory shortages, execution drift in stores, or a mismatch between the planogram and the physical store setup. It compares current and prior compliance periods, isolates affected stores, applies attribution rules, and turns the result into a usable operating brief. The manual burden is not the decision itself; it is the repeated cross-domain querying, compliance calculation, store bucketing, and action-list formatting required before judgment can begin.</p>
+              <p class="text-muted mb-4" style="font-size:0.875rem;"><strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.</p>
+              <div style="background:rgba(255,149,0,0.06);border:1px solid rgba(255,149,0,0.28);border-radius:0.625rem;padding:0.875rem 1.125rem;margin-bottom:1.5rem;font-size:0.875rem;color:#374151;line-height:1.65;display:flex;gap:0.75rem;align-items:flex-start;">
+                <span style="flex-shrink:0;margin-top:0.15rem;">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/><path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><strong style="color:#111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked, and what the output artifact should contain. That analysis happens once. By the time the workflow runs, there is nothing left to figure out.</div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 pb-3">
+                  <div class="agent-pipeline">
+                    <div class="agent-step" id="wf-step-0" onclick="showStepDetail(0)">
+                      <div class="agent-step-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
+                      <div class="agent-step-title">Find Drops</div>
+                      <div class="agent-step-body">Compares current versus prior audit results to isolate stores with a material planogram compliance decline.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-1" onclick="showStepDetail(1)">
+                      <div class="agent-step-num" style="background: rgba(107,122,255,0.12); color: #6b7aff;">2</div>
+                      <div class="agent-step-title">Rank Drivers</div>
+                      <div class="agent-step-body">Combines audit issue patterns with inventory conditions to classify the likely causes of the compliance drop.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-2" onclick="showStepDetail(2)">
+                      <div class="agent-step-num" style="background: rgba(124,92,252,0.12); color: #7c5cfc;">3</div>
+                      <div class="agent-step-title">Action List</div>
+                      <div class="agent-step-body">Builds a narrative brief and prioritized store action list with a recommended remediation for each affected store.</div>
+                    </div>
+                  </div>
+                  <div class="step-click-hint" id="step-click-hint">&#8593; click a step to explore the logic, query, and output</div>
+                </div>
+                <div class="step-detail-panel" id="step-detail-panel">
+                  <div class="step-detail-header">
+                    <div class="step-detail-num" id="sd-num" style="background:rgba(79,127,255,0.12);color:#4f7fff;">1</div>
+                    <div class="step-detail-title" id="sd-title">Step Detail</div>
+                    <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
+                  </div>
+                  <div class="step-detail-sections">
+                    <div class="step-detail-top-row">
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label">Business Logic</div>
+                        <div class="step-detail-logic" id="sd-logic"></div>
+                      </div>
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
+                        <pre class="step-detail-query" id="sd-query"></pre>
+                      </div>
+                    </div>
+                    <div class="step-detail-output-row">
+                      <div class="step-detail-section-label">Sample Data Query Results</div>
+                      <div class="step-detail-output" id="sd-output"></div>
+                    </div>
+                    <div class="step-detail-analysis-row">
+                      <div class="step-detail-section-label">Step Business Logic</div>
+                      <pre class="step-detail-analysis" id="sd-analysis"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted mb-3">The workflow produces two operational artifacts: a regional compliance driver brief for district or regional review, and a ranked store action list with recommended next steps such as replenishment escalation, targeted reface with photo confirmation, or mini-reset. These outputs are formatted for immediate review and follow-up tasking.</p>
+              <div class="workflow-callout">
+                <strong>What this workflow does NOT do:</strong> It does not decide whether a regional manager should approve a full reset instead of a lighter remediation path, approve a local planogram exception for a store with fixture constraints, reprioritize labor across stores to execute the work, or determine whether recurring issues require a change to compliance policy or planogram design standards.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA WAREHOUSE INTEGRATION -->
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Under the Hood</div>
+            <h2 class="h1 mb-2">Data Warehouse Integration</h2>
+            <p class="text-muted mb-4">The workflow depends on warehouse-level access to audit, store master, and inventory data so the specialist is not manually exporting and stitching evidence across separate reporting views. It computes period-over-period compliance movement, joins store-level operational context, and applies consistent attribution rules across the affected population.</p>
+            <p class="text-muted mb-4" style="font-size:0.875rem;">The cross-domain requirement is central: audit observations explain what the store looked like, planogram expectations define what should have been present, and inventory snapshots show whether the shelf condition was operationally supportable.</p>
+            <ul class="nav nav-tabs mb-0" id="schemaTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-store_compliance_audits" data-bs-toggle="tab"
+                  data-bs-target="#panel-store_compliance_audits" type="button" role="tab">
+                  <code style="font-size:0.8rem;">store_compliance_audits</code>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link " id="tab-store_master" data-bs-toggle="tab"
+                  data-bs-target="#panel-store_master" type="button" role="tab">
+                  <code style="font-size:0.8rem;">store_master</code>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link " id="tab-store_inventory_daily" data-bs-toggle="tab"
+                  data-bs-target="#panel-store_inventory_daily" type="button" role="tab">
+                  <code style="font-size:0.8rem;">store_inventory_daily</code>
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom-4 p-0 mb-4">
+              <div class="tab-pane fade show active" id="panel-store_compliance_audits" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Store audit and field execution data &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Merchandising Operations<br>
+                    <strong>Role in this workflow:</strong> This table provides the observed compliance outcome for each store and category, including the issue counts that show how the shelf failed. It is the primary signal for detecting where compliance materially declined and for distinguishing missing facings from wrong placement behavior.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_compliance_audits (
+  audit_date <span class="code-type">DATE</span>,
+  store_id <span class="code-type">STRING</span>,
+  category_id <span class="code-type">STRING</span>,
+  compliance_pct <span class="code-type">DOUBLE</span>,
+  missing_facings_count <span class="code-type">INT</span>,
+  wrong_placement_count <span class="code-type">INT</span>,
+  promo_display_missing_count <span class="code-type">INT</span>
+);
+
+<span class="code-keyword">SELECT</span>
+  m.region_id,
+  a.store_id,
+  <span class="code-keyword">AVG</span>(<span class="code-keyword">CASE</span> <span class="code-keyword">WHEN</span> a.audit_date <span class="code-keyword">BETWEEN</span> <span class="code-<span class="code-type">string</span>">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-<span class="code-type">string</span>">'{end_date}'</span> <span class="code-keyword">THEN</span> a.compliance_pct <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> compliance_curr_pct,
+  <span class="code-keyword">AVG</span>(
+    <span class="code-keyword">CASE</span>
+      <span class="code-keyword">WHEN</span> a.audit_date <span class="code-keyword">BETWEEN</span> <span class="code-keyword">date_add</span>(<span class="code-<span class="code-type">string</span>">'{start_date}'</span>, -<span class="code-keyword">datediff</span>(<span class="code-<span class="code-type">string</span>">'{end_date}'</span>,<span class="code-<span class="code-type">string</span>">'{start_date}'</span>)-<span class="code-number">1</span>)
+                           <span class="code-keyword">AND</span> <span class="code-keyword">date_add</span>(<span class="code-<span class="code-type">string</span>">'{start_date}'</span>, -<span class="code-number">1</span>)
+      <span class="code-keyword">THEN</span> a.compliance_pct
+    <span class="code-keyword">END</span>
+  ) <span class="code-keyword">AS</span> compliance_prev_pct
+<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_compliance_audits a
+<span class="code-keyword">JOIN</span> pura_vida_foods_dev.merchandising.store_master m
+  <span class="code-keyword">ON</span> a.store_id = m.store_id
+<span class="code-keyword">WHERE</span> m.region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>
+  <span class="code-keyword">AND</span> a.category_id = <span class="code-<span class="code-type">string</span>">'{category_id}'</span>
+<span class="code-keyword">GROUP BY</span> m.region_id, a.store_id
+<span class="code-keyword">HAVING</span> (compliance_prev_pct - compliance_curr_pct) &gt;= {compliance_drop_threshold_pct};</code></pre>
+              </div>
+              <div class="tab-pane fade " id="panel-store_master" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Store master data &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Retail Operations<br>
+                    <strong>Role in this workflow:</strong> This table adds the organizational and location context needed to group stores into the requested region or district. It is used to scope the analysis correctly and determine whether the compliance issue is isolated or broad enough to support a regional remediation discussion.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_master (
+  store_id <span class="code-type">STRING</span>,
+  region_id <span class="code-type">STRING</span>,
+  district_id <span class="code-type">STRING</span>,
+  store_format <span class="code-type">STRING</span>,
+  open_date <span class="code-type">DATE</span>
+);
+
+<span class="code-keyword">SELECT</span> store_id, region_id, district_id, store_format, open_date
+<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_master
+<span class="code-keyword">WHERE</span> region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>;</code></pre>
+              </div>
+              <div class="tab-pane fade " id="panel-store_inventory_daily" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Store inventory snapshot data &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Inventory Operations<br>
+                    <strong>Role in this workflow:</strong> This table shows whether stores had enough inventory to support the planogram during the analysis window. It is the key input for separating inventory-driven noncompliance from execution-driven issues, which prevents stores from being blamed for shelf gaps caused by low on-hand stock.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_inventory_daily (
+  snapshot_date <span class="code-type">DATE</span>,
+  store_id <span class="code-type">STRING</span>,
+  sku_id <span class="code-type">STRING</span>,
+  category_id <span class="code-type">STRING</span>,
+  on_hand_units <span class="code-type">INT</span>,
+  on_order_units <span class="code-type">INT</span>,
+  dc_lead_time_days <span class="code-type">INT</span>
+);
+
+<span class="code-keyword">SELECT</span> snapshot_date, store_id, sku_id, category_id, on_hand_units, on_order_units, dc_lead_time_days
+<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_inventory_daily
+<span class="code-keyword">WHERE</span> category_id = <span class="code-<span class="code-type">string</span>">'{category_id}'</span>
+  <span class="code-keyword">AND</span> snapshot_date <span class="code-keyword">BETWEEN</span> <span class="code-<span class="code-type">string</span>">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-<span class="code-type">string</span>">'{end_date}'</span>;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COGNITIVE LABOR LAYER ANALYSIS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">Cognitive Labor Analysis</div>
+              <h2 class="h1 mb-3">Where the Work Sits in the Labor Stack</h2>
+              <p class="text-muted mb-4">Not all cognitive labor is equally automatable. The KWF analysis breaks the workflow into three layers — execution, judgment, and strategic — and maps each step to the layer it belongs to. Execution-layer work is automatable. Judgment and strategic work stays with the manager.</p>
+              
+              <div class="layer-bar-track">
+                <div class="layer-bar-exec" style="width:65%;" title="Execution 65%"></div>
+                <div class="layer-bar-judgment" style="width:30%;" title="Judgment 30%"></div>
+                <div class="layer-bar-strategic" style="width:5%;" title="Strategic 5%"></div>
+              </div>
+              <div style="display:flex; gap:1.5rem; font-size:0.8rem; margin-top:0.5rem; flex-wrap:wrap;">
+                <span><span class="layer-legend-dot" style="background:#adb5bd;"></span> Execution 65%</span>
+                <span><span class="layer-legend-dot" style="background:#ff9500;"></span> Judgment 30%</span>
+                <span><span class="layer-legend-dot" style="background:#198754;"></span> Strategic 5%</span>
+              </div>
+              <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#adb5bd;margin-bottom:0.5rem;">Execution Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#adb5bd;">65%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The execution layer pulls audit, planogram, and inventory data, calculates compliance deltas, attributes likely drivers, ranks stores, and formats the brief and action list.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#fff8f0;border:1px solid rgba(255,149,0,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#ff9500;margin-bottom:0.5rem;">Judgment Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#ff9500;">30%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The specialist still interprets edge cases, validates whether the recommended action fits store conditions, and explains the results to regional and store leaders.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f0faf4;border:1px solid rgba(25,135,84,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#198754;margin-bottom:0.5rem;">Strategic Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#198754;">5%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">Management retains decisions about threshold policy, planogram design changes, labor allocation, and broader merchandising process changes.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE MODEL -->
+      <section class="container py-5" id="value">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Value Model</div>
+            <h2 class="h1 mb-3">The Business Case for Automation</h2>
+            <div class="value-hero-card mb-4">
+              <div class="row g-4">
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Time Recovered</div>
+                    <div class="metric-value">65% / incident</div>
+                    <div class="metric-sub">For each compliance-drop review cycle, most of the manual retrieval, joining, segmentation, and formatting work is recoverable.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Annual Savings</div>
+                    <div class="metric-value">$1,036,400 / yr</div>
+                    <div class="metric-sub">Conservative net annual benefit for 4 specialists based on the candidate value model after automation cost.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric highlight">
+                    <div class="metric-label">Strategic Upside</div>
+                    <div class="metric-value">First-Pass Remediation</div>
+                    <div class="metric-sub">The operational upside is a higher share of compliance incidents resolved with a single approved remediation plan in the first review meeting.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="strategic-callout mb-4">
+              <strong>Kill Question:</strong> Without this workflow, the specialist falls back to manual dashboard hopping, ad-hoc spreadsheet joins, and subjective explanations of whether the drop was caused by store execution or inventory conditions, which increases rework and delays remediation.
+            </div>
+            <p class="text-muted" style="font-size:0.875rem;"><strong>Primary Valuation Metric:</strong> % of compliance incidents resolved with a single approved remediation plan in the first review meeting</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT STEP CTA -->
+      <section class="bg-primary py-5" data-bs-theme="dark">
+        <div class="container py-2 text-center">
+          <div class="col-lg-7 mx-auto">
+            <p class="fw-semibold mb-2 fs-sm text-uppercase letter-spacing-wider" style="color:rgba(255,255,255,0.6);">Next Step</p>
+            <h2 class="h1 text-light mb-3">Run your own value estimate for planogram compliance work — or talk to us about your merchandising operations team.</h2>
+            <p class="text-light mb-4" style="opacity:0.85;">The Cognitive Labor Value Calculator models team size, fully loaded role cost, and how much of the recurring workflow is execution work that can be automated. It takes under two minutes to produce a planning-level estimate.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+              <a href="../../../../campaigns/ar/cpn_clc_d_2026/calculator.html?kwf_src=candidate_001_planogram-compliance-drop-driver-brief&amp;kwf_ws=home-depot" class="btn btn-light btn-lg">
+                Calculate Your Team&#8217;s Value
+              </a>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_001_planogram-compliance-drop-driver-brief&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
+                Request a Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <span class="text-muted" style="font-size:0.82rem;">&copy; 2026 Patterson Consulting. All rights reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <a href="../../../../augmented_reasoning_20260311_v5.html" class="text-muted text-decoration-none" style="font-size:0.82rem;">Augmented Reasoning Platform</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <script src="../../../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../../../assets/vendor/aos/dist/aos.js"></script>
+    <script src="../../../../assets/js/theme.min.js"></script>
+
+    <script>
+      // ── Step detail data ──────────────────────────────────────────────────
+      const STEPS = [
+  {
+    num: 1, title: "Find Drops", colorBg: "rgba(79,127,255,0.12)", colorFg: "#4f7fff",
+    logic: "This step establishes where the problem is real by measuring compliance change across comparable time windows and filtering to stores that crossed the decline threshold. It also checks whether the issue is broad enough to treat as a regional pattern or should stay at a store-level response.",
+    query: `SELECT
+  m.region_id,
+  a.store_id,
+  AVG(CASE WHEN a.audit_date BETWEEN '{start_date}' AND '{end_date}' THEN a.compliance_pct END) AS compliance_curr_pct,
+  AVG(
+    CASE
+      WHEN a.audit_date BETWEEN date_add('{start_date}', -datediff('{end_date}','{start_date}')-1)
+                           AND date_add('{start_date}', -1)
+      THEN a.compliance_pct
+    END
+  ) AS compliance_prev_pct
+FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
+JOIN pura_vida_foods_dev.merchandising.store_master m
+  ON a.store_id = m.store_id
+WHERE m.region_id = '{region_id}'
+  AND a.category_id = '{category_id}'
+GROUP BY m.region_id, a.store_id
+HAVING (compliance_prev_pct - compliance_curr_pct) >= {compliance_drop_threshold_pct};`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>region_id</th><th>store_id</th><th>compliance_curr_pct</th><th>compliance_prev_pct</th></tr></thead><tbody><tr><td>R-NE</td><td>S001</td><td>72.0</td><td>86.0</td></tr><tr><td>R-NE</td><td>S003</td><td>65.0</td><td>84.0</td></tr></tbody></table></div><div class=\"sd-result-footer\">2 rows</div></div>",
+    analysis: `<span class="amd-heading"># Detect material compliance drop and isolate affected stores</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Compares current-period vs prior-period average planogram compliance by store for a region and category, flags stores exceeding the drop threshold, and determines whether the issue is localized or region-wide based on affected store count.
+
+<span class="amd-heading">## Interpreting the Results (Business Meaning)</span>
+<span class="amd-bullet">-</span> Each row in the compliance audit results represents a store in the specified region/category that experienced a material compliance decline between two comparable time windows.
+<span class="amd-bullet">-</span> \`compliance_curr_pct\` = the store’s average audit compliance (%) for the current analysis window.
+<span class="amd-bullet">-</span> \`compliance_prev_pct\` = the store’s average audit compliance (%) for the immediately preceding window of equal length.
+<span class="amd-bullet">-</span> Interpret the magnitude of decline as <span class="amd-bold">percentage-point drop</span>:  
+  \`compliance_drop_pts = compliance_prev_pct - compliance_curr_pct\` (report to 1 decimal).
+
+<span class="amd-heading">## Isolating and Enriching Affected Stores</span>
+<span class="amd-bullet">-</span> Treat every store in the compliance audit results as an <span class="amd-bold">affected store candidate</span> (it already meets the configured drop threshold).
+<span class="amd-bullet">-</span> Enrich each affected store using \`store_master\` attributes:
+  <span class="amd-bullet">-</span> \`district_id\` (use to cluster impacts and identify concentration by district)
+  <span class="amd-bullet">-</span> \`store_format\` (use to see whether a specific format is overrepresented)
+  <span class="amd-bullet">-</span> \`open_date\` (flag stores as “newer” if recently opened, as a potential execution-risk indicator)
+
+<span class="amd-heading">## Materiality &amp; Scope Classification</span>
+<span class="amd-bullet">-</span> Compute:
+  <span class="amd-bullet">-</span> \`affected_store_count\` = number of affected stores after exclusions (see Edge Cases).
+<span class="amd-bullet">-</span> Classify scope:
+  <span class="amd-bullet">-</span> If \`affected_store_count\` &lt; \`{min_stores_affected}\` ⇒ label <span class="amd-bold">Localized incident</span>; recommend store-level remediation focus.
+  <span class="amd-bullet">-</span> If \`affected_store_count\` ≥ \`{min_stores_affected}\` ⇒ label <span class="amd-bold">Regional issue</span>; recommend coordinated cross-store response.
+
+<span class="amd-heading">## Output Requirements (Structured and Executive-Friendly)</span>
+<span class="amd-bullet">-</span> Output the following:
+  <span class="amd-bullet">-</span> \`affected_store_count\`
+  <span class="amd-bullet">-</span> \`scope_label\` (Localized incident / Regional issue)
+  <span class="amd-bullet">-</span> \`affected_stores\` list with one entry per store including:
+    <span class="amd-bullet">-</span> \`store_id\`, \`district_id\`, \`store_format\`
+    <span class="amd-bullet">-</span> \`compliance_prev_pct\`, \`compliance_curr_pct\`
+    <span class="amd-bullet">-</span> \`compliance_drop_pts\` (1 decimal)
+<span class="amd-bullet">-</span> Add a brief roll-up highlighting:
+  <span class="amd-bullet">-</span> Which districts have the most affected stores (if any concentration is apparent)
+  <span class="amd-bullet">-</span> Whether one store format dominates the affected list (if apparent)
+
+<span class="amd-heading">## Qualitative Flags (Based on Result Values)</span>
+<span class="amd-bullet">-</span> Flag any store where \`compliance_curr_pct\` is <span class="amd-bold">critically low</span> (e.g., &lt; 70%) as <span class="amd-bold">Immediate execution risk</span>.
+<span class="amd-bullet">-</span> Flag any store where \`compliance_drop_pts\` is <span class="amd-bold">very large</span> (e.g., ≥ 15 pts) as <span class="amd-bold">Severe drop</span>.
+<span class="amd-bullet">-</span> If multiple affected stores cluster in a single \`district_id\`, call out <span class="amd-bold">district-level breakdown likely</span>.
+
+<span class="amd-heading">## Edge Cases / Data Quality Handling</span>
+<span class="amd-bullet">-</span> If the compliance audit result set is empty: report <span class="amd-bold">“No material compliance drop detected for the region/category at the provided threshold.”</span> Do not proceed further.
+<span class="amd-bullet">-</span> If any affected-store row has \`compliance_prev_pct\` or \`compliance_curr_pct\` as NULL:
+  <span class="amd-bullet">-</span> Label that store <span class="amd-bold">“Insufficient audits for period comparison”</span>
+  <span class="amd-bullet">-</span> Exclude it from \`affected_store_count\` and scope classification
+  <span class="amd-bullet">-</span> Still list it separately under a <span class="amd-bold">Data gaps</span> subsection if any exist.
+<span class="amd-bullet">-</span> If an affected store is missing from \`store_master\` enrichment: keep it in the affected list but flag <span class="amd-bold">“Missing store attributes”</span>.
+`
+  },
+  {
+    num: 2, title: "Rank Drivers", colorBg: "rgba(107,122,255,0.12)", colorFg: "#6b7aff",
+    logic: "This step separates stores where missing facings are likely caused by low inventory from stores where the shelf was not executed correctly despite available stock. The workflow then weights those store-level findings by the size of each compliance drop so the specialist gets a ranked explanation rather than a raw exception list.",
+    query: `SELECT
+  m.region_id,
+  a.store_id,
+  AVG(CASE WHEN a.audit_date BETWEEN '{start_date}' AND '{end_date}' THEN a.compliance_pct END) AS compliance_curr_pct,
+  AVG(
+    CASE
+      WHEN a.audit_date BETWEEN date_add('{start_date}', -datediff('{end_date}','{start_date}')-1)
+                           AND date_add('{start_date}', -1)
+      THEN a.compliance_pct
+    END
+  ) AS compliance_prev_pct
+FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
+JOIN pura_vida_foods_dev.merchandising.store_master m
+  ON a.store_id = m.store_id
+WHERE m.region_id = '{region_id}'
+  AND a.category_id = '{category_id}'
+GROUP BY m.region_id, a.store_id
+HAVING (compliance_prev_pct - compliance_curr_pct) >= {compliance_drop_threshold_pct};`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>region_id</th><th>store_id</th><th>compliance_curr_pct</th><th>compliance_prev_pct</th></tr></thead><tbody><tr><td>R-NE</td><td>S001</td><td>72.0</td><td>86.0</td></tr><tr><td>R-NE</td><td>S003</td><td>65.0</td><td>84.0</td></tr></tbody></table></div><div class=\"sd-result-footer\">2 rows</div></div>",
+    analysis: `<span class="amd-heading"># Attribute drivers across inventory vs execution signals</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: For affected stores, evaluates inventory stress (low on-hand ratio) and audit issue intensity (missing facings, wrong placements, promo missing) to classify likely driver buckets and prepare inputs for driver ranking.
+
+<span class="amd-heading">## Interpret the Result Columns (Business Meaning)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">compliance_curr_pct / compliance_prev_pct</span>: average store compliance score for the current vs prior comparable period. The <span class="amd-bold">gap (prev − curr)</span> is the size of the decline that triggered inclusion.
+<span class="amd-bullet">-</span> <span class="amd-bold">store_inventory_daily fields</span>:
+  <span class="amd-bullet">-</span> <span class="amd-bold">on_hand_units</span>: shelf-available inventory signal (0–1 units implies practical stockout/near-stockout risk).
+  <span class="amd-bullet">-</span> <span class="amd-bold">on_order_units</span>: replenishment in the pipeline; use as a “recovery likely” vs “no replenishment” indicator when on-hand is low.
+  <span class="amd-bullet">-</span> <span class="amd-bold">dc_lead_time_days</span>: expected days to receive inventory; longer lead times increase the likelihood that low on-hand persists.
+
+<span class="amd-heading">## Build Store-Level Inventory Signals From the Inventory Rows</span>
+For each <span class="amd-bold">store_id</span> (within the provided window):
+<span class="amd-bullet">-</span> <span class="amd-bold">sku_days</span> = count of inventory rows for that store (each row is a sku-day observation).
+<span class="amd-bullet">-</span> <span class="amd-bold">low_on_hand_ratio</span> = share of those rows where <span class="amd-bold">on_hand_units ≤ 1</span> (0–1 scale).
+<span class="amd-bullet">-</span> When <span class="amd-bold">on_hand_units ≤ 1</span>, compute two contextual sub-signals:
+  <span class="amd-bullet">-</span> <span class="amd-bold">pipeline_coverage_ratio</span> = share of low-on-hand rows where <span class="amd-bold">on_order_units &gt; 0</span> (replenishment is coming).
+  <span class="amd-bullet">-</span> <span class="amd-bold">long_lead_risk_ratio</span> = share of low-on-hand rows where <span class="amd-bold">dc_lead_time_days ≥ 7</span> (use 7 as the qualitative “long lead time” threshold unless the data clearly indicates a different norm).
+
+<span class="amd-heading">## Attribute Drivers: Inventory vs Execution (Using What’s Present in the Prompt)</span>
+You will have:
+<span class="amd-bullet">-</span> A list of stores with meaningful compliance drops (from the audits result set).
+<span class="amd-bullet">-</span> Inventory observations for stores/SKUs/days (from the inventory result set).
+
+For each store in the compliance-drop list:
+1. <span class="amd-bold">If inventory data is missing for that store in the inventory rows</span> (no rows found) or <span class="amd-bold">sku_days = 0</span>:
+   <span class="amd-bullet">-</span> Set driver_bucket = <span class="amd-bold">INSUFFICIENT_INVENTORY_DATA</span>
+   <span class="amd-bullet">-</span> Provide evidence noting missing/insufficient inventory observations.
+2. Otherwise, classify into exactly <span class="amd-bold">one</span> primary bucket:
+   <span class="amd-bullet">-</span> <span class="amd-bold">INVENTORY_DRIVEN</span> if <span class="amd-bold">low_on_hand_ratio ≥ 0.60</span>
+     <span class="amd-bullet">-</span> Strengthen the narrative if <span class="amd-bold">long_lead_risk_ratio</span> is high (≥ 0.40) or <span class="amd-bold">pipeline_coverage_ratio</span> is low (≤ 0.30).
+   <span class="amd-bullet">-</span> <span class="amd-bold">EXECUTION_DRIVEN</span> if <span class="amd-bold">low_on_hand_ratio ≤ 0.40</span>
+     <span class="amd-bullet">-</span> Interpret this as “inventory usually available; compliance drop more consistent with in-store execution issues,” but do not invent specific audit defect types not present in the data.
+   <span class="amd-bullet">-</span> <span class="amd-bold">MIXED</span> if <span class="amd-bold">0.41 ≤ low_on_hand_ratio ≤ 0.59</span>
+     <span class="amd-bullet">-</span> Treat as both inventory pressure and execution inconsistency; use pipeline/lead-time sub-signals to indicate which side is slightly more likely.
+
+<span class="amd-heading">## Compliance-Drop Context to Include</span>
+For every store you classify, include the compliance context as evidence:
+<span class="amd-bullet">-</span> Report <span class="amd-bold">compliance_prev_pct</span>, <span class="amd-bold">compliance_curr_pct</span>, and the <span class="amd-bold">drop = (prev − curr)</span>.
+<span class="amd-bullet">-</span> If <span class="amd-bold">compliance_curr_pct</span> or <span class="amd-bold">compliance_prev_pct</span> is NULL, flag <span class="amd-bold">INSUFFICIENT_AUDIT_DATA</span> and avoid strong driver claims (still compute inventory signals if available, but label conclusions as tentative).
+
+<span class="amd-heading">## Output Format (Audience: Regional Ops Leadership, Executive-Readable)</span>
+Return a concise table (or structured bullets) with one row per store:
+<span class="amd-bullet">-</span> <span class="amd-bold">store_id</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">driver_bucket</span> (INVENTORY_DRIVEN / EXECUTION_DRIVEN / MIXED / INSUFFICIENT_INVENTORY_DATA)
+<span class="amd-bullet">-</span> <span class="amd-bold">compliance_prev_pct → compliance_curr_pct (drop)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">key inventory evidence</span>: \`low_on_hand_ratio\`, \`sku_days\`, plus 1–2 of (\`pipeline_coverage_ratio\`, \`long_lead_risk_ratio\`) when available
+<span class="amd-bullet">-</span> <span class="amd-bold">short interpretation</span> (one sentence max) tying the signals to the driver bucket
+
+<span class="amd-heading">## Edge Cases &amp; Quality Flags</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Empty compliance-drop list</span>: state that no stores met the compliance-drop condition in the provided results; do not proceed with driver attribution.
+<span class="amd-bullet">-</span> <span class="amd-bold">Inventory shows persistent zeros</span>: if <span class="amd-bold">low_on_hand_ratio ≥ 0.80</span>, explicitly call out “near-continuous stockout signal.”
+<span class="amd-bullet">-</span> <span class="amd-bold">Replenishment paradox</span>: if <span class="amd-bold">low_on_hand_ratio ≥ 0.60</span> AND <span class="amd-bold">pipeline_coverage_ratio ≥ 0.70</span>, flag <span class="amd-bold">REPLENISHMENT_IN_TRANSIT</span> (inventory-driven, but recovery likely).
+<span class="amd-bullet">-</span> <span class="amd-bold">No replenishment</span>: if <span class="amd-bold">low_on_hand_ratio ≥ 0.60</span> AND <span class="amd-bold">pipeline_coverage_ratio ≤ 0.20</span>, flag <span class="amd-bold">NO_PIPELINE</span> (inventory-driven, higher urgency).
+<span class="amd-bullet">-</span> <span class="amd-bold">Dominant driver statement</span>: if all classifiable stores fall into the same primary bucket (excluding insufficient-data), explicitly state that the compliance decline appears dominated by that driver type.
+`
+  },
+  {
+    num: 3, title: "Action List", colorBg: "rgba(124,92,252,0.12)", colorFg: "#7c5cfc",
+    logic: "This step converts the analysis into a usable operating artifact: what changed, why it likely changed, and which stores should act first. It handles the assembly, prioritization, and formatting work so the specialist can review edge cases and decide whether to approve reface, mini-reset, exception handling, or replenishment escalation.",
+    query: `SELECT
+  m.region_id,
+  a.store_id,
+  AVG(CASE WHEN a.audit_date BETWEEN '{start_date}' AND '{end_date}' THEN a.compliance_pct END) AS compliance_curr_pct,
+  AVG(
+    CASE
+      WHEN a.audit_date BETWEEN date_add('{start_date}', -datediff('{end_date}','{start_date}')-1)
+                           AND date_add('{start_date}', -1)
+      THEN a.compliance_pct
+    END
+  ) AS compliance_prev_pct
+FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
+JOIN pura_vida_foods_dev.merchandising.store_master m
+  ON a.store_id = m.store_id
+WHERE m.region_id = '{region_id}'
+  AND a.category_id = '{category_id}'
+GROUP BY m.region_id, a.store_id
+HAVING (compliance_prev_pct - compliance_curr_pct) >= {compliance_drop_threshold_pct};`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>region_id</th><th>store_id</th><th>compliance_curr_pct</th><th>compliance_prev_pct</th></tr></thead><tbody><tr><td>R-NE</td><td>S001</td><td>72.0</td><td>86.0</td></tr><tr><td>R-NE</td><td>S003</td><td>65.0</td><td>84.0</td></tr></tbody></table></div><div class=\"sd-result-footer\">2 rows</div></div>",
+    analysis: `<span class="amd-heading"># Generate driver brief and prioritized store action list</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Creates a regional briefing narrative and a prioritized store action list by combining compliance drop magnitude with inventory/execution signals to recommend the most appropriate next action per store.
+
+<span class="amd-heading">## How to Interpret the Result Columns (Business Meaning)</span>
+Use the provided datasets to explain *which stores in the region materially deteriorated in compliance* for the category and what operational signals likely contributed.
+
+<span class="amd-bullet">-</span> <span class="amd-bold">\`compliance_curr_pct\`</span>: average compliance performance during the current period. Lower values indicate weaker in-store execution vs standards.
+<span class="amd-bullet">-</span> <span class="amd-bold">\`compliance_prev_pct\`</span>: average compliance performance during the immediately preceding comparable period. Use as the baseline.
+<span class="amd-bullet">-</span> <span class="amd-bold">Implied compliance drop (percentage points)</span>: \`compliance_prev_pct - compliance_curr_pct\`. Treat this as the core severity metric (bigger drop = more urgent).
+<span class="amd-bullet">-</span> <span class="amd-bold">Store context from \`store_master\`</span>:
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`district_id\`</span>: use to detect clustering (one district driving most issues vs broad-based).
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`store_format\`</span>: use to suggest format-relevant actions (e.g., urban backroom constraints may increase OOS risk).
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`open_date\`</span>: flag newer stores (e.g., opened within ~18 months) as higher coaching/support need.
+<span class="amd-bullet">-</span> <span class="amd-bold">Inventory signals from \`store_inventory_daily\`</span> (category-specific, within the period):
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`on_hand_units\`</span>: 0 indicates likely out-of-stock for that SKU on that day.
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`on_order_units\`</span>: &gt;0 suggests replenishment is in motion; 0 with 0 on-hand suggests a true replenishment gap.
+  <span class="amd-bullet">-</span> <span class="amd-bold">\`dc_lead_time_days\`</span>: higher lead times increase risk that fixes won’t land quickly; use to set expectation on recovery timing.
+  <span class="amd-bullet">-</span> Build store-level interpretation such as “inventory-constrained” when repeated/meaningful zero on-hand across SKUs/days appears.
+
+<span class="amd-heading">## Synthesis Logic Across Data Sources (Compliance + Store Context + Inventory)</span>
+For each affected store:
+1. <span class="amd-bold">Confirm store metadata</span> by matching \`store_id\` to \`store_master\`; include \`district_id\` and \`store_format\` in the narrative and tables.
+2. <span class="amd-bold">Summarize inventory health</span> for that store using the inventory rows available in the prompt:
+   <span class="amd-bullet">-</span> Highlight <span class="amd-bold">SKUs with \`on_hand_units = 0\`</span> and whether they have <span class="amd-bold">\`on_order_units &gt; 0\`</span> (inbound) or <span class="amd-bold">\`on_order_units = 0\`</span> (gap).
+   <span class="amd-bullet">-</span> If multiple snapshot dates exist, call out whether zeros are <span class="amd-bold">isolated</span> (one day) or <span class="amd-bold">persistent</span> (multiple days).
+3. <span class="amd-bold">Assign a likely primary driver</span> per store using these heuristics:
+   <span class="amd-bullet">-</span> <span class="amd-bold">Execution-led (reface/reset/coaching)</span> if compliance drop is large but inventory shows mostly <span class="amd-bold">non-zero on-hand</span> or <span class="amd-bold">on-order present</span> (product likely available but not compliant).
+   <span class="amd-bullet">-</span> <span class="amd-bold">Replenishment-led (OOS/order gap escalation)</span> if inventory shows <span class="amd-bold">repeated zero on-hand</span> across key SKUs and <span class="amd-bold">on-order is also zero</span>.
+   <span class="amd-bullet">-</span> <span class="amd-bold">Mixed</span> if both execution issues (big compliance drop) and inventory stress (material OOS signals) are present; recommend parallel actions.
+
+<span class="amd-heading">## Prioritization (Store Ranking and What “Urgent” Means)</span>
+Rank stores for action using:
+1. <span class="amd-bold">Primary sort:</span> largest implied compliance drop (percentage points) first.
+2. <span class="amd-bold">Secondary urgency modifiers (apply as flags, not as SQL-like calculations):</span>
+   <span class="amd-bullet">-</span> <span class="amd-bold">Critical</span> if current compliance is very low (e.g., <span class="amd-bold">&lt;70%</span>) *or* the drop is very large (e.g., <span class="amd-bold">≥15 pts</span>).
+   <span class="amd-bullet">-</span> <span class="amd-bold">Inventory risk</span> if the store shows multiple \`on_hand_units = 0\` instances and/or long \`dc_lead_time_days\` (e.g., <span class="amd-bold">≥7 days</span>).
+   <span class="amd-bullet">-</span> <span class="amd-bold">Quick win</span> if inventory risk is low (little evidence of OOS) suggesting execution fixes can restore compliance fast.
+3. Output a <span class="amd-bold">prioritized store action list capped at 10 stores</span> (or fewer if fewer exist), showing the top issues and next steps.
+
+<span class="amd-heading">## Action Playbook Output Rules (Turn Drivers into Tasks)</span>
+For each prioritized store, output:
+<span class="amd-bullet">-</span> <span class="amd-bold">Recommended action</span> (one of): \`TARGETED_REFACE_WITH_PHOTO\`, \`MINI_RESET\`, \`ESCALATE_REPLENISHMENT\`, or \`MIXED_EXECUTION_AND_REPLENISHMENT\`.
+<span class="amd-bullet">-</span> <span class="amd-bold">Owner role:</span>
+  <span class="amd-bullet">-</span> \`Store Manager\` for \`TARGETED_REFACE_WITH_PHOTO\` and \`MINI_RESET\`
+  <span class="amd-bullet">-</span> \`Replenishment/Inventory Ops\` for \`ESCALATE_REPLENISHMENT\`
+  <span class="amd-bullet">-</span> For \`MIXED...\`, list both owners with clear split responsibilities
+<span class="amd-bullet">-</span> <span class="amd-bold">Expected time:</span>
+  <span class="amd-bullet">-</span> \`TARGETED_REFACE_WITH_PHOTO\`: 30–45 minutes
+  <span class="amd-bullet">-</span> \`MINI_RESET\`: 2–4 hours
+  <span class="amd-bullet">-</span> \`ESCALATE_REPLENISHMENT\`: same-day exception + follow-up in 48 hours
+<span class="amd-bullet">-</span> <span class="amd-bold">Required evidence:</span>
+  <span class="amd-bullet">-</span> Execution actions: before/after photos + note of where compliance failed (e.g., placement, signage, facings)
+  <span class="amd-bullet">-</span> Replenishment escalation: SKU list + on-hand/on-order details (from system) and expected arrival timing if on-order exists
+<span class="amd-bullet">-</span> <span class="amd-bold">Store-specific evidence callouts</span>: cite 1–3 concrete inventory lines (SKU examples) when inventory is part of the driver; otherwise cite compliance levels and district/format context.
+
+<span class="amd-heading">## Driver Brief Narrative (CEO-Level, Executive-Ready)</span>
+Produce exactly three short sections:
+
+1) <span class="amd-bold">What happened</span>
+<span class="amd-bullet">-</span> Count how many stores are in the affected list.
+<span class="amd-bullet">-</span> Provide the <span class="amd-bold">range</span> of implied compliance drops and highlight the worst 1–2 stores.
+<span class="amd-bullet">-</span> State whether the issue looks <span class="amd-bold">localized or broad</span> by noting if affected stores cluster in one \`district_id\` and comparing the affected-store count to \`{min_stores_affected}\` (localized if below; broad if at/above).
+
+2) <span class="amd-bold">Why it happened</span>
+<span class="amd-bullet">-</span> Summarize the <span class="amd-bold">mix of likely drivers</span> (execution-led vs replenishment-led vs mixed) as counts and rough share.
+<span class="amd-bullet">-</span> Reference 1–2 example stores with their <span class="amd-bold">current/previous compliance</span> and <span class="amd-bold">a key inventory proof point</span> (if applicable).
+
+3) <span class="amd-bold">What to do next</span>
+<span class="amd-bullet">-</span> Name the <span class="amd-bold">top 3 actions</span> by urgency and prevalence (e.g., “immediate refacing in top drops,” “replenishment exceptions for true order gaps,” “district coaching for repeated non-compliance”).
+<span class="amd-bullet">-</span> Include the <span class="amd-bold">prioritized store action table</span> (max 10 rows).
+
+<span class="amd-heading">## Edge Cases and Data Quality Flags</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">No affected stores present</span>: Clearly state that no stores exceeded the configured drop threshold; do not output a store action table.
+<span class="amd-bullet">-</span> <span class="amd-bold">Missing store metadata</span> (store not found in \`store_master\`): still list the store, but flag “store attributes missing” and omit district/format conclusions for it.
+<span class="amd-bullet">-</span> <span class="amd-bold">No inventory rows for a store in the period</span>: default driver to <span class="amd-bold">execution-led</span> but flag “inventory data unavailable for this store/category window.”
+<span class="amd-bullet">-</span> <span class="amd-bold">Inventory contradictions</span> to flag explicitly:
+  <span class="amd-bullet">-</span> \`on_hand_units = 0\` and \`on_order_units &gt; 0\`: likely temporary OOS awaiting delivery; set expectation based on \`dc_lead_time_days\`.
+  <span class="amd-bullet">-</span> \`on_hand_units = 0\` and \`on_order_units = 0\`: likely replenishment/order gap; escalate.
+<span class="amd-bullet">-</span> <span class="amd-bold">Non-sensical compliance values</span> (e.g., nulls or outside 0–100): flag as “audit data quality issue” and avoid overconfident causal claims.
+`
+  }
+];
+
+      let activeStep = null;
+
+      function showStepDetail(idx) {
+        const s = STEPS[idx];
+        if (!s) return;
+        document.querySelectorAll('.agent-step').forEach((el, i) => {
+          el.classList.toggle('step-active', i === idx);
+        });
+        document.getElementById('sd-num').textContent   = s.num;
+        document.getElementById('sd-num').style.background = s.colorBg;
+        document.getElementById('sd-num').style.color      = s.colorFg;
+        document.getElementById('sd-title').textContent = s.title;
+        document.getElementById('sd-logic').innerHTML    = s.logic;
+        document.getElementById('sd-query').textContent  = s.query;
+        document.getElementById('sd-output').innerHTML = s.output;
+        document.getElementById('sd-analysis').innerHTML = s.analysis;
+        const panel = document.getElementById('step-detail-panel');
+        panel.classList.add('visible');
+        document.getElementById('step-click-hint').style.display = 'none';
+        activeStep = idx;
+      }
+
+      function closeStepDetail() {
+        document.getElementById('step-detail-panel').classList.remove('visible');
+        document.getElementById('step-click-hint').style.display = '';
+        document.querySelectorAll('.agent-step').forEach(el => el.classList.remove('step-active'));
+        activeStep = null;
+      }
+
+      // ── Playground data ───────────────────────────────────────────────────
+      const EXAMPLES = [
+  {
+    prompt: "For region R-NE from 2026-03-01 to 2026-03-31, what are the ranked drivers of the planogram compliance drop for category BEVERAGES, and what store-level actions should we take next given a 5 point compliance drop threshold and 2 affected stores?",
+    responseHtml: `<div class="pg-narrative-summary">Region R-NE compliance deterioration is concentrated in 2 affected stores, with the largest specific deviations at S003 (-19.0 pts, 84.0% to 65.0%) and S001 (-14.0 pts, 86.0% to 72.0%).</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Inventory-driven noncompliance</span>
+        — attributed <span class="pg-narrative-item-pct">42%</span>
+        of delayed orders. S001 shows a low_on_hand_ratio of 0.83 with 8 missing facings, indicating missing shelf execution is largely constrained by low available inventory.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Execution drift</span>
+        — attributed <span class="pg-narrative-item-pct">58%</span>
+        of delayed orders. S003 has the larger weighted drop at 19.0 points, with low_on_hand_ratio of 0.33 but 10 missing facings and 4 wrong placements, indicating shelf execution issues despite some stock availability.</div>
+      </div><div class="pg-narrative-action">&#9658; Prioritize S003 for TARGETED_REFACE_WITH_PHOTO and S001 for ESCALATE_REPLENISHMENT, then review whether the issue remains localized or merits district escalation after task completion.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Regional review note: In March, the BEVERAGES compliance decline in R-NE is driven by two distinct causes. S003 requires execution correction with photo confirmation, while S001 should be handled through replenishment escalation because inventory constraints are the primary signal.
+      </div>`
+  },
+  {
+    prompt: "Explain the planogram compliance drop for store S003 in region R-NE for category BEVERAGES from 2026-03-01 to 2026-03-31, using a 5 point drop threshold.",
+    responseHtml: `<div class="pg-narrative-summary">Store S003 fell 19.0 points in compliance, from <span class="pg-narrative-normal">84.0%</span> in the prior period to <span class="pg-narrative-deviation">65.0%</span> in the current period, which is well beyond the 5 point trigger.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Execution drift</span>
+        — attributed <span class="pg-narrative-item-pct">70%</span>
+        of delayed orders. S003 recorded 4 wrong placements and 10 missing facings, which is the strongest direct signal of shelf execution failure.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Limited inventory pressure</span>
+        — attributed <span class="pg-narrative-item-pct">30%</span>
+        of delayed orders. The low_on_hand_ratio is 0.33, so inventory stress is present but not high enough to explain most of the decline on its own.</div>
+      </div><div class="pg-narrative-action">&#9658; Issue a TARGETED_REFACE_WITH_PHOTO task for S003 immediately, with follow-up verification on the affected BEVERAGES section before authorizing a broader reset.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Store communication template: Your latest BEVERAGES audit dropped from 84.0% to 65.0%. Please complete a targeted reface of the affected section, correct wrong placements, and submit photo confirmation for review.
+      </div>`
+  },
+  {
+    prompt: "Explain the planogram compliance drop for store S001 in region R-NE for category BEVERAGES from 2026-03-01 to 2026-03-31, using a 10 point drop threshold.",
+    responseHtml: `<div class="pg-narrative-summary">Store S001 declined 14.0 points in compliance, from <span class="pg-narrative-normal">86.0%</span> to <span class="pg-narrative-deviation">72.0%</span>, exceeding the 10 point threshold and showing an inventory-constrained pattern.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Inventory-driven noncompliance</span>
+        — attributed <span class="pg-narrative-item-pct">75%</span>
+        of delayed orders. S001 has a low_on_hand_ratio of 0.83, with SKU10 at 0 units, SKU11 at 1 unit, and SKU12 at 0 units across the current period snapshots.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Shelf execution issues</span>
+        — attributed <span class="pg-narrative-item-pct">25%</span>
+        of delayed orders. The store also shows 8 missing facings and 2 wrong placements, but the low stock signal is the stronger explanatory factor.</div>
+      </div><div class="pg-narrative-action">&#9658; Raise an ESCALATE_REPLENISHMENT action for S001 first and defer labor-heavy reset work until BEVERAGES inventory availability improves.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Leadership note: S001's compliance decline appears primarily inventory-driven rather than execution-driven. Recommend replenishment escalation first, then reassess shelf compliance after stock position recovers.
+      </div>`
+  }
+];
+
+      let pgActive = false;
+
+      let _pgTypewriteTimer = null;
+
+      function _pgTypewrite(el, fullHtml, onDone) {
+        // Extract plain text from the HTML for character animation
+        const tmp = document.createElement('div');
+        tmp.innerHTML = fullHtml;
+        const plainText = tmp.textContent || tmp.innerText || '';
+        let i = 0;
+        el.textContent = '';
+        _pgTypewriteTimer = setInterval(() => {
+          el.textContent += plainText[i];
+          i++;
+          if (i >= plainText.length) {
+            clearInterval(_pgTypewriteTimer);
+            _pgTypewriteTimer = null;
+            // Restore full HTML (with highlight spans etc.) after typing
+            el.innerHTML = fullHtml;
+            if (onDone) onDone();
+          }
+        }, 26);
+      }
+
+      function runQuery(idx) {
+        const ex = EXAMPLES[idx];
+        if (!ex) return;
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = true;
+        document.getElementById('pg-examples').style.display = 'none';
+        const msgs = document.getElementById('pg-messages');
+        msgs.style.display = 'flex';
+        msgs.innerHTML = `
+          <div class="pg-message">
+            <div class="pg-message-header"><div class="pg-message-icon user">U</div> You</div>
+            <div class="pg-message-bubble user">${ex.prompt}</div>
+          </div>
+          <div class="pg-message" id="pg-loading">
+            <div class="pg-status-loading"><div class="pg-spinner"></div> Running workflow&hellip;</div>
+          </div>`;
+        document.getElementById('pg-reset-btn').style.display = 'inline';
+
+        setTimeout(() => {
+          const loading = document.getElementById('pg-loading');
+          if (loading) loading.remove();
+
+          // Build the agent message container
+          const agentMsg = document.createElement('div');
+          agentMsg.className = 'pg-message';
+          agentMsg.innerHTML = `
+            <div class="pg-message-header"><div class="pg-message-icon agent">A</div> Agent</div>
+            <div class="pg-message-bubble agent" id="pg-resp-bubble"></div>`;
+          msgs.appendChild(agentMsg);
+
+          const bubble = document.getElementById('pg-resp-bubble');
+
+          // Parse response HTML into child blocks
+          const tmp = document.createElement('div');
+          tmp.innerHTML = ex.responseHtml;
+          const blocks = Array.from(tmp.children);
+
+          if (!blocks.length) {
+            bubble.innerHTML = ex.responseHtml;
+            return;
+          }
+
+          // First block: typewrite plain-text, then restore HTML
+          const firstEl = blocks[0].cloneNode(true);
+          bubble.appendChild(firstEl);
+          _pgTypewrite(firstEl, blocks[0].innerHTML, () => {
+            // Fade in remaining blocks with stagger
+            blocks.slice(1).forEach((block, i) => {
+              const el = block.cloneNode(true);
+              el.style.opacity = '0';
+              el.style.transition = 'opacity 0.35s ease';
+              bubble.appendChild(el);
+              setTimeout(() => { el.style.opacity = '1'; }, 160 * (i + 1));
+            });
+          });
+        }, 900);
+      }
+
+      function resetPlayground() {
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = false;
+        document.getElementById('pg-examples').style.display = '';
+        document.getElementById('pg-messages').style.display = 'none';
+        document.getElementById('pg-messages').innerHTML = '';
+        document.getElementById('pg-reset-btn').style.display = 'none';
+      }
+
+      // AOS init
+      AOS.init({ duration: 600, once: true });
+    </script>
+  </body>
+</html>

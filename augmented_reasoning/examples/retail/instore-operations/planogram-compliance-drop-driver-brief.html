@@ -473,7 +473,7 @@
                     <strong>Role in this workflow:</strong> This table provides the observed compliance outcome for each store and category, including the issue counts that show how the shelf failed. It is the primary signal for detecting where compliance materially declined and for distinguishing missing facings from wrong placement behavior.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_compliance_audits (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_store_dev.merchandising.store_compliance_audits (
   audit_date <span class="code-type">DATE</span>,
   store_id <span class="code-type">STRING</span>,
   category_id <span class="code-type">STRING</span>,
@@ -494,8 +494,8 @@
       <span class="code-keyword">THEN</span> a.compliance_pct
     <span class="code-keyword">END</span>
   ) <span class="code-keyword">AS</span> compliance_prev_pct
-<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_compliance_audits a
-<span class="code-keyword">JOIN</span> pura_vida_foods_dev.merchandising.store_master m
+<span class="code-keyword">FROM</span> retail_store_dev.merchandising.store_compliance_audits a
+<span class="code-keyword">JOIN</span> retail_store_dev.merchandising.store_master m
   <span class="code-keyword">ON</span> a.store_id = m.store_id
 <span class="code-keyword">WHERE</span> m.region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>
   <span class="code-keyword">AND</span> a.category_id = <span class="code-<span class="code-type">string</span>">'{category_id}'</span>
@@ -510,7 +510,7 @@
                     <strong>Role in this workflow:</strong> This table adds the organizational and location context needed to group stores into the requested region or district. It is used to scope the analysis correctly and determine whether the compliance issue is isolated or broad enough to support a regional remediation discussion.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_master (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_store_dev.merchandising.store_master (
   store_id <span class="code-type">STRING</span>,
   region_id <span class="code-type">STRING</span>,
   district_id <span class="code-type">STRING</span>,
@@ -519,7 +519,7 @@
 );
 
 <span class="code-keyword">SELECT</span> store_id, region_id, district_id, store_format, open_date
-<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_master
+<span class="code-keyword">FROM</span> retail_store_dev.merchandising.store_master
 <span class="code-keyword">WHERE</span> region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>;</code></pre>
               </div>
               <div class="tab-pane fade " id="panel-store_inventory_daily" role="tabpanel">
@@ -530,7 +530,7 @@
                     <strong>Role in this workflow:</strong> This table shows whether stores had enough inventory to support the planogram during the analysis window. It is the key input for separating inventory-driven noncompliance from execution-driven issues, which prevents stores from being blamed for shelf gaps caused by low on-hand stock.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.merchandising.store_inventory_daily (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_store_dev.merchandising.store_inventory_daily (
   snapshot_date <span class="code-type">DATE</span>,
   store_id <span class="code-type">STRING</span>,
   sku_id <span class="code-type">STRING</span>,
@@ -541,7 +541,7 @@
 );
 
 <span class="code-keyword">SELECT</span> snapshot_date, store_id, sku_id, category_id, on_hand_units, on_order_units, dc_lead_time_days
-<span class="code-keyword">FROM</span> pura_vida_foods_dev.merchandising.store_inventory_daily
+<span class="code-keyword">FROM</span> retail_store_dev.merchandising.store_inventory_daily
 <span class="code-keyword">WHERE</span> category_id = <span class="code-<span class="code-type">string</span>">'{category_id}'</span>
   <span class="code-keyword">AND</span> snapshot_date <span class="code-keyword">BETWEEN</span> <span class="code-<span class="code-type">string</span>">'{start_date}'</span> <span class="code-keyword">AND</span> <span class="code-<span class="code-type">string</span>">'{end_date}'</span>;</code></pre>
               </div>
@@ -693,8 +693,8 @@
       THEN a.compliance_pct
     END
   ) AS compliance_prev_pct
-FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
-JOIN pura_vida_foods_dev.merchandising.store_master m
+FROM retail_store_dev.merchandising.store_compliance_audits a
+JOIN retail_store_dev.merchandising.store_master m
   ON a.store_id = m.store_id
 WHERE m.region_id = '{region_id}'
   AND a.category_id = '{category_id}'
@@ -766,8 +766,8 @@ HAVING (compliance_prev_pct - compliance_curr_pct) >= {compliance_drop_threshold
       THEN a.compliance_pct
     END
   ) AS compliance_prev_pct
-FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
-JOIN pura_vida_foods_dev.merchandising.store_master m
+FROM retail_store_dev.merchandising.store_compliance_audits a
+JOIN retail_store_dev.merchandising.store_master m
   ON a.store_id = m.store_id
 WHERE m.region_id = '{region_id}'
   AND a.category_id = '{category_id}'
@@ -845,8 +845,8 @@ Return a concise table (or structured bullets) with one row per store:
       THEN a.compliance_pct
     END
   ) AS compliance_prev_pct
-FROM pura_vida_foods_dev.merchandising.store_compliance_audits a
-JOIN pura_vida_foods_dev.merchandising.store_master m
+FROM retail_store_dev.merchandising.store_compliance_audits a
+JOIN retail_store_dev.merchandising.store_master m
   ON a.store_id = m.store_id
 WHERE m.region_id = '{region_id}'
   AND a.category_id = '{category_id}'

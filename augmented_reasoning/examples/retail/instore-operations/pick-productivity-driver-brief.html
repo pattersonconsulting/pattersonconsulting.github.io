@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <title>Pick Productivity Driver Brief | Decision Intelligence Demo | Patterson Consulting</title>
+    <meta name="description" content="Fulfillment and pickup coordinators often spend too long pulling pick-rate, exception, and order-mix data before they can decide how to recover a slowing shift. This Decision Intelligence workflow assembles a ranked driver brief with immediate next-shift actions for curbside fulfillment operations.">
+    <meta name="keywords" content="retail grocery, omnichannel fulfillment, fulfillment coordinator, curbside pickup, pick productivity, exception analysis, order mix analysis, zone performance, labor rebalancing, shift briefing">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Pick Productivity Driver Brief | Decision Intelligence Demo | Patterson Consulting" />
+    <meta property="og:description" content="When pick productivity drops, coordinators need to know whether the problem is routing, exceptions, or order complexity before backlog and missed pickup promises build. This workflow produces a ranked driver brief and action-ready shift handoff for the next few hours." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/ar_example_header_0.jpg"/>
+
+    <!-- KWF traceability -->
+    <meta name="kwf:workspace"      content="home-depot">
+    <meta name="kwf:candidate-path" content="cognitive_labor_workspaces/home-depot/cognitive_labor_candidates/fulfillment-store-operations/fulfillment-pickup-coordinator-bopiscurbside-lead/candidate_002_pick-productivity-driver-brief.md">
+    <meta name="kwf:agent-config"   content="instore-operations_fulfillment-store-operations_fulfillment-pickup-coordinator-bopiscurbside-lead_candidate-002-pick-productivity-driver-brief">
+    <meta name="kwf:fa-slug"        content="instore-operations">
+    <meta name="kwf:division-slug"  content="fulfillment-store-operations">
+    <meta name="kwf:role-slug"      content="fulfillment-pickup-coordinator-bopiscurbside-lead">
+    <meta name="kwf:generated-at"   content="2026-04-22T17:01:04.906468+00:00">
+
+    <link rel='manifest' href='../../../../alpha_manifest.json'>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <script src="../../../../assets/js/theme-switcher.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
+
+    <link rel="stylesheet" media="screen" href="../../../../assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="../../../../assets/icons/around-icons.min.css">
+    <link rel="stylesheet" media="screen" href="../../../../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading { position:fixed; top:0; right:0; bottom:0; left:0; width:100%; height:100%; transition:all .4s .2s ease-in-out; background-color:#fff; opacity:0; visibility:hidden; z-index:9999; }
+      [data-bs-theme="dark"] .page-loading { background-color:#121519; }
+      .page-loading.active { opacity:1; visibility:visible; }
+      .page-loading-inner { position:absolute; top:50%; left:0; width:100%; text-align:center; transform:translateY(-50%); transition:opacity .2s ease-in-out; opacity:0; }
+      .page-loading.active > .page-loading-inner { opacity:1; }
+      .page-loading-inner > span { display:block; font-family:"Inter",sans-serif; font-size:1rem; font-weight:normal; color:#6f788b; }
+      .page-spinner { display:inline-block; width:2.75rem; height:2.75rem; margin-bottom:.75rem; vertical-align:text-bottom; background-color:#d7dde2; border-radius:50%; opacity:0; animation:spinner .75s linear infinite; }
+      @keyframes spinner { 0% { transform:scale(0); } 50% { opacity:1; transform:none; } }
+      .layer-bar-track { height:28px; border-radius:6px; overflow:hidden; display:flex; margin:0.4rem 0; }
+      .layer-bar-exec { background-color:#adb5bd; }
+      .layer-bar-judgment { background-color:#ff9500; }
+      .layer-bar-strategic { background-color:#198754; }
+      .layer-legend-dot { display:inline-block; width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+      .result-metric { border-left:4px solid var(--bs-primary); padding-left:1.25rem; }
+      .result-metric .metric-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#6f788b; margin-bottom:0.25rem; }
+      .result-metric .metric-value { font-size:2.2rem; font-weight:800; line-height:1.1; color:#121519; }
+      .result-metric .metric-sub { font-size:0.875rem; color:#6f788b; margin-top:0.2rem; }
+      .result-metric.positive .metric-value { color:#198754; }
+      .result-metric.highlight .metric-value { color:var(--bs-primary); }
+      .agent-pipeline { display:flex; gap:0; align-items:stretch; margin:0; }
+      .agent-step { flex:1; text-align:center; position:relative; padding:1.25rem 0.75rem; display:flex; flex-direction:column; align-items:center; cursor:pointer; border-radius:0.5rem; transition:background 0.15s, box-shadow 0.15s; }
+      .agent-step:hover { background:rgba(79,127,255,0.07); }
+      .agent-step.step-active { background:rgba(79,127,255,0.1); box-shadow:inset 0 0 0 2px rgba(79,127,255,0.5); }
+      .agent-step:not(:last-child)::after { content:'›'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:1.5rem; color:#adb5bd; z-index:1; line-height:1; pointer-events:none; }
+      .agent-step-num { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; margin-bottom:0.6rem; flex-shrink:0; transition:transform 0.15s; }
+      .agent-step.step-active .agent-step-num { transform:scale(1.1); }
+      .agent-step-title { font-size:0.82rem; font-weight:700; margin-bottom:0.35rem; }
+      .agent-step-body { font-size:0.75rem; color:#6f788b; line-height:1.4; }
+      .step-click-hint { font-size:0.7rem; color:#adb5bd; font-style:italic; text-align:center; margin-top:0.5rem; }
+      .step-detail-panel { border-top:1px solid #e5e7eb; padding:1.5rem 1.5rem 1.25rem; display:none; }
+      .step-detail-panel.visible { display:block; }
+      .step-detail-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; }
+      .step-detail-num { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; }
+      .step-detail-title { font-size:1rem; font-weight:700; color:#111827; }
+      .step-detail-close { margin-left:auto; background:none; border:none; padding:0.25rem 0.5rem; color:#9ca3af; cursor:pointer; font-size:0.8rem; border-radius:4px; transition:color 0.12s,background 0.12s; }
+      .step-detail-close:hover { color:#374151; background:#f3f4f6; }
+      .step-detail-sections { display:flex; flex-direction:column; gap:1.25rem; }
+      .step-detail-top-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      @media (max-width:768px) { .step-detail-top-row { grid-template-columns:1fr; } }
+      .step-detail-section-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#6b7280; margin-bottom:0.5rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.35rem; }
+      .step-detail-logic { font-size:0.82rem; color:#374151; line-height:1.6; }
+      .step-detail-output { overflow-x:auto; }
+      .sd-result-wrap { border:1px solid #3c3c3c; border-radius:0.375rem; overflow:hidden; background:#1e1e1e; }
+      .sd-result-scroll { overflow-x:auto; }
+      .sd-result-table { border-collapse:collapse; width:100%; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; background:#1e1e1e; color:#d4d4d4; white-space:nowrap; }
+      .sd-result-table th { background:#2d2d2d; color:#569cd6; font-weight:600; padding:0.3rem 0.75rem; text-align:left; border-bottom:1px solid #3c3c3c; border-right:1px solid #333; }
+      .sd-result-table th:last-child { border-right:none; }
+      .sd-result-table td { padding:0.28rem 0.75rem; border-bottom:1px solid #252526; border-right:1px solid #282828; vertical-align:top; }
+      .sd-result-table td:last-child { border-right:none; }
+      .sd-result-table tr:last-child td { border-bottom:none; }
+      .sd-result-table tbody tr:nth-child(even) td { background:#252526; }
+      .sd-result-footer { font-size:0.66rem; color:#6a9955; padding:0.28rem 0.75rem; border-top:1px solid #3c3c3c; background:#1a1a1a; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; }
+      .sd-result-pre { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .step-detail-query { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; height:100%; box-sizing:border-box; }
+      .step-detail-analysis { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; overflow-y:auto; max-height:240px; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .amd-heading { color:#dcdcaa; font-weight:700; } .amd-bold { color:#9cdcfe; font-weight:600; } .amd-bullet { color:#569cd6; }
+      .code-block { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.82rem; line-height:1.7; border-radius:0.5rem; padding:1.25rem 1.5rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; }
+      .code-keyword { color:#569cd6; } .code-function { color:#dcdcaa; } .code-string { color:#ce9178; }
+      .code-comment { color:#6a9955; font-style:italic; } .code-number { color:#b5cea8; } .code-type { color:#4ec9b0; }
+      .pg-shell { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.07); font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      .pg-header { background:#ffffff; border-bottom:1px solid #e5e7eb; padding:0.75rem 1.25rem; display:flex; align-items:center; gap:0.625rem; }
+      .pg-header-icon { width:28px; height:28px; border-radius:6px; background:#ede9fe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-header-icon svg { width:14px; height:14px; }
+      .pg-header-title { font-size:0.875rem; font-weight:600; color:#111827; }
+      .pg-header-sep { color:#d1d5db; margin:0 0.125rem; font-size:0.875rem; }
+      .pg-agent-tag { font-size:0.72rem; font-weight:600; color:#6b7280; letter-spacing:0.02em; }
+      .pg-header-actions { margin-left:auto; display:flex; align-items:center; gap:0.5rem; }
+      .pg-kwf-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.2rem 0.625rem; font-size:0.68rem; font-weight:600; color:#b45309; letter-spacing:0.04em; }
+      .pg-conversation { padding:1.25rem; min-height:200px; }
+      .pg-examples-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin-bottom:0.75rem; }
+      .pg-example-card { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.625rem; padding:0.875rem 1rem; display:flex; align-items:center; gap:0.875rem; cursor:pointer; transition:box-shadow 0.15s,border-color 0.15s; margin-bottom:0.625rem; text-align:left; width:100%; }
+      .pg-example-card:hover { box-shadow:0 4px 8px rgba(0,0,0,0.07); border-color:#d1d5db; }
+      .pg-example-icon { width:32px; height:32px; border-radius:8px; background:#eff6ff; border:1px solid #dbeafe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-example-content { flex:1; min-width:0; }
+      .pg-example-title { font-size:0.82rem; font-weight:600; color:#111827; margin-bottom:0.2rem; }
+      .pg-example-prompt { font-size:0.78rem; color:#6b7280; line-height:1.45; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .pg-try-btn { flex-shrink:0; padding:0.35rem 0.875rem; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; font-size:0.78rem; font-weight:500; color:#374151; cursor:pointer; transition:background 0.12s,border-color 0.12s; white-space:nowrap; }
+      .pg-try-btn:hover { background:#f3f4f6; border-color:#d1d5db; }
+      .pg-messages { display:flex; flex-direction:column; gap:1rem; }
+      .pg-message { display:flex; flex-direction:column; gap:0.5rem; }
+      .pg-message-header { display:flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; color:#374151; }
+      .pg-message-icon { width:22px; height:22px; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; }
+      .pg-message-icon.user { background:#dbeafe; color:#1d4ed8; } .pg-message-icon.agent { background:#ede9fe; color:#7c3aed; }
+      .pg-message-bubble { border-radius:0.625rem; padding:0.75rem 1rem; font-size:0.875rem; line-height:1.6; color:#111827; }
+      .pg-message-bubble.user { background:#f0f9ff; border:1px solid #bfdbfe; } .pg-message-bubble.agent { background:#ffffff; border:1px solid #e5e7eb; }
+      .pg-status-loading { background:#fffbeb; border:1px solid #fde68a; border-radius:0.5rem; padding:0.625rem 1rem; font-size:0.82rem; color:#92400e; display:flex; align-items:center; gap:0.5rem; }
+      .pg-spinner { width:13px; height:13px; border:2px solid rgba(146,64,14,0.2); border-top-color:#92400e; border-radius:50%; animation:pgSpin 0.75s linear infinite; flex-shrink:0; }
+      @keyframes pgSpin { to { transform:rotate(360deg); } }
+      .pg-narrative-summary { margin-bottom:0.75rem; font-size:0.875rem; color:#111827; line-height:1.6; }
+      .pg-narrative-deviation { color:#b45309; font-weight:700; } .pg-narrative-normal { color:#15803d; font-weight:700; } .pg-narrative-ok { color:#15803d; font-weight:700; }
+      .pg-narrative-factors-label { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#6b7280; margin:0.625rem 0 0.5rem; }
+      .pg-narrative-item { display:flex; gap:0.625rem; align-items:flex-start; margin-bottom:0.4rem; font-size:0.875rem; line-height:1.55; color:#374151; }
+      .pg-narrative-item-num { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:#eff6ff; border:1px solid #bfdbfe; font-size:0.68rem; font-weight:800; color:#1d4ed8; display:flex; align-items:center; justify-content:center; margin-top:0.15rem; }
+      .pg-narrative-item-station { font-weight:700; color:#111827; } .pg-narrative-item-pct { color:#dc2626; font-weight:700; }
+      .pg-narrative-action { margin-top:0.75rem; padding:0.5rem 0.75rem; background:#fffbeb; border:1px solid #fde68a; border-radius:0.4rem; font-size:0.82rem; color:#92400e; line-height:1.55; }
+      .pg-narrative-comms { margin-top:0.625rem; padding:0.625rem 0.875rem; background:#f0f9ff; border:1px solid #bae6fd; border-radius:0.4rem; font-size:0.82rem; color:#0369a1; line-height:1.55; font-style:italic; }
+      .pg-narrative-comms-label { font-style:normal; font-weight:700; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:#0369a1; margin-bottom:0.2rem; }
+      .pg-footer { border-top:1px solid #f3f4f6; padding:0.625rem 1.25rem; background:#fafafa; display:flex; align-items:center; gap:0.75rem; font-size:0.72rem; color:#9ca3af; }
+      .pg-reset-btn { background:none; border:none; padding:0; color:#2563eb; font-size:0.78rem; cursor:pointer; text-decoration:underline; white-space:nowrap; margin-left:auto; display:none; }
+      .pg-reset-btn:hover { color:#1d4ed8; }
+      .lob-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.18); border-radius:0.625rem; padding:0.875rem 1.125rem; margin-bottom:1.5rem; font-size:0.875rem; color:#374151; line-height:1.6; display:flex; gap:0.75rem; align-items:flex-start; }
+      .lob-callout-icon { flex-shrink:0; font-size:1rem; margin-top:0.1rem; }
+      .value-hero-card { background:linear-gradient(135deg,rgba(25,135,84,0.08),rgba(25,135,84,0.03)); border:1.5px solid rgba(25,135,84,0.25); border-radius:0.75rem; padding:1.5rem 2rem; }
+      .workflow-callout { background:linear-gradient(135deg,rgba(var(--bs-primary-rgb),0.07),rgba(var(--bs-primary-rgb),0.03)); border-radius:0.75rem; padding:1.25rem 1.5rem; border-left:4px solid var(--bs-primary); }
+      .strategic-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.15); border-radius:0.75rem; padding:1.25rem 1.5rem; }
+      .section-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#ff9500; margin-bottom:0.5rem; }
+      .kwf-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; color:#ff9500; letter-spacing:0.04em; }
+      .schema-meta { background:#f8f9fa; border-radius:0.5rem; padding:0.875rem 1rem; margin-bottom:1rem; font-size:0.82rem; line-height:1.6; color:#374151; }
+      .schema-meta strong { color:#111827; }
+      /* ── Mobile: pipeline stack (raised from 575px to cover all phone viewports) ── */
+      @media (max-width:767px) {
+        .agent-pipeline { flex-direction:column; gap:0.75rem; }
+        .agent-step:not(:last-child)::after { content:'↓'; position:static; transform:none; display:block; margin-top:0.25rem; font-size:1.2rem; }
+        .agent-step { border-radius:0.5rem; background:#f8f9fa; }
+        .step-detail-query { white-space:pre-wrap; word-break:break-all; height:auto; }
+        .code-block { white-space:pre-wrap; word-break:break-all; font-size:0.68rem; }
+      }
+      /* ── Mobile: playground card + header ── */
+      .pg-header { flex-wrap:wrap; }
+      @media (max-width:575px) {
+        .pg-example-prompt { white-space:normal; }
+        .pg-try-btn { display:none; }
+        .pg-header-actions { width:100%; margin-top:0.375rem; }
+        .display-4 { font-size:2.2rem !important; }
+        .value-hero-card { padding:1.25rem; }
+      }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+  </head>
+
+  <body>
+    <noscript><iframe src='https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9' height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript>
+
+    <div class="page-loading active">
+      <div class="page-loading-inner"><div class="page-spinner"></div><span>Loading...</span></div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- NAVBAR -->
+      <header data-bs-theme="dark">
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+            <a class="navbar-brand pe-sm-3" href="../../../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459,0,0,-0.00433,-8154.369629,-2022.807495)" fill="#000000" stroke="none" style="transform-origin:8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill:rgb(255,149,0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill:rgb(255,149,0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../../../contact_us.html" target="_blank" rel="noopener">Contact Us</a>
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height:520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image:url(../../../../assets/img/ar_example_header_0.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+          <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb" style="font-size:0.78rem;opacity:0.7;"><li class="breadcrumb-item text-light">Decision Intelligence</li><li class="breadcrumb-item text-light">Retail</li><li class="breadcrumb-item text-light">In-Store Operations</li></ol>
+          </nav>
+          <div class="col-lg-8">
+            <h1 class="display-4 mb-3">Rank Pick Productivity Drivers</h1>
+            <p class="text-body fs-lg mb-4">When a store's curbside pick rate drops mid-shift, the Fulfillment &amp; Pickup Coordinator has limited time to determine whether the cause is routing friction, exception rework, or a heavier order mix. This workflow assembles the evidence into a ranked driver brief with zone-level impact and immediate recovery actions.</p>
+            <p class="text-body fs-lg mb-4">The coordinator still decides how to respond, coach associates, and rebalance labor; the workflow removes the retrieval, calculation, attribution, and briefing work. The estimated impact is a 36% shift in role time out of execution-layer work.</p>
+            <div class="d-flex flex-wrap gap-3 mt-3">
+              <a class="btn btn-outline-light btn-lg" href="#value">See the Value Model</a>
+            </div>
+          </div>
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+        </div>
+      </section>
+
+      <!-- PLAYGROUND -->
+      <section class="container py-5" id="playground">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Interactive Demo</div>
+            <h2 class="h1 mb-2">See the Decision Intelligence Workflow in Action</h2>
+            <p class="text-muted mb-3">This workflow handles the compound analysis required after a pick productivity alert: measure the drop, localize it to zones, test whether exceptions or order mix moved at the same time, and turn those signals into a brief the coordinator can use immediately. The work is analytical but repetitive, and most of it does not require managerial judgment. What remains with the coordinator is deciding which lever to pull in the current shift context.</p>
+            <div class="lob-callout">
+              <span class="lob-callout-icon">&#128100;</span>
+              <div>
+                Designed for line-of-business leaders — specifically the Fulfillment &amp; Pickup Coordinator responsible for pick/pack execution monitoring, same-shift labor rebalancing, and exception triage. It shows where manager time is being spent on repeat analysis instead of on-floor intervention.
+                <span style="display:block;margin-top:0.3rem;font-size:0.8rem;color:#6b7280;">
+                  Why this matters: <a href="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/information_for_line_of_business.html" target="_blank" rel="noopener" style="color:#2563eb;">What line-of-business leaders actually need from automation &rarr;</a>
+                </span>
+              </div>
+            </div>
+            <div class="pg-shell">
+              <div class="pg-header">
+                <div class="pg-header-icon">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="pg-header-title">Decision Intelligence Playground</span>
+                <span class="pg-header-sep">·</span>
+                <span class="pg-agent-tag">Pick Productivity Driver Brief</span>
+                <div class="pg-header-actions">
+                  <span class="pg-kwf-badge">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5.5" stroke="#b45309"/><path d="M4 6l1.5 1.5L8 4" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    KWF Runtime
+                  </span>
+                </div>
+              </div>
+              <div class="pg-conversation" id="pg-conversation">
+                <div id="pg-examples">
+                  <div class="pg-examples-label">Start with an example</div>
+                  
+                  <button class="pg-example-card" onclick="runQuery(0)" id="ex-0">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(220,38,38)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Store S0421 — March 6 to March 12 — CURBSIDE productivity drop</div>
+                      <div class="pg-example-prompt">For store S0421 in region North from 2026-03-06 to 2026-03-12, what are the ranked drivers of the pick productivity decline for CURBSIDE, and what should we change in the next 4 hours?</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(1)" id="ex-1">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(37,99,235)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Zone A4 focus — March 12 spike — routing-led slowdown</div>
+                      <div class="pg-example-prompt">For store S0421 in region North on 2026-03-12, why did CURBSIDE pick productivity in zone A4 drop to 30.0 lines per hour, and what should the coordinator change before the next shift handoff?</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(2)" id="ex-2">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(5,150,105)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Exception and order-mix check — March 6 baseline vs March 12 current</div>
+                      <div class="pg-example-prompt">Compare store S0421 in region North for CURBSIDE on 2026-03-06 versus 2026-03-12 and tell me whether exceptions or order mix are materially contributing to the productivity decline.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                </div>
+                <div class="pg-messages" id="pg-messages" style="display:none;"></div>
+              </div>
+              <div class="pg-footer">
+                <span>Simulated output — KWF agent configuration + sample data. No live database.</span>
+                <button class="pg-reset-btn" id="pg-reset-btn" onclick="resetPlayground()">&#8592; Run another query</button>
+              </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+              <div class="flex-grow-1">
+                <div style="font-size:0.875rem;font-weight:700;color:#111827;margin-bottom:0.2rem;">Want to see this in your fulfillment environment?</div>
+                <div style="font-size:0.82rem;color:#6b7280;line-height:1.5;">We'll walk through the workflow using your store fulfillment data, your alert thresholds, and your current shift-recovery process. The session covers the source data required, the driver-ranking logic, and the output brief your coordinators would receive. We'll show you this workflow running on your Google Cloud Platform environment.</div>
+              </div>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_002_pick-productivity-driver-brief&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-primary flex-shrink-0" style="white-space:nowrap;">Schedule a GCP Session</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">How It Works</div>
+              <h2 class="h1 mb-3">What the Decision Intelligence Workflow Does</h2>
+              <p class="text-muted mb-4">This workflow handles the compound analysis required after a pick productivity alert: measure the drop, localize it to zones, test whether exceptions or order mix moved at the same time, and turn those signals into a brief the coordinator can use immediately. The work is analytical but repetitive, and most of it does not require managerial judgment. What remains with the coordinator is deciding which lever to pull in the current shift context.</p>
+              <p class="text-muted mb-4" style="font-size:0.875rem;"><strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.</p>
+              <div style="background:rgba(255,149,0,0.06);border:1px solid rgba(255,149,0,0.28);border-radius:0.625rem;padding:0.875rem 1.125rem;margin-bottom:1.5rem;font-size:0.875rem;color:#374151;line-height:1.65;display:flex;gap:0.75rem;align-items:flex-start;">
+                <span style="flex-shrink:0;margin-top:0.15rem;">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/><path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><strong style="color:#111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked, and what the output artifact should contain. That analysis happens once. By the time the workflow runs, there is nothing left to figure out.</div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 pb-3">
+                  <div class="agent-pipeline">
+                    <div class="agent-step" id="wf-step-0" onclick="showStepDetail(0)">
+                      <div class="agent-step-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
+                      <div class="agent-step-title">Zone Baseline</div>
+                      <div class="agent-step-body">Measures where pick speed dropped and pinpoints the zones carrying the largest productivity loss.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-1" onclick="showStepDetail(1)">
+                      <div class="agent-step-num" style="background: rgba(107,122,255,0.12); color: #6b7aff;">2</div>
+                      <div class="agent-step-title">Driver Attribution</div>
+                      <div class="agent-step-body">Tests whether exceptions and order complexity explain the slowdown alongside zone-level routing evidence.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-2" onclick="showStepDetail(2)">
+                      <div class="agent-step-num" style="background: rgba(124,92,252,0.12); color: #7c5cfc;">3</div>
+                      <div class="agent-step-title">Driver Brief</div>
+                      <div class="agent-step-body">Ranks the likely causes of the decline and assembles the evidence into a shift-ready summary.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-3" onclick="showStepDetail(3)">
+                      <div class="agent-step-num" style="background: rgba(52,211,153,0.12); color: #34d399;">4</div>
+                      <div class="agent-step-title">Shift Actions</div>
+                      <div class="agent-step-body">Maps the ranked drivers to the next operational actions for the coming shift window.</div>
+                    </div>
+                  </div>
+                  <div class="step-click-hint" id="step-click-hint">&#8593; click a step to explore the logic, query, and output</div>
+                </div>
+                <div class="step-detail-panel" id="step-detail-panel">
+                  <div class="step-detail-header">
+                    <div class="step-detail-num" id="sd-num" style="background:rgba(79,127,255,0.12);color:#4f7fff;">1</div>
+                    <div class="step-detail-title" id="sd-title">Step Detail</div>
+                    <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
+                  </div>
+                  <div class="step-detail-sections">
+                    <div class="step-detail-top-row">
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label">Business Logic</div>
+                        <div class="step-detail-logic" id="sd-logic"></div>
+                      </div>
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
+                        <pre class="step-detail-query" id="sd-query"></pre>
+                      </div>
+                    </div>
+                    <div class="step-detail-output-row">
+                      <div class="step-detail-section-label">Sample Data Query Results</div>
+                      <div class="step-detail-output" id="sd-output"></div>
+                    </div>
+                    <div class="step-detail-analysis-row">
+                      <div class="step-detail-section-label">Step Business Logic</div>
+                      <pre class="step-detail-analysis" id="sd-analysis"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted mb-3">The output is a ranked driver brief that states the size of the productivity decline, the leading contributing factors, the affected zones, and the recommended actions for the next few hours. It also produces a shift handoff note that can be used for manager updates and mobile tasking.</p>
+              <div class="workflow-callout">
+                <strong>What this workflow does NOT do:</strong> It does not decide whether to pull associates from other departments, determine which pickup windows to throttle, approve permanent slotting or bin map changes, choose whether to escalate recurring out-of-stock issues to merchandising or replenishment leadership, or set coaching priorities for individual associates beyond presenting the evidence.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA WAREHOUSE INTEGRATION -->
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Under the Hood</div>
+            <h2 class="h1 mb-2">Data Warehouse Integration</h2>
+            <p class="text-muted mb-4">The workflow depends on operational data that already exists across store fulfillment systems but is usually reviewed separately under time pressure. It combines pick-task telemetry, exception activity, and order-level demand patterns so the coordinator can see whether the slowdown came from movement, rework, or order complexity.</p>
+            <p class="text-muted mb-4" style="font-size:0.875rem;">That cross-domain join matters because pick productivity declines rarely come from one source; the coordinator needs labor, exception, and order-mix signals in one analysis before making a same-shift adjustment.</p>
+            <ul class="nav nav-tabs mb-0" id="schemaTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-ops_wms_pick_tasks" data-bs-toggle="tab"
+                  data-bs-target="#panel-ops_wms_pick_tasks" type="button" role="tab">
+                  <code style="font-size:0.8rem;">ops_wms_pick_tasks</code>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link " id="tab-ops_exception_tickets" data-bs-toggle="tab"
+                  data-bs-target="#panel-ops_exception_tickets" type="button" role="tab">
+                  <code style="font-size:0.8rem;">ops_exception_tickets</code>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link " id="tab-ops_oms_order_summary" data-bs-toggle="tab"
+                  data-bs-target="#panel-ops_oms_order_summary" type="button" role="tab">
+                  <code style="font-size:0.8rem;">ops_oms_order_summary</code>
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom-4 p-0 mb-4">
+              <div class="tab-pane fade show active" id="panel-ops_wms_pick_tasks" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Warehouse Management System pick telemetry &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Store Fulfillment Operations<br>
+                    <strong>Role in this workflow:</strong> This table provides the base productivity signal: how many lines were picked, how long the work took, and which zone absorbed the effort. It is the primary source for detecting a throughput drop and for identifying whether longer pick paths suggest routing, slotting, or bin-location disruption.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> ops.fulfillment.ops_wms_pick_tasks (
+  task_id <span class="code-type">STRING</span>,
+  order_id <span class="code-type">STRING</span>,
+  store_id <span class="code-type">STRING</span>,
+  associate_id <span class="code-type">STRING</span>,
+  started_ts <span class="code-type">TIMESTAMP</span>,
+  completed_ts <span class="code-type">TIMESTAMP</span>,
+  zone_id <span class="code-type">STRING</span>,
+  lines_picked <span class="code-type">INT</span>,
+  est_path_km <span class="code-type">DOUBLE</span>
+);
+
+<span class="code-keyword">SELECT</span>
+  store_id,
+  zone_id,
+  date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, started_ts) <span class="code-keyword">AS</span> day,
+  <span class="code-keyword">SUM</span>(lines_picked) <span class="code-keyword">AS</span> total_lines,
+  <span class="code-keyword">SUM</span>((epoch(completed_ts) - epoch(started_ts))/<span class="code-number">3600.0</span>) <span class="code-keyword">AS</span> total_hours,
+  (<span class="code-keyword">SUM</span>(lines_picked) / <span class="code-keyword">NULLIF</span>(<span class="code-keyword">SUM</span>((epoch(completed_ts) - epoch(started_ts))/<span class="code-number">3600.0</span>),<span class="code-number">0</span>)) <span class="code-keyword">AS</span> lines_per_hour,
+  <span class="code-keyword">AVG</span>(est_path_km) <span class="code-keyword">AS</span> avg_path_km
+<span class="code-keyword">FROM</span> ops.fulfillment.ops_wms_pick_tasks
+<span class="code-keyword">WHERE</span> store_id = <span class="code-<span class="code-type">string</span>">'{store_id}'</span>
+  <span class="code-keyword">AND</span> started_ts &gt;= <span class="code-<span class="code-type">string</span>">'{start_date}'</span>
+  <span class="code-keyword">AND</span> started_ts &lt; <span class="code-<span class="code-type">string</span>">'{end_date}'</span>
+<span class="code-keyword">GROUP BY</span> store_id, zone_id, date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, started_ts)
+<span class="code-keyword">ORDER BY</span> day, zone_id;</code></pre>
+              </div>
+              <div class="tab-pane fade " id="panel-ops_exception_tickets" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Fulfillment exception management records &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Store Fulfillment Operations<br>
+                    <strong>Role in this workflow:</strong> This table measures rework pressure from out-of-stock, damage, and similar exceptions. It contributes when productivity is down and exception intensity rises at the same time, indicating that associates are losing time to interruption, substitution, refund handling, or re-pick cycles.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> ops.fulfillment.ops_exception_tickets (
+  ticket_id <span class="code-type">STRING</span>,
+  order_id <span class="code-type">STRING</span>,
+  store_id <span class="code-type">STRING</span>,
+  created_ts <span class="code-type">TIMESTAMP</span>,
+  exception_type <span class="code-type">STRING</span>,
+  resolution_type <span class="code-type">STRING</span>,
+  resolved_ts <span class="code-type">TIMESTAMP</span>
+);
+
+<span class="code-keyword">WITH</span> orders <span class="code-keyword">AS</span> (
+  <span class="code-keyword">SELECT</span> date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, order_created_ts) <span class="code-keyword">AS</span> day, <span class="code-keyword">COUNT</span>(*) <span class="code-keyword">AS</span> orders
+  <span class="code-keyword">FROM</span> ops.fulfillment.ops_oms_order_summary
+  <span class="code-keyword">WHERE</span> store_id = <span class="code-<span class="code-type">string</span>">'{store_id}'</span>
+    <span class="code-keyword">AND</span> region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>
+    <span class="code-keyword">AND</span> fulfillment_mode = <span class="code-<span class="code-type">string</span>">'{fulfillment_mode}'</span>
+    <span class="code-keyword">AND</span> order_created_ts &gt;= <span class="code-<span class="code-type">string</span>">'{start_date}'</span>
+    <span class="code-keyword">AND</span> order_created_ts &lt; <span class="code-<span class="code-type">string</span>">'{end_date}'</span>
+  <span class="code-keyword">GROUP BY</span> date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, order_created_ts)
+),
+ex <span class="code-keyword">AS</span> (
+  <span class="code-keyword">SELECT</span> date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, created_ts) <span class="code-keyword">AS</span> day, <span class="code-keyword">COUNT</span>(*) <span class="code-keyword">AS</span> exceptions
+  <span class="code-keyword">FROM</span> ops.fulfillment.ops_exception_tickets
+  <span class="code-keyword">WHERE</span> store_id = <span class="code-<span class="code-type">string</span>">'{store_id}'</span>
+    <span class="code-keyword">AND</span> created_ts &gt;= <span class="code-<span class="code-type">string</span>">'{start_date}'</span>
+    <span class="code-keyword">AND</span> created_ts &lt; <span class="code-<span class="code-type">string</span>">'{end_date}'</span>
+  <span class="code-keyword">GROUP BY</span> date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, created_ts)
+)
+<span class="code-keyword">SELECT</span>
+  o.day,
+  o.orders,
+  <span class="code-keyword">COALESCE</span>(e.exceptions,<span class="code-number">0</span>) <span class="code-keyword">AS</span> exceptions,
+  (<span class="code-keyword">COALESCE</span>(e.exceptions,<span class="code-number">0</span>) * <span class="code-number">100.0</span> / <span class="code-keyword">NULLIF</span>(o.orders,<span class="code-number">0</span>)) <span class="code-keyword">AS</span> exceptions_per_100_orders
+<span class="code-keyword">FROM</span> orders o
+<span class="code-keyword">LEFT</span> <span class="code-keyword">JOIN</span> ex e <span class="code-keyword">ON</span> o.day = e.day
+<span class="code-keyword">ORDER BY</span> o.day;</code></pre>
+              </div>
+              <div class="tab-pane fade " id="panel-ops_oms_order_summary" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Order Management System order summary &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Order Operations<br>
+                    <strong>Role in this workflow:</strong> This table supplies daily order volume and line-count complexity for the requested fulfillment mode and region. It is used both to normalize exception rates per 100 orders and to detect whether larger, more complex baskets explain part of the observed decline in pick throughput.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> ops.fulfillment.ops_oms_order_summary (
+  order_id <span class="code-type">STRING</span>,
+  store_id <span class="code-type">STRING</span>,
+  region_id <span class="code-type">STRING</span>,
+  fulfillment_mode <span class="code-type">STRING</span>,
+  order_created_ts <span class="code-type">TIMESTAMP</span>,
+  order_line_count <span class="code-type">INT</span>
+);
+
+<span class="code-keyword">SELECT</span>
+  date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, order_created_ts) <span class="code-keyword">AS</span> day,
+  <span class="code-keyword">AVG</span>(order_line_count) <span class="code-keyword">AS</span> avg_lines_per_order,
+  <span class="code-keyword">AVG</span>(<span class="code-keyword">CASE</span> <span class="code-keyword">WHEN</span> order_line_count &gt;= {complex_order_line_threshold} <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> share_complex_orders
+<span class="code-keyword">FROM</span> ops.fulfillment.ops_oms_order_summary
+<span class="code-keyword">WHERE</span> store_id = <span class="code-<span class="code-type">string</span>">'{store_id}'</span>
+  <span class="code-keyword">AND</span> region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>
+  <span class="code-keyword">AND</span> fulfillment_mode = <span class="code-<span class="code-type">string</span>">'{fulfillment_mode}'</span>
+  <span class="code-keyword">AND</span> order_created_ts &gt;= <span class="code-<span class="code-type">string</span>">'{start_date}'</span>
+  <span class="code-keyword">AND</span> order_created_ts &lt; <span class="code-<span class="code-type">string</span>">'{end_date}'</span>
+<span class="code-keyword">GROUP BY</span> date_trunc(<span class="code-<span class="code-type">string</span>">'day'</span>, order_created_ts)
+<span class="code-keyword">ORDER BY</span> day;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COGNITIVE LABOR LAYER ANALYSIS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">Cognitive Labor Analysis</div>
+              <h2 class="h1 mb-3">Where the Work Sits in the Labor Stack</h2>
+              <p class="text-muted mb-4">Not all cognitive labor is equally automatable. The KWF analysis breaks the workflow into three layers — execution, judgment, and strategic — and maps each step to the layer it belongs to. Execution-layer work is automatable. Judgment and strategic work stays with the manager.</p>
+              
+              <div class="layer-bar-track">
+                <div class="layer-bar-exec" style="width:60%;" title="Execution 60%"></div>
+                <div class="layer-bar-judgment" style="width:28%;" title="Judgment 28%"></div>
+                <div class="layer-bar-strategic" style="width:12%;" title="Strategic 12%"></div>
+              </div>
+              <div style="display:flex; gap:1.5rem; font-size:0.8rem; margin-top:0.5rem; flex-wrap:wrap;">
+                <span><span class="layer-legend-dot" style="background:#adb5bd;"></span> Execution 60%</span>
+                <span><span class="layer-legend-dot" style="background:#ff9500;"></span> Judgment 28%</span>
+                <span><span class="layer-legend-dot" style="background:#198754;"></span> Strategic 12%</span>
+              </div>
+              <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#adb5bd;margin-bottom:0.5rem;">Execution Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#adb5bd;">60%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The execution layer pulls zone-level pick metrics, calculates productivity and deviation thresholds, joins exception and order-mix signals, ranks likely drivers, and formats the briefing output.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#fff8f0;border:1px solid rgba(255,149,0,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#ff9500;margin-bottom:0.5rem;">Judgment Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#ff9500;">28%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The coordinator still interprets the brief in the context of current staffing, backlog risk, and store conditions, then decides which corrective action to take now.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f0faf4;border:1px solid rgba(25,135,84,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#198754;margin-bottom:0.5rem;">Strategic Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#198754;">12%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">Store and operations leaders still own structural decisions such as slotting changes, replenishment process redesign, labor model changes, and pickup policy adjustments.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE MODEL -->
+      <section class="container py-5" id="value">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Value Model</div>
+            <h2 class="h1 mb-3">The Business Case for Automation</h2>
+            <div class="value-hero-card mb-4">
+              <div class="row g-4">
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Time Recovered</div>
+                    <div class="metric-value">36% role time freed</div>
+                    <div class="metric-sub">Based on the candidate value model, automating the analysis and briefing work shifts 36% of coordinator time away from manual execution tasks.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Annual Savings</div>
+                    <div class="metric-value">$430,840 net benefit</div>
+                    <div class="metric-sub">The conservative planning model estimates annual net benefit for a six-person coordinator and senior associate analysis team.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric highlight">
+                    <div class="metric-label">Strategic Upside</div>
+                    <div class="metric-value">Faster Shift Recovery</div>
+                    <div class="metric-sub">The strategic upside is reaching a documented driver-and-action decision in under 20 minutes, reducing backlog growth, overtime, and missed pickup promises.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="strategic-callout mb-4">
+              <strong>Kill Question:</strong> Without this workflow, the coordinator pulls pick-rate, path, exception, and order-mix data by hand, builds a quick narrative from partial evidence, and often chooses between routing changes, replenishment support, or coaching without a defensible ranking of the actual drivers.
+            </div>
+            <p class="text-muted" style="font-size:0.875rem;"><strong>Primary Valuation Metric:</strong> Median time from productivity alert to a documented driver plus action decision, with a target of under 20 minutes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT STEP CTA -->
+      <section class="bg-primary py-5" data-bs-theme="dark">
+        <div class="container py-2 text-center">
+          <div class="col-lg-7 mx-auto">
+            <p class="fw-semibold mb-2 fs-sm text-uppercase letter-spacing-wider" style="color:rgba(255,255,255,0.6);">Next Step</p>
+            <h2 class="h1 text-light mb-3">Run your own value estimate for fulfillment coordinators — or talk to us about your pick productivity recovery workflow.</h2>
+            <p class="text-light mb-4" style="opacity:0.85;">The Cognitive Labor Value Calculator models team size, role cost, and automation coverage so you can estimate the operational value of removing manual analysis work. It takes under two minutes to complete.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+              <a href="../../../../campaigns/ar/cpn_clc_d_2026/calculator.html?kwf_src=candidate_002_pick-productivity-driver-brief&amp;kwf_ws=home-depot" class="btn btn-light btn-lg">
+                Calculate Your Team&#8217;s Value
+              </a>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_002_pick-productivity-driver-brief&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
+                Request a Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <span class="text-muted" style="font-size:0.82rem;">&copy; 2026 Patterson Consulting. All rights reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <a href="../../../../augmented_reasoning_20260311_v5.html" class="text-muted text-decoration-none" style="font-size:0.82rem;">Augmented Reasoning Platform</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <script src="../../../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../../../assets/vendor/aos/dist/aos.js"></script>
+    <script src="../../../../assets/js/theme.min.js"></script>
+
+    <script>
+      // ── Step detail data ──────────────────────────────────────────────────
+      const STEPS = [
+  {
+    num: 1, title: "Zone Baseline", colorBg: "rgba(79,127,255,0.12)", colorFg: "#4f7fff",
+    logic: "This step compares current pick output to baseline performance at the zone and day level. It looks for a sustained drop in lines per hour and checks whether longer travel distance rose at the same time, which is a practical signal of routing, slotting, or bin disruption. It also weights impacted zones by labor hours so the brief focuses on the areas actually consuming shift capacity.",
+    query: `SELECT
+  store_id,
+  zone_id,
+  date_trunc('day', started_ts) AS day,
+  SUM(lines_picked) AS total_lines,
+  SUM((epoch(completed_ts) - epoch(started_ts))/3600.0) AS total_hours,
+  (SUM(lines_picked) / NULLIF(SUM((epoch(completed_ts) - epoch(started_ts))/3600.0),0)) AS lines_per_hour,
+  AVG(est_path_km) AS avg_path_km
+FROM ops.fulfillment.ops_wms_pick_tasks
+WHERE store_id = '{store_id}'
+  AND started_ts >= '{start_date}'
+  AND started_ts < '{end_date}'
+GROUP BY store_id, zone_id, date_trunc('day', started_ts)
+ORDER BY day, zone_id;`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>store_id</th><th>zone_id</th><th>day</th><th>total_lines</th><th>total_hours</th><th>lines_per_hour</th><th>avg_path_km</th></tr></thead><tbody><tr><td>S0421</td><td>A3</td><td>2026-03-12</td><td>12</td><td>0.6333</td><td>18.9474</td><td>0.7000</td></tr><tr><td>S0421</td><td>A4</td><td>2026-03-12</td><td>10</td><td>0.6667</td><td>15.0000</td><td>0.7200</td></tr></tbody></table></div><div class=\"sd-result-footer\">2 rows</div></div>",
+    analysis: `<span class="amd-heading"># Quantify pick productivity change and localize to zones</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Measures lines per hour by day and zone for a store and flags material productivity declines, then localizes the change to the zones with the largest labor-hour exposure and path distance increases.
+
+<span class="amd-heading">## Interpret the result columns (business meaning)</span>
+You are given daily, zone-level pick productivity for the requested store and time window.
+<span class="amd-bullet">-</span> <span class="amd-bold">total_lines</span>: total pick lines completed in that zone on that day (throughput volume).
+<span class="amd-bullet">-</span> <span class="amd-bold">total_hours</span>: labor hours spent picking in that zone on that day (time-on-task).
+<span class="amd-bullet">-</span> <span class="amd-bold">lines_per_hour</span>: productivity rate for that zone/day (higher = faster picking).
+<span class="amd-bullet">-</span> <span class="amd-bold">avg_path_km</span>: average estimated walking distance per task (proxy for travel inefficiency, routing/bin layout friction).
+
+<span class="amd-heading">## Build baseline vs current periods from the provided days</span>
+<span class="amd-bullet">-</span> Sort unique <span class="amd-bold">day</span> values ascending.
+<span class="amd-bullet">-</span> Define:
+  <span class="amd-bullet">-</span> <span class="amd-bold">baseline period</span> = earliest 30% of days (round up to at least 1 day).
+  <span class="amd-bullet">-</span> <span class="amd-bold">current period</span> = latest 30% of days (round up to at least 1 day).
+<span class="amd-bullet">-</span> If there are fewer than 3 unique days total, state that trend inference is low-confidence; still compute the comparison using the first day as baseline and last day as current.
+
+<span class="amd-heading">## Compute zone-level productivity change (using provided totals)</span>
+For each <span class="amd-bold">zone_id</span>:
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">baseline_lines_per_hour</span> as: (sum of <span class="amd-bold">total_lines</span> across baseline days) / (sum of <span class="amd-bold">total_hours</span> across baseline days).
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">current_lines_per_hour</span> as: (sum of <span class="amd-bold">total_lines</span> across current days) / (sum of <span class="amd-bold">total_hours</span> across current days).
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">prod_drop_pct_observed</span> = (baseline_lines_per_hour − current_lines_per_hour) / baseline_lines_per_hour.
+<span class="amd-bullet">-</span> Persistence check: count <span class="amd-bold">current_days_present</span> = number of distinct current-period days where the zone appears.
+
+<span class="amd-heading">### Reliability / exclusion rules</span>
+<span class="amd-bullet">-</span> Exclude a zone from all drop/ranking logic if:
+  <span class="amd-bullet">-</span> baseline-period <span class="amd-bold">sum(total_hours)</span> is 0 or extremely small (treat as unreliable; explicitly note “insufficient baseline hours”), or
+  <span class="amd-bullet">-</span> baseline_lines_per_hour is null/undefined.
+<span class="amd-bullet">-</span> If <span class="amd-bold">current_lines_per_hour</span> is null because current hours are 0, treat as “no measurable current picking time”; do not flag as a productivity drop—report separately as a data/operations anomaly.
+
+<span class="amd-heading">## Materiality flag (quantify drop and decide if it matters)</span>
+Flag a zone as <span class="amd-bold">material productivity drop</span> if BOTH are true:
+<span class="amd-bullet">-</span> <span class="amd-bold">prod_drop_pct_observed &gt;= {prod_drop_pct}</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">current_days_present &gt;= {min_days_persist}</span>
+
+Also surface these notable edge conditions (even if not meeting the drop threshold):
+<span class="amd-bullet">-</span> <span class="amd-bold">Negative prod_drop_pct_observed</span>: productivity improved; do not flag as drop.
+<span class="amd-bullet">-</span> <span class="amd-bold">prod_drop_pct_observed &gt; 0.5</span> (50%+ drop): call out as “severe decline” regardless of routing signal, provided reliability rules pass.
+
+<span class="amd-heading">## Diagnose likely travel/routing contribution (using avg_path_km)</span>
+For each zone (only where reliability rules pass):
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">baseline_avg_path_km</span> = simple average of <span class="amd-bold">avg_path_km</span> over baseline days (ignoring nulls).
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">current_avg_path_km</span> = simple average of <span class="amd-bold">avg_path_km</span> over current days (ignoring nulls).
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">path_km_delta_observed</span> = current_avg_path_km − baseline_avg_path_km.
+<span class="amd-bullet">-</span> Flag <span class="amd-bold">routing/bin disruption likely</span> if:
+  <span class="amd-bullet">-</span> zone is flagged for <span class="amd-bold">material productivity drop</span>, AND
+  <span class="amd-bullet">-</span> <span class="amd-bold">path_km_delta_observed &gt;= {path_km_delta}</span>
+<span class="amd-bullet">-</span> If productivity dropped but <span class="amd-bold">path_km_delta_observed</span> is ~0 or negative, label as “drop not explained by walking distance; consider labor mix, congestion, training, equipment, or batching changes.”
+
+<span class="amd-heading">## Prioritize zones by operational impact (output structured, not prose)</span>
+Among zones flagged for <span class="amd-bold">material productivity drop</span>:
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">current_period_total_hours</span> per zone = sum of <span class="amd-bold">total_hours</span> over current days.
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">impact_weight</span> per zone = current_period_total_hours / (sum of current_period_total_hours across all flagged zones).
+<span class="amd-bullet">-</span> Rank zones by <span class="amd-bold">impact_weight</span> descending.
+<span class="amd-bullet">-</span> Output up to <span class="amd-bold">top 3</span> zones, each including:
+  <span class="amd-bullet">-</span> zone_id
+  <span class="amd-bullet">-</span> baseline_lines_per_hour, current_lines_per_hour
+  <span class="amd-bullet">-</span> prod_drop_pct_observed (as %)
+  <span class="amd-bullet">-</span> baseline_avg_path_km, current_avg_path_km
+  <span class="amd-bullet">-</span> path_km_delta_observed
+  <span class="amd-bullet">-</span> current_days_present
+  <span class="amd-bullet">-</span> current_period_total_hours
+  <span class="amd-bullet">-</span> impact_weight
+  <span class="amd-bullet">-</span> routing/bin disruption likely (yes/no) + one-line reason tied to the metrics
+
+<span class="amd-heading">## Required edge-case handling (must be explicit)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Empty result set</span>: output “No pick task data available for this store and period” and stop.
+<span class="amd-bullet">-</span> <span class="amd-bold">No zones meet material drop rule</span>: output “No material pick productivity decline detected for this period” and stop (no ranking section).
+<span class="amd-bullet">-</span> <span class="amd-bold">All zones excluded for low/zero baseline hours</span>: output “Insufficient baseline picking hours to assess productivity change” and stop.
+<span class="amd-bullet">-</span> <span class="amd-bold">Outliers</span>: if a zone’s productivity is driven by a single day with disproportionately high hours in baseline or current, note “results dominated by one day; interpret with caution” (do not remove unless reliability rules already exclude it).
+`
+  },
+  {
+    num: 2, title: "Driver Attribution", colorBg: "rgba(107,122,255,0.12)", colorFg: "#6b7aff",
+    logic: "This step measures two other common causes of slower picking: rework from exceptions and harder order mix. It checks whether exceptions per 100 orders and average lines per order increased during the same period as the productivity decline, then compares those shifts against the routing signal. The result is a fact pattern for which driver is most responsible rather than a guess based on anecdotal floor feedback.",
+    query: `WITH orders AS (
+  SELECT date_trunc('day', order_created_ts) AS day, COUNT(*) AS orders
+  FROM ops.fulfillment.ops_oms_order_summary
+  WHERE store_id = '{store_id}'
+    AND region_id = '{region_id}'
+    AND fulfillment_mode = '{fulfillment_mode}'
+    AND order_created_ts >= '{start_date}'
+    AND order_created_ts < '{end_date}'
+  GROUP BY date_trunc('day', order_created_ts)
+),
+ex AS (
+  SELECT date_trunc('day', created_ts) AS day, COUNT(*) AS exceptions
+  FROM ops.fulfillment.ops_exception_tickets
+  WHERE store_id = '{store_id}'
+    AND created_ts >= '{start_date}'
+    AND created_ts < '{end_date}'
+  GROUP BY date_trunc('day', created_ts)
+)
+SELECT
+  o.day,
+  o.orders,
+  COALESCE(e.exceptions,0) AS exceptions,
+  (COALESCE(e.exceptions,0) * 100.0 / NULLIF(o.orders,0)) AS exceptions_per_100_orders
+FROM orders o
+LEFT JOIN ex e ON o.day = e.day
+ORDER BY o.day;`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>day</th><th>orders</th><th>exceptions</th><th>exceptions_per_100_orders</th></tr></thead><tbody><tr><td>2026-02-05</td><td>3</td><td>3</td><td>100.0000</td></tr><tr><td>2026-03-12</td><td>4</td><td>4</td><td>100.0000</td></tr></tbody></table></div><div class=\"sd-result-footer\">2 rows</div></div>",
+    analysis: `<span class="amd-heading"># Attribute degradation to exceptions and order mix</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Uses daily exception load per 100 orders and daily order complexity metrics to determine whether exceptions and/or order mix shifts plausibly contributed to observed productivity decline, producing driver signals to combine with zone routing evidence.
+
+<span class="amd-heading">## Interpret the Columns (Business Meaning)</span>
+You are given two daily result sets:
+
+1) <span class="amd-bold">Exceptions vs Orders (ops_exception_tickets result)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">day</span>: calendar day of activity.
+<span class="amd-bullet">-</span> <span class="amd-bold">orders</span>: number of orders created that day (volume context).
+<span class="amd-bullet">-</span> <span class="amd-bold">exceptions</span>: number of exception tickets created that day (operational interruptions/rework).
+<span class="amd-bullet">-</span> <span class="amd-bold">exceptions_per_100_orders</span>: exception intensity normalized for volume; interpret as “exceptions generated per 100 orders.” Higher values indicate more disruption and likely productivity drag.
+
+2) <span class="amd-bold">Order Mix / Complexity (ops_oms_order_summary result)</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">day</span>: calendar day of activity.
+<span class="amd-bullet">-</span> <span class="amd-bold">avg_lines_per_order</span>: average number of lines per order; higher implies more complex picks/pack effort per order.
+<span class="amd-bullet">-</span> <span class="amd-bold">share_complex_orders</span>: fraction of orders at/above the configured complexity threshold; closer to 1 means most orders are “complex.”
+
+<span class="amd-heading">## Baseline vs Current Comparison (Use Only the Days Present)</span>
+<span class="amd-bullet">-</span> Sort all available <span class="amd-bold">day</span> values chronologically.
+<span class="amd-bullet">-</span> Split days into:
+  <span class="amd-bullet">-</span> <span class="amd-bold">Baseline</span> = earliest 30% of days
+  <span class="amd-bullet">-</span> <span class="amd-bold">Current</span> = latest 30% of days  
+  (If very few days exist, still apply the rule as best possible; see confidence handling below.)
+
+<span class="amd-heading">### Exceptions signal</span>
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">baseline_exceptions_rate</span> as the average of \`exceptions_per_100_orders\` over baseline days.
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">current_exceptions_rate</span> as the average over current days.
+<span class="amd-bullet">-</span> <span class="amd-bold">exceptions_delta_observed</span> = current_exceptions_rate − baseline_exceptions_rate.
+
+<span class="amd-heading">### Order mix signal</span>
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">baseline_avg_lines</span> and <span class="amd-bold">current_avg_lines</span> as averages of \`avg_lines_per_order\` over baseline/current days.
+<span class="amd-bullet">-</span> <span class="amd-bold">avg_lines_delta_observed</span> = current_avg_lines − baseline_avg_lines.
+<span class="amd-bullet">-</span> Compute <span class="amd-bold">baseline_complex_share</span> and <span class="amd-bold">current_complex_share</span> as averages of \`share_complex_orders\` over baseline/current days.
+<span class="amd-bullet">-</span> <span class="amd-bold">complex_share_delta_observed</span> = current_complex_share − baseline_complex_share.
+
+<span class="amd-heading">## Driver Qualification (Binary Flags)</span>
+<span class="amd-bullet">-</span> Set <span class="amd-bold">exceptions_driver = true</span> if \`exceptions_delta_observed &gt;= {exceptions_delta_per_100}\`.
+<span class="amd-bullet">-</span> Set <span class="amd-bold">order_mix_driver = true</span> if either:
+  <span class="amd-bullet">-</span> \`avg_lines_delta_observed &gt;= {avg_lines_delta}\`, <span class="amd-bold">or</span>
+  <span class="amd-bullet">-</span> \`complex_share_delta_observed &gt;= {complex_share_delta}\`.
+<span class="amd-bullet">-</span> If both are true, keep both as contributing drivers (do not force a single attribution).
+
+<span class="amd-heading">## Severity Scoring (For Downstream Ranking)</span>
+Create a structured “driver evidence” object with:
+
+<span class="amd-heading">### Exceptions</span>
+<span class="amd-bullet">-</span> baseline/current rates and delta.
+<span class="amd-bullet">-</span> <span class="amd-bold">severity_score_exceptions</span> = \`max(0, exceptions_delta_observed) / {exceptions_delta_per_100}\`.
+
+<span class="amd-heading">### Mix</span>
+<span class="amd-bullet">-</span> baseline/current \`avg_lines_per_order\` and \`share_complex_orders\`, plus both deltas.
+<span class="amd-bullet">-</span> <span class="amd-bold">severity_score_mix</span> =  
+  \`max(0, max( avg_lines_delta_observed / {avg_lines_delta}, complex_share_delta_observed / {complex_share_delta} ))\`.
+
+<span class="amd-heading">## Edge Cases &amp; Data Quality Flags</span>
+<span class="amd-bullet">-</span> <span class="amd-bold">Zero/undefined rate days</span>: if a day indicates zero orders or the rate is null/undefined, <span class="amd-bold">exclude that day from exception-rate averaging</span> and note that exception-rate confidence is reduced if many days are excluded.
+<span class="amd-bullet">-</span> <span class="amd-bold">Missing alignment across tables</span>: if a day exists in one result set but not the other, compute each driver using the days available for that driver; do not fabricate missing days.
+<span class="amd-bullet">-</span> <span class="amd-bold">Insufficient days</span>: if baseline or current has only <span class="amd-bold">1 day</span>, set <span class="amd-bold">confidence = "low"</span> and avoid causal language; still output deltas and scores.
+<span class="amd-bullet">-</span> <span class="amd-bold">Empty results</span>:
+  <span class="amd-bullet">-</span> If both result sets are empty, return evidence indicating <span class="amd-bold">no data</span> and set both drivers to false with confidence “low.”
+  <span class="amd-bullet">-</span> If only one set is empty, evaluate only the available driver and mark the other as “no data.”
+<span class="amd-bullet">-</span> <span class="amd-bold">Directionality</span>: negative deltas mean improvement; keep the delta values but they should yield <span class="amd-bold">0 severity</span> due to the \`max(0, …)\` rule and should not trigger driver flags.
+
+<span class="amd-heading">## Output Format Requirements</span>
+Return a single structured driver-evidence payload suitable for downstream ranking, containing at minimum:
+<span class="amd-bullet">-</span> \`exceptions\`: baseline, current, delta, flag, severity_score
+<span class="amd-bullet">-</span> \`mix\`: baseline, current, deltas, flag, severity_score
+<span class="amd-bullet">-</span> \`confidence\`: \`"low"\` or \`"normal"\` based on day-count sufficiency and exclusions
+<span class="amd-bullet">-</span> brief notes array capturing any edge-case handling (e.g., excluded days, missing tables, very small sample).
+`
+  },
+  {
+    num: 3, title: "Driver Brief", colorBg: "rgba(124,92,252,0.12)", colorFg: "#7c5cfc",
+    logic: "This step normalizes the severity of each signal so routing, exceptions, and order mix can be compared on one ranked list. It converts the underlying metrics into a short manager-facing brief that states the size of the productivity drop, the estimated contribution of each driver, and the specific evidence supporting each one. That removes the manual synthesis work coordinators usually do under time pressure.",
+    query: ``,
+    output: "",
+    analysis: `<span class="amd-heading"># Produce ranked driver brief</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Synthesizes the detected productivity drop and driver signals into a concise shift-ready briefing that cites the key numbers and highlights the most affected zones.
+
+<span class="amd-heading">## Inputs Assumed Present</span>
+You already have:
+<span class="amd-bullet">-</span> The zone-level productivity findings (material drop flags, baseline vs current lines_per_hour, path km deltas, and impact_weight).
+<span class="amd-bullet">-</span> The exceptions and order-mix driver evidence (baseline/current, deltas, severity scores, and confidence notes if any).
+
+<span class="amd-heading">## Ranking Narrative (no new calculations beyond normalization)</span>
+<span class="amd-bullet">-</span> Normalize the three driver severity scores to sum to 100%:
+  <span class="amd-bullet">-</span> routing_score from path_km_delta_observed (use the top impacted zone's path_km_delta_observed divided by {path_km_delta}, floored at 0).
+  <span class="amd-bullet">-</span> exceptions_score from exceptions severity score.
+  <span class="amd-bullet">-</span> mix_score from mix severity score.
+<span class="amd-bullet">-</span> If any driver is not flagged, set its score to 0 before normalization.
+<span class="amd-bullet">-</span> If all scores are 0: state that no clear driver signal emerged despite the productivity change and recommend verifying data quality / staffing anomalies.
+
+<span class="amd-heading">## Briefing Format (bullet artifact)</span>
+Produce:
+<span class="amd-bullet">-</span> Overall: one line with direction and magnitude (use the most impacted zone(s) to anchor; cite baseline vs current lines/hour).
+<span class="amd-bullet">-</span> Ranked drivers: 1–3 bullets, each with:
+  <span class="amd-bullet">-</span> Driver label (Routing/bin, Exceptions, Order mix)
+  <span class="amd-bullet">-</span> Percent contribution (normalized score)
+  <span class="amd-bullet">-</span> 1–2 evidence citations (numbers: path km baseline→current and zones; exceptions per 100 baseline→current; avg lines baseline→current)
+<span class="amd-bullet">-</span> Evidence note: explicitly name top affected zones (up to 2) and why they matter (impact_weight and path increase).
+
+<span class="amd-heading">## Tone and Audience</span>
+<span class="amd-bullet">-</span> Write for a store ops lead and the next shift coordinator: concise, operational, non-technical.
+<span class="amd-bullet">-</span> Avoid blaming language; focus on observable constraints and levers.
+`
+  },
+  {
+    num: 4, title: "Shift Actions", colorBg: "rgba(52,211,153,0.12)", colorFg: "#34d399",
+    logic: "This step applies predefined action rules to the top-ranked drivers so the coordinator receives practical next moves instead of just diagnostics. If routing is dominant, it recommends zone batching and replenishment support; if exceptions dominate, it recommends substitution and triage steps; if order mix dominates, it recommends fast-lane handling and staffing rebalance. The coordinator still decides whether to execute, sequence, or override those actions based on staffing realities and service commitments.",
+    query: ``,
+    output: "",
+    analysis: `<span class="amd-heading"># Recommend next actions for the next shift window</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Maps the ranked drivers into a prioritized set of concrete actions to execute within the next shift-hours horizon, with owners and expected immediate effect.
+
+<span class="amd-heading">## Inputs Assumed Present</span>
+You already have the ranked driver list with contribution percentages and supporting evidence, plus the named top impacted zones.
+
+<span class="amd-heading">## Action Selection Rules</span>
+<span class="amd-bullet">-</span> Produce exactly 3 actions, ranked by the driver contribution order.
+<span class="amd-bullet">-</span> For each action, include: action, where (zone or process), owner role, and why-now evidence (cite one metric).
+<span class="amd-bullet">-</span> Apply these mappings:
+  <span class="amd-bullet">-</span> If Routing/bin is ranked #1:
+    <span class="amd-bullet">-</span> Action: "Switch to keep-zone batching for the top 1–2 impacted zones and temporarily avoid cross-zone batching."
+    <span class="amd-bullet">-</span> Action: "Assign a replenishment runner to those zones for the next {next_shift_hours} hours; focus on fast movers driving OOS."
+    <span class="amd-bullet">-</span> Add a quick check: "Verify bin map/slotting updates or recent resets affecting the zone."
+  <span class="amd-bullet">-</span> If Exceptions is ranked #1 or #2:
+    <span class="amd-bullet">-</span> Action: "Stand up an exception triage role (1 associate) to handle OOS/damage quickly to reduce re-pick loops."
+    <span class="amd-bullet">-</span> Action: "Pre-approve substitutions for the highest-frequency OOS categories/SKUs (top list based on observed exception_type mix)."
+  <span class="amd-bullet">-</span> If Order mix is ranked #1 or #2:
+    <span class="amd-bullet">-</span> Action: "Fast-lane low-line orders (e.g., small baskets) to prevent queue buildup; assign one picker to small orders."
+    <span class="amd-bullet">-</span> Action: "Rebalance staffing away from low-impact zones toward the top impacted zones during the horizon."
+
+<span class="amd-heading">## Guardrails and Edge Cases</span>
+<span class="amd-bullet">-</span> If confidence was marked "low" in upstream evidence, phrase actions as "trial with tight feedback loop" and include a check-in time at half of {next_shift_hours}.
+<span class="amd-bullet">-</span> If no driver signals were flagged (all contributions 0%): recommend "data validation + observe 30–60 minutes" actions only (e.g., confirm staffing, device issues, batch config), still capped at 3 actions.
+
+<span class="amd-heading">## Output Format</span>
+<span class="amd-bullet">-</span> Return a shift-ready checklist with:
+  <span class="amd-bullet">-</span> "Top driver and why" (one sentence)
+  <span class="amd-bullet">-</span> "Actions (next {next_shift_hours} hours)" (3 bullets)
+  <span class="amd-bullet">-</span> "What to watch" (2 metrics to monitor: lines/hour and the top driver's evidence metric)
+`
+  }
+];
+
+      let activeStep = null;
+
+      function showStepDetail(idx) {
+        const s = STEPS[idx];
+        if (!s) return;
+        document.querySelectorAll('.agent-step').forEach((el, i) => {
+          el.classList.toggle('step-active', i === idx);
+        });
+        document.getElementById('sd-num').textContent   = s.num;
+        document.getElementById('sd-num').style.background = s.colorBg;
+        document.getElementById('sd-num').style.color      = s.colorFg;
+        document.getElementById('sd-title').textContent = s.title;
+        document.getElementById('sd-logic').innerHTML    = s.logic;
+        document.getElementById('sd-query').textContent  = s.query;
+        document.getElementById('sd-output').innerHTML = s.output;
+        document.getElementById('sd-analysis').innerHTML = s.analysis;
+        const panel = document.getElementById('step-detail-panel');
+        panel.classList.add('visible');
+        document.getElementById('step-click-hint').style.display = 'none';
+        activeStep = idx;
+      }
+
+      function closeStepDetail() {
+        document.getElementById('step-detail-panel').classList.remove('visible');
+        document.getElementById('step-click-hint').style.display = '';
+        document.querySelectorAll('.agent-step').forEach(el => el.classList.remove('step-active'));
+        activeStep = null;
+      }
+
+      // ── Playground data ───────────────────────────────────────────────────
+      const EXAMPLES = [
+  {
+    prompt: "For store S0421 in region North from 2026-03-06 to 2026-03-12, what are the ranked drivers of the pick productivity decline for CURBSIDE, and what should we change in the next 4 hours?",
+    responseHtml: `<div class="pg-narrative-summary">Pick productivity fell to <span class="pg-narrative-deviation">30.0 lines/hour</span> from <span class="pg-narrative-normal">38.4 lines/hour</span>, a 21.9% decline over the comparison window.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Routing and bin disruption</span>
+        — attributed <span class="pg-narrative-item-pct">45%</span>
+        of delayed orders. Average path distance increased from 0.41 km to 0.70 km, with the largest impact concentrated in zones A3 and A4.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Exception rework</span>
+        — attributed <span class="pg-narrative-item-pct">30%</span>
+        of delayed orders. Exceptions per 100 orders increased from 4.2 to 8.6, indicating materially more interruption and re-pick activity.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Order mix complexity</span>
+        — attributed <span class="pg-narrative-item-pct">25%</span>
+        of delayed orders. Average lines per order increased from 4.9 to 6.2, which reduced throughput even without a staffing change.</div>
+      </div><div class="pg-narrative-action">&#9658; Re-route picks into keep-zone batches for A3 and A4, assign a replenishment runner to those zones, pre-approve substitutions for recurring OOS items, and fast-lane low-line orders during the next 4 hours.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Store update: CURBSIDE productivity is running at 30.0 lines/hour versus 38.4 lines/hour baseline. The primary drivers are longer pick paths in A3/A4, higher exception volume, and larger orders, so the immediate plan is zone batching, replenishment support, substitution pre-approval, and a fast lane for small orders.
+      </div>`
+  },
+  {
+    prompt: "For store S0421 in region North on 2026-03-12, why did CURBSIDE pick productivity in zone A4 drop to 30.0 lines per hour, and what should the coordinator change before the next shift handoff?",
+    responseHtml: `<div class="pg-narrative-summary">Zone A4 operated at 30.0 lines/hour versus the 38.4 lines/hour baseline, with the strongest deviation coming from a path-distance increase to 0.70 km.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Routing and slotting friction</span>
+        — attributed <span class="pg-narrative-item-pct">50%</span>
+        of delayed orders. The path-distance jump from 0.41 km to 0.70 km aligns directly with the zone-level throughput decline.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Exception load</span>
+        — attributed <span class="pg-narrative-item-pct">28%</span>
+        of delayed orders. Exception intensity rose to 8.6 per 100 orders, adding avoidable interruption during active picking.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Higher line-count orders</span>
+        — attributed <span class="pg-narrative-item-pct">22%</span>
+        of delayed orders. Average lines per order reached 6.2, which reduced per-hour order completion speed.</div>
+      </div><div class="pg-narrative-action">&#9658; Prioritize A4 keep-zone batching, verify recent bin-map or replenishment issues in that zone, and assign one associate as a runner so active pickers are not absorbing replenishment travel.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Shift handoff note: A4 is the main source of today’s slowdown. Travel distance rose to 0.70 km per order and is the leading explanation for the drop, so we are holding A4 picks in tighter batches and adding runner support before the next shift starts.
+      </div>`
+  },
+  {
+    prompt: "Compare store S0421 in region North for CURBSIDE on 2026-03-06 versus 2026-03-12 and tell me whether exceptions or order mix are materially contributing to the productivity decline.",
+    responseHtml: `<div class="pg-narrative-summary">Both secondary drivers worsened: exceptions increased to 8.6 per 100 orders from 4.2, and average lines per order increased to 6.2 from 4.9.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Exception rework</span>
+        — attributed <span class="pg-narrative-item-pct">32%</span>
+        of delayed orders. The move from 13 exceptions on 310 orders to 31 exceptions on 360 orders indicates materially more interruption and resolution work.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Order complexity</span>
+        — attributed <span class="pg-narrative-item-pct">27%</span>
+        of delayed orders. Average lines per order increased from 4.9 to 6.2, and share of complex orders rose from 0.22 to 0.35.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">3</div>
+        <div><span class="pg-narrative-item-station">Routing carryover</span>
+        — attributed <span class="pg-narrative-item-pct">41%</span>
+        of delayed orders. These secondary drivers matter, but the largest overall signal still comes from the concurrent path-distance increase.</div>
+      </div><div class="pg-narrative-action">&#9658; Treat exceptions as a meaningful co-driver by pre-approving substitutions for the top recurring OOS items and assigning one person to exception triage while small orders are moved through a fast lane.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Leadership update: The slowdown is not only a routing issue. Exception intensity roughly doubled and order complexity also increased, so the corrective plan should include substitution governance and a separate exception triage role alongside routing changes.
+      </div>`
+  }
+];
+
+      let pgActive = false;
+
+      let _pgTypewriteTimer = null;
+
+      function _pgTypewrite(el, fullHtml, onDone) {
+        // Extract plain text from the HTML for character animation
+        const tmp = document.createElement('div');
+        tmp.innerHTML = fullHtml;
+        const plainText = tmp.textContent || tmp.innerText || '';
+        let i = 0;
+        el.textContent = '';
+        _pgTypewriteTimer = setInterval(() => {
+          el.textContent += plainText[i];
+          i++;
+          if (i >= plainText.length) {
+            clearInterval(_pgTypewriteTimer);
+            _pgTypewriteTimer = null;
+            // Restore full HTML (with highlight spans etc.) after typing
+            el.innerHTML = fullHtml;
+            if (onDone) onDone();
+          }
+        }, 26);
+      }
+
+      function runQuery(idx) {
+        const ex = EXAMPLES[idx];
+        if (!ex) return;
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = true;
+        document.getElementById('pg-examples').style.display = 'none';
+        const msgs = document.getElementById('pg-messages');
+        msgs.style.display = 'flex';
+        msgs.innerHTML = `
+          <div class="pg-message">
+            <div class="pg-message-header"><div class="pg-message-icon user">U</div> You</div>
+            <div class="pg-message-bubble user">${ex.prompt}</div>
+          </div>
+          <div class="pg-message" id="pg-loading">
+            <div class="pg-status-loading"><div class="pg-spinner"></div> Running workflow&hellip;</div>
+          </div>`;
+        document.getElementById('pg-reset-btn').style.display = 'inline';
+
+        setTimeout(() => {
+          const loading = document.getElementById('pg-loading');
+          if (loading) loading.remove();
+
+          // Build the agent message container
+          const agentMsg = document.createElement('div');
+          agentMsg.className = 'pg-message';
+          agentMsg.innerHTML = `
+            <div class="pg-message-header"><div class="pg-message-icon agent">A</div> Agent</div>
+            <div class="pg-message-bubble agent" id="pg-resp-bubble"></div>`;
+          msgs.appendChild(agentMsg);
+
+          const bubble = document.getElementById('pg-resp-bubble');
+
+          // Parse response HTML into child blocks
+          const tmp = document.createElement('div');
+          tmp.innerHTML = ex.responseHtml;
+          const blocks = Array.from(tmp.children);
+
+          if (!blocks.length) {
+            bubble.innerHTML = ex.responseHtml;
+            return;
+          }
+
+          // First block: typewrite plain-text, then restore HTML
+          const firstEl = blocks[0].cloneNode(true);
+          bubble.appendChild(firstEl);
+          _pgTypewrite(firstEl, blocks[0].innerHTML, () => {
+            // Fade in remaining blocks with stagger
+            blocks.slice(1).forEach((block, i) => {
+              const el = block.cloneNode(true);
+              el.style.opacity = '0';
+              el.style.transition = 'opacity 0.35s ease';
+              bubble.appendChild(el);
+              setTimeout(() => { el.style.opacity = '1'; }, 160 * (i + 1));
+            });
+          });
+        }, 900);
+      }
+
+      function resetPlayground() {
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = false;
+        document.getElementById('pg-examples').style.display = '';
+        document.getElementById('pg-messages').style.display = 'none';
+        document.getElementById('pg-messages').innerHTML = '';
+        document.getElementById('pg-reset-btn').style.display = 'none';
+      }
+
+      // AOS init
+      AOS.init({ duration: 600, once: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <title>Driver Narratives for Route Changes | Decision Intelligence Demo | Patterson Consulting</title>
+    <meta name="description" content="Last-mile route planners spend time manually explaining daily route changes to drivers and carrier partners. This Decision Intelligence workflow turns route plan differences and operational signals into clear driver instructions for a specific plan and date.">
+    <meta name="keywords" content="last-mile route planner, logistics, route plan adjustments, driver communications, dispatch operations, route change narrative, stop-level analysis, delivery compliance, operational signals, daily route planning">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Driver Narratives for Route Changes | Decision Intelligence Demo | Patterson Consulting" />
+    <meta property="og:description" content="When daily route plans change, planners often have to explain reorders, reassignments, and delays one driver at a time. This workflow assembles the changes, attributes likely causes, and produces a consistent driver-facing narrative with next actions." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/ar_example_header_0.jpg"/>
+
+    <!-- KWF traceability -->
+    <meta name="kwf:workspace"      content="home-depot">
+    <meta name="kwf:candidate-path" content="cognitive_labor_workspaces/home-depot/cognitive_labor_candidates/logistics-and-fulfillment/last-mile-route-planner/candidate_003_daily-route-plan-operational-narrative.md">
+    <meta name="kwf:agent-config"   content="end-to-end-fulfillment-reliability_logistics-and-fulfillment_last-mile-route-planner_candidate-003-daily-route-plan-operational-narrative">
+    <meta name="kwf:fa-slug"        content="end-to-end-fulfillment-reliability">
+    <meta name="kwf:division-slug"  content="logistics-and-fulfillment">
+    <meta name="kwf:role-slug"      content="last-mile-route-planner">
+    <meta name="kwf:generated-at"   content="2026-04-28T12:31:48.564497+00:00">
+
+    <link rel='manifest' href='../../../../alpha_manifest.json'>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <script src="../../../../assets/js/theme-switcher.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" id="google-font">
+
+    <link rel="stylesheet" media="screen" href="../../../../assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="../../../../assets/icons/around-icons.min.css">
+    <link rel="stylesheet" media="screen" href="../../../../assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading { position:fixed; top:0; right:0; bottom:0; left:0; width:100%; height:100%; transition:all .4s .2s ease-in-out; background-color:#fff; opacity:0; visibility:hidden; z-index:9999; }
+      [data-bs-theme="dark"] .page-loading { background-color:#121519; }
+      .page-loading.active { opacity:1; visibility:visible; }
+      .page-loading-inner { position:absolute; top:50%; left:0; width:100%; text-align:center; transform:translateY(-50%); transition:opacity .2s ease-in-out; opacity:0; }
+      .page-loading.active > .page-loading-inner { opacity:1; }
+      .page-loading-inner > span { display:block; font-family:"Inter",sans-serif; font-size:1rem; font-weight:normal; color:#6f788b; }
+      .page-spinner { display:inline-block; width:2.75rem; height:2.75rem; margin-bottom:.75rem; vertical-align:text-bottom; background-color:#d7dde2; border-radius:50%; opacity:0; animation:spinner .75s linear infinite; }
+      @keyframes spinner { 0% { transform:scale(0); } 50% { opacity:1; transform:none; } }
+      .layer-bar-track { height:28px; border-radius:6px; overflow:hidden; display:flex; margin:0.4rem 0; }
+      .layer-bar-exec { background-color:#adb5bd; }
+      .layer-bar-judgment { background-color:#ff9500; }
+      .layer-bar-strategic { background-color:#198754; }
+      .layer-legend-dot { display:inline-block; width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+      .result-metric { border-left:4px solid var(--bs-primary); padding-left:1.25rem; }
+      .result-metric .metric-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#6f788b; margin-bottom:0.25rem; }
+      .result-metric .metric-value { font-size:2.2rem; font-weight:800; line-height:1.1; color:#121519; }
+      .result-metric .metric-sub { font-size:0.875rem; color:#6f788b; margin-top:0.2rem; }
+      .result-metric.positive .metric-value { color:#198754; }
+      .result-metric.highlight .metric-value { color:var(--bs-primary); }
+      .agent-pipeline { display:flex; gap:0; align-items:stretch; margin:0; }
+      .agent-step { flex:1; text-align:center; position:relative; padding:1.25rem 0.75rem; display:flex; flex-direction:column; align-items:center; cursor:pointer; border-radius:0.5rem; transition:background 0.15s, box-shadow 0.15s; }
+      .agent-step:hover { background:rgba(79,127,255,0.07); }
+      .agent-step.step-active { background:rgba(79,127,255,0.1); box-shadow:inset 0 0 0 2px rgba(79,127,255,0.5); }
+      .agent-step:not(:last-child)::after { content:'›'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:1.5rem; color:#adb5bd; z-index:1; line-height:1; pointer-events:none; }
+      .agent-step-num { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; margin-bottom:0.6rem; flex-shrink:0; transition:transform 0.15s; }
+      .agent-step.step-active .agent-step-num { transform:scale(1.1); }
+      .agent-step-title { font-size:0.82rem; font-weight:700; margin-bottom:0.35rem; }
+      .agent-step-body { font-size:0.75rem; color:#6f788b; line-height:1.4; }
+      .step-click-hint { font-size:0.7rem; color:#adb5bd; font-style:italic; text-align:center; margin-top:0.5rem; }
+      .step-detail-panel { border-top:1px solid #e5e7eb; padding:1.5rem 1.5rem 1.25rem; display:none; }
+      .step-detail-panel.visible { display:block; }
+      .step-detail-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; }
+      .step-detail-num { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; }
+      .step-detail-title { font-size:1rem; font-weight:700; color:#111827; }
+      .step-detail-close { margin-left:auto; background:none; border:none; padding:0.25rem 0.5rem; color:#9ca3af; cursor:pointer; font-size:0.8rem; border-radius:4px; transition:color 0.12s,background 0.12s; }
+      .step-detail-close:hover { color:#374151; background:#f3f4f6; }
+      .step-detail-sections { display:flex; flex-direction:column; gap:1.25rem; }
+      .step-detail-top-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      @media (max-width:768px) { .step-detail-top-row { grid-template-columns:1fr; } }
+      .step-detail-section-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#6b7280; margin-bottom:0.5rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.35rem; }
+      .step-detail-logic { font-size:0.82rem; color:#374151; line-height:1.6; }
+      .step-detail-output { overflow-x:auto; }
+      .sd-result-wrap { border:1px solid #3c3c3c; border-radius:0.375rem; overflow:hidden; background:#1e1e1e; }
+      .sd-result-scroll { overflow-x:auto; }
+      .sd-result-table { border-collapse:collapse; width:100%; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; background:#1e1e1e; color:#d4d4d4; white-space:nowrap; }
+      .sd-result-table th { background:#2d2d2d; color:#569cd6; font-weight:600; padding:0.3rem 0.75rem; text-align:left; border-bottom:1px solid #3c3c3c; border-right:1px solid #333; }
+      .sd-result-table th:last-child { border-right:none; }
+      .sd-result-table td { padding:0.28rem 0.75rem; border-bottom:1px solid #252526; border-right:1px solid #282828; vertical-align:top; }
+      .sd-result-table td:last-child { border-right:none; }
+      .sd-result-table tr:last-child td { border-bottom:none; }
+      .sd-result-table tbody tr:nth-child(even) td { background:#252526; }
+      .sd-result-footer { font-size:0.66rem; color:#6a9955; padding:0.28rem 0.75rem; border-top:1px solid #3c3c3c; background:#1a1a1a; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; }
+      .sd-result-pre { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .step-detail-query { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; height:100%; box-sizing:border-box; }
+      .step-detail-analysis { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.72rem; line-height:1.65; border-radius:0.375rem; padding:0.875rem 1rem; overflow-x:auto; overflow-y:auto; max-height:240px; white-space:pre-wrap; border:1px solid #3c3c3c; margin:0; }
+      .amd-heading { color:#dcdcaa; font-weight:700; } .amd-bold { color:#9cdcfe; font-weight:600; } .amd-bullet { color:#569cd6; }
+      .code-block { background:#1e1e1e; color:#d4d4d4; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.82rem; line-height:1.7; border-radius:0.5rem; padding:1.25rem 1.5rem; overflow-x:auto; white-space:pre; border:1px solid #3c3c3c; margin:0; }
+      .code-keyword { color:#569cd6; } .code-function { color:#dcdcaa; } .code-string { color:#ce9178; }
+      .code-comment { color:#6a9955; font-style:italic; } .code-number { color:#b5cea8; } .code-type { color:#4ec9b0; }
+      .pg-shell { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.07); font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      .pg-header { background:#ffffff; border-bottom:1px solid #e5e7eb; padding:0.75rem 1.25rem; display:flex; align-items:center; gap:0.625rem; }
+      .pg-header-icon { width:28px; height:28px; border-radius:6px; background:#ede9fe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-header-icon svg { width:14px; height:14px; }
+      .pg-header-title { font-size:0.875rem; font-weight:600; color:#111827; }
+      .pg-header-sep { color:#d1d5db; margin:0 0.125rem; font-size:0.875rem; }
+      .pg-agent-tag { font-size:0.72rem; font-weight:600; color:#6b7280; letter-spacing:0.02em; }
+      .pg-header-actions { margin-left:auto; display:flex; align-items:center; gap:0.5rem; }
+      .pg-kwf-badge { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.2rem 0.625rem; font-size:0.68rem; font-weight:600; color:#b45309; letter-spacing:0.04em; }
+      .pg-conversation { padding:1.25rem; min-height:200px; }
+      .pg-examples-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin-bottom:0.75rem; }
+      .pg-example-card { background:#ffffff; border:1px solid #e5e7eb; border-radius:0.625rem; padding:0.875rem 1rem; display:flex; align-items:center; gap:0.875rem; cursor:pointer; transition:box-shadow 0.15s,border-color 0.15s; margin-bottom:0.625rem; text-align:left; width:100%; }
+      .pg-example-card:hover { box-shadow:0 4px 8px rgba(0,0,0,0.07); border-color:#d1d5db; }
+      .pg-example-icon { width:32px; height:32px; border-radius:8px; background:#eff6ff; border:1px solid #dbeafe; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .pg-example-content { flex:1; min-width:0; }
+      .pg-example-title { font-size:0.82rem; font-weight:600; color:#111827; margin-bottom:0.2rem; }
+      .pg-example-prompt { font-size:0.78rem; color:#6b7280; line-height:1.45; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .pg-try-btn { flex-shrink:0; padding:0.35rem 0.875rem; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; font-size:0.78rem; font-weight:500; color:#374151; cursor:pointer; transition:background 0.12s,border-color 0.12s; white-space:nowrap; }
+      .pg-try-btn:hover { background:#f3f4f6; border-color:#d1d5db; }
+      .pg-messages { display:flex; flex-direction:column; gap:1rem; }
+      .pg-message { display:flex; flex-direction:column; gap:0.5rem; }
+      .pg-message-header { display:flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; color:#374151; }
+      .pg-message-icon { width:22px; height:22px; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; }
+      .pg-message-icon.user { background:#dbeafe; color:#1d4ed8; } .pg-message-icon.agent { background:#ede9fe; color:#7c3aed; }
+      .pg-message-bubble { border-radius:0.625rem; padding:0.75rem 1rem; font-size:0.875rem; line-height:1.6; color:#111827; }
+      .pg-message-bubble.user { background:#f0f9ff; border:1px solid #bfdbfe; } .pg-message-bubble.agent { background:#ffffff; border:1px solid #e5e7eb; }
+      .pg-status-loading { background:#fffbeb; border:1px solid #fde68a; border-radius:0.5rem; padding:0.625rem 1rem; font-size:0.82rem; color:#92400e; display:flex; align-items:center; gap:0.5rem; }
+      .pg-spinner { width:13px; height:13px; border:2px solid rgba(146,64,14,0.2); border-top-color:#92400e; border-radius:50%; animation:pgSpin 0.75s linear infinite; flex-shrink:0; }
+      @keyframes pgSpin { to { transform:rotate(360deg); } }
+      .pg-narrative-summary { margin-bottom:0.75rem; font-size:0.875rem; color:#111827; line-height:1.6; }
+      .pg-narrative-deviation { color:#b45309; font-weight:700; } .pg-narrative-normal { color:#15803d; font-weight:700; } .pg-narrative-ok { color:#15803d; font-weight:700; }
+      .pg-narrative-factors-label { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#6b7280; margin:0.625rem 0 0.5rem; }
+      .pg-narrative-item { display:flex; gap:0.625rem; align-items:flex-start; margin-bottom:0.4rem; font-size:0.875rem; line-height:1.55; color:#374151; }
+      .pg-narrative-item-num { flex-shrink:0; width:18px; height:18px; border-radius:50%; background:#eff6ff; border:1px solid #bfdbfe; font-size:0.68rem; font-weight:800; color:#1d4ed8; display:flex; align-items:center; justify-content:center; margin-top:0.15rem; }
+      .pg-narrative-item-station { font-weight:700; color:#111827; } .pg-narrative-item-pct { color:#dc2626; font-weight:700; }
+      .pg-narrative-action { margin-top:0.75rem; padding:0.5rem 0.75rem; background:#fffbeb; border:1px solid #fde68a; border-radius:0.4rem; font-size:0.82rem; color:#92400e; line-height:1.55; }
+      .pg-narrative-comms { margin-top:0.625rem; padding:0.625rem 0.875rem; background:#f0f9ff; border:1px solid #bae6fd; border-radius:0.4rem; font-size:0.82rem; color:#0369a1; line-height:1.55; font-style:italic; }
+      .pg-narrative-comms-label { font-style:normal; font-weight:700; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:#0369a1; margin-bottom:0.2rem; }
+      .pg-footer { border-top:1px solid #f3f4f6; padding:0.625rem 1.25rem; background:#fafafa; display:flex; align-items:center; gap:0.75rem; font-size:0.72rem; color:#9ca3af; }
+      .pg-reset-btn { background:none; border:none; padding:0; color:#2563eb; font-size:0.78rem; cursor:pointer; text-decoration:underline; white-space:nowrap; margin-left:auto; display:none; }
+      .pg-reset-btn:hover { color:#1d4ed8; }
+      .lob-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.18); border-radius:0.625rem; padding:0.875rem 1.125rem; margin-bottom:1.5rem; font-size:0.875rem; color:#374151; line-height:1.6; display:flex; gap:0.75rem; align-items:flex-start; }
+      .lob-callout-icon { flex-shrink:0; font-size:1rem; margin-top:0.1rem; }
+      .value-hero-card { background:linear-gradient(135deg,rgba(25,135,84,0.08),rgba(25,135,84,0.03)); border:1.5px solid rgba(25,135,84,0.25); border-radius:0.75rem; padding:1.5rem 2rem; }
+      .workflow-callout { background:linear-gradient(135deg,rgba(var(--bs-primary-rgb),0.07),rgba(var(--bs-primary-rgb),0.03)); border-radius:0.75rem; padding:1.25rem 1.5rem; border-left:4px solid var(--bs-primary); }
+      .strategic-callout { background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(37,99,235,0.02)); border:1px solid rgba(37,99,235,0.15); border-radius:0.75rem; padding:1.25rem 1.5rem; }
+      .section-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#ff9500; margin-bottom:0.5rem; }
+      .kwf-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(255,149,0,0.08); border:1px solid rgba(255,149,0,0.2); border-radius:999px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; color:#ff9500; letter-spacing:0.04em; }
+      .schema-meta { background:#f8f9fa; border-radius:0.5rem; padding:0.875rem 1rem; margin-bottom:1rem; font-size:0.82rem; line-height:1.6; color:#374151; }
+      .schema-meta strong { color:#111827; }
+      /* ── Mobile: pipeline stack (raised from 575px to cover all phone viewports) ── */
+      @media (max-width:767px) {
+        .agent-pipeline { flex-direction:column; gap:0.75rem; }
+        .agent-step:not(:last-child)::after { content:'↓'; position:static; transform:none; display:block; margin-top:0.25rem; font-size:1.2rem; }
+        .agent-step { border-radius:0.5rem; background:#f8f9fa; }
+        .step-detail-query { white-space:pre-wrap; word-break:break-all; height:auto; }
+        .code-block { white-space:pre-wrap; word-break:break-all; font-size:0.68rem; }
+      }
+      /* ── Mobile: playground card + header ── */
+      .pg-header { flex-wrap:wrap; }
+      @media (max-width:575px) {
+        .pg-example-prompt { white-space:normal; }
+        .pg-try-btn { display:none; }
+        .pg-header-actions { width:100%; margin-top:0.375rem; }
+        .display-4 { font-size:2.2rem !important; }
+        .value-hero-card { padding:1.25rem; }
+      }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+  </head>
+
+  <body>
+    <noscript><iframe src='https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9' height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript>
+
+    <div class="page-loading active">
+      <div class="page-loading-inner"><div class="page-spinner"></div><span>Loading...</span></div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- NAVBAR -->
+      <header data-bs-theme="dark">
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+            <a class="navbar-brand pe-sm-3" href="../../../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459,0,0,-0.00433,-8154.369629,-2022.807495)" fill="#000000" stroke="none" style="transform-origin:8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill:rgb(255,149,0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill:rgb(255,149,0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../../../contact_us.html" target="_blank" rel="noopener">Contact Us</a>
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height:520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image:url(../../../../assets/img/ar_example_header_0.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+          <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb" style="font-size:0.78rem;opacity:0.7;"><li class="breadcrumb-item text-light">Decision Intelligence</li><li class="breadcrumb-item text-light">Logistics: Last-Mile Delivery Operations</li><li class="breadcrumb-item text-light">Daily Route Planning and Dispatch</li></ol>
+          </nav>
+          <div class="col-lg-8">
+            <h1 class="display-4 mb-3">Explain Daily Route Changes</h1>
+            <p class="text-body fs-lg mb-4">When a delivery plan changes before dispatch, the last-mile route planner has to explain what moved, why it changed, and what each driver should do next. This workflow compiles route changes, attributes likely operational causes, and produces a driver-ready narrative for a specific plan and date.</p>
+            <p class="text-body fs-lg mb-4">Planner judgment stays intact; the workflow removes the execution work of collecting changes, matching causes, and formatting instructions. The estimated impact is $27,300 per year in hard savings from compressing this work by 50%.</p>
+            <div class="d-flex flex-wrap gap-3 mt-3">
+              <a class="btn btn-outline-light btn-lg" href="#value">See the Value Model</a>
+            </div>
+          </div>
+          <div class="d-none d-lg-block" style="height:80px;"></div>
+          <div class="d-lg-none" style="height:40px;"></div>
+        </div>
+      </section>
+
+      <!-- PLAYGROUND -->
+      <section class="container py-5" id="playground">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Interactive Demo</div>
+            <h2 class="h1 mb-2">See the Decision Intelligence Workflow in Action</h2>
+            <p class="text-muted mb-3">This workflow handles a compound communication task that planners usually do manually under time pressure. It identifies which stops changed from the original plan, links those changes to observable operating factors, and assembles a plain-language explanation that a driver can act on immediately. The result is a repeatable narrative instead of one-off calls, texts, and ad hoc notes.</p>
+            <div class="lob-callout">
+              <span class="lob-callout-icon">&#128100;</span>
+              <div>
+                Designed for line-of-business leaders — specifically the Last-Mile Route Planner who is accountable for dispatch clarity, driver compliance, and exception follow-through. It addresses the repetitive explanation work that sits between route changes and clean field execution.
+                <span style="display:block;margin-top:0.3rem;font-size:0.8rem;color:#6b7280;">
+                  Why this matters: <a href="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/information_for_line_of_business.html" target="_blank" rel="noopener" style="color:#2563eb;">What line-of-business leaders actually need from AI &rarr;</a>
+                </span>
+              </div>
+            </div>
+            <div class="pg-shell">
+              <div class="pg-header">
+                <div class="pg-header-icon">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L2.5 8H7L6 13L11.5 6H7L8 1Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0.5" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="pg-header-title">Decision Intelligence Playground</span>
+                <span class="pg-header-sep">·</span>
+                <span class="pg-agent-tag">Driver Narratives for Route Changes</span>
+                <div class="pg-header-actions">
+                  <span class="pg-kwf-badge">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5.5" stroke="#b45309"/><path d="M4 6l1.5 1.5L8 4" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    KWF Runtime
+                  </span>
+                </div>
+              </div>
+              <div class="pg-conversation" id="pg-conversation">
+                <div id="pg-examples">
+                  <div class="pg-examples-label">Start with an example</div>
+                  
+                  <button class="pg-example-card" onclick="runQuery(0)" id="ex-0">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(220,38,38)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(220,38,38)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Plan P001 — 2024-06-10 — 2 changed stops</div>
+                      <div class="pg-example-prompt">For daily route plan P001 on 2024-06-10, what are the key operational changes from the original plan, what factors drove these changes, and what actions should drivers take?</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(1)" id="ex-1">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(37,99,235)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(37,99,235)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Stop S01 — 2024-06-10 — reorder driven by traffic index 120</div>
+                      <div class="pg-example-prompt">Explain why stop S01 in plan P001 changed on 2024-06-10 and what instruction should be sent to the driver.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                  <button class="pg-example-card" onclick="runQuery(2)" id="ex-2">
+                    <div class="pg-example-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="3" rx="1" fill="rgb(5,150,105)" opacity="0.8"/>
+                        <rect x="2" y="7" width="9" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.5"/>
+                        <rect x="2" y="11" width="11" height="2" rx="1" fill="rgb(5,150,105)" opacity="0.3"/>
+                      </svg>
+                    </div>
+                    <div class="pg-example-content">
+                      <div class="pg-example-title">Stop S02 — 2024-06-10 — reassignment tied to customer unavailable</div>
+                      <div class="pg-example-prompt">For stop S02 on 2024-06-10 in plan P001, summarize the adjustment, identify the likely driver, and draft the message that should go to the assigned driver.</div>
+                    </div>
+                    <span class="pg-try-btn">Try</span>
+                  </button>
+                </div>
+                <div class="pg-messages" id="pg-messages" style="display:none;"></div>
+              </div>
+              <div class="pg-footer">
+                <span>Simulated output — KWF agent configuration + sample data. No live database.</span>
+                <button class="pg-reset-btn" id="pg-reset-btn" onclick="resetPlayground()">&#8592; Run another query</button>
+              </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mt-4 p-4 rounded-3" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+              <div class="flex-grow-1">
+                <div style="font-size:0.875rem;font-weight:700;color:#111827;margin-bottom:0.2rem;">Want to see this workflow on your route planning data?</div>
+                <div style="font-size:0.82rem;color:#6b7280;line-height:1.5;">In a working session, we map the route plan and stop-factor data needed for the narrative, walk through the logic that identifies changes and likely causes, and show the output your planners and drivers would receive. We'll show you this workflow running on your Databricks environment. The session is focused on data fit, operating logic, and where the time recovery sits for your team.</div>
+              </div>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_003_daily-route-plan-operational-narrative&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-primary flex-shrink-0" style="white-space:nowrap;">Schedule a Databricks Session</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">How It Works</div>
+              <h2 class="h1 mb-3">What the Decision Intelligence Workflow Does</h2>
+              <p class="text-muted mb-4">This workflow handles a compound communication task that planners usually do manually under time pressure. It identifies which stops changed from the original plan, links those changes to observable operating factors, and assembles a plain-language explanation that a driver can act on immediately. The result is a repeatable narrative instead of one-off calls, texts, and ad hoc notes.</p>
+              <p class="text-muted mb-4" style="font-size:0.875rem;"><strong>Click any step below</strong> to see the business logic, data query, and sample output for that step of the workflow.</p>
+              <div style="background:rgba(255,149,0,0.06);border:1px solid rgba(255,149,0,0.28);border-radius:0.625rem;padding:0.875rem 1.125rem;margin-bottom:1.5rem;font-size:0.875rem;color:#374151;line-height:1.65;display:flex;gap:0.75rem;align-items:flex-start;">
+                <span style="flex-shrink:0;margin-top:0.15rem;">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="#ff9500" stroke-width="1.5"/><path d="M5 7.5l2 2L10 5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><strong style="color:#111827;">Pre-specified logic, not runtime guessing</strong> — Most AI agent frameworks work by figuring things out on the fly. These Decision Intelligence workflows work differently. The Knowledge Work Foundry analyzes the cognitive labor pattern <em>before</em> deployment and encodes the decision logic directly into the configuration — which tables to query, which thresholds define a breach, how signals are ranked, and what the output artifact should contain. That analysis happens once. By the time the workflow runs, there is nothing left to figure out.</div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 pb-3">
+                  <div class="agent-pipeline">
+                    <div class="agent-step" id="wf-step-0" onclick="showStepDetail(0)">
+                      <div class="agent-step-num" style="background: rgba(79,127,255,0.12); color: #4f7fff;">1</div>
+                      <div class="agent-step-title">Detect Changes</div>
+                      <div class="agent-step-body">Compares the original and adjusted route plan to identify which stops changed and how they changed.</div>
+                    </div>
+                    <div class="agent-step" id="wf-step-1" onclick="showStepDetail(1)">
+                      <div class="agent-step-num" style="background: rgba(107,122,255,0.12); color: #6b7aff;">2</div>
+                      <div class="agent-step-title">Rank Causes</div>
+                      <div class="agent-step-body">Looks up operational signals for the changed stops and ranks the factors most likely driving the adjustments.</div>
+                    </div>
+                  </div>
+                  <div class="step-click-hint" id="step-click-hint">&#8593; click a step to explore the logic, query, and output</div>
+                </div>
+                <div class="step-detail-panel" id="step-detail-panel">
+                  <div class="step-detail-header">
+                    <div class="step-detail-num" id="sd-num" style="background:rgba(79,127,255,0.12);color:#4f7fff;">1</div>
+                    <div class="step-detail-title" id="sd-title">Step Detail</div>
+                    <button class="step-detail-close" onclick="closeStepDetail()" title="Close">&#10005; close</button>
+                  </div>
+                  <div class="step-detail-sections">
+                    <div class="step-detail-top-row">
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label">Business Logic</div>
+                        <div class="step-detail-logic" id="sd-logic"></div>
+                      </div>
+                      <div class="step-detail-section">
+                        <div class="step-detail-section-label" id="sd-query-label">Query / Instructions</div>
+                        <pre class="step-detail-query" id="sd-query"></pre>
+                      </div>
+                    </div>
+                    <div class="step-detail-output-row">
+                      <div class="step-detail-section-label">Sample Data Query Results</div>
+                      <div class="step-detail-output" id="sd-output"></div>
+                    </div>
+                    <div class="step-detail-analysis-row">
+                      <div class="step-detail-section-label">Step Business Logic</div>
+                      <pre class="step-detail-analysis" id="sd-analysis"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted mb-3">The workflow produces a concise driver-facing route adjustment summary for a given plan and date. That output can be delivered in the driver mobile app and surfaced as an annotated update in the daily route planning dashboard.</p>
+              <div class="workflow-callout">
+                <strong>What this workflow does NOT do:</strong> It does not decide whether a route should be redesigned for the day, choose which driver or carrier partner should absorb extra workload, determine whether to escalate repeated customer unavailability to account management, approve staffing or dispatch changes, or set the operating policy for how much delay is acceptable before a stop is reassigned.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA WAREHOUSE INTEGRATION -->
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Under the Hood</div>
+            <h2 class="h1 mb-2">Data Warehouse Integration</h2>
+            <p class="text-muted mb-4">The workflow depends on joining route plan data with stop-level operating signals for the same service date. It retrieves planned versus adjusted sequence and assignment changes, then connects those changes to measurable factors so the narrative is traceable to actual operating data.</p>
+            <p class="text-muted mb-4" style="font-size:0.875rem;">That means the explanation is built across route planning data and stop-level factor data, not from a single operational table.</p>
+            <ul class="nav nav-tabs mb-0" id="schemaTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-route_plans" data-bs-toggle="tab"
+                  data-bs-target="#panel-route_plans" type="button" role="tab">
+                  <code style="font-size:0.8rem;">route_plans</code>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link " id="tab-stop_factors" data-bs-toggle="tab"
+                  data-bs-target="#panel-stop_factors" type="button" role="tab">
+                  <code style="font-size:0.8rem;">stop_factors</code>
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom-4 p-0 mb-4">
+              <div class="tab-pane fade show active" id="panel-route_plans" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Daily route planning and dispatch output &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Last-mile Operations<br>
+                    <strong>Role in this workflow:</strong> This table is the core operational record for comparing the original route plan to the adjusted plan at the stop level. It provides the stop sequence, driver assignment, and execution status needed to identify whether a stop was reordered, reassigned, delayed, or left unchanged.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_dev.last_mile_ops.route_plans (
+  plan_id <span class="code-type">VARCHAR</span>,
+  stop_id <span class="code-type">VARCHAR</span>,
+  plan_date <span class="code-type">DATE</span>,
+  driver_id <span class="code-type">VARCHAR</span>,
+  planned_sequence INTEGER,
+  adjusted_sequence INTEGER,
+  status <span class="code-type">VARCHAR</span>
+);
+
+<span class="code-keyword">SELECT</span>
+  plan_id,
+  plan_date,
+  stop_id,
+  driver_id,
+  planned_sequence,
+  adjusted_sequence,
+  status,
+  <span class="code-keyword">CASE</span>
+    <span class="code-keyword">WHEN</span> planned_sequence &lt;&gt; adjusted_sequence <span class="code-keyword">THEN</span> <span class="code-number">1</span>
+    <span class="code-keyword">WHEN</span> status &lt;&gt; <span class="code-<span class="code-type">string</span>">'<span class="code-keyword">On</span> Time'</span> <span class="code-keyword">THEN</span> <span class="code-number">1</span>
+    <span class="code-keyword">ELSE</span> <span class="code-number">0</span>
+  <span class="code-keyword">END</span> <span class="code-keyword">AS</span> is_changed
+<span class="code-keyword">FROM</span> retail_dev.last_mile_ops.route_plans
+<span class="code-keyword">WHERE</span> plan_id = <span class="code-<span class="code-type">string</span>">'{plan_id}'</span>
+  <span class="code-keyword">AND</span> plan_date = <span class="code-<span class="code-type">string</span>">'{plan_date}'</span>;</code></pre>
+              </div>
+              <div class="tab-pane fade " id="panel-stop_factors" role="tabpanel">
+                <div class="p-4 pb-0">
+                  <div class="schema-meta">
+                    <strong>Source system:</strong> Operational signal feeds for traffic and customer availability &nbsp;·&nbsp;
+                    <strong>Domain:</strong> Last-mile Operations<br>
+                    <strong>Role in this workflow:</strong> This table adds the contextual signals used to explain why a stop changed after the plan was adjusted. It contributes causal evidence such as elevated traffic conditions or customer unavailability, which the workflow uses to produce a ranked explanation rather than a raw list of route edits.
+                  </div>
+                </div>
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_dev.last_mile_ops.stop_factors (
+  stop_id <span class="code-type">VARCHAR</span>,
+  factor_date <span class="code-type">DATE</span>,
+  traffic_index INTEGER,
+  customer_available <span class="code-type">BOOLEAN</span>
+);
+
+<span class="code-keyword">SELECT</span>
+  stop_id,
+  factor_date <span class="code-keyword">AS</span> plan_date,
+  traffic_index,
+  customer_available
+<span class="code-keyword">FROM</span> retail_dev.last_mile_ops.stop_factors
+<span class="code-keyword">WHERE</span> factor_date = <span class="code-<span class="code-type">string</span>">'{plan_date}'</span>
+  <span class="code-keyword">AND</span> stop_id <span class="code-keyword">IN</span> (
+    <span class="code-keyword">SELECT</span> stop_id
+    <span class="code-keyword">FROM</span> retail_dev.last_mile_ops.route_plans
+    <span class="code-keyword">WHERE</span> plan_id = <span class="code-<span class="code-type">string</span>">'{plan_id}'</span>
+      <span class="code-keyword">AND</span> plan_date = <span class="code-<span class="code-type">string</span>">'{plan_date}'</span>
+  );</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COGNITIVE LABOR LAYER ANALYSIS -->
+      <section class="bg-secondary py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <div class="section-eyebrow">Cognitive Labor Analysis</div>
+              <h2 class="h1 mb-3">Where the Work Sits in the Labor Stack</h2>
+              <p class="text-muted mb-4">Not all cognitive labor is equally automatable. The KWF analysis breaks the workflow into three layers — execution, judgment, and strategic — and maps each step to the layer it belongs to. Execution-layer work is automatable. Judgment and strategic work stays with the manager.</p>
+              
+              <div class="layer-bar-track">
+                <div class="layer-bar-exec" style="width:50%;" title="Execution 50%"></div>
+                <div class="layer-bar-judgment" style="width:35%;" title="Judgment 35%"></div>
+                <div class="layer-bar-strategic" style="width:15%;" title="Strategic 15%"></div>
+              </div>
+              <div style="display:flex; gap:1.5rem; font-size:0.8rem; margin-top:0.5rem; flex-wrap:wrap;">
+                <span><span class="layer-legend-dot" style="background:#adb5bd;"></span> Execution 50%</span>
+                <span><span class="layer-legend-dot" style="background:#ff9500;"></span> Judgment 35%</span>
+                <span><span class="layer-legend-dot" style="background:#198754;"></span> Strategic 15%</span>
+              </div>
+              <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f8f9fa;border:1px solid #e5e7eb;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#adb5bd;margin-bottom:0.5rem;">Execution Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#adb5bd;">50%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The execution layer retrieves changed stops, evaluates route differences, attributes likely causes such as congestion or customer unavailability, ranks factors, and formats the driver-facing message.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#fff8f0;border:1px solid rgba(255,149,0,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#ff9500;margin-bottom:0.5rem;">Judgment Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#ff9500;">35%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">The planner still interprets whether the narrative fits field conditions, decides whether added outreach is needed, and handles exceptions with drivers or carrier partners.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 rounded-3 h-100" style="background:#f0faf4;border:1px solid rgba(25,135,84,0.2);">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#198754;margin-bottom:0.5rem;">Strategic Layer</div>
+                    <div style="font-size:1.75rem;font-weight:800;color:#198754;">15%</div>
+                    <div style="font-size:0.82rem;color:#374151;margin-top:0.5rem;line-height:1.5;">Leadership still owns broader decisions about dispatch policy, carrier management, staffing structure, and route planning standards.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE MODEL -->
+      <section class="container py-5" id="value">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-eyebrow">Value Model</div>
+            <h2 class="h1 mb-3">The Business Case for Automation</h2>
+            <div class="value-hero-card mb-4">
+              <div class="row g-4">
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Time Recovered</div>
+                    <div class="metric-value">30 min / day</div>
+                    <div class="metric-sub">One planner is assumed to spend 30 minutes each day explaining route changes for five drivers, six days per week.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric positive">
+                    <div class="metric-label">Annual Savings</div>
+                    <div class="metric-value">$27,300 / yr</div>
+                    <div class="metric-sub">This reflects the modeled hard savings from compressing that explanation work by 50% at a blended rate of $70 per hour.</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="result-metric highlight">
+                    <div class="metric-label">Strategic Upside</div>
+                    <div class="metric-value">Fewer Support Escalations</div>
+                    <div class="metric-sub">Consistent narratives reduce confusion, missed stops, and avoidable back-and-forth between drivers and planners.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="strategic-callout mb-4">
+              <strong>Kill Question:</strong> Without this workflow, drivers understand daily plan changes through manual calls, ad-hoc texts, and inconsistent planner explanations.
+            </div>
+            <p class="text-muted" style="font-size:0.875rem;"><strong>Primary Valuation Metric:</strong> Reduction in average time spent by planners on daily route plan explanations per driver.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT STEP CTA -->
+      <section class="bg-primary py-5" data-bs-theme="dark">
+        <div class="container py-2 text-center">
+          <div class="col-lg-7 mx-auto">
+            <p class="fw-semibold mb-2 fs-sm text-uppercase letter-spacing-wider" style="color:rgba(255,255,255,0.6);">Next Step</p>
+            <h2 class="h1 text-light mb-3">Run your own value estimate for last-mile route planning — or talk to us about this driver communication workflow.</h2>
+            <p class="text-light mb-4" style="opacity:0.85;">The Cognitive Labor Value Calculator models team size, role cost, and automation coverage to estimate the time and cost tied to manual route-change explanations. It takes under two minutes to complete.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+              <a href="../../../../campaigns/ar/cpn_clc_d_2026/calculator.html?kwf_src=candidate_003_daily-route-plan-operational-narrative&amp;kwf_ws=home-depot" class="btn btn-light btn-lg">
+                Calculate Your Team&#8217;s Value
+              </a>
+              <a href="../../../../campaigns/kwf2026/kwf_example_demo/content.html?kwf_src=candidate_003_daily-route-plan-operational-narrative&amp;kwf_ws=home-depot" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
+                Request a Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <span class="text-muted" style="font-size:0.82rem;">&copy; 2026 Patterson Consulting. All rights reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <a href="../../../../augmented_reasoning_20260311_v5.html" class="text-muted text-decoration-none" style="font-size:0.82rem;">Augmented Reasoning Platform</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <script src="../../../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../../../assets/vendor/aos/dist/aos.js"></script>
+    <script src="../../../../assets/js/theme.min.js"></script>
+
+    <script>
+      // ── Step detail data ──────────────────────────────────────────────────
+      const STEPS = [
+  {
+    num: 1, title: "Detect Changes", colorBg: "rgba(79,127,255,0.12)", colorFg: "#4f7fff",
+    logic: "This step reviews each stop in the daily plan and flags any stop where the sequence changed or the status moved away from normal execution. It then groups those exceptions into operational categories such as reordered, reassigned, or delayed so the planner does not have to inspect each stop manually.",
+    query: `SELECT
+  plan_id,
+  plan_date,
+  stop_id,
+  driver_id,
+  planned_sequence,
+  adjusted_sequence,
+  status,
+  CASE
+    WHEN planned_sequence <> adjusted_sequence THEN 1
+    WHEN status <> 'On Time' THEN 1
+    ELSE 0
+  END AS is_changed
+FROM retail_dev.last_mile_ops.route_plans
+WHERE plan_id = '{plan_id}'
+  AND plan_date = '{plan_date}';`,
+    output: "<div class=\"sd-result-wrap\"><div class=\"sd-result-scroll\"><table class=\"sd-result-table\"><thead><tr><th>plan_id</th><th>plan_date</th><th>stop_id</th><th>driver_id</th><th>planned_sequence</th><th>adjusted_sequence</th><th>status</th><th>is_changed</th></tr></thead><tbody><tr><td>P001</td><td>2026-03-03</td><td>S001</td><td>D100</td><td>1</td><td>2</td><td>Reordered</td><td>1</td></tr><tr><td>P001</td><td>2026-03-03</td><td>S002</td><td>D100</td><td>2</td><td>1</td><td>Reordered</td><td>1</td></tr><tr><td>P001</td><td>2026-03-03</td><td>S003</td><td>D100</td><td>3</td><td>3</td><td>On Time</td><td>0</td></tr><tr><td>P001</td><td>2026-03-03</td><td>S004</td><td>D101</td><td>4</td><td>4</td><td>Reassigned</td><td>1</td></tr><tr><td>P001</td><td>2026-03-03</td><td>S005</td><td>D101</td><td>5</td><td>5</td><td>Delayed</td><td>1</td></tr></tbody></table></div><div class=\"sd-result-footer\">5 rows</div></div>",
+    analysis: `<span class="amd-heading"># Identify Operational Changes and Attribute Drivers</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: For a given route plan and date, identify which stops changed between planned vs. adjusted execution details and attribute those changes to likely operational drivers such as traffic congestion or customer unavailability.
+
+<span class="amd-heading">## Interpret the SQL Results in Business Terms</span>
+
+You have two datasets already provided in the prompt:
+
+1) <span class="amd-bold">Route plan execution vs plan</span> (one row per stop):
+<span class="amd-bullet">-</span> \`planned_sequence\` vs \`adjusted_sequence\`: indicates whether the stop order changed.
+<span class="amd-bullet">-</span> \`status\`: operational outcome label for the stop (e.g., On Time, Reordered, Reassigned, Delayed).
+<span class="amd-bullet">-</span> \`is_changed\` (0/1): treat <span class="amd-bold">1</span> as “the stop experienced an operational change vs plan.”
+
+2) <span class="amd-bold">Stop context factors</span> (one row per stop for the same date):
+<span class="amd-bullet">-</span> \`traffic_index\`: proxy for traffic conditions affecting that stop (higher = worse congestion).
+<span class="amd-bullet">-</span> \`customer_available\` (true/false): whether the customer was available as planned.
+
+A <span class="amd-bold">“changed stop”</span> is any stop where \`is_changed = 1\`.
+
+<span class="amd-heading">### Change type classification (per changed stop)</span>
+Assign one <span class="amd-bold">primary change type</span> and optionally a <span class="amd-bold">secondary note</span>:
+<span class="amd-bullet">-</span> <span class="amd-bold">Reordered (primary)</span> if the stop order changed (\`planned_sequence\` ≠ \`adjusted_sequence\`) or \`status\` explicitly indicates “Reordered.”
+<span class="amd-bullet">-</span> <span class="amd-bold">Reassigned (primary)</span> if \`status = 'Reassigned'\` (driver assignment change is the key business change).
+<span class="amd-bullet">-</span> <span class="amd-bold">Delayed (primary)</span> if \`status = 'Delayed'\`.
+<span class="amd-bullet">-</span> If multiple signals conflict, use \`status\` as the primary indicator and treat sequence mismatch as supporting evidence (secondary note).
+
+<span class="amd-heading">## Attribute Likely Drivers Using the Stop Factors</span>
+
+For each <span class="amd-bold">changed stop</span>, attach “driver labels” based on factor values:
+<span class="amd-bullet">-</span> If \`traffic_index &gt; 100\`: label <span class="amd-bold">Traffic congestion</span>.
+<span class="amd-bullet">-</span> If \`customer_available = false\`: label <span class="amd-bold">Customer unavailability / rescheduling</span>.
+<span class="amd-bullet">-</span> If both apply, include both labels.
+
+<span class="amd-heading">### Rollups to produce</span>
+Compute:
+<span class="amd-bullet">-</span> <span class="amd-bold">total_changed_stops</span>: number of stops with \`is_changed = 1\`.
+<span class="amd-bullet">-</span> <span class="amd-bold">change_type_counts</span>: count of changed stops by primary change type (Reordered, Reassigned, Delayed, Other/Unspecified if needed).
+<span class="amd-bullet">-</span> <span class="amd-bold">driver_frequency</span>: count of changed stops associated with each driver label.
+  <span class="amd-bullet">-</span> Rank drivers by <span class="amd-bold">frequency (descending)</span>.
+  <span class="amd-bullet">-</span> Break ties by <span class="amd-bold">average \`traffic_index\` among stops tagged “Traffic congestion”</span> (higher average ranks higher). If a tie persists or traffic isn’t involved, keep a stable, sensible order (e.g., alphabetical).
+
+<span class="amd-heading">## Edge Cases and Data Quality Flags</span>
+
+<span class="amd-bullet">-</span> <span class="amd-bold">No changes:</span> If \`total_changed_stops = 0\`, output only:  
+  “No operational changes detected versus the original plan for this date.”  
+  Do not speculate about drivers; omit ranked drivers and stop-level change details.
+<span class="amd-bullet">-</span> <span class="amd-bold">Missing stop factors for a changed stop:</span>  
+  <span class="amd-bullet">-</span> Add driver label <span class="amd-bold">Driver unknown (missing factors)</span> for that stop.
+  <span class="amd-bullet">-</span> Include a <span class="amd-bold">Missing data</span> note listing affected \`stop_id\`s.
+<span class="amd-bullet">-</span> <span class="amd-bold">Blank/NULL \`status\`:</span>  
+  <span class="amd-bullet">-</span> If sequences differ, classify as <span class="amd-bold">Reordered</span>.
+  <span class="amd-bullet">-</span> If sequences match and \`is_changed = 1\` but status is blank, classify as <span class="amd-bold">Other/Unspecified</span> and call out as a data quality issue.
+<span class="amd-bullet">-</span> <span class="amd-bold">Unexpected status values:</span> Map to <span class="amd-bold">Other/Unspecified</span> and include the raw status in parentheses for transparency.
+<span class="amd-bullet">-</span> <span class="amd-bold">Traffic index anomalies:</span> If \`traffic_index\` is missing or non-numeric for a stop, do not assign “Traffic congestion” from it; treat as missing factor input.
+
+<span class="amd-heading">## Output Formatting (Structured, Operationally Actionable)</span>
+
+Produce three sections in this order:
+
+1) <span class="amd-bold">Change Summary (exec-ready, 2–4 lines)</span>
+<span class="amd-bullet">-</span> Total changed stops
+<span class="amd-bullet">-</span> Counts by change type (primary)
+<span class="amd-bullet">-</span> One-line headline on top ranked driver(s) if changes exist (e.g., “Top attributed driver: Traffic congestion (3 of 4 changed stops)”)
+
+2) <span class="amd-bold">Stop-Level Detail (changed stops only)</span>
+For each changed stop, include a compact row/bullet with:
+<span class="amd-bullet">-</span> \`stop_id\`
+<span class="amd-bullet">-</span> \`driver_id\`
+<span class="amd-bullet">-</span> planned → adjusted sequence (e.g., \`1 → 2\`) when relevant
+<span class="amd-bullet">-</span> <span class="amd-bold">Primary change type</span> (+ secondary note if applicable)
+<span class="amd-bullet">-</span> Attributed driver label(s)
+<span class="amd-bullet">-</span> Key factor values shown succinctly (e.g., \`traffic_index=125\`, \`customer_available=false\`) when present
+
+3) <span class="amd-bold">Ranked Drivers</span>
+A ranked list with:
+<span class="amd-bullet">-</span> Driver label
+<span class="amd-bullet">-</span> Frequency (number of changed stops)
+<span class="amd-bullet">-</span> For Traffic congestion, also show <span class="amd-bold">avg traffic_index</span> used for tie-breaking (and optionally min/max if helpful but keep concise)
+
+Keep language practical and non-speculative: attribute drivers only when supported by factor values or explicitly mark as unknown/missing.
+`
+  },
+  {
+    num: 2, title: "Rank Causes", colorBg: "rgba(107,122,255,0.12)", colorFg: "#6b7aff",
+    logic: "For each changed stop, this step checks supporting signals such as traffic conditions and customer availability on the same date. It applies straightforward threshold logic to attribute likely causes, then ranks those causes by how often they appear across the changed stops.",
+    query: ``,
+    output: "",
+    analysis: `<span class="amd-heading"># Generate Plain-Language Narrative for Daily Route Adjustments</span>
+
+<span class="amd-bold">Anomaly / Skill Description</span>: Convert the identified stop-level changes and attributed drivers into a concise driver-facing message that explains what changed, why it changed, and what actions drivers should take.
+
+<span class="amd-heading">## Inputs Available</span>
+Use the structured outputs from the prior step (changed stops, change type counts, and ranked driver frequencies). Do not introduce new causes that are not supported by those outputs.
+
+<span class="amd-heading">## Narrative Construction Rules</span>
+Produce a driver-facing operational message with three sections:
+
+1) Summary (1–2 sentences)
+   <span class="amd-bullet">-</span> State the plan_id and plan_date.
+   <span class="amd-bullet">-</span> State the number of changed stops and a breakdown by change type (reordered / reassigned / delayed).
+
+2) Drivers (bullet list, ranked)
+   <span class="amd-bullet">-</span> List the top drivers in rank order, using the driver labels from the prior step.
+   <span class="amd-bullet">-</span> For each driver, include how many changed stops it affected (e.g., "Traffic congestion: affected 3 changed stops").
+
+3) Actions (numbered list, 2–4 items max)
+   <span class="amd-bullet">-</span> Always include: "Follow the updated stop sequence shown in the app."
+   <span class="amd-bullet">-</span> If any stops are "Delayed" or have driver label "Customer unavailability / rescheduling": include an action to confirm with the customer before arrival and to record the contact attempt in the app.
+   <span class="amd-bullet">-</span> If any stops are "Reassigned": include an action to check assignment changes in the app and coordinate handoff if needed.
+   <span class="amd-bullet">-</span> If any stop has "Driver unknown (missing factors)": include an action to report issues via the app so dispatch can update context.
+
+<span class="amd-heading">## Tone and Formatting</span>
+<span class="amd-bullet">-</span> Plain language, non-technical, and directive.
+<span class="amd-bullet">-</span> Keep it concise: target 80–140 words.
+<span class="amd-bullet">-</span> Ensure traceability: mention stop counts and the named drivers exactly as derived; avoid vague phrasing like "various reasons" unless data is missing.
+`
+  }
+];
+
+      let activeStep = null;
+
+      function showStepDetail(idx) {
+        const s = STEPS[idx];
+        if (!s) return;
+        document.querySelectorAll('.agent-step').forEach((el, i) => {
+          el.classList.toggle('step-active', i === idx);
+        });
+        document.getElementById('sd-num').textContent   = s.num;
+        document.getElementById('sd-num').style.background = s.colorBg;
+        document.getElementById('sd-num').style.color      = s.colorFg;
+        document.getElementById('sd-title').textContent = s.title;
+        document.getElementById('sd-logic').innerHTML    = s.logic;
+        document.getElementById('sd-query').textContent  = s.query;
+        document.getElementById('sd-output').innerHTML = s.output;
+        document.getElementById('sd-analysis').innerHTML = s.analysis;
+        const panel = document.getElementById('step-detail-panel');
+        panel.classList.add('visible');
+        document.getElementById('step-click-hint').style.display = 'none';
+        activeStep = idx;
+      }
+
+      function closeStepDetail() {
+        document.getElementById('step-detail-panel').classList.remove('visible');
+        document.getElementById('step-click-hint').style.display = '';
+        document.querySelectorAll('.agent-step').forEach(el => el.classList.remove('step-active'));
+        activeStep = null;
+      }
+
+      // ── Playground data ───────────────────────────────────────────────────
+      const EXAMPLES = [
+  {
+    prompt: "For daily route plan P001 on 2024-06-10, what are the key operational changes from the original plan, what factors drove these changes, and what actions should drivers take?",
+    responseHtml: `<div class="pg-narrative-summary">Plan P001 on 2024-06-10 shows <span class="pg-narrative-deviation">2 changed stops</span> versus a normal baseline of <span class="pg-narrative-normal">0 planned changes</span>: S01 was reordered and S02 was reassigned.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Traffic congestion</span>
+        — attributed <span class="pg-narrative-item-pct">50%</span>
+        of delayed orders. S01 had a traffic_index of 120, which is above the &gt;100 threshold used to attribute congestion-driven changes.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Customer unavailability</span>
+        — attributed <span class="pg-narrative-item-pct">50%</span>
+        of delayed orders. S02 had customer_available = FALSE, indicating the stop was affected by customer rescheduling or unavailability.</div>
+      </div><div class="pg-narrative-action">&#9658; Follow the updated stop sequence for S01, route S02 to the alternate driver assignment, and confirm timing with the affected customer before arrival.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Today's route update for plan P001: 2 stops changed. S01 was reordered due to traffic conditions, and S02 was reassigned due to customer unavailability. Please follow the updated sequence and confirm with the affected customer before completing the stop.
+      </div>`
+  },
+  {
+    prompt: "Explain why stop S01 in plan P001 changed on 2024-06-10 and what instruction should be sent to the driver.",
+    responseHtml: `<div class="pg-narrative-summary">Stop S01 deviated from its original sequence, moving from planned position 1 to adjusted position 2, with traffic_index <span class="pg-narrative-deviation">120</span> versus the normal congestion threshold of 100.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Traffic congestion</span>
+        — attributed <span class="pg-narrative-item-pct">100%</span>
+        of delayed orders. The traffic index for S01 was 120, directly exceeding the rule used to classify congestion as the cause of a route adjustment.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Sequence disruption</span>
+        — attributed <span class="pg-narrative-item-pct">0%</span>
+        of delayed orders. No customer availability issue is present for S01 because customer_available = TRUE.</div>
+      </div><div class="pg-narrative-action">&#9658; Tell the driver to follow the revised stop order and expect slower travel conditions around S01 rather than treating the change as a customer issue.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Update for stop S01: your stop position changed from 1 to 2 due to traffic congestion identified in today's route conditions. Please follow the revised order in the app and continue to the stop as scheduled once traffic clears.
+      </div>`
+  },
+  {
+    prompt: "For stop S02 on 2024-06-10 in plan P001, summarize the adjustment, identify the likely driver, and draft the message that should go to the assigned driver.",
+    responseHtml: `<div class="pg-narrative-summary">Stop S02 changed from planned sequence 2 to adjusted sequence 1 and was marked Reassigned, with customer availability at <span class="pg-narrative-deviation">FALSE</span> versus the normal expected value of TRUE.</div><div class="pg-narrative-factors-label">Contributing Factors</div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">1</div>
+        <div><span class="pg-narrative-item-station">Customer unavailability</span>
+        — attributed <span class="pg-narrative-item-pct">100%</span>
+        of delayed orders. S02 shows customer_available = FALSE, which meets the workflow rule for attributing the change to customer rescheduling or unavailability.</div>
+      </div>
+      <div class="pg-narrative-item">
+        <div class="pg-narrative-item-num">2</div>
+        <div><span class="pg-narrative-item-station">Traffic congestion</span>
+        — attributed <span class="pg-narrative-item-pct">0%</span>
+        of delayed orders. The traffic_index for S02 was 80, below the &gt;100 threshold, so traffic is not the primary driver.</div>
+      </div><div class="pg-narrative-action">&#9658; Have the assigned driver confirm the customer's availability before arrival and treat the stop as a reassigned delivery rather than a route-delay issue.</div><div class="pg-narrative-comms">
+        <div class="pg-narrative-comms-label">Communication Template</div>
+        Update for stop S02: this stop has been reassigned because the customer was not available at the original time. Please confirm availability before arrival and follow the updated assignment shown in the route plan.
+      </div>`
+  }
+];
+
+      let pgActive = false;
+
+      let _pgTypewriteTimer = null;
+
+      function _pgTypewrite(el, fullHtml, onDone) {
+        // Extract plain text from the HTML for character animation
+        const tmp = document.createElement('div');
+        tmp.innerHTML = fullHtml;
+        const plainText = tmp.textContent || tmp.innerText || '';
+        let i = 0;
+        el.textContent = '';
+        _pgTypewriteTimer = setInterval(() => {
+          el.textContent += plainText[i];
+          i++;
+          if (i >= plainText.length) {
+            clearInterval(_pgTypewriteTimer);
+            _pgTypewriteTimer = null;
+            // Restore full HTML (with highlight spans etc.) after typing
+            el.innerHTML = fullHtml;
+            if (onDone) onDone();
+          }
+        }, 26);
+      }
+
+      function runQuery(idx) {
+        const ex = EXAMPLES[idx];
+        if (!ex) return;
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = true;
+        document.getElementById('pg-examples').style.display = 'none';
+        const msgs = document.getElementById('pg-messages');
+        msgs.style.display = 'flex';
+        msgs.innerHTML = `
+          <div class="pg-message">
+            <div class="pg-message-header"><div class="pg-message-icon user">U</div> You</div>
+            <div class="pg-message-bubble user">${ex.prompt}</div>
+          </div>
+          <div class="pg-message" id="pg-loading">
+            <div class="pg-status-loading"><div class="pg-spinner"></div> Running workflow&hellip;</div>
+          </div>`;
+        document.getElementById('pg-reset-btn').style.display = 'inline';
+
+        setTimeout(() => {
+          const loading = document.getElementById('pg-loading');
+          if (loading) loading.remove();
+
+          // Build the agent message container
+          const agentMsg = document.createElement('div');
+          agentMsg.className = 'pg-message';
+          agentMsg.innerHTML = `
+            <div class="pg-message-header"><div class="pg-message-icon agent">A</div> Agent</div>
+            <div class="pg-message-bubble agent" id="pg-resp-bubble"></div>`;
+          msgs.appendChild(agentMsg);
+
+          const bubble = document.getElementById('pg-resp-bubble');
+
+          // Parse response HTML into child blocks
+          const tmp = document.createElement('div');
+          tmp.innerHTML = ex.responseHtml;
+          const blocks = Array.from(tmp.children);
+
+          if (!blocks.length) {
+            bubble.innerHTML = ex.responseHtml;
+            return;
+          }
+
+          // First block: typewrite plain-text, then restore HTML
+          const firstEl = blocks[0].cloneNode(true);
+          bubble.appendChild(firstEl);
+          _pgTypewrite(firstEl, blocks[0].innerHTML, () => {
+            // Fade in remaining blocks with stagger
+            blocks.slice(1).forEach((block, i) => {
+              const el = block.cloneNode(true);
+              el.style.opacity = '0';
+              el.style.transition = 'opacity 0.35s ease';
+              bubble.appendChild(el);
+              setTimeout(() => { el.style.opacity = '1'; }, 160 * (i + 1));
+            });
+          });
+        }, 900);
+      }
+
+      function resetPlayground() {
+        if (_pgTypewriteTimer) { clearInterval(_pgTypewriteTimer); _pgTypewriteTimer = null; }
+        pgActive = false;
+        document.getElementById('pg-examples').style.display = '';
+        document.getElementById('pg-messages').style.display = 'none';
+        document.getElementById('pg-messages').innerHTML = '';
+        document.getElementById('pg-reset-btn').style.display = 'none';
+      }
+
+      // AOS init
+      AOS.init({ duration: 600, once: true });
+    </script>
+  </body>
+</html>

@@ -473,7 +473,7 @@
                     <strong>Role in this workflow:</strong> This table defines the expected inbound commitment: supplier, region, PO line, promised delivery date, and ordered quantity. It is the baseline for determining whether a receipt was late, short, or missing, and it anchors the analysis window for the manager's review.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.inbound_ops.erp_po_lines (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_dev.inbound_ops.erp_po_lines (
   po_id <span class="code-type">STRING</span>,
   po_line_id <span class="code-type">STRING</span>,
   supplier_id <span class="code-type">STRING</span>,
@@ -496,7 +496,7 @@
                     <strong>Role in this workflow:</strong> This table shows what the warehouse actually received, when it was received, in what quantity, and whether the line was placed on QC hold. It provides the operational truth used to classify missed receipts and detect internal receiving or quality-related delay patterns.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.inbound_ops.wms_receipts (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_dev.inbound_ops.wms_receipts (
   receipt_id <span class="code-type">STRING</span>,
   po_id <span class="code-type">STRING</span>,
   po_line_id <span class="code-type">STRING</span>,
@@ -515,8 +515,8 @@
   <span class="code-keyword">SUM</span>(<span class="code-keyword">CASE</span> <span class="code-keyword">WHEN</span> r.receipt_id <span class="code-keyword">IS</span> <span class="code-type"><span class="code-keyword">NOT</span> <span class="code-keyword">NULL</span></span> <span class="code-keyword">AND</span> r.received_date &gt; p.promised_delivery_date <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> late_lines,
   <span class="code-keyword">SUM</span>(<span class="code-keyword">CASE</span> <span class="code-keyword">WHEN</span> r.receipt_id <span class="code-keyword">IS</span> <span class="code-type"><span class="code-keyword">NOT</span> <span class="code-keyword">NULL</span></span> <span class="code-keyword">AND</span> r.received_qty &lt; p.ordered_qty <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> short_lines,
   <span class="code-keyword">SUM</span>(<span class="code-keyword">CASE</span> <span class="code-keyword">WHEN</span> r.receipt_id <span class="code-keyword">IS</span> <span class="code-type"><span class="code-keyword">NOT</span> <span class="code-keyword">NULL</span></span> <span class="code-keyword">AND</span> r.qc_hold_flag = true <span class="code-keyword">THEN</span> <span class="code-number">1</span> <span class="code-keyword">ELSE</span> <span class="code-number">0</span> <span class="code-keyword">END</span>) <span class="code-keyword">AS</span> qc_hold_lines
-<span class="code-keyword">FROM</span> pura_vida_foods_dev.inbound_ops.erp_po_lines p
-<span class="code-keyword">LEFT</span> <span class="code-keyword">JOIN</span> pura_vida_foods_dev.inbound_ops.wms_receipts r
+<span class="code-keyword">FROM</span> retail_dev.inbound_ops.erp_po_lines p
+<span class="code-keyword">LEFT</span> <span class="code-keyword">JOIN</span> retail_dev.inbound_ops.wms_receipts r
   <span class="code-keyword">ON</span> p.po_id = r.po_id <span class="code-keyword">AND</span> p.po_line_id = r.po_line_id <span class="code-keyword">AND</span> p.region_id = r.region_id
 <span class="code-keyword">WHERE</span> p.supplier_id = <span class="code-<span class="code-type">string</span>">'{supplier_id}'</span>
   <span class="code-keyword">AND</span> p.region_id = <span class="code-<span class="code-type">string</span>">'{region_id}'</span>
@@ -531,7 +531,7 @@
                     <strong>Role in this workflow:</strong> This table provides shipment notice timing, planned ship dates, and ASN quantities for each PO line. It is used to determine whether late receipts are more consistent with poor supplier ASN discipline or whether the supplier provided timely notice and the delay likely occurred in receiving.
                   </div>
                 </div>
-                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> pura_vida_foods_dev.inbound_ops.edi_asn_lines (
+                <pre class="code-block rounded-bottom-4 rounded-top-0 mb-0"><code><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> retail_dev.inbound_ops.edi_asn_lines (
   asn_id <span class="code-type">STRING</span>,
   po_id <span class="code-type">STRING</span>,
   po_line_id <span class="code-type">STRING</span>,
@@ -690,8 +690,8 @@
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.received_date > p.promised_delivery_date THEN 1 ELSE 0 END) AS late_lines,
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.received_qty < p.ordered_qty THEN 1 ELSE 0 END) AS short_lines,
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.qc_hold_flag = true THEN 1 ELSE 0 END) AS qc_hold_lines
-FROM pura_vida_foods_dev.inbound_ops.erp_po_lines p
-LEFT JOIN pura_vida_foods_dev.inbound_ops.wms_receipts r
+FROM retail_dev.inbound_ops.erp_po_lines p
+LEFT JOIN retail_dev.inbound_ops.wms_receipts r
   ON p.po_id = r.po_id AND p.po_line_id = r.po_line_id AND p.region_id = r.region_id
 WHERE p.supplier_id = '{supplier_id}'
   AND p.region_id = '{region_id}'
@@ -756,8 +756,8 @@ Produce a compact KPI block containing:
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.received_date > p.promised_delivery_date THEN 1 ELSE 0 END) AS late_lines,
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.received_qty < p.ordered_qty THEN 1 ELSE 0 END) AS short_lines,
   SUM(CASE WHEN r.receipt_id IS NOT NULL AND r.qc_hold_flag = true THEN 1 ELSE 0 END) AS qc_hold_lines
-FROM pura_vida_foods_dev.inbound_ops.erp_po_lines p
-LEFT JOIN pura_vida_foods_dev.inbound_ops.wms_receipts r
+FROM retail_dev.inbound_ops.erp_po_lines p
+LEFT JOIN retail_dev.inbound_ops.wms_receipts r
   ON p.po_id = r.po_id AND p.po_line_id = r.po_line_id AND p.region_id = r.region_id
 WHERE p.supplier_id = '{supplier_id}'
   AND p.region_id = '{region_id}'

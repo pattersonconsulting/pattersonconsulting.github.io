@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>What Is Reasoning? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="A working definition of reasoning — what it is, what makes it count, and why it exists.">
+    <meta name="keywords" content="reasoning, knowledge work, ebook, inference, deduction, induction, abduction, argumentation, Mercier, Sperber, artificial intelligence, cognition">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="What Is Reasoning? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/header_what_is_reasoning_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_is_reasoning_20260627_v2.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="A working definition of reasoning — what it is, what makes it count, and why it exists."/>
+
+    <meta name="twitter:title" content="What Is Reasoning? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/header_what_is_reasoning_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_is_reasoning_20260627_v2.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+        
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .ai_detected {
+        color: #f542d1;
+      }
+      /* Offset in-page reference jumps so the target clears the fixed navbar */
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">What Is Reasoning?</li>
+          </ol>
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">What Is Reasoning?</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">May 2026</div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/header_what_is_reasoning_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+                      Reasoning is a transition in thought in which some beliefs — or thoughts — provide the ground or reason for coming to another. 
+
+                      The transition from one thought to the next is what seperates reasoning from the simpler cue-triggered mental processes of the cognition.
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              A cousin who drives a BMW reminds you to call Fred. A sound in the next room makes you turn your head. Each is a transition in thought, but neither one is yet <em>reasoning</em>. The transitions are causal — one mental event triggers another — but the second event wasn't arrived at because the first served as a <em>reason</em> for it.
+            </p>
+
+            <p class="fs-lg">
+
+              Cues that trigger mental processing are a baseline, <b>but are not the type of cognition that is considered "reasoning".</b>
+            </p>
+            <p class="fs-lg">
+
+               Adler, in the introduction to the Cambridge anthology on the subject, sharpens it into a working definition<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><b>Reasoning is</b> a transition in thought <em>in which some beliefs (or thoughts) provide the ground or reason for coming to another.</em></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+
+              <b>Reasoning starts when one thought doesn’t just trigger the next, but supports it.</b>
+            </p>
+
+            <p class="fs-lg">
+              Cue-triggered transitions — one thought producing the next, with no justification in play — make up most of mental life. 
+
+            </p>
+
+            <p class="fs-lg">
+              Reasoning is more specific: <b>it happens when one thought gives a reason for the next, <i>rather than simply causing it</i>.</b>
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Makes It Count</h2>
+
+            <p class="fs-lg">
+              Four features have to hold together for a transition to count as reasoning.
+            </p>
+
+            <h3 class="h4 mb-lg-3 pt-3">First: it operates on beliefs aimed at truth.</h3>
+
+            <p class="fs-lg">
+              Belief has a direction of fit — it aims to match the world, not the other way around<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>. You can choose a more comfortable seat, but you can't simply choose to believe the more convenient claim. The contradiction in asserting "it's raining, but I don't believe it" — what philosophers call Moore's paradox — follows from this: asserting something expresses a belief, and belief answers to evidence rather than preference.
+            </p>
+
+            <p class="fs-lg">
+
+              That is why a conclusion cannot be justified simply because it is useful.
+            </p>
+            <p class="fs-lg">
+
+               It may be comforting, profitable, or socially convenient, <b>but that does not make it true, and it does not give us a real reason to believe it</b>.
+
+            </p>
+
+            <h3 class="h4 mb-lg-3 pt-3">Second: it involves representing the connection itself.</h3>
+
+            <p class="fs-lg">
+              This is where reasoning separates from more basic forms of cognition. Consider a simple chain: "The roads are icy, so we should leave early." A person reasoning through this isn't merely producing the conclusion after hearing the premise. They are holding the <em>relationship between</em> premise and conclusion as something to be evaluated — asking whether this reason is sufficient, whether it actually supports that conclusion.
+            </p>
+
+            <p class="fs-lg">
+              Cognitive scientists call this metarepresentation<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>: the ability to represent a representation. To reason from a premise to a conclusion is to hold "this follows from that" as a structured object in its own right — one that can itself be questioned, weighed, or defended.
+            </p>
+
+            <p class="fs-lg">
+
+
+This same capacity helps us understand what other people believe, recognize what someone means beyond their literal words, and check whether our own thinking is well supported. 
+</p>
+            <p class="fs-lg">
+Reasoning is part of a broader set of human abilities that depend on this reflective layer.
+
+
+            </p>
+
+            <h3 class="h4 mb-lg-3 pt-3">Third: the conclusion has normative grip.</h3>
+
+            <p class="fs-lg">
+
+Once you decide the evidence is strong enough, you cannot simply ignore the conclusion. Refusing to accept what the reasoning supports is not just a preference; it is a kind of inconsistency<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>.
+</p>
+            <p class="fs-lg">
+A well-supported conclusion has a force that mere plausibility does not.
+
+            </p>
+
+            <h3 class="h4 mb-lg-3 pt-3">Fourth: the reasoner is answerable.</h3>
+
+            <p class="fs-lg">
+              A conclusion reached by reasoning is one you can be asked to defend. You can be asked for the reason. You can also be wrong about it. This accountability — not just that you arrived at a conclusion, but that you stand behind it and can be evaluated on how you got there — is part of what makes it reasoning rather than association.
+            </p>
+
+            <p class="fs-lg">
+
+A system that produces outputs that look like conclusions, but lacks belief, an understanding of the inference, any sense of obligation to the result, and anyone responsible for it, is doing something different. 
+</p>
+            <p class="fs-lg">
+It may still be useful, but it is not reasoning.
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Three Forms</h2>
+
+            <p class="fs-lg">
+
+              Reasoning takes different forms, and those differences matter.
+
+            </p>
+
+            <p class="fs-lg">
+              The first distinction is by <em>aim</em>.
+            </p>
+
+            <p class="fs-lg">
+              <b>Theoretical reasoning</b> aims at settling what is true — at belief about the world. <b>Practical reasoning</b> aims at settling what to do — at intention and action. Practical reasoning bottoms out in desires and ends (Williams<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>). Theoretical reasoning bottoms out in evidence.
+            </p>
+
+            <p class="fs-lg">
+              The second distinction, within theoretical reasoning, is by <em>inferential form</em>.
+            </p>
+
+            <p class="fs-lg">
+              <b>Deduction</b> moves from general premises to specific conclusions and is monotonic: adding more premises cannot turn a valid argument invalid. It is the only form that produces certainty, and it pays for that certainty by telling us nothing the premises didn't already entail (Stalnaker<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>).
+            </p>
+
+            <p class="fs-lg">
+              <b>Induction</b> moves from observed instances to general claims and is nonmonotonic: new evidence can defeat the conclusion. Hume's problem is permanent — every induction assumes a uniformity of nature that induction itself cannot establish without circularity<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup>.
+            </p>
+
+            <p class="fs-lg">
+
+<b>Abduction</b>, or inference to the best explanation, starts with the evidence and looks for the hypothesis that best explains it. We judge that hypothesis by how simple it is, how well it fits with what we already know, and how much it explains<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>. This is the kind of reasoning we use every day in diagnosis, history, debugging, and scientific discovery. It is also one of the hardest forms to formalize, because there is no fixed rule for what counts as the “best” explanation.
+
+            </p>
+
+            <p class="fs-lg">
+              Real expert reasoning interleaves all three. 
+</p>
+            <p class="fs-lg">
+              A physician <em>abducts</em> a candidate diagnosis from a patient's presentation, <em>deduces</em> which tests should confirm or rule it out, and <em>induces</em> from prior cases. 
+            </p>
+            <p class="fs-lg">
+
+              Knowing which kind of reasoning to use in a given situation is not itself one of the three forms. <b>It is part of what expertise means.</b>
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Reasoning Exists</h2>
+
+            <p class="fs-lg">
+              The evidence on individual reasoning is not especially flattering.
+            </p>
+
+            <p class="fs-lg">
+              Subjects solve the abstract Wason selection task — a basic problem in logic — at rates of 10 to 25 percent. Asked to judge which is more probable, "Linda is a bank teller" or "Linda is a bank teller and an active feminist," the great majority pick the conjunction — a direct violation of the most elementary rule of probability<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>. Beliefs persist long after their evidential basis has been discredited. The pattern is robust across education levels, monetary incentives, and expert populations.
+            </p>
+
+            <p class="fs-lg">
+              If reasoning were designed to make individuals more accurate, it looks designed badly.
+            </p>
+
+            <p class="fs-lg">
+              Mercier &amp; Sperber propose a different account<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup>. Reasoning is not a general-purpose inference engine. The fast, automatic judgments that fill most of mental life — perception, intuition, pattern recognition — run underneath reasoning and don't require it. Reasoning proper is a narrower mechanism, and it evolved to serve a different job: the production and evaluation of reasons in communication.
+            </p>
+
+            <p class="fs-lg">
+              The problem it solves is <em>trust calibration</em>. When someone makes a claim, you can't directly inspect the world they're describing. What you can inspect is their <em>reasons</em> — the arguments they offer. 
+<!--
+              A faculty that produces arguments and evaluates the arguments of others lets a communicating species accept useful information without being defenseless against manipulation. <span class="ai_detected"><b>Reasoning, on this account, is an epistemic immune system.</b></span>
+-->
+</p>
+            <p class="fs-lg">
+A capacity for making arguments and evaluating the arguments of others helps a communicating species learn from one another without becoming defenseless against manipulation. On this view, reasoning functions as an epistemic immune system.
+
+
+            </p>
+
+            <p class="fs-lg">
+              <!--
+              <span class="ai_detected">This reframing makes the data fall into place.</span> The same individuals who fail the Wason task alone solve it at around 80 percent when they can argue with each other (Moshman &amp; Geil 1998). Groups regularly outperform even their best individual member when conditions allow genuine adversarial exchange (Laughlin 2011). <span class="ai_detected">Confirmation bias — the tendency to gather evidence that supports your own position — stops looking like a defect and starts looking like the production side of the mechanism working as designed.</span> You gather supporting evidence; others scrutinize it. <span class="ai_detected">The asymmetry that looks like bias in isolation is the architecture of collaborative inquiry.</span>
+              -->
+
+              This reframing helps the evidence make sense. 
+            </p>
+            <p class="fs-lg">
+
+              People who fail the Wason task on their own solve it about 80 percent of the time when they can argue with others<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup>. Groups often outperform even their best individual member when they are able to engage in real adversarial exchange<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup>. Confirmation bias—the tendency to seek evidence that supports your own position—then looks less like a flaw and more like one side of the system working as intended. 
+            </p>
+            <p class="fs-lg">
+
+              You gather support for your view; others test it. 
+            </p>
+            <p class="fs-lg">
+              What looks like bias in isolation becomes part of the structure of collaborative inquiry.
+
+            </p>
+
+            <p class="fs-lg">
+              Neuroscience points to the same conclusion.
+
+
+              Prado et al. found that argumentative reasoning preferentially recruits the medial prefrontal cortex and the broader theory-of-mind network — the same brain substrate used to represent what other minds are doing<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>. Abstract syllogisms in controlled lab conditions engage executive control instead. 
+            </p>
+            <p class="fs-lg">
+
+              Reasoning, in its natural setting—<i>the evaluation of arguments made by real people in real situations</i>—<b>is fundamentally social</b>.
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What This Map Is For</h2>
+
+            <p class="fs-lg">
+
+Reasoning is a reflective, socially evolved practice governed by norms. 
+            </p>
+            <p class="fs-lg">
+              It works with beliefs aimed at truth. It requires understanding the connection between premises and conclusion, not just producing an answer. And its conclusions carry force: they are judgments, not preferences, and they come with <b>accountability</b>.
+
+            </p>
+
+            <p class="fs-lg">
+              With this structure in place, we can ask the questions that guide the rest of this series more precisely, such as:
+
+            </p>
+
+            <p class="fs-lg">
+              <ul>
+              <li><i>What are large language models doing when they produce text that looks like reasoning? </i></li>
+
+              <li><i>As machine-generated text becomes more fluent, what forms of cognitive labor remain uniquely human?</i></li>
+              <li><i>Where is the structural limit of automation, and why?</i></li>
+            </ul>
+            </p>
+
+            <p class="fs-lg">
+              In the rest of this section of the book, we will build on the ideas developed in this article to begin answering these questions and others.
+
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+
+            <ol class="references-list fs-lg pb-5 ">
+              <li id="fn-1">Adler, J. E., &amp; Rips, L. J. (Eds.). (2008). <a href="https://philpapers.org/rec/ADLRSO-2" target="_blank" rel="noopener"><b>Reasoning: Studies of Human Inference and Its Foundations.</b></a> Cambridge University Press.</li>
+              <li id="fn-2">Anscombe, G. E. M. (1957). <a href="https://www.hup.harvard.edu/books/9780674003996" target="_blank" rel="noopener"><b>Intention.</b></a> Blackwell.</li>
+              <li id="fn-3">Searle, J. R. (1983). <a href="https://doi.org/10.1017/CBO9781139173452" target="_blank" rel="noopener"><b>Intentionality: An Essay in the Philosophy of Mind.</b></a> Cambridge University Press.</li>
+              <li id="fn-4">Sperber, D. (Ed.). (2000). <a href="https://doi.org/10.1093/oso/9780195141146.001.0001" target="_blank" rel="noopener"><b>Metarepresentations: A Multidisciplinary Perspective.</b></a> Oxford University Press.</li>
+              <li id="fn-5">Prado, J., Léone, J., Epinat-Duclos, J., Trouche, E., &amp; Mercier, H. (2020). <a href="https://doi.org/10.1016/j.bandl.2020.104827" target="_blank" rel="noopener">The neural bases of argumentative reasoning.</a> <b>Brain and Language,</b> 208, 104827.</li>
+              <li id="fn-6">Grice, H. P. (2001). <a href="https://doi.org/10.1093/0198242522.001.0001" target="_blank" rel="noopener"><b>Aspects of Reason.</b></a> Oxford University Press.</li>
+              <li id="fn-7">Hume, D. (1748/1977). <a href="https://www.gutenberg.org/ebooks/9662" target="_blank" rel="noopener"><b>An Enquiry Concerning Human Understanding.</b></a> Hackett.</li>
+              <li id="fn-8">Harman, G. (1965). <a href="https://doi.org/10.2307/2183532" target="_blank" rel="noopener">The inference to the best explanation.</a> <b>Philosophical Review,</b> 74(1), 88–95.</li>
+              <li id="fn-9">Lipton, P. (2004). <a href="https://doi.org/10.4324/9780203470855" target="_blank" rel="noopener"><b>Inference to the Best Explanation</b></a> (2nd ed.). Routledge.</li>
+              <li id="fn-10">Tversky, A., &amp; Kahneman, D. (1983). <a href="https://doi.org/10.1037/0033-295X.90.4.293" target="_blank" rel="noopener">Extensional versus intuitive reasoning: The conjunction fallacy in probability judgment.</a> <b>Psychological Review,</b> 90(4), 293–315.</li>
+              <li id="fn-11">Mercier, H., &amp; Sperber, D. (2011). <a href="https://doi.org/10.1017/S0140525X10000968" target="_blank" rel="noopener">Why do humans reason? Arguments for an argumentative theory.</a> <b>Behavioral and Brain Sciences,</b> 34(2), 57–74.</li>
+              <li id="fn-12">Mercier, H., &amp; Sperber, D. (2017). <a href="https://www.hup.harvard.edu/books/9780674237827" target="_blank" rel="noopener"><b>The Enigma of Reason.</b></a> Harvard University Press.</li>
+              <li id="fn-13">Mercier, H. (2025). <a href="https://doi.org/10.21428/e2759450.96cf440a" target="_blank" rel="noopener">Reasoning and argumentation.</a> <b>MIT Press Open Encyclopedia of Cognitive Science.</b></li>
+              <li id="fn-14">Moshman, D., &amp; Geil, M. (1998). <a href="https://doi.org/10.1080/135467898394148" target="_blank" rel="noopener">Collaborative reasoning: Evidence for collective rationality.</a> <b>Thinking and Reasoning,</b> 4(3), 231–248.</li>
+              <li id="fn-15">Laughlin, P. R. (2011). <a href="https://press.princeton.edu/books/paperback/9780691147918/group-problem-solving" target="_blank" rel="noopener"><b>Group Problem Solving.</b></a> Princeton University Press.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

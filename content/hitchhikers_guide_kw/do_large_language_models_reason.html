@@ -5,40 +5,30 @@
 
     <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
-    
+
     <!-- SEO meta tags -->
     <title>Do Large Language Models Reason? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
-    <meta name="description" content="Companies don't buy software. Companies buy productivity.">
-    <meta name="keywords" content="ebook, knowledge work, technology, efficiency, productivity, economics, line of business, investment, Artificial intelligence, data platform">
+    <meta name="description" content="Language models produce reasoning-shaped text, reliably and often usefully — but the four parts of reasoning aren't there. A look at what the machine actually does, and three rules for building with it.">
+    <meta name="keywords" content="LLM reasoning, large language models, reasoning, knowledge work, ebook, chain of thought, hallucination, sycophancy, AI accountability, mechanistic interpretability, understanding, Kvanvig, Mercier, Sperber">
     <meta name="author" content="Josh Patterson">
-
-
 
     <!-- Facebook and Twitter integration -->
     <meta property="og:title" content="Do Large Language Models Reason? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
-    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/do_llms_reason_header_0.jpg"/>
-    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/what_is_generative_ai.html"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/do_llms_reason_header_1.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/do_large_language_models_reason.html"/>
     <meta property="og:site_name" content="Patterson Consulting"/>
-    <meta property="og:description" content="Companies don't buy software. Companies buy productivity."/>
-
-
-
+    <meta property="og:description" content="Language models produce reasoning-shaped text, reliably and often usefully — but the four parts of reasoning aren't there. A look at what the machine actually does, and three rules for building with it."/>
 
     <meta name="twitter:title" content="Do Large Language Models Reason? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
-    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/do_llms_reason_header_0.jpg" />
-    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/what_is_generative_ai.html" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/do_llms_reason_header_1.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/do_large_language_models_reason.html" />
     <meta name="twitter:card" content="summary_large_image" />
-
-
-
-
-
 
     <!-- Webmanifest + Favicon / App icons -->
     <link rel="manifest" href="/alpha_manifest.json">
     <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
     <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
-        
+
     <!-- Theme switcher (color modes) -->
     <script src="../../assets/js/theme-switcher.js"></script>
 
@@ -50,7 +40,6 @@
     <!-- Vendor styles -->
     <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
-
     <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
 
     <!-- Font icons -->
@@ -59,8 +48,17 @@
     <!-- Theme styles + Bootstrap -->
     <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
 
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
     <!-- Page loading styles -->
     <style>
+      .ai_detected {
+        color: #f542d1;
+      }
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
       .page-loading {
         position: fixed;
         top: 0;
@@ -115,7 +113,7 @@
         height: 2.75rem;
         margin-bottom: .75rem;
         vertical-align: text-bottom;
-        background-color: #d7dde2; 
+        background-color: #d7dde2;
         border-radius: 50%;
         opacity: 0;
         -webkit-animation: spinner .75s linear infinite;
@@ -146,64 +144,6 @@
           transform: none;
         }
       }
-
-
-      .todo_quote_rewrite { 
-        color: #ffaa00;
-        font-style: italic;
-       }
-
-      .todo_edit { 
-        color: #ff0000;
-       }
-
-      .todo_consider { 
-        color: #dddddd;
-       }
-
-
-      .working_outline { 
-        color: #aaaaaa;
-       }
-
-       .todo_segue {
-        color: #0000dd;
-       }
-
-
-       .todo_blue {
-        color: #0000ff;
-       }
-
-       .narrative {
-        color: #fc9003;
-        font-weight: bold;
-        font-style: italic;
-       }
-
-       .core_thesis {
-        color: #777777;
-        font-weight: bold;
-        font-style: italic;
-        margin-bottom: 50px;
-        margin-left: 50px;
-       }
-       .narrative_scaffolding {
-
-        color: #cccccc;
-        
-        font-style: italic;
-
-       }
-
-
-      .pre {
-          display: block;
-          unicode-bidi: embed;
-          
-          white-space: pre;
-      }     
-
     </style>
 
     <!-- Page loading scripts -->
@@ -218,8 +158,6 @@
 
           const theme = 'light'
           document.documentElement.setAttribute('data-bs-theme', theme)
-          
-
         }
       })()
     </script>
@@ -232,13 +170,11 @@
     })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
     <!-- End Google Tag Manager -->
 
-
   </head>
 
 
   <!-- Body -->
   <body>
-
 
     <!-- Page loading spinner -->
     <div class="page-loading active">
@@ -253,7 +189,7 @@
     <main class="page-wrapper">
 
       <header data-bs-theme="light">
-        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <!-- Navbar -->
         <div class="navbar navbar-expand-lg fixed-top bg-light">
           <div class="container">
 
@@ -261,38 +197,27 @@
             <a class="navbar-brand pe-sm-3" href="../../index.html">
               <span class="text-primary flex-shrink-0 me-2">
                 <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
-                  <!--
-                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
-                -->
-
-
-
-
-<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
-  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
--21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
-390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
--341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
--20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
--257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
--241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
--7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
--140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
--1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
-  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
-13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
-109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
-42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
--31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
-</g>
-
-
-
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
                 </svg>
               </span>
               Patterson Consulting
             </a>
-
 
             <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
               <i class="fs-xl me-2 ms-n1"></i>
@@ -308,29 +233,22 @@
             <nav class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
 
-
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
                   <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
                     <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
                   </ul>
                 </li>
-
 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
                     <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
                     <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
                     <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
-                    <!--
-                    <li><a class="dropdown-item" href="../../data_strategy.html">Data Strategy</a></li>
-                  -->
-                    
-                    
                   </ul>
-
                 </li>
 
                 <li class="nav-item dropdown">
@@ -341,7 +259,6 @@
                     <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
                     <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
                   </ul>
-
                 </li>
 
                 <li class="nav-item">
@@ -360,43 +277,36 @@
 
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
-          
           <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
             <li class="breadcrumb-item"><a href="">eBook</a></li>
             <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
             <li class="breadcrumb-item active" aria-current="page">Do Large Language Models Reason?</li>
           </ol>
-          
         </nav>
 
         <!-- Post title + post meta -->
         <h1 class="display-4 text-left pb-2 pb-lg-3">Do Large Language Models Reason?</h1>
 
-
-            <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
-              <div class="d-flex align-items-center mb-4 me-4">
-                <span class="fs-sm me-2">By:</span>
-                <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
-                  Josh Patterson
-                  <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
-                </a>
-              </div>
-
-            </div>
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">July 2026</div>
 
       </section>
 
 
       <!-- Post cover image (parallax) -->
       <section class="jarallax" data-jarallax data-speed=".65">
-        <!--
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/kw_information_transformation_header2.jpg);"></div>
-        -->
-        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/do_llms_reason_header_0.jpg);"></div>
-
-        <div class="d-none d-xxl-block" style="height: 660px;"></div>
-        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
-        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/do_llms_reason_header_1.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 560px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 450px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 400px;"></div>
         <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
         <div class="d-md-none" style="height: 300px;"></div>
       </section>
@@ -406,234 +316,438 @@
       <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
         <div class="row justify-content-center pt-xxl-2">
           <div class="col-lg-9 col-xl-8">
-        
 
-          <p class="fs-lg pre">
 
-            outline notes
+            <p class="fs-lg">
 
-            - all the smart people say "no" --- all the smart people also used to say the earth was flat
+              Ask a modern language model a difficult question and inspect what it produces. The response is structured like an argument: premises, inferences, conclusions, sometimes even explicit revisions of earlier steps. Some systems appear to reconsider intermediate results before settling on a final answer. 
 
-            - we accept that CNNs can do object detection
+            </p>
 
-            - we don't know exactly how the brain reasons
+            <p class="fs-lg">
+              From the outside, it <b>looks remarkably like reasoning</b>, which begs the question: 
 
-            - we struggle to define reasoning
+            </p>
 
+            <p class="fs-lg">
+              <i>"do large language models reason?"</i>
 
-          </p>
 
+            </p>
 
+            <p class="fs-lg">
 
-<p class="fs-lg narrative_scaffolding pre">
-Idea to weave in: Agents do not eliminate humans—they compress and standardize cognition.
-</p>
+              And that resemblance is what makes the question difficult. 
 
-            <div class="card border-0 bg-secondary mb-2">
-              <div class="card-body">
-                <figure>
-                  <blockquote class="blockquote">
-                    <p class=""><i>
+            </p>
 
-The intellectual establishment, by and large, preferred to believe that a "machine can never do X."
-                      
-                    </i></p>
-                  </blockquote>
-                  <figcaption class="blockquote-footer">"Introduction to AI", Russell and Norvig</figcaption>
-                </figure>
-              </div>
-            </div> 
+            <p class="fs-lg">
+              The resemblance is genuine, not accidental, but resemblance alone cannot establish that reasoning has occurred. An earlier article in this series, <a href="draft_what_is_reasoning_20260722_v3.html">What Is Reasoning?</a>, defined the term carefully. That definition provides the standard against which language models can be evaluated, and it is important to be clear about both what it includes and what it excludes.
+            </p>
 
+            <p class="fs-lg">
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Humanity's Knowledge Closure (rename)</h2>
+The classical account in logic defines reasoning in terms of inference: deduction, induction, and abduction. Judged only by that structure, a fluent chain of premises and conclusions appears to qualify. 
+            </p>
 
-<p class="fs-lg pre todo_quote_rewrite">
+            <p class="fs-lg">
+But inferential form alone is not enough.              
 
-To.invent new knowledge and new artifacts, or simply to deal with new situations for which they have not been explicitly trained, AI systems need to learn mental models of the world.
-Manipulating our mental model of the world is what we call thinking.
+            </p>
 
-...
+            <p class="fs-lg">
 
-[quote]
-Neither LLMs nor LRMs have the ability to go beyond the humanity's knowledge closure--which is needed for true discoveries. Both are beholden to the collected knowledge of the humanity (whether declaratively enumerated or procedurally specified as models/"verifiers"). (c.f. https://lnkd.in/g2y42RX3) 
 
-The new found love for verifiers--which are written by humans after all--is but a way for LRMs to train themselves over synthetic data--Generate candidate solutions--have 'em checked by the verifiers.. rinse.. repeat, with some LLM-Modulo + RL combo (c.f. https://lnkd.in/gGJzqFBK)
+Reasoning is a <b>transition in thought in which one belief provides the basis for another</b>.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> For that transition to count as reasoning, it must satisfy four conditions. It operates on <b>beliefs that aim at truth</b>. It represents the inferential connection between premise and conclusion as <b>something that can be examined and challenged</b>. Its conclusion carries <b>normative force</b> once the evidence is in. And the <b>reasoner is accountable for the conclusion reached</b>. 
 
-Just as RL over simulators (written by humans) is a lazy way to compile simulator knowledge into the policy; LLM-RL over verifiers too is a form of compiling (human written) verifier knowledge (into the base LLM).. (c.f https://lnkd.in/gmsfARZm) 
+            </p>
 
-LLMs/LRMs are great as force multipliers. But if you really want your AI agent to learn and go beyond the humanity's knowledge closure, you also need your agent to act in the world (*not* simulator), and learn from that (c.f. Yann LeCun's exhortations). 
+            <p class="fs-lg">
+Deduction, induction, and abduction describe the forms that inference can take. These four conditions distinguish reasoning itself from mere association.
 
-Acting in the world--as against learning vicariously from other's experiences--is fraught--especially given that much of real world is non-ergodic. It is okay for LLMs/LRMs to skip this part--as long as we avoid the "automated scientific discoveries by next weekend" hype..
-[quote]
 
-</p>
 
+            </p>
 
-<h2 class="h3 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Information as Infrastructure</h2>
+            <p class="fs-lg">
 
-<p class="fs-lg">
+              Those conditions provide a straightforward basis for evaluating language models. We can examine the machine against each of them.
+            </p>
 
-The birth of cognitive labor is rooted in the invention of writing systems during the Bronze Age.
 
-</p>
-<p class="fs-lg">
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Language Models Look Like Reasoners</h2>
 
-In essence, writing turned information into infrastructure. It allowed societies to remember, reason, and organize at scales impossible before—creating the administrative, economic, and cultural frameworks that still underpin civilization today.
-</p>
+            <p class="fs-lg">
+              The resemblance is real and calls for explanation. Dismissing the model as “autocomplete” does not explain why it produces arguments that so closely resemble the products of human reasoning.
+            </p>
 
-<p class="fs-lg pre todo_outline">
+            <p class="fs-lg">
+              
+              <b>A language model is neither a stochastic parrot nor an agent that reasons.</b>
+            </p>
 
-Can’t use reasoning beyond our ability to understand / guide the reasoning
-If its wrong, how would we know?
-The car design problem
-MIT paper on how LLMs are making people dumber
-Language as knowledge building
-Natural language as the original agent
-LLMs are good at reasoning over language
-E.g., “embedded data”, “logic rules expressed in language”, “long form documents”
+            <p class="fs-lg">
+              It is better understood as a statistical engine that continues the patterns present in the text on which it was trained. Tayyar Madabushi and colleagues describe this as extrapolation from training priors: a prompt directs the model toward a region of its training distribution, and the model projects the patterns it finds there into a continuation.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> Its failures arise from the same mechanism as its successes. When the prompt does not identify a well-supported region, the model falls back on broader statistical regularities. Hallucinations are the result.
+            </p>
 
+            <p class="fs-lg">
 
-</p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Defining Reasoning</h2>
+              Floridi and colleagues identify the source of the illusion.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> In human reasoning, abduction is the search for the best explanation: a hypothesis is proposed and then evaluated against the available evidence. A language model <b>performs only the first step</b>. It generates a plausible explanation but never tests whether that explanation is actually supported. They describe this as zeroth-order abduction. Its two best-known failure modes are the same mechanism expressed in different contexts. In a hallucination, the model continues generating explanations when the prompt provides too little evidence to support one. 
 
-<p class="fs-lg narrative_scaffolding pre">
-## Do Large Language Models Reason?
+            </p>
 
-Reasoning is a fundamental aspect of human thought, particularly evident in how we understand and use everyday language. When we encounter statements like "If A then B," our brains naturally work through the logic to draw conclusions. For instance, if "A" is true, we deduce that "B" must also be true (modus ponens). However, if we know "B" is not true (not-B), about half of us will conclude that "A" is not true either (modus tollens), while the other half might not draw a definite conclusion. In the context of generative AI, understanding these patterns of reasoning helps in developing models that can mimic human-like logical thought processes, enhancing their ability to generate coherent and contextually relevant responses.
+            <p class="fs-lg">
+              When the model tells you what you want to hear, it generates the explanation that best matches your apparent expectations rather than the available evidence.
 
-The idea of "reasoning" belongs to the larger group of processes known as "cognitive processes." These encompass a wide range of mental activities involved in acquiring, processing, and utilizing knowledge. 
+            </p>
 
-Cognitive processes include perception, memory, attention, language, problem-solving, and decision-making, all of which are essential for understanding and interacting with the world. In the context of generative AI, simulating these cognitive processes, especially reasoning, is crucial for creating systems that can perform tasks requiring logical thought and decision-making, similar to how humans do.
+            <p class="fs-lg">
 
-Judgment in the context of reasoning involves evaluating options, forming conclusions, and making decisions. This process relies on heuristics—mental shortcuts like attribute substitution, availability, representativeness, and anchoring—that help us make quick, efficient decisions. While these heuristics speed up reasoning, they can also lead to errors. In large language models, incorporating these aspects of human judgment can enhance their ability to simulate human-like decision-making and reasoning, making their responses more intuitive and relatable.
 
-https://sloanreview.mit.edu/article/the-working-limitations-of-large-language-models/
-Some people criticize LLMs and say “They are only predicting the next token”
+The resemblance is not merely superficial. 
 
-</p>
+            </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">A Counter Data Point</h2>
+            <p class="fs-lg">
+              Researchers have measured the dynamics of a model's reasoning traces—how uncertainty and computational effort rise and fall across a chain of inference—and found that they broadly mirror those observed in human reasoning.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> Trained on the written record of human thought, language models have learned to reproduce these patterns with remarkable fidelity. 
 
-<p class="fs-lg narrative_scaffolding pre">
+            </p>
 
-* thoughts on topic
-* strata 2015 talk on LSTMs
+            <p class="fs-lg">
+The similarity is real, but it exists in the <b>behavior</b>, <i>not necessarily in the mechanism</i>. Looking only at the output cannot tell us whether the underlying process is reasoning in the philosophical sense.
+            </p>
 
-Anecdotal Evidence
 
-I presented on using LSTM’s to generate text in 2016 (Strata, NYC) with a 250k parameter neural network (pre-transformers). Generating “a next token” to generate sentences is not new, and we did not need billions of parameters to do it.
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Edge of Reasoning</h2>
 
-Traditional ML:
-“Learn a function that maps X input input Y output” (tensor to tensor)
-Examples: 
-classification (label output) 
-Regression (real-value output)
+            <p class="fs-lg">
+              The first thing to test is whether the model can separate the logical link from the words used to express it. Can <i>"this follows from that"</i> remain the same when the wording changes?
+            </p>
 
-My Hypothesis (based on Dr Yao Fu’s published papers):
-https://yaofu.notion.site/A-Closer-Look-at-Large-Language-Models-Emergent-Abilities-493876b55df5479d80686f68a1abd72f
+            <p class="fs-lg">
 
-LLMs are learning the fundamental logic mapping between tokens in the input and expressing the output logic (coupled with the knowledge and reasoning contained in its 5+ Billion parameters) as a sequence of Tokens
-The tokens are simply the expression of the reasoning output.
-</p>
+              From this point on, the pattern is hard to ignore.
+            </p>
 
-<h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Importance of Embeddings</h2>
+            <p class="fs-lg">
+              Models do well as long as the surface wording matches what they saw in training, and fall off a cliff when it does not. 
 
-<p class="fs-lg narrative_scaffolding pre">
-<b>
-embeddings play a key role in the transformer architecture
+              There is no gentle decline. Performance falls off a cliff the moment the logical structure has to be recognized independently of the words that express it.
+            </p>
 
-- explain how embeddings represent ideas
+            <p class="fs-lg">
+              Keep the logical structure fixed and change only the vocabulary, and performance collapses. Tang and colleagues swapped meaningful terms like &ldquo;parentOf&rdquo; for meaningless ones like &ldquo;r1,&rdquo; and GPT-4 lost about thirty points; 
+            </p>
 
-- llms are learning the latent connection between ideas --- the reasoning over language
+            <p class="fs-lg">
 
-- the token prediction part is just the final rendering of the reasoning work being done
-</b>
 
-* NOTE: dont confuse "reasoning" with "personal agency"; LLMs won't tell you the secret meaning of life or tell you the goal you need to set to solve your key business problem. That is up to you.
-* define strategic goal setting, how is it a different cognitive function from "reasoning"
+              Their interpretation is that the models depend on the learned meanings of familiar terms rather than on abstract logical structure.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> 
+            </p>
 
-humans have long seek to build more effective tooling to augment their ability
+            <p class="fs-lg">
+              Yan and colleagues redefined AND to mean OR inside the prompt, and that redefinition made it into the model&rsquo;s inferences less than 5 percent of the time.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> The same pattern shows up when you stretch the length of the chain rather than change the wording: models can retrieve a fact stated one step back but fail two steps back, with error above 90 percent.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> 
+            </p>
 
-for instance, recently we put a super-human mechanical "eye" in space that is so powerful that it can see the origins of the universe
+            <p class="fs-lg">
+              The same phenomenon appears in legal reasoning.
+            
+              Precedent judgments that run 74 to 82 percent on modern cases drop below 35 percent on cases from before 1882, once the old language stops matching the training text.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
 
-why is it shocking, then, that we would end up augmenting our ability to reason?
+            <p class="fs-lg">
 
-* what happens after reasoning exceeds human level?
-* will we be able to recognize the new emergent capabilities?
-* this is the "industrial revolution" of knowledge work
-   * draw parallels between how the industrial revolution changed industry and labor
-   * and what second order effects emerged (textiles)
-* paint the scenario of how { image, audio } models surpased human levels (reference points back in DL book)
-   * and outline how we'll soon enter a phase of "super reasoning" ("The Age of Super Reasoning")
+              Across domains, the conclusion is the same: 
+            </p>
 
-Generative AI and automation are reshaping labor dynamics by displacing traditional job tasks while simultaneously creating new ones that require specialized human expertise. Historically, automation has predominantly affected middle-paid production and clerical occupations, while new job creation has shifted towards high-paid professional roles and low-paid services. Technological advancements that complement occupational outputs and demand shocks are key drivers of new work emergence. However, automation innovations tend to erode labor demand, whereas augmentation innovations bolster it.
+            <p class="fs-lg">
+              <b>the model does not reliably represent the logical relation independently of the words used to express it. </b>
+            </p>
 
-In recent decades, there has been a notable increase in automation, especially in middle-skill occupations, while augmentation has been more prevalent in professional and technical fields. This trend suggests that while automation is accelerating, the creation of new, specialized work is not keeping pace, potentially leading to an imbalance in labor demand. The dual impact of augmentation and automation highlights the need for policies that encourage the creation of new work, which often commands higher wages and offers more opportunities for skill development.
+            <p class="fs-lg">
+              Its inferences remain tightly coupled to the vocabulary and patterns on which it was trained. Prompting cannot reliably overcome this limitation. Adding the missing rule may improve performance while the wording remains familiar, but not once the model must generalize beyond it.
+            </p>
 
-The future of labor in the context of rapid AI advancements remains uncertain. While AI has the potential to automate a wide range of tasks, it can also catalyze the emergence of novel specialties and complement existing skills. Early research indicates a broad spectrum of potential impacts, but definitive conclusions are still elusive. Understanding how AI innovations can be leveraged to foster both automation and augmentation will be crucial in shaping the future workforce and ensuring that new work opportunities are both valuable and accessible.
+            <p class="fs-lg">
 
-* where do we go?
 
-Generative AI presents a dual opportunity to reshape roles in the workforce positively. Rather than solely focusing on automation and displacement, a more promising approach involves leveraging AI to complement human abilities, regardless of educational background. By augmenting workers' capabilities, from teachers to electricians, generative AI has the potential to elevate the quality of work, increase productivity, and ultimately boost wages. This shift towards human-complementary AI requires not only changes in technological development but also shifts in corporate practices towards fostering innovation that enhances workers' skills and expertise. Ultimately, embracing this path could lead to a more equitable distribution of opportunities and resources within the labor market.
-</p>
+              In one study of AI research agents, the scaffolding around the model explained 1.5 percent of the results while the base model explained 41 percent.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> 
+
+            </p>
+
+            <p class="fs-lg">
+
+              
+
+              Which means: <b>prompts can bring out existing capabilities, but they cannot reliably create new ones.</b>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Unconnected Mind</h2>
+
+            <p class="fs-lg">
+
+
+              The next two parts — having beliefs aimed at truth and being guided by reasons that matter — can be tested by looking inside the network itself. These methods reveal a deeper problem. The question is not merely whether these properties exist. 
+            </p>
+
+            <p class="fs-lg">
+              It is <i>whether anything inside the model that resembles them actually influences what the model does</i>.
+            </p>
+
+            <p class="fs-lg">
+              A belief can sit inside the model and have no effect on what it does. Sanyal and colleagues, in a paper called <i>Confidence Is Not Competence</i>,<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> found a readable internal signal for &ldquo;this problem can&rsquo;t be solved,&rdquo; flipped it from near-zero to near-certain, and measured what happened to the model&rsquo;s answers. Nothing did &mdash; across four kinds of problem, no measurable change. The part that assesses and the part that acts sit in separate regions of the network. 
+
+            </p>
+
+            <p class="fs-lg">
+              A truth-related representation can be detected inside the model, yet it carries no authority over the model’s subsequent behavior. In a person, a belief that fails to constrain action is a failure of coherence. In the model, the existence of a representation and the production of an output remain separate processes.
+            </p>
+
+            <p class="fs-lg">
+              Researchers have found the same gap between what the model represents internally and what it does in practice across many other cases.
+
+
+              Reconstruct the game tree a model is supposedly searching and it is shallow &mdash; under two moves deep, where a decent human looks four to six &mdash; and the deeper analysis it writes into its own notes barely affects the move it makes.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+              The notes look like deliberation, but the actual decision is driven by a simpler process.
+            </p>
+
+            <p class="fs-lg">
+              And the abilities a &ldquo;thinking&rdquo; model shows off were mostly already present in the base model after ordinary training: switch on the right pre-existing patterns for 12 percent of the tokens and you recover 91 percent of the gain.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+
+              The reasoning training did not create a new capability. <i>It taught the model when to apply a capability it already had.</i>
+            </p>
+
+            <p class="fs-lg">
+              Taken together, these results reveal the real gap. The model contains representations that resemble beliefs, traces of lookahead, and skills that can produce reasoning-like outputs. What it lacks is the grip that binds them together: the ability for a belief to govern an action, for a reason to constrain a conclusion, and for a judgment to carry consequences. 
+            </p>
+
+            <p class="fs-lg">
+              The missing piece is not a component of reasoning, <b>but the structure that connects the components into a reasoning process.</b>
+
+
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Reasons Without Responsibility</h2>
+
+            <p class="fs-lg">
+
+              The fourth part is answerability: the ability to offer reasons that can be evaluated, defended, and, when necessary, revised. This is the feature most relevant to people who rely on these systems, because it is the one the model appears to perform most naturally while lacking the underlying relationship between reasons, beliefs, and responsibility.
+            </p>
+
+            <p class="fs-lg">
+
+              Start with confidence. Ask a GPT-4-class model how sure it is, and it will often express complete certainty despite answering correctly only about 65 percent of the time.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> A simple request to reconsider — <i>“are you sure?”</i> — causes it to reverse itself 88 to 98 percent of the time. The problem is not merely inaccurate confidence. It is the absence of a stable relationship between conclusion, evidence, and commitment. The model can produce the language of conviction without being answerable to the reasons that would justify it.
+            </p>
+
+            <p class="fs-lg">
+
+
+Then come the explanations. Ask a model for the counterfactual — “what is the smallest change that would have flipped your answer?” — and compare its answer with the change it describes. On grade-school math problems, they match only 5 to 14 percent of the time.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+The explanation is not a window into the process that produced the answer. 
+            </p>
+
+            <p class="fs-lg">
+It is another output from the same system, generated in the language of justification: the hedges, qualifications, and numbered steps people use when they stand behind a claim. But the model does not stand behind the claim. There is no stable separation between what is said and what is believed, because the explanation is not tied to a judgment that must be defended.              
+            </p>
+
+            <p class="fs-lg">
+
+The practical consequence is the point that matters. When these explanations reach someone who cannot independently verify the answer, <b>they increase confidence in wrong answers rather than reduce it — producing outcomes worse than providing no explanation at all.</b>
+
+              <sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> 
+
+            </p>
+
+            <p class="fs-lg">
+
+              The only version that reverses the effect is one that argues both sides of its own answer, because that hands the reader the scrutiny they would otherwise have to supply themselves. This is what the argumentative account of reasoning would predict.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup> 
+
+            </p>
+
+            <p class="fs-lg">
+
+              As the companion article argued, human reasoning contains both a constructive process that generates explanations and a critical process that evaluates them. The model reproduces the first while lacking the second. It can generate the linguistic markers of reflection — qualifications, structure, and revision — without an underlying process that treats claims as accountable to evidence. The danger is that <b>these familiar markers activate human trust mechanisms even when the conditions that normally justify that trust are absent.</b>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Boundary of Computation</h2>
+
+            <p class="fs-lg">
+
+
+If reasoning-shaped text is not reasoning, why does exposing the intermediate steps sometimes improve results? Because not every intermediate representation is empty. Some alter the path to the answer. The key question is whether those steps provide actual "cognitive scaffolding" or just a convincing surface imitation.              
+            </p>
+
+            <p class="fs-lg">
+              The intermediate steps come in two kinds. Yu and colleagues tried to squeeze a model&rsquo;s step-by-step work back into a single pass and found a clean split: rephrasing and reformatting fold away with no loss, but real multi-step deduction doesn&rsquo;t. Take the intermediary steps away on grade-school math and accuracy drops from 52.8 to 7.1 percent.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+              When the steps carried out real computation, removing them changed the result. When they served only as formatting, they could be discarded without effect.
+            </p>
+
+            <p class="fs-lg">
+
+Even when intermediate steps contribute real computation, they should not be confused with explanations. Bhambri and colleagues showed that the traces most effective for transferring capability to another model can be precisely those that are hardest for humans to interpret.<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup> The chain of “reasoning” functions as a training signal, not as an expression of the grounds on which the model’s conclusion rests. Its appearance resembles an explanation, but its role is different.              
+            </p>
+
+            <p class="fs-lg">
+
+
+              The clearest evidence comes from moving the hardest parts of the computation outside the model altogether.
+            </p>
+
+            <p class="fs-lg">
+
+
+              Zhang and colleagues route the load-bearing steps through a Python sandbox—the model writes code, the code runs, and it can't fake the result—and competition-math scores jump about seventy points.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup>
+
+The boundary turns out to be exactly where language gives way to computation.
+
+            </p>
+
+            <p class="fs-lg">
+
+              Outside help closes the gap exactly where the truth can be settled by running something: the closed, checkable world of <a href="deterministic_computation.html" target="_blank">deterministic computation</a>.
+            </p>
+
+
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">So, Do Large Language Models Reason?</h2>
+
+            <p class="fs-lg">
+
+No, not in the sense of reasoning established in <a href="what_is_reasoning.html" target="_blank">What Is Reasoning?</a>
+            </p>
+
+            <p class="fs-lg">
+
+ These models <i>write like reasoners</i>, <b>but they do not reason. </b>
+            </p>
+
+            <p class="fs-lg">
+
+ The resemblance is real because they learned from the written products of human reasoning. The difference is just as real: beneath the fluent surface there is no belief that constrains behavior, no logical structure preserved independently of language, and no answerability for the conclusions they produce.
+            </p>
+
+            <p class="fs-lg">
+
+Most of the differences trace back to a single absence. The model never represents the logical relation as something independent of the words that express it, and its internal representations do not reliably govern what it does. The missing piece is not another capability, but the connection that binds the existing ones into a reasoning process. That is an <b>architectural limitation</b>, not simply a matter of more data, more parameters, or another round of training. 
+            </p>
+
+            <p class="fs-lg">
+The difference is not how much reasoning the model does, but what kind of process it is performing.
+            </p>
+
+            <p class="fs-lg">
+The model does not reason more slowly, less completely, or not yet. It performs a different kind of computation that happens to resemble reasoning, and the distinction becomes visible precisely where reasoning must answer to logic, evidence, and justification.              
+            </p>
+
+            <p class="fs-lg">
+              Three rules follow, worth building into any system that uses these models:
+            </p>
+
+            <ol class="fs-lg">
+              <li class="pb-2">A chain of reasoning is not a record of how the model arrived at its answer. Don't evaluate the model by treating the trace as an explanation of the process that produced it.</li>
+
+              <li class="pb-2">A fluent explanation creates the appearance of reliability, not reliability itself. <b>Trust claims that can be independently checked</b>, not explanations that merely sound justified.</li>
+
+              <li class="pb-2">
+
+The gap is hidden in the output. It appears most clearly where the work demands judgment: <b>in unfamiliar situations, high-stakes decisions, and questions where reasonable people can disagree</b>. A model can give you the right answer without giving you understanding of why it is right. That difference — <i>between knowing and understanding</i><sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup> — <b>becomes unavoidable when the conclusion must be explained, defended, or acted upon</b>.
+              </li>
+
+
+            </ol>
+
+            <p class="fs-lg">
+
+There is one more finding, and it changes where the danger lies. Before and after these tools spread, researchers found shifts in human reasoning itself: people settled on conclusions faster and explored fewer alternatives.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> The concern is not that machines are gradually becoming more human. 
+            </p>
+
+            <p class="fs-lg">
+It is that humans, when they stop exercising the effortful parts of reasoning, may move closer to the surface behavior these systems produce.              
+            </p>
+
+            <p class="fs-lg">
+
+Once we understand what the machine actually does, the harder questions become possible to ask: 
+            </p>
+
+            <ul class="fs-lg">
+              <li class="pb-2">what work can be handed to systems like these?
+              </li>
+
+              <li class="pb-2">where does automation reach its limit?
+              </li>
+
+              <li class="pb-2">what remains uniquely human?
+              </li>
+            </ul>
+
+            <p class="fs-lg">
+This article addresses only the first question. The machine does not reason --- it produces the shape of reasoning without the process that makes reasoning accountable.              
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+
+            <ol class="references-list fs-lg pb-5 ">
+              <li id="fn-1">Adler, J. E., &amp; Rips, L. J. (Eds.). (2008). <a href="https://philpapers.org/rec/ADLRSO-2" target="_blank" rel="noopener"><b>Reasoning: Studies of Human Inference and Its Foundations.</b></a> Cambridge University Press.</li>
+              <li id="fn-2">Tayyar Madabushi, H., Torgbi, M., &amp; Bonial, C. (2025). <a href="https://arxiv.org/abs/2505.23323" target="_blank" rel="noopener">Neither stochastic parroting nor AGI: LLMs solve tasks through context-directed extrapolation from training data priors.</a> arXiv:2505.23323.</li>
+              <li id="fn-3">Floridi, L., Morley, J., Novelli, C., &amp; Watson, D. (2025). <a href="https://arxiv.org/abs/2512.10080" target="_blank" rel="noopener">What kind of reasoning (if any) is an LLM actually doing? On the stochastic nature and abductive appearance of large language models.</a> arXiv:2512.10080.</li>
+              <li id="fn-4">Chen, Q., et al. (2025). <a href="https://arxiv.org/abs/2510.21623" target="_blank" rel="noopener">The Universal Landscape of Human Reasoning.</a> arXiv:2510.21623.</li>
+              <li id="fn-5">Tang, X., et al. (2023). <a href="https://arxiv.org/abs/2305.14825" target="_blank" rel="noopener">Large language models are in-context semantic reasoners rather than symbolic reasoners.</a> arXiv:2305.14825.</li>
+              <li id="fn-6">Yan, J., Wang, C., Huang, J., &amp; Zhang, W. (2024). <a href="https://arxiv.org/abs/2402.12091" target="_blank" rel="noopener">Do large language models understand logic or just mimic context?</a> arXiv:2402.12091.</li>
+              <li id="fn-7">Zheng, C., Wu, L., Li, B., Liu, L., &amp; Zhou, Y. (2026). <a href="https://arxiv.org/abs/2605.06882" target="_blank" rel="noopener">How well do LLMs perform on the simplest long-chain reasoning tasks: An empirical study on the equivalence class problem.</a> arXiv:2605.06882.</li>
+              <li id="fn-8">Zhang, L., Savelka, J., &amp; Ashley, K. (2025). <a href="https://arxiv.org/abs/2510.20941" target="_blank" rel="noopener">Do LLMs truly &ldquo;understand&rdquo; when a precedent is overruled?</a> arXiv:2510.20941.</li>
+              <li id="fn-9">R&iacute;os-Garc&iacute;a, M., et al. (2026). <a href="https://arxiv.org/abs/2604.18805" target="_blank" rel="noopener">AI scientists produce results without reasoning scientifically.</a> arXiv:2604.18805.</li>
+              <li id="fn-10">Sanyal, D., Pandey, M., Kumar, D., Deshpande, S., &amp; Mandal, M. (2025). <a href="https://arxiv.org/abs/2510.24772" target="_blank" rel="noopener">Confidence is not competence: A mechanistic look at the decoupling of belief and action in LLMs.</a> arXiv:2510.24772.</li>
+              <li id="fn-11">Chen, S., Li, J.-A., et al. (2026). <a href="https://arxiv.org/abs/2605.06840" target="_blank" rel="noopener">Extracting search trees from LLM reasoning traces reveals myopic planning.</a> arXiv:2605.06840.</li>
+              <li id="fn-12">Venhoff, C., Arcuschin, I., Torr, P., Conmy, A., &amp; Nanda, N. (2025). <a href="https://arxiv.org/abs/2510.07364" target="_blank" rel="noopener">Base models know how to reason, thinking models learn when.</a> arXiv:2510.07364.</li>
+              <li id="fn-13">Pawitan, Y., &amp; Holmes, C. (2025). <a href="https://arxiv.org/abs/2412.15296" target="_blank" rel="noopener">Confidence in the reasoning of large language models.</a> <b>Harvard Data Science Review.</b> arXiv:2412.15296.</li>
+              <li id="fn-14">Dehghanighobadi, Z., Fischer, A., &amp; Zafar, M. B. (2025). <a href="https://arxiv.org/abs/2502.18156" target="_blank" rel="noopener">Can LLMs Explain Themselves Counterfactually?</a> arXiv:2502.18156.</li>
+              <li id="fn-15">Palod, V., Biswas, U., &amp; Kambhampati, S. (2026). <a href="https://arxiv.org/abs/2605.10930" target="_blank" rel="noopener">Evaluating the false trust engendered by LLM explanations.</a> arXiv:2605.10930.</li>
+              <li id="fn-16">Mercier, H., &amp; Sperber, D. (2011). <a href="https://doi.org/10.1017/S0140525X10000968" target="_blank" rel="noopener">Why do humans reason? Arguments for an argumentative theory.</a> <b>Behavioral and Brain Sciences,</b> 34(2), 57&ndash;74. (See also <a href="https://www.hup.harvard.edu/books/9780674237827" target="_blank" rel="noopener"><i>The Enigma of Reason,</i></a> Harvard University Press, 2017.)</li>
+              <li id="fn-17">Yu, P., Xu, J., Weston, J., &amp; Kulikov, I. (2024). <a href="https://arxiv.org/abs/2407.06023" target="_blank" rel="noopener">Distilling System 2 into System 1.</a> arXiv:2407.06023.</li>
+              <li id="fn-18">Bhambri, S., Biswas, U., &amp; Kambhampati, S. (2025). <a href="https://arxiv.org/abs/2508.16695" target="_blank" rel="noopener">Do cognitively interpretable reasoning traces improve LLM performance?</a> arXiv:2508.16695.</li>
+              <li id="fn-19">Zhang, K., et al. (2025). <a href="https://arxiv.org/abs/2506.02658" target="_blank" rel="noopener">Computational thinking reasoning in large language models.</a> arXiv:2506.02658.</li>
+              <li id="fn-20">Kvanvig, J. L. (2003). <a href="https://doi.org/10.1017/CBO9780511498909" target="_blank" rel="noopener"><b>The Value of Knowledge and the Pursuit of Understanding.</b></a> Cambridge University Press.</li>
+            </ol>
+
 
           </div>
         </div>
       </section>
 
 
-
-      <!-- Post content -->
-      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
-
-
-            <!-- Tags -->
-            <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
-              <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
-            </div>
-
-
-                  <div class="card overflow-hidden mb-4">
-                    <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/what_is_ai_header2.jpg); min-height: 14rem;"></div>
-                      <div class="col-sm-8">
-                        <div class="card-body">
-                          <h4 class="card-title">What is Artificial Intelligence?</h4>
-                          <p class="card-text">Taking a look at what is real and how to define AI.</p>
-                          
-                          <!--
-                          <a class="btn btn-primary" href="#">Go somewhere</a>
-                        -->
-                <a class="btn btn-lg btn-link px-0" href="./what_is_artificial_intelligence.html">
-                  Read next article in series
-                  <i class="ai-arrow-right ms-2"></i>
-                </a>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-      </section>
-
-
-
-
     </main>
 
-    
 
-  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
       <div class="container pt-md-2 pt-lg-3 pt-xl-4">
         <div class="row pb-5 pt-sm-2 mb-lg-2">
           <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
 
-
             <a class="navbar-brand pe-sm-3" href="/index.html">
               <span class="text-primary flex-shrink-0 me-2">
                 <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
-
                   <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
                     <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
                   -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
@@ -651,26 +765,15 @@ Generative AI presents a dual opportunity to reshape roles in the workforce posi
                   42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
                   -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
                   </g>
-
                 </svg>
               </span>
               <span class="text-light">
               Patterson Consulting
               </span>
-            </a>    
+            </a>
 
             <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
             <div class="d-flex gap-3">
-              <!--
-              <a class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle" href="#" aria-label="Facebook">
-                <i class="ai-facebook"></i>
-              </a>
-            -->
-              <!--
-              <a class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle" href="#" aria-label="Instagram">
-                <i class="ai-instagram"></i>
-              </a>
-            -->
               <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
                 <i class="ai-linkedin"></i>
               </a>
@@ -681,7 +784,6 @@ Generative AI presents a dual opportunity to reshape roles in the workforce posi
               <div class="col mb-4 mb-md-0">
               </div>
               <div class="col mb-4 mb-md-0">
-
               </div>
               <div class="col mb-4 mb-md-0">
                 <h4 class="h6 fw-bold pb-lg-1">Company</h4>
@@ -702,7 +804,7 @@ Generative AI presents a dual opportunity to reshape roles in the workforce posi
           <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
         </p>
       </div>
-    </footer>    
+    </footer>
 
 
     <!-- Back to top button -->
@@ -714,11 +816,8 @@ Generative AI presents a dual opportunity to reshape roles in the workforce posi
     </a>
 
 
-    <!-- Vendor scripts: JS libraries and plugins -->
-
+    <!-- Vendor scripts -->
     <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
-
-
     <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
 
     <!-- Bootstrap + Theme scripts -->

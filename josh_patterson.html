@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Josh Patterson - Patterson Consulting</title>
+    <meta name="description" content="Josh Patterson, Founder and CEO of Patterson Consulting. Twenty-five years of machine learning in the enterprise, across five technology cycles - helping executives tell the signal from the AI noise.">
+    <meta name="keywords" content="Josh Patterson, Patterson Consulting, AI expert, machine learning, deep learning, MLOps, Cloudera, Deeplearning4j, Kubeflow, decision intelligence">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="Josh Patterson - Patterson Consulting" />
+    <meta property="og:description" content="Twenty-five years of machine learning in the enterprise, across five technology cycles - helping executives tell the signal from the AI noise.">
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/josh_patterson.html" />
+    <meta property="og:image" content="https://www.pattersonconsultingtn.com/assets/img/patterson_high_res_headshot_2017.jpg" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/app-icons/pct_box_logo_32x32.png">
+
+
+    <!-- Theme switcher (color modes) -->
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+
+    <link rel="stylesheet" media="screen" href="assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page specific styles: the "noise wall" and the cycle rail -->
+    <style>
+      .pct-eyebrow {
+        color: rgb(255, 149, 0);
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        font-weight: 700;
+      }
+      .noise-chip {
+        display: inline-block;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 2rem;
+        padding: .5rem 1.1rem;
+        margin: 0 .4rem .7rem 0;
+        color: rgba(255,255,255,.55);
+        font-size: .875rem;
+        line-height: 1.35;
+        white-space: normal;
+      }
+      .noise-chip.n1 { opacity: .9;  transform: rotate(-1.1deg); }
+      .noise-chip.n2 { opacity: .72; transform: rotate(.8deg); }
+      .noise-chip.n3 { opacity: .58; transform: rotate(-.6deg); }
+      .noise-chip.n4 { opacity: .46; transform: rotate(1.3deg); }
+      .signal-card {
+        border: 0 !important;
+        border-left: 4px solid rgb(255, 149, 0) !important;
+      }
+      .cycle-rail {
+        width: 2px;
+        background: rgba(255, 149, 0, .25);
+      }
+      .cycle-badge {
+        width: 3rem;
+        height: 3rem;
+        background: rgb(255, 149, 0);
+        color: #fff;
+        font-weight: 700;
+      }
+      .stat-figure {
+        color: rgb(255, 149, 0);
+        font-weight: 800;
+        line-height: 1;
+      }
+      .book-cover {
+        height: 260px;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
+      }
+      .guide-cover {
+        height: 260px;
+        width: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+
+
+        }
+      })()
+    </script>
+
+
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+      <header data-bs-theme="dark">
+
+        <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+<g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+  <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+-21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+-341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+-20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+-257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+-241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+-7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+-140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+-1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+  <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+-31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+</g>
+
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="./contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="./insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="./municipal_industry.html">Smart City</a></li>
+                  </ul>
+
+                </li>
+
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="./augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="./offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="./platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="./data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="./generative_ai.html">GenAI Services</a></li>
+
+                  </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="./publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="./index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="jarallax bg-dark py-5" data-jarallax data-speed="0.6" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-75"></div>
+        <div class="jarallax-img" style="background-image: url(assets/img/header_google_next_2026_roundtable_0.jpg);"></div>
+        <div class="container position-relative z-2 pt-5 pb-md-2 pb-lg-3 pb-xl-4 pb-xxl-5">
+
+          <!-- Navbar clearance -->
+          <div class="d-none d-xxl-block" style="height: 100px;"></div>
+          <div class="d-none d-lg-block d-xxl-none" style="height: 120px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 80px;"></div>
+          <div class="d-md-none" style="height: 40px;"></div>
+
+          <div class="row align-items-center">
+
+            <div class="col-lg-7 order-lg-1">
+              <h4 class="pct-eyebrow fs-sm mb-3">Founder &amp; Chief Executive Officer</h4>
+              <h1 class="display-2 mb-4">Josh Patterson</h1>
+              <p class="fs-lg text-body mb-4">Twenty-five years of machine learning in the enterprise. Five technology cycles. Two O'Reilly books. One consistent job: helping executive teams tell the difference between what is actually changing and what is just loud.</p>
+              <p class="fs-lg text-body mb-5">Josh has been building production AI systems since long before the current cycle had a marketing budget &mdash; at the Tennessee Valley Authority, as employee&nbsp;#36 at Cloudera, as VP of Field Engineering at Skymind, and today as CEO of Patterson Consulting. He is not new to this arena, and that is precisely the point.</p>
+
+              <div class="d-flex flex-wrap gap-3">
+                <a class="btn btn-primary btn-lg" href="./contact_us.html">Talk to Josh</a>
+                <a class="btn btn-outline-light btn-lg" href="https://www.linkedin.com/in/joshlpatterson/" target="_blank" rel="noopener">
+                  <i class="ai-linkedin me-2"></i>
+                  Connect on LinkedIn
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4 offset-lg-1 order-lg-2 pt-5 pt-lg-0 aos-init aos-animate" data-aos="fade-left" data-aos-duration="500" data-aos-offset="150">
+              <img src="assets/img/patterson_high_res_headshot_2017.jpg" class="rounded-circle w-100" alt="Josh Patterson, Founder and CEO of Patterson Consulting">
+            </div>
+
+          </div>
+
+          <div class="d-none d-lg-block d-xxl-none" style="height: 60px;"></div>
+          <div class="d-none d-md-block d-lg-none" style="height: 50px;"></div>
+          <div class="d-md-none" style="height: 30px;"></div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- Stat strip -->
+      <section class="bg-secondary py-5">
+        <div class="container py-md-2 py-lg-3">
+          <div class="row row-cols-2 row-cols-lg-4 g-4 text-center">
+
+            <div class="col">
+              <div class="display-4 stat-figure">25</div>
+              <p class="fs-sm mb-0 pt-2">years of machine learning in the enterprise</p>
+            </div>
+
+            <div class="col">
+              <div class="display-4 stat-figure">#36</div>
+              <p class="fs-sm mb-0 pt-2">employee at Cloudera, through to its IPO</p>
+            </div>
+
+            <div class="col">
+              <div class="display-4 stat-figure">2</div>
+              <p class="fs-sm mb-0 pt-2">O'Reilly books, translated into 7+ languages</p>
+            </div>
+
+            <div class="col">
+              <div class="display-4 stat-figure">10</div>
+              <p class="fs-sm mb-0 pt-2">years as an industry expert at the KeyBanc Technology Leadership Forum</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- The Noise / The Signal -->
+      <section class="bg-dark overflow-hidden py-5" data-bs-theme="dark">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-8">
+              <h4 class="pct-eyebrow fs-sm mb-3">Cutting through the noise</h4>
+              <h2 class="display-5 mb-3">Everyone has an AI headline. Almost nobody has a read.</h2>
+              <p class="fs-lg text-body mb-0">The volume around AI is at an all-time high and the signal-to-noise ratio is at an all-time low. Executives are asked to make ten-year infrastructure and workforce decisions against a feed that contradicts itself weekly. What Josh brings into the room is not another forecast &mdash; it is pattern recognition earned across five prior cycles that each arrived with the same certainty and the same noise.</p>
+            </div>
+          </div>
+
+          <div class="row g-5 align-items-start">
+
+            <!-- The noise -->
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-right" data-aos-duration="500" data-aos-offset="200">
+              <h3 class="h5 text-uppercase mb-4" style="letter-spacing: .1em; color: rgba(255,255,255,.4);">The noise</h3>
+
+              <div class="pe-lg-4">
+                <span class="noise-chip n1">&ldquo;The end of programming as we know it.&rdquo;</span>
+                <span class="noise-chip n2">&ldquo;The future is shrouded in an AI fog.&rdquo;</span>
+                <span class="noise-chip n1">&ldquo;80% of companies cut jobs for AI. It didn't improve their returns. Not even a little.&rdquo;</span>
+                <span class="noise-chip n3">&ldquo;AI agents are killing SaaS.&rdquo;</span>
+                <span class="noise-chip n2">&ldquo;AI agents aren't killing SaaS.&rdquo;</span>
+                <span class="noise-chip n4">&ldquo;At current growth, one vendor's revenue hits 100% of global GDP by 2028.&rdquo;</span>
+                <span class="noise-chip n3">&ldquo;The AI layoff trap.&rdquo;</span>
+                <span class="noise-chip n1">&ldquo;Federal agencies directed to cease use of a major AI vendor.&rdquo;</span>
+                <span class="noise-chip n4">&ldquo;An agent was given $190, lost 30% on meme coins, then pivoted to launching a thought-leadership blog.&rdquo;</span>
+                <span class="noise-chip n2">&ldquo;AGI is eighteen months away.&rdquo;</span>
+                <span class="noise-chip n3">&ldquo;AGI has been eighteen months away for four years.&rdquo;</span>
+              </div>
+
+              <p class="fs-sm mt-4 mb-0" style="color: rgba(255,255,255,.4);">Every one of these ran in a serious outlet. Several ran in the same week. None of them tells you what to do on Monday.</p>
+            </div>
+
+            <!-- The signal -->
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-left" data-aos-duration="500" data-aos-offset="200">
+              <h3 class="h5 text-uppercase mb-4 pct-eyebrow" style="letter-spacing: .1em;">The signal</h3>
+
+              <div class="card signal-card border-0 rounded-3 shadow-lg" data-bs-theme="light" style="background: #fff;">
+                <div class="card-body p-4 p-lg-5">
+
+                  <div class="d-flex pb-4 mb-1">
+                    <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                    <div>
+                      <h4 class="h5 mb-2">The function outlasts the method.</h4>
+                      <p class="fs-sm mb-0">Two hundred and fifty years of precedent say the same thing. The handloom weaver's job disappeared; weaving did not. The bookkeeper's role contracted; financial analysis expanded into territory the bookkeeper never touched. Routine execution compresses, and the judgment that remains becomes the job.</p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex pb-4 mb-1">
+                    <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                    <div>
+                      <h4 class="h5 mb-2">AGI is not going to arrive with your answers.</h4>
+                      <p class="fs-sm mb-0">We can know more than we can tell. The judgment layer of expert work resists codification &mdash; which is exactly why the model-scales-and-solves-it story keeps missing its date, and why planning around it is a strategy risk rather than a strategy.</p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex pb-4 mb-1">
+                    <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                    <div>
+                      <h4 class="h5 mb-2">None of it works without the warehouse.</h4>
+                      <p class="fs-sm mb-0">Governed, trustworthy data is the entire difference between an LLM that is a party trick and one your teams can operate on. The unglamorous analytics foundation you already own is the thing that makes AI dependable &mdash; and it is where the returns actually show up.</p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex">
+                    <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                    <div>
+                      <h4 class="h5 mb-2">Automation was never the risk. Speed and concentration are.</h4>
+                      <p class="fs-sm mb-0">The danger is change that outpaces an organization's &mdash; or a region's &mdash; capacity to adapt. The leadership question is not whether to automate, but how to restructure roles <em>upward</em> instead of simply cutting them.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="pt-4">
+                <a class="btn btn-primary" href="./content/hitchhikers_guide_kw_toc.html">Read the long version</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- Five cycles -->
+      <section class="py-5">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-9">
+              <h4 class="pct-eyebrow fs-sm mb-3">Across five technology cycles</h4>
+              <h2 class="display-5 mb-3">He has seen this movie before.</h2>
+              <p class="fs-lg mb-0">Grid sensors. Big data. Deep learning. MLOps. Agents. Each one arrived as an inevitability, generated an enormous amount of noise, and then settled into something narrower, more useful, and more boring than the headlines promised. Josh has shipped production systems in every one of them.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+
+              <!-- Cycle 01 -->
+              <div class="d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="150">
+                <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle cycle-badge">01</span>
+                  <span class="flex-grow-1 cycle-rail"></span>
+                </div>
+                <div class="flex-grow-1 pb-5">
+                  <span class="fs-sm pct-eyebrow">The Grid &amp; Sensor Era</span>
+                  <h3 class="h4 mt-1 mb-2">Machine learning before anyone called it a platform</h3>
+                  <p class="mb-0">At the Tennessee Valley Authority, Josh drove the integration of Apache Hadoop for large-scale storage and processing of smart grid phasor measurement unit (PMU) data &mdash; sensor telemetry at a scale the tooling of the day was not built for. His master's thesis, <em>TinyTermite: A Secure Routing Algorithm on the Intel iMote 2 Sensor Network Platform</em>, was published at IAAI-09.</p>
+                </div>
+              </div>
+
+              <!-- Cycle 02 -->
+              <div class="d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="150">
+                <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle cycle-badge">02</span>
+                  <span class="flex-grow-1 cycle-rail"></span>
+                </div>
+                <div class="flex-grow-1 pb-5">
+                  <span class="fs-sm pct-eyebrow">The Big Data Era</span>
+                  <h3 class="h4 mt-1 mb-2">Employee #36 at Cloudera</h3>
+                  <p class="mb-0">Josh joined Cloudera as employee&nbsp;#36 and worked through the arc of the entire big data cycle &mdash; from &ldquo;every company needs a data lake&rdquo; through to the company's <a href="https://www.prnewswire.com/news-releases/cloudera-announces-pricing-of-initial-public-offering-marking-its-debut-as-a-public-company-300447800.html" target="_blank" rel="noopener">IPO</a>. That is a full round trip of a technology narrative: hype, disillusionment, and the durable subset that actually stuck.</p>
+                </div>
+              </div>
+
+              <!-- Cycle 03 -->
+              <div class="d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="150">
+                <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle cycle-badge">03</span>
+                  <span class="flex-grow-1 cycle-rail"></span>
+                </div>
+                <div class="flex-grow-1 pb-5">
+                  <span class="fs-sm pct-eyebrow">The Deep Learning Era</span>
+                  <h3 class="h4 mt-1 mb-2">Building the neural network stack, not just using it</h3>
+                  <p class="mb-0">As VP of Field Engineering at Skymind &mdash; named to Business Insider's <a href="https://www.businessinsider.com/51-enterprise-startups-to-bet-your-career-on-in-2017-2016-11#skymind-silicon-valleys-bet-on-artificial-intelligence-1" target="_blank" rel="noopener">&ldquo;51 Enterprise Startups to Bet Your Career On&rdquo;</a> &mdash; Josh co-founded the <a href="https://projects.eclipse.org/projects/technology.deeplearning4j" target="_blank" rel="noopener">Eclipse Deeplearning4j</a> project, an open source deep learning library for the JVM. His work in this period was covered by <a href="./publications.html">WIRED</a>.</p>
+                </div>
+              </div>
+
+              <!-- Cycle 04 -->
+              <div class="d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="150">
+                <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle cycle-badge">04</span>
+                  <span class="flex-grow-1 cycle-rail"></span>
+                </div>
+                <div class="flex-grow-1 pb-5">
+                  <span class="fs-sm pct-eyebrow">The MLOps Era</span>
+                  <h3 class="h4 mt-1 mb-2">From models to operations</h3>
+                  <p class="mb-0">Two O'Reilly books bracket this period: <em>Deep Learning: A Practitioner's Approach</em> (2017) and the <em>Kubeflow Operations Guide</em> (2021). In parallel, Patterson Consulting built the NVIDIA DGX-based deep learning platform underpinning the UTC CUIP smart city project, and cloud data platforms for research teams including the University of Michigan.</p>
+                </div>
+              </div>
+
+              <!-- Cycle 05 -->
+              <div class="d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="150">
+                <div class="flex-shrink-0 d-flex flex-column align-items-center me-4">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle cycle-badge">05</span>
+                </div>
+                <div class="flex-grow-1 pb-2">
+                  <span class="fs-sm pct-eyebrow">The Agent Era</span>
+                  <h3 class="h4 mt-1 mb-2">Cognitive labor, made operational</h3>
+                  <p class="mb-0">Today Josh leads Patterson Consulting's work on <a href="./augmented_reasoning.html">Decision Intelligence Agents</a> &mdash; turning high-friction cognitive labor into reliable, repeatable, audit-friendly workflows on the customer's existing data platform. He holds a provisional patent in &ldquo;Cognitive Labor Compilers.&rdquo;</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- Published work -->
+      <section class="bg-secondary py-5">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-8">
+              <h4 class="pct-eyebrow fs-sm mb-3">Published work</h4>
+              <h2 class="display-5 mb-3">He wrote the practitioner's book. Twice.</h2>
+              <p class="fs-lg mb-0">Not thought leadership &mdash; implementation manuals, written for the engineers who have to make the thing run in production. Both titles have been translated for international markets and are cited in the academic literature.</p>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- Deep Learning -->
+            <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="200">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column p-4">
+                  <div class="pb-4">
+                    <img class="book-cover rounded-3" src="https://pattersonconsultingtn.com/images/book_cover.png" alt="Deep Learning: A Practitioner's Approach">
+                  </div>
+                  <h3 class="h5">Deep Learning: A Practitioner's Approach</h3>
+                  <p class="fs-sm text-body-secondary mb-3">O'Reilly Media, 2017</p>
+                  <p class="fs-sm">Theory of deep learning followed by production workflows on Spark and Hadoop with the DL4J library. Cited by <a href="https://dl.acm.org/doi/10.5555/3169957" target="_blank" rel="noopener">14 academic papers tracked by the ACM</a> and translated into at least seven world languages.</p>
+                  <div class="mt-auto pt-2">
+                    <a class="btn btn-sm btn-outline-primary" href="./publications.html">Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kubeflow -->
+            <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="200">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column p-4">
+                  <div class="pb-4">
+                    <img class="book-cover rounded-3" src="https://pattersonconsultingtn.com/images/kfops_book_cover_final.png" alt="Kubeflow Operations Guide">
+                  </div>
+                  <h3 class="h5">Kubeflow Operations Guide</h3>
+                  <p class="fs-sm text-body-secondary mb-3">O'Reilly Media, 2021</p>
+                  <p class="fs-sm">How machine learning infrastructure evolved in the enterprise, and how a Kubernetes-native platform meets the operational needs of a modern organization. Published in two additional translations.</p>
+                  <div class="mt-auto pt-2">
+                    <a class="btn btn-sm btn-outline-primary" href="./publications.html">Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hitchhiker's Guide -->
+            <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="500" data-aos-offset="200">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column p-4">
+                  <div class="pb-4">
+                    <img class="guide-cover rounded-3" src="assets/img/header_layers_kw_0.jpg" alt="The Hitchhiker's Guide to Knowledge Work Systems">
+                  </div>
+                  <h3 class="h5">The Hitchhiker's Guide to Knowledge Work Systems</h3>
+                  <p class="fs-sm text-body-secondary mb-3">Online, in progress</p>
+                  <p class="fs-sm">An ongoing online book on how knowledge work actually changes under automation &mdash; the economics, the historical precedent, and the architecture. The reference text behind most of what Josh argues in the room.</p>
+                  <div class="mt-auto pt-2">
+                    <a class="btn btn-sm btn-outline-primary" href="./content/hitchhikers_guide_kw_toc.html">Read online</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- The rooms he is in -->
+      <section class="border-top border-light py-5">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-8">
+              <h4 class="pct-eyebrow fs-sm mb-3">Where the perspective comes from</h4>
+              <h2 class="display-5 mb-3">Investors, researchers, clinicians, and city engineers.</h2>
+              <p class="fs-lg mb-0">A view of a technology cycle is only as good as the number of vantage points it is assembled from. Josh spends his year moving between capital markets, university research, regional industry, and production engineering &mdash; which is why his read tends to survive contact with reality.</p>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">01</span>
+                  <h3 class="h5">KeyBanc Capital Markets Technology Leadership Forum</h3>
+                  <p class="fs-sm mb-0">Patterson Consulting has participated as an Industry Expert for a decade at KeyBanc's invitation-only forum in Park City &mdash; where institutional investors, public company executives, and private technology founders pressure-test theses on what the next cycle actually is.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">02</span>
+                  <h3 class="h5">Venture capital due diligence</h3>
+                  <p class="fs-sm mb-0">Josh has worked with multiple major venture firms &mdash; including Telstra Ventures, Telus Ventures, and Sand Hill Road firms &mdash; performing technical due diligence on AI companies. Reading the gap between an AI pitch and an AI product is, quite literally, a job he has been paid to do.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">03</span>
+                  <h3 class="h5">UTC CUIP smart city</h3>
+                  <p class="fs-sm mb-0">Patterson Consulting built out the core NVIDIA DGX-based deep learning platform for the Center for Urban Informatics and Progress smart city project at the University of Tennessee at Chattanooga.</p>
+                  <a class="btn btn-sm btn-link px-0 mt-2" href="./case_studies/case_study_cuip_smart_city_data_engineering.html">Read the case study</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">04</span>
+                  <h3 class="h5">AI in medicine at Erlanger</h3>
+                  <p class="fs-sm mb-0">Patterson Consulting has run workshops for teams at Erlanger on the practical use of AI in medicine &mdash; one of the highest-stakes environments there is for separating what a model can do from what it should be trusted to do.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">05</span>
+                  <h3 class="h5">University research</h3>
+                  <p class="fs-sm mb-0">Josh has done research with teams at the University of Michigan and is recognized as an inventor on their system, alongside Patterson Consulting's work building their cloud data platform.</p>
+                  <a class="btn btn-sm btn-link px-0 mt-2" href="./case_studies/case_study_university_of_michigan_cloud_data_platform.html">Read the case study</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">06</span>
+                  <h3 class="h5">AI Coffee Hour</h3>
+                  <p class="fs-sm mb-0">Josh hosts the AI Coffee Hour podcast series, an ongoing set of unvarnished conversations with practitioners about what is really working in enterprise AI.</p>
+                  <a class="btn btn-sm btn-link px-0 mt-2" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Watch the series</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- Depth band -->
+      <section class="bg-dark py-5" data-bs-theme="dark">
+        <div class="container py-md-3 py-lg-4">
+          <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+              <h4 class="pct-eyebrow fs-sm mb-3">Underneath the strategy</h4>
+              <h2 class="h1 mb-4">He can move from the board slide to the loss function without changing gears.</h2>
+              <p class="fs-lg text-body mb-4">Josh's background runs from complexity theory and metaheuristics &mdash; ant colony optimization, secure routing on constrained sensor networks &mdash; through the mathematics of neural networks, deep learning, and large language models. That depth is why the strategic advice holds up: he is not repeating a vendor's summary of how the technology works, he has implemented it.</p>
+              <p class="fs-lg text-body mb-0">He holds a master's degree in computer science and a bachelor's in business management &mdash; a combination that turns out to be exactly the right pair of lenses for a decision about whether an AI investment is real.</p>
+            </div>
+
+            <div class="col-lg-5">
+              <div class="card border-0 rounded-3 signal-card shadow-lg" data-bs-theme="light" style="background: #fff;">
+                <div class="card-body p-4 p-lg-5">
+                  <h3 class="h5 mb-4">Credentials at a glance</h3>
+                  <ul class="list-unstyled mb-0">
+                    <li class="d-flex pb-3">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">M.S. Computer Science; B.S. Business Management</span>
+                    </li>
+                    <li class="d-flex pb-3">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">Published at IAAI-09 &mdash; <em>TinyTermite</em>, secure routing on the Intel iMote 2 sensor network platform</span>
+                    </li>
+                    <li class="d-flex pb-3">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">Co-founder of the Eclipse Deeplearning4j project</span>
+                    </li>
+                    <li class="d-flex pb-3">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">Provisional patent in &ldquo;Cognitive Labor Compilers&rdquo;</span>
+                    </li>
+                    <li class="d-flex pb-3">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">Recognized inventor on a University of Michigan system</span>
+                    </li>
+                    <li class="d-flex">
+                      <span class="mt-2 me-3 flex-shrink-0" style="width: 10px; height: 10px; border-radius: 2px; background: rgb(255,149,0);"></span>
+                      <span class="fs-sm">Co-author, two O'Reilly Media titles</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- What he is building now -->
+      <section class="overflow-hidden py-5">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+          <div class="row g-4 align-items-center">
+
+            <div class="col-md-6 aos-init aos-animate" data-aos="fade-right" data-aos-duration="600" data-aos-offset="250" data-disable-parallax-down="md">
+              <div class="zoom-effect-wrapper">
+                <div class="zoom-effect-img">
+                  <img class="rounded-3 w-100 object-fit-cover" style="height: 460px;" src="assets/img/augmented_reasoning_cloud_deploy_0.jpg" alt="Decision Intelligence Agents">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 aos-init aos-animate" data-aos="fade-left" data-aos-duration="600" data-aos-offset="250" data-disable-parallax-down="md">
+              <div class="ps-md-4">
+                <h4 class="pct-eyebrow fs-sm mb-3">What he is building now</h4>
+                <h2 class="h1 mb-4">Decision Intelligence Agents</h2>
+                <p class="fs-lg">Patterson Consulting works with executive teams to identify the recurring decisions that have to be made correctly and fast &mdash; then designs and deploys agents that integrate with the data platform and governed metrics the company already has, producing consistent, audit-friendly narratives and actions at scale.</p>
+                <p class="fs-lg">The outcome is lower decision latency, fewer escalations driven by ambiguity, and a measurable lift in operational consistency &mdash; without asking leaders to become prompt engineers or rebuild their analytics stack.</p>
+                <div class="pt-2">
+                  <a class="btn btn-primary btn-lg" href="./augmented_reasoning.html">See how it works</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- CTA -->
+      <section class="bg-secondary position-relative py-md-1">
+
+        <div class="container mt-xxl-5 pb-5">
+
+          <div class="row pt-1 pt-sm-1 pt-md-4 pt-lg-1 mt-xl-1">
+            <div class="col-lg-4">
+
+              <h4 class="display-5">Bring a real read into the room.</h4>
+
+            </div>
+            <div class="col-lg-8 pt-5 pl-5">
+
+              <p>
+                Josh works with executive teams, boards, and investment committees on the questions underneath the AI headlines: what is actually changing in this cycle, what it means for your roles and your data platform, and where the next dollar of AI investment should go. Roundtables, workshops, advisory sessions, and engagements &mdash; start with a conversation.
+              </p>
+
+              <div class="d-flex flex-wrap gap-3 pt-2">
+                <a class="btn btn-primary" href="./contact_us.html">Talk to Josh</a>
+                <a class="btn btn-outline-primary" href="https://www.linkedin.com/in/joshlpatterson/" target="_blank" rel="noopener">
+                  <i class="ai-linkedin me-2"></i>
+                  LinkedIn
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+
+  <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">&copy; All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts: JS libraries and plugins -->
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="assets/vendor/aos/dist/aos.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

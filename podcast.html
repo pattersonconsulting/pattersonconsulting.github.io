@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <title>AI Coffee Hour — Patterson Consulting</title>
+    <meta name="description" content="AI Coffee Hour is a podcast about the real state of AI — what's working, what's hype, and what it means for work. Hosted by Josh Patterson.">
+    <meta name="keywords" content="AI podcast, AI Coffee Hour, Josh Patterson, Patterson Consulting, AI market, knowledge work, automation, machine learning">
+    <meta name="author" content="Patterson Consulting">
+
+    <meta property="og:title" content="AI Coffee Hour — Patterson Consulting" />
+    <meta property="og:description" content="Unvarnished conversations about AI, work, and what's actually changing. Hosted by Josh Patterson." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.pattersonconsultingtn.com/podcast.html" />
+    <meta property="og:image" content="https://www.pattersonconsultingtn.com/assets/img/podcast_ep4_cover.png" />
+
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/app-icons/pct_box_logo_32x32.png">
+
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="assets/icons/around-icons.min.css">
+    <link rel="stylesheet" media="screen" href="assets/css/theme.pct.v2.css">
+
+    <style>
+      .page-loading {
+        position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff; opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        transform: translateY(-50%); transition: opacity .2s ease-in-out; opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @keyframes spinner {
+        0% { transform: scale(0); }
+        50% { opacity: 1; transform: none; }
+      }
+
+      /* Page-specific */
+      .pct-eyebrow {
+        color: rgb(255, 149, 0);
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        font-weight: 700;
+      }
+      .ep-number {
+        display: inline-block;
+        background: rgb(255, 149, 0);
+        color: #fff;
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        padding: .25rem .65rem;
+        border-radius: 2rem;
+        margin-bottom: .6rem;
+      }
+      .episode-card {
+        transition: transform .2s ease, box-shadow .2s ease;
+      }
+      .episode-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 1rem 2.5rem rgba(0,0,0,.15) !important;
+      }
+      .episode-card .card-img-top {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+      .ep-placeholder {
+        aspect-ratio: 16/9;
+        background: #1a1a1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: rgba(255,255,255,.35);
+      }
+      .host-strip {
+        border-left: 4px solid rgb(255, 149, 0);
+      }
+    </style>
+
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () { preloader.remove() }, 1500)
+          document.documentElement.setAttribute('data-bs-theme', 'light')
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+  </head>
+
+  <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6H6PTM9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- Navbar -->
+      <header data-bs-theme="dark">
+        <div class="navbar navbar-expand-lg fixed-top">
+          <div class="container">
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="./contact_us.html" target="_blank" rel="noopener">
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="./insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="./municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="./augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="./offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="./platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="./data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="./generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="./publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="./index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item active" href="./podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="bg-dark overflow-hidden position-relative" data-bs-theme="dark">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(ellipse at 70% 40%, rgba(255,149,0,.12) 0%, transparent 65%), linear-gradient(160deg, #0a0a0a 0%, #1a1208 100%);"></div>
+
+        <!-- decorative mic silhouette -->
+        <div class="position-absolute end-0 top-0 d-none d-lg-block" style="opacity: .06; font-size: 28rem; line-height: 1; transform: translateX(15%) translateY(-10%); user-select: none;">🎙</div>
+
+        <div class="container position-relative z-2 py-4" style="padding-top: clamp(80px, 10vw, 120px) !important;">
+          <div class="col-lg-8">
+            <h4 class="pct-eyebrow fs-sm mb-3">Patterson Consulting Podcast</h4>
+            <h1 class="display-2 text-white mb-4">AI Coffee Hour</h1>
+            <p class="fs-lg text-body mb-4" style="max-width: 620px;">Unvarnished conversations about the real state of AI — what's working, what's noise, and what it actually means for how work changes. No slides, no vendor pitches. Just a long, honest discussion over coffee.</p>
+            <div class="d-flex flex-wrap gap-3 pb-4">
+              <a class="btn btn-primary btn-lg" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">
+                <i class="ai-youtube me-2"></i>Watch on YouTube
+              </a>
+              <a class="btn btn-outline-light btn-lg" href="#episodes">All Episodes</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- What the show is -->
+      <section class="border-bottom py-5">
+        <div class="container py-md-3 py-lg-4">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-8">
+              <h4 class="pct-eyebrow fs-sm mb-3">About the show</h4>
+              <h2 class="display-6 mb-4">Signal, not noise.</h2>
+              <p class="fs-lg mb-3">The AI media cycle is loud and mostly wrong. Every week there's a new claim about what's going to be automated, eliminated, or revolutionized — and most of it evaporates on contact with reality.</p>
+              <p class="fs-lg mb-0">AI Coffee Hour is the conversation that happens after the conference ends — when practitioners talk about what's actually running in production, what keeps failing, and what the economic history of automation tells us that the breathless headlines don't. Technology, economics, philosophy — no agenda except honesty.</p>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">01</span>
+                  <h3 class="h5">Wide-ranging guests</h3>
+                  <p class="fs-sm mb-0">Industry veterans, researchers, and practitioners from AI, data infrastructure, and enterprise operations — each bringing a different vantage point on the same set of questions.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">02</span>
+                  <h3 class="h5">No pitch. No panel.</h3>
+                  <p class="fs-sm mb-0">Conversations run long and go off-script. The interesting part is usually the tangent — and there's no moderator pulling anyone back to the bullet points.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 fw-bold" style="width: 2.5rem; height: 2.5rem; background: rgb(255,149,0); color: #fff;">03</span>
+                  <h3 class="h5">AI, economics, and work</h3>
+                  <p class="fs-sm mb-0">The through-line: what does automation actually do to how people work, and what does 250 years of precedent say about where it goes? The history is more useful than the forecast.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Episodes -->
+      <section class="py-5" id="episodes">
+        <div class="container py-md-3 py-lg-4 py-xl-5">
+
+          <div class="row pb-4 pb-lg-5">
+            <div class="col-lg-8">
+              <h4 class="pct-eyebrow fs-sm mb-3">Episodes</h4>
+              <h2 class="display-5 mb-0">Latest conversations</h2>
+            </div>
+            <div class="col-lg-4 d-flex align-items-end justify-content-lg-end pt-3 pt-lg-0">
+              <a class="btn btn-outline-primary" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Full playlist on YouTube</a>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+
+            <!-- Episode 4 -->
+            <div class="col aos-init" data-aos="fade-up" data-aos-duration="500" data-aos-offset="100">
+              <div class="card h-100 border-0 shadow-sm episode-card">
+                <img class="card-img-top" src="assets/img/podcast_ep4_cover.png" alt="Episode 4 — Melanie Warrick and Josh Patterson">
+                <div class="card-body d-flex flex-column p-4">
+                  <span class="ep-number">Episode 4</span>
+                  <h3 class="h5 mb-1">Melanie Warrick &amp; Josh Patterson</h3>
+                  <p class="fs-xs text-body-secondary mb-3">June 25, 2026</p>
+                  <p class="fs-sm text-body-secondary mb-0 mt-auto">An honest look at where AI applications are actually landing in the enterprise — and where the gap between the pitch and the production system is widest.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                  <a class="btn btn-sm btn-outline-primary" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Watch episode</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Episode 3 -->
+            <div class="col aos-init" data-aos="fade-up" data-aos-duration="500" data-aos-offset="100" data-aos-delay="50">
+              <div class="card h-100 border-0 shadow-sm episode-card">
+                <img class="card-img-top" src="assets/img/podcast_ep3_cover.png" alt="Episode 3 — Amandeep Khurana and Josh Patterson">
+                <div class="card-body d-flex flex-column p-4">
+                  <span class="ep-number">Episode 3</span>
+                  <h3 class="h5 mb-1">Amandeep Khurana &amp; Josh Patterson</h3>
+                  <p class="fs-xs text-body-secondary mb-3">May 27, 2026</p>
+                  <p class="fs-sm text-body-secondary mb-0 mt-auto">A conversation about data infrastructure, the real prerequisites for production AI, and what the market is getting wrong about what "AI-ready" actually means.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                  <a class="btn btn-sm btn-outline-primary" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Watch episode</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Episode 2 -->
+            <div class="col aos-init" data-aos="fade-up" data-aos-duration="500" data-aos-offset="100" data-aos-delay="100">
+              <div class="card h-100 border-0 shadow-sm episode-card">
+                <img class="card-img-top" src="assets/img/podcast_ep2_cover.png" alt="Episode 2 — Roger Magoulas and Josh Patterson">
+                <div class="card-body d-flex flex-column p-4">
+                  <span class="ep-number">Episode 2</span>
+                  <h3 class="h5 mb-1">Roger Magoulas &amp; Josh Patterson</h3>
+                  <p class="fs-xs text-body-secondary mb-3">May 1, 2026</p>
+                  <p class="fs-sm text-body-secondary mb-0 mt-auto">Drawing on years of technology research and market analysis, the conversation ranges from AI adoption patterns to how noise in tech marketing shapes — and distorts — real investment decisions.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                  <a class="btn btn-sm btn-outline-primary" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Watch episode</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Episode 1 — placeholder -->
+            <div class="col aos-init" data-aos="fade-up" data-aos-duration="500" data-aos-offset="100" data-aos-delay="150">
+              <div class="card h-100 border-0 shadow-sm episode-card">
+                <div class="ep-placeholder rounded-top-3">
+                  <span style="font-size: 2.5rem; opacity: .3;">🎙</span>
+                  <p class="fs-xs mt-2 mb-0" style="opacity: .4;">Cover coming soon</p>
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span class="ep-number">Episode 1</span>
+                  <h3 class="h5 mb-1">Josh Patterson</h3>
+                  <p class="fs-xs text-body-secondary mb-3">2026</p>
+                  <p class="fs-sm text-body-secondary mb-0 mt-auto">The first episode — setting the stage for the series and the questions it's going to keep returning to.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                  <a class="btn btn-sm btn-outline-primary" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">Watch episode</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Host -->
+      <section class="bg-dark py-5" data-bs-theme="dark">
+        <div class="container py-md-3 py-lg-4">
+          <div class="row align-items-center g-5">
+
+            <div class="col-lg-3 text-center">
+              <img src="assets/img/patterson_high_res_headshot_2017.jpg" class="rounded-circle" style="width: 220px; height: 220px; object-fit: cover;" alt="Josh Patterson">
+            </div>
+
+            <div class="col-lg-9">
+              <h4 class="pct-eyebrow fs-sm mb-3">Your host</h4>
+              <h2 class="h1 text-white mb-3">Josh Patterson</h2>
+              <p class="fs-lg text-body mb-3">Founder and CEO of Patterson Consulting. Twenty-five years of machine learning in the enterprise, across five technology cycles. Co-author of two O'Reilly books on deep learning and MLOps. Employee #36 at Cloudera. Provisional patent in Cognitive Labor Compilers.</p>
+              <p class="fs-lg text-body mb-4">Josh has been building production AI systems since long before the current cycle had a marketing budget — and has spent most of that time explaining the gap between the headline and the reality to executive teams, investors, and engineers alike. AI Coffee Hour is that conversation, recorded.</p>
+              <div class="d-flex flex-wrap gap-3">
+                <a class="btn btn-primary" href="./josh_patterson.html">Full bio</a>
+                <a class="btn" href="https://www.linkedin.com/in/joshlpatterson/" target="_blank" rel="noopener" style="background-color: #0077B5; border-color: #0077B5; color: #fff;">
+                  <i class="ai-linkedin me-2"></i>LinkedIn
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- CTA -->
+      <section class="bg-secondary py-5">
+        <div class="container py-md-3 py-lg-4 text-center">
+          <h2 class="display-6 mb-3">Subscribe and never miss an episode.</h2>
+          <p class="fs-lg text-body-secondary mb-4">New episodes drop on YouTube. Follow the channel to get notified.</p>
+          <a class="btn btn-primary btn-lg" href="https://www.youtube.com/playlist?list=PL8Cp9uhJPW0tNAu7QM3gmnoHpZRU83jX7" target="_blank" rel="noopener">
+            <i class="ai-youtube me-2"></i>Watch on YouTube
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159 -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257 390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47 -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30 -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161 -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70 -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20 -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18 -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0 -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28 13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168 109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62 42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1 -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0"></div>
+              <div class="col mb-4 mb-md-0"></div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./podcast.html">AI Coffee Hour</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="./about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">&copy; All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+    <script src="assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="assets/vendor/aos/dist/aos.js"></script>
+    <script src="assets/js/theme.min.js"></script>
+  </body>
+</html>

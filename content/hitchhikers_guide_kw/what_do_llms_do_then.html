@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    
+    <title>What Do Large Language Models Do Then? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="If the machine doesn't reason, what does it do? Naming the activity precisely: associative synthesis — an instrument that amplifies a reasoner rather than being one.">
+    <meta name="keywords" content="LLM, large language models, reasoning, associative synthesis, cognitive amplifier, knowledge work, ebook, induction, stochastic parrot, instrument, reasoning-shaped text, Engelbart, Kahneman">
+    <meta name="author" content="Josh Patterson">
+
+    
+    <meta property="og:title" content="What Do Large Language Models Do Then? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/what_do_llms_do_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_do_llms_do_then_20260713_v2.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="If the machine doesn't reason, what does it do? Naming the activity precisely: associative synthesis — an instrument that amplifies a reasoner rather than being one."/>
+
+    <meta name="twitter:title" content="What Do Large Language Models Do Then? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/what_do_llms_do_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_do_llms_do_then_20260713_v2.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    
+    <link rel="manifest" href="/alpha_manifest.json">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+
+    
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    
+    <style>
+      .ai_detected {
+        color: #f542d1;
+      }
+      .think_more {
+        color: #007dff;
+      }
+
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    
+
+  </head>
+
+  
+  <body>
+
+    
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+      
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">What Do Large Language Models Do Then?</li>
+          </ol>
+        </nav>
+
+        
+        <h1 class="display-4 text-left pb-2 pb-lg-3">What Do Large Language Models Do Then?</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">July 2026</div>
+
+      </section>
+
+      
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/what_do_llms_do_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 560px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 450px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 400px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+      
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+The machine can produce something that looks remarkably like thought, but its underlying mechanism is different.
+<br/><br/>
+ It finds patterns across humanity’s accumulated knowledge and recombines them into new ideas, explanations, and conclusions. In that sense, it is best understood as an instrument that amplifies human reasoning—not as a reasoner itself.
+
+ <br/><br/>
+ I label this concept "associate synthesis" to distinguish it from "reasoning".
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              
+              The last article ended with a simple conclusion: 
+            </p>
+
+            <p class="fs-lg">
+              <i>the machine doesn’t reason. </i>
+            </p>
+
+            <p class="fs-lg">
+              But that answer only tells us what it lacks. It doesn’t tell us what the machine actually does.
+            </p>
+
+            <p class="fs-lg">
+And something is clearly happening. The technology is useful enough that millions of people rely on it every day to draft documents, summarize information, explain complex topics, analyze problems, and support decisions.
+            </p>
+
+            <p class="fs-lg">
+Saying “it doesn’t reason” leaves the most important question unanswered: 
+            </p>
+
+            <p class="fs-lg">
+              <b><b>if it isn’t reasoning, then what is it doing?</b></b>
+
+            </p>
+
+            <p class="fs-lg">
+              
+There are two common answers to fill that gap, and neither is very satisfying.
+
+            </p>
+
+            <p class="fs-lg">
+One view is that the machine is essentially a “stochastic parrot”—recombining fragments of text it has seen without any deeper capability. The other treats it as a thinking machine, or something close to one. The previous article addressed the "thinking machine" view, which I refute.
+
+            </p>
+
+            <p class="fs-lg">
+This article takes a different approach. First, we’ll describe what the machine actually does. Then we’ll compare that behavior with what we mean by reasoning and determine how much of that capability it actually reproduces.
+
+            </p>
+
+            <p class="fs-lg">
+Two questions, in order:
+
+            </p>
+
+            <p class="fs-lg">
+<b>What is it?</b>
+
+            </p>
+
+            <p class="fs-lg">
+<b>And how much of reasoning does it actually perform?</b>
+
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Neither Parrot Nor Mind</h2>
+
+            <p class="fs-lg">
+              
+Start with how the technology actually works, rather than trying to force it into either of two misleading categories. As Tayyar Madabushi and colleagues argue in their paper, it is neither a “stochastic parrot” nor AGI.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>
+
+            </p>
+
+            <p class="fs-lg">
+              
+“Parrot” undersells what the technology can do. A parrot repeats; an LLM can generalize from the patterns it learned during training.
+            </p>
+
+            <p class="fs-lg">
+
+              (<I>Side note: I helped build a 250k parameter LSTM neural network in 2015 that could generate decent english language. Whatever we're doing at 100 billion parameters is different than what we were doing then.</I>)
+
+            </p>
+
+            <p class="fs-lg">
+When you give it a prompt, the model uses that context to identify relevant patterns from its training and generate a response that extends those patterns to a new situation. That is why it can answer questions that were never explicitly written down in its training data, and why the same model can work across domains such as law, software development, or cooking simply by changing the context of the request.
+            </p>
+
+            <p class="fs-lg">
+Simple memorization cannot explain that behavior.
+
+            </p>
+
+            <p class="fs-lg">
+              
+
+“Mind” goes too far, for the reasons the last article laid out. Look at how the system actually works, and none of the four components of reasoning is performing its intended function.
+            </p>
+
+            <p class="fs-lg">
+What we have instead is pattern extension over language: the model identifies patterns in its training and extends them to the context in front of it. That can produce remarkably useful results, but it is fundamentally different from reasoning about why something is true.
+
+            </p>
+
+            <p class="fs-lg">
+              
+
+The simplest description sits between these two extremes: the model predicts the next word, repeatedly, based on patterns learned from a vast amount of human-written text. Viewed this way, both its strengths and its failures become easier to understand. A hallucination occurs when the model generates a plausible continuation without enough reliable information in the prompt or its learned patterns to anchor the answer.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+
+            </p>
+
+            <p class="fs-lg">
+The point is not to criticize the machine. It is to describe how it works.
+
+            </p>
+
+            <p class="fs-lg">
+              
+
+But “a pile of human text” still doesn’t fully describe what the model has learned, because the text itself has structure. It isn’t random. Much of it is the written record of people explaining, analyzing, arguing, solving problems, and making decisions.
+
+            </p>
+
+            <p class="fs-lg">
+That distinction matters. 
+
+            </p>
+
+            <p class="fs-lg">
+<b>The model is not simply learning language; </b>
+
+            </p>
+
+            <p class="fs-lg">
+<i>it is learning patterns from the accumulated record of human reasoning. </i>
+
+            </p>
+
+            <p class="fs-lg">
+That is where the more useful description begins.
+
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Appearance of Knowledge</h2>
+
+            <p class="fs-lg">
+
+This is where the earlier work in the series becomes important.
+            </p>
+
+            <p class="fs-lg">
+Writing is not simply a container for reasoning. It is the mechanism that allows reasoning to persist. Writing turns thoughts and conclusions into durable records that can be revisited, examined, challenged, and built upon. Law, science, and scholarship have advanced for centuries through this process: people write down what they know, others examine it, and new reasoning builds on the record.
+            </p>
+
+            <p class="fs-lg">
+That is the material on which these models are trained. The training corpus is, to a remarkable extent, a compressed record of human reasoning preserved in written form.
+</p>
+
+            <p class="fs-lg">
+              
+
+So what the model produces is neither reasoning nor gibberish. 
+            </p>
+
+            <p class="fs-lg">
+It is <b>reasoning-shaped text</b>: 
+            </p>
+
+            <p class="fs-lg">
+<i>new writing generated by extending patterns found in the written record of human reasoning.</i>
+            </p>
+
+            <p class="fs-lg">
+              
+
+That is why its outputs so often take the form of premises, conclusions, “therefore” statements, and numbered steps. 
+            </p>
+
+            <p class="fs-lg">
+These structures are common in the material the model learned from. The resemblance to reasoning is neither a trick nor a coincidence. It is the natural result of extending patterns found in a written record created through human reasoning.
+
+            </p>
+
+<p class="fs-lg">
+
+What the model does not do is reproduce the process that created that record.
+            </p>
+
+            <p class="fs-lg">
+It can produce the products of reasoning without performing the work of reasoning itself. It does not independently establish that a claim is true, test its conclusions against the evidence, or revise its position when new evidence contradicts it.
+            </p>
+
+            <p class="fs-lg">
+Floridi and colleagues describe the distinction in a particularly useful way.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> The model can produce the output of an explanation—a coherent and plausible account—without performing the act of explanation, which requires testing that account against the world. Quattrociocchi and colleagues describe the resulting problem as well.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+<span style="color:red;"><b>Plausibility can take the place of verification</b></span>, <i>creating the appearance of knowledge</i> <b>without the underlying process of judgment</b>.
+            </p>
+
+            <p class="fs-lg">
+That is the distinction to carry forward: <b>reasoning-shaped text</b>—the products of reasoning, generated from its written record, <b>without necessarily performing the work that made those products reasoned in the first place</b>.
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">An Instrument, Not an Agent</h2>
+
+<p class="fs-lg">
+Before we examine what the model actually does, there is one practical question to answer: 
+            </p>
+
+            <p class="fs-lg">
+<i> if the output looks like reasoning, but the model itself does not reason, where does that reasoning come from?</i>
+            </p>
+
+            <p class="fs-lg">
+The answer is: <b>from humans.</b>
+            </p>
+
+            <p class="fs-lg">
+Most of it is inherited from the training data. The logical structure in a model’s output reflects patterns created by thousands—or millions—of people whose arguments, explanations, analyses, and solutions became part of that corpus. When an output moves coherently from premise to conclusion, <b>it is often drawing on relationships that humans established in the underlying language</b>.
+            </p>
+
+            <p class="fs-lg">
+But <i>recombination</i> is not the same as reasoning. 
+            </p>
+
+            <p class="fs-lg">
+The model can combine those patterns into a genuinely new argument without independently evaluating the premises, testing the conclusion against evidence, or revising the argument when it fails. 
+</p>
+
+            <p class="fs-lg">
+<span style="color:red;" ><b>It reproduces the <i>structure</i> of reasoning without necessarily performing the reasoning that created that structure</b></span>.
+</p>
+
+            <p class="fs-lg">
+The rest comes from the human using the system.
+            </p>
+
+            <p class="fs-lg">
+A <b>person is responsible for deciding whether the claims are true</b>, whether the evidence supports the conclusion, and whether the output is good enough to stand behind. The person reads the result, verifies it, corrects it when necessary, and <span style="color: red;"><b>ultimately takes responsibility for what is produced</b></span>.
+            </p>
+
+            <p class="fs-lg">
+That is the missing part of the loop. The machine can generate an argument, <b>but a human must evaluate it and decide whether it should be accepted</b>.
+            </p>
+
+            <p class="fs-lg">
+That leads to the more accurate description: <I>the model is an instrument, not an agent.</I> It extends human capability, <b>much like a telescope extends the reach of the eye</b>. 
+            </p>
+
+            <p class="fs-lg">
+The instrument provides greater capability, but the human still has to interpret what it produces.
+            </p>
+
+            <p class="fs-lg">
+Who supplies that <b>missing judgment</b>—<i>and what happens when nobody does</i>—is the subject of future sections of this book.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Much of Reasoning Is That?</h2>
+
+            <p class="fs-lg">
+We have now described what the machine does. The next question is how much of that actually constitutes reasoning. To answer it, we can take the definition of reasoning piece by piece and examine which parts the model actually performs.
+            </p>
+
+            <p class="fs-lg">
+Start with the core distinction. Reasoning occurs when one thought provides a <i>reason</i> for another—when it justifies the next step, rather than simply coming before it.
+            </p>
+
+            <p class="fs-lg">
+The model works differently. 
+            </p>
+
+            <p class="fs-lg">
+Its next step is <b>determined by what statistically predicts the next step given the context</b>.  (<i>note: Transformers learn a latent space of relationships between patterns, expanding the range of things they can generate beyond what they encountered verbatim during training. More on this in a future article.</i>)
+            </p>
+
+            <p class="fs-lg">
+That is essentially the same "one-thing-leads-to-another" association that the <a href="what_is_reasoning.html" target="_blank">definition of reasoning</a> was designed to distinguish from genuine justification—the way "seeing your cousin’s BMW might remind you to call Fred".
+            </p>
+
+            <p class="fs-lg">
+The important point, then, is not simply that <i>the model falls short of reasoning</i>. Its basic operation belongs to the category that the definition of reasoning was designed to distinguish from reasoning in the first place.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup>
+            </p>
+
+<p class="fs-lg">
+
+The four components of reasoning do not fare much better. The last article covered the evidence in detail, so the conclusion here can be brief.
+            </p>
+
+            <p class="fs-lg ">
+A model can generate language that expresses belief, but that signal does not reliably change how the model behaves.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> It can produce logical connections between statements, but studies have found little evidence that it consistently represents those logical relationships as something it can independently maintain and evaluate. It can state conclusions with confidence, <b>but there is no underlying commitment that forces the conclusion to remain consistent with the evidence</b>. 
+            </p>
+
+            <p class="fs-lg">
+And it can produce the language of accountability—“I conclude,” “I recommend,” “I believe”—without actually being responsible for the result.
+            </p>
+
+            <p class="fs-lg">
+In each case, <span style="color:red;"><b>the form of reasoning is present, but the function is not</b></span>.
+            </p>
+
+            <p class="fs-lg">
+The three major forms of inference also separate in important ways. The model can imitate the structure of deduction, but its ability to carry out reliable deductive reasoning is fragile: changing the symbols or structure of a problem can cause it to fail.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> When exact, verifiable deduction matters, the more reliable approach is to delegate the calculation or logical check to an external system—the kind of deterministic engine discussed earlier in the series.
+            </p>
+
+            <p class="fs-lg">
+Explanation has the same limitation described above: the model can produce a coherent explanation, <b>but it does not independently test that explanation against reality.</b>
+            </p>
+
+            <p class="fs-lg">
+That leaves <i>induction</i>—the one form of inference where the model's capabilities are meaningfully different. It deserves its own section.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The One Part It Really Does</h2>
+
+            <p class="fs-lg">
+There are two parts of reasoning the model genuinely performs. Both come with important limitations.
+            </p>
+
+            <p class="fs-lg">
+The first is <b>induction</b>: reasoning from many examples toward a general pattern. That is essentially what happens during model training. The system learns from an enormous body of text and generalizes from those examples to identify patterns in the language. In that sense, statistical learning is a form of induction.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+But the fundamental limitation of induction remains the same one David Hume identified centuries ago: <b>no amount of past observations can guarantee what will happen next</b>.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+ But still --- a pattern learned from the past <i>can be useful without being universally true</i>.
+            </p>
+
+            <p class="fs-lg">
+So induction is the clearest case where the model genuinely performs a form of reasoning. More precisely, <b>the model is the result of induction performed at a scale no individual could match</b>.
+            </p>
+
+            <p class="fs-lg">
+But three limitations matter.
+            </p>
+
+            <p class="fs-lg">
+First, the induction happens primarily over text. <span style="color: red;"><b>The model learns patterns in what people write, rather than learning directly from the world itself.</b></span> It can therefore learn strong statistical associations between events without necessarily establishing which events actually cause others.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+Second, the underlying learned model is largely fixed once training is complete. A person can encounter new evidence, update their beliefs, and carry those changes forward. A deployed model can also <b>consider new information provided in its context</b>—what is commonly called <i>"in-context learning"</i>—and its response can change accordingly. But this is not the same as updating the underlying model. The new information conditions the model's output for that interaction; it does not normally change the learned parameters or permanently incorporate the new evidence into what the model has learned.
+            </p>
+
+            <p class="fs-lg">
+That distinction matters for reasoning. A person can revise what they believe based on new evidence and carry that revision into future judgments. A deployed model can reason <i>with</i> new information placed in its context, but the inductive process that established its underlying model occurred before the conversation began.
+            </p>
+
+            <p class="fs-lg">
+Third, the model cannot independently evaluate or defend its own inductive conclusions. It can state why an answer might be correct, <i>but that explanation is itself another generated output rather than an independent check on the inference</i>.
+            </p>
+
+            <p class="fs-lg">
+<b>What remains is a limited form of induction</b>: a system that has generalized patterns from an enormous body of text, but does not independently test those patterns against the world, update its underlying model as new evidence arrives, or take responsibility for the conclusions it produces. It is Hume’s problem, mechanized—and applied primarily to language rather than direct experience.
+            </p>
+
+            <p class="fs-lg">
+The second piece is the <b>social side</b> of reasoning: evaluating arguments made by others. Reasoning is not only about constructing an argument; it is also about challenging, testing, and rejecting arguments when the evidence does not support them. The model is much better at the first task than the second.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+That imbalance matters. 
+            </p>
+
+            <p class="fs-lg">
+              A system that can generate convincing arguments without an equivalent built-in process for challenging them can produce explanations that sound authoritative without being grounded in truth. Research has found that fluent AI-generated explanations <i>can actually increase people’s confidence in incorrect answers rather than reduce it.</i><sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              This means that answers that sound "plausibly correct" yet wrong --- are sometimes more dangerous than ones that are easy to spot as wrong.
+            </p>
+
+            <p class="fs-lg">
+The missing skepticism therefore has to come from the human reader. That creates its own problem: people naturally evaluate arguments in a social context, where the speaker is assumed to have knowledge, experience, or something at stake. 
+            </p>
+
+            <p class="fs-lg">
+A language model has none of those properties, but its fluency can make its output feel as though it does.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Should We Call It?</h2>
+
+            <p class="fs-lg">
+The industry has already chosen a name for this capability: <b>“reasoning.”</b>
+            </p>
+
+            <p class="fs-lg">
+ The latest models are marketed as <i>"reasoning models"</i>, and the intermediate steps they generate before an answer are often called <b>reasoning traces</b>.
+            </p>
+
+            <p class="fs-lg">
+The terminology is convenient, but it can also be misleading. It suggests that these traces are records of the model’s actual thinking and that the model is performing the same kind of reasoning we described earlier. Theses assumptions don't hold up.
+            </p>
+
+            <p class="fs-lg">
+As the last article showed, a reasoning model’s trace is better understood as part of the mechanism used to produce a better answer—not as a transparent record of how the answer was reached. In fact, research has found that the traces most useful for training future models can be the least understandable to human readers.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+That distinction matters operationally. A reasoning trace should not automatically be treated as evidence that the model has independently reasoned through a problem, verified its conclusions, or identified its own mistakes.
+            </p>
+
+            <p class="fs-lg">
+Dropping the word “reasoning” <i>should not mean replacing it with a dismissive label</i>. Terms like <i>“stochastic parrot,”</i> <i>“pseudo-reasoning,”</i> or <i>“counterfeit”</i> correct one overstatement by creating another. <b>They understate a technology that can perform an enormous amount of useful work.</b>
+            </p>
+
+            <p class="fs-lg">
+In seconds, a model can <i>process and connect information across more written material than a person could read in a lifetime</i>. It can identify relevant patterns and recombine them into a useful draft, analysis, explanation, or recommendation. Whatever we call this capability has to account for that.
+            </p>
+
+            <p class="fs-lg">
+So instead of defining the technology by what it lacks, <i>name what it actually does</i>.
+            </p>
+
+            <p class="fs-lg">
+Earlier, we called the output <b>reasoning-shaped text</b>: the structure of an argument without necessarily performing the reasoning that produced it. Now we can name the process that generates that output.
+            </p>
+
+            <p class="fs-lg">
+The underlying operation is <i><b>association at scale</b></i>. The model moves from one piece of information to the next based on statistical relationships learned from an enormous body of human writing, then synthesizes those patterns into something new.
+            </p>
+
+            <p class="fs-lg">
+<b>Associative synthesis</b> is the more useful name for this capability: <i>searching a vast space of human knowledge through learned associations and synthesizing those patterns into new, usable outputs.</i>
+            </p>
+
+            <p class="fs-lg">
+So name what it actually does.
+            </p>
+
+            <p class="fs-lg">
+Earlier, we named the output from the perspective of what it lacks: <i>reasoning-shaped text</i>—the form of an argument without necessarily performing the reasoning behind it. Now name the activity that produces that output, and the picture changes from what is missing to what is actually happening.
+            </p>
+
+            <p class="fs-lg">
+Underneath the fluent output is <i>association at scale</i>. The model moves from one piece of information to the next based on statistical relationships learned from an enormous body of human writing, rather than by independently establishing that one claim justifies another.
+            </p>
+
+            <p class="fs-lg">
+The more accurate name for this process is <b>associative synthesis</b>: 
+            </p>
+
+            <p class="fs-lg">
+<b>the model searches a vast space of human writing through learned associations and synthesizes those patterns into something new.</b>
+            </p>
+
+            <p class="fs-lg">
+Both words matter.
+            </p>
+
+            <p class="fs-lg">
+<i>“Associative”</i> keeps the description precise. Association is the fundamental operation: the model <i>moves between patterns based on learned statistical relationships rather than independently establishing that one claim justifies another</i>. The term identifies the distinction without diminishing what the system can do.
+            </p>
+
+            <p class="fs-lg">
+<i>“Synthesis”</i> captures the other half of the capability. The model can <i>pull relevant patterns from an enormous body of information and combine them into a coherent draft, analysis, or explanation</i>. That is meaningful cognitive work—work that can save a person hours.
+            </p>
+
+            <p class="fs-lg">
+<b>The name also clarifies the machine’s role</b>. <i>Associative synthesis does not reason for you; it amplifies your ability to reason.</i> It is a cognitive amplifier: a tool designed to extend human intellectual capability rather than replace human judgment.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+<b>The human supplies the belief, judgment, and accountability</b>. The machine supplies <i>speed, scale, and access to patterns across an extraordinary amount of written knowledge</i>.
+            </p>
+
+            <p class="fs-lg">
+Used this way, an associative-synthesis engine is not a substitute for human reasoning. <b>It is a powerful instrument for extending what a person can accomplish with it</b>.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Work Still Belongs to Us</h2>
+
+            <p class="fs-lg">
+So, both questions.
+            </p>
+
+            <p class="fs-lg">
+<b>What does it do?</b> <i>Associative synthesis:</i> it searches the patterns in humanity’s written reasoning and recombines them into something new. It is an instrument that amplifies a reasoner, not an agent that reasons on its own.
+            </p>
+
+            <p class="fs-lg">
+<b>How much of reasoning does that cover?</b> The model reproduces the shape of nearly all of it, but reliably performs the substance of very little. There is one genuine exception: induction, performed at enormous scale but primarily over text rather than direct experience, and without independently reflecting on or updating the conclusions it produces. There is also a half-exception: <i>the ability to construct arguments without reliably evaluating them</i>.
+            </p>
+
+            <p class="fs-lg">
+Put plainly, the machine operates through the exact kind of one-thing-leads-to-another association that <a href="" target="_blank"><i>What Is Reasoning?</i></a> defined reasoning against—only now it does so with a fluency and scale that history had never prepared us for.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup> The result can look remarkably like careful thought.
+            </p>
+
+            <p class="fs-lg">
+That is <b>neither a small capability nor a disappointing one</b>. Fast, fluent pattern work <i>across an enormous body of human knowledge is a genuinely powerful tool</i>. Naming it precisely is not about diminishing what the machine can do. It is about understanding how to use it well.
+            </p>
+
+            <p class="fs-lg">
+The missing part of reasoning still has to come from a person: someone must evaluate the output, close the loop, and take responsibility for the result. Treat the machine as an agent, and you risk assigning that responsibility to something that cannot assume it.
+            </p>
+
+            <p class="fs-lg">
+Which raises the question I address in future articles: 
+            </p>
+
+            <p class="fs-lg">
+<b>who supplies what the machine lacks, and can that loop ever be closed without a person in it?</b>
+            </p>
+
+            <hr />
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5 ">
+              <li id="fn-1">Tayyar Madabushi, H., Torgbi, M., &amp; Bonial, C. (2025). <a href="https://arxiv.org/abs/2505.23323" target="_blank" rel="noopener">Neither stochastic parroting nor AGI: LLMs solve tasks through context-directed extrapolation from training data priors.</a> arXiv:2505.23323.</li>
+              <li id="fn-2">Floridi, L., Morley, J., Novelli, C., &amp; Watson, D. (2025). <a href="https://arxiv.org/abs/2512.10080" target="_blank" rel="noopener">What kind of reasoning (if any) is an LLM actually doing? On the stochastic nature and abductive appearance of large language models.</a> arXiv:2512.10080.</li>
+              <li id="fn-3">Quattrociocchi, W., Capraro, V., &amp; Perc, M. (2025). <a href="https://arxiv.org/abs/2512.19466" target="_blank" rel="noopener">Epistemological fault lines between human and artificial intelligence.</a> arXiv:2512.19466.</li>
+              <li id="fn-4">Adler, J. E., &amp; Rips, L. J. (Eds.). (2008). <a href="https://philpapers.org/rec/ADLRSO-2" target="_blank" rel="noopener"><b>Reasoning: Studies of Human Inference and Its Foundations.</b></a> Cambridge University Press.</li>
+              <li id="fn-5">Sanyal, D., Pandey, M., Kumar, D., Deshpande, S., &amp; Mandal, M. (2025). <a href="https://arxiv.org/abs/2510.24772" target="_blank" rel="noopener">Confidence is not competence: A mechanistic look at the decoupling of belief and action in LLMs.</a> arXiv:2510.24772.</li>
+              <li id="fn-6">Tang, X., et al. (2023). <a href="https://arxiv.org/abs/2305.14825" target="_blank" rel="noopener">Large language models are in-context semantic reasoners rather than symbolic reasoners.</a> arXiv:2305.14825.</li>
+              <li id="fn-7">Vapnik, V. N. (1999). <a href="https://doi.org/10.1109/72.788640" target="_blank" rel="noopener">An overview of statistical learning theory.</a> <b>IEEE Transactions on Neural Networks,</b> 10(5), 988&ndash;999.</li>
+              <li id="fn-8">Hume, D. (1748/1977). <a href="https://www.gutenberg.org/ebooks/9662" target="_blank" rel="noopener"><b>An Enquiry Concerning Human Understanding.</b></a> Hackett.</li>
+              <li id="fn-9">Zecevic, M., Willig, M., Dhami, D. S., &amp; Kersting, K. (2023). <a href="https://arxiv.org/abs/2308.13067" target="_blank" rel="noopener">Causal parrots: Large language models may talk causality but are not causal.</a> <b>Transactions on Machine Learning Research,</b> 08/2023. arXiv:2308.13067.</li>
+              <li id="fn-10">Mercier, H., &amp; Sperber, D. (2011). <a href="https://doi.org/10.1017/S0140525X10000968" target="_blank" rel="noopener">Why do humans reason? Arguments for an argumentative theory.</a> <b>Behavioral and Brain Sciences,</b> 34(2), 57&ndash;74. (See also <a href="https://www.hup.harvard.edu/books/9780674237827" target="_blank" rel="noopener"><i>The Enigma of Reason,</i></a> Harvard University Press, 2017.)</li>
+              <li id="fn-11">Palod, V., Biswas, U., &amp; Kambhampati, S. (2026). <a href="https://arxiv.org/abs/2605.10930" target="_blank" rel="noopener">Evaluating the false trust engendered by LLM explanations.</a> arXiv:2605.10930.</li>
+              <li id="fn-12">Bhambri, S., Biswas, U., &amp; Kambhampati, S. (2025). <a href="https://arxiv.org/abs/2508.16695" target="_blank" rel="noopener">Do cognitively interpretable reasoning traces improve LLM performance?</a> arXiv:2508.16695.</li>
+              <li id="fn-13">Engelbart, D. C. (1962). <a href="https://www.dougengelbart.org/pubs/augment-3906.html" target="_blank" rel="noopener"><b>Augmenting Human Intellect: A Conceptual Framework.</b></a> Stanford Research Institute.</li>
+              <li id="fn-14">Kahneman, D. (2011). <a href="https://philpapers.org/rec/KAHTFA-2" target="_blank" rel="noopener"><b>Thinking, Fast and Slow.</b></a> Farrar, Straus and Giroux.</li>
+            </ol>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+    
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+    
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

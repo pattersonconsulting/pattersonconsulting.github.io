@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Embeddings and the Latent Space of Language | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Words have no meaning by themselves. Embeddings encode conceptual relationships in high-dimensional space — and that map is real and useful. But it is a map of language about the world, not the world itself.">
+    <meta name="keywords" content="embeddings, word embeddings, contextual embeddings, latent space, vector space, semantic similarity, large language models, LLM, knowledge work, ebook, distributional hypothesis, symbol grounding problem, Harris, Harnad, Shannon, Mikolov, word2vec, transformers, Vaswani, hallucination">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Embeddings and the Latent Space of Language | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/word_embeddings_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_embeddings_20260922_v2.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Words have no meaning by themselves. Embeddings encode conceptual relationships in high-dimensional space — and that map is real and useful. But it is a map of language about the world, not the world itself."/>
+
+    <meta name="twitter:title" content="Embeddings and the Latent Space of Language | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/word_embeddings_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_embeddings_20260922_v2.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .ai_detected {
+        color: #f542d1;
+      }
+      /* Offset in-page reference jumps so the target clears the fixed navbar */
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <!-- Nav toggler (Mobile) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../machine_learning.html">Machine Learning</a></li>
+                    <li><a class="dropdown-item" href="../../llm_ops.html">LLM Ops</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Embeddings and the Latent Space of Language</li>
+          </ol>
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Embeddings and the Latent Space of Language</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">September 2026</div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/word_embeddings_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+                      An LLM navigates a rich, implicit map of how humans have written about concepts and their relationships. That map is real and useful. But it is a map of language about the world, not a map of the world itself. There is no internal validity check — every output requires a reader who knows the territory.
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              The previous articles in this series, <a href="do_large_language_models_reason.html">Do Large Language Models Reason?</a> and <a href="what_do_llms_do_then.html">What Do Large Language Models Do Then?</a>, named "associative synthesis" as what large language models do:
+            </p>
+
+            <p class="fs-lg">
+              <i>search and recombine patterns from training data rather than reason. </i>
+            </p>
+
+            <p class="fs-lg">
+              That claim depends on a mechanism — what does the search actually run on? The answer is <b>embeddings</b>.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Encoding Problem</h2>
+
+            <p class="fs-lg">
+              A list of words has no structure.
+            </p>
+
+            <p class="fs-lg">
+              "Doctor" and "physician" are different strings. A simple index assigns them different numbers and stops there. That index has no way to represent that the two words are nearly interchangeable, or that both are far from "carburetor" in some meaningful sense.
+            </p>
+
+            <p class="fs-lg">
+              Early approaches — bag-of-words, simple frequency counts — captured word presence but not relationship. Shannon's 1948 information theory<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> showed how to measure information and how reliably symbols can be sent over a noisy channel. Shannon set meaning aside on purpose. He wrote that the "semantic aspects of communication are irrelevant to the engineering problem."
+            </p>
+
+            <p class="fs-lg">
+              <b>Meaning lives in the relationships between symbols, not inside any single one.</b>
+            </p>
+
+            <p class="fs-lg">
+              Stevan Harnad named the deeper problem in 1990: <b>the symbol grounding problem</b>.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> A formal system can manipulate symbols according to rules without having any connection to what those symbols represent in the real world. Harnad asked how the meaning of such symbols could be intrinsic to the system, instead of "parasitic on the meanings in our heads." Embeddings leave that problem open. What they add is structure: each word gets a position defined by its relationships to other words.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Meaning from Context</h2>
+
+            <p class="fs-lg">
+              The underlying idea comes from the <b>distributional hypothesis</b>, proposed by linguist Zellig Harris in 1954. Harris framed it as a correlation: the more two words differ in meaning, the more they differ in the contexts where they appear.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> The usual short form is that words appearing in similar contexts tend to have similar meanings.
+            </p>
+
+            <p class="fs-lg">
+              <i>"Oncologist"</i> and <i>"cardiologist"</i> both appear near <i>"diagnosis," "patient," "hospital,"</i> and <i>"treatment."</i> <b>That overlap in context is a signal about conceptual overlap</b>. Harris claimed only a correlation. Context is <i>a measurable proxy for meaning</i>. The signal turns out to be rich enough to be useful at scale.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What an Embedding Is</h2>
+
+            <p class="fs-lg">
+              An embedding maps each word to a point in high-dimensional space — <b>typically hundreds to thousands of dimensions</b>. The position encodes the contexts that word tends to appear in.
+            </p>
+
+            <p class="fs-lg">
+              The positions are learned during training. The basic idea is simple: adjust the position of each word so that words appearing in similar contexts move closer together. Given enough text, the resulting geometry begins to reflect <i>real relationships between concepts</i>.
+            </p>
+
+            <p class="fs-lg">
+              The landmark demonstration came from Mikolov and colleagues in 2013:<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> <b>vector arithmetic on word embeddings</b> <i>produces meaningful analogies</i>.
+            </p>
+
+            <p class="fs-lg">
+              <strong>king &minus; man + woman &asymp; queen.</strong>
+            </p>
+
+            <p class="fs-lg">
+              The arithmetic works because the geometry captures relationships between concepts. The same method gives:<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <strong>Paris &minus; France + Italy &asymp; Rome</strong>
+            </p>
+
+            <p class="fs-lg">
+              This works because the embedding space contains a direction that corresponds roughly to the relationship between a country and its capital.
+            </p>
+
+            <p class="fs-lg">
+              <i>No one explicitly labeled that direction.</i> It emerged from patterns of co-occurrence across billions of words.
+            </p>
+
+            <p class="fs-lg">
+              Later models made embeddings <em>contextual</em>: the same word gets a different position depending on the words around it, so "bank" in a financial sentence lands far from "bank" beside a river. ELMo did this in 2018 using recurrent networks.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> BERT did it with the transformer,<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> the architecture Vaswani and colleagues introduced in 2017 for machine translation.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup> Today's large language models are built on the transformer.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Latent Space: The Geometry Between Concepts</h2>
+
+            <p class="fs-lg">
+              The high-dimensional space contains structure that was never explicitly labeled. It emerged from the statistical patterns in the training data and was encoded as a coordinate system. <i>This is what we mean by <b>latent space</b></i>: relationships that are implicit in the data become explicit in the geometry of the model.
+            </p>
+
+            <p class="fs-lg">
+              Three types of structure are particularly important.
+            </p>
+
+            <p class="fs-lg">
+              <b>Neighborhoods.</b> Semantically related concepts tend to cluster together. Legal terms occupy one region; medical terms another. When a model processes a question about employment law, the relevant concepts are located in the same general neighborhood, influencing the patterns of text the model produces.
+            </p>
+
+            <p class="fs-lg">
+              <b>Directions.</b> Some relationships appear as directions through the space. Gender, capital-to-country relationships, and differences in formal versus informal language can each correspond to directions in the geometry. These dimensions were not defined in advance. They emerged from patterns in the training data.
+            </p>
+
+            <p class="fs-lg">
+              <b>Paths.</b> The geometry can also capture relationships between concepts that go beyond simple proximity. Human writing repeatedly moves through certain patterns of reasoning: evidence leads to a hypothesis; a claim is followed by a rebuttal and then a conclusion. These recurring patterns can become reflected in the structure of the space.
+            </p>
+
+            <p class="fs-lg">
+              The important point is that the space is not random. It contains structure derived from the relationships present in the training data, and models use that structure when producing new text.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Geometry Is Not Knowledge</h2>
+
+            <p class="fs-lg">
+              The latent space encodes statistical patterns in text <i>about</i> the world.
+            </p>
+
+            <p class="fs-lg">
+              The world itself is outside the space, and there is no built-in representation of truth.
+            </p>
+
+            <p class="fs-lg">
+              Three limits follow from this.
+            </p>
+
+            <p class="fs-lg">
+              <b>Truth has no reliable address.</b> In a static word embedding such as word2vec, <i>“The moon orbits Earth”</i> and <i>“Earth orbits the moon”</i> are built from the same word vectors. Nothing in those vectors marks one sentence as true and the other as false.
+            </p>
+
+            <p class="fs-lg">
+              Contextual models do place the two sentences differently, and researchers have found some structure related to truth inside them. Burns and colleagues recovered a direction in a model's internal activations that separates true statements from false ones, without using any labels.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> On average that direction was about 4% more accurate than the model's own answers. Marks and Tegmark found that true and false statements separate along a roughly linear direction, and that the separation gets cleaner in larger models.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              These signals are partial. Both studies tested simple yes/no or true/false items with clear answers. Levinstein and Herrmann tested two probing methods, Burns's among them, and found that both failed to generalize in basic ways.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup> A supervised probe trained on plain factual statements scored worse than chance on negated versions of similar statements. Marks and Tegmark later reported probes that held up better across datasets, so the evidence on how far these signals generalize is mixed. The model also has no step where it checks a claim against this signal before writing it. The Burns result shows the gap directly: on average, the model's internal state held a slightly better answer than the one it gave.
+            </p>
+
+            <p class="fs-lg">
+              <b>This helps explain why hallucinations are a structural problem rather than simply a bug to patch</b>. When the model generates from a region where the training data provides no strong path to a correct answer, it still has to produce something. It follows the statistical patterns available to it.
+            </p>
+
+            <p class="fs-lg">
+              <b>The result can be fluent and internally coherent while being factually wrong. </b>
+            </p>
+
+            <p class="fs-lg">
+              Whatever truth-related structure the geometry holds is weak, and nothing in generation requires the output to agree with it.
+            </p>
+
+            <p class="fs-lg">
+              <b>Grounding is still absent.</b> Harnad's symbol grounding problem<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> has been deferred, not solved. The things that words refer to—the actual objects, events, and experiences in the world—are not present in the embedding space. <i>“Invoice”</i> occupies a position because of its relationships to terms such as <i>“payment,” “due date,”</i> and <i>“net 30.”</i> The model has never issued an invoice, waited for payment, or dealt with an overdue account.
+            </p>
+
+            <p class="fs-lg">
+              <b>Proximity is not entailment.</b> <i>“Promise”</i> and <i>“obligation”</i> may be close neighbors in the latent space. But <i>“A promised”</i> does not logically entail <i>“A is obligated.”</i> That conclusion depends on conditions and exceptions that formal logic can represent but geometric proximity cannot. The embedding tells us that two concepts are related; it does not tell us what kind of relationship they have. Association and logical implication can both appear as distance in the same space.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Here Be Dragons</h2>
+
+            <p class="fs-lg">
+              The latent space is a real and useful map of how humans have written about concepts and their relationships, <b>compressed from a corpus far larger than any individual could read</b>. That is where much of an LLM’s capability comes from: <i>it can move across domains because the same geometry contains patterns from all of them.</i>
+            </p>
+
+            <p class="fs-lg">
+              But it is a map of <i>language about</i> the world, <b>not a map of the world itself</b>. A map of the London Underground can accurately show how stations connect while saying nothing about their elevation. In the same way, latent space can accurately capture patterns in human language while saying nothing about whether those statements are true.
+            </p>
+
+            <p class="fs-lg">
+              Systems built on this substrate cannot verify their output by inspecting the space itself. There is no reliable internal truth register or formal validity check. Verification comes from outside the model:
+            </p>
+
+            <p class="fs-lg">
+              <b>someone who knows the subject must compare the output with what is actually known about the world.</b>
+            </p>
+
+            <p class="fs-lg">
+              Every generation is therefore a new traversal through a space with no ground truth. Whether the destination is correct depends on whether someone—or something outside the model—can check it against the territory.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Shannon, C. E. (1948). <a href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x" target="_blank" rel="noopener">A mathematical theory of communication.</a> <b>Bell System Technical Journal,</b> 27(3), 379–423.</li>
+              <li id="fn-2">Harnad, S. (1990). <a href="https://doi.org/10.1016/0167-2789(90)90087-6" target="_blank" rel="noopener">The symbol grounding problem.</a> <b>Physica D: Nonlinear Phenomena,</b> 42(1–3), 335–346.</li>
+              <li id="fn-3">Harris, Z. S. (1954). <a href="https://doi.org/10.1080/00437956.1954.11659520" target="_blank" rel="noopener">Distributional structure.</a> <b>Word,</b> 10(2–3), 146–162.</li>
+              <li id="fn-4">Mikolov, T., Yih, W., &amp; Zweig, G. (2013). <a href="https://aclanthology.org/N13-1090/" target="_blank" rel="noopener">Linguistic regularities in continuous space word representations.</a> <b>Proceedings of the 2013 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT),</b> 746–751.</li>
+              <li id="fn-5">Mikolov, T., Chen, K., Corrado, G., &amp; Dean, J. (2013). <a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener">Efficient estimation of word representations in vector space.</a> <b>arXiv:1301.3781.</b></li>
+              <li id="fn-6">Peters, M. E., Neumann, M., Iyyer, M., Gardner, M., Clark, C., Lee, K., &amp; Zettlemoyer, L. (2018). <a href="https://aclanthology.org/N18-1202/" target="_blank" rel="noopener">Deep contextualized word representations.</a> <b>Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT),</b> 2227–2237.</li>
+              <li id="fn-7">Devlin, J., Chang, M.-W., Lee, K., &amp; Toutanova, K. (2019). <a href="https://aclanthology.org/N19-1423/" target="_blank" rel="noopener">BERT: Pre-training of deep bidirectional transformers for language understanding.</a> <b>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT),</b> 4171–4186.</li>
+              <li id="fn-8">Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp; Polosukhin, I. (2017). <a href="https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html" target="_blank" rel="noopener">Attention is all you need.</a> <b>Advances in Neural Information Processing Systems,</b> 30.</li>
+              <li id="fn-9">Burns, C., Ye, H., Klein, D., &amp; Steinhardt, J. (2023). <a href="https://arxiv.org/abs/2212.03827" target="_blank" rel="noopener">Discovering latent knowledge in language models without supervision.</a> <b>International Conference on Learning Representations (ICLR).</b> arXiv:2212.03827.</li>
+              <li id="fn-10">Marks, S., &amp; Tegmark, M. (2024). <a href="https://arxiv.org/abs/2310.06824" target="_blank" rel="noopener">The geometry of truth: Emergent linear structure in large language model representations of true/false datasets.</a> <b>Conference on Language Modeling (COLM 2024).</b> arXiv:2310.06824.</li>
+              <li id="fn-11">Levinstein, B. A., &amp; Herrmann, D. A. (2025). <a href="https://doi.org/10.1007/s11098-023-02094-3" target="_blank" rel="noopener">Still no lie detector for language models: Probing empirical and conceptual roadblocks.</a> <b>Philosophical Studies,</b> 182(7), 1539–1565.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

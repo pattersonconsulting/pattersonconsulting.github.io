@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Subjective Computation | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="A database returns results according to defined rules; a language model generates outputs that must be evaluated. Deterministic software can be verified once and trusted after that. With a language model, oversight returns with every output.">
+    <meta name="keywords" content="subjective computation, deterministic computation, large language models, LLM, knowledge work, ebook, hallucination, symbol grounding problem, distributional hypothesis, determinism, temperature, verification, AI oversight, Turing, Rice, Harris, Harnad, Kahneman, Klein, Kalai, Vempala, Weizenbaum, ELIZA, processing fluency, Mata v. Avianca">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Subjective Computation | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/subjective_computation_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_subjective_computation_20261009_v6.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="A database returns results according to defined rules; a language model generates outputs that must be evaluated. Deterministic software can be verified once and trusted after that. With a language model, oversight returns with every output."/>
+
+    <meta name="twitter:title" content="Subjective Computation | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/subjective_computation_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_subjective_computation_20261009_v6.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      /* Offset in-page reference jumps so the target clears the fixed navbar */
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2;
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+
+          const theme = 'light'
+          document.documentElement.setAttribute('data-bs-theme', theme)
+        }
+      })()
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper -->
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <!-- Navbar -->
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <!-- Navbar brand (Logo) -->
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <!-- Mobile menu toggler (Hamburger) -->
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar collapse (Main navigation) -->
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Subjective Computation</li>
+          </ol>
+        </nav>
+
+        <!-- Post title + post meta -->
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Subjective Computation</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/subjective_computation_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+                      A database and a language model are fundamentally different kinds of systems. A database returns results according to defined rules; a language model generates outputs that must be evaluated.
+                      <br/><br/>
+                      Deterministic software lets you verify the system and trust subsequent executions under the same conditions. With a language model, that oversight returns with every output.
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              Run payroll for fifty thousand people, and nobody rechecks the arithmetic.
+            </p>
+
+            <p class="fs-lg">
+              The system was tested and validated; now it runs without anyone checking each result. The same is true of a query that totals last quarter’s revenue, code that routes a payment, or a formula copied down ten thousand rows of a spreadsheet. We <b>trust</b> these systems to handle real business operations <i>without reviewing every execution</i>. That trust is justified when the logic is correct and the inputs meet the assumptions the system was built for. Under those conditions, <i>the same inputs produce the same results.</i>
+            </p>
+
+            <p class="fs-lg">
+              Now ask a language model to summarize a contract, draft a customer email, or identify risks in a vendor agreement.
+            </p>
+
+            <p class="fs-lg">
+              <b>Each output needs review.</b> Someone has to read it, check whether the claims are sound, and decide whether it is fit for use. <b>Approving yesterday's output tells you nothing about the quality of today's.</b>
+            </p>
+
+            <p class="fs-lg">
+              The difference is structural. The two systems operate on different principles, and improving a language model doesn't eliminate that difference. One can execute validated logic without reviewing every result. The other requires evaluation of its outputs. This article focuses on the latter: subjective computation. The deterministic side of the comparison is covered in <a href="deterministic_computation.html">Deterministic Computation</a>.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Computation by Prediction</h2>
+
+            <p class="fs-lg">
+              When you run SUM over a column, the answer is fixed by the data and the definition of addition. There is no judgment in it and no room to go two ways. Alan Turing described this kind of machine in 1936<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>: <strong>a fixed rule that reads the current state and decides, with no latitude, what happens next.</strong>
+            </p>
+
+            <p class="fs-lg">
+              Every classical program your company runs sits on that principle.
+            </p>
+
+            <p class="fs-lg">
+              Given some text, a language model assigns probabilities to possible next tokens, selects one, and repeats the process until it reaches the end of the output.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> The model is effectively navigating a high-dimensional probability space learned from its training data.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> At each step, it selects what is statistically likely to come next, not what is necessarily true. A long sequence of locally likely choices can produce fluent, confident prose without the model having a mechanism that distinguishes a true statement from a false one.
+            </p>
+
+            <p class="fs-lg">
+              The previous article in this series, <a href="what_do_llms_do_then.html">What Do Large Language Models Do Then?</a>, covers this mechanism in depth.
+            </p>
+
+            <p class="fs-lg">
+              A good engineer will point out that you can reduce the randomness. Set the model to select its most likely token at every step and, given the same inputs and implementation, you can make the output reproducible. Set temperature to zero and you get determinism. <i>You don't get correctness.</i>
+            </p>
+
+            <p class="fs-lg">
+              The model is still ranking possible tokens by how well they fit the patterns it learned from its training data. It isn't evaluating whether the resulting statement is true. Reducing variance changes the consistency of the output, not the basis on which the output is produced.
+            </p>
+
+            <p class="fs-lg">
+              Determinism can make a language model repeat the same mistake reliably; <strong>it cannot give the model a mechanism for measuring truth.</strong>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Meaning Comes From Context</h2>
+
+            <p class="fs-lg">
+              The model learns statistical relationships between words across its training corpus—what words tend to occur together and in what contexts. That is what makes the output easy to mistake for understanding: the model can reproduce the language of a subject convincingly without actually representing the subject itself.
+            </p>
+
+            <p class="fs-lg">
+              A model learns the statistical relationships between words by observing which words appear together across a vast corpus of text. “Invoice” appears alongside “payment,” “due,” and “net 30,” so the model learns how the word is typically used. The linguist Zellig Harris described this principle in 1954<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>: words with similar meanings tend to occur in similar contexts, and differences in meaning show up as differences in where words occur.
+            </p>
+
+            <p class="fs-lg">
+              But usage is not reference. The model can learn how people use the word “invoice” without having any connection to the thing the word refers to. <strong>It has processed “invoice” billions of times without ever seeing an invoice, being owed money, or waiting for a late payment.</strong>
+            </p>
+
+            <p class="fs-lg">
+              Stevan Harnad identified the underlying problem in 1990.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> Symbols in a formal system <i>do not acquire meaning from the system itself</i>; their meaning has to be grounded outside it, in the world those symbols describe. Inside a language model, words are connected to other words, <b>but there is no underlying connection to the things those words refer to.</b>
+            </p>
+
+            <p class="fs-lg">
+              The earlier article in this series, <a href="do_large_language_models_reason.html">Do Large Language Models Reason?</a>, examines the same problem through the four components of reasoning and reaches a similar conclusion from a different direction.
+            </p>
+
+            <p class="fs-lg">
+              The meaning of a model's output is supplied by the reader. The reader brings the context, the stakes, and the knowledge needed to understand what the words refer to. Two people can read the same model-generated summary and come away with different interpretations because each supplies context the text itself does not contain.
+            </p>
+
+            <p class="fs-lg">
+              A <code>SUM</code> query produces the same result regardless of who reads it. <i>A model generates text that the reader must interpret and validate.</i>
+            </p>
+
+            <p class="fs-lg">
+              That dependence on the reader <b>is what makes this computation subjective.</b>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Plausibly Correct</h2>
+
+            <p class="fs-lg">
+              You can trust a billing system because its correctness is established once and then carried forward by every subsequent run. Test it, work through the edge cases, review the implementation, and the same logic applies every time.
+            </p>
+
+            <p class="fs-lg">
+              After that, oversight becomes monitoring. You watch for a changed tax rule or a bad data feed, not for the arithmetic itself. The calculation does not change from one execution to the next.
+            </p>
+
+            <p class="fs-lg">
+              <b>Language models work differently, and that difference changes the nature of the oversight required.</b>
+            </p>
+
+            <p class="fs-lg">
+              A language model does not necessarily reproduce the same output, so the usual debugging model breaks down. There is no stable result to diff against and no single failing case to isolate. Change a prompt without materially changing its intent, and the output can change.
+            </p>
+
+            <p class="fs-lg">
+              There is also no equivalent of a known-correct result to compare it with.
+            </p>
+
+            <p class="fs-lg">
+              “Is this contract summary correct?” does not have a fixed answer in the way a column total does.
+            </p>
+
+            <p class="fs-lg">
+              Correctness depends on the purpose of the summary, the relevant facts, and the judgment of the person reviewing it. Evaluating the output can require nearly as much domain expertise as producing it. A plausible wrong answer can look the same as a correct one until someone qualified examines it.
+            </p>
+
+            <p class="fs-lg">
+              <b>There is no cheap verification step for something that looks "plausibly correct".</b>
+            </p>
+
+            <p class="fs-lg">
+              The cost of verification does not amortize. A billing system can be thoroughly tested once, then trusted across millions of executions. A model output requires evaluation each time.
+            </p>
+
+            <p class="fs-lg">
+              Kahneman and Klein (2009)<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> describe when fast, intuitive judgment can be trusted: the environment has to be regular enough to be predictable, and the person needs prolonged practice with rapid, unambiguous feedback. Someone reviewing open-ended model output usually has neither. The cues to whether an answer is correct are weak, and feedback on whether it was right comes late or not at all. Each output has to be checked deliberately. <b>As usage increases, the cost of oversight increases with it.</b>
+            </p>
+
+            <p class="fs-lg">
+              Better models reduce the problem without removing it. Kalai and Vempala (2024)<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> proved that a pretrained language model that is calibrated, meaning its confidence matches how often it is right, must hallucinate at some rate on arbitrary facts: facts that can't be worked out from patterns in the training data. That rate is roughly the share of such facts that appear only once in training. <b>The bound comes from statistics, not from a particular model architecture.</b>
+            </p>
+
+            <p class="fs-lg">
+              The authors are explicit about the limits of the result. It doesn't apply to systematic facts like arithmetic, and post-training or looking facts up in a database at generation time can lower the hallucination rate, at the cost of calibration. Where a fact can be checked against a fixed source, the reliable fix is to move that check onto deterministic software.
+            </p>
+
+            <p class="fs-lg">
+              Classical computing has its own fundamental limits: some questions about programs cannot be resolved by any algorithm, such as whether an arbitrary program will ever produce a given output.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup><sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup> Language models have a different limit. A model built to predict plausible text has no built-in check on whether that text is grounded in fact. Engineering can reduce how often that matters, but the check still has to come from outside the model.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Case for Language Models</h2>
+
+            <p class="fs-lg">
+              This is a different kind of machine, with a different strength.
+            </p>
+
+            <p class="fs-lg">
+              A database operates within a defined structure: typed data, fixed schemas, and a known set of operations. But much of the information a business depends on does not fit that structure. Contracts, emails, support tickets, research, and even the half-formed question a customer asks are expressed in open-ended language that does not map neatly to a schema.
+            </p>
+
+            <p class="fs-lg">
+              Classical software could store, index, and retrieve that text. <b>It could not reliably work with the meaning expressed in it.</b>
+            </p>
+
+            <p class="fs-lg">
+              Language models operate on this layer. You can give them contracts, emails, support tickets, and research notes and get back a useful summary, an answer to a question, or an analysis of the material. That is a real capability, and it explains much of the market's interest in the technology.
+            </p>
+
+            <p class="fs-lg">
+              The trade-off is straightforward. A database gives you predictable results within a defined schema. A language model can work across unstructured text, where the information doesn't fit neatly into predefined fields and relationships. Much of the potential business value comes from being able to analyze information that conventional software could store and search but not interpret.
+            </p>
+
+            <p class="fs-lg">
+              The companion article, <a href="what_do_llms_do_then.html">What Do Large Language Models Do Then?</a>, explores how this works in practice.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">When Plausibility Passes for Correctness</h2>
+
+            <p class="fs-lg">
+              Both systems produce outputs that look convincing, and <b>that resemblance is where teams get into trouble</b>. A language model returns an answer that is fluent, well-structured, and confident.
+            </p>
+
+            <p class="fs-lg">
+              <i>It looks like something worth trusting.</i>
+            </p>
+
+            <p class="fs-lg">
+              Joseph Weizenbaum, who built ELIZA, one of the first chatbots, in the 1960s, observed that users attributed understanding to his program because its responses sounded appropriate.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup><sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup> People tend to judge text that is easy to process as more credible.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> A language model produces fluent text whether its answer is accurate or not.
+            </p>
+
+            <p class="fs-lg">
+              Don't treat model output as if it carries a guarantee of correctness. A summary that looks finished has not necessarily been verified. A language model uses the same underlying process to generate correct and incorrect answers, and both can sound equally convincing.
+            </p>
+
+            <p class="fs-lg">
+              The risk is greatest when the output looks polished enough that people stop checking it. In <i>Mata v. Avianca</i> (2023), lawyers filed a brief citing court decisions that ChatGPT had invented.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> The citations were properly formatted and sounded credible. Opposing counsel caught them by trying to look the cases up and failing to find them; the judge then confirmed the cases did not exist.
+            </p>
+
+            <p class="fs-lg">
+              <b>Building reliable systems with language models means identifying which parts of a task can be made deterministic and which require judgment.</b>
+            </p>
+
+            <p class="fs-lg">
+              Use conventional software for the parts that can be specified precisely. When a model needs to perform arithmetic or apply strict logic, have it generate code and execute it rather than generate the answer directly. The result can then be checked against defined rules.
+            </p>
+
+            <p class="fs-lg">
+              The remaining work—interpreting the result, evaluating its relevance, and deciding whether it is correct for the situation—requires human judgment. That division of responsibility isn't a temporary workaround until better models arrive. Deterministic computation can be verified against a defined standard. Language model outputs must be evaluated in context. Good system design accounts for that difference rather than pretending it will disappear.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">When Computation Needs Judgment</h2>
+
+            <p class="fs-lg">
+              Two kinds of computation, with different guarantees. Deterministic computation produces exact, repeatable results under defined rules and data constraints. Language models operate on the ambiguity of language and meaning, where there is no single correct output guaranteed by the computation itself. Each result has to be evaluated on its merits.
+            </p>
+
+            <p class="fs-lg">
+              Nearly every system worth building today combines both. The engineering challenge is deciding which parts of the work can be made deterministic and where a language model is necessary. Model outputs still need human oversight because the computation itself cannot establish whether a result is correct.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Alter, A. L., &amp; Oppenheimer, D. M. (2009). Uniting the tribes of fluency to form a metacognitive nation. <b>Personality and Social Psychology Review,</b> 13(3), 219–235. <a href="https://doi.org/10.1177/1088868309341564" target="_blank" rel="noopener">doi:10.1177/1088868309341564</a></li>
+              <li id="fn-2">Harnad, S. (1990). The symbol grounding problem. <b>Physica D,</b> 42(1–3), 335–346. <a href="https://doi.org/10.1016/0167-2789(90)90087-6" target="_blank" rel="noopener">doi:10.1016/0167-2789(90)90087-6</a></li>
+              <li id="fn-3">Harris, Z. S. (1954). Distributional structure. <b>Word,</b> 10(2–3), 146–162.</li>
+              <li id="fn-4">Kahneman, D., &amp; Klein, G. (2009). Conditions for intuitive expertise: A failure to disagree. <b>American Psychologist,</b> 64(6), 515–526.</li>
+              <li id="fn-5">Kalai, A. T., &amp; Vempala, S. S. (2024). <a href="https://arxiv.org/abs/2311.14648" target="_blank" rel="noopener">Calibrated language models must hallucinate.</a> In <b>Proceedings of the 56th Annual ACM Symposium on Theory of Computing (STOC 2024).</b> arXiv:2311.14648.</li>
+              <li id="fn-6"><i>Mata v. Avianca, Inc.</i>, 678 F. Supp. 3d 443 (S.D.N.Y. 2023).</li>
+              <li id="fn-7">Quattrociocchi, W., Capraro, V., &amp; Perc, M. (2025). <a href="https://arxiv.org/abs/2512.19466" target="_blank" rel="noopener">Epistemological fault lines between human and artificial intelligence.</a> arXiv:2512.19466.</li>
+              <li id="fn-8">Rice, H. G. (1953). Classes of recursively enumerable sets and their decision problems. <b>Transactions of the American Mathematical Society,</b> 74(2), 358–366.</li>
+              <li id="fn-9">Turing, A. M. (1936). On computable numbers, with an application to the Entscheidungsproblem. <b>Proceedings of the London Mathematical Society,</b> Series 2, 42, 230–265. <a href="https://doi.org/10.1112/plms/s2-42.1.230" target="_blank" rel="noopener">doi:10.1112/plms/s2-42.1.230</a></li>
+              <li id="fn-10">Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp; Polosukhin, I. (2017). Attention is all you need. <b>Advances in Neural Information Processing Systems</b> 30.</li>
+              <li id="fn-11">Weizenbaum, J. (1966). ELIZA—a computer program for the study of natural language communication between man and machine. <b>Communications of the ACM,</b> 9(1), 36–45. <a href="https://doi.org/10.1145/365153.365168" target="_blank" rel="noopener">doi:10.1145/365153.365168</a></li>
+              <li id="fn-12">Weizenbaum, J. (1976). <b>Computer Power and Human Reason: From Judgment to Calculation.</b> W. H. Freeman.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">
+              Patterson Consulting
+              </span>
+            </a>
+
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+              </div>
+              <div class="col mb-4 mb-md-0">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+  </body>
+</html>

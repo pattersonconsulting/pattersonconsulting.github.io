@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>What Is Work? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Work, labor, and job describe different things. Labor economics research shows technology eliminating specific jobs while new work appears, slowly and unevenly, from Uruk scribes to telephone operators.">
+    <meta name="keywords" content="what is work, labor, jobs, work definition, labor economics, knowledge work, automation, task framework, new work, Arendt, Marx, Autor, Frey and Osborne, Arntz, Mokyr, handloom weavers, telephone operators, Uruk scribes">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="What Is Work? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_is_work_20260924_v4.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Work, labor, and job describe different things. Labor economics research shows technology eliminating specific jobs while new work appears, slowly and unevenly, from Uruk scribes to telephone operators."/>
+
+    <meta name="twitter:title" content="What Is Work? | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/draft_what_is_work_20260924_v4.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../machine_learning.html">Machine Learning</a></li>
+                    <li><a class="dropdown-item" href="../../llm_ops.html">LLM Ops</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">What Is Work?</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">What Is Work?</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">September 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/what_is_work_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      Work is human effort directed toward producing value within a particular social and economic context. That context has changed continuously since the first agricultural surpluses created demand for work beyond what subsistence alone required. Technology eliminates specific bundles of tasks—the basis of many jobs—<b>and so far new kinds of work have appeared to replace them, though slowly and unevenly.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              Every organization runs on work.
+            </p>
+
+            <p class="fs-lg">
+              Every technology investment is ultimately a bet on how work will change: which tasks can be automated, which become more valuable, and which disappear. The debate over large language models and employment is no different. Yet the central concept in that debate—work—is rarely defined precisely.
+            </p>
+
+            <p class="fs-lg">
+              "Work," "labor," and "job" are often used interchangeably, but they describe different things.
+            </p>
+
+            <p class="fs-lg">
+              The distinction has practical consequences. Frey and Osborne (2013) assessed entire occupations and estimated that 47 percent of US employment was in occupations at high risk of automation, defined as an estimated probability above 70 percent.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> Arntz, Gregory, and Zierahn (2016) revisited that estimate by examining the tasks individual workers actually reported performing. The estimated share of US employment at high risk fell to 9 percent, matching the average across 21 OECD countries.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>These concepts are related, but they are not interchangeable.</b> Distinguishing them is essential to understanding how technology changes work and what that means for employment.
+            </p>
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Labor, Work, and Jobs</h2>
+
+            <p class="fs-lg">
+              Hannah Arendt (1958) drew one of the most influential distinctions between labor and work.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> <strong>Labor</strong> is the activity tied to the body's biological life. Its products are consumed almost as fast as they are made, and it leaves nothing behind. Arendt's own example is bread, which lasts about a day. <em>Work</em> fabricates durable things that together make up a human world. Her matching example is a table, which can outlast generations.
+            </p>
+
+            <p class="fs-lg">
+              Writing something down also counts as work for Arendt, because it <i>turns passing speech and thought into a lasting record.</i>
+            </p>
+
+            <p class="fs-lg">
+              Marx (1867), writing almost a century before Arendt, drew a different line, between labor and labor-power.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> <strong>Labor</strong> is the process by which people act on nature to turn raw material into useful things. What workers sell in the market is labor-power: their capacity to work, sold for a set period. Labor-power is the commodity that gets priced, hired, and tracked on a payroll. Arendt later criticized Marx for treating all labor as if it were work.
+            </p>
+
+            <p class="fs-lg">
+              Neither of these definitions is a <strong>job</strong>. A job is an institutional construct: a specific bundle of tasks packaged into an employment contract at a particular point in time. Jobs are created and destroyed continuously as technology and economic context change. In its 1966 report, the National Commission on Technology, Automation, and Economic Progress, a blue-ribbon panel appointed by President Johnson, put it this way. Autor (2015b) quotes the passage:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <p class="fw-bold mb-1" style="font-size:1.05rem;">"The basic fact is that technology eliminates jobs, not work."</p>
+                <p class="mb-0 text-muted" style="font-size:0.85rem;">— National Commission on Technology, Automation, and Economic Progress (1966), <em>Technology and the American Economy</em>, Vol. I, p. 9; quoted in Autor (2015b), p. 4<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup></p>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Labor</p>
+                  <p>The human capacity for effort, treated as an economic resource. Labor is expended over time, must be replenished, and is priced in units of time. Workers sell their labor-power: their capacity to perform work for a defined period.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Work</p>
+                  <p>Purposeful human effort directed toward producing something of value within a given social and economic context. As societies become more complex, the demand for work expands and changes.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Job</p>
+                  <p>A defined bundle of tasks organized around an employment relationship at a particular point in time. Jobs are created, reshaped, and eliminated as technology and economic conditions change.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              By around 3,000 BCE, the temple households of Uruk employed trained record-keepers, usually called scribes. They maintained clay-tablet accounts of grain, livestock, land, and labor, learning their trade through standardized exercises in signs and word lists.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> This was a job in the sense defined here: a recognizable bundle of tasks organized around a specific role.
+            </p>
+
+            <p class="fs-lg">
+              The surviving evidence does not establish how these early record-keepers were compensated. A thousand years later, under the Third Dynasty of Ur, ordinary scribes received rations of barley, oil, and cloth, and some were allocated fields.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>The scribal job is gone. People still record transactions, keep institutional records, and coordinate economic activity at scale.</b>
+            </p>
+
+            <p class="fs-lg">
+              Over the centuries those tasks have been regrouped into other jobs, such as the clerk, the bookkeeper, and the accountant, usually as record-keeping tools changed.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Emergent Nature of Work</h2>
+
+            <p class="fs-lg">
+              <b>What counts as work, and what that work is worth, depends on the social and economic context</b>, and that context keeps changing.
+            </p>
+
+            <p class="fs-lg">
+              Before agriculture, people lived in small mobile bands. Studies of recent foragers find that getting food took a few hours a day; Sahlins (1972) put it at three to five.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> Counting food processing, tool-making, and camp chores raises the total to around 40 hours a week.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              In either case, there was no demand for scribes, administrators, architects, or lawyers because the institutions that required their services did not yet exist. There were no written records to maintain, large organizations to administer, or permanent buildings to design. <a href="" target="_blank"><b>Agriculture generated surplus</b></a>, surplus supported settled communities, and those communities developed systems for keeping records.
+            </p>
+
+            <p class="fs-lg">
+              Small clay tokens, each standing for a measure of grain or a head of livestock, appear in Near Eastern villages around the time farming began.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> By the late fourth millennium BCE, the temple households of Uruk were using written tablets to track grain stores, field areas, and the rations owed to work gangs.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> The demand for accounting, record-keeping, and institutional coordination came with agriculture and the larger, more complex organizations it made possible. Part 4 traced this sequence in detail.
+            </p>
+
+            <p class="fs-lg">
+              <span style="color: blue;" ><b>Work grows as societies become more complex</b></span>, because complexity creates needs that did not exist before, such as the record-keeping Uruk's temple households required.
+            </p>
+
+            <p class="fs-lg">
+              Modern data show something similar. Autor, Chin, Salomons, and Seegmiller (2024) estimate that roughly 60 percent of US employment in 2018 was in job titles the Census Bureau added after 1940, and they trace this new work to new technologies and to shifts in demand.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Automation also creates a tension that Autor (2015a) calls a "paradox of abundance."<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              For most people, the main income-generating asset is their labor, and it pays because it is scarce. If technology substituted cheap capital for that labor, society as a whole would be richer, but people who own labor and no capital could struggle to earn a living. Autor treats this as a distribution problem: total output rises, and the question is who receives it.
+            </p>
+
+            <p class="fs-lg">
+              New work, meaning job titles that did not exist before, offsets some of what automation takes away (Autor, Chin, Salomons, and Seegmiller 2026). It tends to appear where demand for new products and services is growing, and it requires expertise that is scarce at first. Workers in new job titles earn a wage premium, and that premium is smaller for older vintages of new work as the expertise spreads.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Mokyr, Vickers, and Ziebarth (2015) traced fears of technological unemployment from the Industrial Revolution through the Great Depression. In each period, predictions of lasting mass unemployment did not come true. Machines raised demand for complementary work, and new products created new sectors. Gains for workers came slowly and unevenly. The authors expect the pattern to broadly hold for AI and robotics, but warn that the transition may be painful and that some workers may need income support.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Task Structure of Work</h2>
+
+            <p class="fs-lg">
+              Autor, Levy, and Murnane (2003) built their analysis around <b>tasks</b>.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup> They sorted tasks by whether a computer could carry them out by following explicit rules (<i>routine</i>) or not (<i>nonroutine</i>), and by whether the task was analytic, interactive, or manual. Later work grouped these into three categories: abstract, routine, and manual.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> In that framework a task is "a unit of work activity that produces output," and a job is a bundle of tasks.
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Abstract Tasks</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Problem-solving, intuition, persuasion, and creativity. Computers <em>complement</em> these tasks.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Routine Tasks</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Tasks that follow explicit rules, cognitive or manual, e.g. bookkeeping, sorting, or repetitive assembly. Computers <em>substitute</em> for them.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Manual Tasks</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Nonroutine manual tasks that need situational adaptability, e.g. driving in city traffic or preparing a meal. Computers neither substitute for nor complement these much, unless the environment can be controlled.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Autor and Handel (2013) found that tasks vary within occupations as well as between them. Workers with the same job title report doing different tasks, and those differences predict wages even after controlling for occupation.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup> When asking how technology will affect a worker, their tasks tell you more than their job title.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">When Human Activity Stops Being Work</h2>
+
+            <p class="fs-lg">
+              Human activity ceases to be economically viable as work when demand for the human effort behind it collapses.
+            </p>
+
+            <p class="fs-lg">
+              The activity itself may continue, but the market no longer needs people to perform it.
+            </p>
+
+            <p class="fs-lg">
+              The handloom weavers were right about what the power loom would do to them. Their pay was already unsteady during the Napoleonic wars, when too many weavers competed for too little work. After 1826, as power looms spread, piece-rates collapsed and never recovered. In north-east Lancashire, the calico piece-rate in 1841 was about a sixth of its 1814 level.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup><sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              As cloth got cheaper, people bought far more of it. In the United States, labor productivity in cotton cloth rose about 30-fold over the nineteenth century while consumption rose about 100-fold, and employment in the industry grew.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Demand for hand-weaving collapsed. Power looms, run for long factory hours by lower-paid workers and made steadily faster, produced cloth more cheaply, and by the 1840s hand-weaving of cotton had largely disappeared in Britain.<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Telephone operators followed a related path. When AT&amp;T switched cities to dial service between 1920 and 1940, young women's employment as operators fell 50 to 80 percent.<sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup> Women already working as operators were more likely to end up in lower-paying jobs or out of work. Later cohorts found work as typists, secretaries, and in service jobs, some of them new kinds of work, and overall employment for young women did not fall.
+            </p>
+
+            <p class="fs-lg">
+              Two parts of the weaver story did not repeat. Local wages held up, and AT&amp;T raised phone rates after automation instead of passing on its savings.
+            </p>
+
+            <p class="fs-lg">
+              <strong>In each of these cases, automation removed specific jobs, and new kinds of work appeared elsewhere.</strong>
+            </p>
+
+            <p class="fs-lg">
+              Smith (1776) described an early form of this.<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup> He argued that dividing labor makes workers far more productive, partly through machines that let one worker do the work of many. He also noted that the division of labor produced new trades, such as machine-making and "philosophers, or men of speculation," and that a larger market supports finer specialization than a small one.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Evolution of Work</h2>
+
+            <p class="fs-lg">
+              Work is purposeful human effort directed toward producing value within a given social and economic context.
+            </p>
+
+            <p class="fs-lg">
+              Labor is the economic input: the capacity for that effort, priced and hired in the market.
+            </p>
+
+            <p class="fs-lg">
+              A job is a specific bundle of tasks organized into a role at a particular point in time.
+            </p>
+
+            <p class="fs-lg">
+              Technology eliminates some jobs by automating their tasks, while changing the economy in ways that create demand for new work and new roles. Historically, new work has eventually offset the jobs automation displaced, but the transition has been slow and uneven, and the workers affected have not shared equally in the gains.
+            </p>
+
+            <p class="fs-lg">
+              The "civilization information layer" traced in Part 4 made abstract task work possible at scale. In the United States, professional, technical, and managerial occupations—jobs built largely around abstract tasks—grew by about 3 percentage points of total employment per decade from 1940 to 1980, with faster growth from 1980 to 2010, though that growth slowed after 2000.<sup><a href="#fn-22" data-scroll data-scroll-offset="100">[22]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The question now is whether AI can automate the judgment these jobs require, or whether its capabilities remain concentrated in retrieving information and generating outputs. That distinction will shape how AI changes knowledge work and the jobs built around it.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Frey, C. B., &amp; Osborne, M. A. (2013). <em>The future of employment: How susceptible are jobs to computerisation?</em> Oxford Martin School working paper, University of Oxford. Published as: Frey, C. B., &amp; Osborne, M. A. (2017). <b>Technological Forecasting and Social Change,</b> 114, 254–280. <a href="https://doi.org/10.1016/j.techfore.2016.08.019" target="_blank" rel="noopener">doi:10.1016/j.techfore.2016.08.019</a></li>
+              <li id="fn-2">Arntz, M., Gregory, T., &amp; Zierahn, U. (2016). <em>The Risk of Automation for Jobs in OECD Countries: A Comparative Analysis.</em> OECD Social, Employment and Migration Working Papers, No. 189. OECD Publishing. <a href="https://doi.org/10.1787/5jlz9h56dvq7-en" target="_blank" rel="noopener">doi:10.1787/5jlz9h56dvq7-en</a></li>
+              <li id="fn-3">Arendt, H. (1958). <em>The Human Condition.</em> University of Chicago Press. [labor/work/action defined ch. I, p. 7; labor ch. III; work ch. IV]</li>
+              <li id="fn-4">Marx, K. (1867). <em>Capital: A Critique of Political Economy, Vol. I.</em> [labor-power as a commodity, ch. 6; the labor process, ch. 7; labor has no value, ch. 19]</li>
+              <li id="fn-5">National Commission on Technology, Automation, and Economic Progress [H. R. Bowen, Chairman]. (1966). <em>Technology and the American Economy: Report of the National Commission on Technology, Automation, and Economic Progress</em> (Vol. I). U.S. Government Printing Office, p. 9. Quoted in: Autor, D. H. (2015b). Why are there still so many jobs? The history and future of workplace automation. <b>Journal of Economic Perspectives,</b> 29(3), 3–30, at p. 4.</li>
+              <li id="fn-6">Nissen, H. J., Damerow, P., &amp; Englund, R. K. (1993). <em>Archaic Bookkeeping: Early Writing and Techniques of Economic Administration in the Ancient Near East</em> (P. Larsen, Trans.). University of Chicago Press. [labor and rations, pp. 70–71; scribes, pp. 105–108]</li>
+              <li id="fn-7">Sahlins, M. (1972). <em>Stone Age Economics.</em> Aldine-Atherton. [ch. 1, "The Original Affluent Society"]</li>
+              <li id="fn-8">Kaplan, D. (2000). The darker side of the "original affluent society." <b>Journal of Anthropological Research,</b> 56(3), 301–324. <a href="https://doi.org/10.1086/jar.56.3.3631086" target="_blank" rel="noopener">doi:10.1086/jar.56.3.3631086</a></li>
+              <li id="fn-9">Schmandt-Besserat, D. (1992). <em>Before Writing, Vol. 1: From Counting to Cuneiform.</em> University of Texas Press.</li>
+              <li id="fn-10">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2024). New frontiers: The origins and content of new work, 1940–2018. <b>Quarterly Journal of Economics,</b> 139(3), 1399–1465. <a href="https://doi.org/10.1093/qje/qjae008" target="_blank" rel="noopener">doi:10.1093/qje/qjae008</a></li>
+              <li id="fn-11">Autor, D. H. (2015a). Paradox of abundance: Automation anxiety returns. In S. Rangan (Ed.), <em>Performance and Progress: Essays on Capitalism, Business, and Society.</em> Oxford University Press, pp. 237–260. <a href="https://doi.org/10.1093/acprof:oso/9780198744283.003.0017" target="_blank" rel="noopener">doi:10.1093/acprof:oso/9780198744283.003.0017</a></li>
+              <li id="fn-12">Autor, D., Chin, C., Salomons, A. M., &amp; Seegmiller, B. (2026). What makes new work different from more work? NBER Working Paper No. 34986. National Bureau of Economic Research.</li>
+              <li id="fn-13">Mokyr, J., Vickers, C., &amp; Ziebarth, N. L. (2015). The history of technological anxiety and the future of economic growth: Is this time different? <b>Journal of Economic Perspectives,</b> 29(3), 31–50. <a href="https://doi.org/10.1257/jep.29.3.31" target="_blank" rel="noopener">doi:10.1257/jep.29.3.31</a></li>
+              <li id="fn-14">Autor, D. H., Levy, F., &amp; Murnane, R. J. (2003). The skill content of recent technological change: An empirical exploration. <b>Quarterly Journal of Economics,</b> 118(4), 1279–1333.</li>
+              <li id="fn-15">Acemoglu, D., &amp; Autor, D. (2011). Skills, tasks and technologies: Implications for employment and earnings. In O. Ashenfelter &amp; D. Card (Eds.), <em>Handbook of Labor Economics</em> (Vol. 4B, pp. 1043–1171). Elsevier. <a href="https://doi.org/10.1016/S0169-7218(11)02410-5" target="_blank" rel="noopener">doi:10.1016/S0169-7218(11)02410-5</a></li>
+              <li id="fn-16">Autor, D. H., &amp; Handel, M. J. (2013). Putting tasks to the test: Human capital, job tasks, and wages. <b>Journal of Labor Economics,</b> 31(2, Pt. 2), S59–S96. <a href="https://doi.org/10.1086/669332" target="_blank" rel="noopener">doi:10.1086/669332</a></li>
+              <li id="fn-17">Bythell, D. (1969). <em>The Handloom Weavers: A Study in the English Cotton Industry during the Industrial Revolution.</em> Cambridge University Press. [piece-rates, pp. 103–105] <a href="https://doi.org/10.1017/CBO9780511895999" target="_blank" rel="noopener">doi:10.1017/CBO9780511895999</a></li>
+              <li id="fn-18">Allen, R. C. (2018). The hand-loom weaver and the power loom: A Schumpeterian perspective. <b>European Review of Economic History,</b> 22(4), 381–402. <a href="https://doi.org/10.1093/ereh/hex030" target="_blank" rel="noopener">doi:10.1093/ereh/hex030</a></li>
+              <li id="fn-19">Bessen, J. (2019). Automation and jobs: When technology boosts employment. <b>Economic Policy,</b> 34(100), 589–626. <a href="https://doi.org/10.1093/epolic/eiaa001" target="_blank" rel="noopener">doi:10.1093/epolic/eiaa001</a></li>
+              <li id="fn-20">Feigenbaum, J., &amp; Gross, D. P. (2024). Answering the call of automation: How the labor market adjusted to mechanizing telephone operation. <b>Quarterly Journal of Economics,</b> 139(3), 1879–1939. <a href="https://doi.org/10.1093/qje/qjae005" target="_blank" rel="noopener">doi:10.1093/qje/qjae005</a></li>
+              <li id="fn-21">Smith, A. (1776). <em>An Inquiry into the Nature and Causes of the Wealth of Nations.</em> Book I, chs. 1–3.</li>
+              <li id="fn-22">Autor, D. H. (2015b). Why are there still so many jobs? The history and future of workplace automation. <b>Journal of Economic Perspectives,</b> 29(3), 3–30. <a href="https://doi.org/10.1257/jep.29.3.3" target="_blank" rel="noopener">doi:10.1257/jep.29.3.3</a></li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

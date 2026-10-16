@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Physical Labor and Cognitive Labor | The Hitchhiker's Guide to Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Physical labor changes matter, and cognitive labor changes information. The two are measured and automated differently, and LLMs now reach cognitive steps that earlier software could not.">
+    <meta name="keywords" content="physical labor, cognitive labor, knowledge work, automation, Marx, Taylor, Braverman, scientific management, Smil, brain energy, Kahneman, mental effort, Moravec's paradox, Eloundou, LLM exposure, Autor, Simon, Harnad, Polanyi, tacit knowledge, Frankfurt">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Physical Labor and Cognitive Labor | The Hitchhiker's Guide to Knowledge Work Systems (Series)"/>
+    <!-- og:image and twitter:image are placeholders (the What Is Work? header). -->
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/physical_labor_and_cognitive_labor.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Physical labor changes matter, and cognitive labor changes information. The two are measured and automated differently, and LLMs now reach cognitive steps that earlier software could not."/>
+
+    <meta name="twitter:title" content="Physical Labor and Cognitive Labor | The Hitchhiker's Guide to Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/physical_labor_and_cognitive_labor.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Automation paths figure ────────────────────────────── */
+      .paths-figure svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .paths-figure .paths-phase rect {
+        fill: #ffffff;
+        stroke: #d7dde2;
+        stroke-width: 1.5;
+      }
+      .paths-figure .paths-frontier rect {
+        fill: rgba(255,149,0,0.08);
+        stroke: #ff9500;
+        stroke-width: 1.5;
+        stroke-dasharray: 5 4;
+      }
+      .paths-figure .paths-row {
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        fill: #121519;
+      }
+      .paths-figure .paths-title {
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        fill: #121519;
+      }
+      .paths-figure .paths-frontier-title { fill: #9a5800; }
+      .paths-figure .paths-detail {
+        font-family: "Inter", sans-serif;
+        font-size: 12.5px;
+        fill: #6f788b;
+      }
+      .paths-figure .paths-arrow {
+        stroke: #9aa3b2;
+        stroke-width: 1.6;
+      }
+      .paths-figure .paths-frontier-line {
+        stroke: #ff9500;
+        stroke-width: 1.5;
+        stroke-dasharray: 4 4;
+      }
+      .paths-figure .paths-frontier-label {
+        font-family: "Inter", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        fill: #9a5800;
+      }
+      /* ── Beyond-frontier boxes (cognitive still-hard region) ── */
+      .paths-figure .paths-beyond rect {
+        fill: rgba(111, 120, 139, 0.06);
+        stroke: #6f788b;
+        stroke-width: 1.5;
+        stroke-dasharray: 5 4;
+      }
+      .paths-figure .paths-beyond-title {
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        fill: #3a4255;
+      }
+
+      /* ── Employment polarization bar chart ──────────────────── */
+      .polar-figure svg { display: block; width: 100%; height: auto; }
+      .polar-figure .polar-chart-title {
+        font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; fill: #121519;
+      }
+      .polar-figure .polar-axis-label {
+        font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; fill: #6f788b;
+      }
+      .polar-figure .polar-tick-label {
+        font-family: "Inter", sans-serif; font-size: 11px; fill: #6f788b;
+      }
+      .polar-figure .polar-cat-label {
+        font-family: "Inter", sans-serif; font-size: 12.5px; font-weight: 700; fill: #121519;
+      }
+      .polar-figure .polar-cat-detail {
+        font-family: "Inter", sans-serif; font-size: 11px; fill: #6f788b;
+      }
+      .polar-figure .polar-bar-data-label {
+        font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; fill: #121519;
+      }
+      .polar-figure .polar-axis-line { stroke: #d7dde2; stroke-width: 1.2; }
+      .polar-figure .polar-zero-line { stroke: #6f788b; stroke-width: 1.5; }
+      .polar-figure .polar-tick-line { stroke: #6f788b; stroke-width: 1.2; }
+      .polar-figure .polar-grid-line { stroke: #d7dde2; stroke-width: 0.8; stroke-dasharray: 3 3; }
+      .polar-figure .polar-bar-positive { fill: rgba(255,149,0,0.75); }
+      .polar-figure .polar-bar-positive-light { fill: rgba(255,149,0,0.38); }
+      .polar-figure .polar-bar-negative { fill: rgba(111,120,139,0.42); }
+
+      /* ── Task content matrix ─────────────────────────────────── */
+      .task-matrix-figure svg { display: block; width: 100%; height: auto; }
+      .task-matrix-figure .matrix-tier {
+        font-family: "Inter", sans-serif; font-size: 9.5px; font-weight: 700;
+        letter-spacing: 0.09em; fill: #3a4255;
+      }
+      .task-matrix-figure .matrix-q-title {
+        font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; fill: #121519;
+      }
+      .task-matrix-figure .matrix-q-title-active { fill: #9a5800; }
+      .task-matrix-figure .matrix-q-detail {
+        font-family: "Inter", sans-serif; font-size: 11.5px; fill: #6f788b;
+      }
+      .task-matrix-figure .matrix-q-trend {
+        font-family: "Inter", sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em;
+      }
+      .task-matrix-figure .matrix-q-trend-grow { fill: #ff9500; }
+      .task-matrix-figure .matrix-q-trend-shrink { fill: #6f788b; }
+      .task-matrix-figure .matrix-llm-tag {
+        font-family: "Inter", sans-serif; font-size: 10px; font-weight: 700;
+        letter-spacing: 0.06em; fill: #9a5800;
+      }
+      .task-matrix-figure .matrix-axis-label {
+        font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700;
+        letter-spacing: 0.05em; fill: #6f788b;
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../machine_learning.html">Machine Learning</a></li>
+                    <li><a class="dropdown-item" href="../../llm_ops.html">LLM Ops</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Physical Labor and Cognitive Labor</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Physical Labor and Cognitive Labor</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax). Placeholder: this is the What Is Work? header; the article needs its own image. -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/physical_labor_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      Physical labor changes matter, and cognitive labor changes information. Nearly every task has steps of both kinds. Physical effort can be measured in energy, while cognitive effort shows up only in time and in what gets produced. For physical steps, machines supplied power and then control. Cognitive steps have been automated in three phases: rule-following software, machine learning, and now language generation. <b>The current wave reaches nonroutine cognitive steps that earlier automation could not, while many nonroutine physical steps remain hard to automate.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              In <em>Capital</em>, Marx compared human labor with the work of animals:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <p class="fw-bold mb-1" style="font-size:1.05rem;">"A spider conducts operations that resemble those of a weaver, and a bee puts to shame many an architect in the construction of her cells. But what distinguishes the worst architect from the best of bees is this, that the architect raises his structure in imagination before he erects it in reality."</p>
+                <p class="mb-0 text-muted" style="font-size:0.85rem;">— Karl Marx, <em>Capital</em>, Vol. I, ch. 7 (Moore and Aveling translation, 1887)<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup></p>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              The same mix runs through modern roles. In O*NET's profile for transit bus drivers, the most important work activity is operating the vehicle, and most of the activities ranked just below it involve the public, information, or decisions.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> Over a shift, an operator decides whether a rider needs help, how to handle an incident, and what to write in the incident report.
+            </p>
+
+            <p class="fs-lg">
+              An insurance claims analyst has the reverse mix: nearly every step produces information, though gathering evidence can mean a site visit.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Two Kinds of Output</h2>
+
+            <p class="fs-lg">
+              The two kinds of labor differ in what a step produces:
+            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Physical labor</p>
+                  <p>The output is a change in matter or energy, such as a weld, a moved pallet, a mile driven, or a repaired pipe.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Cognitive labor</p>
+                  <p>The output is information, such as a classification, a decision, a document, or a plan.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              <a href="what_is_knowledge_work.html">Earlier in this series</a>, knowledge work was defined as "the transformation of information into more information." Both kinds of labor are labor in the sense of "<a href="what_is_work.html">What Is Work?</a>" when they are paid. "Physical" and "cognitive" describe the content of a step, and a role's mix of the two can be measured step by step. Part 9 looks at what happens inside a cognitive step.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How the Split Became a Job Structure</h2>
+
+            <p class="fs-lg">
+              In craft production, the same person usually planned the work and carried it out. A cabinetmaker worked out the design, chose the materials, and built the piece. Frederick Taylor's scientific management moved planning into a separate department, and workers received written instructions for each task.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Harry Braverman argued that this separation of conception from execution produced the modern divide between white-collar and blue-collar jobs.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> His further claim, that the separation deskilled work, has been disputed.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The division between physical jobs and cognitive jobs is partly a choice about how to bundle steps. A role labeled physical, such as the bus operator's, can contain cognitive steps that software can now reach, while some of a claims analyst's evidence gathering still has to be done in person.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Measuring Each Kind of Labor</h2>
+
+            <p class="fs-lg">
+              Physical labor can be measured in energy. 
+            </p>
+
+            <p class="fs-lg">
+              Mechanical work is force times distance, and <b>a person can sustain only about 60 to 100 watts of useful mechanical output over a working day</b>.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> James Watt rated his engines in horsepower, about 746 watts. When engines replaced muscle in industrial Britain, the change showed up as coal-fired energy replacing human and animal effort.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Cognitive labor does not show up in energy accounts. 
+            </p>
+
+            <p class="fs-lg">
+              The human brain is about 2 percent of body weight and uses about 20 percent of the body's energy, and that rate stays nearly constant across very different mental and physical activity.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup> The extra energy used during demanding mental tasks is small compared with the brain's baseline, often less than 5 percent.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              So <b>cognitive labor is measured by time, attention, and output</b>. Daniel Kahneman described mental effort as <i>a limited capacity that people allocate across tasks</i>.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> Wouter Kool and Matthew Botvinick apply the labor-supply model from economics to mental effort, treating it as a cost people weigh against its rewards.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>Markets count cognitive labor in hours and in outputs</b> such as <i>claims closed</i> or <i>reports filed</i>. The quality of those outputs varies widely, and a correct diagnosis can take the same time as a wrong one. That makes productivity in cognitive work harder to measure than productivity in physical work.
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Physical labor</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Measured in energy and power: joules, watts, horsepower. A person sustains about 60 to 100 watts of useful work over a day.</p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Cognitive labor</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Measured in time, attention, and output: hours, claims closed, reports filed. The quality of the output varies widely.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Each Kind Gets Automated</h2>
+
+            <p class="fs-lg">
+              Physical steps were automated first by <i>supplying power, through water wheels, steam engines, and electric motors</i>, and then by supplying <i>control</i>, through numerical control and industrial robots. <b>Control</b> works best in a structured environment. Autor notes that production robots are <i>bolted to the floor and caged</i> because they cannot sense what is around them.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>Computers took over cognitive steps first by following rules, executing procedures that people could write down</b>.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> Machine learning then let computers learn some tasks from examples. LLMs now generate language across many domains.
+            </p>
+
+            <p class="fs-lg">
+              Hans Moravec observed that:
+            </p>
+
+            <p class="fs-lg">
+              <i>"it is comparatively easy to make computers exhibit adult-level performance in solving problems on intelligence tests or playing checkers, and difficult or impossible to give them the skills of a one-year-old when it comes to perception and mobility."</i><sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup> 
+            </p>
+
+            <p class="fs-lg">
+              The current wave fits his observation. Earlier computerization hit routine middle-wage work hardest. In the 2023 working-paper version of their study, Tyna Eloundou and colleagues estimated that about 80 percent of US workers have at least a tenth of their tasks exposed to LLMs, with exposure higher in higher-wage occupations.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> Exposure means LLMs can perform or assist those steps — not that those steps have been automated. Even within the newly reached territory, many cognitive steps retain hard-to-automate properties: the output requires judgment no procedure captures, someone must answer for it, or the knowledge behind it cannot be fully stated. Plumbing, elder care, and skilled repair remain hard to automate.
+            </p>
+
+            <figure class="paths-figure d-none d-md-block my-4">
+              <svg viewBox="0 18 1040 252" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="paths-title">
+                <title id="paths-title">Two automation paths. Physical steps: power, then control; nonroutine physical work such as plumbing, elder care, and skilled repair remains hard to automate. Cognitive steps: rules, then learning from examples, then language generation, which newly exposes nonroutine cognitive steps at the current frontier; beyond that frontier, tacit expertise, judgment, and accountability remain hard to automate.</title>
+                <defs>
+                  <marker id="paths-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill="#9aa3b2"></path>
+                  </marker>
+                </defs>
+                <line class="paths-frontier-line" x1="636" y1="44" x2="636" y2="262"></line>
+                <text class="paths-frontier-label" x="644" y="36">CURRENT FRONTIER</text>
+                <!-- Physical steps row -->
+                <text class="paths-row" x="6" y="99">Physical</text>
+                <text class="paths-row" x="6" y="117">steps</text>
+                <g class="paths-phase">
+                  <rect x="122" y="64" width="196" height="78" rx="8"></rect>
+                  <text class="paths-title" x="220" y="90" text-anchor="middle">Power</text>
+                  <text class="paths-detail" x="220" y="110" text-anchor="middle">water wheels, steam</text>
+                  <text class="paths-detail" x="220" y="127" text-anchor="middle">engines, electric motors</text>
+                </g>
+                <line class="paths-arrow" x1="324" y1="103" x2="348" y2="103" marker-end="url(#paths-arrow)"></line>
+                <g class="paths-phase">
+                  <rect x="354" y="64" width="196" height="78" rx="8"></rect>
+                  <text class="paths-title" x="452" y="90" text-anchor="middle">Control</text>
+                  <text class="paths-detail" x="452" y="110" text-anchor="middle">numerical control,</text>
+                  <text class="paths-detail" x="452" y="127" text-anchor="middle">industrial robots</text>
+                </g>
+                <line class="paths-arrow" x1="556" y1="103" x2="646" y2="103" marker-end="url(#paths-arrow)"></line>
+                <g class="paths-frontier">
+                  <rect x="652" y="64" width="182" height="78" rx="8"></rect>
+                  <text class="paths-title paths-frontier-title" x="743" y="90" text-anchor="middle">Still hard</text>
+                  <text class="paths-detail" x="743" y="110" text-anchor="middle">plumbing, elder care,</text>
+                  <text class="paths-detail" x="743" y="127" text-anchor="middle">skilled repair</text>
+                </g>
+                <!-- Cognitive steps row -->
+                <text class="paths-row" x="6" y="209">Cognitive</text>
+                <text class="paths-row" x="6" y="227">steps</text>
+                <g class="paths-phase">
+                  <rect x="122" y="174" width="140" height="78" rx="8"></rect>
+                  <text class="paths-title" x="192" y="200" text-anchor="middle">Rules</text>
+                  <text class="paths-detail" x="192" y="220" text-anchor="middle">software executes</text>
+                  <text class="paths-detail" x="192" y="237" text-anchor="middle">written procedures</text>
+                </g>
+                <line class="paths-arrow" x1="268" y1="213" x2="282" y2="213" marker-end="url(#paths-arrow)"></line>
+                <g class="paths-phase">
+                  <rect x="288" y="174" width="140" height="78" rx="8"></rect>
+                  <text class="paths-title" x="358" y="200" text-anchor="middle">Learning</text>
+                  <text class="paths-detail" x="358" y="220" text-anchor="middle">machine learning</text>
+                  <text class="paths-detail" x="358" y="237" text-anchor="middle">from examples</text>
+                </g>
+                <line class="paths-arrow" x1="434" y1="213" x2="448" y2="213" marker-end="url(#paths-arrow)"></line>
+                <g class="paths-phase">
+                  <rect x="454" y="174" width="140" height="78" rx="8"></rect>
+                  <text class="paths-title" x="524" y="200" text-anchor="middle">Language</text>
+                  <text class="paths-detail" x="524" y="220" text-anchor="middle">LLMs generate text</text>
+                  <text class="paths-detail" x="524" y="237" text-anchor="middle">in many domains</text>
+                </g>
+                <line class="paths-arrow" x1="600" y1="213" x2="646" y2="213" marker-end="url(#paths-arrow)"></line>
+                <!-- Cognitive frontier: newly exposed at the current frontier -->
+                <g class="paths-frontier">
+                  <rect x="652" y="174" width="182" height="78" rx="8"></rect>
+                  <text class="paths-title paths-frontier-title" x="743" y="200" text-anchor="middle">Newly exposed</text>
+                  <text class="paths-detail" x="743" y="220" text-anchor="middle">nonroutine</text>
+                  <text class="paths-detail" x="743" y="237" text-anchor="middle">cognitive steps</text>
+                </g>
+                <line class="paths-arrow" x1="836" y1="213" x2="856" y2="213" marker-end="url(#paths-arrow)"></line>
+                <!-- Cognitive beyond-frontier: what remains hard even at the new frontier -->
+                <g class="paths-beyond">
+                  <rect x="862" y="174" width="172" height="78" rx="8"></rect>
+                  <text class="paths-title paths-beyond-title" x="948" y="200" text-anchor="middle">Still hard</text>
+                  <text class="paths-detail" x="948" y="220" text-anchor="middle">tacit expertise,</text>
+                  <text class="paths-detail" x="948" y="237" text-anchor="middle">accountability</text>
+                </g>
+              </svg>
+              <figcaption class="fs-sm text-muted text-center mt-2">The two automation paths and where each currently stands. Orange boxes mark the current frontier on each path. The gray box shows what remains hard to automate even within the cognitive frontier: steps requiring tacit expertise, judgment, or accountability that cannot be delegated.</figcaption>
+            </figure>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Shift Toward Cognitive Labor</h2>
+
+            <p class="fs-lg">
+              US employment has shifted toward jobs built around abstract cognitive tasks. Professional, technical, and managerial occupations grew by about 3 percentage points of total employment per decade from 1940 to 1980, and faster from 1980 to 2010.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              To understand why, it helps to classify occupations along two dimensions: whether their tasks are <em>routine</em> or <em>non-routine</em>, and whether those tasks are primarily <em>cognitive</em> or <em>manual</em>. Routine tasks are those whose rules can be written down and executed step by step — a clerical procedure, an assembly-line operation, an accounting rule. Non-routine tasks require judgment that no procedure fully specifies, whether physical (a plumber diagnosing an unfamiliar leak) or cognitive (an analyst synthesizing a recommendation from ambiguous evidence).<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <strong>Middle-skill jobs</strong> are occupations concentrated in the routine quadrants of this map — clerical work, production and craft, administrative support, data processing, and routine sales. They sit in the middle of the wage distribution because their tasks can be learned without exceptional education but are not particularly scarce. 
+            </p>
+
+            <p class="fs-lg">
+              The defining economic property is <b>codifiability</b>: <i>the rules of a middle-skill job can be written down</i>, which means a sufficiently capable machine can execute them.
+            </p>
+
+            <figure class="task-matrix-figure d-none d-md-block my-4">
+              <svg viewBox="0 0 600 362" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="matrix-title">
+                <title id="matrix-title">Task content matrix with four quadrants, each tagged with its skill tier. Top-left: non-routine manual (elder care, food service, cleaning, security), low-skill service, growing from 1980 to 2010. Top-right: non-routine cognitive (professional, technical, managerial, analysis), high-skill, growing from 1980 to 2010 and now newly exposed to LLMs. Bottom-left: routine manual (assembly, production, machine operation), middle-skill, shrinking from 1980 to 2010 through automation. Bottom-right: routine cognitive (clerical, data processing, bookkeeping, filing), middle-skill, shrinking from 1980 to 2010 through software.</title>
+                <defs>
+                  <clipPath id="matrix-clip">
+                    <rect x="85" y="28" width="470" height="300" rx="4"></rect>
+                  </clipPath>
+                </defs>
+                <!-- Quadrant fills match the tier colors in the bar chart below -->
+                <g clip-path="url(#matrix-clip)">
+                  <rect x="85" y="28" width="235" height="150" fill="rgba(255,149,0,0.05)"></rect>
+                  <rect x="320" y="28" width="235" height="150" fill="rgba(255,149,0,0.11)"></rect>
+                  <rect x="85" y="178" width="470" height="150" fill="rgba(111,120,139,0.07)"></rect>
+                </g>
+                <!-- Center divider lines and outer border -->
+                <line x1="85" y1="178" x2="555" y2="178" stroke="#d7dde2" stroke-width="1.5"></line>
+                <line x1="320" y1="28" x2="320" y2="328" stroke="#d7dde2" stroke-width="1.5"></line>
+                <rect x="85" y="28" width="470" height="300" rx="4" fill="none" stroke="#d7dde2" stroke-width="1.5"></rect>
+                <!-- Top-left quadrant: Non-routine Manual (low-skill service) -->
+                <text class="matrix-tier" x="202.5" y="56" text-anchor="middle">LOW-SKILL SERVICE</text>
+                <text class="matrix-q-title" x="202.5" y="79" text-anchor="middle">Non-routine Manual</text>
+                <text class="matrix-q-detail" x="202.5" y="99" text-anchor="middle">elder care, food service,</text>
+                <text class="matrix-q-detail" x="202.5" y="115" text-anchor="middle">cleaning, security</text>
+                <text class="matrix-q-trend matrix-q-trend-grow" x="202.5" y="138" text-anchor="middle">GROWING</text>
+                <!-- Top-right quadrant: Non-routine Cognitive (high-skill) -->
+                <text class="matrix-tier" x="437.5" y="56" text-anchor="middle">HIGH-SKILL</text>
+                <text class="matrix-q-title matrix-q-title-active" x="437.5" y="79" text-anchor="middle">Non-routine Cognitive</text>
+                <text class="matrix-q-detail" x="437.5" y="99" text-anchor="middle">professional, technical,</text>
+                <text class="matrix-q-detail" x="437.5" y="115" text-anchor="middle">managerial, analysis</text>
+                <text class="matrix-q-trend matrix-q-trend-grow" x="437.5" y="138" text-anchor="middle">GROWING</text>
+                <text class="matrix-llm-tag" x="437.5" y="156" text-anchor="middle">NEWLY EXPOSED TO LLMS</text>
+                <!-- Bottom-left quadrant: Routine Manual (middle-skill) -->
+                <text class="matrix-tier" x="202.5" y="209" text-anchor="middle">MIDDLE-SKILL</text>
+                <text class="matrix-q-title" x="202.5" y="232" text-anchor="middle">Routine Manual</text>
+                <text class="matrix-q-detail" x="202.5" y="252" text-anchor="middle">assembly, production,</text>
+                <text class="matrix-q-detail" x="202.5" y="268" text-anchor="middle">machine operation</text>
+                <text class="matrix-q-trend matrix-q-trend-shrink" x="202.5" y="293" text-anchor="middle">SHRINKING (AUTOMATION)</text>
+                <!-- Bottom-right quadrant: Routine Cognitive (middle-skill) -->
+                <text class="matrix-tier" x="437.5" y="209" text-anchor="middle">MIDDLE-SKILL</text>
+                <text class="matrix-q-title" x="437.5" y="232" text-anchor="middle">Routine Cognitive</text>
+                <text class="matrix-q-detail" x="437.5" y="252" text-anchor="middle">clerical, data processing,</text>
+                <text class="matrix-q-detail" x="437.5" y="268" text-anchor="middle">bookkeeping, filing</text>
+                <text class="matrix-q-trend matrix-q-trend-shrink" x="437.5" y="293" text-anchor="middle">SHRINKING (SOFTWARE)</text>
+                <!-- Axis labels. The y-axis labels are rotated -90°. -->
+                <text class="matrix-axis-label" x="202.5" y="350" text-anchor="middle">MANUAL</text>
+                <text class="matrix-axis-label" x="437.5" y="350" text-anchor="middle">COGNITIVE</text>
+                <text class="matrix-axis-label" transform="rotate(-90,50,103)" x="50" y="103" text-anchor="middle">NON-ROUTINE</text>
+                <text class="matrix-axis-label" transform="rotate(-90,50,253)" x="50" y="253" text-anchor="middle">ROUTINE</text>
+              </svg>
+              <figcaption class="fs-sm text-muted text-center mt-2">The Autor–Levy–Murnane task-content framework. Routine tasks are those whose rules can be written down; non-routine tasks require judgment. Tags show each quadrant's skill tier, ranked by wage. Middle-skill jobs fill both routine quadrants. Growth and decline labels show changes in employment share from 1980 to 2010. The orange tag marks non-routine cognitive work as newly exposed to LLMs.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              The result, documented across US commuting zones and time periods, was a hollowing out of the middle. Between 1980 and 2010, employment grew at both ends of the skill distribution and contracted in the middle. Professional, technical, and managerial roles — concentrated in non-routine cognitive tasks — expanded. In-person service roles — personal care, food preparation, cleaning, building security — also grew, because their non-routine physical steps require presence and perception that automation could not provide. Routine jobs in both quadrants shrank: clerical work, production, and craft were displaced by software and industrial robots.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup>
+            </p>
+
+            <figure class="polar-figure d-none d-md-block my-4">
+              <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="polar-title">
+                <title id="polar-title">Bar chart showing approximate changes in US employment share by occupation tier from 1980 to 2010. High-skill non-routine cognitive roles grew approximately 9 percentage points. Middle-skill routine roles shrank approximately 10 percentage points. Low-skill service non-routine manual roles grew approximately 3 percentage points.</title>
+                <!-- Chart title -->
+                <text class="polar-chart-title" x="297" y="26" text-anchor="middle">Approximate Change in US Employment Share by Occupation Tier, 1980–2010</text>
+                <!-- Y-axis vertical line -->
+                <line class="polar-axis-line" x1="65" y1="60" x2="65" y2="285"></line>
+                <!-- Horizontal zero line -->
+                <line class="polar-zero-line" x1="65" y1="185" x2="490" y2="185"></line>
+                <!-- Y-axis label (rotated) -->
+                <text class="polar-axis-label" transform="rotate(-90,18,175)" x="18" y="175" text-anchor="middle">Percentage-point change</text>
+                <!-- Y-axis ticks and labels (10px per pp, zero at y=185) -->
+                <line class="polar-tick-line" x1="60" y1="85" x2="65" y2="85"></line>
+                <text class="polar-tick-label" x="54" y="89" text-anchor="end">+10</text>
+                <line class="polar-tick-line" x1="60" y1="135" x2="65" y2="135"></line>
+                <text class="polar-tick-label" x="54" y="139" text-anchor="end">+5</text>
+                <line class="polar-tick-line" x1="60" y1="185" x2="65" y2="185"></line>
+                <text class="polar-tick-label" x="54" y="189" text-anchor="end">0</text>
+                <line class="polar-tick-line" x1="60" y1="235" x2="65" y2="235"></line>
+                <text class="polar-tick-label" x="54" y="239" text-anchor="end">−5</text>
+                <line class="polar-tick-line" x1="60" y1="285" x2="65" y2="285"></line>
+                <text class="polar-tick-label" x="54" y="289" text-anchor="end">−10</text>
+                <!-- Horizontal grid lines (dashed, behind bars) -->
+                <line class="polar-grid-line" x1="65" y1="85" x2="490" y2="85"></line>
+                <line class="polar-grid-line" x1="65" y1="135" x2="490" y2="135"></line>
+                <line class="polar-grid-line" x1="65" y1="235" x2="490" y2="235"></line>
+                <line class="polar-grid-line" x1="65" y1="285" x2="490" y2="285"></line>
+                <!-- Bar 1: High-skill non-routine cognitive (+9 pp) -->
+                <!-- y = 185 - (9×10) = 95; height = 90 -->
+                <rect class="polar-bar-positive" x="85" y="95" width="110" height="90" rx="3"></rect>
+                <text class="polar-bar-data-label" x="140" y="88" text-anchor="middle">+9 pp</text>
+                <!-- Bar 2: Middle-skill routine (−10 pp) -->
+                <!-- y = 185; height = 100; bottom = 285 -->
+                <rect class="polar-bar-negative" x="225" y="185" width="110" height="100" rx="3"></rect>
+                <text class="polar-bar-data-label" x="280" y="299" text-anchor="middle">−10 pp</text>
+                <!-- Bar 3: Low-skill service non-routine manual (+3 pp) -->
+                <!-- y = 185 - (3×10) = 155; height = 30 -->
+                <rect class="polar-bar-positive-light" x="365" y="155" width="110" height="30" rx="3"></rect>
+                <text class="polar-bar-data-label" x="420" y="148" text-anchor="middle">+3 pp</text>
+                <!-- Category labels below bars -->
+                <text class="polar-cat-label" x="140" y="311" text-anchor="middle">High-skill</text>
+                <text class="polar-cat-detail" x="140" y="325" text-anchor="middle">non-routine cognitive</text>
+                <text class="polar-cat-label" x="280" y="311" text-anchor="middle">Middle-skill</text>
+                <text class="polar-cat-detail" x="280" y="325" text-anchor="middle">routine</text>
+                <text class="polar-cat-label" x="420" y="311" text-anchor="middle">Low-skill service</text>
+                <text class="polar-cat-detail" x="420" y="325" text-anchor="middle">non-routine manual</text>
+              </svg>
+              <figcaption class="fs-sm text-muted text-center mt-2">Approximate changes in US employment share by occupation tier, 1980–2010 (pp = percentage points). Stylized values consistent with Autor (2015) and Autor &amp; Dorn (2013). Professional and technical roles and in-person services grew; routine middle-skill occupations contracted.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              The polarization pattern is why the current wave of automation matters more than earlier ones. A large and growing share of labor now sits in roles dominated by non-routine cognitive steps — the tier that grew throughout the twentieth century. Earlier computerization displaced middle-skill routine cognitive jobs. The LLM wave reaches a different tier: exposure is highest in professional and analytical occupations, the ones that survived and grew through all prior waves of automation.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Remains Distinct in Human Cognitive Labor</h2>
+
+            <p class="fs-lg">
+              Four features of human cognitive labor bear on which steps stay human:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">Many cognitive outputs <b>have no fixed answer set</b>. Checking an analysis of a loan file <b>takes judgment of the same kind that produced it</b>. Herbert Simon called decisions of this kind <i>"nonprogrammed."</i><sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup></li>
+              <li class="mb-2">People connect words to things they have encountered. Stevan Harnad argued that a system that only manipulates symbols has no such connection on its own.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup></li>
+              <li class="mb-2"><b>Much expertise is tacit</b>. Michael Polanyi wrote that <i>"we can know more than we can tell."</i><sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup>(e.g., <i>"Polanyi's Paradox"</i>)</li>
+              <li class="mb-2">A <b>person can be held responsible for a decision</b>, and can reflect on and endorse or reject their own reasons for it.<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup></li>
+            </ul>
+
+            <!-- "Labor Automation" links to its planned file name; the article is not published yet. -->
+            <p class="fs-lg">
+              The cognitive steps most likely to stay human are those whose outputs someone must verify or answer for. <i>Overseeing automated cognitive work takes effort</i> for the same reason, as "<a href="labor_automation.html">Labor Automation</a>" and Part 9 describe.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Marx, K. (1867). <em>Capital: A Critique of Political Economy, Vol. I,</em> ch. 7. (S. Moore &amp; E. Aveling, Trans., 1887.) <a href="https://www.marxists.org/archive/marx/works/1867-c1/ch07.htm" target="_blank" rel="noopener">marxists.org</a></li>
+              <li id="fn-2">National Center for O*NET Development. <em>Summary Report for 53-3052.00, Bus Drivers, Transit and Intercity.</em> O*NET OnLine. Accessed 12 October 2026. [work activities ranked by importance] <a href="https://www.onetonline.org/link/summary/53-3052.00" target="_blank" rel="noopener">onetonline.org</a></li>
+              <li id="fn-3">Taylor, F. W. (1911). <em>The Principles of Scientific Management.</em> Harper &amp; Brothers.</li>
+              <li id="fn-4">Braverman, H. (1974). <em>Labor and Monopoly Capital: The Degradation of Work in the Twentieth Century.</em> Monthly Review Press.</li>
+              <li id="fn-5">Attewell, P. (1987). The deskilling controversy. <b>Work and Occupations,</b> 14(3), 323–346. <a href="https://doi.org/10.1177/0730888487014003001" target="_blank" rel="noopener">doi:10.1177/0730888487014003001</a></li>
+              <li id="fn-6">Smil, V. (2017). <em>Energy and Civilization: A History.</em> MIT Press. ["60–100 W of sustained (daylong) useful labor"; horsepower as 745.7 W]</li>
+              <li id="fn-7">Wrigley, E. A. (2010). <em>Energy and the English Industrial Revolution.</em> Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511779619" target="_blank" rel="noopener">doi:10.1017/CBO9780511779619</a></li>
+              <li id="fn-8">Raichle, M. E., &amp; Gusnard, D. A. (2002). Appraising the brain's energy budget. <b>Proceedings of the National Academy of Sciences,</b> 99(16), 10237–10239. <a href="https://doi.org/10.1073/pnas.172399499" target="_blank" rel="noopener">doi:10.1073/pnas.172399499</a></li>
+              <li id="fn-9">Raichle, M. E. (2010). Two views of brain function. <b>Trends in Cognitive Sciences,</b> 14(4), 180–190. <a href="https://doi.org/10.1016/j.tics.2010.01.008" target="_blank" rel="noopener">doi:10.1016/j.tics.2010.01.008</a> See also Raichle, M. E., &amp; Mintun, M. A. (2006). Brain work and brain imaging. <b>Annual Review of Neuroscience,</b> 29, 449–476. <a href="https://doi.org/10.1146/annurev.neuro.29.051605.112819" target="_blank" rel="noopener">doi:10.1146/annurev.neuro.29.051605.112819</a></li>
+              <li id="fn-10">Kahneman, D. (1973). <em>Attention and Effort.</em> Prentice-Hall.</li>
+              <li id="fn-11">Kool, W., &amp; Botvinick, M. (2018). Mental labour. <b>Nature Human Behaviour,</b> 2(12), 899–908. <a href="https://doi.org/10.1038/s41562-018-0401-9" target="_blank" rel="noopener">doi:10.1038/s41562-018-0401-9</a> See also Kool, W., &amp; Botvinick, M. (2014). A labor/leisure tradeoff in cognitive control. <b>Journal of Experimental Psychology: General,</b> 143(1), 131–141. <a href="https://doi.org/10.1037/a0031048" target="_blank" rel="noopener">doi:10.1037/a0031048</a></li>
+              <li id="fn-12">Autor, D. H. (2015). Paradox of abundance: Automation anxiety returns. In S. Rangan (Ed.), <em>Performance and Progress: Essays on Capitalism, Business, and Society</em> (pp. 237–260). Oxford University Press. <a href="https://doi.org/10.1093/acprof:oso/9780198744283.003.0017" target="_blank" rel="noopener">doi:10.1093/acprof:oso/9780198744283.003.0017</a></li>
+              <li id="fn-13">Autor, D. H., Levy, F., &amp; Murnane, R. J. (2003). The skill content of recent technological change: An empirical exploration. <b>Quarterly Journal of Economics,</b> 118(4), 1279–1333. <a href="https://doi.org/10.1162/003355303322552801" target="_blank" rel="noopener">doi:10.1162/003355303322552801</a></li>
+              <li id="fn-14">Moravec, H. (1988). <em>Mind Children: The Future of Robot and Human Intelligence.</em> Harvard University Press. [often cited as p. 15]</li>
+              <li id="fn-15">Eloundou, T., Manning, S., Mishkin, P., &amp; Rock, D. (2023). <em>GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models.</em> <a href="https://arxiv.org/abs/2303.10130" target="_blank" rel="noopener">arXiv:2303.10130</a>. The published version, <b>Science,</b> 384(6702), 1306–1308 (2024), <a href="https://doi.org/10.1126/science.adj0998" target="_blank" rel="noopener">doi:10.1126/science.adj0998</a>, reports different headline measures.</li>
+              <li id="fn-16">Autor, D. H. (2015). Why are there still so many jobs? The history and future of workplace automation. <b>Journal of Economic Perspectives,</b> 29(3), 3–30, at p. 10. <a href="https://doi.org/10.1257/jep.29.3.3" target="_blank" rel="noopener">doi:10.1257/jep.29.3.3</a></li>
+              <li id="fn-17">Autor, D. H., &amp; Dorn, D. (2013). The growth of low-skill service jobs and the polarization of the US labor market. <b>American Economic Review,</b> 103(5), 1553–1597. <a href="https://doi.org/10.1257/aer.103.5.1553" target="_blank" rel="noopener">doi:10.1257/aer.103.5.1553</a></li>
+              <li id="fn-18">Simon, H. A. (1960). <em>The New Science of Management Decision.</em> Harper &amp; Row. [nonprogrammed decisions, pp. 5–6]</li>
+              <li id="fn-19">Harnad, S. (1990). The symbol grounding problem. <b>Physica D,</b> 42(1–3), 335–346. <a href="https://doi.org/10.1016/0167-2789(90)90087-6" target="_blank" rel="noopener">doi:10.1016/0167-2789(90)90087-6</a></li>
+              <li id="fn-20">Polanyi, M. (1966). <em>The Tacit Dimension.</em> Doubleday.</li>
+              <li id="fn-21">Frankfurt, H. G. (1971). Freedom of the will and the concept of a person. <b>Journal of Philosophy,</b> 68(1), 5–20. <a href="https://doi.org/10.2307/2024717" target="_blank" rel="noopener">doi:10.2307/2024717</a></li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

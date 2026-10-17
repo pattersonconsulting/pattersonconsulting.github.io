@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Value of Human Labor | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="What a step of labor earns depends on how few people can do it and how cheaply a machine could. Automation lowers the value of labor in the steps it takes over and can raise it in the steps that remain.">
+    <meta name="keywords" content="value of labor, wages, value added, labor share, marginal productivity, human capital, compensating differences, comparative advantage, O-ring, superstars, expertise, monopsony, displacement effect, new work, generative AI, Autor and Thompson, Solow, Adam Smith, knowledge work">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Value of Human Labor | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <!-- og:image and twitter:image are placeholders (the What Is Work? header). -->
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/the_value_of_human_labor.html"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="What a step of labor earns depends on how few people can do it and how cheaply a machine could. Automation lowers the value of labor in the steps it takes over and can raise it in the steps that remain."/>
+
+    <meta name="twitter:title" content="The Value of Human Labor | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/what_is_work_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/the_value_of_human_labor.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Valuation models table ─────────────────────────────── */
+      .models-table {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+      }
+      .models-table th {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .models-table td:first-child {
+        font-weight: 600;
+        white-space: nowrap;
+        padding-right: 1.25rem;
+      }
+      @media (max-width: 575.98px) {
+        .models-table td:first-child { white-space: normal; }
+      }
+      /* ── Step map figure (shared with "The Task Structure of Work" and "Labor Automation") ── */
+      .step-figure svg { display: block; width: 100%; height: auto; }
+      .step-figure .step-box rect { stroke-width: 1.5; }
+      .step-figure .step-automate rect { fill: #fff1e0; stroke: #ff9500; }
+      .step-figure .step-augment rect { fill: #e8f1fd; stroke: #3b7ddd; }
+      .step-figure .step-retain rect { fill: #f3f4f6; stroke: #9aa3b2; }
+      .step-figure .step-num {
+        font-family: "Inter", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        fill: #9aa3b2;
+      }
+      .step-figure .step-label {
+        font-family: "Inter", sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        fill: #121519;
+      }
+      .step-figure .step-decision {
+        font-family: "Inter", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .step-figure .step-automate .step-decision { fill: #9a5800; }
+      .step-figure .step-augment .step-decision { fill: #2a62b8; }
+      .step-figure .step-retain .step-decision { fill: #4b5563; }
+      .step-figure .step-seq { fill: #c3c9d3; }
+      .step-figure .step-row-label {
+        font-family: "Inter", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        fill: #6f788b;
+      }
+      .step-figure .step-bar-hours { fill: #c3c9d3; }
+      .step-figure .step-bar-value { fill: #4b5563; }
+      .step-figure .step-bar-num {
+        font-family: "Inter", sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        fill: #6f788b;
+      }
+      .step-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem 1.25rem;
+        margin-top: 0.75rem;
+        color: #6f788b;
+      }
+      .step-key {
+        display: inline-block;
+        width: 0.85rem;
+        height: 0.85rem;
+        margin-right: 0.4rem;
+        vertical-align: -0.1rem;
+        border: 1.5px solid;
+        border-radius: 3px;
+      }
+      .step-key-automate { background: #fff1e0; border-color: #ff9500; }
+      .step-key-augment { background: #e8f1fd; border-color: #3b7ddd; }
+      .step-key-retain { background: #f3f4f6; border-color: #9aa3b2; }
+      .step-key-hours { background: #c3c9d3; border-color: #c3c9d3; }
+      .step-key-value { background: #4b5563; border-color: #4b5563; }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../machine_learning.html">Machine Learning</a></li>
+                    <li><a class="dropdown-item" href="../../llm_ops.html">LLM Ops</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Value of Human Labor</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Value of Human Labor</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax). Placeholder: this is the What Is Work? header; the article needs its own image. -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/value_labor_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      The wage is the price of an hour of labor. Value added is the value of what that hour produces. The labor share is the part of that value paid to workers. What a step of labor earns depends mostly on how few people can do it and how cheaply a machine could. <b>Automation lowers the value of labor in the steps machines take over and can raise it in the steps that remain, depending on how much expertise those steps require.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Computers automated routine work for two groups of clerks: accounting clerks, and stock and inventory clerks. Standard task models predict similar effects on both. Between 1980 and 2018, the outcomes went in opposite directions.
+            </p>
+
+            <p class="fs-lg">
+              Accounting clerks fell from 1.62 million to 1.11 million while their average wage rose about 39 percent. Inventory clerks nearly tripled in number, from about 540,000 to 1.48 million, and their average wage fell about 13 percent.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Accounting clerks, 1980–2018</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Employment 1.62 million → 1.11 million. Average wage up about 39 percent. Automation took the least expert work.</p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="fw-bold mb-1" style="font-size:0.9rem; color:#ff9500;">Inventory clerks, 1980–2018</p>
+                    <p class="mb-0 text-muted" style="font-size:0.85rem;">Employment about 540,000 → 1.48 million. Average wage down about 13 percent. Automation took the most expert work.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              David Autor and Neil Thompson explain the difference by which steps were automated. For accounting clerks, the automated work was basic bookkeeping, the least expert part of the job. What remained, such as reconciliation and problem-solving, was more expert, so fewer workers qualified and pay rose.
+            </p>
+
+            <p class="fs-lg">
+              Inventory clerks lost the expert parts of their job, such as computing prices, and what remained was generic. More workers could do it, and pay fell.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Three Measures of Value</h2>
+
+            <p class="fs-lg">
+              Discussions of "the value of labor" often merge three numbers:
+            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Wage</p>
+                  <p>The price of an hour of labor.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Value added</p>
+                  <p>The value of what the work produces, minus purchased inputs.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="def-box">
+                  <p class="def-label">Labor share</p>
+                  <p>Wages divided by value added: the part of the work's value paid to workers.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              In Robert Solow's US data for 1909–1949, labor received roughly 60 to 67 percent of income.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Adam Smith noticed that usefulness and price can diverge: "Nothing is more useful than water; but it will purchase scarce any thing," while a diamond "has scarce any value in use; but a very great quantity of other goods may frequently be had in exchange for it."<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Later economists resolved the puzzle by looking at the margin, where price depends on scarcity. Labor works the same way. The wage for a step reflects how scarce the ability to do it is, more than how important the step is to the final product.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">How Economists Have Valued Labor</h2>
+
+            <p class="fs-lg">
+              Each major model ties the wage to something different:
+            </p>
+
+            <div class="table-responsive mb-4">
+              <table class="table models-table">
+                <thead><tr><th scope="col">Model</th><th scope="col">What sets the wage</th></tr></thead>
+                <tbody>
+                  <tr><td>Marginal productivity</td><td>In a competitive market, the wage equals the value of what the last hour of labor produces.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup></td></tr>
+                  <tr><td>Human capital</td><td>Skills are an investment, and earnings rise with schooling and experience.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup></td></tr>
+                  <tr><td>Compensating differences</td><td>Wages adjust for hard, dirty, or risky work, a point Smith made in 1776.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup></td></tr>
+                  <tr><td>Comparative advantage</td><td>Workers sort into the jobs where their particular skills pay best, so the same skill earns different amounts in different jobs.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup></td></tr>
+                  <tr><td>O-ring production</td><td>When quality multiplies across steps, workers of similar skill cluster together, and small differences in skill produce large differences in output and pay.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup></td></tr>
+                  <tr><td>Superstars</td><td>When one person's work can reach a large market, small differences in talent produce large differences in earnings.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup></td></tr>
+                  <tr><td>Scarce expertise</td><td>The wage reflects how few workers can perform the most expert task left in the job.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              Real labor markets also depart from competition. Employers with wage-setting power pay less than workers' marginal product.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> When steps are complements, the contribution of any one worker is hard to isolate, and wages are better described as the outcome of bargaining over joint output.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Value at the Step Level</h2>
+
+            <p class="fs-lg">
+              The same distinctions apply inside a task. For each step, it helps to separate the hours of labor, their cost, the units of output, the value of that output, the hours a machine now performs, and the net value of that automation after its cost and any loss of quality.
+            </p>
+
+            <!-- "The Task Structure of Work" links to its planned file name; the article is not published yet. -->
+            <p class="fs-lg">
+              These numbers diverge within a single task. In the claims workflow from "<a href="the_task_structure_of_work.html">The Task Structure of Work</a>," most of the hours go to gathering and documenting evidence, while most of the value and the risk sit in the coverage decision and the payout estimate.
+            </p>
+
+            <figure class="step-figure d-none d-md-block my-4">
+              <svg viewBox="-78 0 922 146" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="value-steps-title">
+                <title id="value-steps-title">Illustrative claims workflow showing each step's share of the analyst's hours and share of the claim's value. Intake, policy lookup, and evidence gathering are marked for automation and take 60 percent of the hours but carry 20 percent of the value. Payout estimation and fraud screening are marked for augmentation and take 25 percent of the hours and 40 percent of the value. The coverage check and the final decision are retained and take 15 percent of the hours and 40 percent of the value.</title>
+                <path class="step-seq" d="M104,48 L110,53 L104,58 z"></path>
+                <path class="step-seq" d="M210,48 L216,53 L210,58 z"></path>
+                <path class="step-seq" d="M316,48 L322,53 L316,58 z"></path>
+                <path class="step-seq" d="M422,48 L428,53 L422,58 z"></path>
+                <path class="step-seq" d="M528,48 L534,53 L528,58 z"></path>
+                <path class="step-seq" d="M634,48 L640,53 L634,58 z"></path>
+                <g class="step-box step-automate">
+                  <rect x="6" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="14" y="26">1</text>
+                  <text class="step-label" x="54" y="48" text-anchor="middle">Intake and</text>
+                  <text class="step-label" x="54" y="65" text-anchor="middle">classify</text>
+                  <text class="step-decision" x="54" y="86" text-anchor="middle">AUTOMATE</text>
+                </g>
+                <g class="step-box step-automate">
+                  <rect x="112" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="120" y="26">2</text>
+                  <text class="step-label" x="160" y="48" text-anchor="middle">Pull policy</text>
+                  <text class="step-label" x="160" y="65" text-anchor="middle">and terms</text>
+                  <text class="step-decision" x="160" y="86" text-anchor="middle">AUTOMATE</text>
+                </g>
+                <g class="step-box step-automate">
+                  <rect x="218" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="226" y="26">3</text>
+                  <text class="step-label" x="266" y="48" text-anchor="middle">Gather</text>
+                  <text class="step-label" x="266" y="65" text-anchor="middle">evidence</text>
+                  <text class="step-decision" x="266" y="86" text-anchor="middle">AUTOMATE</text>
+                </g>
+                <g class="step-box step-retain">
+                  <rect x="324" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="332" y="26">4</text>
+                  <text class="step-label" x="372" y="48" text-anchor="middle">Check</text>
+                  <text class="step-label" x="372" y="65" text-anchor="middle">coverage</text>
+                  <text class="step-decision" x="372" y="86" text-anchor="middle">RETAIN</text>
+                </g>
+                <g class="step-box step-augment">
+                  <rect x="430" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="438" y="26">5</text>
+                  <text class="step-label" x="478" y="48" text-anchor="middle">Estimate</text>
+                  <text class="step-label" x="478" y="65" text-anchor="middle">payout</text>
+                  <text class="step-decision" x="478" y="86" text-anchor="middle">AUGMENT</text>
+                </g>
+                <g class="step-box step-augment">
+                  <rect x="536" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="544" y="26">6</text>
+                  <text class="step-label" x="584" y="48" text-anchor="middle">Screen for</text>
+                  <text class="step-label" x="584" y="65" text-anchor="middle">fraud</text>
+                  <text class="step-decision" x="584" y="86" text-anchor="middle">AUGMENT</text>
+                </g>
+                <g class="step-box step-retain">
+                  <rect x="642" y="10" width="96" height="86" rx="8"></rect>
+                  <text class="step-num" x="650" y="26">7</text>
+                  <text class="step-label" x="690" y="48" text-anchor="middle">Decide and</text>
+                  <text class="step-label" x="690" y="65" text-anchor="middle">communicate</text>
+                  <text class="step-decision" x="690" y="86" text-anchor="middle">RETAIN</text>
+                </g>
+                <!-- Share bars: 1.8 px per percentage point, so 40% = 72 px -->
+                <text class="step-row-label" x="-8" y="118" text-anchor="end">Hours</text>
+                <text class="step-row-label" x="-8" y="137" text-anchor="end">Value</text>
+                <rect class="step-bar-hours" x="6" y="109" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="28" y="118">10%</text>
+                <rect class="step-bar-value" x="6" y="128" width="9" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="19" y="137">5%</text>
+                <rect class="step-bar-hours" x="112" y="109" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="134" y="118">10%</text>
+                <rect class="step-bar-value" x="112" y="128" width="9" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="125" y="137">5%</text>
+                <rect class="step-bar-hours" x="218" y="109" width="72" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="294" y="118">40%</text>
+                <rect class="step-bar-value" x="218" y="128" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="240" y="137">10%</text>
+                <rect class="step-bar-hours" x="324" y="109" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="346" y="118">10%</text>
+                <rect class="step-bar-value" x="324" y="128" width="54" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="382" y="137">30%</text>
+                <rect class="step-bar-hours" x="430" y="109" width="27" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="461" y="118">15%</text>
+                <rect class="step-bar-value" x="430" y="128" width="54" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="488" y="137">30%</text>
+                <rect class="step-bar-hours" x="536" y="109" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="558" y="118">10%</text>
+                <rect class="step-bar-value" x="536" y="128" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="558" y="137">10%</text>
+                <rect class="step-bar-hours" x="642" y="109" width="9" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="655" y="118">5%</text>
+                <rect class="step-bar-value" x="642" y="128" width="18" height="11" rx="2"></rect>
+                <text class="step-bar-num" x="664" y="137">10%</text>
+              </svg>
+              <div class="step-legend fs-sm">
+                <span><span class="step-key step-key-automate"></span>Automate</span>
+                <span><span class="step-key step-key-augment"></span>Augment</span>
+                <span><span class="step-key step-key-retain"></span>Retain</span>
+                <span><span class="step-key step-key-hours"></span>Share of hours</span>
+                <span><span class="step-key step-key-value"></span>Share of value</span>
+              </div>
+              <figcaption class="fs-sm text-muted text-center mt-2">The illustrative claims workflow from "The Task Structure of Work," with the automation decisions from "Labor Automation." Share of hours is the part of the analyst's time each step takes before automation. Share of value is how much of the claim's value depends on getting that step right. The numbers are illustrative.</figcaption>
+            </figure>
+
+            <!-- "Labor Automation" links to its planned file name; the article is not published yet. -->
+            <p class="fs-lg">
+              The colors match the automation decisions in "<a href="labor_automation.html">Labor Automation</a>." In this example, the three steps marked for automation take 60 percent of the hours and carry 20 percent of the value. The coverage check and the payout estimate take 25 percent of the hours and carry 60 percent of the value.
+            </p>
+
+            <p class="fs-lg">
+              Automating the steps with the most hours can save a great deal of labor while barely changing the value of the work. An error in the decision step can erase the value of every other step. Part 10 builds these differences into a value model for knowledge-work roles.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Automation Does to the Value of Labor</h2>
+
+            <p class="fs-lg">
+              Automation changes the value of labor in several ways at once:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2"><strong>A ceiling on automated steps.</strong> Once capital can perform a step more cheaply, a firm will not pay more for human time in that step than the machine costs. Daron Acemoglu and Pascual Restrepo call the resulting loss of tasks for labor the displacement effect.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup></li>
+              <li class="mb-2"><strong>More value in the remaining steps.</strong> In an O-ring chain, more reliable automated steps raise the value of the human steps that remain.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup> Joshua Gans and Avi Goldfarb show that labor income can rise under partial automation.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup></li>
+              <li class="mb-2"><strong>A moving expertise threshold.</strong> Automating inexpert steps tends to raise wages and lower employment, and automating expert steps does the reverse, as with the two clerks.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup></li>
+              <li class="mb-2"><strong>New work with a fading premium.</strong> In 2011–2023, workers in job titles introduced since 1970 earned about 1.8 percent more than similar workers in older titles, and about 3.8 percent more in technology-linked titles. The premium was largest for titles introduced after 2000 and had disappeared for titles from the 1970s.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup></li>
+            </ul>
+
+            <p class="fs-lg">
+              The first studies of generative AI at work point the same way. At a large customer-support operation, an AI assistant raised issues resolved per hour by about 15 percent on average and by about 30 percent for less-skilled and less-experienced agents. The most skilled agents saw small gains in speed and small declines in quality.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              In an experiment with professional writing tasks, ChatGPT cut the time taken by about 40 percent and raised quality by about 18 percent, with the largest gains for weaker writers.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> In both cases the tool narrowed skill differences on the steps it touched, which lowers the premium for those skills and raises average output.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Who Gets the Gains</h2>
+
+            <p class="fs-lg">
+              For most people, the main income-generating asset is their labor, and it pays because it is scarce. Autor calls the resulting risk the "paradox of abundance": society as a whole gets richer, while people who own labor and no capital can struggle to earn a living.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup> Across 19 developed economies from 1970 to 2007, productivity growth raised employment overall and lowered labor's share of value added.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The value of a human step depends on how scarce the ability to do it is, compared with the cheapest alternative, including a machine. For a business case, that means estimating the value of the remaining steps, and who will be able to do them, as well as the hours saved in the automated ones.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Autor, D., &amp; Thompson, N. (2025). Expertise. <b>Journal of the European Economic Association,</b> 23(4), 1203–1271. <a href="https://doi.org/10.1093/jeea/jvaf023" target="_blank" rel="noopener">doi:10.1093/jeea/jvaf023</a> [Clerk employment and wages, 1980–2018: NBER Working Paper 33941 version, introduction, footnote 5. Wage changes computed from the reported averages: $13.07 to $18.17 for accounting clerks; $14.30 to $12.43 for inventory clerks.]</li>
+              <li id="fn-2">Solow, R. M. (1957). Technical change and the aggregate production function. <b>Review of Economics and Statistics,</b> 39(3), 312–320. <a href="https://doi.org/10.2307/1926047" target="_blank" rel="noopener">doi:10.2307/1926047</a> [share of property in income, Table 1]</li>
+              <li id="fn-3">Smith, A. (1776). <em>An Inquiry into the Nature and Causes of the Wealth of Nations.</em> Book I, ch. 4 (water and diamonds) and ch. 10 (wages in different employments).</li>
+              <li id="fn-4">Clark, J. B. (1899). <em>The Distribution of Wealth: A Theory of Wages, Interest and Profits.</em> Macmillan.</li>
+              <li id="fn-5">Becker, G. S. (1964). <em>Human Capital: A Theoretical and Empirical Analysis, with Special Reference to Education.</em> National Bureau of Economic Research / Columbia University Press.</li>
+              <li id="fn-6">Roy, A. D. (1951). Some thoughts on the distribution of earnings. <b>Oxford Economic Papers,</b> 3(2), 135–146. <a href="https://doi.org/10.1093/oxfordjournals.oep.a041827" target="_blank" rel="noopener">doi:10.1093/oxfordjournals.oep.a041827</a></li>
+              <li id="fn-7">Kremer, M. (1993). The O-ring theory of economic development. <b>Quarterly Journal of Economics,</b> 108(3), 551–575. <a href="https://doi.org/10.2307/2118400" target="_blank" rel="noopener">doi:10.2307/2118400</a></li>
+              <li id="fn-8">Rosen, S. (1981). The economics of superstars. <b>American Economic Review,</b> 71(5), 845–858. <a href="https://www.jstor.org/stable/1803469" target="_blank" rel="noopener">jstor.org/stable/1803469</a></li>
+              <li id="fn-9">Manning, A. (2003). <em>Monopsony in Motion: Imperfect Competition in Labor Markets.</em> Princeton University Press.</li>
+              <li id="fn-10">Gans, J. S., &amp; Goldfarb, A. (2026). <em>O-Ring Automation.</em> NBER Working Paper 34639. <a href="https://doi.org/10.3386/w34639" target="_blank" rel="noopener">doi:10.3386/w34639</a></li>
+              <li id="fn-11">Acemoglu, D., &amp; Restrepo, P. (2019). Automation and new tasks: How technology displaces and reinstates labor. <b>Journal of Economic Perspectives,</b> 33(2), 3–30. <a href="https://doi.org/10.1257/jep.33.2.3" target="_blank" rel="noopener">doi:10.1257/jep.33.2.3</a></li>
+              <li id="fn-12">Autor, D. H. (2015). Why are there still so many jobs? The history and future of workplace automation. <b>Journal of Economic Perspectives,</b> 29(3), 3–30, at p. 6. <a href="https://doi.org/10.1257/jep.29.3.3" target="_blank" rel="noopener">doi:10.1257/jep.29.3.3</a></li>
+              <li id="fn-13">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2026). <em>What Makes New Work Different from More Work?</em> NBER Working Paper 34986. <a href="https://doi.org/10.3386/w34986" target="_blank" rel="noopener">doi:10.3386/w34986</a></li>
+              <li id="fn-14">Brynjolfsson, E., Li, D., &amp; Raymond, L. (2025). Generative AI at work. <b>Quarterly Journal of Economics,</b> 140(2), 889–942. <a href="https://doi.org/10.1093/qje/qjae044" target="_blank" rel="noopener">doi:10.1093/qje/qjae044</a> [The 2023 NBER working-paper version, WP 31161, reported 14 percent and 34 percent.]</li>
+              <li id="fn-15">Noy, S., &amp; Zhang, W. (2023). Experimental evidence on the productivity effects of generative artificial intelligence. <b>Science,</b> 381(6654), 187–192. <a href="https://doi.org/10.1126/science.adh2586" target="_blank" rel="noopener">doi:10.1126/science.adh2586</a></li>
+              <li id="fn-16">Autor, D. H. (2015). Paradox of abundance: Automation anxiety returns. In S. Rangan (Ed.), <em>Performance and Progress: Essays on Capitalism, Business, and Society</em> (pp. 237–260). Oxford University Press. <a href="https://doi.org/10.1093/acprof:oso/9780198744283.003.0017" target="_blank" rel="noopener">doi:10.1093/acprof:oso/9780198744283.003.0017</a></li>
+              <li id="fn-17">Autor, D., &amp; Salomons, A. (2018). Is automation labor share–displacing? Productivity growth, employment, and the labor share. <b>Brookings Papers on Economic Activity,</b> Spring 2018, 1–87. <a href="https://doi.org/10.1353/eca.2018.0000" target="_blank" rel="noopener">doi:10.1353/eca.2018.0000</a></li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Demand | The Hitchhiker's Guide to Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Demand rests on needs that level off and wants that keep growing. When automation makes an output cheaper, elasticity decides whether that work grows, and freed income goes to new goods and new work.">
+    <meta name="keywords" content="demand, labor demand, derived demand, needs and wants, Engel's law, Witt, Robson, Scitovsky, industrious revolution, de Vries, price elasticity, pass-through, rebound effect, Jevons, Bessen, price of light, Nordhaus, Lancaster, Hicks, Baumol, new work, Autor, LLMs, generative AI, freelancers, Leontief, Keynes, automation, knowledge work">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Demand | The Hitchhiker's Guide to Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/demand_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/demand.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Demand rests on needs that level off and wants that keep growing. When automation makes an output cheaper, elasticity decides whether that work grows, and freed income goes to new goods and new work."/>
+
+    <meta name="twitter:title" content="Demand | The Hitchhiker's Guide to Knowledge Work Systems (Series)" />
+
+    <meta name="twitter:description" content="Demand rests on needs that level off and wants that keep growing. When automation makes an output cheaper, elasticity decides whether that work grows, and freed income goes to new goods and new work." />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/demand_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/demand.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Elasticity figure ──────────────────────────────────── */
+      .elas-figure svg { display: block; width: 100%; height: auto; }
+      .elas-figure .elas-before {
+        fill: none;
+        stroke: #4b5563;
+        stroke-width: 1.5;
+        stroke-dasharray: 5 4;
+      }
+      .elas-figure .elas-after {
+        fill: rgba(255,149,0,0.22);
+        stroke: #c46f00;
+        stroke-width: 1.5;
+      }
+      .elas-figure .elas-curve { fill: none; stroke: #121519; stroke-width: 2; }
+      .elas-figure .elas-axis { stroke: #9aa3b2; stroke-width: 1; }
+      .elas-figure .elas-title {
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        fill: #121519;
+      }
+      .elas-figure .elas-sub,
+      .elas-figure .elas-tick,
+      .elas-figure .elas-axis-label {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        fill: #6f788b;
+      }
+      .elas-figure .elas-label {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        fill: #4b5563;
+      }
+      .elas-figure .elas-result {
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        fill: #121519;
+      }
+      .elas-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem 1.25rem;
+        margin-top: 0.5rem;
+        color: #6f788b;
+      }
+      .elas-key {
+        display: inline-block;
+        width: 0.85rem;
+        height: 0.85rem;
+        margin-right: 0.4rem;
+        vertical-align: -0.1rem;
+        border: 1.5px solid;
+      }
+      .elas-key-before { border-color: #4b5563; border-style: dashed; }
+      .elas-key-after { background: rgba(255,149,0,0.22); border-color: #c46f00; }
+
+      /* ── Spending-share figure ──────────────────────────────── */
+      .spend-figure svg { display: block; width: 100%; height: auto; }
+      .spend-figure .spend-year {
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        fill: #121519;
+      }
+      .spend-figure .spend-val {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        fill: #121519;
+      }
+      .spend-figure .spend-food { fill: #ff9500; }
+      .spend-figure .spend-apparel { fill: #ffd08a; }
+      .spend-figure .spend-housing { fill: #c9dbf5; }
+      .spend-figure .spend-other { fill: #eceff3; }
+      .spend-figure rect { stroke: #ffffff; stroke-width: 2; }
+      .spend-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem 1.25rem;
+        margin-top: 0.5rem;
+        color: #6f788b;
+      }
+      .spend-key {
+        display: inline-block;
+        width: 0.85rem;
+        height: 0.85rem;
+        margin-right: 0.4rem;
+        vertical-align: -0.1rem;
+        border-radius: 2px;
+      }
+      .spend-key-food { background: #ff9500; }
+      .spend-key-apparel { background: #ffd08a; }
+      .spend-key-housing { background: #c9dbf5; }
+      .spend-key-other { background: #eceff3; border: 1px solid #c3c9d3; }
+
+      /* ── Small tables (figure fallbacks on phones) ──────────── */
+      .fig-table { font-size: 0.95rem; }
+      .fig-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .fig-table td:not(:first-child), .fig-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Demand</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Demand</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/demand_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      Firms hire labor because people buy what labor produces, so labor demand is derived from human needs and wants. Body needs such as food level off as they are met. The needs for stimulation and status, and the wants people learn from experience and from each other, keep growing. When automation makes an output cheaper, the work of producing it grows only if the savings reach buyers and buyers want much more at the lower price. The income freed by cheaper goods goes to new goods, and new goods need new work. <b>Automation has expanded total work so far because the wants behind demand have kept growing.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              By 2000, lighting in the United Kingdom cost less than one three-thousandth of what it cost in 1800. Over the same two centuries, the amount of light used per person rose about 6,500-fold and total use about 25,000-fold, while income per person rose about 15-fold.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              William Nordhaus showed that standard price indexes missed most of this decline, because they tracked the prices of candles and lamps instead of the price of light itself.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Cloth followed the same path. In the United States, labor productivity in cotton cloth production rose about 30-fold over the nineteenth century, consumption rose about 100-fold, and employment in the industry grew.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> People bought so much more of these goods as they got cheaper that the work of producing them expanded.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="what-demand-is">What Demand Is</h2>
+
+            <p class="fs-lg">
+              Demand is the quantity of something buyers are willing and able to buy at each price. It depends on the price, on buyers' incomes, and on their preferences.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              People mostly want the service a good provides, such as light, warmth, transport, or information. Kelvin Lancaster modeled goods as bundles of characteristics, which helps explain why a need persists while the goods that meet it change, as candles gave way to gas and then electric light.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Labor demand is derived demand. Firms hire labor because people buy what labor produces, so the demand for labor depends on demand for the product, on labor productivity, and on the price of substitutes such as machines.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup>
+            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Demand</p>
+                  <p>The quantity buyers are willing and able to buy at each price, given their incomes and preferences.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Derived demand</p>
+                  <p>Demand for labor that follows from demand for what labor produces.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Links to What Is Work?, Value of Human Labor, Physical and Cognitive Labor, Labor Automation, Structural Transformation, and The Neolithic Age point to published pages. "The Evolution of Work" and "Engines of Creation" use the planned file names from the What Is Work? cycle figure. -->
+            <p class="fs-lg">
+              "<a href="labor_automation.html">Labor Automation</a>" described two effects that pull in opposite directions: machines take over tasks from people, and lower costs raise output and the demand for labor in the tasks that remain. Demand decides which one wins. When machines get cheaper, the demand for labor rises if buyers respond to lower prices more strongly than firms can swap machines for workers, and it falls if they respond less.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="where-demand-comes-from">Where Demand Comes From</h2>
+
+            <p class="fs-lg">
+              Demand starts with biology. Ulrich Witt lists the needs people share as part of their genetic makeup: body needs such as water, food, sleep, sex, shelter, and clothing, and other needs such as affection, stimulation, a positive self-image, and status.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> Arthur Robson argues that evolution shaped preferences like these, and that human evolutionary history "logically must be the foundation of economic behavior."<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Body needs level off. In 1857, Ernst Engel found that the poorer a family is, the larger the share of its spending that goes to food. A century later, Hendrik Houthakker found the same pattern in about 40 household surveys from some 30 countries.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> In the United States, food took 42.5 percent of household spending in 1901 and 13.1 percent in 2002–03.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <figure class="spend-figure my-4">
+              <svg class="d-none d-md-block" viewBox="0 0 844 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="spend-title">
+                <title id="spend-title">Shares of US household spending. 1901: food 42.5%, clothing 14.0%, housing 23.3%, everything else 20.2%; 1950: food 29.7%, clothing 11.5%, housing 27.2%, everything else 31.6%; 2002–03: food 13.1%, clothing 4.2%, housing 32.8%, everything else 49.9%.</title>
+                <text class="spend-year" x="84" y="51" text-anchor="end">1901</text>
+                <rect class="spend-food" x="96.0" y="28" width="314.5" height="36"><title>Food 42.5% (1901)</title></rect>
+                <text class="spend-val" x="253.2" y="50" text-anchor="middle">42.5%</text>
+                <rect class="spend-apparel" x="410.5" y="28" width="103.6" height="36"><title>Clothing 14.0% (1901)</title></rect>
+                <text class="spend-val" x="462.3" y="50" text-anchor="middle">14.0%</text>
+                <rect class="spend-housing" x="514.1" y="28" width="172.4" height="36"><title>Housing 23.3% (1901)</title></rect>
+                <text class="spend-val" x="600.3" y="50" text-anchor="middle">23.3%</text>
+                <rect class="spend-other" x="686.5" y="28" width="149.5" height="36"><title>Everything else 20.2% (1901)</title></rect>
+                <text class="spend-val" x="761.3" y="50" text-anchor="middle">20.2%</text>
+                <text class="spend-year" x="84" y="103" text-anchor="end">1950</text>
+                <rect class="spend-food" x="96.0" y="80" width="219.8" height="36"><title>Food 29.7% (1950)</title></rect>
+                <text class="spend-val" x="205.9" y="102" text-anchor="middle">29.7%</text>
+                <rect class="spend-apparel" x="315.8" y="80" width="85.1" height="36"><title>Clothing 11.5% (1950)</title></rect>
+                <text class="spend-val" x="358.3" y="102" text-anchor="middle">11.5%</text>
+                <rect class="spend-housing" x="400.9" y="80" width="201.3" height="36"><title>Housing 27.2% (1950)</title></rect>
+                <text class="spend-val" x="501.5" y="102" text-anchor="middle">27.2%</text>
+                <rect class="spend-other" x="602.2" y="80" width="233.8" height="36"><title>Everything else 31.6% (1950)</title></rect>
+                <text class="spend-val" x="719.1" y="102" text-anchor="middle">31.6%</text>
+                <text class="spend-year" x="84" y="155" text-anchor="end">2002–03</text>
+                <rect class="spend-food" x="96.0" y="132" width="96.9" height="36"><title>Food 13.1% (2002–03)</title></rect>
+                <text class="spend-val" x="144.5" y="154" text-anchor="middle">13.1%</text>
+                <rect class="spend-apparel" x="192.9" y="132" width="31.1" height="36"><title>Clothing 4.2% (2002–03)</title></rect>
+                <rect class="spend-housing" x="224.0" y="132" width="242.7" height="36"><title>Housing 32.8% (2002–03)</title></rect>
+                <text class="spend-val" x="345.4" y="154" text-anchor="middle">32.8%</text>
+                <rect class="spend-other" x="466.7" y="132" width="369.3" height="36"><title>Everything else 49.9% (2002–03)</title></rect>
+                <text class="spend-val" x="651.4" y="154" text-anchor="middle">49.9%</text>
+              </svg>
+              <div class="spend-legend fs-sm d-none d-md-flex">
+                <span><span class="spend-key spend-key-food"></span>Food</span>
+                <span><span class="spend-key spend-key-apparel"></span>Clothing</span>
+                <span><span class="spend-key spend-key-housing"></span>Housing</span>
+                <span><span class="spend-key spend-key-other"></span>Everything else</span>
+              </div>
+              <div class="table-responsive d-md-none">
+                <table class="table fig-table mb-0">
+                  <thead><tr><th scope="col">Year</th><th scope="col">Food</th><th scope="col">Clothing</th><th scope="col">Housing</th><th scope="col">Other</th></tr></thead>
+                  <tbody>
+                    <tr><td>1901</td><td>42.5%</td><td>14.0%</td><td>23.3%</td><td>20.2%</td></tr>
+                    <tr><td>1950</td><td>29.7%</td><td>11.5%</td><td>27.2%</td><td>31.6%</td></tr>
+                    <tr><td>2002–03</td><td>13.1%</td><td>4.2%</td><td>32.8%</td><td>49.9%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption class="fs-sm text-muted text-center mt-2">Shares of US household spending, from the Bureau of Labor Statistics report <i>100 Years of U.S. Consumer Spending</i> (2006). Food and clothing fell from more than half of spending to under a fifth, while housing and everything else grew. The early surveys covered wage-earner and urban households, so the comparison is approximate.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              Spending moved to other goods as incomes rose. Diego Comin, Danial Lashkari, and Martí Mestieri find that rising income, more than changes in relative prices, accounts for most of the shift in spending from agriculture to manufacturing and services within countries.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup> Part 1's "<a href="structural_transformation.html">Structural Transformation</a>" traced the same shift in where people work, and "<a href="labor_automation.html">Labor Automation</a>" showed what it meant for farm employment.
+            </p>
+
+            <p class="fs-lg">
+              Other needs do not level off. Witt calls this differential satiation: food satisfies quickly, while the needs for stimulation and status do not, because people adapt to what they have and compare themselves with others.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> Tibor Scitovsky drew a similar line between comfort and stimulation, writing that "the pleasures of stimulation, unlike those of want satisfaction, are not eliminated by their too persistent and too continuous pursuit."<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Most of what people buy meets these needs through wants they have learned. In Witt's account, learned wants grow out of "a limited number of innate wants," and they multiply as people discover new goods and new ways to meet the same needs.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> "<a href="the_evolution_of_work.html">The Evolution of Work</a>" takes up the need for status and why it keeps rising.
+            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Innate need</p>
+                  <p>A need people share as part of their genetic makeup, such as food, sleep, affection, stimulation, or status. Body needs level off as they are met; stimulation and status do not.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Learned want</p>
+                  <p>A desire for particular goods that meet a need, learned from experience and from other people. Learned wants multiply as new goods appear.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Wants for new goods have drawn people into more work before. Jan de Vries argues that in the seventeenth and eighteenth centuries, households in northwestern Europe and North America worked more for the market and sold more of what they produced so they could buy new consumer goods such as sugar, tea, tobacco, and cotton cloth. He calls this the industrious revolution.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The evidence is debated. Robert Allen and Jacob Weisdorf find that English farm laborers did work longer, but they attribute the longer hours to hardship, while leaving room for an industrious revolution among urban workers.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Demand also grows with income, as productivity raises what an hour of work earns ("<a href="what_is_work.html">What Is Work?</a>"), and with population. The first large expansion came with farming, when surplus supported denser settlements that needed record-keepers and administrators, as Part 4's "<a href="neolithic_age.html">The Neolithic Age</a>" and "What Is Work?" described.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="how-automation-expands-demand">How Automation Expands Demand</h2>
+
+            <p class="fs-lg">
+              Automation cuts the labor needed for each unit of output. Three things decide whether that turns into more work or less:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">whether the savings reach buyers as lower prices</li>
+              <li class="mb-2">how much more buyers want when the price falls</li>
+              <li class="mb-2">where the income freed by cheaper goods is spent</li>
+            </ul>
+
+            <p class="fs-lg">
+              <b>The savings have to reach buyers.</b> On average they do. Across 19 developed economies, David Autor and Anna Salomons find that rising productivity in an industry lowers its prices.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup> AT&amp;T, as "<a href="labor_automation.html">Labor Automation</a>" noted, did not pass its savings from dial switching on to callers: its rates typically rose after a city converted.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup> How much of a cost cut reaches prices depends on competition and on the shape of demand, and a firm with market power can keep more of it as margin.<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>Buyers have to want more.</b> The key quantity is the price elasticity of demand, which measures how strongly the quantity bought responds to the price. When elasticity is above 1, a price cut raises total spending on the output, and with it the work of producing it. When elasticity is below 1, total spending falls.
+            </p>
+
+<figure class="elas-figure my-4">
+              <svg class="d-none d-md-block" viewBox="0 0 820 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="elas-title">
+                <title id="elas-title">Illustrative example: price and labor per unit both fall 40 percent. With elastic demand (elasticity 2), quantity bought rises about 2.8 times and labor hours rise about 67 percent. With inelastic demand (elasticity 0.5), quantity rises about 29 percent and labor hours fall about 23 percent.</title>
+                <g class="elas-panel">
+                  <text class="elas-title" x="52" y="22">Elastic demand</text>
+                  <text class="elas-sub" x="52" y="40">elasticity 2</text>
+                  <rect class="elas-after" x="52.0" y="172.0" width="295.1" height="90.0"><title>After: quantity 2.78, spending and labor hours 1.67 (+67%)</title></rect>
+                  <rect class="elas-before" x="52.0" y="112.0" width="106.2" height="150.0"><title>Before: quantity 1.00, spending and labor hours 1.00</title></rect>
+                  <polyline class="elas-curve" points="110.3,59.5 111.8,62.1 113.4,64.7 115.1,67.4 116.8,70.0 118.7,72.6 120.5,75.2 122.5,77.9 124.6,80.5 126.7,83.1 129.0,85.8 131.3,88.4 133.8,91.0 136.3,93.6 139.0,96.2 141.8,98.9 144.8,101.5 147.9,104.1 151.2,106.7 154.6,109.4 158.2,112.0 162.1,114.6 166.1,117.2 170.4,119.9 174.8,122.5 179.6,125.1 184.6,127.7 190.0,130.4 195.7,133.0 201.7,135.6 208.1,138.2 214.9,140.9 222.2,143.5 230.0,146.1 238.4,148.8 247.3,151.4 257.0,154.0 267.3,156.6 278.4,159.2 290.5,161.9 303.5,164.5 317.6,167.1 332.9,169.7 349.6,172.4 367.8,175.0 387.8,177.6"></polyline>
+                  <line class="elas-axis" x1="52.0" y1="262.0" x2="392.0" y2="262.0"></line>
+                  <line class="elas-axis" x1="52.0" y1="262.0" x2="52.0" y2="52.0"></line>
+                  <text class="elas-tick" x="46.0" y="116.0" text-anchor="end">1.0</text>
+                  <text class="elas-tick" x="46.0" y="176.0" text-anchor="end">0.6</text>
+                  <text class="elas-tick" x="158.2" y="278.0" text-anchor="middle">1.0</text>
+                  <text class="elas-tick" x="347.1" y="278.0" text-anchor="middle">2.8</text>
+                  <text class="elas-axis-label" x="46.0" y="50.0" text-anchor="end">Price</text>
+                  <text class="elas-axis-label" x="392.0" y="296.0" text-anchor="end">Quantity bought</text>
+                  <text class="elas-label" x="58.0" y="128.0">before</text>
+                  <text class="elas-result" x="392.0" y="22" text-anchor="end">Labor hours +67%</text>
+                </g>
+                <g class="elas-panel">
+                  <text class="elas-title" x="462" y="22">Inelastic demand</text>
+                  <text class="elas-sub" x="462" y="40">elasticity 0.5</text>
+                  <rect class="elas-after" x="462.0" y="172.0" width="137.2" height="90.0"><title>After: quantity 1.29, spending and labor hours 0.77 (−23%)</title></rect>
+                  <rect class="elas-before" x="462.0" y="112.0" width="106.2" height="150.0"><title>Before: quantity 1.00, spending and labor hours 1.00</title></rect>
+                  <polyline class="elas-curve" points="553.4,59.5 554.0,62.1 554.7,64.7 555.3,67.4 555.9,70.0 556.6,72.6 557.2,75.2 557.9,77.9 558.6,80.5 559.3,83.1 560.0,85.8 560.8,88.4 561.5,91.0 562.3,93.6 563.1,96.2 563.9,98.9 564.7,101.5 565.6,104.1 566.4,106.7 567.3,109.4 568.2,112.0 569.2,114.6 570.2,117.2 571.2,119.9 572.2,122.5 573.2,125.1 574.3,127.7 575.4,130.4 576.6,133.0 577.8,135.6 579.0,138.2 580.2,140.9 581.5,143.5 582.9,146.1 584.3,148.8 585.7,151.4 587.2,154.0 588.8,156.6 590.4,159.2 592.0,161.9 593.8,164.5 595.6,167.1 597.5,169.7 599.5,172.4 601.5,175.0 603.7,177.6 605.9,180.2 608.3,182.9 610.8,185.5 613.4,188.1 616.2,190.8 619.1,193.4 622.2,196.0 625.5,198.6 629.0,201.2 632.7,203.9 636.7,206.5 641.0,209.1 645.6,211.8 650.6,214.4 656.0,217.0"></polyline>
+                  <line class="elas-axis" x1="462.0" y1="262.0" x2="802.0" y2="262.0"></line>
+                  <line class="elas-axis" x1="462.0" y1="262.0" x2="462.0" y2="52.0"></line>
+                  <text class="elas-tick" x="456.0" y="116.0" text-anchor="end">1.0</text>
+                  <text class="elas-tick" x="456.0" y="176.0" text-anchor="end">0.6</text>
+                  <text class="elas-tick" x="568.2" y="278.0" text-anchor="middle">1.0</text>
+                  <text class="elas-tick" x="599.2" y="278.0" text-anchor="middle">1.3</text>
+                  <text class="elas-axis-label" x="456.0" y="50.0" text-anchor="end">Price</text>
+                  <text class="elas-axis-label" x="802.0" y="296.0" text-anchor="end">Quantity bought</text>
+                  <text class="elas-label" x="468.0" y="128.0">before</text>
+                  <text class="elas-result" x="802.0" y="22" text-anchor="end">Labor hours −23%</text>
+                </g>
+              </svg>
+              <div class="elas-legend fs-sm d-none d-md-flex">
+                <span><span class="elas-key elas-key-before"></span>Spending before the price cut</span>
+                <span><span class="elas-key elas-key-after"></span>Spending after</span>
+              </div>
+              <div class="table-responsive d-md-none">
+                <table class="table fig-table mb-0">
+                  <thead><tr><th scope="col"></th><th scope="col">Elastic (2)</th><th scope="col">Inelastic (0.5)</th></tr></thead>
+                  <tbody>
+                    <tr><td>Price and labor per unit</td><td>−40%</td><td>−40%</td></tr>
+                    <tr><td>Quantity bought</td><td>×2.8</td><td>+29%</td></tr>
+                    <tr><td>Spending and labor hours</td><td>+67%</td><td>−23%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption class="fs-sm text-muted text-center mt-2">An illustrative case: automation cuts the labor needed per unit by 40 percent, and the price falls by the same share. Each box is price times quantity, which here is proportional to labor hours. With elastic demand the work grows; with inelastic demand it shrinks.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              James Bessen found that automation raised employment in textiles, steel, and automobiles for decades while demand for their products was elastic. Once demand was largely satisfied, further productivity growth reduced employment in those industries.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> Automation that barely lowers costs, the "so-so technologies" described in "<a href="labor_automation.html">Labor Automation</a>," gives buyers little reason to buy more.
+            </p>
+
+            <p class="fs-lg">
+              <b>Freed income goes somewhere.</b> Energy economists call the extra demand that follows an efficiency gain the rebound effect. William Stanley Jevons made the original observation in 1865, when he argued that more efficient steam engines would increase Britain's total use of coal.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup> The rebound comes through three channels:<sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup>
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2"><strong>direct:</strong> more of the same output is bought</li>
+              <li class="mb-2"><strong>indirect:</strong> the savings are spent on other goods</li>
+              <li class="mb-2"><strong>economy-wide:</strong> growth raises demand across the economy</li>
+            </ul>
+
+            <p class="fs-lg">
+              Autor and Salomons measured these channels for employment, across 28 industries from 1970 to 2007. Productivity growth reduced employment in the industries where it occurred. Employment grew in the industries that bought their output and through added final demand, and the gains more than made up the loss.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup> "<a href="value_of_human_labor.html">The Value of Human Labor</a>" covers the other half of their finding, the fall in labor's share of income.
+            </p>
+
+            <p class="fs-lg">
+              Much of the freed income goes to services. William Baumol showed that when demand for services with slow productivity growth, such as education and the performing arts, holds up as their relative costs rise, those services take a growing share of spending and employment.<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup> Baumol's mechanism helps explain why in-person services kept growing, as "<a href="physical_and_cognitive_labor.html">Physical Labor and Cognitive Labor</a>" showed.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="how-demand-creates-new-work">How Demand Creates New Work</h2>
+
+            <p class="fs-lg">
+              New goods bring new work. As cars replaced horse travel in the 1920s, roadside motels and fast-food restaurants grew up to serve the "motoring public."<sup><a href="#fn-22" data-scroll data-scroll-offset="100">[22]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Most of today's jobs carry titles that did not exist a few generations ago, as "<a href="what_is_work.html">What Is Work?</a>" noted. David Autor and his coauthors trace this new work to two sources: augmentation, which "<a href="labor_automation.html">Labor Automation</a>" described, and rising demand for what an occupation produces. They find that "the flow of new work responds elastically to shifts in demand for occupational output."<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Demand works in both directions. Occupations hit by competition from Chinese imports created fewer new job titles, and occupations that gained from demographic shifts created more, especially in personal and care services.<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup> In a follow-up study, workers in counties that received large industrial plants during World War II were more likely to hold new job titles by 1950, and most of that new work was linked to new technology.<sup><a href="#fn-24" data-scroll data-scroll-offset="100">[24]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              New work usually starts informally, as new tasks inside existing jobs. When demand grows enough, firms formalize a role, the title enters the Census list of occupations, and training programs follow. The wage premium for the new expertise is highest while the title is new and fades over the following decades, as "<a href="value_of_human_labor.html">The Value of Human Labor</a>" described.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="demand-for-cognitive-work">Demand for Cognitive Work</h2>
+
+            <p class="fs-lg">
+              LLMs are lowering the cost of steps in knowledge work quickly. Epoch AI estimates that the cost of reaching a given score on benchmark tasks has fallen about 13-fold a year since 2023, counting the extra text that reasoning models generate.<sup><a href="#fn-25" data-scroll data-scroll-offset="100">[25]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Use has grown faster. Google processed about 9.7 trillion tokens a month across its products in 2024 and more than 3.2 quadrillion a month by May 2026, more than 300 times as many.<sup><a href="#fn-26" data-scroll data-scroll-offset="100">[26]</a></sup> Machine-generated text is following the path lighting took: as its price falls, people use far more of it.
+            </p>
+
+            <p class="fs-lg">
+              Whether that expands human cognitive work depends on how the machine output relates to what people do. Where it substitutes for human output, demand for the human work has fallen so far. On a large freelancing platform, demand for writing and translation dropped 20 to 50 percent below its prior trend after ChatGPT's release, while demand for machine-learning programming rose 24 percent and demand for building AI chatbots nearly tripled.<sup><a href="#fn-27" data-scroll data-scroll-offset="100">[27]</a></sup> Another study found 21 percent fewer postings for writing and coding jobs that were easy to automate, compared with jobs that needed manual skills, and the jobs that remained were more complex and better paid.<sup><a href="#fn-28" data-scroll data-scroll-offset="100">[28]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Demand for the substituted output did not grow enough to offset the substitution, and new work appeared around the new tools. The early labor-market evidence in "<a href="labor_automation.html">Labor Automation</a>" points the same way: jobs that LLMs augment have held up so far, and entry-level hiring has slowed where AI substitutes for workers.
+            </p>
+
+            <p class="fs-lg">
+              Over time, the result depends on the outputs firms sell. Some, such as software or tailored analysis, may find many more buyers at a lower price. Others are fixed by rules or by the calendar: a firm files one annual report no matter how cheap reports become.
+            </p>
+
+            <p class="fs-lg">
+              For a business, the practical question in any automation plan is where the savings go: into lower prices in a market that will buy more, or into margin in a market that will not.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="where-the-demand-channel-breaks">Where the Demand Channel Breaks</h2>
+
+            <p class="fs-lg">
+              Demand does not always absorb displaced labor:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">Some demand is fixed, and some markets saturate, as Bessen's industries eventually did.</li>
+              <li class="mb-2">New work arrives later than displacement. The incumbent telephone operators in "<a href="labor_automation.html">Labor Automation</a>" were more likely to end up in lower-paying work or out of work, and it was later cohorts who found the new jobs.</li>
+              <li class="mb-2">If most of the gains go to owners of capital, as "<a href="value_of_human_labor.html">The Value of Human Labor</a>" discussed, demand can lag, because households with high incomes save a larger share of what they earn.<sup><a href="#fn-29" data-scroll data-scroll-offset="100">[29]</a></sup></li>
+            </ul>
+
+            <p class="fs-lg">
+              Wassily Leontief compared human workers to horses, whose role in farming shrank and then disappeared once tractors arrived.<sup><a href="#fn-30" data-scroll data-scroll-offset="100">[30]</a></sup> The comparison breaks down on demand. Horses do not buy anything, while people are both the workers and the source of demand. "<a href="engines_of_creation.html">Engines of Creation</a>" takes up the harder version of the question: what happens if machines can do every task people can.
+            </p>
+
+            <p class="fs-lg">
+              Every channel in this article depends on wants that keep growing. Spending on food stopped keeping pace with income long ago, and the needs and wants that took its place keep rising. "<a href="the_evolution_of_work.html">The Evolution of Work</a>," the next article in Part 5, explains why.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Fouquet, R., &amp; Pearson, P. J. G. (2006). Seven centuries of energy services: The price and use of light in the United Kingdom (1300–2000). <b>Energy Journal,</b> 27(1), 139–177. <a href="https://doi.org/10.5547/ISSN0195-6574-EJ-Vol27-No1-8" target="_blank" rel="noopener">doi:10.5547/ISSN0195-6574-EJ-Vol27-No1-8</a></li>
+              <li id="fn-2">Nordhaus, W. D. (1997). Do real-output and real-wage measures capture reality? The history of lighting suggests not. In T. F. Bresnahan &amp; R. J. Gordon (Eds.), <em>The Economics of New Goods</em> (pp. 29–66). University of Chicago Press.</li>
+              <li id="fn-3">Bessen, J. (2019). Automation and jobs: When technology boosts employment. <b>Economic Policy,</b> 34(100), 589–626. <a href="https://doi.org/10.1093/epolic/eiaa001" target="_blank" rel="noopener">doi:10.1093/epolic/eiaa001</a></li>
+              <li id="fn-4">Marshall, A. (1890). <em>Principles of Economics.</em> Macmillan. [derived demand, Book V, ch. VI]</li>
+              <li id="fn-5">Lancaster, K. J. (1966). A new approach to consumer theory. <b>Journal of Political Economy,</b> 74(2), 132–157. <a href="https://doi.org/10.1086/259131" target="_blank" rel="noopener">doi:10.1086/259131</a></li>
+              <li id="fn-6">Hicks, J. R. (1932). <em>The Theory of Wages.</em> Macmillan. For the modern statement, see Hamermesh, D. S. (1993). <em>Labor Demand.</em> Princeton University Press. [The cross-price elasticity of labor demand with respect to the price of capital is <i>s</i><sub>K</sub>(<i>σ</i> − <i>η</i>), where <i>s</i><sub>K</sub> is capital's cost share, <i>σ</i> the elasticity of substitution, and <i>η</i> the price elasticity of product demand. When capital gets cheaper, labor demand rises if <i>η</i> &gt; <i>σ</i>.]</li>
+              <li id="fn-7">Witt, U. (2017). The evolution of consumption and its welfare effects. <b>Journal of Evolutionary Economics,</b> 27(2), 273–293. <a href="https://doi.org/10.1007/s00191-016-0459-3" target="_blank" rel="noopener">doi:10.1007/s00191-016-0459-3</a> [innate needs as "human universals," Section 2; the differential satiation hypothesis, Section 3]</li>
+              <li id="fn-8">Robson, A. J. (2001). The biological basis of economic behavior. <b>Journal of Economic Literature,</b> 39(1), 11–33, at p. 11. <a href="https://doi.org/10.1257/jel.39.1.11" target="_blank" rel="noopener">doi:10.1257/jel.39.1.11</a></li>
+              <li id="fn-9">Engel, E. (1857). Die Productions- und Consumtionsverhältnisse des Königreichs Sachsen. <em>Zeitschrift des Statistischen Bureaus des Königlich Sächsischen Ministeriums des Innern,</em> Nos. 8–9. Reprinted in Engel, E. (1895), <em>Die Lebenskosten belgischer Arbeiter-Familien früher und jetzt,</em> Anlage I [the law, pp. 28–29 of the reprint]. Houthakker, H. S. (1957). An international comparison of household expenditure patterns, commemorating the centenary of Engel's law. <b>Econometrica,</b> 25(4), 532–551. <a href="https://doi.org/10.2307/1905382" target="_blank" rel="noopener">doi:10.2307/1905382</a></li>
+              <li id="fn-10">U.S. Bureau of Labor Statistics. (2006). <em>100 Years of U.S. Consumer Spending: Data for the Nation, New York City, and Boston</em> (Report 991; M. L. Dolfman &amp; D. M. McSweeney). <a href="https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf" target="_blank" rel="noopener">bls.gov/opub/100-years-of-u-s-consumer-spending.pdf</a> [1901: p. 6, Table 5; 1950: p. 25, Table 14; 2002–03: p. 63, Table 29. The report cautions that comparisons across surveys "should be interpreted with caution"; the early figures come from surveys of wage-earner and urban households.]</li>
+              <li id="fn-11">Comin, D., Lashkari, D., &amp; Mestieri, M. (2021). Structural change with long-run income and price effects. <b>Econometrica,</b> 89(1), 311–374. <a href="https://doi.org/10.3982/ECTA16317" target="_blank" rel="noopener">doi:10.3982/ECTA16317</a></li>
+              <li id="fn-12">Scitovsky, T. (1976). <em>The Joyless Economy: An Inquiry into Human Satisfaction and Consumer Dissatisfaction.</em> Oxford University Press, pp. 77–78.</li>
+              <li id="fn-13">Witt, U. (2001). Learning to consume: A theory of wants and the growth of demand. <b>Journal of Evolutionary Economics,</b> 11(1), 23–36. <a href="https://doi.org/10.1007/PL00003851" target="_blank" rel="noopener">doi:10.1007/PL00003851</a> For a review of the research that followed, see Chai, A. (2017). Tackling Keynes' question: A look back on 15 years of Learning To Consume. <b>Journal of Evolutionary Economics,</b> 27(2), 251–271. <a href="https://doi.org/10.1007/s00191-016-0455-7" target="_blank" rel="noopener">doi:10.1007/s00191-016-0455-7</a></li>
+              <li id="fn-14">de Vries, J. (1994). The Industrial Revolution and the industrious revolution. <b>Journal of Economic History,</b> 54(2), 249–270. <a href="https://doi.org/10.1017/S0022050700014467" target="_blank" rel="noopener">doi:10.1017/S0022050700014467</a> See also de Vries, J. (2008). <em>The Industrious Revolution: Consumer Behavior and the Household Economy, 1650 to the Present.</em> Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511818196" target="_blank" rel="noopener">doi:10.1017/CBO9780511818196</a></li>
+              <li id="fn-15">Allen, R. C., &amp; Weisdorf, J. L. (2011). Was there an "industrious revolution" before the industrial revolution? An empirical exercise for England, c. 1300–1830. <b>Economic History Review,</b> 64(3), 715–729. <a href="https://doi.org/10.1111/j.1468-0289.2010.00566.x" target="_blank" rel="noopener">doi:10.1111/j.1468-0289.2010.00566.x</a> See also Clark, G., &amp; Van Der Werf, Y. (1998). Work in progress? The industrious revolution. <b>Journal of Economic History,</b> 58(3), 830–843. <a href="https://doi.org/10.1017/S0022050700021197" target="_blank" rel="noopener">doi:10.1017/S0022050700021197</a></li>
+              <li id="fn-16">Autor, D., &amp; Salomons, A. (2018). Is automation labor share–displacing? Productivity growth, employment, and the labor share. <b>Brookings Papers on Economic Activity,</b> Spring 2018, 1–87. <a href="https://doi.org/10.1353/eca.2018.0000" target="_blank" rel="noopener">doi:10.1353/eca.2018.0000</a> [19 countries, 28 industries, 1970–2007. Annual employment effects in log points: own industry −0.222; industries downstream of the productivity gain +0.353; upstream +0.051; final demand +0.301; net +0.482.]</li>
+              <li id="fn-17">Feigenbaum, J., &amp; Gross, D. P. (2024). Answering the call of automation: How the labor market adjusted to mechanizing telephone operation. <b>Quarterly Journal of Economics,</b> 139(3), 1879–1939. <a href="https://doi.org/10.1093/qje/qjae005" target="_blank" rel="noopener">doi:10.1093/qje/qjae005</a> [Dial cutovers "were typically accompanied by telephone rate increases, rather than decreases": Appendix Figure A.4.]</li>
+              <li id="fn-18">Weyl, E. G., &amp; Fabinger, M. (2013). Pass-through as an economic tool: Principles of incidence under imperfect competition. <b>Journal of Political Economy,</b> 121(3), 528–583. <a href="https://doi.org/10.1086/670401" target="_blank" rel="noopener">doi:10.1086/670401</a></li>
+              <li id="fn-19">Jevons, W. S. (1865). <em>The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines.</em> Macmillan. The modern rebound literature begins with Khazzoom, J. D. (1980). Economic implications of mandated efficiency standards for household appliances. <b>Energy Journal,</b> 1(4).</li>
+              <li id="fn-20">Sorrell, S., &amp; Dimitropoulos, J. (2008). The rebound effect: Microeconomic definitions, limitations and extensions. <b>Ecological Economics,</b> 65(3), 636–649. <a href="https://doi.org/10.1016/j.ecolecon.2007.08.013" target="_blank" rel="noopener">doi:10.1016/j.ecolecon.2007.08.013</a></li>
+              <li id="fn-21">Baumol, W. J. (1967). Macroeconomics of unbalanced growth: The anatomy of urban crisis. <b>American Economic Review,</b> 57(3), 415–426.</li>
+              <li id="fn-22">Autor, D. H. (2015). Why are there still so many jobs? The history and future of workplace automation. <b>Journal of Economic Perspectives,</b> 29(3), 3–30, at p. 7. <a href="https://doi.org/10.1257/jep.29.3.3" target="_blank" rel="noopener">doi:10.1257/jep.29.3.3</a> [citing Jackson, K. T. (1993), <em>Crabgrass Frontier</em>]</li>
+              <li id="fn-23">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2024). New frontiers: The origins and content of new work, 1940–2018. <b>Quarterly Journal of Economics,</b> 139(3), 1399–1465. <a href="https://doi.org/10.1093/qje/qjae008" target="_blank" rel="noopener">doi:10.1093/qje/qjae008</a></li>
+              <li id="fn-24">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2026). <em>What Makes New Work Different from More Work?</em> NBER Working Paper 34986. <a href="https://doi.org/10.3386/w34986" target="_blank" rel="noopener">doi:10.3386/w34986</a> [WWII plants and new work by 1950; 85 to 90 percent of that new work was technology-linked]</li>
+              <li id="fn-25">Emberson, L., &amp; Roodman, D. (2026, September 22). <em>The plunging price of thought.</em> Epoch AI. [about 47 percent a quarter, or 13-fold a year, since 2023, for the cost of reaching a fixed benchmark score] An earlier Epoch AI analysis of per-token prices found declines of 9- to 900-fold a year, with a median of 50-fold: Cottier, B., Snodin, B., Owen, D., &amp; Adamczewski, T. (2025, March 12). <em>LLM inference prices have fallen rapidly but unequally across tasks.</em> Epoch AI.</li>
+              <li id="fn-26">Pichai, S. (2026, May 19). <em>I/O 2026: Welcome to the agentic Gemini era.</em> Google. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">blog.google/innovation-and-ai/sundar-pichai-io-2026</a> [9.7 trillion tokens a month two years earlier; more than 3.2 quadrillion a month in May 2026]</li>
+              <li id="fn-27">Teutloff, O., Einsiedler, J., Kässi, O., Braesemann, F., Mishkin, P., &amp; del Rio-Chanona, R. M. (2025). Winners and losers of generative AI: Early evidence of shifts in freelancer demand. <b>Journal of Economic Behavior &amp; Organization,</b> 235, 106845. <a href="https://doi.org/10.1016/j.jebo.2024.106845" target="_blank" rel="noopener">doi:10.1016/j.jebo.2024.106845</a></li>
+              <li id="fn-28">Demirci, O., Hannane, J., &amp; Zhu, X. (2025). Who is AI replacing? The impact of generative AI on online freelancing platforms. <b>Management Science,</b> 71(10), 8097–8108. <a href="https://doi.org/10.1287/mnsc.2024.05420" target="_blank" rel="noopener">doi:10.1287/mnsc.2024.05420</a> [21 percent fewer posts for automation-prone writing and coding jobs within eight months of ChatGPT's release, relative to jobs requiring manual skills]</li>
+              <li id="fn-29">Keynes, J. M. (1936). <em>The General Theory of Employment, Interest and Money.</em> Macmillan, Book III, ch. 8, pp. 96–97. [Kuznets's long-run data later showed no rise in the share of income saved as incomes grew, which led to the permanent-income and life-cycle theories. The point here concerns differences between households at a point in time.]</li>
+              <li id="fn-30">Leontief, W. (1983). Technological advance, economic growth, and the distribution of income. <b>Population and Development Review,</b> 9(3), 403–410. <a href="https://doi.org/10.2307/1973315" target="_blank" rel="noopener">doi:10.2307/1973315</a></li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

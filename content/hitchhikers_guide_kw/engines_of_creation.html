@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>Engines of Creation | The Hitchhiker's Guide to Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Automation keeps lowering the cost of meeting human wants, and AI applies it to cognitive work. Work keeps growing, and who shares in it depends on how AI is built and used and who can reach the new jobs.">
+    <meta name="keywords" content="engines of creation, automation, artificial intelligence, AI, LLMs, cognitive labor, knowledge work, Wright's law, cost of computation, Nordhaus, lump of labour, technological unemployment, AGI, Korinek, paradox of abundance, Autor, new work, augmentation, expertise, prediction, Agrawal, Gans, Goldfarb, pro-worker AI, Acemoglu, Johnson, tax policy, tool use, Lomekwi, Henrich, future of work">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Engines of Creation | The Hitchhiker's Guide to Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/engines_creation_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/engines_of_creation.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Automation keeps lowering the cost of meeting human wants, and AI applies it to cognitive work. Work keeps growing, and who shares in it depends on how AI is built and used and who can reach the new jobs."/>
+
+    <meta name="twitter:title" content="Engines of Creation | The Hitchhiker's Guide to Knowledge Work Systems (Series)" />
+
+    <meta name="twitter:description" content="Automation keeps lowering the cost of meeting human wants, and AI applies it to cognitive work. Work keeps growing, and who shares in it depends on how AI is built and used and who can reach the new jobs." />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/engines_creation_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/engines_of_creation.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Part 5 cycle figure ────────────────────────────────── */
+      .cycle-figure svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .cycle-figure a { text-decoration: none; }
+      .cycle-figure .cycle-node rect {
+        fill: #ffffff;
+        stroke: #d7dde2;
+        stroke-width: 1.5;
+        transition: fill .2s ease-in-out, stroke .2s ease-in-out;
+      }
+      .cycle-figure .cycle-node:hover rect,
+      .cycle-figure .cycle-node:focus rect {
+        fill: rgba(255,149,0,0.08);
+        stroke: #ff9500;
+      }
+      .cycle-figure .cycle-current rect {
+        fill: rgba(255,149,0,0.10);
+        stroke: #ff9500;
+        stroke-width: 1.5;
+      }
+      .cycle-figure .cycle-title {
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        fill: #121519;
+      }
+      .cycle-figure .cycle-hub-title { font-size: 16px; }
+      .cycle-figure .cycle-gloss {
+        font-family: "Inter", sans-serif;
+        font-size: 12.5px;
+        fill: #6f788b;
+      }
+      .cycle-figure .cycle-arrows line {
+        stroke: #9aa3b2;
+        stroke-width: 1.6;
+      }
+
+      /* ── Claims table (what Part 5 found) ───────────────────── */
+      .claims-table { font-size: 0.95rem; }
+      .claims-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .claims-table td { vertical-align: top; }
+      .claims-table td:first-child { font-weight: 600; width: 34%; }
+
+      /* ── Small tables (figure fallbacks on phones) ──────────── */
+      .fig-table { font-size: 0.95rem; }
+      .fig-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .fig-table td:not(:first-child), .fig-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Engines of Creation</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">Engines of Creation</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="../../josh_patterson.html">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/engines_creation_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      Automation keeps lowering the cost of meeting human wants, and AI is the newest form of it, applied to the cognitive steps of knowledge work. Each fall in cost opens new uses and new goods, and because wants are relative they rise to fill the space. That makes work inexhaustible, though it does not guarantee that people will do the new work or share in what it produces. Our ancestors and their tools have shaped each other for more than three million years. <b>Whether the new work reaches most people depends on choices about how AI is built and used, and on who can reach the new jobs.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              William Nordhaus traced the cost of computation from calculation by hand to modern computers. Depending on the measure, he estimated that computing performance improved by a factor of between 1.7 trillion and 76 trillion relative to manual computing.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Cheap computation created work that did not exist before. The Census Bureau added "artificial intelligence specialist" to its list of occupations in 2000 and "cybersecurity analyst" in 2018.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> Lighting and cloth followed the same path over two centuries, as "<a href="demand.html">Demand</a>" showed, and each fall in cost opened uses that nobody had planned.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Automation Lowers Costs Continuously</h2>
+
+            <p class="fs-lg">
+              In 1936, the aeronautical engineer T. P. Wright found that the labor cost of building an airplane fell by a fixed share, about 20 percent, each time the number of planes built doubled.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> Béla Nagy and colleagues tested this rule against historical data on the cost and production of 62 technologies and found that it produced the best forecasts of the six rules they compared.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Under Wright's law, cost keeps falling with every doubling of output and never reaches zero. The price of LLM output has been falling quickly too, as "<a href="demand.html">Demand</a>" showed, and use has grown faster than the price has fallen.
+            </p>
+
+            <p class="fs-lg">
+              Cheap outputs become inputs to new products. Martin Weitzman modeled growth as new ideas formed by combining existing ones, so the number of possible combinations grows faster than the stock of ideas and growth is limited by the capacity to work through them.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> W. Brian Arthur made the same point about technologies, which are assembled from earlier technologies.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The title of this article borrows from Eric Drexler's 1986 book on nanotechnology, which imagined machines that could build almost anything at very low cost.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> Drexler's machines are an extreme version of the cost declines that ordinary automation produces.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why Work Is Inexhaustible</h2>
+
+            <p class="fs-lg">
+              The belief that there is a fixed amount of work to go around has a name, the "lump of labour" fallacy, and economists have criticized it since the 1890s.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Fears that machines would leave most people without work have recurred for two centuries. So far they have been wrong about the long run, though the adjustment was slow and costly for the workers caught in it.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Part 5 has given three reasons why the demand for work keeps growing:
+            </p>
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">human wants are relative and rise as they are met ("<a href="the_evolution_of_work.html">The Evolution of Work</a>")</li>
+              <li class="mb-2">each fall in cost opens new categories of goods, which need new kinds of work ("<a href="demand.html">Demand</a>")</li>
+              <li class="mb-2">each cheap output becomes a component of new outputs</li>
+            </ul>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">If Machines Can Do Every Task</h2>
+
+            <p class="fs-lg">
+              Wassily Leontief compared human workers to farm horses, and "<a href="demand.html">Demand</a>" explained why the comparison fails: people buy what machines produce, and horses do not. The harder question is what happens if machines can do every task that people can.
+            </p>
+
+            <p class="fs-lg">
+              Anton Korinek and Donghyun Suh model this case. If the complexity of the tasks people can perform has a limit and machines reach it, wages first rise as the economy grows more productive and then collapse. If tasks keep getting more complex without limit, and enough of them stay beyond the machines' reach, wages can keep rising.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              William Nordhaus proposed several tests in economic data for signs that such a transition had begun. Most came out negative, and he concluded that it is not near.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Two things would still limit what machines replace. People value some work because a person does it, as "<a href="the_evolution_of_work.html">The Evolution of Work</a>" showed with handmade goods and with writing labeled as human. Korinek and Suh show that if a society keeps enough jobs human by choice, e.g., priests and judges, labor can stay scarce enough for wages to keep growing even after full automation becomes possible.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> A job also carries responsibility for the result, and "<a href="what_is_work.html">What Is Work?</a>" explained why an LLM agent cannot hold one.
+            </p>
+
+            <p class="fs-lg">
+              The rest depends on ownership. David Autor, whose "paradox of abundance" "<a href="value_of_human_labor.html">The Value of Human Labor</a>" described, pointed out that horses do not own capital and people do. If machines make human labor much less scarce, he wrote, "the challenge will not be finding jobs for people to do, but rather finding a means to distribute our abundant societal riches."<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tools Have Shaped Our Ancestors for Three Million Years</h2>
+
+            <p class="fs-lg">
+              The oldest known stone tools, from Lomekwi in Kenya, are about 3.3 million years old, older than any known fossil of our genus.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> As "<a href="neolithic_age.html">The Neolithic Age</a>" described, our hominin ancestors made tools before there were humans in the modern sense.
+            </p>
+
+            <p class="fs-lg">
+              Tools changed human bodies. Human hands have features that make the forceful precision grips of toolmaking easier.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup> Making stone tools draws on brain regions that overlap with some of those used for language.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> Richard Wrangham argues that cooking let our ancestors get more energy from food, which allowed smaller guts and larger brains.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              People also depend on inherited know-how to survive. Joseph Henrich describes the Burke and Wills expedition of 1860–61 across Australia. Robert Burke and William Wills died on the return journey in country where the local Aboriginal people lived well.
+            </p>
+
+            <p class="fs-lg">
+              They had eaten nardoo seed without processing it the way local people did, and in Henrich's account they managed to "starve and poison themselves while keeping their stomachs full." The one survivor of their party, John King, lived because local people took him in and fed him.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Stone flakes are tools. Machines and automation came much later:
+            </p>
+
+            <div class="def-box">
+              <p class="def-label">Tool</p>
+              <p>A tool extends a capability, as a stone flake does.</p>
+            </div>
+            <div class="def-box">
+              <p class="def-label">Machine</p>
+              <p>A machine transmits or transforms force, as a lever or a loom does.</p>
+            </div>
+            <div class="def-box">
+              <p class="def-label">Automation</p>
+              <p>Automation adds control over a sequence of steps, so a machine can perform steps that a person used to perform. The punched cards of the Jacquard loom did this for woven patterns in the early 1800s,<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup> and software does it today.</p>
+            </div>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tools as Engines of Creation</h2>
+
+            <p class="fs-lg">
+              An engine converts energy into motion. An engine of creation, in the sense used here, converts human wants into goods and services at falling cost.
+            </p>
+
+            <p class="fs-lg">
+              The cycle that "<a href="what_is_work.html">What Is Work?</a>" laid out for Part 5 is a loop. New work from each turn becomes the next set of tasks and steps, and Part 4's civilization information layer keeps the improvements from one generation to the next.
+            </p>
+
+            <figure class="cycle-figure d-none d-md-block my-4">
+              <svg viewBox="4 27 813 485" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="The cycle of work that Part 5 follows, with Engines of Creation highlighted">
+                <defs>
+                  <marker id="cycle-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill="#9aa3b2"></path>
+                  </marker>
+                </defs>
+                <g class="cycle-arrows">
+                  <line x1="501.8" y1="99.3" x2="552.7" y2="116.6" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="656.1" y1="183.5" x2="691.0" y2="291.5" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="664.5" y1="360.8" x2="578.1" y2="437.4" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="431.2" y1="471.0" x2="388.8" y2="471.0" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="241.9" y1="437.4" x2="155.5" y2="360.8" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="129.0" y1="291.5" x2="163.9" y2="183.5" marker-end="url(#cycle-arrow)"></line>
+                  <line x1="267.3" y1="116.6" x2="318.2" y2="99.3" marker-end="url(#cycle-arrow)"></line>
+                </g>
+                <a class="cycle-node" href="what_is_work.html">
+                  <title>What Is Work?</title>
+                  <rect x="288" y="244" width="244" height="72" rx="10"></rect>
+                  <text class="cycle-title cycle-hub-title" x="410" y="276" text-anchor="middle">What Is Work?</text>
+                  <text class="cycle-gloss" x="410" y="297" text-anchor="middle">work, labor, job, productivity</text>
+                </a>
+                <a class="cycle-node" href="task_structure_of_work.html">
+                  <title>The Task Structure of Work</title>
+                  <rect x="308.0" y="39.0" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="410.0" y="65.0" text-anchor="middle">Task Structure</text>
+                  <text class="cycle-gloss" x="410.0" y="84.0" text-anchor="middle">jobs, tasks, and steps</text>
+                </a>
+                <a class="cycle-node" href="physical_and_cognitive_labor.html">
+                  <title>Physical Labor and Cognitive Labor</title>
+                  <rect x="542.5" y="118.8" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="644.5" y="144.8" text-anchor="middle">Physical &amp; Cognitive</text>
+                  <text class="cycle-gloss" x="644.5" y="163.8" text-anchor="middle">matter or information</text>
+                </a>
+                <a class="cycle-node" href="value_of_human_labor.html">
+                  <title>The Value of Human Labor</title>
+                  <rect x="600.5" y="298.2" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="702.5" y="324.2" text-anchor="middle">Value of Labor</text>
+                  <text class="cycle-gloss" x="702.5" y="343.2" text-anchor="middle">what labor is worth</text>
+                </a>
+                <a class="cycle-node" href="labor_automation.html">
+                  <title>Labor Automation</title>
+                  <rect x="438.2" y="442.0" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="540.2" y="468.0" text-anchor="middle">Labor Automation</text>
+                  <text class="cycle-gloss" x="540.2" y="487.0" text-anchor="middle">steps move to capital</text>
+                </a>
+                <a class="cycle-node" href="demand.html">
+                  <title>Demand</title>
+                  <rect x="177.8" y="442.0" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="279.8" y="468.0" text-anchor="middle">Demand</text>
+                  <text class="cycle-gloss" x="279.8" y="487.0" text-anchor="middle">cheaper output, new goods</text>
+                </a>
+                <a class="cycle-node" href="the_evolution_of_work.html">
+                  <title>The Evolution of Work</title>
+                  <rect x="15.5" y="298.2" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="117.5" y="324.2" text-anchor="middle">Evolution of Work</text>
+                  <text class="cycle-gloss" x="117.5" y="343.2" text-anchor="middle">wants rise as they are met</text>
+                </a>
+                <g class="cycle-current">
+                  <title>Engines of Creation (this article)</title>
+                  <rect x="73.5" y="118.8" width="204" height="58" rx="8"></rect>
+                  <text class="cycle-title" x="175.5" y="144.8" text-anchor="middle">Engines of Creation</text>
+                  <text class="cycle-gloss" x="175.5" y="163.8" text-anchor="middle">tools keep lowering costs</text>
+                </g>
+              </svg>
+              <figcaption class="fs-sm text-muted text-center mt-2">The cycle that Part 5 has followed, first shown in "What Is Work?" The new work from each turn feeds the next round of tasks and steps. Each box links to its article.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              Adam Smith saw knowledge work come out of this process. As the division of labor deepened, making machines became "the business of a peculiar trade," and some improvements came from "those who are called philosophers or men of speculation," whose trade was observation and who "are often capable of combining together the powers of the most distant and dissimilar objects."<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              An engine also needs a purpose. Value is defined by human wants, so a machine running with nobody to want its output produces nothing of value. Part 7 takes up the philosophical version of this question, whether a tool can exist without people.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Newest Engine</h2>
+
+            <p class="fs-lg">
+              <b>In the vocabulary of Part 5, AI is automation applied to the cognitive steps of knowledge work.</b> "<a href="labor_automation.html">Labor Automation</a>" defined automation as capital performing a step that labor used to perform. An LLM fits the definition. A firm buys or rents it, and it performs steps that change information, the kind of steps that "<a href="physical_and_cognitive_labor.html">Physical Labor and Cognitive Labor</a>" called cognitive.
+            </p>
+
+            <p class="fs-lg">
+              Whether AI exists depends on what the word is asked to name. As a label, "AI" has followed the frontier of what machines could not yet do, and a technique that works soon gets a plainer name, as "<a href="ai_is_just_productivity_you_dont_understand_yet.html">AI Is Just Productivity You Don't Understand Yet</a>" argued. As an economic object, AI shows up as a fall in the cost of a step.
+            </p>
+
+            <p class="fs-lg">
+              In 2019, Ajay Agrawal, Joshua Gans, and Avi Goldfarb described machine learning as an advance in one part of intelligence, prediction, whose quality-adjusted cost was falling. Prediction is an input to decisions, which also need data, the ability to act, and judgment about what different outcomes are worth. As prediction gets better and cheaper, they wrote, "the demand for these related, complementary tasks may increase." They found forces pushing the demand for labor both up and down, and could not say which would win.<sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              An LLM predicts text, so the steps it makes cheaper are the steps of knowledge work that produce text. Its effects on labor run through the same channels as every earlier engine, and most claims that AI will take all the jobs leave out at least one of them:
+            </p>
+
+            <div class="table-responsive my-4">
+              <table class="table claims-table mb-0">
+                <thead><tr><th scope="col">Common claim</th><th scope="col">What Part 5 found</th></tr></thead>
+                <tbody>
+                  <tr><td>AI will take over whole jobs.</td><td>A job is a bundle of tasks, and each task is a sequence of steps. AI takes over steps, and most jobs keep steps it does not perform. ("<a href="task_structure_of_work.html">The Task Structure of Work</a>")</td></tr>
+                  <tr><td>AI agents will become virtual employees.</td><td>An agent can perform work, but it cannot sell its labor, enter an employment contract, or carry liability, so a person still holds the job. ("<a href="what_is_work.html">What Is Work?</a>")</td></tr>
+                  <tr><td>Machines that think will replace people who think.</td><td>The cognitive steps most likely to stay human are those whose outputs someone must verify or answer for. ("<a href="physical_and_cognitive_labor.html">Physical Labor and Cognitive Labor</a>")</td></tr>
+                  <tr><td>Automation makes human labor worthless.</td><td>Labor is valued by its scarcity, and automation moves the scarcity to the steps that remain. ("<a href="value_of_human_labor.html">The Value of Human Labor</a>")</td></tr>
+                  <tr><td>Work done by machines disappears.</td><td>The work continues in the machine, and checking its output becomes new work for people. ("<a href="labor_automation.html">Labor Automation</a>")</td></tr>
+                  <tr><td>Cheaper output means fewer workers.</td><td>Where buyers want much more at a lower price, cheaper output brings more work, and freed income goes to new goods that need new work. ("<a href="demand.html">Demand</a>")</td></tr>
+                  <tr><td>People will eventually have enough.</td><td>Wants are relative and rise with everyone's living standard. ("<a href="the_evolution_of_work.html">The Evolution of Work</a>")</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              So far the labor-market effects of LLMs have been small, as "<a href="labor_automation.html">Labor Automation</a>" found, and the clearest signal is slower hiring for entry-level jobs in the most exposed occupations.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Where Work Goes From Here</h2>
+
+            <p class="fs-lg">
+              The mechanisms of Part 5 point to several trends for the coming years:
+            </p>
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">The price of cognitive steps will keep falling, and firms will use far more machine-generated text and analysis, as they did with computing.</li>
+              <li class="mb-2">Inside most jobs, the main near-term effect will be augmentation. People keep the job and hand some of its steps to the tool, as "<a href="labor_automation.html">Labor Automation</a>" found for LLMs so far, and checking the tool's output becomes part of the work.</li>
+              <li class="mb-2">Jobs will be rebuilt around the steps that machines do poorly or that people want a person to do, e.g., deciding what to do, taking responsibility for the result, and dealing with people.</li>
+              <li class="mb-2">LLMs will narrow skill differences on the steps they touch. In the experiments described in "<a href="value_of_human_labor.html">The Value of Human Labor</a>," the least experienced workers gained the most. That lowers the premium for those skills and lets more people do the work, the trade-off David Autor and Neil Thompson traced in clerical jobs.</li>
+              <li class="mb-2">Entry-level jobs are the most exposed, and they are where people build expertise. In robotic surgery, Matthew Beane found that the technology cut trainees' part in operations so much that approved ways of learning stopped working. Only a minority became competent, by learning in ways that challenged their programs' norms and policies.<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup></li>
+            </ul>
+
+            <p class="fs-lg">
+              New work will keep appearing, and where it appears has changed. From 1940 to 1980, much new work was in middle-paid production and clerical occupations. Since 1980, it has appeared mainly in high-paid professional occupations and secondarily in low-paid services.<sup><a href="#fn-22" data-scroll data-scroll-offset="100">[22]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Autor sorts recent new occupations into three groups:<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup>
+            </p>
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">"frontier jobs" that produce, install, and deploy new technologies, which are relatively well paid and held disproportionately by college-educated men</li>
+              <li class="mb-2">"wealth work," in-person services for affluent consumers such as personal training and pet care, which pays close to the local average and is held disproportionately by women</li>
+              <li class="mb-2">"last mile" jobs that carry out the human parts of nearly automated tasks, such as call-center and order-fulfillment work, where wages and education levels are well below average</li>
+            </ul>
+
+            <p class="fs-lg">
+              He concluded that "the bifurcated structure of new work does not suggest that a technology-driven 'reinstatement' of middle-skill, non-college jobs is currently underway."<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Autor has also argued that AI, used well, could let more workers with foundational training make some of the higher-stakes decisions now reserved for elite experts, much as nurse practitioners came to diagnose patients and prescribe medications, work once reserved for physicians. He presents this as a possible path that depends on how AI is used.<sup><a href="#fn-24" data-scroll data-scroll-offset="100">[24]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              For a business, the planning question is which products and services become worth offering when cognitive steps get cheap, along with which costs come down.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">New Work That Reaches Most People</h2>
+
+            <p class="fs-lg">
+              Daron Acemoglu, Autor, and Simon Johnson sort technologies by what they do to workers' expertise, which has value in the labor market only when it is required for some valuable activity and scarce. Automation commodifies expertise and makes it less valuable. Tools that let less expert workers do tasks that used to need experts open opportunities for some workers and increase competition for others. Technology that creates new tasks is the one category they find unambiguously good for workers, because it creates demand for new expertise.<sup><a href="#fn-25" data-scroll data-scroll-offset="100">[25]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The research behind Part 5 points to several conditions for new work that reaches most people:
+            </p>
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">More AI development needs to aim at creating new tasks for people. Firms and AI developers have reasons to automate beyond what productivity alone justifies, as "<a href="labor_automation.html">Labor Automation</a>" described, and governments can shift the balance through what they buy and how they pay for services in fields such as health care and education.<sup><a href="#fn-25" data-scroll data-scroll-offset="100">[25]</a></sup></li>
+              <li class="mb-2">US tax rules favor machines. Acemoglu, Andrea Manera, and Pascual Restrepo estimate effective tax rates of 25.5 to 33.5 percent on labor, against about 5 percent on equipment and software after the 2017 tax reform, and argue that the difference has pushed automation beyond what is socially desirable.<sup><a href="#fn-26" data-scroll data-scroll-offset="100">[26]</a></sup></li>
+              <li class="mb-2">Access to the tools, and to the skills to use them, is uneven. In a survey of Danish workers in 11 occupations exposed to ChatGPT, women were 16 percentage points less likely than men to have used it for work, and lower earners were less likely to use it.<sup><a href="#fn-27" data-scroll data-scroll-offset="100">[27]</a></sup> Adoption overall has been fast, as "<a href="the_evolution_of_work.html">The Evolution of Work</a>" showed.</li>
+              <li class="mb-2">Entry-level jobs have to stay places where people learn. Firms that hand junior steps to machines need apprenticeships or supervised practice in their place.</li>
+              <li class="mb-2">The people and places hit first need help. After the China trade shock, job losses in the most exposed US regions lasted into 2019, nearly a decade after the shock peaked, and the main way people adjusted was by leaving work. Losses were larger in places that started with fewer college-educated workers.<sup><a href="#fn-28" data-scroll data-scroll-offset="100">[28]</a></sup> New work, as "<a href="what_is_work.html">What Is Work?</a>" showed, has formed mostly in cities with more college graduates.</li>
+              <li class="mb-2">Workers need a say in how the tools are used and a share in what they produce. Ways for workers to have input into how AI is developed and deployed are among the policies Acemoglu, Autor, and Johnson discuss,<sup><a href="#fn-25" data-scroll data-scroll-offset="100">[25]</a></sup> and the ownership of machines decides who receives the income they earn, the question raised in "<a href="value_of_human_labor.html">The Value of Human Labor</a>" and "<a href="the_evolution_of_work.html">The Evolution of Work</a>."</li>
+            </ul>
+
+            <p class="fs-lg">
+              Which cognitive steps an LLM can perform reliably is still an open question, and so is whether producing fluent text about a problem amounts to reasoning about it. Part 6 starts with the prior question, "<a href="what_is_reasoning.html">What Is Reasoning?</a>"
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Nordhaus, W. D. (2007). Two centuries of productivity growth in computing. <b>Journal of Economic History,</b> 67(1), 128–159. <a href="https://doi.org/10.1017/S0022050707000058" target="_blank" rel="noopener">doi:10.1017/S0022050707000058</a> [The range of 1.7 trillion to 76 trillion, "depending upon the standard used," is from the abstract, p. 128. Table 5, p. 142, gives about 2 trillion for computer power, 7.1 trillion for price per calculation, and 73 trillion for cost relative to the price of labor.]</li>
+              <li id="fn-2">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2026). <em>What Makes New Work Different from More Work?</em> NBER Working Paper 34986. <a href="https://doi.org/10.3386/w34986" target="_blank" rel="noopener">doi:10.3386/w34986</a> [examples of title vintages, "Key Terms" box]</li>
+              <li id="fn-3">Wright, T. P. (1936). Factors affecting the cost of airplanes. <b>Journal of the Aeronautical Sciences,</b> 3(4), 122–128, at pp. 124–125. <a href="https://doi.org/10.2514/8.155" target="_blank" rel="noopener">doi:10.2514/8.155</a> [Wright's "eighty percent curve": each doubling of quantity multiplies the average labor cost per airplane by about 0.8.]</li>
+              <li id="fn-4">Nagy, B., Farmer, J. D., Bui, Q. M., &amp; Trancik, J. E. (2013). Statistical basis for predicting technological progress. <b>PLOS ONE,</b> 8(2), e52669. <a href="https://doi.org/10.1371/journal.pone.0052669" target="_blank" rel="noopener">doi:10.1371/journal.pone.0052669</a> [Abstract, p. 1: six forecasting rules tested on 62 technologies; "Wright's law produces the best forecasts, but Moore's law is not far behind."]</li>
+              <li id="fn-5">Weitzman, M. L. (1998). Recombinant growth. <b>Quarterly Journal of Economics,</b> 113(2), 331–360, at pp. 331 and 342. <a href="https://doi.org/10.1162/003355398555595" target="_blank" rel="noopener">doi:10.1162/003355398555595</a></li>
+              <li id="fn-6">Arthur, W. B. (2009). <em>The Nature of Technology: What It Is and How It Evolves.</em> Free Press.</li>
+              <li id="fn-7">Drexler, K. E. (1986). <em>Engines of Creation: The Coming Era of Nanotechnology.</em> Anchor Press/Doubleday.</li>
+              <li id="fn-8">Schloss, D. F. (1891). Why working-men dislike piece-work. <b>Economic Review,</b> 1(3), 311–326, at p. 324 ("the theory of the Lump of Labour"). Reprinted in Schloss, D. F. (1892). <em>Methods of Industrial Remuneration.</em> Williams and Norgate.</li>
+              <li id="fn-9">Mokyr, J., Vickers, C., &amp; Ziebarth, N. L. (2015). The history of technological anxiety and the future of economic growth: Is this time different? <b>Journal of Economic Perspectives,</b> 29(3), 31–50, at pp. 34, 36, and 38. <a href="https://doi.org/10.1257/jep.29.3.31" target="_blank" rel="noopener">doi:10.1257/jep.29.3.31</a></li>
+              <li id="fn-10">Korinek, A., &amp; Suh, D. (2024). <em>Scenarios for the Transition to AGI.</em> NBER Working Paper 32255, at pp. 3–5 and 31. <a href="https://doi.org/10.3386/w32255" target="_blank" rel="noopener">doi:10.3386/w32255</a> [Also arXiv:2403.12107. The NBER and arXiv abstracts state the condition for ever-rising wages differently; the text follows the body, p. 4. Jobs kept human by choice are discussed on p. 5 and in section 4.3, p. 31.]</li>
+              <li id="fn-11">Nordhaus, W. D. (2021). Are we approaching an economic singularity? Information technology and the future of economic growth. <b>American Economic Journal: Macroeconomics,</b> 13(1), 299–332. <a href="https://doi.org/10.1257/mac.20170105" target="_blank" rel="noopener">doi:10.1257/mac.20170105</a> [The number of tests differs between versions: seven in the 2015 working paper (NBER WP 21547), six in the 2017 revision. Every version concludes that the singularity is not near.]</li>
+              <li id="fn-12">Autor, D. H. (2015). Paradox of abundance: Automation anxiety returns. In S. Rangan (Ed.), <em>Performance and Progress: Essays on Capitalism, Business, and Society</em> (pp. 237–260). Oxford University Press. [horses and capital, pp. 257–258]</li>
+              <li id="fn-13">Harmand, S., Lewis, J. E., Feibel, C. S., Lepre, C. J., Prat, S., Lenoble, A., et al. (2015). 3.3-million-year-old stone tools from Lomekwi 3, West Turkana, Kenya. <b>Nature,</b> 521(7552), 310–315, at pp. 311 and 314–315. <a href="https://doi.org/10.1038/nature14464" target="_blank" rel="noopener">doi:10.1038/nature14464</a></li>
+              <li id="fn-14">Marzke, M. W. (1997). Precision grips, hand morphology, and tools. <b>American Journal of Physical Anthropology,</b> 102(1), 91–110, at p. 91. <a href="https://doi.org/10.1002/(SICI)1096-8644(199701)102:1&lt;91::AID-AJPA8>3.0.CO;2-G" target="_blank" rel="noopener">doi:10.1002/(SICI)1096-8644(199701)102:1&lt;91::AID-AJPA8>3.0.CO;2-G</a></li>
+              <li id="fn-15">Stout, D., &amp; Chaminade, T. (2012). Stone tools, language and the brain in human evolution. <b>Philosophical Transactions of the Royal Society B,</b> 367(1585), 75–87, at p. 75 and section 3. <a href="https://doi.org/10.1098/rstb.2011.0099" target="_blank" rel="noopener">doi:10.1098/rstb.2011.0099</a></li>
+              <li id="fn-16">Wrangham, R. (2009). <em>Catching Fire: How Cooking Made Us Human.</em> Basic Books.</li>
+              <li id="fn-17">Henrich, J. (2016). <em>The Secret of Our Success: How Culture Is Driving Human Evolution, Domesticating Our Species, and Making Us Smarter.</em> Princeton University Press. [ch. 3, "Lost European Explorers," pp. 27–30; the quotation is on p. 30. The expedition left Melbourne in August 1860, and Burke and Wills died in 1861.]</li>
+              <li id="fn-18">Science Museum Group. Jacquard hand loom (object record co8405056): the loom was "first developed by Joseph Jacquard in France in 1804-1805," with punched cards controlling the lifting of the warp threads.</li>
+              <li id="fn-19">Smith, A. (1776). <em>An Inquiry into the Nature and Causes of the Wealth of Nations.</em> Book I, ch. 1, para. 9 (Cannan edition, vol. 1, p. 12; punctuation varies between editions).</li>
+              <li id="fn-20">Agrawal, A., Gans, J. S., &amp; Goldfarb, A. (2019). Artificial intelligence: The ambiguous labor market impact of automating prediction. <b>Journal of Economic Perspectives,</b> 33(2), 31–50, at pp. 31–32, 34, and 42. <a href="https://doi.org/10.1257/jep.33.2.31" target="_blank" rel="noopener">doi:10.1257/jep.33.2.31</a></li>
+              <li id="fn-21">Beane, M. (2019). Shadow learning: Building robotic surgical skill when approved means fail. <b>Administrative Science Quarterly,</b> 64(1), 87–123, at p. 87. <a href="https://doi.org/10.1177/0001839217751692" target="_blank" rel="noopener">doi:10.1177/0001839217751692</a></li>
+              <li id="fn-22">Autor, D., Chin, C., Salomons, A., &amp; Seegmiller, B. (2024). New frontiers: The origins and content of new work, 1940–2018. <b>Quarterly Journal of Economics,</b> 139(3), 1399–1465, at p. 1403. <a href="https://doi.org/10.1093/qje/qjae008" target="_blank" rel="noopener">doi:10.1093/qje/qjae008</a></li>
+              <li id="fn-23">Autor, D. (2019). Work of the past, work of the future. <b>AEA Papers and Proceedings,</b> 109, 1–32, at p. 23. <a href="https://doi.org/10.1257/pandp.20191110" target="_blank" rel="noopener">doi:10.1257/pandp.20191110</a> [The three categories of new work are from Autor and Salomons (2019), as reported in this lecture.]</li>
+              <li id="fn-24">Autor, D. (2024). <em>Applying AI to Rebuild Middle Class Jobs.</em> NBER Working Paper 32140, at p. 2. <a href="https://doi.org/10.3386/w32140" target="_blank" rel="noopener">doi:10.3386/w32140</a> [Nurse practitioners, pp. 8–9. Autor describes the argument as a scenario, not a forecast, in the section of that name, p. 15.]</li>
+              <li id="fn-25">Acemoglu, D., Autor, D., &amp; Johnson, S. (2026). <em>Building Pro-Worker Artificial Intelligence.</em> The Hamilton Project, Brookings Institution. <a href="https://www.brookings.edu/wp-content/uploads/2026/02/20260223_THP_ProWorkerAI_Paper.pdf" target="_blank" rel="noopener">brookings.edu</a> [Five categories of technology and the conditions for expertise to have value, pp. ii and 5, and Table 1, p. 6; firms' and developers' incentives, p. 17; policy directions, including procurement in health care and education and worker input, pp. 18–20.]</li>
+              <li id="fn-26">Acemoglu, D., Manera, A., &amp; Restrepo, P. (2020). Does the US tax code favor automation? <b>Brookings Papers on Economic Activity,</b> Spring 2020, 231–285, at pp. 231 and 233–234. <a href="https://doi.org/10.1353/eca.2020.0003" target="_blank" rel="noopener">doi:10.1353/eca.2020.0003</a> [Rates are for equipment and software; structures are taxed more heavily. The 33.5 percent labor rate adds the implicit taxes of means-tested programs to the 25.5 percent benchmark. Comments and discussion follow on pp. 286–300.]</li>
+              <li id="fn-27">Humlum, A., &amp; Vestergaard, E. (2025). The unequal adoption of ChatGPT exacerbates existing inequalities among workers. <b>Proceedings of the National Academy of Sciences,</b> 122(1), e2414972121. <a href="https://doi.org/10.1073/pnas.2414972121" target="_blank" rel="noopener">doi:10.1073/pnas.2414972121</a> [Survey of 18,000 Danish workers in 11 exposed occupations, November 2023 to January 2024, linked to administrative records.]</li>
+              <li id="fn-28">Autor, D., Dorn, D., &amp; Hanson, G. H. (2021). On the persistence of the China shock. <b>Brookings Papers on Economic Activity,</b> Fall 2021, 381–476, at pp. 381 and 384. <a href="https://doi.org/10.1353/eca.2022.0005" target="_blank" rel="noopener">doi:10.1353/eca.2022.0005</a> [The shock is trade, not automation; the paper is cited for how local labor markets adjust to a large fall in labor demand.]</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Evolution of Work | The Hitchhiker's Guide to Knowledge Work Systems (Series)</title>
+    <meta name="description" content="People compete for recognition, so wants rise with everyone's living standard. Automation spreads new goods until they no longer confer status, and demand moves to what stays scarce, creating new work.">
+    <meta name="keywords" content="evolution of work, status, recognition, Adam Smith, relative needs, Keynes, work hours, Red Queen, Van Valen, thumos, megalothymia, isothymia, Fukuyama, costly signaling, conspicuous consumption, Veblen, demand ladder, technology adoption, positional goods, Hirsch, inconspicuous consumption, handmade effect, generative AI, LLMs, Kano model, table stakes, hedonic adaptation, exosomatic evolution, Lotka, Georgescu-Roegen, automation, knowledge work">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Evolution of Work | The Hitchhiker's Guide to Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/evolution_of_work_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/the_evolution_of_work.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="People compete for recognition, so wants rise with everyone's living standard. Automation spreads new goods until they no longer confer status, and demand moves to what stays scarce, creating new work."/>
+
+    <meta name="twitter:title" content="The Evolution of Work | The Hitchhiker's Guide to Knowledge Work Systems (Series)" />
+
+    <meta name="twitter:description" content="People compete for recognition, so wants rise with everyone's living standard. Automation spreads new goods until they no longer confer status, and demand moves to what stays scarce, creating new work." />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/evolution_of_work_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/the_evolution_of_work.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Diffusion figure (how fast goods spread through households) ── */
+      .adopt-figure svg { display: block; width: 100%; height: auto; }
+      .adopt-figure .adopt-grid { stroke: #e5e8ee; stroke-width: 1; }
+      .adopt-figure .adopt-axis {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        fill: #6f788b;
+      }
+      .adopt-figure .adopt-name {
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        fill: #121519;
+      }
+      .adopt-figure .adopt-rail { stroke: #c3c9d3; stroke-width: 1.5; stroke-dasharray: 2 4; }
+      .adopt-figure .adopt-bar { fill: #ff9500; }
+      .adopt-figure .adopt-dot { fill: #121519; }
+      .adopt-figure .adopt-years {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        fill: #4b5563;
+      }
+      .adopt-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem 1.25rem;
+        margin-top: 0.5rem;
+        color: #6f788b;
+      }
+      .adopt-key {
+        display: inline-block;
+        width: 1.4rem;
+        height: 0.6rem;
+        margin-right: 0.4rem;
+        vertical-align: 0.05rem;
+        border-radius: 2px;
+        background: #ff9500;
+      }
+      .adopt-key-rail {
+        background: none;
+        border-top: 2px dotted #c3c9d3;
+        height: 0;
+        vertical-align: 0.25rem;
+      }
+
+      /* ── Small tables (figure fallbacks on phones) ──────────── */
+      .fig-table { font-size: 0.95rem; }
+      .fig-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .fig-table td:not(:first-child), .fig-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Evolution of Work</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Evolution of Work</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="#author" data-scroll data-scroll-offset="80">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/evolution_of_work_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      Demand keeps rising partly because people compete for recognition. They want to be seen as the equals of others and as better than others, and both wants rise with everyone's living standard. The wish to stand out creates demand for new goods, the wish to keep up spreads them, and automation makes them cheap enough to spread. A good that nearly everyone owns no longer sets anyone apart, so the competition moves to what is still scarce, often human time, skill, and judgment. <b>New goods and new kinds of scarcity keep creating new work, which is why work has kept growing and changing form as productivity rose.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Seventeen years before <em>The Wealth of Nations</em>, Adam Smith asked what people gain from "that great purpose of human life which we call bettering our condition." His answer was social:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <p class="fw-bold mb-1" style="font-size:1.05rem;">"To be observed, to be attended to, to be taken notice of with sympathy, complacency, and approbation, are all the advantages which we can propose to derive from it."</p>
+                <p class="text-muted mb-0 fs-sm">Adam Smith, <em>The Theory of Moral Sentiments</em> (1759)<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup></p>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Keynes made a related distinction in his 1930 essay predicting a fifteen-hour week, the prediction "<a href="what_is_work.html">What Is Work?</a>" opened with. He divided human needs into absolute needs, felt "whatever the situation of our fellow human beings may be," and relative needs, felt "only if their satisfaction lifts us above, makes us feel superior to, our fellows." Needs of the second class, he wrote, "may indeed be insatiable; for the higher the general level, the higher still are they."<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Relative needs are the status needs that, as "<a href="demand.html">Demand</a>" showed, do not level off the way the need for food does. They also help explain why the fifteen-hour week never came.
+            </p>
+
+            <p class="fs-lg">
+              Samuel Bowles and Yongjin Park studied ten rich countries from 1963 to 1998 and found that people worked longer hours where top earnings were further above the middle. By their estimate, the difference in earnings inequality between the United States and Sweden in 1992 accounted for 59 percent of the difference in hours worked, though they could not show that inequality was the cause.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Revisiting the essay in 2008, Gary Becker and Luis Rayo wrote that if Keynes had put more weight on relative needs, "his predictions would have been radically different."<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> Richard Freeman, in the same volume, gave more weight to higher wages, which make every hour of leisure more expensive.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              <b>People work partly to be seen and ranked, and that part of demand rises with everyone else's living standard.</b>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Red Queen in Biology and in Markets</h2>
+
+            <p class="fs-lg">
+              In <em>Through the Looking-Glass</em>, the Red Queen tells Alice, "Now, here, you see, it takes all the running you can do, to keep in the same place."<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup> In 1973, the biologist Leigh Van Valen used the image to explain a pattern in the fossil record. Within groups of related species, the probability of extinction stays roughly constant over time. Each species' adaptations worsen its competitors' environment, so every species has to keep adapting to hold its position.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Part 1's "<a href="the_red_queens_game.html">The Red Queen's Game</a>" applied the image to firms, where each advantage in technology becomes table stakes once competitors match it.
+            </p>
+
+            <p class="fs-lg">
+              Erzo Luttmer found the same pressure among people. Americans whose neighbors, in areas of about 150,000 residents, earned more reported lower happiness, and a rise in neighbors' earnings and a similar fall in their own income reduced happiness by "about the same order of magnitude."<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The economic version borrows its structure from the biological one. In biology the competition is over relative fitness and among people over relative position, and an absolute gain raises nobody's rank when everyone else gains as much.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Thumos and the Desire for Recognition</h2>
+
+            <p class="fs-lg">
+              In the <em>Republic</em>, Plato divided the soul into reason, appetite, and <em>thumos</em>, the spirited part that seeks honor and resents being slighted.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup> Francis Fukuyama, drawing on Hegel's account of the struggle for recognition, coined two terms for the forms thumos takes:<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Megalothymia</p>
+                  <p>The desire to be recognized as superior to others.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="def-box">
+                  <p class="def-label">Isothymia</p>
+                  <p>The desire to be recognized as the equal of others.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Fukuyama argued that market economies channel megalothymia into economic competition and entrepreneurship.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The desire for status appears to be an evolved motive. Cameron Anderson and colleagues reviewed the empirical research and concluded that it is a fundamental human motive.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup> Among the Tsimane, forager-horticulturalists in Bolivia, men with higher status had more surviving children.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Status has to be shown before others can recognize it, and a display is believed only when it is hard to fake. The biologist Amotz Zahavi proposed in 1975 that showy traits such as a peacock's tail are reliable signals because they are costly.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> Researchers have suggested that conspicuous consumption, which Thorstein Veblen named in 1899, may "serve a function similar to that of the peacock's tail."<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup><sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Recognition depends on what others can see, so the desire for it turns into demand for visible goods and services. Ori Heffetz asked a national sample of Americans how soon they would notice that a household like theirs spent more than average on each of 31 categories. Cigarettes, cars, clothing, and furniture ranked as the most visible, and underwear and insurance as the least. Spending on the more visible categories rises faster with income, and visibility alone explains "one-sixth to one-fifth of the cross-category variation" in how spending responds to income.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup>
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Demand Ladder</h2>
+
+            <p class="fs-lg">
+              "<a href="demand.html">Demand</a>" traced how spending moves from food toward other goods and services as incomes rise. Economists also model the order in which households take up goods: wants are ranked by priority, and new goods are added as incomes grow.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup> This series calls that order the demand ladder.
+            </p>
+
+            <div class="def-box">
+              <p class="def-label">Demand ladder</p>
+              <p>The order in which households add goods and services as their incomes rise. New goods start with a few households and spread to most of them as they get cheaper.</p>
+            </div>
+
+            <p class="fs-lg">
+              Status supplies much of the force that moves people up the ladder. This series' account of how it does so combines findings from earlier work:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">The wish to stand out creates demand for new goods at the top. Georg Simmel described fashion as a cycle in which elites adopt new styles to set themselves apart, others imitate them, and the elites move on.<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup></li>
+              <li class="mb-2">The wish to keep up spreads goods downward. James Duesenberry argued that what people spend depends on what the people around them consume.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup> When a postcode won the Dutch Postcode Lottery, winners' next-door neighbors became about 7 percentage points more likely to buy a car within six months, while their other spending did not change measurably.<sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup> Across US states, Marianne Bertrand and Adair Morse found that as incomes at the top rose, households below them spent larger shares on "more visible goods and services" and saved less.<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup></li>
+              <li class="mb-2">Spreading goods is what makes automation pay. Kiminori Matsuyama modeled how productivity gains from learning by doing make each good affordable to a growing share of households, and Rolf Foellmi and Josef Zweimüller modeled new goods that enter as luxuries and later become necessities.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup> "<a href="engines_of_creation.html">Engines of Creation</a>" follows how costs keep falling as output grows.</li>
+            </ul>
+
+            <p class="fs-lg">
+              US household data show how goods spread from a few households to most. The telephone took 59 years to go from one household in ten to four in five, and the car took 55; both stalled during the Depression and the Second World War. Radio took 14 years, color television 15, and the cell phone 15.<sup><a href="#fn-22" data-scroll data-scroll-offset="100">[22]</a></sup>
+            </p>
+
+            <figure class="adopt-figure my-4">
+              <svg class="d-none d-md-block" viewBox="0 0 820 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="adopt-title">
+                <title id="adopt-title">Years each good took to go from 10 percent to 80 percent of US households: Telephone 1903–1962 (59 years, half of households by 1946); Electricity 1908–1942 (34 years, half of households by 1925); Car 1915–1970 (55 years, half of households by 1926); Radio 1925–1939 (14 years, half of households by 1931); Refrigerator 1931–1950 (19 years, half of households by 1942); Air conditioning 1957–2002 (45 years, half of households by 1974); Color TV 1966–1981 (15 years, half of households by 1974); Internet 1993–2012 (19 years, half of households by 2002); Cell phone 1994–2009 (15 years, half of households by 2002).</title>
+                <line class="adopt-grid" x1="160.0" y1="26" x2="160.0" y2="308"/>
+                <text class="adopt-axis" x="160.0" y="20" text-anchor="middle">1900</text>
+                <line class="adopt-grid" x1="257.0" y1="26" x2="257.0" y2="308"/>
+                <text class="adopt-axis" x="257.0" y="20" text-anchor="middle">1920</text>
+                <line class="adopt-grid" x1="354.0" y1="26" x2="354.0" y2="308"/>
+                <text class="adopt-axis" x="354.0" y="20" text-anchor="middle">1940</text>
+                <line class="adopt-grid" x1="451.0" y1="26" x2="451.0" y2="308"/>
+                <text class="adopt-axis" x="451.0" y="20" text-anchor="middle">1960</text>
+                <line class="adopt-grid" x1="548.0" y1="26" x2="548.0" y2="308"/>
+                <text class="adopt-axis" x="548.0" y="20" text-anchor="middle">1980</text>
+                <line class="adopt-grid" x1="645.0" y1="26" x2="645.0" y2="308"/>
+                <text class="adopt-axis" x="645.0" y="20" text-anchor="middle">2000</text>
+                <line class="adopt-grid" x1="742.0" y1="26" x2="742.0" y2="308"/>
+                <text class="adopt-axis" x="742.0" y="20" text-anchor="middle">2020</text>
+                <text class="adopt-name" x="148" y="53.5" text-anchor="end">Cell phone</text>
+                <line class="adopt-rail" x1="160" y1="49.0" x2="742" y2="49.0"/>
+                <rect class="adopt-bar" x="615.9" y="43.0" width="72.8" height="12" rx="2"><title>Cell phone: 10% of households in 1994, half in 2002, 80% in 2009</title></rect>
+                <circle class="adopt-dot" cx="654.7" cy="49.0" r="3.5"/>
+                <text class="adopt-years" x="696.6" y="53.0">15 yrs</text>
+                <text class="adopt-name" x="148" y="83.5" text-anchor="end">Internet</text>
+                <line class="adopt-rail" x1="160" y1="79.0" x2="742" y2="79.0"/>
+                <rect class="adopt-bar" x="611.0" y="73.0" width="92.2" height="12" rx="2"><title>Internet: 10% of households in 1993, half in 2002, 80% in 2012</title></rect>
+                <circle class="adopt-dot" cx="654.7" cy="79.0" r="3.5"/>
+                <text class="adopt-years" x="711.2" y="83.0">19 yrs</text>
+                <text class="adopt-name" x="148" y="113.5" text-anchor="end">Color TV</text>
+                <line class="adopt-rail" x1="160" y1="109.0" x2="742" y2="109.0"/>
+                <rect class="adopt-bar" x="480.1" y="103.0" width="72.8" height="12" rx="2"><title>Color TV: 10% of households in 1966, half in 1974, 80% in 1981</title></rect>
+                <circle class="adopt-dot" cx="518.9" cy="109.0" r="3.5"/>
+                <text class="adopt-years" x="560.9" y="113.0">15 yrs</text>
+                <text class="adopt-name" x="148" y="143.5" text-anchor="end">Air conditioning</text>
+                <line class="adopt-rail" x1="160" y1="139.0" x2="742" y2="139.0"/>
+                <rect class="adopt-bar" x="436.4" y="133.0" width="218.3" height="12" rx="2"><title>Air conditioning: 10% of households in 1957, half in 1974, 80% in 2002</title></rect>
+                <circle class="adopt-dot" cx="518.9" cy="139.0" r="3.5"/>
+                <text class="adopt-years" x="662.7" y="143.0">45 yrs</text>
+                <text class="adopt-name" x="148" y="173.5" text-anchor="end">Refrigerator</text>
+                <line class="adopt-rail" x1="160" y1="169.0" x2="742" y2="169.0"/>
+                <rect class="adopt-bar" x="310.4" y="163.0" width="92.1" height="12" rx="2"><title>Refrigerator: 10% of households in 1931, half in 1942, 80% in 1950</title></rect>
+                <circle class="adopt-dot" cx="363.7" cy="169.0" r="3.5"/>
+                <text class="adopt-years" x="410.5" y="173.0">19 yrs</text>
+                <text class="adopt-name" x="148" y="203.5" text-anchor="end">Radio</text>
+                <line class="adopt-rail" x1="160" y1="199.0" x2="742" y2="199.0"/>
+                <rect class="adopt-bar" x="281.2" y="193.0" width="67.9" height="12" rx="2"><title>Radio: 10% of households in 1925, half in 1931, 80% in 1939</title></rect>
+                <circle class="adopt-dot" cx="310.4" cy="199.0" r="3.5"/>
+                <text class="adopt-years" x="357.1" y="203.0">14 yrs</text>
+                <text class="adopt-name" x="148" y="233.5" text-anchor="end">Car</text>
+                <line class="adopt-rail" x1="160" y1="229.0" x2="742" y2="229.0"/>
+                <rect class="adopt-bar" x="232.8" y="223.0" width="266.8" height="12" rx="2"><title>Car: 10% of households in 1915, half in 1926, 80% in 1970</title></rect>
+                <circle class="adopt-dot" cx="286.1" cy="229.0" r="3.5"/>
+                <text class="adopt-years" x="507.5" y="233.0">55 yrs</text>
+                <text class="adopt-name" x="148" y="263.5" text-anchor="end">Electricity</text>
+                <line class="adopt-rail" x1="160" y1="259.0" x2="742" y2="259.0"/>
+                <rect class="adopt-bar" x="198.8" y="253.0" width="164.9" height="12" rx="2"><title>Electricity: 10% of households in 1908, half in 1925, 80% in 1942</title></rect>
+                <circle class="adopt-dot" cx="281.2" cy="259.0" r="3.5"/>
+                <text class="adopt-years" x="371.7" y="263.0">34 yrs</text>
+                <text class="adopt-name" x="148" y="293.5" text-anchor="end">Telephone</text>
+                <line class="adopt-rail" x1="160" y1="289.0" x2="742" y2="289.0"/>
+                <rect class="adopt-bar" x="174.6" y="283.0" width="286.1" height="12" rx="2"><title>Telephone: 10% of households in 1903, half in 1946, 80% in 1962</title></rect>
+                <circle class="adopt-dot" cx="383.1" cy="289.0" r="3.5"/>
+                <text class="adopt-years" x="468.7" y="293.0">59 yrs</text>
+              </svg>
+              <div class="adopt-legend fs-sm d-none d-md-flex">
+                <span><span class="adopt-key"></span>From 10% to 80% of households</span>
+                <span>&#9679; Half of households</span>
+              </div>
+              <div class="table-responsive d-md-none">
+                <table class="table fig-table mb-0">
+                  <thead><tr><th scope="col">Good</th><th scope="col">10%</th><th scope="col">50%</th><th scope="col">80%</th><th scope="col">Years</th></tr></thead>
+                  <tbody>
+                    <tr><td>Telephone</td><td>1903</td><td>1946</td><td>1962</td><td>59</td></tr>
+                    <tr><td>Electricity</td><td>1908</td><td>1925</td><td>1942</td><td>34</td></tr>
+                    <tr><td>Car</td><td>1915</td><td>1926</td><td>1970</td><td>55</td></tr>
+                    <tr><td>Radio</td><td>1925</td><td>1931</td><td>1939</td><td>14</td></tr>
+                    <tr><td>Refrigerator</td><td>1931</td><td>1942</td><td>1950</td><td>19</td></tr>
+                    <tr><td>Air conditioning</td><td>1957</td><td>1974</td><td>2002</td><td>45</td></tr>
+                    <tr><td>Color TV</td><td>1966</td><td>1974</td><td>1981</td><td>15</td></tr>
+                    <tr><td>Internet</td><td>1993</td><td>2002</td><td>2012</td><td>19</td></tr>
+                    <tr><td>Cell phone</td><td>1994</td><td>2002</td><td>2009</td><td>15</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption class="fs-sm text-muted text-center mt-2">The demand ladder in US households: the year each good reached 10, 50, and 80 percent of households, and the years from 10 to 80 percent. Data compiled by Our World in Data from Comin and Hobijn and other sources.</figcaption>
+            </figure>
+
+            <p class="fs-lg">
+              Each new rung brought new kinds of work, as "<a href="demand.html">Demand</a>" showed with the car and the roadside motel.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Status Moves to What Stays Scarce</h2>
+
+            <p class="fs-lg">
+              A good stops setting its owner apart once most households have one. Fred Hirsch described a positional economy of goods, services, and positions that are "scarce in some absolute or socially imposed sense" or "subject to congestion or crowding through more extensive use."<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup> Rising incomes do not add to that supply, so the competition for it does not end.
+            </p>
+
+            <p class="fs-lg">
+              Automation moves this competition: when a good becomes cheap and common, owning it says little about the owner, and the competition for status shifts to what is still expensive or hard to get. Elizabeth Currid-Halkett finds this shift in US consumer surveys. The richest 1 percent of households now give the largest share of their spending to what she calls inconspicuous consumption. Education alone accounts for "almost 6 per cent of top 1 per cent household expenditures, compared with just over 1 per cent of middle-income spending," and the rich "are investing significantly more in education, retirement and health."<sup><a href="#fn-24" data-scroll data-scroll-offset="100">[24]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Human effort can itself be what stays scarce. In experiments by Christoph Fuchs and colleagues, people preferred handmade products, especially as gifts for people close to them, because they saw handmade goods as containing more love. In one study they would pay 17 percent more for handmade soap as a Mother's Day gift.<sup><a href="#fn-25" data-scroll data-scroll-offset="100">[25]</a></sup> Armin Granulo, Fuchs, and Stefano Puntoni found that the preference for human over robotic labor is stronger when a product expresses who the buyer is, such as eyeglass frames, than when only its function matters, such as the lenses.<sup><a href="#fn-26" data-scroll data-scroll-offset="100">[26]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The same preference appears with AI. In 16 preregistered experiments with more than 27,000 Americans, Manav Raj, Justin Berg, and Rob Seamans found that labeling the same creative writing as AI-generated lowered ratings by about 6 percent on average, mainly because readers saw it as less authentic.<sup><a href="#fn-27" data-scroll data-scroll-offset="100">[27]</a></sup> For marketing copy, Yunhao Zhang and Renée Gosline found no penalty for disclosing AI, though readers favored content they were told a human expert wrote.<sup><a href="#fn-28" data-scroll data-scroll-offset="100">[28]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Much of what stays scarce takes human time and skill, such as teaching, care, craft, and expert advice. This is one route by which demand moves toward work that machines have not made cheap, and "<a href="value_of_human_labor.html">The Value of Human Labor</a>" showed that scarcity sets what a step of labor earns.
+            </p>
+
+            <p class="fs-lg">
+              Generative AI is spreading faster than earlier tools did. In August 2025, about three years after ChatGPT's release, 54.6 percent of US adults aged 18 to 64 used it. The personal computer had reached 19.7 percent three years after the IBM PC, and the internet 30.1 percent three years after it opened to commercial traffic.<sup><a href="#fn-29" data-scroll data-scroll-offset="100">[29]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              As use spreads, using an LLM stops setting a worker or a firm apart, much as owning a car did. What stays scarce is what the output lacks: the judgment of a person who knows the context and will answer for the result, and the work of checking the output, which "<a href="labor_automation.html">Labor Automation</a>" showed still takes effort.
+            </p>
+
+            <p class="fs-lg">
+              Customers' expectations move the same way. Noriaki Kano's model of product quality separates attractive features, which delight customers when present and are not missed when absent, from must-be features, which customers take for granted and notice only when they are missing.<sup><a href="#fn-30" data-scroll data-scroll-offset="100">[30]</a></sup> In Kano's surveys, a television remote control was an attractive feature in 1983 and a must-be feature by 1998.<sup><a href="#fn-31" data-scroll data-scroll-offset="100">[31]</a></sup> For a firm, a feature that sets its product apart soon becomes one that customers expect from every competitor, the table stakes of Part 1's "<a href="the_red_queens_game.html">The Red Queen's Game</a>."
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Why the Climb Continues, and When It Has Slowed</h2>
+
+            <p class="fs-lg">
+              People adapt to gains, so a higher income or a new possession produces less satisfaction over time.<sup><a href="#fn-32" data-scroll data-scroll-offset="100">[32]</a></sup> Luis Rayo and Gary Becker argue that evolution would favor a happiness function that adjusts to a moving reference point, because it keeps people striving.<sup><a href="#fn-33" data-scroll data-scroll-offset="100">[33]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The claim that the climb cannot stop needs three qualifications:
+            </p>
+
+            <ul class="fs-lg" style="padding-left: 1.6rem;">
+              <li class="mb-2">People do take some gains as leisure. Across the industrial countries that Michael Huberman and Chris Minns studied, full-time weekly hours fell from about 64 in 1870 to about 45 in 1950. They kept falling more slowly after that, and further in Europe than in the United States: by 2000, annual hours in their data were about 1,880 in the United States against an average of about 1,570 in the European countries.<sup><a href="#fn-34" data-scroll data-scroll-offset="100">[34]</a></sup> Hours per person in the United States changed little over the twentieth century, as "<a href="what_is_work.html">What Is Work?</a>" showed, because women's added market hours offset the decline in men's.</li>
+              <li class="mb-2">For most of history the drive existed and the climb did not happen. Gregory Clark finds that before 1800, income per person "varied across societies and epochs. But there was no upward trend."<sup><a href="#fn-35" data-scroll data-scroll-offset="100">[35]</a></sup> Productivity gains mostly supported larger populations.</li>
+              <li class="mb-2">Some markets saturate. As "<a href="demand.html">Demand</a>" showed, automation stopped adding jobs in textiles, steel, and automobiles once demand for their products was largely met.</li>
+            </ul>
+
+            <p class="fs-lg">
+              The drive for more has been constant. Acting on it requires productivity to grow faster than population.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Automation as an Extension of Biological Evolution</h2>
+
+            <p class="fs-lg">
+              Alfred Lotka described the development of "artificial" aids to the body's own senses and limbs as "a process that might be termed exosomatic evolution."<sup><a href="#fn-36" data-scroll data-scroll-offset="100">[36]</a></sup> Nicholas Georgescu-Roegen built on Lotka to argue that the economic process is a continuation of the biological one, carried out with "exosomatic instruments" such as knives, hammers, boats, and engines.<sup><a href="#fn-37" data-scroll data-scroll-offset="100">[37]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              In 1925, Lotka pointed out that people share these artificial organs and pay for their use. A worker who accepts a weekly wage, he wrote, "is in fact paying to his employers an undetermined amount for the privilege of using his machines as artificial members to manufacture marketable wares."<sup><a href="#fn-38" data-scroll data-scroll-offset="100">[38]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Peter Richerson and Robert Boyd have documented how culture and genes shaped each other over human evolution.<sup><a href="#fn-39" data-scroll data-scroll-offset="100">[39]</a></sup> Part 4's "<a href="neolithic_age.html">The Neolithic Age</a>" described the ratchet that lets tools improve from one generation to the next, and "<a href="engines_of_creation.html">Engines of Creation</a>" takes up the physical evidence that tools reshaped human bodies.
+            </p>
+
+            <p class="fs-lg">
+              In this framing, automation is the newest round of exosomatic evolution. Each new instrument changes what people can do and, through the competition for recognition, what they come to want. Evolution does not decide who does the new work or who is paid for it, the question "<a href="value_of_human_labor.html">The Value of Human Labor</a>" raised.
+            </p>
+
+            <p class="fs-lg">
+              "<a href="engines_of_creation.html">Engines of Creation</a>," the last article in Part 5, follows the tools themselves: how automation keeps lowering the cost of meeting wants that keep rising, and why that makes work inexhaustible without guaranteeing that people will do it.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Smith, A. (1759). <em>The Theory of Moral Sentiments.</em> Part I, Section III, ch. 2.</li>
+              <li id="fn-2">Keynes, J. M. (1930). Economic possibilities for our grandchildren. <b>The Nation and Athenæum,</b> 11 and 18 October 1930. Reprinted in <em>Essays in Persuasion</em> (1931). Macmillan.</li>
+              <li id="fn-3">Bowles, S., &amp; Park, Y. (2005). Emulation, inequality, and work hours: Was Thorsten Veblen right? <b>Economic Journal,</b> 115(507), F397–F412, at p. F404. <a href="https://doi.org/10.1111/j.1468-0297.2005.01042.x" target="_blank" rel="noopener">doi:10.1111/j.1468-0297.2005.01042.x</a> [Belgium, Canada, France, Italy, the Netherlands, Norway, Sweden, the United Kingdom, the United States, and West Germany, 1963–1998; inequality measured mainly by the ratio of 90th- to 50th-percentile earnings. The authors found no instrument for inequality, so the estimate is an association.]</li>
+              <li id="fn-4">Becker, G. S., &amp; Rayo, L. (2008). Why Keynes underestimated consumption and overestimated leisure for the long run. In L. Pecchi &amp; G. Piga (Eds.), <em>Revisiting Keynes: Economic Possibilities for Our Grandchildren</em> (pp. 179–184). MIT Press, at p. 181. <a href="https://doi.org/10.7551/mitpress/9780262162494.001.0001" target="_blank" rel="noopener">doi:10.7551/mitpress/9780262162494.001.0001</a> [Becker and Rayo also point to new consumer goods, p. 182. In the same volume, Robert Frank (pp. 143–150) and Joseph Stiglitz (pp. 41–85) also discuss consumption judged against what others have.]</li>
+              <li id="fn-5">Freeman, R. B. (2008). Why do we work more than Keynes expected? In L. Pecchi &amp; G. Piga (Eds.), <em>Revisiting Keynes: Economic Possibilities for Our Grandchildren</em> (pp. 135–142). MIT Press.</li>
+              <li id="fn-6">Carroll, L. (1871). <em>Through the Looking-Glass, and What Alice Found There,</em> ch. 2. Macmillan.</li>
+              <li id="fn-7">Van Valen, L. (1973). A new evolutionary law. <b>Evolutionary Theory,</b> 1, 1–30.</li>
+              <li id="fn-8">Luttmer, E. F. P. (2005). Neighbors as negatives: Relative earnings and well-being. <b>Quarterly Journal of Economics,</b> 120(3), 963–1002, at p. 965. <a href="https://doi.org/10.1093/qje/120.3.963" target="_blank" rel="noopener">doi:10.1093/qje/120.3.963</a> ["Neighbors" are residents of the same Public Use Microdata Area, about 150,000 people. The comparison with own income uses estimates that correct own income for measurement error.]</li>
+              <li id="fn-9">Plato. <em>Republic,</em> Book IV.</li>
+              <li id="fn-10">Fukuyama, F. (1992). <em>The End of History and the Last Man.</em> Free Press. [megalothymia and isothymia defined, ch. 17, p. 182; entrepreneurship and economic activity as the main outlet for megalothymia in a liberal society, ch. 29, pp. 315–16]</li>
+              <li id="fn-11">Anderson, C., Hildreth, J. A. D., &amp; Howland, L. (2015). Is the desire for status a fundamental human motive? A review of the empirical literature. <b>Psychological Bulletin,</b> 141(3), 574–601. <a href="https://doi.org/10.1037/a0038781" target="_blank" rel="noopener">doi:10.1037/a0038781</a></li>
+              <li id="fn-12">von Rueden, C., Gurven, M., &amp; Kaplan, H. (2011). Why do men seek status? Fitness payoffs to dominance and prestige. <b>Proceedings of the Royal Society B,</b> 278(1715), 2223–2232. <a href="https://doi.org/10.1098/rspb.2010.2145" target="_blank" rel="noopener">doi:10.1098/rspb.2010.2145</a> [Tsimane; "dominant and prestigious men have more in-pair surviving offspring"]</li>
+              <li id="fn-13">Zahavi, A. (1975). Mate selection: A selection for a handicap. <b>Journal of Theoretical Biology,</b> 53(1), 205–214. <a href="https://doi.org/10.1016/0022-5193(75)90111-3" target="_blank" rel="noopener">doi:10.1016/0022-5193(75)90111-3</a> Biologists still debate whether cost is what keeps signals reliable; see Penn, D. J., &amp; Számadó, S. (2020). The handicap principle: How an erroneous hypothesis became a scientific principle. <b>Biological Reviews,</b> 95(1), 267–290. <a href="https://doi.org/10.1111/brv.12563" target="_blank" rel="noopener">doi:10.1111/brv.12563</a></li>
+              <li id="fn-14">Sundie, J. M., Kenrick, D. T., Griskevicius, V., Tybur, J. M., Vohs, K. D., &amp; Beal, D. J. (2011). Peacocks, Porsches, and Thorstein Veblen: Conspicuous consumption as a sexual signaling system. <b>Journal of Personality and Social Psychology,</b> 100(4), 664–680, at p. 665. <a href="https://doi.org/10.1037/a0021669" target="_blank" rel="noopener">doi:10.1037/a0021669</a></li>
+              <li id="fn-15">Veblen, T. (1899). <em>The Theory of the Leisure Class.</em> Macmillan.</li>
+              <li id="fn-16">Heffetz, O. (2011). A test of conspicuous consumption: Visibility and income elasticities. <b>Review of Economics and Statistics,</b> 93(4), 1101–1117, at p. 1102. <a href="https://doi.org/10.1162/REST_a_00116" target="_blank" rel="noopener">doi:10.1162/REST_a_00116</a> [national telephone survey, 2004–2005; most visible: tobacco products, cars, clothing, furniture; least visible: underwear and insurance (Table 3). Among higher-income households visibility explains up to about a third of the variation.]</li>
+              <li id="fn-17">Matsuyama, K. (2002). The rise of mass consumption societies. <b>Journal of Political Economy,</b> 110(5), 1035–1070. <a href="https://doi.org/10.1086/341873" target="_blank" rel="noopener">doi:10.1086/341873</a> Foellmi, R., &amp; Zweimüller, J. (2008). Structural change, Engel's consumption cycles and Kaldor's facts of economic growth. <b>Journal of Monetary Economics,</b> 55(7), 1317–1328. <a href="https://doi.org/10.1016/j.jmoneco.2008.09.001" target="_blank" rel="noopener">doi:10.1016/j.jmoneco.2008.09.001</a></li>
+              <li id="fn-18">Simmel, G. (1904). Fashion. <b>International Quarterly,</b> 10, 130–155, at p. 135. Reprinted in <b>American Journal of Sociology,</b> 62(6), 1957, 541–558. <a href="https://doi.org/10.1086/222102" target="_blank" rel="noopener">doi:10.1086/222102</a></li>
+              <li id="fn-19">Duesenberry, J. S. (1949). <em>Income, Saving, and the Theory of Consumer Behavior.</em> Harvard University Press. ["demonstration effect," ch. III, p. 27]</li>
+              <li id="fn-20">Kuhn, P., Kooreman, P., Soetevent, A., &amp; Kapteyn, A. (2011). The effects of lottery prizes on winners and their neighbors: Evidence from the Dutch Postcode Lottery. <b>American Economic Review,</b> 101(5), 2226–2247. <a href="https://doi.org/10.1257/aer.101.5.2226" target="_blank" rel="noopener">doi:10.1257/aer.101.5.2226</a> [The authors note that part of the effect on neighbors' car purchases could come from winners selling or giving away their old cars.]</li>
+              <li id="fn-21">Bertrand, M., &amp; Morse, A. (2016). Trickle-down consumption. <b>Review of Economics and Statistics,</b> 98(5), 863–879, at p. 863. <a href="https://doi.org/10.1162/REST_a_00613" target="_blank" rel="noopener">doi:10.1162/REST_a_00613</a> [US Consumer Expenditure Survey, 1980–2008; "nonrich" households are those below their state's 80th income percentile. Nonrich households "might have saved up to 3% more annually by the mid-2000s." The evidence is correlational.]</li>
+              <li id="fn-22">Our World in Data. Technology adoption by households in the United States. Compiled from Comin, D., &amp; Hobijn, B. (2004). Cross-country technology adoption: Making the theories face the facts. <b>Journal of Monetary Economics,</b> 51(1), 39–83 (<a href="https://doi.org/10.1016/j.jmoneco.2003.07.003" target="_blank" rel="noopener">doi:10.1016/j.jmoneco.2003.07.003</a>), and other sources. <a href="https://ourworldindata.org/grapher/technology-adoption-by-households-in-the-united-states" target="_blank" rel="noopener">ourworldindata.org/grapher/technology-adoption-by-households-in-the-united-states</a> [Years are the first year at or above 10, 50, and 80 percent of households in the compiled series.]</li>
+              <li id="fn-23">Hirsch, F. (1976). <em>Social Limits to Growth.</em> Harvard University Press, p. 27.</li>
+              <li id="fn-24">Currid-Halkett, E. (2017). <em>The Sum of Small Things: A Theory of the Aspirational Class.</em> Princeton University Press. Figures quoted from Currid-Halkett, E. (2017, June 7). Conspicuous consumption is over. It's all about intangibles now. <b>Aeon.</b> <a href="https://aeon.co/ideas/conspicuous-consumption-is-over-its-all-about-intangibles-now" target="_blank" rel="noopener">aeon.co/ideas/conspicuous-consumption-is-over-its-all-about-intangibles-now</a> [US Consumer Expenditure Survey; the top 1 percent are households "earning upwards of $300,000 per year." The survey covers the highest-income households less completely than others.]</li>
+              <li id="fn-25">Fuchs, C., Schreier, M., &amp; van Osselaer, S. M. J. (2015). The handmade effect: What's love got to do with it? <b>Journal of Marketing,</b> 79(2), 98–110. <a href="https://doi.org/10.1509/jm.14.0018" target="_blank" rel="noopener">doi:10.1509/jm.14.0018</a> [Study 4: willingness to pay of $6.56 for handmade soap against $5.63 for machine-made, p. 107]</li>
+              <li id="fn-26">Granulo, A., Fuchs, C., &amp; Puntoni, S. (2021). Preference for human (vs. robotic) labor is stronger in symbolic consumption contexts. <b>Journal of Consumer Psychology,</b> 31(1), 72–80. <a href="https://doi.org/10.1002/jcpy.1181" target="_blank" rel="noopener">doi:10.1002/jcpy.1181</a></li>
+              <li id="fn-27">Raj, M., Berg, J. M., &amp; Seamans, R. (2026). The artificial intelligence disclosure penalty: Humans persistently devalue AI-generated creative writing. <b>Journal of Experimental Psychology: General,</b> 155(4), 896–915. <a href="https://doi.org/10.1037/xge0001889" target="_blank" rel="noopener">doi:10.1037/xge0001889</a> [27,491 participants, 2023–2024. The outcomes are ratings, not purchases.]</li>
+              <li id="fn-28">Zhang, Y., &amp; Gosline, R. (2023). Human favoritism, not AI aversion: People's perceptions (and bias) toward generative AI, human experts, and human–GAI collaboration in persuasive content generation. <b>Judgment and Decision Making,</b> 18, e41. <a href="https://doi.org/10.1017/jdm.2023.37" target="_blank" rel="noopener">doi:10.1017/jdm.2023.37</a></li>
+              <li id="fn-29">Bick, A., Blandin, A., &amp; Deming, D. (2025, November 13). The state of generative AI adoption in 2025. Federal Reserve Bank of St. Louis, <b>On the Economy.</b> <a href="https://www.stlouisfed.org/on-the-economy/2025/nov/state-generative-ai-adoption-2025" target="_blank" rel="noopener">stlouisfed.org/on-the-economy/2025/nov/state-generative-ai-adoption-2025</a> [Share of US adults aged 18–64 who use each technology. The full study is Bick, A., Blandin, A., &amp; Deming, D. J. (2026). The rapid adoption of generative AI. <b>Management Science,</b> 72(10), 8440–8456. <a href="https://doi.org/10.1287/mnsc.2025.02523" target="_blank" rel="noopener">doi:10.1287/mnsc.2025.02523</a>]</li>
+              <li id="fn-30">Kano, N., Seraku, N., Takahashi, F., &amp; Tsuji, S. (1984). Attractive quality and must-be quality [in Japanese]. <b>Hinshitsu (Journal of the Japanese Society for Quality Control),</b> 14(2), 147–156. <a href="https://doi.org/10.20684/quality.14.2_147" target="_blank" rel="noopener">doi:10.20684/quality.14.2_147</a></li>
+              <li id="fn-31">Witell, L., Löfgren, M., &amp; Dahlgaard, J. J. (2013). Theory of attractive quality and the Kano methodology: The past, the present, and the future. <b>Total Quality Management &amp; Business Excellence,</b> 24(11–12), 1241–1252. <a href="https://doi.org/10.1080/14783363.2013.791117" target="_blank" rel="noopener">doi:10.1080/14783363.2013.791117</a> [Kano's remote-control surveys of 1983, 1989, and 1998. The life cycle of quality attributes is from Kano, N. (2001). Life cycle and creation of attractive quality. 4th International QMOD Conference, Linköping University.]</li>
+              <li id="fn-32">Brickman, P., &amp; Campbell, D. T. (1971). Hedonic relativism and planning the good society. In M. H. Appley (Ed.), <em>Adaptation-Level Theory: A Symposium</em> (pp. 287–302). Academic Press.</li>
+              <li id="fn-33">Rayo, L., &amp; Becker, G. S. (2007). Evolutionary efficiency and happiness. <b>Journal of Political Economy,</b> 115(2), 302–337. <a href="https://doi.org/10.1086/516737" target="_blank" rel="noopener">doi:10.1086/516737</a></li>
+              <li id="fn-34">Huberman, M., &amp; Minns, C. (2007). The times they are not changin': Days and hours of work in Old and New Worlds, 1870–2000. <b>Explorations in Economic History,</b> 44(4), 538–567. <a href="https://doi.org/10.1016/j.eeh.2007.03.002" target="_blank" rel="noopener">doi:10.1016/j.eeh.2007.03.002</a> [Table 1: weekly hours of full-time non-farm production workers, unweighted average of 14 countries, 64.3 in 1870 and 45.4 in 1950; Table 3: annual hours in 2000, United States 1,878, European average 1,572. The post-1950 decline was "greater in Europe (0.4 vs 0.2 percent p.a.)," p. 545.]</li>
+              <li id="fn-35">Clark, G. (2007). <em>A Farewell to Alms: A Brief Economic History of the World.</em> Princeton University Press, p. 1.</li>
+              <li id="fn-36">Lotka, A. J. (1945). The law of evolution as a maximal principle. <b>Human Biology,</b> 17(3), 167–194, at p. 188.</li>
+              <li id="fn-37">Georgescu-Roegen, N. (1971). <em>The Entropy Law and the Economic Process.</em> Harvard University Press. [Introduction, p. 11]</li>
+              <li id="fn-38">Lotka, A. J. (1925). <em>Elements of Physical Biology.</em> Williams &amp; Wilkins, p. 369.</li>
+              <li id="fn-39">Richerson, P. J., &amp; Boyd, R. (2005). <em>Not by Genes Alone: How Culture Transformed Human Evolution.</em> University of Chicago Press, ch. 6.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+  </body>
+</html>

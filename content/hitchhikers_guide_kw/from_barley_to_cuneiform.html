@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>From Barley to Cuneiform | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Clay tokens tracked grain and labor across the ancient Near East four thousand years before the first writing tablets. The agricultural economy created an information problem biological memory could not solve — and the accounting system that solved it became writing.">
+    <meta name="keywords" content="cuneiform, accounting, clay tokens, bullae, proto-cuneiform, Uruk, Mesopotamia, writing origins, knowledge work, information infrastructure, Neolithic, Bronze Age, Schmandt-Besserat, cognitive externalization">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="From Barley to Cuneiform | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/grain_writing_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/from_barley_to_cuneiform.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Clay tokens tracked grain and labor across the ancient Near East four thousand years before the first writing tablets. The agricultural economy created an information problem biological memory could not solve — and the accounting system that solved it became writing."/>
+
+    <meta name="twitter:title" content="From Barley to Cuneiform | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:description" content="Clay tokens tracked grain and labor across the ancient Near East four thousand years before the first writing tablets. The accounting system that solved the agricultural information problem became writing." />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/grain_writing_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/from_barley_to_cuneiform.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* ── Comparison table ───────────────────────────────────── */
+      .layers-table { font-size: 0.95rem; }
+      .layers-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .layers-table td { vertical-align: top; }
+      .layers-table td:first-child { font-weight: 600; width: 28%; }
+
+      /* Long DOIs wrap on narrow screens */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Interactive Timeline ─────────────────────────────────── */
+      .ht-timeline-wrap {
+        position: relative;
+        overflow-x: auto;
+        padding: 1rem 0 0.5rem;
+      }
+      .ht-timeline {
+        position: relative;
+        min-width: 600px;
+        height: 140px;
+        margin: 2.5rem 0 1rem;
+      }
+      .ht-axis {
+        position: absolute;
+        top: 50%;
+        left: 0; right: 0;
+        height: 2px;
+        background: #d0d5dd;
+        transform: translateY(-50%);
+      }
+      .ht-event {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 2;
+      }
+      .ht-dot {
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: #ff9500;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #ff9500;
+        transition: transform .15s, box-shadow .15s;
+        margin: 0 auto;
+      }
+      .ht-event.context .ht-dot {
+        background: #c8cdd6;
+        box-shadow: 0 0 0 2px #c8cdd6;
+        width: 10px; height: 10px;
+      }
+      .ht-event.future .ht-dot {
+        background: #c8cdd6;
+        box-shadow: 0 0 0 2px #c8cdd6;
+      }
+      .ht-event.active .ht-dot,
+      .ht-event:hover .ht-dot {
+        transform: scale(1.45);
+        box-shadow: 0 0 0 3px #ff9500;
+      }
+      .ht-event.context:hover .ht-dot,
+      .ht-event.future:hover .ht-dot {
+        transform: scale(1.45);
+        box-shadow: 0 0 0 3px #c8cdd6;
+      }
+      .ht-event-lbl {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: #4a5568;
+        line-height: 1.2;
+        text-align: center;
+        max-width: 86px;
+        white-space: normal;
+      }
+      .ht-event.context .ht-event-lbl,
+      .ht-event.future .ht-event-lbl { color: #9aa0ac; }
+      .ht-event-lbl.above { bottom: calc(50% + 14px); padding-bottom: 4px; }
+      .ht-event-lbl.below { top: calc(50% + 14px); padding-top: 4px; }
+      .ht-axis-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        color: #9aa0ac;
+        padding: 0 0 0.5rem;
+        min-width: 600px;
+      }
+      .ht-detail-panel {
+        transition: opacity .2s;
+      }
+      .ht-detail-panel.hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; }
+      .ht-scale-note {
+        font-size: 0.72rem;
+        color: #9aa0ac;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+      /* ── Period Bands ─────────────────────────────────────── */
+      .ht-period-band {
+        position: absolute;
+        top: 0; bottom: 0;
+        z-index: 0;
+        overflow: hidden;
+        border-right: 1px solid rgba(0,0,0,0.07);
+      }
+      .ht-period-label-inline {
+        position: absolute;
+        top: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.57rem;
+        font-weight: 700;
+        color: rgba(50,50,50,0.45);
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .ht-period-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.9rem;
+        margin-top: 0.45rem;
+        min-width: 600px;
+      }
+      .ht-legend-swatch {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.67rem;
+        font-weight: 600;
+        color: #4a5568;
+      }
+      .ht-legend-box {
+        display: inline-block;
+        width: 14px; height: 10px;
+        border-radius: 2px;
+        border: 1px solid rgba(0,0,0,0.10);
+        flex-shrink: 0;
+      }
+      .ht-timeline-modal {
+        height: 200px;
+        min-width: 100%;
+      }
+      .ht-modal-event-card {
+        transition: border-color .15s, box-shadow .15s;
+      }
+      .ht-modal-event-card:hover {
+        border-color: rgba(255,149,0,0.45) !important;
+        box-shadow: 0 0 0 2px rgba(255,149,0,0.15);
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">From Barley to Cuneiform</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">From Barley to Cuneiform</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="../../josh_patterson.html">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">September 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/grain_writing_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+                      The earliest writing in the archaeological record is accounting: commodity, quantity, recipient, institution, date. The economic need came first. The general-purpose language technology grew out of the accounting system.
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              "<a href="moon_clock.html">The Moon Clock</a>" drew a line between two kinds of knowledge. Stone monuments can hold what repeats: a solstice alignment answers correctly year after year, for as long as the stones stand. What stone cannot hold is the changing record of an economy — which field belongs to which family, how much grain was delivered to the common store last season, which households have settled their labor obligations and which have not. That is information that differs every year, accumulates across parties who may never meet face to face, and is lost when the person who held it dies or forgets.
+            </p>
+
+            <p class="fs-lg">
+              The technologies in this article filled that gap. They span the late Neolithic through the early Bronze Age — roughly 7,500 to 3,000 BCE — and the sequence runs from small geometric clay objects to the world's first writing system. The agricultural economy created the information problem. Clay solved it.
+            </p>
+
+
+            <!-- ═══════════════════════════════════════════════════
+                 INTERACTIVE TIMELINE
+                 ═══════════════════════════════════════════════════ -->
+            <div class="my-5">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <h5 class="mb-0">From First Tokens to Cuneiform: ~10,000–1,850 BCE</h5>
+                <button type="button" class="btn btn-outline-secondary btn-sm flex-shrink-0 ms-3" data-bs-toggle="modal" data-bs-target="#timelineExpandModal" style="font-size:0.75rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="margin-bottom:1px;margin-right:3px;"><path d="M1.5 1h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 1zm9 0a.5.5 0 0 1 0-1h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4zm6.5 9a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5z"/></svg>Expand
+                </button>
+              </div>
+              <p class="text-muted" style="font-size:0.82rem; margin-bottom:0.25rem;">Click any event for details. Scale is logarithmic. Gray = context from prior article or coming up next.</p>
+
+              <div class="ht-timeline-wrap">
+                <div class="ht-axis-labels">
+                  <span>~10,000 BCE</span>
+                  <span>~7,000 BCE</span>
+                  <span>~5,000 BCE</span>
+                  <span>~3,000 BCE</span>
+                  <span>~1,850 BCE</span>
+                </div>
+                <div class="ht-timeline" id="htTimeline">
+                  <div class="ht-axis"></div>
+                  <!-- events injected by JS -->
+                </div>
+                <p class="ht-scale-note">Orange = covered in this article &nbsp;·&nbsp; Gray = context or coming up in Part 4</p>
+                <div class="ht-period-legend">
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(60,160,80,0.28);"></span>Neolithic (New Stone Age)</span>
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,100,40,0.32);"></span>Chalcolithic (Copper Age)</span>
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.32);"></span>Bronze Age</span>
+                </div>
+              </div>
+
+              <!-- Detail panel -->
+              <div class="card border-0 bg-secondary mt-3 ht-detail-panel hidden" id="htDetail">
+                <div class="card-body py-3 px-4">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="fw-semibold mb-1" id="htDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                      <p class="fw-bold mb-1" id="htDetailTitle" style="font-size:1rem;"></p>
+                      <p class="mb-0" id="htDetailBody" style="font-size:0.9rem;"></p>
+                    </div>
+                    <button type="button" class="btn-close ms-3 flex-shrink-0" id="htDetailClose" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END TIMELINE -->
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Agriculture Scales the Information Load</h2>
+
+            <p class="fs-lg">
+              Agriculture produces reliable food surplus, which supports higher population density. Shennan and Edinborough (2007) traced radiocarbon-dated population histories across Central and Northern Europe and found a pronounced rise in population density following the adoption of farming.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              A band of thirty people solves allocation through direct conversation and shared memory. A village of three hundred tracks food stocks, land claims, seasonal labor pools, and multi-party exchanges that no single memory can hold accurately across seasons. The information burden grows faster than the headcount, because the number of bilateral relationships — and therefore the number of transactions that need tracking — grows roughly as the square of the population, not linearly with it.
+            </p>
+
+            <p class="fs-lg">
+              Before a quantity can be recorded, it has to be defined. A delivery of grain means nothing to an absent third party without an agreed unit of grain. A labor obligation is unverifiable without a standard day's work. Calibrated clay and stone weights — shaped as ducks, lions, or geometric forms — appear at Near Eastern sites well before any writing tablet. The measurement system came first; accounting depended on it.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Tokens Before Tablets</h2>
+
+            <p class="fs-lg">
+              Clay tokens appear in the Near Eastern archaeological record from roughly 7,500 BCE onward — spanning the late Neolithic through the Chalcolithic — as the earliest surviving external records of economic transactions.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> The tokens are small geometric objects: spheres, cones, cylinders, disks. Each shape maps to a specific commodity: a count of grain, a labor unit, an animal, a unit of oil.
+            </p>
+
+            <p class="fs-lg">
+              Schmandt-Besserat (1992) documented more than ten thousand such tokens at sites from Iran to Turkey to the Nile Delta, identifying approximately eighty distinct types with consistent commodity associations across geographically separated sites.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> The token system was not a local invention that spread: sites across the region had independently arrived at the same representational conventions, or had adopted them early enough that the system was effectively a shared standard across the ancient Near East for thousands of years.
+            </p>
+
+            <p class="fs-lg">
+              Groups of tokens were sealed inside hollow clay spheres called bullae. A sealed bulla is a transaction record: commodity and quantity committed to a physical object that can later be checked against what was actually delivered or returned. The bulla removes the requirement that both parties trust each other's memory of an agreement made months earlier.
+            </p>
+
+            <p class="fs-lg">
+              This system predates proto-cuneiform writing by roughly four thousand years. The concept of moving a transaction from human memory into a persistent external record was established long before what we conventionally call writing existed.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Institutional Engine</h2>
+
+            <p class="fs-lg">
+              The first writing tablets did not appear at a village household or a market stall. They appeared at Uruk, in southern Mesopotamia, within the administrative precincts of the city's central institutions — specifically the Eanna complex, which combined temple functions with the management of the city's economic life.
+            </p>
+
+            <p class="fs-lg">
+              Nissen, Damerow, and Englund (1993) analyzed the administrative structure behind the early Uruk tablets and found a system managing labor allocation, livestock, and grain at a scale that made written records a functional requirement, not a convenience.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> A city of tens of thousands, with attached agricultural land, dependent craft workers, and incoming trade goods, generates more transactions per day than any group of administrators could hold accurately in memory. The volume forced the innovation.
+            </p>
+
+            <p class="fs-lg">
+              The Eanna administrators distributed standardized daily grain rations to workers. The archaic tablets use an administrative year of twelve 30-day months — the same lunar-derived calendar that the Moon Clock article traced in the final paragraph — to calculate ration obligations. The counting system and the calendar were coordinated from the beginning because the same institution needed both to run its operations.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The First Writing Is Accounting</h2>
+
+            <p class="fs-lg">
+              Proto-cuneiform tablets appear at Uruk in Mesopotamia around 3,350–3,000 BCE (early Bronze Age). They are the earliest known writing in the archaeological record.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The content is administrative accounting: commodity, quantity, recipient, institution, date. The Antiquity (2024) analysis of the origins of writing in ancient Southwest Asia traces the Uruk proto-cuneiform directly to the earlier token and seal tradition — the same underlying need, formalized into a more expressive medium. The system evolved to handle a wider range of commodities, larger quantities, and more complex institutional relationships than clay tokens alone could represent.
+            </p>
+
+            <p class="fs-lg">
+              <strong>The accounting function came first.</strong> The general-purpose representational technology grew out of the accounting system. The tablets record grain deliveries, labor allocations, and livestock inventories — an administrative archive for the economic operations of a city.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What Clay Records Do</h2>
+
+            <p class="fs-lg">
+              A transaction recorded on clay differs from one held in memory in several concrete ways. The table below compares what each medium can and cannot provide.
+            </p>
+
+            <div class="table-responsive my-4">
+              <table class="table layers-table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Memory</th>
+                    <th scope="col">Clay record</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Who can access it</td>
+                    <td>Only the person who holds it</td>
+                    <td>Anyone who can read the tablet</td>
+                  </tr>
+                  <tr>
+                    <td>Survives the participants</td>
+                    <td>No — lost when the holder dies or forgets</td>
+                    <td>Yes — the tablet outlasts the scribe and the parties</td>
+                  </tr>
+                  <tr>
+                    <td>Verifiable by</td>
+                    <td>Only parties present at the original exchange</td>
+                    <td>Any administrator, at any later time, against physical inventory</td>
+                  </tr>
+                  <tr>
+                    <td>Supports</td>
+                    <td>Transactions between people who know each other</td>
+                    <td>Transactions between strangers, across time, through intermediaries</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="def-box">
+              <div class="def-label">Cognitive Externalization</div>
+              <p>Moving information from biological memory into an external medium that holds it independently of the people who created it. The clay tablet is an early form; the spreadsheet, the relational database, and the knowledge management system are later ones.</p>
+            </div>
+
+            <p class="fs-lg">
+              Mouck (2004) describes Mesopotamian accounting in exactly these terms — as a form of cognitive externalization, where the clay tablet carries what biological memory cannot reliably hold across time and multiple parties.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> Ezzamel and Hoskin (2002) extend the argument further: accounting, writing, and money developed as mutually reinforcing information technologies, each one making the others more useful and more necessary.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Once records were impressed on clay rather than sealed inside bullae, an institution — a temple granary, a trading house, a labor pool — could carry records independent of any individual administrator's memory. When an administrator died or moved on, the archive remained. The institution acquired a continuity that no individual could provide. Whether any specific person remembered the transaction was no longer the binding constraint on whether the transaction could be verified.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">From Counting to Language</h2>
+
+            <p class="fs-lg">
+              Early tokens encoded a small, fixed vocabulary of commodities in direct one-to-one mappings: this shape represents this thing. Proto-cuneiform extended that into hundreds of signs, covering a wider range of goods, quantities, and administrative categories.
+            </p>
+
+            <p class="fs-lg">
+              As representational demands grew, signs began to represent sounds rather than things directly — the shift from logographic to phonetic encoding. A sign that originally pictured a barley sheaf came to represent the sound associated with that word, which could then combine with other sound-signs to encode words that had no obvious pictorial form. That shift converted a commodity-tracking system into something capable of encoding any sentence in a spoken language.
+            </p>
+
+            <p class="fs-lg">
+              The accounting system came first. The general-purpose writing technology grew out of it over several thousand years. The next article follows what happened once phonetic writing was fully in place: anything you could say, you could write. The scribal tradition that began tracking barley eventually encoded law, mathematics, and literature — and the knowledge those texts carried stopped resetting with each generation.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Shennan, S., &amp; Edinborough, K. (2007). Prehistoric population history: from the Late Glacial to the Late Neolithic in Central and Northern Europe. <b>Journal of Archaeological Science,</b> 34(8), 1339–1345.</li>
+              <li id="fn-2">Antiquity (2024). Seals and signs: tracing the origins of writing in ancient South-west Asia. <b>Antiquity,</b> Cambridge University Press. DOI: 10.15184/aqy.2024.XX</li>
+              <li id="fn-3">Schmandt-Besserat, D. (1992). <em>Before Writing, Vol. 1: From Counting to Cuneiform.</em> Austin: University of Texas Press.</li>
+              <li id="fn-4">Nissen, H. J., Damerow, P., &amp; Englund, R. K. (1993). <em>Archaic Bookkeeping: Early Writing and Techniques of Economic Administration in the Ancient Near East.</em> Chicago: University of Chicago Press.</li>
+              <li id="fn-5">Mouck, T. (2004). Ancient Mesopotamian accounting and human cognitive evolution. <b>Accounting Historians Journal,</b> 31(2), 111–150.</li>
+              <li id="fn-6">Ezzamel, M., &amp; Hoskin, K. (2002). Retheorizing accounting, writing and money with evidence from Mesopotamia and ancient Egypt. <b>Critical Perspectives on Accounting,</b> 13(3), 333–367.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         TIMELINE EXPAND MODAL
+         ═══════════════════════════════════════════════════ -->
+    <div class="modal fade" id="timelineExpandModal" tabindex="-1" aria-labelledby="timelineExpandModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title" id="timelineExpandModalLabel">From First Tokens to Cuneiform: ~10,000–1,850 BCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pt-2 d-flex flex-column" style="overflow-y:auto;">
+            <p class="text-muted mb-2" style="font-size:0.82rem;">Click any event for details, or click a card below. Scale is logarithmic. Gray = context or coming up next.</p>
+
+            <div class="ht-timeline ht-timeline-modal" id="htModalTimeline">
+              <div class="ht-axis"></div>
+            </div>
+
+            <div class="ht-period-legend mt-2 mb-2">
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(60,160,80,0.28);"></span>Neolithic (New Stone Age)</span>
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,100,40,0.32);"></span>Chalcolithic (Copper Age)</span>
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.32);"></span>Bronze Age</span>
+            </div>
+
+            <div class="card border-0 bg-secondary ht-detail-panel hidden mb-3" id="htModalDetail">
+              <div class="card-body py-3 px-4">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <p class="fw-semibold mb-1" id="htModalDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                    <p class="fw-bold mb-1" id="htModalDetailTitle" style="font-size:1rem;"></p>
+                    <p class="mb-0" id="htModalDetailBody" style="font-size:0.9rem;"></p>
+                  </div>
+                  <button type="button" class="btn-close ms-3 flex-shrink-0" id="htModalDetailClose" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 mt-1" id="htModalEventGrid">
+              <!-- populated by JS on first modal open -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+    <!-- Interactive Timeline Script -->
+    <script>
+    (function () {
+      var EVENTS = [
+        { yearsAgo:12000, date:'~10,000 BCE', title:'Agriculture Begins',
+          body:'Farming emerges in the Fertile Crescent. The economic consequence of poor seasonal timing shifts from inconvenient to survival-critical. Population density begins rising. Covered in "New Stone Age" (previous article).',
+          type:'context' },
+        { yearsAgo:9500,  date:'~7,500 BCE',  title:'First Clay Tokens',
+          body:'[Late Neolithic] Small geometric clay objects — spheres, cones, cylinders, disks — appear across the ancient Near East as commodity counters. Each shape represents a specific good: a count of grain, a labor unit, an animal. The earliest known external record-keeping system, predating writing by roughly 4,000 years.',
+          type:'primary' },
+        { yearsAgo:5500,  date:'~3,500 BCE',  title:'Sealed Bullae Systems',
+          body:'[Late Chalcolithic] Tokens are enclosed in hollow clay spheres (bullae) and sealed. The bulla is a transaction record: commodity and quantity committed to clay, verifiable against actual delivery. Complex bulla systems with impressed markings appear across Mesopotamia, representing an increasingly sophisticated approach to tracking multi-party economic obligations.',
+          type:'primary' },
+        { yearsAgo:5350,  date:'~3,350 BCE',  title:'Proto-Cuneiform at Uruk',
+          body:'[Early Bronze Age] The earliest known writing appears at Uruk in Mesopotamia: proto-cuneiform tablets recording commodity, quantity, recipient, institution, and date. Overwhelmingly administrative accounting. The Antiquity (2024) analysis traces this directly to the earlier token and seal tradition — the same need, in a more expressive medium.',
+          type:'primary' },
+        { yearsAgo:4700,  date:'~2,700 BCE',  title:'Cuneiform Becomes General Writing',
+          body:'[Early Bronze Age] Cuneiform evolves from logographic commodity symbols toward phonetic encoding of sounds. The shift converts a specialized accounting system into a general-purpose language technology capable of recording any sentence in Sumerian. Literature, law, and religion now become representable — but accounting remained the foundation.',
+          type:'primary' },
+        { yearsAgo:3850,  date:'~1,850 BCE',  title:'Proto-Sinaitic Alphabet',
+          body:'[Middle Bronze Age] The first alphabet: a small set of symbols representing sounds rather than concepts, combinable into any word. The accounting system that began with clay tokens has evolved into a general combinatorial representational technology. Coming up in Part 4: The Alphabet as a Machine for Thought.',
+          type:'future' }
+      ];
+
+      var LOG_MAX   = Math.log10(12000);
+      var LOG_MIN   = Math.log10(3500);
+      var LOG_RANGE = LOG_MAX - LOG_MIN;
+      function logPos(y) { return ((LOG_MAX - Math.log10(y)) / LOG_RANGE) * 100; }
+
+      // Neolithic: 12000→5500 yrs ago (~10,000→~3,500 BCE)
+      // Chalcolithic: 5500→5100 yrs ago (~3,500→~3,100 BCE)
+      // Bronze Age: 5100→3500 yrs ago (~3,100→~1,500 BCE)
+      var PERIODS = [
+        { label:'Neolithic',    fromYrs:12000, toYrs:5500, color:'rgba(60,160,80,0.10)'   },
+        { label:'Chalcolithic', fromYrs:5500,  toYrs:5100, color:'rgba(200,100,40,0.14)'  },
+        { label:'Bronze Age',   fromYrs:5100,  toYrs:3500, color:'rgba(200,160,40,0.14)'  }
+      ];
+
+      function buildTimeline(container, detailEl, dateEl, titleEl, bodyEl, closeEl, gridEl) {
+        while (container.firstChild) container.removeChild(container.firstChild);
+        var axisEl = document.createElement('div');
+        axisEl.className = 'ht-axis';
+        container.appendChild(axisEl);
+
+        PERIODS.forEach(function(p) {
+          var lp = logPos(p.fromYrs), rp = logPos(p.toYrs), wp = rp - lp;
+          var band = document.createElement('div');
+          band.className = 'ht-period-band';
+          band.style.left = lp.toFixed(1) + '%';
+          band.style.width = wp.toFixed(1) + '%';
+          band.style.backgroundColor = p.color;
+          if (wp >= 4) {
+            var lbl = document.createElement('div');
+            lbl.className = 'ht-period-label-inline';
+            lbl.textContent = p.label;
+            band.appendChild(lbl);
+          }
+          container.insertBefore(band, axisEl);
+        });
+
+        var activeEl = null;
+        function showDetail(ev, el) {
+          if (activeEl) activeEl.classList.remove('active');
+          activeEl = el;
+          if (el) el.classList.add('active');
+          dateEl.textContent  = ev.date;
+          titleEl.textContent = ev.title;
+          bodyEl.textContent  = ev.body;
+          dateEl.style.color  = ev.type === 'primary' ? '#ff9500' : '#9aa0ac';
+          detailEl.classList.remove('hidden');
+        }
+
+        EVENTS.forEach(function(ev, i) {
+          var el = document.createElement('div');
+          el.className = 'ht-event ' + ev.type;
+          el.style.left = logPos(ev.yearsAgo).toFixed(1) + '%';
+          el.dataset.idx = i;
+          var dot = document.createElement('div'); dot.className = 'ht-dot';
+          var lbl = document.createElement('div');
+          lbl.className = 'ht-event-lbl ' + (i % 2 === 0 ? 'above' : 'below');
+          lbl.textContent = ev.date;
+          el.appendChild(dot); el.appendChild(lbl);
+          container.appendChild(el);
+          el.addEventListener('click', function() { showDetail(ev, el); });
+        });
+
+        if (closeEl) {
+          closeEl.addEventListener('click', function() {
+            detailEl.classList.add('hidden');
+            if (activeEl) { activeEl.classList.remove('active'); activeEl = null; }
+          });
+        }
+
+        if (gridEl) {
+          gridEl.innerHTML = '';
+          var evEls = container.querySelectorAll('.ht-event');
+          EVENTS.forEach(function(ev, i) {
+            var accent  = ev.type === 'primary' ? '#ff9500' : '#9aa0ac';
+            var snippet = ev.body.length > 110 ? ev.body.substring(0, 110) + '…' : ev.body;
+            var col = document.createElement('div');
+            col.className = 'col';
+            col.innerHTML = '<div class="card h-100 ht-modal-event-card border border-secondary" style="cursor:pointer;background:rgba(255,255,255,0.04);">'
+              + '<div class="card-body py-2 px-3">'
+              + '<p class="fw-semibold mb-1" style="color:' + accent + ';font-size:0.78rem;">' + ev.date + '</p>'
+              + '<p class="fw-bold mb-1" style="font-size:0.85rem;">' + ev.title + '</p>'
+              + '<p class="mb-0 text-body-secondary" style="font-size:0.78rem;">' + snippet + '</p>'
+              + '</div></div>';
+            col.querySelector('.card').addEventListener('click', (function(ev, i) {
+              return function() {
+                showDetail(ev, evEls[i] || null);
+                detailEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+              };
+            })(ev, i));
+            gridEl.appendChild(col);
+          });
+        }
+
+        return showDetail;
+      }
+
+      // Inline timeline
+      var inlineContainer = document.getElementById('htTimeline');
+      if (!inlineContainer) return;
+      buildTimeline(
+        inlineContainer,
+        document.getElementById('htDetail'),
+        document.getElementById('htDetailDate'),
+        document.getElementById('htDetailTitle'),
+        document.getElementById('htDetailBody'),
+        document.getElementById('htDetailClose'),
+        null
+      );
+
+      // Modal timeline — built lazily on first open
+      var modalEl = document.getElementById('timelineExpandModal');
+      if (modalEl) {
+        var modalBuilt = false;
+        modalEl.addEventListener('shown.bs.modal', function() {
+          if (modalBuilt) return;
+          modalBuilt = true;
+          buildTimeline(
+            document.getElementById('htModalTimeline'),
+            document.getElementById('htModalDetail'),
+            document.getElementById('htModalDetailDate'),
+            document.getElementById('htModalDetailTitle'),
+            document.getElementById('htModalDetailBody'),
+            document.getElementById('htModalDetailClose'),
+            document.getElementById('htModalEventGrid')
+          );
+        });
+      }
+
+    })();
+    </script>
+
+  </body>
+</html>

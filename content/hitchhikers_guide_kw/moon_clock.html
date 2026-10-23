@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Moon Clock | The Hitchhiker's Guide to Knowledge Work Systems (Series)</title>
+    <meta name="description" content="Long before writing, people kept time by the Moon and the Sun. Neolithic monuments stored that knowledge in stone and drew people together to build and use them, but stone could not keep accounts.">
+    <meta name="keywords" content="moon clock, lunar month, calendar, solstice, Neolithic, megaliths, stone monuments, archaeoastronomy, Warren Field, Nabta Playa, Newgrange, Knowth, Stonehenge, Durrington Walls, Göbekli Tepe, Basin of Mexico, Mexica calendar, focal point, common knowledge, work feast, labor, external symbolic storage, data platform, information infrastructure, knowledge work, proto-cuneiform, Uruk, writing, agriculture">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Moon Clock | The Hitchhiker's Guide to Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/sun_clock_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/moon_clock.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="Long before writing, people kept time by the Moon and the Sun. Neolithic monuments stored that knowledge in stone and drew people together to build and use them, but stone could not keep accounts."/>
+
+    <meta name="twitter:title" content="The Moon Clock | The Hitchhiker's Guide to Knowledge Work Systems (Series)" />
+
+    <meta name="twitter:description" content="Long before writing, people kept time by the Moon and the Sun. Neolithic monuments stored that knowledge in stone and drew people together to build and use them, but stone could not keep accounts." />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/sun_clock_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/moon_clock.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/app-icons/pct_box_logo_16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/app-icons/pct_box_logo_32x32.png">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/pct_box_logo_32x32.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* Long DOIs wrap on narrow screens instead of widening the page */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Interactive Timeline ─────────────────────────────────── */
+      .ht-timeline-wrap {
+        position: relative;
+        overflow-x: auto;
+        padding: 1rem 0 0.5rem;
+      }
+      .ht-timeline {
+        position: relative;
+        min-width: 640px;
+        height: 140px;
+        /* side gutters leave room for labels centered on the first and last dots */
+        margin: 2.5rem 48px 1rem;
+      }
+      .ht-axis {
+        position: absolute;
+        top: 50%;
+        left: 0; right: 0;
+        height: 2px;
+        background: #d0d5dd;
+        transform: translateY(-50%);
+      }
+      .ht-event {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 2;
+      }
+      .ht-dot {
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: #ff9500;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #ff9500;
+        transition: transform .15s, box-shadow .15s;
+        margin: 0 auto;
+      }
+      .ht-event.future .ht-dot {
+        background: #c8cdd6;
+        box-shadow: 0 0 0 2px #c8cdd6;
+      }
+      .ht-event.active .ht-dot,
+      .ht-event:hover .ht-dot,
+      .ht-event.card-hover .ht-dot {
+        transform: scale(1.45);
+        box-shadow: 0 0 0 3px #ff9500;
+      }
+      .ht-event.future:hover .ht-dot,
+      .ht-event.future.card-hover .ht-dot {
+        box-shadow: 0 0 0 3px #c8cdd6;
+      }
+      .ht-event.card-hover .ht-event-lbl { color: #1f2937; }
+      .ht-event.future.card-hover .ht-event-lbl { color: #4a5568; }
+      .ht-event-lbl {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: #4a5568;
+        line-height: 1.2;
+        text-align: center;
+        max-width: 90px;
+        white-space: normal;
+      }
+      .ht-event.future .ht-event-lbl { color: #9aa0ac; }
+      .ht-event-lbl.above { bottom: calc(50% + 14px); padding-bottom: 4px; }
+      .ht-event-lbl.below { top: calc(50% + 14px); padding-top: 4px; }
+      .ht-axis-labels {
+        position: relative;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        color: #9aa0ac;
+        min-width: 640px;
+        margin: 0 48px;
+      }
+      .ht-axis-labels span {
+        position: absolute;
+        top: 0;
+        white-space: nowrap;
+        transform: translateX(-50%);
+      }
+      .ht-detail-panel {
+        transition: opacity .2s;
+      }
+      .ht-detail-panel.hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; }
+      .ht-scale-note {
+        font-size: 0.72rem;
+        color: #9aa0ac;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+      /* ── Period Bands ─────────────────────────────────────── */
+      .ht-period-band {
+        position: absolute;
+        top: 0; bottom: 0;
+        z-index: 0;
+        overflow: hidden;
+        border-right: 1px solid rgba(0,0,0,0.07);
+      }
+      .ht-period-label-inline {
+        position: absolute;
+        top: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.57rem;
+        font-weight: 700;
+        color: rgba(50,50,50,0.45);
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .ht-period-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.9rem;
+        margin-top: 0.45rem;
+        min-width: 600px;
+      }
+      .ht-legend-swatch {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.67rem;
+        font-weight: 600;
+        color: #4a5568;
+      }
+      .ht-legend-box {
+        display: inline-block;
+        width: 14px; height: 10px;
+        border-radius: 2px;
+        border: 1px solid rgba(0,0,0,0.10);
+        flex-shrink: 0;
+      }
+      .ht-timeline-modal {
+        height: 200px;
+        min-width: 0;
+      }
+      .ht-modal-event-card {
+        transition: border-color .15s, box-shadow .15s;
+      }
+      .ht-modal-event-card:hover {
+        border-color: rgba(255,149,0,0.45) !important;
+        box-shadow: 0 0 0 2px rgba(255,149,0,0.15);
+      }
+
+      /* ── Layers table (a monument read as a data platform) ─── */
+      .layers-table { font-size: 0.95rem; }
+      .layers-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .layers-table td { vertical-align: top; }
+      .layers-table td:first-child { font-weight: 600; width: 30%; }
+
+      /* ── Small tables (figure fallbacks on phones) ──────────── */
+      .fig-table { font-size: 0.95rem; }
+      .fig-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .fig-table td:not(:first-child), .fig-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Moon Clock</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Moon Clock</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="../../josh_patterson.html">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">October 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/moon_clock_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+                      Key Idea:<br/><br/>
+                      People kept time by the Moon and the Sun long before they farmed or wrote. In the Neolithic, some communities set that knowledge in stone, so anyone at the site could see the year turn without having made the observations. The monuments also brought large numbers of people together, to build them and to meet at set times of year. <b>Stone could store knowledge that repeats every year, such as the date of midwinter, but not the changing records of a growing economy, and that is the job writing took over.</b>
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              "<a href="neolithic_age.html">The Neolithic Age</a>" ended with two problems that farming made harder: knowing the time of year, and keeping track of what people owe each other as communities grow. People had been working on the first one long before they farmed.
+            </p>
+
+            <p class="fs-lg">
+              The first clock people had was the Moon. Its phases repeat about every 29.5 days, and anyone can see and count them. The word <i>month</i> comes from <i>moon</i>.
+            </p>
+
+            <p class="fs-lg">
+              Twelve lunar months add up to about 354 days, 11 days short of the solar year, so a calendar that counts only moons slips a full month against the seasons about every three years.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> To keep months tied to the seasons, people had to check the count against the Sun.
+            </p>
+
+            <!-- ═══════════════════════════════════════════════════
+                 INTERACTIVE TIMELINE
+                 ═══════════════════════════════════════════════════ -->
+            <div class="my-5">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <h5 class="mb-0">Time Kept in Stone: 10,000–2,000 BCE</h5>
+                <button type="button" class="btn btn-outline-secondary btn-sm flex-shrink-0 ms-3" data-bs-toggle="modal" data-bs-target="#timelineExpandModal" style="font-size:0.75rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="margin-bottom:1px;margin-right:3px;"><path d="M1.5 1h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 1zm9 0a.5.5 0 0 1 0-1h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4zm6.5 9a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5z"/></svg>Expand
+                </button>
+              </div>
+              <p class="text-muted" style="font-size:0.82rem; margin-bottom:0.25rem;">Click any event for details. Scale is logarithmic — equal visual distance represents equal proportional time.</p>
+
+              <div class="ht-timeline-wrap">
+                <div class="ht-axis-labels">
+                  <span style="left:3.6%;">10,000 BCE</span>
+                  <span style="left:19.6%;">8,000 BCE</span>
+                  <span style="left:39.2%;">6,000 BCE</span>
+                  <span style="left:64.4%;">4,000 BCE</span>
+                  <span style="left:80.4%;">3,000 BCE</span>
+                  <span style="left:100.0%;">2,000 BCE</span>
+                </div>
+                <div class="ht-timeline" id="htTimeline">
+                  <div class="ht-axis"></div>
+                  <!-- events injected by JS -->
+                </div>
+                <p class="ht-scale-note">Orange = covered in this article &nbsp;·&nbsp; Gray = covered in another Part 4 article &nbsp;·&nbsp; Period bands follow the Near Eastern sequence; Britain and Ireland stayed Neolithic until about 2500 BCE</p>
+                <div class="ht-period-legend">
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(60,160,80,0.28);"></span>Neolithic (New Stone Age)</span>
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,100,40,0.32);"></span>Chalcolithic (Copper Age)</span>
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.32);"></span>Bronze Age</span>
+                </div>
+              </div>
+
+              <!-- Detail panel -->
+              <div class="card border-0 bg-secondary mt-3 ht-detail-panel hidden" id="htDetail">
+                <div class="card-body py-3 px-4">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="fw-semibold mb-1" id="htDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                      <p class="fw-bold mb-1" id="htDetailTitle" style="font-size:1rem;"></p>
+                      <p class="mb-0" id="htDetailBody" style="font-size:0.9rem;"></p>
+                    </div>
+                    <button type="button" class="btn-close ms-3 flex-shrink-0" id="htDetailClose" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END TIMELINE -->
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="moon-and-sun">The Moon and the Midwinter Sun</h2>
+
+            <p class="fs-lg">
+              The oldest structure that may have done this is at Warren Field in Aberdeenshire, Scotland. By about 8000 BCE, hunter-gatherers had dug 12 pits in an arc, smaller at the ends and larger in the middle. Gaffney and colleagues (2013) argue that the pits track the lunar months, with their sizes following the phases of the Moon. At that time, a pass in the hills framed the midwinter sunrise, which would have let the people using the pits reset their count of months once a year.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The authors call the calendar reading hypothetical: trees may have blocked the view, and the alignment could be chance.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> If it holds, people were checking a count of moons against the Sun about 4,000 years before farming reached Britain.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="landscape-as-calendar">The Landscape as Calendar</h2>
+
+            <p class="fs-lg">
+              The Sun sets the length of the year. Its rising point on the horizon moves north and south through the year and turns back at the two solstices. Watching where the Sun comes up against a hill or a stone, from the same spot each time, turns that movement into a calendar.
+            </p>
+
+            <p class="fs-lg">
+              Ezcurra and colleagues (2022) showed how accurate this can be, using a much later society. On the summit of Mount Tlaloc, on the eastern edge of the Basin of Mexico, a stone causeway lines up with the sunrise on February 23–24, the start of the year in the Mexica (Aztec) calendar. The authors argue that this kept the calendar that set the farming year in step with the Sun.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              In late February the sunrise point moves almost a full Sun's width along the horizon each day, so an alignment on that date picks out a single morning. Near the solstices, the authors note, "sunrise will seem to stand still for some 10 d."<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> A solstice alignment can show that the year has turned, but it can't pin down the exact day by eye.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="rocks-that-remember">Rocks That Remember</h2>
+
+            <p class="fs-lg">
+              Some Neolithic communities built the horizon into a monument. At Nabta Playa, in the desert of southern Egypt, cattle herders came to a seasonal lake after the summer rains, and the site became a regional ceremonial center. Around 4800 BCE they set up a ring of stones about 4 meters across, with gaps between upright slabs that frame a rough north–south line and a line toward the summer solstice sunrise.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup><sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> How precise the solstice line is, and whether it was intended, is still debated.<sup><a href="#fn-6" data-scroll data-scroll-offset="100">[6]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              At Newgrange in Ireland, built around 3150 BCE, an opening above the entrance called the roof-box lets the midwinter sunrise shine down the 19-meter passage to the floor of the chamber.<sup><a href="#fn-7" data-scroll data-scroll-offset="100">[7]</a></sup> Ray (1989) found that the passage lined up with the midwinter sunrise of 5,150 years ago to within a few minutes of arc, which supports the view that the orientation was deliberate. He also placed Newgrange among wider surveys showing that megalith builders marked the southern limits of the Sun and the Moon "albeit approximately," and read that low accuracy as a sign of ritual interest more than of calendar making.<sup><a href="#fn-8" data-scroll data-scroll-offset="100">[8]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Knowth, another great passage tomb near Newgrange from the same centuries, is often said to face the equinoxes and to track the Moon, but a full survey of its two passages found no equinox alignment and no link to the Moon's extreme rising and setting points.<sup><a href="#fn-9" data-scroll data-scroll-offset="100">[9]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The great sarsen stones of Stonehenge were raised between about 2600 and 2500 BCE around an axis that points to the midsummer sunrise in one direction and the midwinter sunset in the other, and its excavators read the layout as focused on midwinter. The rectangle formed by its four Station Stones has a second axis aimed roughly at the Moon's most southerly rising and most northerly setting.<sup><a href="#fn-10" data-scroll data-scroll-offset="100">[10]</a></sup> A recent proposal that its stones encode a calendar of 365.25 days was rejected by other archaeoastronomers. Near the solstices the Sun barely moves along the horizon, so the alignment could not have kept such a calendar accurate.<sup><a href="#fn-11" data-scroll data-scroll-offset="100">[11]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Each of these alignments recorded something that took years of watching to get right. Once the stones were set, people who had never made the observations could see the year turn, for as long as the monument stood. That is the ratchet effect from "<a href="neolithic_age.html">The Neolithic Age</a>," with stone holding the result.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="built-together">Built and Used Together</h2>
+
+            <p class="fs-lg">
+              Building these monuments took organized labor on a large scale. At Stonehenge, most of the big sarsen stones came from West Woods, 25 km to the north, and a typical upright weighs about 20 tonnes.<sup><a href="#fn-12" data-scroll data-scroll-offset="100">[12]</a></sup> The smaller bluestones were quarried around 3000 BCE in the Preseli Hills of west Wales, about 230 km away.<sup><a href="#fn-13" data-scroll data-scroll-offset="100">[13]</a></sup> The six-tonne Altar Stone came from northeast Scotland, at least 700 km away.<sup><a href="#fn-14" data-scroll data-scroll-offset="100">[14]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              People also gathered at these places at set times of year. Durrington Walls, near Stonehenge, was most likely the village of the people who built the sarsen phase, a group of perhaps several thousand. Pigs were killed there all year, with a large peak in late autumn and winter, and the excavators link those feasts to the work of building.<sup><a href="#fn-15" data-scroll data-scroll-offset="100">[15]</a></sup> Isotopes in the bones show that few of the pigs were raised locally, and some probably came from Scotland.<sup><a href="#fn-16" data-scroll data-scroll-offset="100">[16]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              Göbekli Tepe, in southeastern Turkey, is far older. It was built from the tenth millennium BCE, before farming was established in the region. Its excavators argue that feasts brought together groups from a wide area to quarry, carve and raise its stone pillars.<sup><a href="#fn-17" data-scroll data-scroll-offset="100">[17]</a></sup> Later work found that some people also lived there year-round.<sup><a href="#fn-18" data-scroll data-scroll-offset="100">[18]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              A shared date is what the economist Thomas Schelling called a focal point: a choice people converge on without talking, because each expects the others to expect it.<sup><a href="#fn-19" data-scroll data-scroll-offset="100">[19]</a></sup> Michael Chwe argues that public ceremonies turn such a choice into common knowledge, so that everyone knows it and knows that everyone else knows it.<sup><a href="#fn-20" data-scroll data-scroll-offset="100">[20]</a></sup> In Mesoamerica, Šprajc and colleagues (2023) argue that the builders of the earliest ceremonial centers needed solar calendars so that people living far away knew "when to go to communal ceremonial complexes without the benefit of communication systems over long distances."<sup><a href="#fn-21" data-scroll data-scroll-offset="100">[21]</a></sup>
+            </p>
+
+            <p class="fs-lg">
+              The feasts paid for the work. Dietler and Herbich (2001) describe the work feast, food and drink given in return for a day of communal labor, as "a fundamental economic practice."<sup><a href="#fn-22" data-scroll data-scroll-offset="100">[22]</a></sup> For their regions, these monuments were among the largest gatherings of people and labor before there were towns. Later articles in Part 4 follow how cities took over that role, with writing to keep track of the work.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="data-platform">A Monument as a Data Platform</h2>
+
+            <p class="fs-lg">
+              "<a href="what_is_a_data_platform.html">What is a Data Platform?</a>" describes a data platform in three layers: infrastructure, information and knowledge work. It also sets one rule: the knowledge work layer uses only the information layer and never has to go back to the raw data. A solstice monument follows the same pattern for a single question.
+            </p>
+
+            <div class="table-responsive my-4">
+              <table class="table layers-table mb-0">
+                <thead><tr><th scope="col">Data platform</th><th scope="col">Solstice monument</th></tr></thead>
+                <tbody>
+                  <tr><td>Source data</td><td>Years of watching where the Sun rose on the horizon</td></tr>
+                  <tr><td>Infrastructure layer</td><td>Stones set in the ground, and the horizon they frame</td></tr>
+                  <tr><td>Information layer</td><td>The alignment: when the Sun lines up with the stones, the year has turned</td></tr>
+                  <tr><td>Knowledge work layer</td><td>The people who timed gatherings and work by the monument without making the observations themselves</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="fs-lg">
+              Getting an alignment right took people who knew how to watch the horizon over many years. Once it was built, nobody needed that skill to see when the year turned. <b>The monument stored the result of skilled observation so that people without the skill could use it.</b> The tools in the rest of this series do the same with other kinds of knowledge work. The monument also solved the problem once for everyone who came, the comparison "<a href="how_smart_city_investment_enables_growth.html">How Smart City Investment Enables Regional Economic Growth</a>" makes between Roman aqueducts and a city's data platform.
+            </p>
+
+            <p class="fs-lg">
+              A monument answers only one question, can't be updated without moving stones, and holds nothing about any particular person or exchange. The psychologist Merlin Donald called stores of knowledge outside the brain external symbolic storage, and dated the first ones to the permanent symbols of the late Ice Age.<sup><a href="#fn-23" data-scroll data-scroll-offset="100">[23]</a></sup> Writing became the most flexible of them, which is why "<a href="information_as_infrastructure.html">How Writing Allowed Information to Become Infrastructure</a>" treats writing as the first data platform. Monuments were an earlier, single-purpose kind.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="limits-of-stone">The Limits of Stone</h2>
+
+            <p class="fs-lg">
+              Monuments work for knowledge that repeats. Midwinter comes at the same point every year, so a fixed alignment keeps giving the right answer. A farming economy also produces information that changes every season: how much grain is in store, which family works which field, and who owes labor to whom.
+            </p>
+
+            <p class="fs-lg">
+              Stone can't hold that. An alignment can tell a community when midwinter has come. It can't record that the family in the eastern field owes three days of work to the granary and has paid two.
+            </p>
+
+            <p class="fs-lg">
+              In Mesopotamia, where the first cities grew, those records moved into clay, and the count of months moved with them. The earliest tablets from Uruk, written at the end of the fourth millennium BCE, already use an administrative year of 12 months of 30 days, close to the Moon's cycle but fixed for accounting. Scribes used it to work out grain rations, and the sign for one day's ration was a bowl. Later records used the same months to count days of labor.<sup><a href="#fn-24" data-scroll data-scroll-offset="100">[24]</a></sup> "From Barley to Cuneiform," the next article, follows how that accounting grew into writing.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Doggett, L. E. (1992). Calendars. In P. K. Seidelmann (Ed.), <em>Explanatory Supplement to the Astronomical Almanac</em> (pp. 575–608). University Science Books. <a href="https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html" target="_blank" rel="noopener">NASA reprint</a> [§1.1: tropical year 365.24219 days; synodic month 29.530589 days; twelve synodic months 354.36707 days.]</li>
+              <li id="fn-2">Gaffney, V., Fitch, S., Ramsey, E., Yorston, R., Ch'ng, E., Baldwin, E., et al. (2013). Time and a place: A luni-solar 'time-reckoner' from 8th millennium BC Scotland. <b>Internet Archaeology,</b> 34. <a href="https://doi.org/10.11141/ia.34.1" target="_blank" rel="noopener">doi:10.11141/ia.34.1</a> [§2: all 12 pits cut "by the early 8th millennium BC"; §5: pit sizes "highly suggestive of the lunar phases," and a pass in the hills "framed the rising of the midwinter sun," allowing "an annual solar recalibration." The authors note that the calendar function remains hypothetical and that the alignment could be coincidence.]</li>
+              <li id="fn-3">Ezcurra, E., Ezcurra, P., &amp; Meissner, B. (2022). Ancient inhabitants of the Basin of Mexico kept an accurate agricultural calendar using sunrise observatories and mountain alignments. <b>Proceedings of the National Academy of Sciences,</b> 119(51), e2215615119. <a href="https://doi.org/10.1073/pnas.2215615119" target="_blank" rel="noopener">doi:10.1073/pnas.2215615119</a> [Results, "Sunrise Alignments": the Tlaloc causeway aligns with the sunrise on February 23–24; near the equinox the sunrise point shifts about 25′ a day, against a solar disk of about 31′; near the solstices "sunrise will seem to stand still for some 10 d."]</li>
+              <li id="fn-4">Malville, J. M., Wendorf, F., Mazar, A. A., &amp; Schild, R. (1998). Megaliths and Neolithic astronomy in southern Egypt. <b>Nature,</b> 392(6675), 488–491. <a href="https://doi.org/10.1038/33131" target="_blank" rel="noopener">doi:10.1038/33131</a> [the complex "has alignments to cardinal and solstitial directions"]</li>
+              <li id="fn-5">Malville, J. M., Schild, R., Wendorf, F., &amp; Brenmer, R. (2007). Astronomy of Nabta Playa. <b>African Skies/Cieux Africains,</b> 11, 2–7. <a href="https://ui.adsabs.harvard.edu/abs/2007AfrSk..11....2M" target="_blank" rel="noopener">ADS 2007AfrSk..11....2M</a> [p. 2: herders came "after the summer rains"; Nabta served as "a regional ceremonial centre" during the summer wet season; rainfall was "no more than 100–150 mm." p. 3: the circle is "approximately 4 m across," with an adjacent hearth dated 4800 ± 60 BC. A revised version appears in J. C. Holbrook, J. O. Urama, &amp; R. T. Medupe (Eds.), <em>African Cultural Astronomy</em> (pp. 131–143), Springer, 2008.]</li>
+              <li id="fn-6">Belmonte, J. A. (2010). Ancient Egypt. In C. Ruggles &amp; M. Cotte (Eds.), <em>Heritage Sites of Astronomy and Archaeoastronomy in the Context of the UNESCO World Heritage Convention: A Thematic Study</em> (pp. 117–138). ICOMOS and International Astronomical Union. <a href="https://web.astronomicalheritage.org/images/astronomicalheritage.org/thematic-study/ch08main.pdf" target="_blank" rel="noopener">PDF</a> [p. 118: the astronomical intent at Nabta Playa "is highly controversial"; p. 122 lists its solar and stellar alignments as hypothetical.]</li>
+              <li id="fn-7">Patrick, J. (1974). Midwinter sunrise at Newgrange. <b>Nature,</b> 249(5457), 517–519. <a href="https://doi.org/10.1038/249517a0" target="_blank" rel="noopener">doi:10.1038/249517a0</a> [the light travels "along a 19 m passage"]</li>
+              <li id="fn-8">Ray, T. P. (1989). The winter solstice phenomenon at Newgrange, Ireland: Accident or design? <b>Nature,</b> 337(6205), 343–345. <a href="https://doi.org/10.1038/337343a0" target="_blank" rel="noopener">doi:10.1038/337343a0</a> [construction dated to 3150 ± 100 BC; the passage matches the midwinter sunrise of 5,150 years ago to within about 5′, which "supports the theory that the orientation of Newgrange was deliberate." Closing paragraph: surveys show megalith builders marking the southern limits of the Sun and Moon, "albeit approximately," and "such low accuracies suggest that ancient man's interest in these bodies may have been ritualistic rather than for the purpose of calendar construction." A correction (<b>Nature,</b> 342, 958) credits T. M. O'Brien with the surveys.]</li>
+              <li id="fn-9">Prendergast, F., &amp; Ray, T. (2017). Alignment of the western and eastern passage tombs. In G. Eogan &amp; K. Cleary (Eds.), <em>Excavations at Knowth 6: The Passage Tomb Archaeology of the Great Mound at Knowth</em> (Appendix 2, pp. 263–276). Royal Irish Academy. <a href="https://arrow.tudublin.ie/arastbk/3/" target="_blank" rel="noopener">Open copy</a> [no equinox alignment, and "a lack of any association with the major standstill positions of the moon." The lunar reading often cited for Knowth, Prendergast, K. (2017), <b>Journal of Lithic Studies,</b> 4(4), 67–76, reports no new measurements.]</li>
+              <li id="fn-10">Darvill, T., Marshall, P., Parker Pearson, M., &amp; Wainwright, G. (2012). Stonehenge remodelled. <b>Antiquity,</b> 86(334), 1021–1040. <a href="https://doi.org/10.1017/S0003598X00048225" target="_blank" rel="noopener">doi:10.1017/S0003598X00048225</a> [Table 3, p. 1026: Stage 2, 2620–2480 cal BC, with the "SW–NE solstitial axis (midwinter sunset/midsummer sunrise)"; p. 1030: the layout "strongly suggests that its principal focus was the midwinter solstice"; p. 1033: the Station Stones' other axis is "aligned approximately on the major southern moonrise … and the major northern moonset."]</li>
+              <li id="fn-11">Magli, G., &amp; Belmonte, J. A. (2023). Archaeoastronomy and the alleged 'Stonehenge calendar'. <b>Antiquity,</b> 97(393), 745–751. <a href="https://doi.org/10.15184/aqy.2023.33" target="_blank" rel="noopener">doi:10.15184/aqy.2023.33</a> [a reply to Darvill, T. (2022). Keeping time at Stonehenge. <b>Antiquity,</b> 96(386), 319–335. The abstract calls the 365.25-day reading "unsubstantiated"; the preprint (arXiv:2211.07981) argues that "the slow movement of the sun at the horizon makes it impossible to control the correct working of the calendar." Darvill replied in <b>Antiquity,</b> 97(393), 752–754.]</li>
+              <li id="fn-12">Nash, D. J., Ciborowski, T. J. R., Ullyott, J. S., Parker Pearson, M., Darvill, T., Greaney, S., et al. (2020). Origins of the sarsen megaliths at Stonehenge. <b>Science Advances,</b> 6(31), eabc0133. <a href="https://doi.org/10.1126/sciadv.abc0133" target="_blank" rel="noopener">doi:10.1126/sciadv.abc0133</a> [50 of the 52 surviving sarsens share one source, most probably "West Woods, Wiltshire, 25 km north of Stonehenge"; a typical upright weighs about 20 tonnes.]</li>
+              <li id="fn-13">Parker Pearson, M., Pollard, J., Richards, C., Welham, K., Casswell, C., French, C., et al. (2019). Megalith quarries for Stonehenge's bluestones. <b>Antiquity,</b> 93(367), 45–62. <a href="https://doi.org/10.15184/aqy.2018.111" target="_blank" rel="noopener">doi:10.15184/aqy.2018.111</a> [p. 45: the Preseli Hills of west Wales, "230km away," with "megalith quarrying around 3000 BC."]</li>
+              <li id="fn-14">Clarke, A. J. I., Kirkland, C. L., Bevins, R. E., Pearce, N. J. G., Glorie, S., &amp; Ixer, R. A. (2024). A Scottish provenance for the Altar Stone of Stonehenge. <b>Nature,</b> 632(8025), 570–575. <a href="https://doi.org/10.1038/s41586-024-07652-1" target="_blank" rel="noopener">doi:10.1038/s41586-024-07652-1</a> [the Orcadian Basin of northeast Scotland; "a 6 tonne shaped block … sourced at least 750 km from its current location."]</li>
+              <li id="fn-15">Craig, O. E., Shillito, L.-M., Albarella, U., Viner-Daniels, S., Chan, B., Cleal, R., et al. (2015). Feeding Stonehenge: Cuisine and consumption at the Late Neolithic site of Durrington Walls. <b>Antiquity,</b> 89(347), 1096–1109. <a href="https://doi.org/10.15184/aqy.2015.110" target="_blank" rel="noopener">doi:10.15184/aqy.2015.110</a> [pigs were killed year-round, with "a substantial peak … during the late autumn and winter"; Durrington is "most likely the village of the builders of Stonehenge Stage 2," a group that "probably numbered several thousands"; the feasting "accords well with … voluntary labour mobilisation for megalith building." Quoted from the accepted manuscript.]</li>
+              <li id="fn-16">Madgwick, R., Lamb, A. L., Sloane, H., Nederbragt, A. J., Albarella, U., Parker Pearson, M., &amp; Evans, J. A. (2019). Multi-isotope analysis reveals that feasts in the Stonehenge environs and across Wessex drew people and animals from throughout Britain. <b>Science Advances,</b> 5(3), eaau6078. <a href="https://doi.org/10.1126/sciadv.aau6078" target="_blank" rel="noopener">doi:10.1126/sciadv.aau6078</a> [131 pigs from four Late Neolithic complexes; "few pigs [were] raised locally"; five are "likely to derive from Scotland."]</li>
+              <li id="fn-17">Dietrich, O., Heun, M., Notroff, J., Schmidt, K., &amp; Zarnkow, M. (2012). The role of cult and feasting in the emergence of Neolithic communities. New evidence from Göbekli Tepe, south-eastern Turkey. <b>Antiquity,</b> 86(333), 674–695. <a href="https://doi.org/10.1017/S0003598X00047840" target="_blank" rel="noopener">doi:10.1017/S0003598X00047840</a> [pp. 684–687: "there had to be a means of bringing together groups from different areas and organising communal work," and the answer "lies in the widespread evidence for extensive feasting."]</li>
+              <li id="fn-18">Dietrich, L., Meister, J., Dietrich, O., Notroff, J., Kiep, J., Heeb, J., et al. (2019). Cereal processing at Early Neolithic Göbekli Tepe, southeastern Turkey. <b>PLoS ONE,</b> 14(5), e0215214. <a href="https://doi.org/10.1371/journal.pone.0215214" target="_blank" rel="noopener">doi:10.1371/journal.pone.0215214</a> [dates in the 10th and 9th millennia BC; "a smaller group of people actually lived at Göbekli Tepe permanently." Banning, E. B. (2011), <b>Current Anthropology,</b> 52(5), 619–660, first argued that its buildings may be houses.]</li>
+              <li id="fn-19">Schelling, T. C. (1960). <em>The Strategy of Conflict.</em> Harvard University Press, ch. 3, p. 57. ["some focal point for each person's expectation of what the other expects him to expect to be expected to do"]</li>
+              <li id="fn-20">Chwe, M. S.-Y. (2001). <em>Rational Ritual: Culture, Coordination, and Common Knowledge.</em> Princeton University Press, pp. 3–4. ["Public rituals, rallies, and ceremonies generate the necessary common knowledge."]</li>
+              <li id="fn-21">Šprajc, I., Inomata, T., &amp; Aveni, A. F. (2023). Origins of Mesoamerican astronomy and calendar: Evidence from the Olmec and Maya regions. <b>Science Advances,</b> 9(1), eabq7675. <a href="https://doi.org/10.1126/sciadv.abq7675" target="_blank" rel="noopener">doi:10.1126/sciadv.abq7675</a> [Discussion: "To coordinate ritual schedules among participants from ever broader areas, the builders of ceremonial complexes needed to elaborate solar observational calendars." The complexes date from 1100 to 750 BCE.]</li>
+              <li id="fn-22">Dietler, M., &amp; Herbich, I. (2001). Feasts and labor mobilization: Dissecting a fundamental economic practice. In M. Dietler &amp; B. Hayden (Eds.), <em>Feasts: Archaeological and Ethnographic Perspectives on Food, Politics, and Power</em> (pp. 240–264). Smithsonian Institution Press. [p. 256: work feasts are "an exchange of labor for hospitality."]</li>
+              <li id="fn-23">Donald, M. (1993). Précis of <em>Origins of the Modern Mind</em>: Three stages in the evolution of culture and cognition. <b>Behavioral and Brain Sciences,</b> 16(4), 737–748. <a href="https://doi.org/10.1017/S0140525X00032647" target="_blank" rel="noopener">doi:10.1017/S0140525X00032647</a> [external symbolic storage systems "allow humans to circumvent, at least partially, the limitations of biological working memory"; the third transition began "in the late Upper Paleolithic with the invention of the first permanent visual symbols." Quoted from the archived preprint.]</li>
+              <li id="fn-24">Englund, R. K. (1988). Administrative timekeeping in ancient Mesopotamia. <b>Journal of the Economic and Social History of the Orient,</b> 31(2), 121–185. <a href="https://doi.org/10.1163/156852088X00070" target="_blank" rel="noopener">doi:10.1163/156852088X00070</a> [p. 122: "a twelve-month, 360-day year in the archaic documents from the end of the 4th millennium"; p. 163: the bowl sign NINDA for "one day's grain ration"; p. 164: the month as "the unit basic to rationing systems"; p. 125: Ur III workday ledgers (about 2100 BC) count in 30-day months.]</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         TIMELINE EXPAND MODAL
+         ═══════════════════════════════════════════════════ -->
+    <div class="modal fade" id="timelineExpandModal" tabindex="-1" aria-labelledby="timelineExpandModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title" id="timelineExpandModalLabel">Time Kept in Stone: 10,000–2,000 BCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pt-2 d-flex flex-column" style="overflow-y:auto;">
+            <p class="text-muted mb-2" style="font-size:0.82rem;">Click any event for details, or click a card below. Scale is logarithmic — equal visual distance represents equal proportional time.</p>
+
+            <div class="ht-timeline ht-timeline-modal" id="htModalTimeline">
+              <div class="ht-axis"></div>
+            </div>
+
+            <div class="ht-period-legend mt-2 mb-2">
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(60,160,80,0.28);"></span>Neolithic (New Stone Age)</span>
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,100,40,0.32);"></span>Chalcolithic (Copper Age)</span>
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.32);"></span>Bronze Age</span>
+            </div>
+
+            <div class="card border-0 bg-secondary ht-detail-panel hidden mb-3" id="htModalDetail">
+              <div class="card-body py-3 px-4">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <p class="fw-semibold mb-1" id="htModalDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                    <p class="fw-bold mb-1" id="htModalDetailTitle" style="font-size:1rem;"></p>
+                    <p class="mb-0" id="htModalDetailBody" style="font-size:0.9rem;"></p>
+                  </div>
+                  <button type="button" class="btn-close ms-3 flex-shrink-0" id="htModalDetailClose" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 mt-1" id="htModalEventGrid">
+              <!-- populated by JS on first modal open -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+            </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+    <!-- Interactive Timeline Script -->
+    <script>
+    (function () {
+      var EVENTS = [
+        { yearsAgo:12000, date:"~10,000 BCE", title:"Farming Begins",
+          body:"Farming begins in the Fertile Crescent. Hunter-gatherers already tracked the seasons; farming raised the cost of getting the timing wrong. Covered in Part 4: The Neolithic Age.", future:true },
+        { yearsAgo:11500, date:"~9,500 BCE", title:"Göbekli Tepe",
+          body:"Stone enclosures in southeastern Turkey, built before farming was established in the region. The excavators argue that feasts brought together the groups who quarried and raised the pillars (Dietrich et al., 2012). Some people also lived there year-round.", future:false },
+        { yearsAgo:10000, date:"~8,000 BCE", title:"Warren Field",
+          body:"Hunter-gatherers in Aberdeenshire, Scotland, dig 12 pits in an arc that may track the lunar months. A pass in the hills framed the midwinter sunrise, which would let the users reset their count each year (Gaffney et al., 2013). The authors call the calendar reading hypothetical.", future:false },
+        { yearsAgo:6800, date:"~4,800 BCE", title:"Nabta Playa",
+          body:"A ring of stones about 4 m across in the desert of southern Egypt, at a seasonal lake where cattle herders gathered after the summer rains. Gaps between upright slabs frame a rough north–south line and a line toward the summer solstice sunrise. How precise and intended that line is remains debated.", future:false },
+        { yearsAgo:5300, date:"~3,300 BCE", title:"Proto-Cuneiform",
+          body:"The earliest written tablets appear at Uruk in Mesopotamia. They are accounts, and they already count time in an administrative year of twelve 30-day months, used to work out grain rations (Englund, 1988). Coming up in Part 4: From Barley to Cuneiform.", future:true },
+        { yearsAgo:5150, date:"~3,150 BCE", title:"Newgrange",
+          body:"A passage tomb in Ireland. A roof-box above the entrance lets the midwinter sunrise reach the chamber floor down a 19-meter passage, and the alignment appears deliberate (Ray, 1989). Knowth, nearby, has no equinox or lunar alignment.", future:false },
+        { yearsAgo:4500, date:"~2,500 BCE", title:"Stonehenge",
+          body:"The sarsen stones are raised around an axis toward the midsummer sunrise and the midwinter sunset. The sarsens came from 25 km away, the bluestones from about 230 km and the Altar Stone from at least 700 km. Feasts at nearby Durrington Walls drew pigs, and the people who raised them, from across Britain.", future:false }
+      ];
+
+      var LOG_MAX   = Math.log10(12500);
+      var LOG_MIN   = Math.log10(4000);
+      var LOG_RANGE = LOG_MAX - LOG_MIN;
+      function logPos(y) { return ((LOG_MAX - Math.log10(y)) / LOG_RANGE) * 100; }
+
+      var PERIODS = [
+        { label:'Neolithic', fromYrs:12500, toYrs:6500, color:'rgba(60,160,80,0.10)' },
+        { label:'Chalcolithic', fromYrs:6500, toYrs:5300, color:'rgba(200,100,40,0.14)' },
+        { label:'Bronze Age', fromYrs:5300, toYrs:4000, color:'rgba(200,160,40,0.14)' }
+      ];
+
+      function buildTimeline(container, detailEl, dateEl, titleEl, bodyEl, closeEl, gridEl) {
+        while (container.firstChild) container.removeChild(container.firstChild);
+        var axisEl = document.createElement('div');
+        axisEl.className = 'ht-axis';
+        container.appendChild(axisEl);
+
+        PERIODS.forEach(function(p) {
+          var lp = logPos(p.fromYrs), rp = logPos(p.toYrs), wp = rp - lp;
+          var band = document.createElement('div');
+          band.className = 'ht-period-band';
+          band.style.left = lp.toFixed(1) + '%';
+          band.style.width = wp.toFixed(1) + '%';
+          band.style.backgroundColor = p.color;
+          container.insertBefore(band, axisEl);
+          var lbl = document.createElement('div');
+          lbl.className = 'ht-period-label-inline';
+          lbl.textContent = p.label;
+          band.appendChild(lbl);
+          // drop the label if it is wider than its band
+          if (lbl.offsetWidth > band.clientWidth - 6) band.removeChild(lbl);
+        });
+
+        var activeEl = null;
+        function showDetail(ev, el) {
+          if (activeEl) activeEl.classList.remove('active');
+          activeEl = el;
+          if (el) el.classList.add('active');
+          dateEl.textContent  = ev.date;
+          titleEl.textContent = ev.title;
+          bodyEl.textContent  = ev.body;
+          dateEl.style.color  = ev.future ? '#9aa0ac' : '#ff9500';
+          detailEl.classList.remove('hidden');
+        }
+
+        EVENTS.forEach(function(ev, i) {
+          var el = document.createElement('div');
+          el.className = 'ht-event' + (ev.future ? ' future' : '');
+          el.style.left = logPos(ev.yearsAgo).toFixed(1) + '%';
+          el.dataset.idx = i;
+          var dot = document.createElement('div'); dot.className = 'ht-dot';
+          var lbl = document.createElement('div');
+          lbl.className = 'ht-event-lbl ' + (i % 2 === 0 ? 'above' : 'below');
+          lbl.textContent = ev.date;
+          el.appendChild(dot); el.appendChild(lbl);
+          container.appendChild(el);
+          el.addEventListener('click', function() { showDetail(ev, el); });
+        });
+
+        if (closeEl) {
+          closeEl.addEventListener('click', function() {
+            detailEl.classList.add('hidden');
+            if (activeEl) { activeEl.classList.remove('active'); activeEl = null; }
+          });
+        }
+
+        if (gridEl) {
+          gridEl.innerHTML = '';
+          var evEls = container.querySelectorAll('.ht-event');
+          EVENTS.forEach(function(ev, i) {
+            var accent  = ev.future ? '#9aa0ac' : '#ff9500';
+            var snippet = ev.body.length > 110 ? ev.body.substring(0, 110) + '…' : ev.body;
+            var col = document.createElement('div');
+            col.className = 'col';
+            col.innerHTML = '<div class="card h-100 ht-modal-event-card border border-secondary" style="cursor:pointer;background:rgba(255,255,255,0.04);">'
+              + '<div class="card-body py-2 px-3">'
+              + '<p class="fw-semibold mb-1" style="color:' + accent + ';font-size:0.78rem;">' + ev.date + '</p>'
+              + '<p class="fw-bold mb-1" style="font-size:0.85rem;">' + ev.title + '</p>'
+              + '<p class="mb-0 text-body-secondary" style="font-size:0.78rem;">' + snippet + '</p>'
+              + '</div></div>';
+            col.querySelector('.card').addEventListener('click', (function(ev, i) {
+              return function() {
+                showDetail(ev, evEls[i] || null);
+                detailEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+              };
+            })(ev, i));
+            // highlight the matching marker on the timeline while the card is hovered
+            col.querySelector('.card').addEventListener('mouseenter', function() {
+              if (evEls[i]) evEls[i].classList.add('card-hover');
+            });
+            col.querySelector('.card').addEventListener('mouseleave', function() {
+              if (evEls[i]) evEls[i].classList.remove('card-hover');
+            });
+            gridEl.appendChild(col);
+          });
+        }
+
+        return showDetail;
+      }
+
+      // Inline timeline
+      var inlineContainer = document.getElementById('htTimeline');
+      if (!inlineContainer) return;
+      buildTimeline(
+        inlineContainer,
+        document.getElementById('htDetail'),
+        document.getElementById('htDetailDate'),
+        document.getElementById('htDetailTitle'),
+        document.getElementById('htDetailBody'),
+        document.getElementById('htDetailClose'),
+        null
+      );
+
+      // Modal timeline — built lazily on first open
+      var modalEl = document.getElementById('timelineExpandModal');
+      if (modalEl) {
+        var modalBuilt = false;
+        modalEl.addEventListener('shown.bs.modal', function() {
+          if (modalBuilt) return;
+          modalBuilt = true;
+          buildTimeline(
+            document.getElementById('htModalTimeline'),
+            document.getElementById('htModalDetail'),
+            document.getElementById('htModalDetailDate'),
+            document.getElementById('htModalDetailTitle'),
+            document.getElementById('htModalDetailBody'),
+            document.getElementById('htModalDetailClose'),
+            document.getElementById('htModalEventGrid')
+          );
+        });
+      }
+
+    })();
+    </script>
+
+  </body>
+</html>

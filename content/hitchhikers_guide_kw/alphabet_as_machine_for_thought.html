@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO meta tags -->
+    <title>The Alphabet as a Machine for Thought | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)</title>
+    <meta name="description" content="The shift from cuneiform to alphabet moved meaning from symbols into combinations of symbols — creating an expressive space large enough to carry any thought across time to people not yet born.">
+    <meta name="keywords" content="alphabet, cuneiform, writing systems, Proto-Sinaitic, Phoenician, Greek alphabet, literacy, reasoning, knowledge work, Goody, Ong, Olson, compositionality">
+    <meta name="author" content="Josh Patterson">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="The Alphabet as a Machine for Thought | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)"/>
+    <meta property="og:image" content="https://pattersonconsultingtn.com/assets/img/machine_thought_header_0.jpg"/>
+    <meta property="og:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/alphabet_as_machine_for_thought.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="Patterson Consulting"/>
+    <meta property="og:description" content="The shift from cuneiform to alphabet moved meaning from symbols into combinations of symbols — creating an expressive space large enough to carry any thought across time to people not yet born."/>
+
+    <meta name="twitter:title" content="The Alphabet as a Machine for Thought | The Hitchhiker's Guide to Building Knowledge Work Systems (Series)" />
+    <meta name="twitter:image" content="https://pattersonconsultingtn.com/assets/img/machine_thought_header_0.jpg" />
+    <meta name="twitter:url" content="https://pattersonconsultingtn.com/content/hitchhikers_guide_kw/alphabet_as_machine_for_thought.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="The shift from cuneiform to alphabet moved meaning from symbols into combinations of symbols — creating an expressive space large enough to carry any thought across time to people not yet born." />
+
+    <!-- Favicon / App icons -->
+    <link rel="icon" type="image/png" href="../../assets/app-icons/pct_box_logo_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../../assets/app-icons/pct_box_logo_16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="../../assets/app-icons/icon-180x180.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="../../assets/js/theme-switcher.js"></script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" id="google-font">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/lightgallery/css/lightgallery-bundle.min.css">
+    <link rel="stylesheet" media="screen" href="../../assets/vendor/aos/dist/aos.css">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="../../assets/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="../../assets/css/theme.pct.v2.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .references-list li {
+        scroll-margin-top: 100px;
+      }
+      .page-loading {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0; visibility: hidden; z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading { background-color: #121519; }
+      .page-loading.active { opacity: 1; visibility: visible; }
+      .page-loading-inner {
+        position: absolute; top: 50%; left: 0; width: 100%; text-align: center;
+        -webkit-transform: translateY(-50%); transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out; transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner { opacity: 1; }
+      .page-loading-inner > span {
+        display: block; font-family: "Inter", sans-serif;
+        font-size: 1rem; font-weight: normal; color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span { color: #fff; opacity: .6; }
+      .page-spinner {
+        display: inline-block; width: 2.75rem; height: 2.75rem;
+        margin-bottom: .75rem; vertical-align: text-bottom;
+        background-color: #d7dde2; border-radius: 50%; opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner { background-color: rgba(255,255,255,.25); }
+      @-webkit-keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+      @keyframes spinner {
+        0% { -webkit-transform: scale(0); transform: scale(0); }
+        50% { opacity: 1; -webkit-transform: none; transform: none; }
+      }
+
+      /* ── Definition callout boxes ───────────────────────────── */
+      .def-box {
+        border-left: 3px solid #ff9500;
+        padding: 0.6rem 1rem 0.6rem 1.1rem;
+        margin: 1.5rem 0;
+        background: rgba(255,149,0,0.05);
+        border-radius: 0 4px 4px 0;
+      }
+      .def-box .def-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ff9500;
+        margin-bottom: 0.2rem;
+      }
+      .def-box p {
+        margin-bottom: 0;
+        font-size: 0.97rem;
+      }
+
+      /* ── Comparison table ───────────────────────────────────── */
+      .layers-table { font-size: 0.95rem; }
+      .layers-table th {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ff9500;
+        border-bottom-width: 2px;
+      }
+      .layers-table td { vertical-align: top; }
+      .layers-table td:first-child { font-weight: 600; width: 28%; }
+
+      /* Long DOIs wrap on narrow screens */
+      .references-list a { overflow-wrap: anywhere; }
+
+      /* ── Interactive Timeline ─────────────────────────────────── */
+      .ht-timeline-wrap {
+        position: relative;
+        overflow-x: auto;
+        padding: 1rem 0 0.5rem;
+      }
+      .ht-timeline {
+        position: relative;
+        min-width: 600px;
+        height: 140px;
+        margin: 2.5rem 0 1rem;
+      }
+      .ht-axis {
+        position: absolute;
+        top: 50%;
+        left: 0; right: 0;
+        height: 2px;
+        background: #d0d5dd;
+        transform: translateY(-50%);
+      }
+      .ht-event {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 2;
+      }
+      .ht-dot {
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: #ff9500;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #ff9500;
+        transition: transform .15s, box-shadow .15s;
+        margin: 0 auto;
+      }
+      .ht-event.context .ht-dot {
+        background: #c8cdd6;
+        box-shadow: 0 0 0 2px #c8cdd6;
+        width: 10px; height: 10px;
+      }
+      .ht-event.future .ht-dot {
+        background: #c8cdd6;
+        box-shadow: 0 0 0 2px #c8cdd6;
+      }
+      .ht-event.active .ht-dot,
+      .ht-event:hover .ht-dot {
+        transform: scale(1.45);
+        box-shadow: 0 0 0 3px #ff9500;
+      }
+      .ht-event.context:hover .ht-dot,
+      .ht-event.future:hover .ht-dot {
+        transform: scale(1.45);
+        box-shadow: 0 0 0 3px #c8cdd6;
+      }
+      .ht-event-lbl {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: #4a5568;
+        line-height: 1.2;
+        text-align: center;
+        max-width: 86px;
+        white-space: normal;
+      }
+      .ht-event.context .ht-event-lbl,
+      .ht-event.future .ht-event-lbl { color: #9aa0ac; }
+      .ht-event-lbl.above { bottom: calc(50% + 14px); padding-bottom: 4px; }
+      .ht-event-lbl.below { top: calc(50% + 14px); padding-top: 4px; }
+      .ht-axis-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        color: #9aa0ac;
+        padding: 0 0 0.5rem;
+        min-width: 600px;
+      }
+      .ht-detail-panel {
+        transition: opacity .2s;
+      }
+      .ht-detail-panel.hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; }
+      .ht-scale-note {
+        font-size: 0.72rem;
+        color: #9aa0ac;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+      /* ── Period Bands ─────────────────────────────────────── */
+      .ht-period-band {
+        position: absolute;
+        top: 0; bottom: 0;
+        z-index: 0;
+        overflow: hidden;
+        border-right: 1px solid rgba(0,0,0,0.07);
+      }
+      .ht-period-label-inline {
+        position: absolute;
+        top: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.57rem;
+        font-weight: 700;
+        color: rgba(50,50,50,0.45);
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .ht-period-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.9rem;
+        margin-top: 0.45rem;
+        min-width: 600px;
+      }
+      .ht-legend-swatch {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.67rem;
+        font-weight: 600;
+        color: #4a5568;
+      }
+      .ht-legend-box {
+        display: inline-block;
+        width: 14px; height: 10px;
+        border-radius: 2px;
+        border: 1px solid rgba(0,0,0,0.10);
+        flex-shrink: 0;
+      }
+      .ht-timeline-modal {
+        height: 200px;
+        min-width: 100%;
+      }
+      .ht-modal-event-card {
+        transition: border-color .15s, box-shadow .15s;
+      }
+      .ht-modal-event-card:hover {
+        border-color: rgba(255,149,0,0.45) !important;
+        box-shadow: 0 0 0 2px rgba(255,149,0,0.15);
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () { preloader.remove(); }, 1500);
+          const theme = 'light';
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6H6PTM9');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header data-bs-theme="light">
+        <div class="navbar navbar-expand-lg fixed-top bg-light">
+          <div class="container">
+
+            <a class="navbar-brand pe-sm-3" href="../../index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              Patterson Consulting
+            </a>
+
+            <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="../../contact_us.html" target="_blank" rel="noopener">
+              <i class="fs-xl me-2 ms-n1"></i>
+              Contact Us
+            </a>
+
+            <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Industries</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../retail_industry.html">Retail</a></li>
+                    <li><a class="dropdown-item" href="../../insurance_industry.html">Insurance</a></li>
+                    <li><a class="dropdown-item" href="../../municipal_industry.html">Smart City</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Engineering Services</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-semibold" href="../../augmented_reasoning.html" style="color: #ff9500;">Decision Intelligence Agents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../../offerings/migrations_to_databricks.html">Migration to Databricks</a></li>
+                    <li><a class="dropdown-item" href="../../platform_engineering.html">Platform Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../data_engineering.html">Data Engineering</a></li>
+                    <li><a class="dropdown-item" href="../../generative_ai.html">GenAI Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Resources</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../../blog/blog_index.html">Blog</a></li>
+                    <li><a class="dropdown-item" href="../../publications.html">Team Publications</a></li>
+                    <li><a class="dropdown-item" href="../../index.html#case_studies">Case Studies</a></li>
+                    <li><a class="dropdown-item" href="../../podcast.html">AI Coffee Hour</a></li>
+                    <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../about.html">About</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </header>
+
+
+      <!-- Page header -->
+      <section class="container py-5 mt-5 mb-md-2 mb-lg-3 mb-xl-4">
+        <nav aria-label="breadcrumb">
+          <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+            <li class="breadcrumb-item"><a href="">eBook</a></li>
+            <li class="breadcrumb-item"><a href="../hitchhikers_guide_kw_toc.html">Hitchhiker's Guide to Knowledge Work Systems</a></li>
+            <li class="breadcrumb-item active" aria-current="page">The Alphabet as a Machine for Thought</li>
+          </ol>
+        </nav>
+
+        <h1 class="display-4 text-left pb-2 pb-lg-3">The Alphabet as a Machine for Thought</h1>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
+          <div class="d-flex align-items-center mb-4 me-4">
+            <span class="fs-sm me-2">By:</span>
+            <a class="nav-link position-relative fw-semibold p-0" href="../../josh_patterson.html">
+              Josh Patterson
+              <span class="d-block position-absolute start-0 bottom-0 w-100" style="background-color: currentColor; height: 1px;"></span>
+            </a>
+          </div>
+        </div>
+        <div class="">September 2026</div>
+      </section>
+
+
+      <!-- Post cover image (parallax) -->
+      <section class="jarallax" data-jarallax data-speed=".65">
+        <div class="jarallax-img bg-position-center-y" style="background-image: url(../../assets/img/machine_thought_header_0.jpg);"></div>
+        <div class="d-none d-xxl-block" style="height: 660px;"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 650px;"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 500px;"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 400px;"></div>
+        <div class="d-md-none" style="height: 300px;"></div>
+      </section>
+
+
+      <!-- Post content -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+        <div class="row justify-content-center pt-xxl-2">
+          <div class="col-lg-9 col-xl-8">
+
+
+            <div class="card border-0 bg-secondary mb-5">
+              <div class="card-body">
+                <figure>
+                  <blockquote class="blockquote">
+                    <p class=""><i>
+
+                      Key Idea:<br/><br/>
+
+                      Cuneiform encoded concepts in symbols. The alphabet encoded concepts in combinations of ~26 phonetic primitives. From that design change, the expressive space expanded from hundreds of signs to approximately 5.9 × 10¹⁴ possible 10-character sequences — and the system became general enough to carry any thought a human can articulate across time and distance.
+
+                    </i></p>
+                  </blockquote>
+                </figure>
+              </div>
+            </div>
+
+
+            <p class="fs-lg">
+              "<a href="from_barley_to_cuneiform.html">From Barley to Cuneiform</a>" traced the path from clay tokens through proto-cuneiform — writing that emerged not as literature but as an accounting system for the surpluses generated by early agriculture. Schmandt-Besserat's reconstruction of that sequence shows a centuries-long development: three-dimensional clay tokens gave way to two-dimensional impressions, which gave way to incised signs on tablets, which eventually decoupled from their original accounting context into a more general logographic system.<sup><a href="#fn-1" data-scroll data-scroll-offset="100">[1]</a></sup> By the time Sumerian cuneiform had matured at Uruk, it could record grain allocations, labor obligations, administrative decisions, and eventually myth and law. That was a genuine achievement.
+            </p>
+
+            <p class="fs-lg">
+              But the architecture of cuneiform — meaning encoded in individual symbols — imposed a ceiling on how far the system could go. Adding expressive range required adding signs. The ceiling was not a matter of scribal effort; it was built into the design.
+            </p>
+
+
+            <!-- ═══════════════════════════════════════════════════
+                 INTERACTIVE TIMELINE
+                 ═══════════════════════════════════════════════════ -->
+            <div class="my-5">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <h5 class="mb-0">From Cuneiform to Alphabet: ~3,350–300 BCE</h5>
+                <button type="button" class="btn btn-outline-secondary btn-sm flex-shrink-0 ms-3" data-bs-toggle="modal" data-bs-target="#timelineExpandModal" style="font-size:0.75rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="margin-bottom:1px;margin-right:3px;"><path d="M1.5 1h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 1zm9 0a.5.5 0 0 1 0-1h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4zm6.5 9a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5z"/></svg>Expand
+                </button>
+              </div>
+              <p class="text-muted" style="font-size:0.82rem; margin-bottom:0.25rem;">Click any event for details. Scale is logarithmic. Gray = context from prior article or coming up next.</p>
+
+              <div class="ht-timeline-wrap">
+                <div class="ht-axis-labels">
+                  <span>~3,350 BCE</span>
+                  <span>~2,500 BCE</span>
+                  <span>~1,500 BCE</span>
+                  <span>~800 BCE</span>
+                  <span>~300 BCE</span>
+                </div>
+                <div class="ht-timeline" id="htTimeline">
+                  <div class="ht-axis"></div>
+                  <!-- events injected by JS -->
+                </div>
+                <p class="ht-scale-note">Orange = covered in this article &nbsp;·&nbsp; Gray = context or coming up in Part 4</p>
+                <div class="ht-period-legend">
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.28);"></span>Bronze Age</span>
+                  <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(120,140,160,0.28);"></span>Iron Age</span>
+                </div>
+              </div>
+
+              <!-- Detail panel -->
+              <div class="card border-0 bg-secondary mt-3 ht-detail-panel hidden" id="htDetail">
+                <div class="card-body py-3 px-4">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="fw-semibold mb-1" id="htDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                      <p class="fw-bold mb-1" id="htDetailTitle" style="font-size:1rem;"></p>
+                      <p class="mb-0" id="htDetailBody" style="font-size:0.9rem;"></p>
+                    </div>
+                    <button type="button" class="btn-close ms-3 flex-shrink-0" id="htDetailClose" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END TIMELINE -->
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Cuneiform Has a Ceiling</h2>
+
+            <p class="fs-lg">
+              A logographic writing system encodes meaning directly in its symbols. Each symbol represents a concept: grain, king, house, labor, cattle. To extend the vocabulary, you invent new symbols. Sumerian cuneiform eventually comprised several hundred distinct signs, with additional mechanisms for representing sounds not covered by logograms.
+            </p>
+
+            <p class="fs-lg">
+              Mastering the full sign inventory required years of specialized scribal education. Literacy remained a small professional class — and a necessary one. The administrative institutions that depended on the system — temples, trading houses, royal granaries — had to maintain scribal schools, train replacements, and hold that expertise continuously inside the institution itself.
+            </p>
+
+            <p class="fs-lg">
+              A writing system where symbols carry meaning directly scales by adding symbols. The more concepts you need to represent, the larger and more complex the system becomes. The cuneiform inventory grew for centuries. It solved the administrative problem well. What it could not do efficiently was represent the full expressive range of spoken language — the relationships, conditionals, causal chains, and hypotheticals that make complex reasoning transmittable in writing.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Alphabet Moves Meaning into Structure</h2>
+
+            <p class="fs-lg">
+              The Proto-Sinaitic alphabet, dated to roughly 1,850–1,700 BCE (Middle Bronze Age), is the earliest known alphabetic script.<sup><a href="#fn-2" data-scroll data-scroll-offset="100">[2]</a></sup> It appears to have been developed by Semitic-speaking workers in Egypt, adapting Egyptian hieroglyphs into approximately 22–27 symbols representing consonantal sounds. The Phoenician alphabet (~1,050 BCE, Late Bronze Age / Early Iron Age) standardized the system and spread it across the Mediterranean. The Greek alphabet (~800 BCE, Iron Age) added systematic representation of vowels, producing the first alphabet capable of full phonemic encoding of spoken language.
+            </p>
+
+            <p class="fs-lg">
+              <strong>The structural shift from cuneiform to alphabet is the shift from symbols carrying meaning to combinations of symbols carrying meaning.</strong>
+            </p>
+
+            <p class="fs-lg">
+              A cuneiform system with several hundred signs encodes concepts in individual symbols. An alphabet with 22–30 symbols encodes nothing on its own — each symbol represents only a sound. Meaning lives entirely in the structure of combinations. The same 26 letters that spell "king" also spell "kin," "ink," "rink," "link," and an enormous number of other words and sentences.
+            </p>
+
+            <p class="fs-lg">
+              A system of 30 alphabetic symbols can produce sequences of length 10 in approximately 5.9 × 10<sup>14</sup> distinct arrangements — an effectively unlimited representational space generated from a tiny primitive set. The cuneiform system, with hundreds of concept-bearing symbols, cannot approach this expressive range without proportional growth in its sign inventory.
+            </p>
+
+            <p class="fs-lg">
+              The learning investment required to reach functional literacy with an alphabetic system is measured in weeks to months rather than the years demanded by cuneiform's hundreds of signs. That difference shifts literacy from a professional credential requiring institutional support to a widely distributed cognitive tool — one that any trader, farmer, or philosopher can carry without a scribal school behind them.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Combinations Carry the Meaning</h2>
+
+            <p class="fs-lg">
+              A logographic representation of a situation might look like:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <p class="mb-2 text-muted" style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">Logographic (concepts in symbols)</p>
+                <p class="mb-0 fw-semibold" style="font-size:1.05rem;">[KING] &nbsp; [HOUSE] &nbsp; [GRAIN]</p>
+                <p class="mb-0 text-muted mt-2" style="font-size:0.85rem;">Concepts juxtaposed. Relationships between them are not encoded.</p>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              An alphabetic representation of the same situation:
+            </p>
+
+            <div class="card border-0 bg-secondary mb-4">
+              <div class="card-body py-3 px-4">
+                <p class="mb-2 text-muted" style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">Alphabetic (meaning in combinations)</p>
+                <p class="mb-0 fw-semibold" style="font-size:1.05rem; font-style:italic;">"The king's control of the grain trade caused prices to rise in neighboring kingdoms."</p>
+                <p class="mb-0 text-muted mt-2" style="font-size:0.85rem;">Encodes: entities, attributes, relationships, causality, conditionality, time, and hypothetical states — using the same 26 symbols recombined.</p>
+              </div>
+            </div>
+
+            <p class="fs-lg">
+              Each symbol is deliberately non-semantic — a sound, not a concept — so that their combinations carry arbitrarily complex meaning. The structure of the sentence, not the symbols themselves, encodes the relationship between entities, the direction of causality, and the conditionality of claims.
+            </p>
+
+            <p class="fs-lg">
+              Alphabetic writing forces propositional precision in a way that other recording media cannot. The requirement to produce a grammatical sentence commits the writer to a specific claim, makes causal relationships explicit, and renders logical dependencies visible. Olson (1977) identified the mechanism: writing introduces a gap between what was said and what was meant — between the explicit propositional content of a text and the speaker's original intent — that oral communication sidesteps through tone, gesture, and shared context.<sup><a href="#fn-3" data-scroll data-scroll-offset="100">[3]</a></sup> A written text says exactly what it says, regardless of what was intended. That fixed propositional character is what makes written arguments criticizable across time: the critic can hold the text to what it actually asserts, not what its author might have meant.
+            </p>
+
+            <div class="def-box">
+              <div class="def-label">Key Concept: Compositionality</div>
+              <p>A system is compositional when the meaning of a complex expression is determined by the meanings of its parts and the rules used to combine them. The alphabet is the first widely deployed compositional writing system: a finite set of phonemic primitives, combined by syntactic rules, generates an effectively unlimited expressive space. The same design principle appears in formal logic, mathematics, and programming languages — all built from small primitive sets whose combinations carry meaning that the primitives alone do not.</p>
+            </div>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">What This Enables for Reasoning</h2>
+
+            <p class="fs-lg">
+              Goody and Watt (1963) argued that literacy enables a qualitatively different mode of thought from oral culture.<sup><a href="#fn-4" data-scroll data-scroll-offset="100">[4]</a></sup> In an oral culture, reasoning operates on what is present or recently spoken. A statement must be responded to immediately. Contradiction across time is difficult to detect because the conflicting statements do not coexist in a form that can be compared simultaneously.
+            </p>
+
+            <p class="fs-lg">
+              Alphabetic writing changes this. A written argument can be examined at a distance from when it was made. The reader can check the claim on page 3 against the claim on page 47 without asking anyone. Logical contradictions become detectable across time in a way they are not in oral exchange. A hypothesis can survive its author. Critics who never met the original thinker can examine it, identify the flaw, and pass a corrected version forward — carrying what held up and discarding what did not.
+            </p>
+
+            <p class="fs-lg">
+              Ong (1982) frames the same transition as the shift from oral to literate consciousness: the alphabet does not merely record speech — it transforms the epistemic relationship between a thinker and their own thoughts.<sup><a href="#fn-5" data-scroll data-scroll-offset="100">[5]</a></sup> Writing makes it possible to reason about what was said rather than only about what is present. A written claim is an object that can be inspected, compared, modified, and challenged. An oral claim disappears.
+            </p>
+
+            <p class="fs-lg">
+              That interpretive discipline — the ability to reason about what a fixed text actually asserts rather than what its author might have intended — is precisely what made written argument the substrate for cumulative knowledge. Every discipline that depends on systematic critique and extension of earlier arguments (science, law, philosophy, mathematics) depends on this property. The next article in this series, <a href="information_as_infrastructure.html">How Writing Allowed Information to Become Infrastructure</a>, traces what happened once that mechanism was in place across the ancient Mediterranean world.
+            </p>
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5">The Alphabet as Reasoning Infrastructure</h2>
+
+            <p class="fs-lg">
+              Alphabetic writing carries reasoning — causal chains, conditionals, hypotheticals, logical dependencies — across time and distance, to readers not present at its creation and not yet born at its writing.
+            </p>
+
+            <p class="fs-lg">
+              Each generation of alphabetically literate workers inherited access to the accumulated reasoning of every generation before them that wrote things down. A written argument outlasts its author. Critics who never met the original thinker can find the flaw, correct it, and pass the corrected version forward. What gets transmitted is the corrected understanding — not the original error alongside it.
+            </p>
+
+            <p class="fs-lg">
+              Before the alphabet, writing was either monumental — a fixed record answerable to recurring patterns — or institutional, tied to specific transactions requiring a scribal apparatus to produce and interpret. The alphabet changed both constraints at once. The same 22–30 symbols that encode grain deliveries also encode causal arguments, legal conditionals, hypotheses, and histories — and they do so through a system small enough that any literate person can carry and deploy it without institutional support.
+            </p>
+
+            <p class="fs-lg">
+              The productivity layers from earlier articles in this section depended on each other sequentially. Each represented a medium with institutional constraints on who could produce records and what kinds of records they could produce. The alphabet removed the constraint at the source: the same system serves astronomy, law, philosophy, and commerce. That generality is what made writing into information infrastructure — and what <a href="information_as_infrastructure.html">the next article in this series</a> traces from there.
+            </p>
+
+            <hr />
+
+
+            <h2 class="h2 mb-lg-4 pt-3 pt-md-4 pt-xl-5" id="references">References</h2>
+
+            <ol class="references-list fs-lg pb-5">
+              <li id="fn-1">Schmandt-Besserat, D. (1992). <em>Before Writing, Vol. I: From Counting to Cuneiform.</em> University of Texas Press. [reconstruction of clay token → impressed tablet → incised sign sequence]</li>
+              <li id="fn-2">Daniels, P. T., &amp; Bright, W. (Eds.) (1996). <em>The World's Writing Systems.</em> Oxford University Press. [historical sequence of Proto-Sinaitic, Phoenician, and Greek alphabets]</li>
+              <li id="fn-3">Olson, D. R. (1977). From utterance to text: The bias of language in speech and writing. <b>Harvard Educational Review,</b> 47(3), 257–281.</li>
+              <li id="fn-4">Goody, J., &amp; Watt, I. (1963). The consequences of literacy. <b>Comparative Studies in Society and History,</b> 5(3), 304–345.</li>
+              <li id="fn-5">Ong, W. J. (1982). <em>Orality and Literacy: The Technologizing of the Word.</em> Methuen.</li>
+            </ol>
+
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Next in Series -->
+      <section class="container pt-5 mt-md-2 mt-lg-3 mt-xl-4">
+
+        <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2 pl-3">
+          <h3 class="h3 py-1 mb-0 me-4">Next in Series</h3>
+        </div>
+
+        <div class="card overflow-hidden mb-4">
+          <div class="row g-0">
+            <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url(../../assets/img/header_writing_infrastructure_2.jpg); min-height: 14rem;"></div>
+            <div class="col-sm-8">
+              <div class="card-body">
+                <h4 class="card-title">How Writing Allowed Information to Become Infrastructure</h4>
+                <p class="card-text">The historical pattern behind every major information infrastructure layer — writing, the printing press, the telegraph, the database — and what AI represents in that arc.</p>
+                <a class="btn btn-lg btn-link px-0" href="./information_as_infrastructure.html">
+                  Read next article in series
+                  <i class="ai-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         TIMELINE EXPAND MODAL
+         ═══════════════════════════════════════════════════ -->
+    <div class="modal fade" id="timelineExpandModal" tabindex="-1" aria-labelledby="timelineExpandModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title" id="timelineExpandModalLabel">From Cuneiform to Alphabet: ~3,350–300 BCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pt-2 d-flex flex-column" style="overflow-y:auto;">
+            <p class="text-muted mb-2" style="font-size:0.82rem;">Click any event for details, or click a card below. Scale is logarithmic. Gray = context or coming up next.</p>
+
+            <div class="ht-timeline ht-timeline-modal" id="htModalTimeline">
+              <div class="ht-axis"></div>
+            </div>
+
+            <div class="ht-period-legend mt-2 mb-2">
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(200,160,40,0.28);"></span>Bronze Age</span>
+              <span class="ht-legend-swatch"><span class="ht-legend-box" style="background:rgba(120,140,160,0.28);"></span>Iron Age</span>
+            </div>
+
+            <div class="card border-0 bg-secondary ht-detail-panel hidden mb-3" id="htModalDetail">
+              <div class="card-body py-3 px-4">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <p class="fw-semibold mb-1" id="htModalDetailDate" style="color:#ff9500; font-size:0.85rem;"></p>
+                    <p class="fw-bold mb-1" id="htModalDetailTitle" style="font-size:1rem;"></p>
+                    <p class="mb-0" id="htModalDetailBody" style="font-size:0.9rem;"></p>
+                  </div>
+                  <button type="button" class="btn-close ms-3 flex-shrink-0" id="htModalDetailClose" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 mt-1" id="htModalEventGrid">
+              <!-- populated by JS on first modal open -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </main>
+
+
+    <footer class="footer py-5 bg-dark" data-bs-theme="dark">
+      <div class="container pt-md-2 pt-lg-3 pt-xl-4">
+        <div class="row pb-5 pt-sm-2 mb-lg-2">
+          <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
+            <a class="navbar-brand pe-sm-3" href="/index.html">
+              <span class="text-primary flex-shrink-0 me-2">
+                <svg width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
+                  <g transform="matrix(0.004459, 0, 0, -0.00433, -8154.369629, -2022.807495)" fill="#000000" stroke="none" style="transform-origin: 8189.37px 2055.78px;">
+                    <path d="M340 9410 l0 -260 1348 0 c807 0 1370 -4 1403 -9 30 -6 101 -15 159
+                  -21 177 -19 447 -88 605 -155 242 -103 389 -186 553 -310 124 -94 287 -257
+                  390 -390 26 -34 100 -148 140 -215 214 -362 327 -901 282 -1345 -11 -115 -47
+                  -341 -58 -362 -5 -10 -14 -45 -21 -78 -7 -33 -16 -64 -20 -70 -4 -5 -13 -30
+                  -20 -55 -7 -25 -19 -58 -26 -75 -70 -160 -92 -205 -132 -277 -45 -80 -161
+                  -257 -189 -288 -8 -8 -33 -37 -56 -65 -60 -71 -200 -208 -277 -270 -88 -70
+                  -241 -175 -258 -175 -7 0 -13 -3 -13 -8 0 -11 -304 -162 -326 -162 -3 0 -20
+                  -7 -37 -14 -45 -21 -210 -74 -254 -82 -21 -4 -45 -10 -55 -15 -9 -5 -72 -18
+                  -140 -30 -67 -12 -145 -26 -173 -31 -29 -6 -359 -12 -782 -15 l-733 -4 0
+                  -1175 0 -1174 3270 0 3270 0 0 3695 0 3695 -3925 0 -3925 0 0 -260z" style="fill: rgb(255, 149, 0);"></path>
+                    <path d="M1650 6884 l0 -1096 648 4 647 4 120 28 c66 16 125 32 130 36 6 4 28
+                  13 50 20 53 17 129 56 179 92 23 16 52 36 66 46 86 60 201 201 261 322 84 168
+                  109 281 116 525 7 251 -18 402 -97 580 -56 126 -184 280 -295 355 -27 18 -62
+                  42 -77 52 -15 10 -29 18 -32 18 -3 0 -30 11 -60 25 -30 14 -61 25 -68 25 -7 1
+                  -31 8 -53 16 -101 37 -228 44 -892 44 l-643 0 0 -1096z" style="fill: rgb(255, 149, 0);"></path>
+                  </g>
+                </svg>
+              </span>
+              <span class="text-light">Patterson Consulting</span>
+            </a>
+            <p class="fs-sm pb-2 pb-md-3 mb-3 text-light">Delivering data pipelines, analytics, and large language model applications.</p>
+            <div class="d-flex gap-3">
+              <a class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle" href="https://www.linkedin.com/company/patterson-consulting-tn/" aria-label="LinkedIn">
+                <i class="ai-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
+            <div class="row row-cols-2 row-cols-sm-3">
+              <div class="col mb-4">
+                <h4 class="h6 fw-bold pb-lg-1">Company</h4>
+                <ul class="nav flex-column">
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/contact_us.html">Contact Us</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/blog/blog_index.html">Blog</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/index.html#case_studies">Case Studies</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/publications.html">eBooks</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="https://www.youtube.com/channel/UCmaki2Xq1AeFL8XbWGIWyQg">Videos</a></li>
+                  <li><a class="nav-link fw-normal py-1 px-0" href="/about.html">About</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="nav fs-sm mb-0">
+          <span class="text-body-secondary">© All rights reserved. Made by</span>
+          <a class="nav-link fw-normal p-0 ms-1" href="https://www.pattersonconsultingtn.com/" target="_blank" rel="noopener">Patterson Consulting</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <a class="btn-scroll-top" href="#top" data-scroll aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></circle>
+      </svg>
+      <i class="ai-arrow-up"></i>
+    </a>
+
+
+    <!-- Vendor scripts -->
+    <script src="../../assets/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="../../assets/js/theme.min.js"></script>
+
+    <!-- Interactive Timeline Script -->
+    <script>
+    (function () {
+      var EVENTS = [
+        { yearsAgo:5350, date:'~3,350 BCE', title:'Proto-Cuneiform at Uruk',
+          body:'[Bronze Age] The earliest writing: hundreds of logographic signs encoding commodity, quantity, recipient, and date. Each symbol carries meaning directly. Scribal mastery requires years of specialized training. The system solves the accounting problem but cannot efficiently encode relationships, causality, or hypotheticals. Covered in "From Barley to Cuneiform" (previous article).',
+          type:'context' },
+        { yearsAgo:3850, date:'~1,850 BCE', title:'Proto-Sinaitic Alphabet',
+          body:'[Middle Bronze Age] The earliest known alphabetic script: ~22–27 symbols, each representing a consonantal sound rather than a concept. Likely developed by Semitic-speaking workers in Egypt adapting Egyptian hieroglyphs. The structural shift: meaning moves from individual symbols into the combinations of symbols. Daniels & Bright (1996).',
+          type:'primary' },
+        { yearsAgo:3050, date:'~1,050 BCE', title:'Phoenician Alphabet',
+          body:'[Late Bronze Age / Early Iron Age] The Phoenician alphabet standardizes the consonantal alphabetic system and spreads it across the Mediterranean through trade networks. ~22 signs. Becomes the common ancestor of Greek, Latin, Arabic, and Hebrew scripts. The compact, learnable system begins reaching populations beyond professional scribes.',
+          type:'primary' },
+        { yearsAgo:2800, date:'~800 BCE',   title:'Greek Alphabet',
+          body:'[Iron Age] The Greek alphabet adds systematic representation of vowel sounds — the first alphabet capable of full phonemic encoding of spoken language. Any word in any spoken language can now be written down. Combined with a growing tradition of written argument and philosophy, alphabetic literacy becomes a tool for transmitted reasoning, not just record-keeping.',
+          type:'primary' },
+        { yearsAgo:2300, date:'~300 BCE',   title:'Euclid\'s Elements',
+          body:'[Iron Age] Euclid encodes the entire field of geometry as a deductive system: axioms, definitions, propositions, and proofs — all in alphabetic text, transmittable to any literate reader in any era. A working mathematician in 2026 can still read it. This is the civilization information layer in operation: accumulated reasoning, carried forward in writing. Coming up in "Civilization Information Layer" (next article).',
+          type:'future' }
+      ];
+
+      // Scale: oldest = 5,500 years ago (~3,500 BCE), newest = 2,300 years ago (~300 BCE)
+      var LOG_MAX   = Math.log10(5500);
+      var LOG_MIN   = Math.log10(2300);
+      var LOG_RANGE = LOG_MAX - LOG_MIN;
+      function logPos(y) { return ((LOG_MAX - Math.log10(y)) / LOG_RANGE) * 100; }
+
+      // Bronze Age: ~3,500 BCE → ~1,200 BCE (5,500 → 3,200 years ago)
+      // Iron Age:   ~1,200 BCE → ~300 BCE  (3,200 → 2,300 years ago)
+      var PERIODS = [
+        { label:'Bronze Age', fromYrs:5500, toYrs:3200, color:'rgba(200,160,40,0.10)'  },
+        { label:'Iron Age',   fromYrs:3200, toYrs:2300, color:'rgba(120,140,160,0.12)' }
+      ];
+
+      function buildTimeline(container, detailEl, dateEl, titleEl, bodyEl, closeEl, gridEl) {
+        while (container.firstChild) container.removeChild(container.firstChild);
+        var axisEl = document.createElement('div');
+        axisEl.className = 'ht-axis';
+        container.appendChild(axisEl);
+
+        PERIODS.forEach(function(p) {
+          var lp = logPos(p.fromYrs), rp = logPos(p.toYrs), wp = rp - lp;
+          var band = document.createElement('div');
+          band.className = 'ht-period-band';
+          band.style.left = lp.toFixed(1) + '%';
+          band.style.width = wp.toFixed(1) + '%';
+          band.style.backgroundColor = p.color;
+          if (wp >= 4) {
+            var lbl = document.createElement('div');
+            lbl.className = 'ht-period-label-inline';
+            lbl.textContent = p.label;
+            band.appendChild(lbl);
+          }
+          container.insertBefore(band, axisEl);
+        });
+
+        var activeEl = null;
+        function showDetail(ev, el) {
+          if (activeEl) activeEl.classList.remove('active');
+          activeEl = el;
+          if (el) el.classList.add('active');
+          dateEl.textContent  = ev.date;
+          titleEl.textContent = ev.title;
+          bodyEl.textContent  = ev.body;
+          dateEl.style.color  = ev.type === 'primary' ? '#ff9500' : '#9aa0ac';
+          detailEl.classList.remove('hidden');
+        }
+
+        EVENTS.forEach(function(ev, i) {
+          var el = document.createElement('div');
+          el.className = 'ht-event ' + ev.type;
+          el.style.left = logPos(ev.yearsAgo).toFixed(1) + '%';
+          el.dataset.idx = i;
+          var dot = document.createElement('div'); dot.className = 'ht-dot';
+          var lbl = document.createElement('div');
+          lbl.className = 'ht-event-lbl ' + (i % 2 === 0 ? 'above' : 'below');
+          lbl.textContent = ev.date;
+          el.appendChild(dot); el.appendChild(lbl);
+          container.appendChild(el);
+          el.addEventListener('click', function() { showDetail(ev, el); });
+        });
+
+        if (closeEl) {
+          closeEl.addEventListener('click', function() {
+            detailEl.classList.add('hidden');
+            if (activeEl) { activeEl.classList.remove('active'); activeEl = null; }
+          });
+        }
+
+        if (gridEl) {
+          gridEl.innerHTML = '';
+          var evEls = container.querySelectorAll('.ht-event');
+          EVENTS.forEach(function(ev, i) {
+            var accent  = ev.type === 'primary' ? '#ff9500' : '#9aa0ac';
+            var snippet = ev.body.length > 110 ? ev.body.substring(0, 110) + '…' : ev.body;
+            var col = document.createElement('div');
+            col.className = 'col';
+            col.innerHTML = '<div class="card h-100 ht-modal-event-card border border-secondary" style="cursor:pointer;background:rgba(255,255,255,0.04);">'
+              + '<div class="card-body py-2 px-3">'
+              + '<p class="fw-semibold mb-1" style="color:' + accent + ';font-size:0.78rem;">' + ev.date + '</p>'
+              + '<p class="fw-bold mb-1" style="font-size:0.85rem;">' + ev.title + '</p>'
+              + '<p class="mb-0 text-body-secondary" style="font-size:0.78rem;">' + snippet + '</p>'
+              + '</div></div>';
+            col.querySelector('.card').addEventListener('click', (function(ev, i) {
+              return function() {
+                showDetail(ev, evEls[i] || null);
+                detailEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+              };
+            })(ev, i));
+            gridEl.appendChild(col);
+          });
+        }
+
+        return showDetail;
+      }
+
+      // Inline timeline
+      var inlineContainer = document.getElementById('htTimeline');
+      if (!inlineContainer) return;
+      buildTimeline(
+        inlineContainer,
+        document.getElementById('htDetail'),
+        document.getElementById('htDetailDate'),
+        document.getElementById('htDetailTitle'),
+        document.getElementById('htDetailBody'),
+        document.getElementById('htDetailClose'),
+        null
+      );
+
+      // Modal timeline — built lazily on first open
+      var modalEl = document.getElementById('timelineExpandModal');
+      if (modalEl) {
+        var modalBuilt = false;
+        modalEl.addEventListener('shown.bs.modal', function() {
+          if (modalBuilt) return;
+          modalBuilt = true;
+          buildTimeline(
+            document.getElementById('htModalTimeline'),
+            document.getElementById('htModalDetail'),
+            document.getElementById('htModalDetailDate'),
+            document.getElementById('htModalDetailTitle'),
+            document.getElementById('htModalDetailBody'),
+            document.getElementById('htModalDetailClose'),
+            document.getElementById('htModalEventGrid')
+          );
+        });
+      }
+
+    })();
+    </script>
+
+  </body>
+</html>
